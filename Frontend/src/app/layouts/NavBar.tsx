@@ -252,11 +252,13 @@ export default function Navbar() {
     );
   };
 
+  const isMenuPage = location.pathname === '/menu';
+
   return (
     <>
       {isReservationPage
         ? renderNavigation('v1')
-        : renderNavigation(scrolled ? 'v2' : 'v1')}
+        : renderNavigation((scrolled || isMenuPage) ? 'v2' : 'v1')}
     </>
   );
 }

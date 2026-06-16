@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import DishCard from '@/components/ui/dish-card';
 import './index.css';
-import imgLotusPattern from '@/assets/Lotus Partern-01.png';
+import imgLotusHalf from '@/assets/lotus-half.png';
 
 // Background assets
 import imgHeroBg from '@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.png';
@@ -175,9 +175,9 @@ const menuItemsData: Record<MenuCategory, MenuItem[]> = {
       badge: "Chef's Choice ✦",
     },
     {
-      name: 'Angkor Beer',
-      category: 'DRINKS · LOCAL BEER',
-      desc: 'The signature local lager of Cambodia. Crisp, clean, and refreshing, the perfect pairing for savory Khmer dishes.',
+      name: 'Wine',
+      category: 'DRINKS · WINE',
+      desc: 'Discover our curated selection of wines, carefully chosen to complement the rich flavors of Cambodian cuisine.',
       img: imgDish3,
       price: '$4',
     },
@@ -306,7 +306,7 @@ export default function Menu() {
       <section className="w-full py-16 bg-white flex flex-col items-center relative overflow-hidden">
         {/* Lotus Background Pattern */}
         <div className="lotus-bg-wrapper">
-          <div className="lotus-bg-pattern" style={{ backgroundImage: `url("${imgLotusPattern}")` }} />
+          <div className="lotus-bg-pattern" style={{ backgroundImage: `url("${imgLotusHalf}")` }} />
         </div>
 
         <div className="max-w-[1440px] w-full px-6 md:px-[64px] text-center flex flex-col items-center relative z-10">

@@ -10,7 +10,7 @@ export default function MainLayouts() {
   const isReservationPage =
     location.pathname === '/reservations' || location.pathname === '/reservation';
 
-  const needsTopPadding = !isHomePage && !isReservationPage && location.pathname !== '/menu';
+  const needsTopPadding = !isHomePage && !isReservationPage;
 
   return (
     <div
