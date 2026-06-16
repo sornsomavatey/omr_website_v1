@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import DishCard from '@/components/ui/dish-card';
+import './index.css';
+import imgLotusPattern from '@/assets/Lotus Partern-01.png';
 
 // Background assets
 import imgHeroBg from '@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.png';
@@ -184,13 +186,81 @@ const menuItemsData: Record<MenuCategory, MenuItem[]> = {
 
 export default function Menu() {
   const [activeCategory, setActiveCategory] = useState<MenuCategory>('Breakfast');
+  const observerRef = useRef<IntersectionObserver | null>(null);
 
   const categories: MenuCategory[] = ['Breakfast', 'Lunch', 'Dinner', 'Dessert', 'Drinks'];
+
+  useEffect(() => {
+    const observerOptions = {
+      root: null,
+      // Focus on the top third of the screen to detect active section
+      rootMargin: '-180px 0px -50% 0px',
+      threshold: 0,
+    };
+
+    const handleIntersection = (entries: IntersectionObserverEntry[]) => {
+      const intersectingEntries = entries.filter((entry) => entry.isIntersecting);
+      if (intersectingEntries.length > 0) {
+        // Find the one closest to the top of the viewport
+        const closest = intersectingEntries.reduce((prev, curr) => {
+          return Math.abs(curr.boundingClientRect.top - 180) < Math.abs(prev.boundingClientRect.top - 180)
+            ? curr
+            : prev;
+        });
+
+        const categoryId = closest.target.id;
+        const matchedCategory = categories.find(
+          (c) => c.toLowerCase() === categoryId
+        );
+        if (matchedCategory) {
+          setActiveCategory(matchedCategory);
+        }
+      }
+    };
+
+    observerRef.current = new IntersectionObserver(handleIntersection, observerOptions);
+
+    categories.forEach((category) => {
+      const element = document.getElementById(category.toLowerCase());
+      if (element) {
+        observerRef.current?.observe(element);
+      }
+    });
+
+    return () => {
+      observerRef.current?.disconnect();
+    };
+  }, []);
+
+  const handleCategoryClick = (category: MenuCategory) => {
+    const element = document.getElementById(category.toLowerCase());
+    if (element) {
+      // Temporarily stop observing so we don't flash active states while scrolling past sections
+      if (observerRef.current) {
+        categories.forEach((cat) => {
+          const el = document.getElementById(cat.toLowerCase());
+          if (el) observerRef.current?.unobserve(el);
+        });
+      }
+
+      setActiveCategory(category);
+
+      element.scrollIntoView({ behavior: 'smooth' });
+
+      // Re-observe after the smooth scroll completes
+      setTimeout(() => {
+        categories.forEach((cat) => {
+          const el = document.getElementById(cat.toLowerCase());
+          if (el) observerRef.current?.observe(el);
+        });
+      }, 850);
+    }
+  };
 
   return (
     <div className="bg-white flex flex-col items-center w-full min-h-screen">
       {/* Hero Header Section */}
-      <section className="relative w-full h-[520px] flex flex-col items-center justify-center overflow-hidden">
+      <section className="relative w-full h-[420px] flex flex-col items-center justify-center overflow-hidden">
         <div className="absolute inset-0 w-full h-full pointer-events-none z-0">
           <img
             alt="Menu Header Background"
@@ -205,65 +275,75 @@ export default function Menu() {
             Our Menu
           </h1>
 
-          <p className="text-white/80 text-base md:text-lg font-sans font-light max-w-xl mx-auto leading-relaxed mb-12">
+          <p className="text-white/80 text-base md:text-lg font-sans font-light max-w-xl mx-auto leading-relaxed drop-shadow-sm">
             Freshly crafted dishes made with love.
           </p>
-
-          {/* Category Filter Tabs */}
-          <div className="flex flex-wrap justify-center gap-3 max-w-4xl">
-            {categories.map((category) => {
-              const isActive = activeCategory === category;
-              return (
-                <button
-                  key={category}
-                  type="button"
-                  onClick={() => setActiveCategory(category)}
-                  className={`px-8 py-3 rounded-full text-xs font-sans font-bold uppercase tracking-widest transition-all duration-300 cursor-pointer ${
-                    isActive
-                      ? 'bg-[#6b9158] text-white shadow-md border border-[#6b9158]'
-                      : 'border border-white/40 text-white/85 hover:border-white hover:text-white hover:bg-white/5'
-                  }`}
-                >
-                  {category}
-                </button>
-              );
-            })}
-          </div>
         </div>
       </section>
 
-      {/* Menu Grid Section */}
-      <section className="w-full py-24 bg-white flex flex-col items-center">
-        <div className="max-w-[1440px] w-full px-6 md:px-[64px] text-center flex flex-col items-center">
-          {/* Section Header */}
-          <div className="flex items-center justify-center gap-4 mb-10 text-[#6b9158] font-sans text-xs font-bold uppercase tracking-widest">
-            <span className="w-10 h-[1px] bg-[#6b9158]" />
-            Seasonal Selection
-            <span className="w-10 h-[1px] bg-[#6b9158]" />
-          </div>
+      {/* Sticky Category Filter Tabs */}
+      <div className="menu-sticky-tabs-container">
+        <div className="menu-sticky-tabs-inner">
+          {categories.map((category) => {
+            const isActive = activeCategory === category;
+            return (
+              <button
+                key={category}
+                type="button"
+                onClick={() => handleCategoryClick(category)}
+                className={`category-pill-btn ${
+                  isActive ? 'category-pill-btn-active' : 'category-pill-btn-inactive'
+                }`}
+              >
+                {category}
+              </button>
+            );
+          })}
+        </div>
+      </div>
 
-          <h2 className="font-serif text-4xl md:text-5xl font-normal tracking-wide mb-16 text-[#212d1b]">
-            {activeCategory}
-          </h2>
+      {/* Menu Grid Sections */}
+      <section className="w-full py-16 bg-white flex flex-col items-center relative overflow-hidden">
+        {/* Lotus Background Pattern */}
+        <div className="lotus-bg-wrapper">
+          <div className="lotus-bg-pattern" style={{ backgroundImage: `url("${imgLotusPattern}")` }} />
+        </div>
 
-          {/* Transition grid */}
-          <div 
-            key={activeCategory} 
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-16 w-full animate-fade-in"
-          >
-            {menuItemsData[activeCategory].map((dish, index) => (
-              <DishCard
-                key={`${dish.name}-${index}`}
-                index={index}
-                name={dish.name}
-                category={dish.category}
-                description={dish.desc}
-                image={dish.img}
-                price={dish.price}
-                badge={dish.badge}
-              />
-            ))}
-          </div>
+        <div className="max-w-[1440px] w-full px-6 md:px-[64px] text-center flex flex-col items-center relative z-10">
+          {categories.map((category) => (
+            <div
+              key={category}
+              id={category.toLowerCase()}
+              className="menu-section w-full py-16 first:pt-4 last:pb-16 border-b border-[#dde0dc]/50 last:border-b-0"
+            >
+              {/* Section Header */}
+              <div className="flex items-center justify-center gap-4 mb-8 text-[#6b9158] font-sans text-xs font-bold uppercase tracking-widest">
+                <span className="w-10 h-[1px] bg-[#6b9158]/50" />
+                Seasonal Selection
+                <span className="w-10 h-[1px] bg-[#6b9158]/50" />
+              </div>
+
+              <h2 className="font-serif text-4xl md:text-5xl font-normal tracking-wide mb-16 text-[#212d1b]">
+                {category}
+              </h2>
+
+              {/* Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-16 w-full text-left">
+                {menuItemsData[category].map((dish, index) => (
+                  <DishCard
+                    key={`${dish.name}-${index}`}
+                    index={index}
+                    name={dish.name}
+                    category={dish.category}
+                    description={dish.desc}
+                    image={dish.img}
+                    price={dish.price}
+                    badge={dish.badge}
+                  />
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
       </section>
     </div>

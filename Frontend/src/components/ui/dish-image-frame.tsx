@@ -16,6 +16,7 @@ const variantClasses = {
   "circle": "rounded-[50%_50%_0px_0px]", // dome alias for index mapping
   "dome": "rounded-[50%_50%_0px_0px]",
   "right-leaf": "rounded-[0px_50%_0px_50%]",
+  "menu-redesign": "rounded-[160px_16px_16px_16px]",
 }
 
 export function DishImageFrame({
