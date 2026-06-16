@@ -210,7 +210,7 @@ export default function Menu() {
           </p>
 
           {/* Category Filter Tabs */}
-          <div className="flex flex-wrap justify-center gap-3 max-w-2xl">
+          <div className="flex flex-wrap justify-center gap-3 max-w-4xl">
             {categories.map((category) => {
               const isActive = activeCategory === category;
               return (
