@@ -40,7 +40,7 @@
 
 /* Sticky Categories Bar */
 .menu-sticky-tabs-container {
-  position: sticky;
+  position: fixed;
   top: 82px;
   z-index: 40;
   width: 100%;
@@ -49,7 +49,19 @@
   -webkit-backdrop-filter: blur(18px);
   border-bottom: 1px solid rgba(33, 48, 28, 0.08);
   box-shadow: 0 10px 30px -10px rgba(33, 45, 27, 0.05);
-  transition: all 0.3s ease;
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.menu-sticky-tabs-hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-10px);
+}
+
+.menu-sticky-tabs-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
 }
 
 @media (max-width: 1023px) {
@@ -121,6 +133,61 @@
 @media (max-width: 1023px) {
   .menu-section {
     scroll-margin-top: 154px; /* mobile offset adjustment */
+  }
+}
+
+/* Hero category tabs container */
+.menu-hero-tabs-container {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  z-index: 10;
+}
+
+/* Category Pill Buttons inside Hero */
+.hero-category-pill-btn {
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  padding: 10px 28px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+}
+
+.hero-category-pill-btn-active {
+  background-color: #6b9158; /* Premium green to match screenshot active button */
+  color: #ffffff;
+  border: 1px solid #6b9158;
+}
+
+.hero-category-pill-btn-inactive {
+  background-color: rgba(0, 0, 0, 0.22);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.hero-category-pill-btn-inactive:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+  border-color: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .menu-hero-tabs-container {
+    margin-top: 28px;
+    gap: 10px;
+    padding: 0 16px;
+  }
+  .hero-category-pill-btn {
+    font-size: 12px;
+    padding: 8px 20px;
   }
 }
 

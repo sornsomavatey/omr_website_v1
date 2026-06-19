@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import Navbar from '@/app/layouts/NavBar';
+import whiteLogo from '@/assets/omr_logo_white.png';
 import {
   ArrowRight,
   ChevronLeft,
@@ -10,9 +10,8 @@ import {
   Clock,
 } from 'lucide-react';
 
+
 import {
-  svgPaths,
-  imgHeroBg1,
   imgHeroBg2,
   imgGallery1,
   imgGallery2,
@@ -27,14 +26,12 @@ import {
 } from './homeAssets';
 
 import type {
-  SignatureDish,
   DiningSpace,
   Branch,
   Testimonial,
 } from './homeTypes';
 
 import './index.css';
-import DishCard from '@/components/ui/dish-card';
 
 type SectionHeaderProps = {
   eyebrow: string;
@@ -58,18 +55,16 @@ function SectionHeader({
       </div>
 
       <h2
-        className={`font-serif text-4xl md:text-5xl font-normal tracking-wide mb-6 ${
-          dark ? 'text-[#f6fdf2]' : 'text-[#212d1b]'
-        }`}
+        className={`font-serif text-4xl md:text-5xl font-normal tracking-wide mb-6 ${dark ? 'text-[#f6fdf2]' : 'text-[#212d1b]'
+          }`}
       >
         {title}
       </h2>
 
       {description && (
         <p
-          className={`text-base md:text-lg font-sans font-light max-w-2xl mx-auto mb-16 leading-relaxed ${
-            dark ? 'text-[#e7f6df]/80' : 'text-[#646860]'
-          }`}
+          className={`text-base md:text-lg font-sans font-light max-w-2xl mx-auto mb-16 leading-relaxed ${dark ? 'text-[#e7f6df]/80' : 'text-[#646860]'
+            }`}
         >
           {description}
         </p>
@@ -79,17 +74,30 @@ function SectionHeader({
 }
 
 function HeroSection() {
-  return (
-    <section id="home-hero" className="relative w-full h-[1080px] flex items-center justify-center bg-black overflow-hidden">
-      <div className="absolute inset-0 w-full h-full pointer-events-none z-0">
+  const handleScrollDown = () => {
+    const targetSection = document.getElementById('menu');
 
+    if (!targetSection) return;
+
+    targetSection.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
+  };
+
+  return (
+    <section
+      id="home-hero"
+      className="relative w-full min-h-screen flex items-center justify-center bg-black overflow-hidden"
+    >
+      <div className="absolute inset-0 w-full h-full pointer-events-none z-0">
         <img
           alt=""
-          className="absolute inset-0 w-full h-full object-cover opacity-50 mix-blend-overlay"
+          className="absolute inset-0 w-full h-full object-cover opacity-35 mix-blend-overlay"
           src={imgHeroBg2}
         />
 
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/60" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/20 to-black/45" />
       </div>
 
       <div className="relative z-10 text-center text-white max-w-[1260px] px-6 pt-32">
@@ -99,8 +107,7 @@ function HeroSection() {
         </h1>
 
         <p className="text-white/80 text-lg md:text-xl font-sans font-light max-w-2xl mx-auto leading-relaxed mb-12">
-          Traditional Cambodian flavors served in a modern dining experience. Crafted with
-          passion, fresh local organic produce, and heirloom recipes.
+          Traditional Cambodian flavors served in a modern dining experience.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
@@ -114,17 +121,21 @@ function HeroSection() {
         </div>
       </div>
 
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/50 animate-bounce cursor-pointer">
-        <span className="text-[10px] tracking-widest font-sans font-medium">
-          SCROLL
-        </span>
+      <button
+        type="button"
+        onClick={handleScrollDown}
+        className="hero-scroll-button"
+        aria-label="Scroll to featured cuisine section"
+      >
+        <span>SCROLL</span>
 
         <svg
-          className="w-5 h-5"
+          className="hero-scroll-icon"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
           strokeWidth="2"
+          aria-hidden="true"
         >
           <path
             strokeLinecap="round"
@@ -132,41 +143,58 @@ function HeroSection() {
             d="M19 14l-7 7m0 0l-7-7m7 7V3"
           />
         </svg>
-      </div>
+      </button>
     </section>
   );
 }
 
 function SignatureDishesSection() {
   return (
-    <section className="w-full py-24 bg-white flex flex-col items-center">
-      <div className="max-w-[1440px] w-full px-6 md:px-[64px] text-center">
+    <section id="menu" className="featured-cuisine-section">
+      <div className="featured-cuisine-pattern" aria-hidden="true" />
+
+      <div className="featured-cuisine-container">
         <SectionHeader
           eyebrow="Our Signature Dishes"
           title="Featured Khmer Cuisine"
-          description="Each dish tells a story of Cambodia's culinary heritage, crafted with heirloom recipes and seasonal, locally sourced ingredients."
+          description="Each dish tells a story of Cambodia's culinary heritage, crafted with heirloom recipes and seasonal ingredients."
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-16">
-          {signatureDishes.map((dish, index) => (
-            <DishCard
-              key={`${dish.name}-${index}`}
-              index={index}
-              name={dish.name}
-              category={dish.category}
-              description={dish.desc}
-              image={dish.img}
-              price={dish.price}
-              badge={dish.badge}
+        <div className="featured-cuisine-collage">
+          {Array.from({ length: 8 }).map((_, index) => {
+            const dish = signatureDishes[index % signatureDishes.length];
+
+            return (
+              <div
+                key={`${dish.name}-${index}`}
+                className={`cuisine-tile cuisine-tile-${index + 1}`}
+              >
+                <img src={dish.img} alt={dish.name} />
+              </div>
+            );
+          })}
+
+          <span
+            className="cuisine-decoration cuisine-decoration-left"
+            aria-hidden="true"
+          />
+
+          <span
+            className="cuisine-decoration cuisine-decoration-right"
+            aria-hidden="true"
+          />
+
+          <div className="cuisine-center-circle">
+            <img
+              src={signatureDishes[0].img}
+              alt={signatureDishes[0].name}
             />
-          ))}
+          </div>
         </div>
 
-        <div className="mt-16 text-center">
-          <Link to="/menu" className="custom-btn-outline-green">
-            View all menu
-          </Link>
-        </div>
+        <Link to="/menu" className="custom-btn-outline-green">
+          View all menu
+        </Link>
       </div>
     </section>
   );
@@ -442,245 +470,160 @@ function GallerySection() {
   );
 }
 
-function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
+function TestimonialCard({
+  testimonial,
+}: {
+  testimonial: Testimonial;
+}) {
   return (
-    <div className="relative z-10 space-y-8">
-      <p className="text-[#444841] text-lg md:text-xl font-sans font-light leading-relaxed">
+    <article className="testimonial-card">
+      <div
+        className="testimonial-stars"
+        aria-label="5 out of 5 stars"
+      >
+        <span aria-hidden="true">★★★★★</span>
+      </div>
+
+      <span
+        className="testimonial-quote-mark"
+        aria-hidden="true"
+      >
+        “
+      </span>
+
+      <p className="testimonial-card-text">
         {testimonial.text}
       </p>
 
-      <div className="flex items-center gap-4 pt-6 border-t border-[#6b9158]/10">
+      <div className="testimonial-author">
         <img
-          alt={testimonial.name}
-          className="w-14 h-14 rounded-full object-cover border-2 border-[#6b9158]/25"
           src={testimonial.avatar}
+          alt={testimonial.name}
+          className="testimonial-avatar"
         />
 
-        <div className="text-left">
-          <h4 className="font-sans font-bold text-[#212d1b] text-base leading-snug">
-            {testimonial.name}
-          </h4>
-
-          <span className="text-xs text-[#646860]/80 font-sans font-light">
-            {testimonial.date}
-          </span>
+        <div className="testimonial-author-copy">
+          <h3>{testimonial.name}</h3>
+          <span>{testimonial.date}</span>
         </div>
       </div>
-    </div>
+    </article>
   );
 }
 
 function TestimonialsSection() {
-  const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(0);
+  const [currentTestimonialIndex, setCurrentTestimonialIndex] =
+    useState(0);
 
-  const currentTestimonial = testimonials[currentTestimonialIndex];
+  const orderedTestimonials = Array.from(
+    { length: testimonials.length },
+    (_, offset) =>
+      testimonials[
+      (currentTestimonialIndex + offset) %
+      testimonials.length
+      ]
+  );
 
   const handlePrevTestimonial = () => {
-    setCurrentTestimonialIndex((prev) =>
-      prev === 0 ? testimonials.length - 1 : prev - 1
+    setCurrentTestimonialIndex((previousIndex) =>
+      Math.max(previousIndex - 1, 0)
     );
   };
 
   const handleNextTestimonial = () => {
-    setCurrentTestimonialIndex((prev) =>
-      prev === testimonials.length - 1 ? 0 : prev + 1
+    setCurrentTestimonialIndex((previousIndex) =>
+      Math.min(previousIndex + 1, testimonials.length - 1)
     );
   };
 
+  const handleDotClick = (index: number) => {
+    setCurrentTestimonialIndex(index);
+  };
+
   return (
-    <section className="w-full py-24 bg-white flex flex-col items-center">
-      <div className="max-w-[1440px] w-full px-6 md:px-[64px] flex flex-col items-center">
+    <section
+      className="testimonials-section"
+      aria-labelledby="testimonials-title"
+    >
+      <div className="testimonials-container">
         <SectionHeader
           eyebrow="Testimonials"
           title="What Our Guests Say"
-          description="Experiences shared by our valued customers."
+          description="Experiences shared by our valued customers"
         />
 
-        <div className="w-full max-w-[850px] bg-[#e7f6df]/35 border border-[#6b9158]/10 rounded-3xl p-8 md:p-12 relative flex flex-col justify-between shadow-sm">
-          <div className="text-6xl text-[#6b9158]/20 font-serif leading-none absolute top-6 left-8">
-            “
+        <div className="testimonials-viewport">
+          <div
+            key={currentTestimonialIndex}
+            className="testimonials-track"
+          >
+            {orderedTestimonials.map((testimonial, index) => (
+              <TestimonialCard
+                key={`${currentTestimonialIndex}-${testimonial.name}-${index}`}
+                testimonial={testimonial}
+              />
+            ))}
+          </div>
+        </div>
+
+        <div className="testimonials-navigation">
+          <button
+            type="button"
+            className="testimonial-navigation-button"
+            onClick={handlePrevTestimonial}
+            disabled={currentTestimonialIndex === 0}
+            aria-label="Previous testimonial"
+          >
+            <ChevronLeft aria-hidden="true" />
+          </button>
+
+          <div
+            className="testimonial-dots"
+            aria-label="Choose testimonial"
+          >
+            {testimonials.map((testimonial, index) => (
+              <button
+                key={`${testimonial.name}-${index}`}
+                type="button"
+                className={`testimonial-dot ${currentTestimonialIndex === index
+                    ? 'testimonial-dot-active'
+                    : ''
+                  }`}
+                onClick={() => handleDotClick(index)}
+                aria-label={`Show testimonial ${index + 1}`}
+                aria-current={
+                  currentTestimonialIndex === index ? 'true' : undefined
+                }
+              />
+            ))}
           </div>
 
-          <TestimonialCard testimonial={currentTestimonial} />
-
-          <div className="flex justify-end gap-3 mt-8">
-            <button
-              type="button"
-              onClick={handlePrevTestimonial}
-              className="w-10 h-10 rounded-full border border-[#6b9158]/20 hover:border-[#6b9158] text-[#6b9158] flex items-center justify-center hover:bg-[#6b9158]/5 transition-all cursor-pointer active:scale-90"
-              aria-label="Previous testimonial"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-
-            <button
-              type="button"
-              onClick={handleNextTestimonial}
-              className="w-10 h-10 rounded-full border border-[#6b9158]/20 hover:border-[#6b9158] text-[#6b9158] flex items-center justify-center hover:bg-[#6b9158]/5 transition-all cursor-pointer active:scale-90"
-              aria-label="Next testimonial"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
-          </div>
+          <button
+            type="button"
+            className="testimonial-navigation-button"
+            onClick={handleNextTestimonial}
+            disabled={
+              currentTestimonialIndex === testimonials.length - 1
+            }
+            aria-label="Next testimonial"
+          >
+            <ChevronRight aria-hidden="true" />
+          </button>
         </div>
       </div>
     </section>
   );
 }
 
-function HomeFooter() {
-  return (
-    <footer className="bg-[#304625] w-full" data-name="footer">
-      <div className="max-w-[1440px] mx-auto content-stretch flex flex-col gap-16 pb-12 pt-24 px-6 md:px-[80px] relative w-full text-white">
-        <div className="flex flex-col lg:flex-row justify-between items-start gap-12 pb-12 border-b border-white/10">
-          <div className="max-w-xs space-y-6">
-            <Link to="/" className="inline-block">
-              <svg className="w-[64px] h-[78px]" viewBox="0 0 49 59" fill="none">
-                <path d={svgPaths.pd305680} fill="#F6FDF2" />
-              </svg>
-            </Link>
-
-            <p className="text-white/80 text-sm leading-relaxed font-sans font-light">
-              Redefining the boundaries of Khmer gastronomy through a commitment to heritage
-              and innovation.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-12 sm:gap-16">
-            <div className="space-y-4">
-              <h4 className="text-[#E7F6DF] font-sans font-bold text-xs uppercase tracking-widest">
-                Explore
-              </h4>
-
-              <ul className="space-y-3 text-sm font-sans font-light text-white/70">
-                <li>
-                  <Link to="/menu" className="hover:text-[#E7F6DF] transition-colors">
-                    Menu
-                  </Link>
-                </li>
-
-                <li>
-                  <Link to="/restaurants" className="hover:text-[#E7F6DF] transition-colors">
-                    Branches
-                  </Link>
-                </li>
-
-                <li>
-                  <Link to="/about" className="hover:text-[#E7F6DF] transition-colors">
-                    Story
-                  </Link>
-                </li>
-
-                <li>
-                  <Link to="/contact" className="hover:text-[#E7F6DF] transition-colors">
-                    Gift Cards
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            <div className="space-y-4">
-              <h4 className="text-[#E7F6DF] font-sans font-bold text-xs uppercase tracking-widest">
-                Legal
-              </h4>
-
-              <ul className="space-y-3 text-sm font-sans font-light text-white/70">
-                <li>
-                  <Link to="/" className="hover:text-[#E7F6DF] transition-colors">
-                    Terms
-                  </Link>
-                </li>
-
-                <li>
-                  <Link to="/" className="hover:text-[#E7F6DF] transition-colors">
-                    Privacy
-                  </Link>
-                </li>
-
-                <li>
-                  <Link to="/" className="hover:text-[#E7F6DF] transition-colors">
-                    Sustainability
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            <div className="space-y-4">
-              <h4 className="text-[#E7F6DF] font-sans font-bold text-xs uppercase tracking-widest">
-                Contact
-              </h4>
-
-              <ul className="space-y-3 text-sm font-sans font-light text-white/70">
-                <li>
-                  <Link to="/contact" className="hover:text-[#E7F6DF] transition-colors">
-                    Booking Inquiry
-                  </Link>
-                </li>
-
-                <li>
-                  <Link to="/contact" className="hover:text-[#E7F6DF] transition-colors">
-                    Press
-                  </Link>
-                </li>
-
-                <li>
-                  <Link to="/careers" className="hover:text-[#E7F6DF] transition-colors">
-                    Careers
-                  </Link>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-6 text-xs text-white/60 font-sans font-light">
-          <p>© 2026 One More Restaurant. All Rights Reserved.</p>
-
-          <div className="flex gap-6">
-            <a
-              href="https://instagram.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-[#E7F6DF] transition-colors"
-            >
-              Instagram
-            </a>
-
-            <a
-              href="https://facebook.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-[#E7F6DF] transition-colors"
-            >
-              Facebook
-            </a>
-
-            <a
-              href="https://tripadvisor.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-[#E7F6DF] transition-colors"
-            >
-              TripAdvisor
-            </a>
-          </div>
-        </div>
-      </div>
-    </footer>
-  );
-}
-
 export default function HomePage() {
   return (
     <div className="bg-white flex flex-col items-center w-full overflow-x-hidden">
-      <Navbar />
       <HeroSection />
       <SignatureDishesSection />
       <SpacesSection />
       <LocationsSection />
       <GallerySection />
       <TestimonialsSection />
-      <HomeFooter />
     </div>
   );
 }

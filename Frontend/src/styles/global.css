@@ -1,15 +1,9 @@
-@import "tailwindcss";
-@import "tw-animate-css";
-@import "shadcn/tailwind.css";
-@import "@fontsource-variable/geist";
 
 @custom-variant dark (&:is(.dark *));
 
 @theme {
   --font-serif: "Playfair Display", serif;
-  --font-sans: "Outfit", sans-serif;
-  --font-gloock: "Gloock", serif;
-  --font-manrope: "Manrope", sans-serif;
+  --font-sans: "Inter", sans-serif;
 
   --color-gold: #b39a62;
   --color-gold-hover: #9c8451;
@@ -71,7 +65,7 @@ h1, h2, h3, h4, h5, h6 {
 
 @theme inline {
   --font-heading: var(--font-sans);
-  --font-sans: 'Geist Variable', sans-serif;
+  --font-sans: "Inter", sans-serif;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -191,4 +185,13 @@ h1, h2, h3, h4, h5, h6 {
   html {
     @apply font-sans;
   }
+}
+
+/* Custom ScrollToTop button style to override any cache or template issues */
+.scroll-to-top-btn {
+  background-color: #6b9158 !important;
+  --tw-ring-color: rgba(107, 145, 88, 0.2) !important;
+}
+.scroll-to-top-btn:hover {
+  background-color: #5b7d4a !important;
 }
