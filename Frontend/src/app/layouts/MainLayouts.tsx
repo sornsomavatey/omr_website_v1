@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import Navbar from './NavBar';
 import Footer from './Footer';
+import ScrollToTop from '../../components/ScrollToTop';
 
 export default function MainLayouts() {
   const location = useLocation();
+
+  useEffect(() => {
+    // Automatically scroll to the top of the page on route changes
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   const isHomePage = location.pathname === '/';
 
@@ -29,6 +35,7 @@ export default function MainLayouts() {
       </main>
 
       <Footer />
+      <ScrollToTop />
     </div>
   );
 }

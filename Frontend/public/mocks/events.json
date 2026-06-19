@@ -1,0 +1,26 @@
+{
+  "header": {
+    "title": "Special Events & Celebrations",
+    "desc": "Host your memorable moments at One More Restaurant or join our exclusive culinary events."
+  },
+  "events": [
+    {
+      "title": "Khmer New Year Banquet",
+      "date": "April 14 - 16, 2026",
+      "desc": "A festive three-day culinary celebration featuring traditional dances and special family set menus.",
+      "image": "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&q=80&w=800"
+    },
+    {
+      "title": "Exclusive Wine Pairing Dinner",
+      "date": "Every First Friday",
+      "desc": "A curated 5-course Khmer fusion menu paired with premium French and Australian wines.",
+      "image": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&q=80&w=800"
+    },
+    {
+      "title": "Private Cooking Workshop",
+      "date": "By Request",
+      "desc": "Learn heirloom Khmer recipes directly from our master chefs in our professional kitchen.",
+      "image": "https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&q=80&w=800"
+    }
+  ]
+}

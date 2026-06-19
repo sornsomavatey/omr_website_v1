@@ -1,6 +1,6 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import whiteLogo from '@/assets/omr_logo_white.png';
+import { getHomeData } from '@/lib/api';
 import {
   ArrowRight,
   ChevronLeft,
@@ -8,10 +8,11 @@ import {
   MapPin,
   Phone,
   Clock,
+  User,
 } from 'lucide-react';
 
-
 import {
+  imgHeroBg1,
   imgHeroBg2,
   imgGallery1,
   imgGallery2,
@@ -19,13 +20,11 @@ import {
   imgGallery4,
   imgGallery5,
   imgGallery6,
-  signatureDishes,
-  diningSpaces,
-  branches,
-  testimonials,
+  imageMap,
 } from './homeAssets';
 
 import type {
+  SignatureDish,
   DiningSpace,
   Branch,
   Testimonial,
@@ -55,16 +54,18 @@ function SectionHeader({
       </div>
 
       <h2
-        className={`font-serif text-4xl md:text-5xl font-normal tracking-wide mb-6 ${dark ? 'text-[#f6fdf2]' : 'text-[#212d1b]'
-          }`}
+        className={`font-serif text-4xl md:text-5xl font-normal tracking-wide mb-6 ${
+          dark ? 'text-[#f6fdf2]' : 'text-[#212d1b]'
+        }`}
       >
         {title}
       </h2>
 
       {description && (
         <p
-          className={`text-base md:text-lg font-sans font-light max-w-2xl mx-auto mb-16 leading-relaxed ${dark ? 'text-[#e7f6df]/80' : 'text-[#646860]'
-            }`}
+          className={`text-base md:text-lg font-sans font-light max-w-2xl mx-auto mb-16 leading-relaxed ${
+            dark ? 'text-[#e7f6df]/80' : 'text-[#646860]'
+          }`}
         >
           {description}
         </p>
@@ -73,7 +74,7 @@ function SectionHeader({
   );
 }
 
-function HeroSection() {
+function HeroSection({ hero }: { hero: any }) {
   const handleScrollDown = () => {
     const targetSection = document.getElementById('menu');
 
@@ -85,6 +86,8 @@ function HeroSection() {
     });
   };
 
+  const bgImage = imageMap[hero.backgroundImage] || imgHeroBg2;
+
   return (
     <section
       id="home-hero"
@@ -94,7 +97,7 @@ function HeroSection() {
         <img
           alt=""
           className="absolute inset-0 w-full h-full object-cover opacity-35 mix-blend-overlay"
-          src={imgHeroBg2}
+          src={bgImage}
         />
 
         <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/20 to-black/45" />
@@ -102,21 +105,28 @@ function HeroSection() {
 
       <div className="relative z-10 text-center text-white max-w-[1260px] px-6 pt-32">
         <h1 className="font-serif text-5xl md:text-7xl lg:text-[80px] leading-tight mb-8 font-normal tracking-wide drop-shadow-lg">
-          Experience Authentic <br />
-          <span className="text-[#E7F6DF]">Khmer Cuisine</span>
+          {hero.title.includes('Khmer Cuisine') ? (
+            <>
+              {hero.title.replace('Khmer Cuisine', '')}
+              <br />
+              <span className="text-[#E7F6DF]">Khmer Cuisine</span>
+            </>
+          ) : (
+            hero.title
+          )}
         </h1>
 
         <p className="text-white/80 text-lg md:text-xl font-sans font-light max-w-2xl mx-auto leading-relaxed mb-12">
-          Traditional Cambodian flavors served in a modern dining experience.
+          {hero.subtitle}
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
           <Link to="/reservations" className="custom-btn-primary">
-            Reserve a Table
+            {hero.cta_reserve}
           </Link>
 
           <Link to="/menu" className="custom-btn-secondary">
-            Explore Menu <ArrowRight className="w-4 h-4" />
+            {hero.cta_menu} <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
       </div>
@@ -148,7 +158,7 @@ function HeroSection() {
   );
 }
 
-function SignatureDishesSection() {
+function SignatureDishesSection({ dishes }: { dishes: SignatureDish[] }) {
   return (
     <section id="menu" className="featured-cuisine-section">
       <div className="featured-cuisine-pattern" aria-hidden="true" />
@@ -162,7 +172,7 @@ function SignatureDishesSection() {
 
         <div className="featured-cuisine-collage">
           {Array.from({ length: 8 }).map((_, index) => {
-            const dish = signatureDishes[index % signatureDishes.length];
+            const dish = dishes[index % dishes.length];
 
             return (
               <div
@@ -186,8 +196,8 @@ function SignatureDishesSection() {
 
           <div className="cuisine-center-circle">
             <img
-              src={signatureDishes[0].img}
-              alt={signatureDishes[0].name}
+              src={dishes[0]?.img}
+              alt={dishes[0]?.name}
             />
           </div>
         </div>
@@ -230,7 +240,7 @@ function SpaceCard({ space }: { space: DiningSpace }) {
   );
 }
 
-function SpacesSection() {
+function SpacesSection({ spaces }: { spaces: DiningSpace[] }) {
   const spaceScrollContainerRef = useRef<HTMLDivElement>(null);
 
   const scrollSpaces = (direction: 'left' | 'right') => {
@@ -259,7 +269,7 @@ function SpacesSection() {
             ref={spaceScrollContainerRef}
             className="w-full flex gap-6 overflow-x-auto no-scrollbar snap-x snap-mandatory py-4"
           >
-            {diningSpaces.map((space, index) => (
+            {spaces.map((space, index) => (
               <SpaceCard key={`${space.name}-${index}`} space={space} />
             ))}
           </div>
@@ -362,7 +372,7 @@ function LocationCard({ branch }: { branch: Branch }) {
   );
 }
 
-function LocationsSection() {
+function LocationsSection({ branches }: { branches: Branch[] }) {
   return (
     <section className="w-full py-24 bg-white flex flex-col items-center">
       <div className="max-w-[1440px] w-full px-6 md:px-[64px] text-center">
@@ -382,15 +392,11 @@ function LocationsSection() {
   );
 }
 
-function GallerySection() {
-  const galleryImages = [
-    { src: imgGallery1, alt: 'Gallery 1' },
-    { src: imgGallery2, alt: 'Gallery 2' },
-    { src: imgGallery3, alt: 'Gallery 3' },
-    { src: imgGallery4, alt: 'Gallery 4' },
-    { src: imgGallery5, alt: 'Gallery 5' },
-    { src: imgGallery6, alt: 'Gallery 6' },
-  ];
+function GallerySection({ gallery }: { gallery: any[] }) {
+  const images = gallery.map((item) => ({
+    src: imageMap[item.src] || item.src,
+    alt: item.alt,
+  }));
 
   return (
     <section className="w-full py-24 bg-[#fafaf9] flex flex-col items-center">
@@ -405,26 +411,26 @@ function GallerySection() {
           <div className="flex flex-col gap-6">
             <div className="h-[400px] rounded-3xl shadow-sm zoom-image-hover">
               <img
-                alt={galleryImages[0].alt}
+                alt={images[0]?.alt}
                 className="w-full h-full object-cover"
-                src={galleryImages[0].src}
+                src={images[0]?.src || imgGallery1}
               />
             </div>
 
             <div className="grid grid-cols-2 gap-6">
               <div className="h-[250px] rounded-3xl shadow-sm zoom-image-hover">
                 <img
-                  alt={galleryImages[1].alt}
+                  alt={images[1]?.alt}
                   className="w-full h-full object-cover"
-                  src={galleryImages[1].src}
+                  src={images[1]?.src || imgGallery2}
                 />
               </div>
 
               <div className="h-[250px] rounded-3xl shadow-sm zoom-image-hover">
                 <img
-                  alt={galleryImages[2].alt}
+                  alt={images[2]?.alt}
                   className="w-full h-full object-cover"
-                  src={galleryImages[2].src}
+                  src={images[2]?.src || imgGallery3}
                 />
               </div>
             </div>
@@ -434,26 +440,26 @@ function GallerySection() {
             <div className="grid grid-cols-2 gap-6">
               <div className="h-[250px] rounded-3xl shadow-sm zoom-image-hover">
                 <img
-                  alt={galleryImages[3].alt}
+                  alt={images[3]?.alt}
                   className="w-full h-full object-cover"
-                  src={galleryImages[3].src}
+                  src={images[3]?.src || imgGallery4}
                 />
               </div>
 
               <div className="h-[250px] rounded-3xl shadow-sm zoom-image-hover">
                 <img
-                  alt={galleryImages[4].alt}
+                  alt={images[4]?.alt}
                   className="w-full h-full object-cover"
-                  src={galleryImages[4].src}
+                  src={images[4]?.src || imgGallery5}
                 />
               </div>
             </div>
 
             <div className="h-[400px] rounded-3xl shadow-sm zoom-image-hover">
               <img
-                alt={galleryImages[5].alt}
+                alt={images[5]?.alt}
                 className="w-full h-full object-cover"
-                src={galleryImages[5].src}
+                src={images[5]?.src || imgGallery6}
               />
             </div>
           </div>
@@ -511,7 +517,7 @@ function TestimonialCard({
   );
 }
 
-function TestimonialsSection() {
+function TestimonialsSection({ testimonials }: { testimonials: Testimonial[] }) {
   const [currentTestimonialIndex, setCurrentTestimonialIndex] =
     useState(0);
 
@@ -519,8 +525,7 @@ function TestimonialsSection() {
     { length: testimonials.length },
     (_, offset) =>
       testimonials[
-      (currentTestimonialIndex + offset) %
-      testimonials.length
+        (currentTestimonialIndex + offset) % testimonials.length
       ]
   );
 
@@ -585,10 +590,11 @@ function TestimonialsSection() {
               <button
                 key={`${testimonial.name}-${index}`}
                 type="button"
-                className={`testimonial-dot ${currentTestimonialIndex === index
+                className={`testimonial-dot ${
+                  currentTestimonialIndex === index
                     ? 'testimonial-dot-active'
                     : ''
-                  }`}
+                }`}
                 onClick={() => handleDotClick(index)}
                 aria-label={`Show testimonial ${index + 1}`}
                 aria-current={
@@ -616,14 +622,68 @@ function TestimonialsSection() {
 }
 
 export default function HomePage() {
+  const [data, setData] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    getHomeData()
+      .then((res) => {
+        setData(res);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setError('Failed to load home page data.');
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="pt-28 pb-20 text-center text-olive font-serif text-xl min-h-screen flex items-center justify-center">
+        Loading home...
+      </div>
+    );
+  }
+
+  if (error || !data) {
+    return (
+      <div className="pt-28 pb-20 text-center text-red-500 font-serif text-xl min-h-screen flex items-center justify-center">
+        {error || 'No data available.'}
+      </div>
+    );
+  }
+
+  // Map home page arrays with image reference resolver
+  const signatureDishesList: SignatureDish[] = data.signatureDishes.map((dish: any) => ({
+    ...dish,
+    img: imageMap[dish.img] || dish.img,
+  }));
+
+  const diningSpacesList: DiningSpace[] = data.diningSpaces.map((space: any) => ({
+    ...space,
+    img: imageMap[space.img] || space.img,
+  }));
+
+  const branchesList: Branch[] = data.branches.map((branch: any) => ({
+    ...branch,
+    img: imageMap[branch.img] || branch.img,
+  }));
+
+  const testimonialsList: Testimonial[] = data.testimonials.map((t: any) => ({
+    ...t,
+    avatar: imageMap[t.avatar] || t.avatar,
+  }));
+
   return (
     <div className="bg-white flex flex-col items-center w-full overflow-x-hidden">
-      <HeroSection />
-      <SignatureDishesSection />
-      <SpacesSection />
-      <LocationsSection />
-      <GallerySection />
-      <TestimonialsSection />
+      <HeroSection hero={data.hero} />
+      <SignatureDishesSection dishes={signatureDishesList} />
+      <SpacesSection spaces={diningSpacesList} />
+      <LocationsSection branches={branchesList} />
+      <GallerySection gallery={data.gallery} />
+      <TestimonialsSection testimonials={testimonialsList} />
     </div>
   );
 }

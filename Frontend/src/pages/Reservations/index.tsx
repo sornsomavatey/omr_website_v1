@@ -20,47 +20,46 @@ import {
   ChevronUp,
   User,
 } from 'lucide-react';
+import { getReservationsData, getHomeData } from '@/lib/api';
 import {
-  branches,
-  diningSpaces,
   imgHeroBg2,
   imgGallery1,
   imgGallery5,
   imgHeroBg1,
+  imageMap,
 } from '../Home/homeAssets';
 import './index.css';
-import ScrollToTop from '../../components/ScrollToTop';
 
-const guestInformation = [
-  {
-    icon: Clock,
-    label: 'Opening Hours',
-    value: '06:00 AM - 10:00 PM',
-  },
-  {
-    icon: Phone,
-    label: 'Contact Number',
-    value: '+855 23 888 222',
-  },
-  {
-    icon: MessageCircle,
-    label: 'Response Time',
-    value: 'Within 15 Minutes',
-  },
-  {
-    icon: FileText,
-    label: 'Reservation Policy',
-    value: 'Free cancellation up to 24h',
-  },
-];
+type Branch = {
+  name: string;
+  address: string;
+  phone: string;
+  hours: string;
+  img: string;
+  tags: string[];
+};
 
-function GuestInformationCard() {
+type DiningSpace = {
+  name: string;
+  tag: string;
+  desc: string;
+  img: string;
+};
+
+const iconMap: Record<string, React.ComponentType> = {
+  hours: Clock,
+  phone: Phone,
+  time: MessageCircle,
+  policy: FileText,
+};
+
+function GuestInformationCard({ info }: { info: any[] }) {
   return (
     <aside className="reservation-guest-card" aria-label="Guest information">
       <h2>Guest Information</h2>
 
       <div className="reservation-guest-list">
-        {guestInformation.map((item) => {
+        {info.map((item) => {
           const Icon = item.icon;
 
           return (
@@ -81,7 +80,7 @@ function GuestInformationCard() {
   );
 }
 
-function ReservationHero() {
+function ReservationHero({ hero, info }: { hero: any; info: any[] }) {
   return (
     <section className="reservation-hero" aria-labelledby="reservation-title">
       <img
@@ -94,24 +93,23 @@ function ReservationHero() {
 
       <div className="reservation-hero-container">
         <div className="reservation-hero-copy">
-          <p className="reservation-hero-eyebrow">EST. 2008 · PHNOM PENH</p>
+          <p className="reservation-hero-eyebrow">{hero.eyebrow}</p>
 
-          <h1 id="reservation-title">Reserve Your Table</h1>
+          <h1 id="reservation-title">{hero.title}</h1>
 
           <p className="reservation-hero-description">
-            Experience the pinnacle of Khmer culinary heritage. A journey of
-            forgotten flavors rediscovered in a setting of timeless luxury.
+            {hero.desc}
           </p>
         </div>
 
-        <GuestInformationCard />
+        <GuestInformationCard info={info} />
       </div>
     </section>
   );
 }
 
 function FaqSection() {
-  const [expandedIndex, setExpandedIndex] = useState<number | null>(0); // first item expanded by default
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(0);
 
   const faqs = [
     {
@@ -196,6 +194,11 @@ const timeSuggestions = [
 ];
 
 export default function ReservationPage() {
+  const [resData, setResData] = useState<any>(null);
+  const [homeData, setHomeData] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
   // Step 1: Branch
   const [selectedBranch, setSelectedBranch] = useState('Toul Kork');
 
@@ -219,6 +222,20 @@ export default function ReservationPage() {
   const [showTimeDropdown, setShowTimeDropdown] = useState(false);
   const timeInputWrapperRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    Promise.all([getReservationsData(), getHomeData()])
+      .then(([reservationsRes, homeRes]) => {
+        setResData(reservationsRes);
+        setHomeData(homeRes);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setError('Failed to load reservation data.');
+        setLoading(false);
+      });
+  }, []);
+
   // Close dropdown on click outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -234,8 +251,6 @@ export default function ReservationPage() {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
-
-
 
   // Filter suggestions based on typed input
   const filteredTimeSuggestions = timeSuggestions.filter((time) =>
@@ -257,6 +272,38 @@ export default function ReservationPage() {
 
   // Booking submit status
   const [isSubmitted, setIsSubmitted] = useState(false);
+
+  if (loading) {
+    return (
+      <div className="pt-28 pb-20 text-center text-olive font-serif text-xl min-h-screen flex items-center justify-center">
+        Loading reservations...
+      </div>
+    );
+  }
+
+  if (error || !resData || !homeData) {
+    return (
+      <div className="pt-28 pb-20 text-center text-red-500 font-serif text-xl min-h-screen flex items-center justify-center">
+        {error || 'No reservation data available.'}
+      </div>
+    );
+  }
+
+  const branchesList: Branch[] = homeData.branches.map((branch: any) => ({
+    ...branch,
+    img: imageMap[branch.img] || branch.img,
+  }));
+
+  const diningSpacesList: DiningSpace[] = homeData.diningSpaces.map((space: any) => ({
+    ...space,
+    img: imageMap[space.img] || space.img,
+  }));
+
+  const guestInfoList = resData.guestInformation.map((item: any) => ({
+    icon: iconMap[item.type] || Clock,
+    label: item.label,
+    value: item.value,
+  }));
 
   // Helper date calculations
   const daysInMonth = (year: number, month: number) => new Date(year, month + 1, 0).getDate();
@@ -358,9 +405,9 @@ export default function ReservationPage() {
   ];
 
   const seatingPreferences = [
-    { name: 'Indoor', img: diningSpaces[3]?.img || imgHeroBg1 },
+    { name: 'Indoor', img: diningSpacesList[3]?.img || imgHeroBg1 },
     { name: 'Outdoor', img: imgGallery1 },
-    { name: 'Private Room', img: diningSpaces[4]?.img || imgHeroBg2 },
+    { name: 'Private Room', img: diningSpacesList[4]?.img || imgHeroBg2 },
     { name: 'Big Room', img: imgGallery5 }
   ];
 
@@ -386,7 +433,6 @@ export default function ReservationPage() {
   const handleReservationSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // 1. Check for empty fields
     if (!fullName.trim() || !phone.trim()) {
       alert("Please fill in your Contact Details (Name & Phone Number) to complete your reservation.");
       
@@ -399,7 +445,6 @@ export default function ReservationPage() {
       return;
     }
 
-    // 2. Validate Name (must be at least 2 characters)
     if (fullName.trim().length < 2) {
       alert("Please enter a valid Full Name (at least 2 characters).");
       const element = document.getElementById("fullName");
@@ -410,7 +455,6 @@ export default function ReservationPage() {
       return;
     }
 
-    // 3. Validate Phone Number (must have between 9 and 12 digits)
     const phoneDigits = phone.replace(/\D/g, '');
     if (phoneDigits.length < 9 || phoneDigits.length > 12) {
       alert("Please enter a valid Phone Number (typically 9 to 11 digits).");
@@ -440,7 +484,7 @@ export default function ReservationPage() {
 
   return (
     <div className="reservation-page">
-      <ReservationHero />
+      <ReservationHero hero={resData.hero} info={guestInfoList} />
 
       {isSubmitted ? (
         <section className="reservation-form-section flex items-center justify-center py-24">
@@ -496,8 +540,8 @@ export default function ReservationPage() {
                 <div className="reservation-step-heading mb-8">
                   <span>1</span>
                   <div>
-                    <h2>Choose Branch</h2>
-                    <p>Select your preferred location in Phnom Penh</p>
+                    <h2>{resData.steps.branch.title}</h2>
+                    <p>{resData.steps.branch.desc}</p>
                   </div>
                 </div>
 
@@ -509,7 +553,7 @@ export default function ReservationPage() {
                     className={`branch-card-btn text-left ${selectedBranch === 'Toul Kork' ? 'branch-card-btn-active' : ''}`}
                   >
                     <div className="branch-card-image-wrapper">
-                      <img src={branches[0].img} alt="Toul Kork Branch" />
+                      <img src={branchesList[0]?.img} alt="Toul Kork Branch" />
                     </div>
                     <div className="branch-card-content">
                       <div className="branch-card-header">
@@ -521,7 +565,7 @@ export default function ReservationPage() {
                         )}
                       </div>
                       <div className="branch-card-tags">
-                        {branches[0].tags.map((tag) => (
+                        {branchesList[0]?.tags.map((tag: string) => (
                           <span key={tag} className="branch-tag">{tag}</span>
                         ))}
                       </div>
@@ -535,7 +579,7 @@ export default function ReservationPage() {
                     className={`branch-card-btn text-left ${selectedBranch === 'Boeung Kak' ? 'branch-card-btn-active' : ''}`}
                   >
                     <div className="branch-card-image-wrapper">
-                      <img src={branches[1].img} alt="Boeung Kak Branch" />
+                      <img src={branchesList[1]?.img} alt="Boeung Kak Branch" />
                     </div>
                     <div className="branch-card-content">
                       <div className="branch-card-header">
@@ -547,7 +591,7 @@ export default function ReservationPage() {
                         )}
                       </div>
                       <div className="branch-card-tags">
-                        {branches[1].tags.map((tag) => (
+                        {branchesList[1]?.tags.map((tag: string) => (
                           <span key={tag} className="branch-tag">{tag}</span>
                         ))}
                       </div>
@@ -801,8 +845,8 @@ export default function ReservationPage() {
                 <div className="reservation-step-heading mb-8">
                   <span>4</span>
                   <div>
-                    <h2>Occasion</h2>
-                    <p>Select the occasion for this booking</p>
+                    <h2>Special Occasion</h2>
+                    <p>Let us know if you are celebrating a special event</p>
                   </div>
                 </div>
 
@@ -959,9 +1003,6 @@ export default function ReservationPage() {
 
       {/* FAQ Section */}
       <FaqSection />
-
-      {/* Scroll to Top Button */}
-      <ScrollToTop />
     </div>
   );
 }

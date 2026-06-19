@@ -1,0 +1,33 @@
+{
+  "header": {
+    "title": "Our Gallery",
+    "desc": "Take a visual journey through the elegant spaces, fine dining setups, cooking workshops, and exquisite Khmer dishes of One More Restaurant."
+  },
+  "overlayText": "OMR Moments",
+  "images": [
+    {
+      "src": "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&q=80&w=800",
+      "alt": "Elegance and ambience"
+    },
+    {
+      "src": "https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&q=80&w=800",
+      "alt": "Gourmet dining setups"
+    },
+    {
+      "src": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&q=80&w=800",
+      "alt": "Elegant restaurant interior"
+    },
+    {
+      "src": "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&q=80&w=800",
+      "alt": "Exquisite plates and presentation"
+    },
+    {
+      "src": "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&q=80&w=800",
+      "alt": "Culinary creations close-up"
+    },
+    {
+      "src": "https://images.unsplash.com/photo-1581093588401-fbb62a02f120?auto=format&fit=crop&q=80&w=800",
+      "alt": "Kitchen operations and cooking"
+    }
+  ]
+}

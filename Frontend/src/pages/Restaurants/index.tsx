@@ -1,30 +1,65 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Phone, MapPin, Clock } from 'lucide-react';
+import { getRestaurantsData } from '@/lib/api';
+
+type LocationItem = {
+  name: string;
+  address: string;
+  phone: string;
+  hours: string;
+  image: string;
+};
+
+type RestaurantsData = {
+  header: {
+    title: string;
+    desc: string;
+  };
+  locations: LocationItem[];
+};
 
 export default function Restaurants() {
-  const locations = [
-    {
-      name: 'One More Restaurant Tuol Kork',
-      address: 'No. 37, Street 315, Boeung Kak I, Tuol Kork, Phnom Penh',
-      phone: '+855 23 888 555',
-      hours: '6:00 AM - 10:00 PM Daily',
-      image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&q=80&w=800',
-    },
-    {
-      name: 'One More Restaurant Boeung Kak',
-      address: 'No. 12, Street 608, Boeung Kak II, Tuol Kork, Phnom Penh',
-      phone: '+855 12 345 678',
-      hours: '11:00 AM - 11:00 PM Daily',
-      image: 'https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&q=80&w=800',
-    },
-  ];
+  const [data, setData] = useState<RestaurantsData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    getRestaurantsData()
+      .then((res) => {
+        setData(res);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setError('Failed to load locations.');
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="pt-28 pb-20 text-center text-olive font-serif text-xl">
+        Loading locations...
+      </div>
+    );
+  }
+
+  if (error || !data) {
+    return (
+      <div className="pt-28 pb-20 text-center text-red-500 font-serif text-xl">
+        {error || 'No data available.'}
+      </div>
+    );
+  }
+
+  const { header, locations } = data;
 
   return (
     <div className="pt-28 pb-20 max-w-7xl mx-auto px-4">
       <div className="max-w-2xl mx-auto text-center mb-12">
-        <h1 className="text-4xl font-bold font-serif text-dark-green mb-4">Our Locations</h1>
+        <h1 className="text-4xl font-bold font-serif text-dark-green mb-4">{header.title}</h1>
         <p className="text-olive">
-          Experience our hospitality in our beautifully designed spaces, perfect for family dining or business gatherings.
+          {header.desc}
         </p>
       </div>
 

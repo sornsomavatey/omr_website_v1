@@ -1,0 +1,35 @@
+{
+  "hero": {
+    "eyebrow": "EST. 2008 · PHNOM PENH",
+    "title": "Reserve Your Table",
+    "desc": "Experience the pinnacle of Khmer culinary heritage. A journey of forgotten flavors rediscovered in a setting of timeless luxury."
+  },
+  "guestInformation": [
+    {
+      "type": "hours",
+      "label": "Opening Hours",
+      "value": "06:00 AM - 10:00 PM"
+    },
+    {
+      "type": "phone",
+      "label": "Contact Number",
+      "value": "+855 23 888 222"
+    },
+    {
+      "type": "time",
+      "label": "Response Time",
+      "value": "Within 15 Minutes"
+    },
+    {
+      "type": "policy",
+      "label": "Reservation Policy",
+      "value": "Free cancellation up to 24h"
+    }
+  ],
+  "steps": {
+    "branch": {
+      "title": "Choose Branch",
+      "desc": "Select your preferred location in Phnom Penh"
+    }
+  }
+}
