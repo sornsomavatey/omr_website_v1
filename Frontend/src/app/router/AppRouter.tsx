@@ -4,7 +4,7 @@ import MainLayouts from '@/app/layouts/MainLayouts';
 
 import HomePage from '@/pages/Home';
 import MenuPage from '@/pages/Menu';
-import RestaurantsPage from '@/pages/Restaurants';
+import BranchesPage from '@/pages/Branches';
 import GalleryPage from '@/pages/Gallery';
 import AboutPage from '@/pages/About';
 import ReservationPage from '@/pages/Reservations';
@@ -19,8 +19,8 @@ export default function AppRouter() {
           <Route index element={<HomePage />} />
 
           <Route path="/menu" element={<MenuPage />} />
-          <Route path="/restaurants" element={<RestaurantsPage />} />
-          <Route path="/branches" element={<Navigate to="/restaurants" replace />} />
+          <Route path="/restaurants" element={<Navigate to="/branches" replace />} />
+          <Route path="/branches" element={<BranchesPage />} />
           <Route path="/gallery" element={<GalleryPage />} />
           <Route path="/about" element={<AboutPage />} />
           

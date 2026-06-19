@@ -19,8 +19,11 @@ export default function MainLayouts() {
     location.pathname === '/reservation';
 
   const isMenuPage = location.pathname === '/menu';
+  const isRestaurantsPage =
+    location.pathname === '/restaurants' ||
+    location.pathname === '/branches';
 
-  const needsTopPadding = !isHomePage && !isReservationPage && !isMenuPage;
+  const needsTopPadding = !isHomePage && !isReservationPage && !isMenuPage && !isRestaurantsPage;
 
   return (
     <div

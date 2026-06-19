@@ -4,7 +4,7 @@ import './Footer.css';
 
 const exploreLinks = [
   { name: 'Menu', path: '/menu' },
-  { name: 'Branches', path: '/restaurants' },
+  { name: 'Branches', path: '/branches' },
   { name: 'Story', path: '/about' },
   { name: 'Gift Cards', path: '/gift-cards' },
 ];

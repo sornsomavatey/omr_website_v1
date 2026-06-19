@@ -9,7 +9,7 @@ const navLinks = [
   { name: 'Home', path: '/' },
   { name: 'Menu', path: '/menu' },
   { name: 'Events', path: '/events' },
-  { name: 'Branches', path: '/restaurants' },
+  { name: 'Branches', path: '/branches' },
   { name: 'Gallery', path: '/gallery' },
   { name: 'About Us', path: '/about' },
 ];
@@ -19,7 +19,7 @@ const mobileNavLinks = [
   { name: 'Menu', path: '/menu' },
   { name: 'Events', path: '/events' },
   { name: 'Gallery', path: '/gallery' },
-  { name: 'Branches', path: '/restaurants' },
+  { name: 'Branches', path: '/branches' },
   { name: 'About Us', path: '/about' },
 ];
 

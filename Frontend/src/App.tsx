@@ -5,7 +5,7 @@ import Home from './pages/Home';
 import Menu from './pages/Menu';
 import Reservations from './pages/Reservations';
 import Careers from './pages/Careers';
-import Restaurants from './pages/Restaurants';
+import Branches from './pages/Branches';
 import Gallery from './pages/Gallery';
 import About from './pages/About';
 import Contact from './pages/Contact';
@@ -19,7 +19,8 @@ export default function App() {
           <Route path="menu" element={<Menu />} />
           <Route path="reservations" element={<Reservations />} />
           <Route path="careers" element={<Careers />} />
-          <Route path="restaurants" element={<Restaurants />} />
+          <Route path="branches" element={<Branches />} />
+          <Route path="restaurants" element={<Branches />} />
           <Route path="gallery" element={<Gallery />} />
           <Route path="about" element={<About />} />
           <Route path="contact" element={<Contact />} />

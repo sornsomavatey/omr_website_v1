@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getHomeData } from '@/lib/api';
 import SignatureDishes from '@/components/SignatureDishes';
+import LocationCard from '@/components/LocationCard';
 import {
   ArrowRight,
   ChevronLeft,
@@ -248,80 +249,7 @@ function SpacesSection({ spaces }: { spaces: DiningSpace[] }) {
   );
 }
 
-function LocationCard({ branch }: { branch: Branch }) {
-  return (
-    <div className="location-card group">
-      <div className="h-[360px] md:h-[440px] zoom-image-hover relative">
-        <img
-          alt={branch.name}
-          className="w-full h-full object-cover"
-          src={branch.img}
-        />
-
-        <div className="absolute top-4 left-4 flex flex-wrap gap-2">
-          {branch.tags.map((tag) => (
-            <span
-              key={tag}
-              className="bg-white/95 text-[#212d1b] text-[10px] font-sans font-medium tracking-wide px-3 py-1 rounded-full shadow-sm"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-      </div>
-
-      <div className="p-8 md:p-10 flex-grow flex flex-col justify-between">
-        <div className="space-y-6 mb-8">
-          <h3 className="font-serif text-3xl text-[#212d1b] font-normal leading-snug">
-            {branch.name}
-          </h3>
-
-          <div className="space-y-3 font-sans text-sm text-[#444841]/90">
-            <div className="flex items-center gap-3">
-              <MapPin className="w-4 h-4 text-[#6b9158] shrink-0" />
-              <span>{branch.address}</span>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <Phone className="w-4 h-4 text-[#6b9158] shrink-0" />
-              <span className="underline cursor-pointer">{branch.phone}</span>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <Clock className="w-4 h-4 text-[#6b9158] shrink-0" />
-              <span>{branch.hours}</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex flex-wrap gap-4 pt-4 border-t border-[#f0f2f0]">
-          <Link
-            to="/contact"
-            className="px-6 py-3 border border-[#dde0dc] hover:border-[#212d1b] text-[#212d1b] text-xs font-sans font-bold uppercase tracking-wider rounded-full transition-all"
-          >
-            Detail
-          </Link>
-
-          <Link
-            to="/contact"
-            className="px-6 py-3 border border-[#dde0dc] hover:border-[#212d1b] text-[#212d1b] text-xs font-sans font-bold uppercase tracking-wider rounded-full transition-all"
-          >
-            Map
-          </Link>
-
-          <Link
-            to="/reservations"
-            className="px-8 py-3 bg-[#6b9158] hover:bg-[#5b7d4a] text-white text-xs font-sans font-bold uppercase tracking-wider rounded-full shadow-md transition-all ml-auto"
-          >
-            Reserve a Table
-          </Link>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function LocationsSection({ branches }: { branches: Branch[] }) {
+function LocationsSection({ branches }: { branches: any[] }) {
   return (
     <section className="w-full py-24 bg-white flex flex-col items-center">
       <div className="max-w-[1440px] w-full px-6 md:px-[64px] text-center">
@@ -332,8 +260,8 @@ function LocationsSection({ branches }: { branches: Branch[] }) {
         />
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-[1200px] mx-auto text-left">
-          {branches.map((branch, index) => (
-            <LocationCard key={`${branch.name}-${index}`} branch={branch} />
+          {branches.map((branch) => (
+            <LocationCard key={branch.id} branch={branch} />
           ))}
         </div>
       </div>
@@ -615,9 +543,14 @@ export default function HomePage() {
     img: imageMap[space.img] || space.img,
   }));
 
-  const branchesList: Branch[] = data.branches.map((branch: any) => ({
-    ...branch,
-    img: imageMap[branch.img] || branch.img,
+  const branchesList: any[] = data.branches.map((branch: any) => ({
+    id: branch.name.toLowerCase().includes('toul') ? 'toulKork' : 'boeungKak',
+    name: branch.name,
+    address: branch.address,
+    phone: branch.phone,
+    hours: branch.hours,
+    image: imageMap[branch.img] || branch.img,
+    tags: branch.tags,
   }));
 
   const testimonialsList: Testimonial[] = data.testimonials.map((t: any) => ({
