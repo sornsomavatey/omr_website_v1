@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: '/', // Points to the relative root (Vite public directory)
+  baseURL: '/', // Points to the relative root 
 });
 
 export const getHomeData = async () => {

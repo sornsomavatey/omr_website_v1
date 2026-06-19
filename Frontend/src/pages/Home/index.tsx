@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getHomeData } from '@/lib/api';
+import SignatureDishes from '@/components/SignatureDishes';
 import {
   ArrowRight,
   ChevronLeft,
@@ -39,7 +40,7 @@ type SectionHeaderProps = {
   dark?: boolean;
 };
 
-function SectionHeader({
+export function SectionHeader({
   eyebrow,
   title,
   description,
@@ -154,58 +155,6 @@ function HeroSection({ hero }: { hero: any }) {
           />
         </svg>
       </button>
-    </section>
-  );
-}
-
-function SignatureDishesSection({ dishes }: { dishes: SignatureDish[] }) {
-  return (
-    <section id="menu" className="featured-cuisine-section">
-      <div className="featured-cuisine-pattern" aria-hidden="true" />
-
-      <div className="featured-cuisine-container">
-        <SectionHeader
-          eyebrow="Our Signature Dishes"
-          title="Featured Khmer Cuisine"
-          description="Each dish tells a story of Cambodia's culinary heritage, crafted with heirloom recipes and seasonal ingredients."
-        />
-
-        <div className="featured-cuisine-collage">
-          {Array.from({ length: 8 }).map((_, index) => {
-            const dish = dishes[index % dishes.length];
-
-            return (
-              <div
-                key={`${dish.name}-${index}`}
-                className={`cuisine-tile cuisine-tile-${index + 1}`}
-              >
-                <img src={dish.img} alt={dish.name} />
-              </div>
-            );
-          })}
-
-          <span
-            className="cuisine-decoration cuisine-decoration-left"
-            aria-hidden="true"
-          />
-
-          <span
-            className="cuisine-decoration cuisine-decoration-right"
-            aria-hidden="true"
-          />
-
-          <div className="cuisine-center-circle">
-            <img
-              src={dishes[0]?.img}
-              alt={dishes[0]?.name}
-            />
-          </div>
-        </div>
-
-        <Link to="/menu" className="custom-btn-outline-green">
-          View all menu
-        </Link>
-      </div>
     </section>
   );
 }
@@ -679,7 +628,7 @@ export default function HomePage() {
   return (
     <div className="bg-white flex flex-col items-center w-full overflow-x-hidden">
       <HeroSection hero={data.hero} />
-      <SignatureDishesSection dishes={signatureDishesList} />
+      <SignatureDishes dishes={signatureDishesList} />
       <SpacesSection spaces={diningSpacesList} />
       <LocationsSection branches={branchesList} />
       <GallerySection gallery={data.gallery} />
