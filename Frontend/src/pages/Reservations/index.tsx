@@ -193,6 +193,68 @@ const timeSuggestions = [
   '10:00 PM'
 ];
 
+const timeSlots = {
+  Breakfast: [
+    '06:00 AM', '06:30 AM', '07:00 AM', '07:30 AM',
+    '08:00 AM', '08:30 AM', '09:00 AM', '09:30 AM',
+    '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM'
+  ],
+  Lunch: [
+    '11:30 AM', '12:00 PM', '12:30 PM', '01:00 PM',
+    '01:30 PM', '02:00 PM', '02:30 PM', '03:00 PM',
+    '03:30 PM', '04:00 PM'
+  ],
+  Dinner: [
+    '05:00 PM', '05:30 PM', '06:00 PM', '06:30 PM',
+    '07:00 PM', '07:30 PM', '08:00 PM', '08:30 PM',
+    '09:00 PM', '09:30 PM'
+  ]
+};
+
+const getMealCategoryFromTime = (
+  timeStr: string,
+  currentCategory: 'Breakfast' | 'Lunch' | 'Dinner'
+): 'Breakfast' | 'Lunch' | 'Dinner' | null => {
+  if (!timeStr) return null;
+  const cleanTime = timeStr.trim().toUpperCase();
+
+  // 1. If it exists in the current category's slots, keep it
+  if (timeSlots[currentCategory].includes(cleanTime)) {
+    return currentCategory;
+  }
+
+  // 2. See if it matches another category exactly
+  for (const cat of ['Breakfast', 'Lunch', 'Dinner'] as const) {
+    if (timeSlots[cat].includes(cleanTime)) {
+      return cat;
+    }
+  }
+
+  // 3. Fallback: Parse custom input (e.g. "06:00 PM")
+  const match = cleanTime.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)?$/);
+  if (!match) return null;
+
+  let hours = parseInt(match[1], 10);
+  const minutes = parseInt(match[2], 10);
+  const ampm = match[3];
+
+  if (ampm === 'PM' && hours !== 12) {
+    hours += 12;
+  } else if (ampm === 'AM' && hours === 12) {
+    hours = 0;
+  }
+
+  const totalMinutes = hours * 60 + minutes;
+
+  if (totalMinutes < 690) { // Before 11:30 AM
+    return 'Breakfast';
+  } else if (totalMinutes < 990) { // Before 4:30 PM
+    return 'Lunch';
+  } else { // 4:30 PM onwards
+    return 'Dinner';
+  }
+};
+
 export default function ReservationPage() {
   const [resData, setResData] = useState<any>(null);
   const [homeData, setHomeData] = useState<any>(null);
@@ -217,6 +279,15 @@ export default function ReservationPage() {
   const [timeCategory, setTimeCategory] = useState<'Breakfast' | 'Lunch' | 'Dinner'>('Breakfast');
   const [selectedTime, setSelectedTime] = useState('06:30 AM');
   const [customTime, setCustomTime] = useState('');
+
+  // Automatically update active timeCategory tab when selectedTime or customTime changes
+  useEffect(() => {
+    const timeToParse = customTime || selectedTime;
+    const detectedCategory = getMealCategoryFromTime(timeToParse, timeCategory);
+    if (detectedCategory && detectedCategory !== timeCategory) {
+      setTimeCategory(detectedCategory);
+    }
+  }, [selectedTime, customTime, timeCategory]);
 
   // Time autocomplete dropdown state
   const [showTimeDropdown, setShowTimeDropdown] = useState(false);
@@ -375,24 +446,6 @@ export default function ReservationPage() {
     }
 
     return days;
-  };
-
-  const timeSlots = {
-    Breakfast: [
-      '06:00 AM', '06:30 AM', '07:00 AM', '07:30 AM',
-      '08:00 AM', '08:30 AM', '09:00 AM', '09:30 AM',
-      '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM'
-    ],
-    Lunch: [
-      '11:30 AM', '12:00 PM', '12:30 PM', '01:00 PM',
-      '01:30 PM', '02:00 PM', '02:30 PM', '03:00 PM',
-      '03:30 PM', '04:00 PM'
-    ],
-    Dinner: [
-      '05:00 PM', '05:30 PM', '06:00 PM', '06:30 PM',
-      '07:00 PM', '07:30 PM', '08:00 PM', '08:30 PM',
-      '09:00 PM', '09:30 PM'
-    ]
   };
 
   const occasions = [
