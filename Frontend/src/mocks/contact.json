@@ -1,0 +1,35 @@
+{
+  "header": {
+    "title": "Contact Us",
+    "desc": "Have questions or want to host a private event? Get in touch with us and we will get back to you shortly."
+  },
+  "info": {
+    "title": "Get in Touch",
+    "details": [
+      {
+        "type": "address",
+        "label": "Address",
+        "value": "No. 37, Street 315, Boeung Kak I, Tuol Kork, Phnom Penh, Cambodia"
+      },
+      {
+        "type": "phone",
+        "label": "Phone",
+        "value": "+855 23 888 555 / 12 345 678"
+      },
+      {
+        "type": "email",
+        "label": "Email",
+        "value": "info@onemore.com.kh"
+      }
+    ]
+  },
+  "form": {
+    "title": "Send a Message",
+    "fields": {
+      "name": "Name",
+      "email": "Email",
+      "message": "Message"
+    },
+    "submitButtonText": "Send Message"
+  }
+}
