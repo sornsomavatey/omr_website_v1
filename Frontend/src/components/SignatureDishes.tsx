@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { SignatureDish } from '@/pages/Home/homeTypes';
-import { SectionHeader } from '@/pages/Home';
+import SectionHeader from '@/components/SectionHeader';
 
 export default function SignatureDishes({ dishes }: { dishes: SignatureDish[] }) {
   return (

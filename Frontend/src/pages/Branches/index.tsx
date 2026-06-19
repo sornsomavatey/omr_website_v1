@@ -4,6 +4,7 @@ import { Phone, MapPin, Clock, Check, X } from 'lucide-react';
 import { getRestaurantsData } from '@/lib/api';
 import { Button } from '@/components/ui/button';
 import LocationCard from '@/components/LocationCard';
+import SectionHeader from '@/components/SectionHeader';
 import './index.css';
 
 // Asset imports
@@ -140,12 +141,10 @@ export default function Branches() {
       {/* 2. COMPARE OUR LOCATIONS */}
       <section className="comparison-section">
         <div className="comparison-inner">
-          <span className="section-eyebrow block text-center mb-2">
-            What's different
-          </span>
-          <h2 className="section-title text-center mb-16">
-            Compare Our Locations
-          </h2>
+          <SectionHeader
+            eyebrow="What's different"
+            title="Compare Our Locations"
+          />
 
           <div className="comparison-table-container">
             <div className="comparison-scroll-wrapper">
@@ -261,28 +260,18 @@ export default function Branches() {
       <section className="find-us-section">
         <div className="comparison-inner text-center">
           
-          <div className="section-eyebrow-container mb-2">
-            <span className="section-eyebrow-line" />
-            <span className="section-eyebrow">
-              Our Locations
-            </span>
-            <span className="section-eyebrow-line" />
-          </div>
-          
-          <h2 className="section-title text-center mb-2">
-            Find us here
-          </h2>
-          
-          <p className="section-subtitle">
-            Two distinct dining destinations, one unforgettable culinary story.
-          </p>
+          <SectionHeader
+            eyebrow="Our Locations"
+            title="Find us here"
+            description="Two distinct dining destinations, one unforgettable culinary story."
+          />
 
           <div className="find-us-grid">
             {locations.map((loc) => (
               <LocationCard
                 key={loc.id}
                 branch={loc}
-                onDetailClick={setActiveModal}
+                onDetailClick={(b) => setActiveModal(b as LocationItem)}
                 onMapClick={handleScrollToMap}
                 imageMapper={imageMapper}
               />
@@ -296,21 +285,11 @@ export default function Branches() {
       <section id="see-us-on-map" className="map-section">
         <div className="map-wrapper text-center">
           
-          <div className="section-eyebrow-container mb-2">
-            <span className="section-eyebrow-line" />
-            <span className="section-eyebrow">
-              See the Map
-            </span>
-            <span className="section-eyebrow-line" />
-          </div>
-          
-          <h2 className="section-title text-center mb-2">
-            See us on Map
-          </h2>
-          
-          <p className="section-subtitle">
-            Two distinct dining destinations, one unforgettable culinary story.
-          </p>
+          <SectionHeader
+            eyebrow="See the Map"
+            title="See us on Map"
+            description="Two distinct dining destinations, one unforgettable culinary story."
+          />
 
           <div className="map-frame">
             <img
