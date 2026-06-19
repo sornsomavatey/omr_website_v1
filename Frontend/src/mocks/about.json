@@ -1,0 +1,19 @@
+{
+  "header": {
+    "title": "Our Story",
+    "subtitle": "Elevating Cambodian culinary art since 2008"
+  },
+  "paragraphs": [
+    "One More Restaurant was born out of a deep-seated love for Cambodia's traditional recipes and a desire to elevate them to a world-class dining experience. Our name, \"One More,\" comes from the hospitable Khmer culture where hosts always offer \"one more\" plate of rice, representing warmth, generosity, and abundance.",
+    "We collaborate closely with local farmers, sourcing organic ingredients from the fertile plains of Tonle Sap and the highlands of Battambang. Our chefs combine traditional cooking methods with contemporary presentation techniques to create dishes that pay homage to Cambodia’s history while appealing to modern culinary tastes.",
+    "Whether it is our signature Amok Trey, cooked gently in fresh banana leaves, or our signature cocktails infused with lemongrass and Kaffir lime, every detail is curated to deliver an authentic Khmer dining experience."
+  ],
+  "teamImage": {
+    "src": "https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&q=80&w=800",
+    "alt": "Culinary Team"
+  },
+  "mission": {
+    "title": "Our Mission",
+    "desc": "To preserve the culinary traditions of Cambodia, support our local farming communities, and present the refined flavors of Khmer cuisine to the global community with genuine warmth and excellence."
+  }
+}

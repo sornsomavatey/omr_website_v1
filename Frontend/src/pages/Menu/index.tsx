@@ -186,9 +186,25 @@ const menuItemsData: Record<MenuCategory, MenuItem[]> = {
 
 export default function Menu() {
   const [activeCategory, setActiveCategory] = useState<MenuCategory>('Breakfast');
+  const [isStickyVisible, setIsStickyVisible] = useState(false);
   const observerRef = useRef<IntersectionObserver | null>(null);
 
   const categories: MenuCategory[] = ['Breakfast', 'Lunch', 'Dinner', 'Dessert', 'Drinks'];
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // Toggle sticky tabs visibility based on scroll position relative to hero
+      const threshold = window.innerWidth >= 768 ? 480 : 400;
+      setIsStickyVisible(window.scrollY > threshold);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   useEffect(() => {
     const observerOptions = {
@@ -260,14 +276,14 @@ export default function Menu() {
   return (
     <div className="bg-white flex flex-col items-center w-full min-h-screen">
       {/* Hero Header Section */}
-      <section className="relative w-full h-[420px] flex flex-col items-center justify-center overflow-hidden">
+      <section className="relative w-full h-[500px] md:h-[580px] flex flex-col items-center justify-center overflow-hidden">
         <div className="absolute inset-0 w-full h-full pointer-events-none z-0">
           <img
             alt="Menu Header Background"
-            className="absolute inset-0 w-full h-full object-cover opacity-60"
+            className="absolute inset-0 w-full h-full object-cover"
             src={imgHeroBg}
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/45 to-black/75" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/35 to-black/65" />
         </div>
 
         <div className="relative z-10 text-center text-white max-w-[1260px] px-6 pt-16 flex flex-col items-center">
@@ -275,14 +291,33 @@ export default function Menu() {
             Our Menu
           </h1>
 
-          <p className="text-white/80 text-base md:text-lg font-sans font-light max-w-xl mx-auto leading-relaxed drop-shadow-sm">
+          <p className="text-white/80 text-base md:text-lg font-sans font-light max-w-xl mx-auto leading-relaxed drop-shadow-sm mb-10">
             Freshly crafted dishes made with love.
           </p>
+
+          {/* Hero Category Filter Tabs */}
+          <div className="menu-hero-tabs-container">
+            {categories.map((category) => {
+              const isActive = activeCategory === category;
+              return (
+                <button
+                  key={category}
+                  type="button"
+                  onClick={() => handleCategoryClick(category)}
+                  className={`hero-category-pill-btn ${
+                    isActive ? 'hero-category-pill-btn-active' : 'hero-category-pill-btn-inactive'
+                  }`}
+                >
+                  {category}
+                </button>
+              );
+            })}
+          </div>
         </div>
       </section>
 
       {/* Sticky Category Filter Tabs */}
-      <div className="menu-sticky-tabs-container">
+      <div className={`menu-sticky-tabs-container ${isStickyVisible ? 'menu-sticky-tabs-visible' : 'menu-sticky-tabs-hidden'}`}>
         <div className="menu-sticky-tabs-inner">
           {categories.map((category) => {
             const isActive = activeCategory === category;
@@ -316,13 +351,6 @@ export default function Menu() {
               id={category.toLowerCase()}
               className="menu-section w-full py-16 first:pt-4 last:pb-16 border-b border-[#dde0dc]/50 last:border-b-0"
             >
-              {/* Section Header */}
-              <div className="flex items-center justify-center gap-4 mb-8 text-[#6b9158] font-sans text-xs font-bold uppercase tracking-widest">
-                <span className="w-10 h-[1px] bg-[#6b9158]/50" />
-                Seasonal Selection
-                <span className="w-10 h-[1px] bg-[#6b9158]/50" />
-              </div>
-
               <h2 className="font-serif text-4xl md:text-5xl font-normal tracking-wide mb-16 text-[#212d1b]">
                 {category}
               </h2>

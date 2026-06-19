@@ -7,10 +7,14 @@ export default function MainLayouts() {
   const location = useLocation();
 
   const isHomePage = location.pathname === '/';
-  const isReservationPage =
-    location.pathname === '/reservations' || location.pathname === '/reservation';
 
-  const needsTopPadding = !isHomePage && !isReservationPage;
+  const isReservationPage =
+    location.pathname === '/reservations' ||
+    location.pathname === '/reservation';
+
+  const isMenuPage = location.pathname === '/menu';
+
+  const needsTopPadding = !isHomePage && !isReservationPage && !isMenuPage;
 
   return (
     <div
@@ -24,7 +28,7 @@ export default function MainLayouts() {
         <Outlet />
       </main>
 
-      {!isHomePage && <Footer />}
+      <Footer />
     </div>
   );
 }

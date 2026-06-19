@@ -36,7 +36,7 @@ export function DishCard({
   ...props
 }: DishCardProps) {
   // Determine variant based on index if variant is not explicitly provided
-  const shapes: DishFrameVariant[] = ["left-leaf", "circle", "right-leaf"]
+  const shapes: DishFrameVariant[] = ["left-leaf", "dome", "right-leaf"]
   const activeVariant = variant || (typeof index === "number" ? shapes[index % 3] : "left-leaf")
 
   return (
@@ -69,7 +69,7 @@ export function DishCard({
           {description}
         </p>
 
-        <div className="flex items-center justify-between pt-5 border-t border-[#dde0dc]/80 mt-auto">
+        <div className="flex items-center justify-between pt-2 mt-auto">
           <div className="flex items-baseline">
             <span className="text-[#212d1b] font-serif text-[32px] font-bold leading-none">
               {price}

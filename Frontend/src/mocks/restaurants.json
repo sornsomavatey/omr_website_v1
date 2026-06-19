@@ -1,0 +1,22 @@
+{
+  "header": {
+    "title": "Our Locations",
+    "desc": "Experience our hospitality in our beautifully designed spaces, perfect for family dining or business gatherings."
+  },
+  "locations": [
+    {
+      "name": "One More Restaurant Tuol Kork",
+      "address": "No. 37, Street 315, Boeung Kak I, Tuol Kork, Phnom Penh",
+      "phone": "+855 23 888 555",
+      "hours": "6:00 AM - 10:00 PM Daily",
+      "image": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&q=80&w=800"
+    },
+    {
+      "name": "One More Restaurant Boeung Kak",
+      "address": "No. 12, Street 608, Boeung Kak II, Tuol Kork, Phnom Penh",
+      "phone": "+855 12 345 678",
+      "hours": "11:00 AM - 11:00 PM Daily",
+      "image": "https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&q=80&w=800"
+    }
+  ]
+}

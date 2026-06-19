@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
+import type { CSSProperties } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import logo from '@/assets/omr_logo_white.png';
+import whiteLogo from '@/assets/omr_logo_white.png';
 import { useAppStore } from '../store';
 import './NavBar.css';
 
@@ -24,15 +25,49 @@ const mobileNavLinks = [
 
 type NavigationVersion = 'v1' | 'v2';
 
+type LogoStyle = CSSProperties & {
+  '--navbar-logo-image': string;
+};
+
+function NavbarLogo({ mobile = false }: { mobile?: boolean }) {
+  const logoStyle: LogoStyle = {
+    '--navbar-logo-image': `url("${whiteLogo}")`,
+  };
+
+  return (
+    <span
+      aria-hidden="true"
+      className={mobile ? 'navbar-mobile-logo-icon' : 'navbar-logo-icon'}
+      style={logoStyle}
+    />
+  );
+}
+
 function LanguageFlag({ language }: { language: string }) {
   if (language === 'EN') {
     return (
       <svg className="navbar-language-flag" viewBox="0 0 60 40" fill="none">
         <rect width="60" height="40" fill="#00247D" />
-        <path d="M0 0 L60 40 M60 0 L0 40" stroke="#FFFFFF" strokeWidth="6" />
-        <path d="M0 0 L60 40 M60 0 L0 40" stroke="#CF142B" strokeWidth="4" />
-        <path d="M30 0 V40 M0 20 H60" stroke="#FFFFFF" strokeWidth="10" />
-        <path d="M30 0 V40 M0 20 H60" stroke="#CF142B" strokeWidth="6" />
+        <path
+          d="M0 0 L60 40 M60 0 L0 40"
+          stroke="#FFFFFF"
+          strokeWidth="6"
+        />
+        <path
+          d="M0 0 L60 40 M60 0 L0 40"
+          stroke="#CF142B"
+          strokeWidth="4"
+        />
+        <path
+          d="M30 0 V40 M0 20 H60"
+          stroke="#FFFFFF"
+          strokeWidth="10"
+        />
+        <path
+          d="M30 0 V40 M0 20 H60"
+          stroke="#CF142B"
+          strokeWidth="6"
+        />
       </svg>
     );
   }
@@ -52,14 +87,21 @@ function LanguageFlag({ language }: { language: string }) {
 
 export default function Navbar() {
   const location = useLocation();
-  const { language, setLanguage, mobileMenuOpen, setMobileMenuOpen } = useAppStore();
+
+  const {
+    language,
+    setLanguage,
+    mobileMenuOpen,
+    setMobileMenuOpen,
+  } = useAppStore();
 
   const [scrolled, setScrolled] = useState(false);
 
   const isHomePage = location.pathname === '/';
 
   const isReservationPage =
-    location.pathname === '/reservations' || location.pathname === '/reservation';
+    location.pathname === '/reservations' ||
+    location.pathname === '/reservation';
 
   useEffect(() => {
     if (isReservationPage) {
@@ -76,15 +118,14 @@ export default function Navbar() {
           return;
         }
 
-        const heroBottom = heroSection.getBoundingClientRect().bottom;
-        setScrolled(heroBottom <= 0);
+        setScrolled(heroSection.getBoundingClientRect().bottom <= 0);
         return;
       }
 
       setScrolled(window.scrollY > 50);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', handleScroll);
 
     handleScroll();
@@ -98,6 +139,28 @@ export default function Navbar() {
   useEffect(() => {
     setMobileMenuOpen(false);
   }, [location.pathname, setMobileMenuOpen]);
+
+  useEffect(() => {
+    if (!mobileMenuOpen) {
+      return;
+    }
+
+    const previousOverflow = document.body.style.overflow;
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setMobileMenuOpen(false);
+      }
+    };
+
+    document.body.style.overflow = 'hidden';
+    document.addEventListener('keydown', handleEscape);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [mobileMenuOpen, setMobileMenuOpen]);
 
   const toggleLanguage = () => {
     setLanguage(language === 'EN' ? 'KH' : 'EN');
@@ -123,11 +186,9 @@ export default function Navbar() {
             className="navbar-logo-link"
             onClick={closeMobileMenu}
           >
-            <img
-              src={logo}
-              alt="One More Restaurant"
-              className="navbar-logo-icon"
-            />
+            <span className="navbar-logo-frame">
+              <NavbarLogo />
+            </span>
           </Link>
 
           <div className="navbar-desktop-nav">
@@ -136,7 +197,9 @@ export default function Navbar() {
                 key={`${version}-${link.name}`}
                 to={link.path}
                 className={({ isActive }) =>
-                  `navbar-desktop-link ${isActive ? 'navbar-desktop-link-active' : ''}`
+                  `navbar-desktop-link ${
+                    isActive ? 'navbar-desktop-link-active' : ''
+                  }`
                 }
               >
                 {link.name}
@@ -146,7 +209,10 @@ export default function Navbar() {
 
           <div className="navbar-desktop-actions">
             {isV2 && (
-              <Link to="/reservations" className="navbar-reservation-button">
+              <Link
+                to="/reservations"
+                className="navbar-reservation-button"
+              >
                 Reservation
               </Link>
             )}
@@ -156,7 +222,11 @@ export default function Navbar() {
               onClick={toggleLanguage}
               className="navbar-language-button"
               aria-label="Change language"
-              title={language === 'EN' ? 'Switch to Khmer' : 'Switch to English'}
+              title={
+                language === 'EN'
+                  ? 'Switch to Khmer'
+                  : 'Switch to English'
+              }
             >
               <LanguageFlag language={language} />
             </button>
@@ -183,6 +253,7 @@ export default function Navbar() {
               className={`navbar-mobile-menu ${
                 mobileMenuOpen ? 'navbar-mobile-menu-open' : ''
               }`}
+              aria-hidden={!mobileMenuOpen}
             >
               <div className="navbar-mobile-menu-header">
                 <Link
@@ -191,11 +262,9 @@ export default function Navbar() {
                   className="navbar-mobile-logo-link"
                   onClick={closeMobileMenu}
                 >
-                  <img
-                    src={logo}
-                    alt="One More Restaurant"
-                    className="navbar-mobile-logo-icon"
-                  />
+                  <span className="navbar-mobile-logo-frame">
+                    <NavbarLogo mobile />
+                  </span>
                 </Link>
 
                 <div className="navbar-mobile-header-actions">
@@ -204,7 +273,11 @@ export default function Navbar() {
                     onClick={toggleLanguage}
                     className="navbar-mobile-language-button"
                     aria-label="Change language"
-                    title={language === 'EN' ? 'Switch to Khmer' : 'Switch to English'}
+                    title={
+                      language === 'EN'
+                        ? 'Switch to Khmer'
+                        : 'Switch to English'
+                    }
                   >
                     <LanguageFlag language={language} />
                   </button>
@@ -229,7 +302,9 @@ export default function Navbar() {
                       to={link.path}
                       onClick={closeMobileMenu}
                       className={({ isActive }) =>
-                        `navbar-mobile-link ${isActive ? 'navbar-mobile-link-active' : ''}`
+                        `navbar-mobile-link ${
+                          isActive ? 'navbar-mobile-link-active' : ''
+                        }`
                       }
                     >
                       {link.name}
@@ -252,13 +327,7 @@ export default function Navbar() {
     );
   };
 
-  const isMenuPage = location.pathname === '/menu';
-
-  return (
-    <>
-      {isReservationPage
-        ? renderNavigation('v1')
-        : renderNavigation((scrolled || isMenuPage) ? 'v2' : 'v1')}
-    </>
-  );
+  return isReservationPage
+    ? renderNavigation('v1')
+    : renderNavigation(scrolled ? 'v2' : 'v1');
 }
