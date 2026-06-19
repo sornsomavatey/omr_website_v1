@@ -1,0 +1,559 @@
+/* =========================
+   Navbar base
+========================= */
+
+.navbar {
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+
+  transition:
+    opacity 0.28s ease,
+    transform 0.28s ease,
+    background-color 0.28s ease,
+    backdrop-filter 0.28s ease,
+    box-shadow 0.28s ease;
+}
+
+.navbar-v1 {
+  position: fixed;
+  color: #f6fdf2;
+  background: rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+.navbar-v2 {
+  position: fixed;
+  color: #21301c;
+  background: rgba(255, 255, 255, 0.96);
+  border-bottom: 1px solid rgba(33, 48, 28, 0.1);
+  box-shadow: 0 18px 45px rgba(33, 48, 28, 0.12);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.navbar-reservation-static {
+  position: relative;
+  opacity: 1;
+  pointer-events: auto;
+  transform: none;
+  color: #f6fdf2;
+  background: rgba(10, 23, 18, 0.96);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.navbar-inner {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr) 240px;
+  align-items: center;
+
+  width: 100%;
+  max-width: 1440px;
+  height: 82px;
+
+  margin: 0 auto;
+  padding: 0 64px;
+}
+
+/* =========================
+   Logo
+========================= */
+
+.navbar-logo-link {
+  justify-self: start;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: fit-content;
+  color: currentColor;
+  text-decoration: none;
+}
+
+.navbar-logo-icon {
+  width: 50px;
+  height: auto;
+  display: block;
+}
+
+/* =========================
+   Desktop nav
+========================= */
+
+.navbar-desktop-nav {
+  justify-self: center;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 34px;
+}
+
+.navbar-desktop-link {
+  position: relative;
+
+  padding: 0 0 8px;
+
+  color: currentColor;
+  background: transparent;
+
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1;
+
+  text-decoration: none;
+
+  opacity: 0.92;
+
+  transition:
+    color 0.22s ease,
+    opacity 0.22s ease,
+    transform 0.22s ease;
+}
+
+.navbar-desktop-link::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+
+  width: 100%;
+  height: 1.5px;
+
+  background: currentColor;
+  opacity: 0;
+
+  transform: translateX(-50%) scaleX(0);
+  transform-origin: center;
+
+  transition:
+    opacity 0.22s ease,
+    transform 0.22s ease;
+}
+
+.navbar-desktop-link:hover,
+.navbar-desktop-link:focus,
+.navbar-desktop-link-active {
+  opacity: 1;
+  outline: none;
+}
+
+.navbar-desktop-link:hover::after,
+.navbar-desktop-link:focus::after,
+.navbar-desktop-link-active::after {
+  opacity: 1;
+  transform: translateX(-50%) scaleX(1);
+}
+
+/* =========================
+   Desktop right actions
+========================= */
+
+.navbar-desktop-actions {
+  justify-self: end;
+
+  width: 100%;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 14px;
+}
+
+.navbar-reservation-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 36px;
+  padding: 0 18px;
+
+  color: #ffffff;
+  background: #6b9158;
+
+  border: 1px solid rgba(107, 145, 88, 0.3);
+  border-radius: 999px;
+
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+
+  box-shadow: 0 10px 24px rgba(107, 145, 88, 0.18);
+
+  transition:
+    background-color 0.22s ease,
+    transform 0.22s ease,
+    box-shadow 0.22s ease;
+}
+
+.navbar-reservation-button:hover,
+.navbar-reservation-button:focus {
+  background: #5b7d4a;
+  transform: translateY(-1px);
+  box-shadow: 0 14px 28px rgba(107, 145, 88, 0.24);
+  outline: none;
+}
+
+.navbar-language-button {
+  width: 34px;
+  height: 34px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 999px;
+
+  background: rgba(0, 0, 0, 0.22);
+
+  cursor: pointer;
+  overflow: hidden;
+
+  transition:
+    transform 0.22s ease,
+    background-color 0.22s ease,
+    box-shadow 0.22s ease;
+}
+
+.navbar-v2 .navbar-language-button {
+  border-color: rgba(33, 48, 28, 0.16);
+  background: rgba(33, 48, 28, 0.08);
+}
+
+.navbar-language-button:hover,
+.navbar-language-button:focus {
+  transform: scale(1.06);
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 0 18px rgba(250, 215, 149, 0.18);
+  outline: none;
+}
+
+.navbar-v2 .navbar-language-button:hover,
+.navbar-v2 .navbar-language-button:focus {
+  background: rgba(33, 48, 28, 0.12);
+}
+
+.navbar-language-flag {
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  object-fit: cover;
+}
+
+/* =========================
+   Mobile / tablet hamburger
+========================= */
+
+.navbar-mobile-wrapper {
+  position: relative;
+  display: none;
+  align-items: center;
+  justify-self: end;
+}
+
+.navbar-mobile-menu-button {
+  width: 42px;
+  height: 42px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border-radius: 999px;
+  border: 1px solid rgba(139, 185, 116, 0.45);
+
+  color: #fafaf9;
+  background-color: rgba(48, 70, 37, 0.6);
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.navbar-v2 .navbar-mobile-menu-button {
+  color: #21301c;
+  background-color: rgba(107, 145, 88, 0.12);
+}
+
+.navbar-mobile-menu-button:hover,
+.navbar-mobile-menu-button:focus,
+.navbar-mobile-menu-button-open {
+  background-color: rgba(107, 145, 88, 0.55);
+  transform: scale(1.05);
+  box-shadow: 0 0 18px rgba(250, 215, 149, 0.18);
+  outline: none;
+}
+
+.navbar-mobile-menu-icon {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.navbar-mobile-menu-icon span {
+  display: block;
+
+  width: 18px;
+  height: 2px;
+
+  border-radius: 999px;
+  background-color: currentColor;
+}
+
+/* Fullscreen overlay */
+.navbar-mobile-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+
+  width: 100vw;
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 44px 34px 56px;
+
+  color: #f6fdf2;
+  background:
+    radial-gradient(circle at center, rgba(107, 145, 88, 0.12), transparent 42%),
+    linear-gradient(180deg, rgba(13, 39, 24, 0.98), rgba(10, 31, 20, 0.98));
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transform: translateY(-12px);
+
+  transition:
+    opacity 0.28s ease,
+    visibility 0.28s ease,
+    transform 0.32s ease;
+}
+
+.navbar-mobile-menu-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+/* Overlay header */
+.navbar-mobile-menu-header {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar-mobile-logo-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #f6fdf2;
+  text-decoration: none;
+}
+
+.navbar-mobile-logo-icon {
+  width: 50px;
+  height: auto;
+  display: block;
+}
+
+.navbar-mobile-header-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.navbar-mobile-language-button {
+  width: 38px;
+  height: 38px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.08);
+
+  cursor: pointer;
+  overflow: hidden;
+
+  transition:
+    transform 0.22s ease,
+    background-color 0.22s ease,
+    box-shadow 0.22s ease;
+}
+
+.navbar-mobile-language-button:hover,
+.navbar-mobile-language-button:focus {
+  transform: scale(1.06);
+  background: rgba(255, 255, 255, 0.14);
+  box-shadow: 0 0 18px rgba(250, 215, 149, 0.16);
+  outline: none;
+}
+
+.navbar-mobile-close-button {
+  position: relative;
+
+  width: 38px;
+  height: 38px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: none;
+  background: transparent;
+
+  color: #f6fdf2;
+  cursor: pointer;
+}
+
+.navbar-mobile-close-button span {
+  position: absolute;
+
+  width: 30px;
+  height: 2px;
+
+  border-radius: 999px;
+  background-color: currentColor;
+
+  transform-origin: center;
+}
+
+.navbar-mobile-close-button span:first-child {
+  transform: rotate(45deg);
+}
+
+.navbar-mobile-close-button span:last-child {
+  transform: rotate(-45deg);
+}
+
+.navbar-mobile-close-button:hover,
+.navbar-mobile-close-button:focus {
+  color: #fad795;
+  outline: none;
+}
+
+/* Center content */
+.navbar-mobile-menu-content {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 34px;
+
+  padding-bottom: 54px;
+}
+
+.navbar-mobile-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+.navbar-mobile-link {
+  position: relative;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  color: rgba(246, 253, 242, 0.62);
+
+  font-family: "Inter", sans-serif;
+  font-size: 27px;
+  font-weight: 500;
+  line-height: 1;
+  text-align: center;
+  text-decoration: none;
+
+  transition:
+    color 0.22s ease,
+    transform 0.22s ease;
+}
+
+.navbar-mobile-link:hover,
+.navbar-mobile-link:focus,
+.navbar-mobile-link-active {
+  color: #fad795;
+  transform: translateY(-1px);
+  outline: none;
+}
+
+.navbar-mobile-reservation-button {
+  min-width: 180px;
+  height: 42px;
+  padding: 0 26px;
+
+  font-size: 13px;
+  letter-spacing: 0.08em;
+}
+
+/* =========================
+   Responsive
+========================= */
+
+@media (max-width: 1023px) {
+  .navbar-inner {
+    height: 78px;
+    padding: 0 24px;
+    grid-template-columns: auto 1fr auto;
+  }
+
+  .navbar-logo-icon {
+    width: 44px;
+    height: auto;
+  }
+
+  .navbar-desktop-nav,
+  .navbar-desktop-actions {
+    display: none;
+  }
+
+  .navbar-mobile-wrapper {
+    display: flex;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-inner {
+    padding: 0 22px;
+  }
+
+  .navbar-logo-icon {
+    width: 42px;
+    height: auto;
+  }
+
+  .navbar-mobile-link {
+    font-size: 20px;
+  }
+}

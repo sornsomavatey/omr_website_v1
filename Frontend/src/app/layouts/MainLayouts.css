@@ -1,0 +1,4 @@
+/* MainLayout custom resets (Tailwind utilities handle structural layout) */
+.page-enter-active {
+  transition: opacity 300ms ease-out;
+}

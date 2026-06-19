@@ -1,0 +1,126 @@
+/* Menu Page Custom Styles */
+
+.lotus-bg-wrapper {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 160px; /* Width of the left column holding the lotus pattern */
+  pointer-events: none;
+  z-index: 0;
+  user-select: none;
+  overflow: hidden;
+}
+
+.lotus-bg-pattern {
+  width: 100%;
+  height: 100%;
+  background-position: left top;
+  background-repeat: repeat-y;
+  background-size: 100% auto;
+  opacity: 0.18; /* Subtle background line art opacity */
+  transition: opacity 0.3s ease;
+}
+
+@media (max-width: 1023px) {
+  .lotus-bg-wrapper {
+    width: 110px;
+  }
+  .lotus-bg-pattern {
+    opacity: 0.12;
+  }
+}
+
+@media (max-width: 768px) {
+  .lotus-bg-wrapper {
+    width: 70px;
+    opacity: 0.08; 
+  }
+}
+
+/* Sticky Categories Bar */
+.menu-sticky-tabs-container {
+  position: sticky;
+  top: 82px;
+  z-index: 40;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(33, 48, 28, 0.08);
+  box-shadow: 0 10px 30px -10px rgba(33, 45, 27, 0.05);
+  transition: all 0.3s ease;
+}
+
+@media (max-width: 1023px) {
+  .menu-sticky-tabs-container {
+    top: 78px;
+  }
+}
+
+.menu-sticky-tabs-inner {
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 18px 64px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+}
+
+@media (max-width: 1023px) {
+  .menu-sticky-tabs-inner {
+    padding: 14px 24px;
+    overflow-x: auto;
+    justify-content: flex-start;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .menu-sticky-tabs-inner::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Category Pill Buttons inside Sticky Header */
+.category-pill-btn {
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: 10px 28px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+}
+
+.category-pill-btn-active {
+  background-color: #6b9158;
+  color: #ffffff;
+  border: 1px solid #6b9158;
+  box-shadow: 0 4px 14px rgba(107, 145, 88, 0.25);
+}
+
+.category-pill-btn-inactive {
+  background-color: #ffffff;
+  color: #6b9158;
+  border: 1px solid rgba(107, 145, 88, 0.45);
+}
+
+.category-pill-btn-inactive:hover {
+  border-color: #6b9158;
+  background-color: rgba(107, 145, 88, 0.05);
+}
+
+
+.menu-section {
+  scroll-margin-top: 172px; /* height of sticky navbar (82px) + sticky category bar (approx 72px) + buffer */
+}
+
+@media (max-width: 1023px) {
+  .menu-section {
+    scroll-margin-top: 154px; /* mobile offset adjustment */
+  }
+}
+
