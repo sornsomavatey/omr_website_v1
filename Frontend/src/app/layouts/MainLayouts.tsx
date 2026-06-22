@@ -22,8 +22,16 @@ export default function MainLayouts() {
   const isRestaurantsPage =
     location.pathname === '/restaurants' ||
     location.pathname === '/branches';
+  const isToulKorkPage =
+    location.pathname === '/branches/toul-kork' ||
+    location.pathname === '/restaurants/toul-kork';
 
-  const needsTopPadding = !isHomePage && !isReservationPage && !isMenuPage && !isRestaurantsPage;
+  const needsTopPadding =
+    !isHomePage &&
+    !isReservationPage &&
+    !isMenuPage &&
+    !isRestaurantsPage &&
+    !isToulKorkPage;
 
   return (
     <div

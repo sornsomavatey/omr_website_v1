@@ -102,6 +102,9 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
 
   const isHomePage = location.pathname === '/';
+  const isToulKorkPage =
+    location.pathname === '/branches/toul-kork' ||
+    location.pathname === '/restaurants/toul-kork';
 
   const isReservationPage =
     location.pathname === '/reservations' ||
@@ -114,8 +117,10 @@ export default function Navbar() {
     }
 
     const handleScroll = () => {
-      if (isHomePage) {
-        const heroSection = document.getElementById('home-hero');
+      if (isHomePage || isToulKorkPage) {
+        const heroSection =
+          document.getElementById('home-hero') ||
+          document.getElementById('toulkork-hero');
 
         if (!heroSection) {
           setScrolled(false);

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Check, X } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
@@ -83,6 +83,7 @@ const imageMapper: Record<string, string> = {
 
 export default function Branches() {
   const { getObject, t } = useTranslation();
+  const navigate = useNavigate();
 
   const data = getObject<RestaurantsData | null>('branchesPage', null);
   const [activeModal, setActiveModal] = useState<LocationItem | null>(null);
@@ -267,9 +268,13 @@ export default function Branches() {
               <LocationCard
                 key={loc.id}
                 branch={loc}
-                onDetailClick={(branch) =>
-                  setActiveModal(branch as LocationItem)
-                }
+                onDetailClick={(branch) => {
+                  if (branch.id === 'toulKork') {
+                    navigate('/branches/toul-kork');
+                  } else {
+                    setActiveModal(branch as LocationItem);
+                  }
+                }}
                 onMapClick={handleScrollToMap}
                 imageMapper={imageMapper}
               />
