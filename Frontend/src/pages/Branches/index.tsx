@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Phone, MapPin, Clock, Check, X } from 'lucide-react';
 import { getRestaurantsData } from '@/lib/api';
 import { Button } from '@/components/ui/button';
@@ -48,6 +48,7 @@ const imageMapper: Record<string, string> = {
 };
 
 export default function Branches() {
+  const navigate = useNavigate();
   const [data, setData] = useState<RestaurantsData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -271,7 +272,13 @@ export default function Branches() {
               <LocationCard
                 key={loc.id}
                 branch={loc}
-                onDetailClick={(b) => setActiveModal(b as LocationItem)}
+                onDetailClick={(b) => {
+                  if (b.id === 'toulKork') {
+                    navigate('/branches/toul-kork');
+                  } else {
+                    setActiveModal(b as LocationItem);
+                  }
+                }}
                 onMapClick={handleScrollToMap}
                 imageMapper={imageMapper}
               />

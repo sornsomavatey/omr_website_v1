@@ -1,0 +1,1038 @@
+/* Toul Kork Details Page Styling */
+
+.tk-page-container {
+  background-color: #FAF9F5;
+  color: #212D1B;
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* 1. HERO BANNER */
+.tk-hero {
+  position: relative;
+  width: 100%;
+  height: 90vh;
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #FFFFFF;
+}
+
+.tk-hero-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.tk-hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transform: scale(1.02);
+  filter: brightness(0.7);
+}
+
+.tk-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(33, 45, 27, 0.6) 100%);
+}
+
+.tk-hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+  padding: 0 24px;
+  margin-top: 60px;
+  animation: fadeInUp 1s ease-out;
+}
+
+.tk-hero-title {
+  font-family: 'Playfair Display', 'Didot', 'Georgia', serif;
+  font-size: 3.5rem;
+  font-weight: 500;
+  line-height: 1.15;
+  margin-bottom: 24px;
+  letter-spacing: 0.02em;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+@media (min-width: 768px) {
+  .tk-hero-title {
+    font-size: 4.5rem;
+  }
+}
+
+.tk-hero-desc {
+  font-size: 1.125rem;
+  font-weight: 300;
+  line-height: 1.6;
+  opacity: 0.9;
+  max-width: 600px;
+  margin: 0 auto 36px auto;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.hero-cta-button {
+  background-color: #5b7d4a !important;
+  color: #ffffff !important;
+  font-family: var(--font-sans, "Inter", sans-serif) !important;
+  font-weight: 600 !important;
+  font-size: 0.875rem !important;
+  letter-spacing: 0.05em !important;
+  padding: 1rem 2.25rem !important;
+  border-radius: 9999px !important;
+  height: auto !important;
+  box-shadow: 0 10px 25px -5px rgba(91, 125, 74, 0.4) !important;
+  transition: all 0.3s ease !important;
+  cursor: pointer;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.hero-cta-button:hover {
+  background-color: #4d6a3e !important;
+  transform: scale(1.02) !important;
+  box-shadow: 0 15px 30px -5px rgba(91, 125, 74, 0.5) !important;
+}
+
+/* SECTION GLOBAL RULES */
+.tk-section {
+  padding: 80px 24px;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .tk-section {
+    padding: 100px 64px;
+  }
+}
+
+.tk-eyebrow {
+  display: block;
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: #6b9158;
+  margin-bottom: 12px;
+}
+
+.tk-section-title {
+  font-family: 'Playfair Display', 'Didot', 'Georgia', serif;
+  font-size: 2.25rem;
+  font-weight: 500;
+  color: #212D1B;
+  text-align: center;
+  margin-bottom: 48px;
+  letter-spacing: 0.01em;
+}
+
+@media (min-width: 768px) {
+  .tk-section-title {
+    font-size: 2.75rem;
+  }
+}
+
+/* 2. HERITAGE & ELEGANCE GALLERY */
+.tk-heritage-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin-top: 40px;
+}
+
+@media (min-width: 992px) {
+  .tk-heritage-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.tk-image-wrapper {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  background-color: #E2E0D9;
+}
+
+.tk-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.tk-image-wrapper:hover img {
+  transform: scale(1.05);
+}
+
+.tk-image-mask {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(33, 45, 27, 0.15) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+.tk-large-image {
+  height: 380px;
+}
+
+@media (min-width: 992px) {
+  .tk-large-image {
+    height: 560px;
+  }
+}
+
+.tk-heritage-right {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.tk-heritage-right-top {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.tk-sub-image-top-half {
+  height: 180px;
+}
+
+@media (min-width: 992px) {
+  .tk-sub-image-top-half {
+    height: 268px;
+  }
+}
+
+.tk-sub-image-bottom-full {
+  height: 240px;
+}
+
+@media (min-width: 992px) {
+  .tk-sub-image-bottom-full {
+    height: 268px;
+  }
+}
+
+/* Heritage Section Header Custom Styling to match the design (no side lines on eyebrow, short underline under title) */
+.tk-heritage .text-center {
+  margin-bottom: 48px;
+}
+
+.tk-heritage .text-center > div {
+  gap: 0 !important;
+  color: #6b9158 !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.15em !important;
+  margin-bottom: 8px !important;
+}
+
+.tk-heritage .text-center > div span {
+  display: none !important;
+}
+
+.tk-heritage .text-center h2 {
+  font-family: 'Playfair Display', 'Didot', 'Georgia', serif !important;
+  font-size: 2.25rem !important;
+  font-weight: 500 !important;
+  color: #212D1B !important;
+  letter-spacing: 0.01em !important;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 20px;
+  margin-bottom: 0 !important;
+}
+
+@media (min-width: 768px) {
+  .tk-heritage .text-center h2 {
+    font-size: 2.75rem !important;
+  }
+}
+
+.tk-heritage .text-center h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70px;
+  height: 2px;
+  background-color: #6b9158;
+}
+
+/* 3. THE ART OF CAMBODIAN HOSPITALITY */
+.tk-hospitality {
+  background-color: #F3F1EA;
+  max-width: 100%;
+  padding-left: 0;
+  padding-right: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.tk-hospitality-container {
+  max-width: 1240px;
+  width: 100%;
+  padding: 80px 24px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 48px;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .tk-hospitality-container {
+    padding: 100px 64px;
+  }
+}
+
+@media (min-width: 992px) {
+  .tk-hospitality-container {
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 80px;
+  }
+}
+
+.tk-hospitality-text {
+  text-align: left;
+}
+
+.tk-hospitality-text .tk-eyebrow {
+  text-align: left;
+}
+
+.tk-hospitality-text .tk-section-title {
+  text-align: left;
+  margin-bottom: 24px;
+}
+
+.tk-desc-para {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #4A5645;
+  font-weight: 300;
+}
+
+.tk-hospitality-box {
+  background: #FFFFFF;
+  border-radius: 24px;
+  padding: 32px;
+  box-shadow: 0 10px 30px rgba(33, 45, 27, 0.04);
+  border: 1px solid rgba(107, 145, 88, 0.08);
+}
+
+.tk-box-tag {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: #A39E93;
+  margin-bottom: 20px;
+}
+
+.tk-box-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.tk-box-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.tk-box-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #212D1B;
+  color: #E7F6DF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.tk-box-label {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #212D1B;
+}
+
+/* 4. PRIVATE DINING ROOMS */
+.tk-rooms {
+  background-color: #FAF9F5;
+}
+
+.tk-rooms-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  margin-top: 24px;
+}
+
+@media (min-width: 768px) {
+  .tk-rooms-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 992px) {
+  .tk-rooms-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.tk-room-card {
+  background: #FFFFFF;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.tk-room-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(33, 45, 27, 0.08);
+}
+
+.tk-room-img-wrapper {
+  position: relative;
+  height: 240px;
+  overflow: hidden;
+}
+
+.tk-room-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.tk-room-card:hover .tk-room-img-wrapper img {
+  transform: scale(1.05);
+}
+
+.tk-room-badge {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  background-color: rgba(255, 255, 255, 0.95);
+  color: #212D1B;
+  padding: 6px 14px;
+  border-radius: 99px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tk-room-body {
+  padding: 28px;
+}
+
+.tk-room-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #212D1B;
+  margin-bottom: 18px;
+}
+
+.tk-room-highlights {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.tk-room-highlights li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.875rem;
+  color: #5C6758;
+}
+
+.tk-room-button {
+  width: 100%;
+  border-radius: 99px;
+  background-color: transparent;
+  color: #6b9158;
+  border: 1.5px solid #6b9158;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  transition: all 0.3s ease;
+}
+
+.tk-room-card:hover .tk-room-button {
+  background-color: #6b9158;
+  color: #FFFFFF;
+}
+
+/* 5. CHEF'S RECOMMENDATIONS */
+.tk-menu-recs {
+  background-color: #FAF9F5;
+  border-top: 1px solid rgba(107, 145, 88, 0.06);
+}
+
+.tk-menu-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  margin-top: 24px;
+}
+
+@media (min-width: 768px) {
+  .tk-menu-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 992px) {
+  .tk-menu-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.tk-menu-card {
+  background-color: #FFFFFF;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  transition: all 0.3s ease;
+}
+
+.tk-menu-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(33, 45, 27, 0.06);
+}
+
+.tk-menu-img-wrapper {
+  position: relative;
+  height: 250px;
+  overflow: hidden;
+}
+
+.tk-menu-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.tk-menu-card:hover .tk-menu-img-wrapper img {
+  transform: scale(1.05);
+}
+
+.tk-menu-tag {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background-color: #6b9158;
+  color: #FFFFFF;
+  padding: 4px 12px;
+  border-radius: 8px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.tk-menu-body {
+  padding: 24px;
+}
+
+.tk-menu-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.35rem;
+  font-weight: 500;
+  color: #212D1B;
+  margin-bottom: 8px;
+}
+
+.tk-menu-desc {
+  font-size: 0.85rem;
+  color: #6b7764;
+  line-height: 1.6;
+  height: 64px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  font-weight: 300;
+}
+
+.tk-menu-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid rgba(0, 0, 0, 0.04);
+  padding-top: 16px;
+}
+
+.tk-menu-price {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #212D1B;
+}
+
+.tk-menu-action {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #6b9158;
+  letter-spacing: 0.05em;
+  transition: color 0.2s ease;
+}
+
+.tk-menu-action:hover {
+  color: #212D1B;
+}
+
+.tk-btn-menu-full {
+  border-radius: 99px;
+  border-color: #6b9158;
+  color: #6b9158;
+  padding: 12px 36px;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  transition: all 0.3s ease;
+}
+
+.tk-btn-menu-full:hover {
+  background-color: #6b9158;
+  color: #FFFFFF;
+}
+
+/* 6. EVENTS & CELEBRATIONS */
+.tk-events-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+@media (min-width: 768px) {
+  .tk-events-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.tk-event-card {
+  position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+  height: 280px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.tk-event-img-wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+.tk-event-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s ease;
+}
+
+.tk-event-card:hover .tk-event-img-wrapper img {
+  transform: scale(1.05);
+}
+
+.tk-event-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(33, 45, 27, 0.9) 0%, rgba(33, 45, 27, 0.3) 70%, rgba(33, 45, 27, 0.1) 100%);
+  transition: background 0.3s ease;
+}
+
+.tk-event-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 32px;
+  color: #FFFFFF;
+}
+
+.tk-event-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.tk-event-desc {
+  font-size: 0.875rem;
+  font-weight: 300;
+  opacity: 0.85;
+  margin-bottom: 20px;
+  line-height: 1.4;
+  max-width: 320px;
+}
+
+.tk-event-btn {
+  background-color: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 8px 20px;
+  border-radius: 99px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+}
+
+.tk-event-card:hover .tk-event-btn {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.tk-event-btn:hover {
+  background-color: #FFFFFF;
+  color: #212D1B;
+}
+
+/* 7. WHAT OUR GUESTS SAY Testimonials */
+.tk-testimonials {
+  background-color: #F3F1EA;
+  max-width: 100%;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+.tk-section-subtitle {
+  font-size: 1rem;
+  color: #5C6758;
+  margin-top: -36px;
+  margin-bottom: 48px;
+  font-weight: 300;
+}
+
+.tk-testimonial-slider {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.tk-testimonial-card {
+  background-color: #FFFFFF;
+  border-radius: 28px;
+  padding: 40px 32px;
+  box-shadow: 0 10px 30px rgba(33, 45, 27, 0.03);
+  border: 1px solid rgba(107, 145, 88, 0.05);
+  position: relative;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .tk-testimonial-card {
+    padding: 56px 48px;
+  }
+}
+
+.tk-stars {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  margin-bottom: 24px;
+}
+
+.tk-quote-mark {
+  position: absolute;
+  top: 10px;
+  left: 28px;
+  font-family: 'Playfair Display', serif;
+  font-size: 8rem;
+  color: #E7F6DF;
+  line-height: 1;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.tk-testimonial-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.25rem;
+  line-height: 1.6;
+  color: #212D1B;
+  margin-bottom: 32px;
+  position: relative;
+  z-index: 1;
+}
+
+@media (min-width: 768px) {
+  .tk-testimonial-text {
+    font-size: 1.5rem;
+  }
+}
+
+.tk-testimonial-user {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.tk-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.tk-user-info {
+  text-align: left;
+}
+
+.tk-user-name {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #212D1B;
+}
+
+.tk-user-date {
+  font-size: 0.75rem;
+  color: #8C9988;
+}
+
+.tk-slider-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 28px;
+}
+
+.tk-slider-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: #FFFFFF;
+  color: #212D1B;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.tk-slider-btn:hover {
+  background-color: #6b9158;
+  color: #FFFFFF;
+  border-color: #6b9158;
+}
+
+.tk-slider-dots {
+  display: flex;
+  gap: 8px;
+}
+
+.tk-slider-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #C0C8BC;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tk-slider-dot.active {
+  background-color: #6b9158;
+  transform: scale(1.2);
+}
+
+/* 8. VISIT US MAP SECTION */
+.tk-visit {
+  background-color: #FAF9F5;
+}
+
+.tk-visit-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  background-color: #FFFFFF;
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(33, 45, 27, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.02);
+}
+
+@media (min-width: 992px) {
+  .tk-visit-container {
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 0;
+  }
+}
+
+.tk-visit-map {
+  width: 100%;
+  height: 320px;
+  position: relative;
+  overflow: hidden;
+  background-color: #E2E0D9;
+}
+
+@media (min-width: 992px) {
+  .tk-visit-map {
+    height: 100%;
+    min-height: 480px;
+  }
+}
+
+.tk-map-frame {
+  width: 100%;
+  height: 100%;
+}
+
+.tk-map-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tk-map-pin-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.tk-visit-details {
+  padding: 40px 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@media (min-width: 768px) {
+  .tk-visit-details {
+    padding: 56px;
+  }
+}
+
+.tk-visit-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.25rem;
+  font-weight: 500;
+  color: #212D1B;
+  margin-bottom: 32px;
+}
+
+.tk-details-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 36px;
+}
+
+.tk-detail-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.tk-detail-icon {
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.tk-detail-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #8C9988;
+  margin-bottom: 4px;
+}
+
+.tk-detail-value {
+  font-size: 0.95rem;
+  color: #212D1B;
+  line-height: 1.4;
+}
+
+.tk-visit-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.tk-btn-directions {
+  border-radius: 99px;
+  background-color: #6b9158;
+  color: #FFFFFF;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 12px 28px;
+  transition: all 0.3s ease;
+}
+
+.tk-btn-directions:hover {
+  background-color: #212D1B;
+  transform: translateY(-2px);
+}
+
+.tk-btn-close {
+  border-radius: 99px;
+  border-color: #C0C8BC;
+  color: #5C6758;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 12px 28px;
+  transition: all 0.3s ease;
+}
+
+.tk-btn-close:hover {
+  background-color: #FAF9F5;
+  color: #212D1B;
+  border-color: #212D1B;
+}
+
+/* KEYFRAMES FOR TRANSITION EFFECTS */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

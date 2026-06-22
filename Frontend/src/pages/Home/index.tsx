@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { getHomeData } from '@/lib/api';
 import SignatureDishes from '@/components/SignatureDishes';
 import LocationCard from '@/components/LocationCard';
@@ -210,7 +210,13 @@ function SpacesSection({ spaces }: { spaces: DiningSpace[] }) {
   );
 }
 
-function LocationsSection({ branches }: { branches: any[] }) {
+function LocationsSection({
+  branches,
+  onDetailClick,
+}: {
+  branches: any[];
+  onDetailClick?: (branch: any) => void;
+}) {
   return (
     <section className="w-full py-24 bg-white flex flex-col items-center">
       <div className="max-w-[1440px] w-full px-6 md:px-[64px] text-center">
@@ -222,7 +228,11 @@ function LocationsSection({ branches }: { branches: any[] }) {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-[1200px] mx-auto text-left">
           {branches.map((branch) => (
-            <LocationCard key={branch.id} branch={branch} />
+            <LocationCard
+              key={branch.id}
+              branch={branch}
+              onDetailClick={onDetailClick}
+            />
           ))}
         </div>
       </div>
@@ -460,6 +470,7 @@ function TestimonialsSection({ testimonials }: { testimonials: Testimonial[] }) 
 }
 
 export default function HomePage() {
+  const navigate = useNavigate();
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -524,7 +535,16 @@ export default function HomePage() {
       <HeroSection hero={data.hero} />
       <SignatureDishes dishes={signatureDishesList} />
       <SpacesSection spaces={diningSpacesList} />
-      <LocationsSection branches={branchesList} />
+      <LocationsSection
+        branches={branchesList}
+        onDetailClick={(branch) => {
+          if (branch.id === 'toulKork') {
+            navigate('/branches/toul-kork');
+          } else {
+            navigate('/branches');
+          }
+        }}
+      />
       <GallerySection gallery={data.gallery} />
       <TestimonialsSection testimonials={testimonialsList} />
     </div>

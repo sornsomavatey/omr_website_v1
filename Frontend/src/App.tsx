@@ -6,6 +6,7 @@ import Menu from './pages/Menu';
 import Reservations from './pages/Reservations';
 import Careers from './pages/Careers';
 import Branches from './pages/Branches';
+import ToulKork from './pages/Branches/ToukKork/ToulKork';
 import Gallery from './pages/Gallery';
 import About from './pages/About';
 import Contact from './pages/Contact';
@@ -20,7 +21,9 @@ export default function App() {
           <Route path="reservations" element={<Reservations />} />
           <Route path="careers" element={<Careers />} />
           <Route path="branches" element={<Branches />} />
+          <Route path="branches/toul-kork" element={<ToulKork />} />
           <Route path="restaurants" element={<Branches />} />
+          <Route path="restaurants/toul-kork" element={<ToulKork />} />
           <Route path="gallery" element={<Gallery />} />
           <Route path="about" element={<About />} />
           <Route path="contact" element={<Contact />} />
