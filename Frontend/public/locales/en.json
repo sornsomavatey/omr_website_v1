@@ -330,5 +330,19 @@
       ],
       "drinks": []
     }
+  },
+  "branches": {
+    "loading": "Loading locations...",
+    "errors": {
+      "load": "Failed to load locations.",
+      "noData": "No data available."
+    }
+  },
+  "reservation": {
+    "loading": "Loading reservations...",
+    "errors": {
+      "load": "Failed to load reservation data.",
+      "noData": "No reservation data available."
+    }
   }
 }

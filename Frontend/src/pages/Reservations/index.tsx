@@ -1,36 +1,47 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
-  Clock,
-  FileText,
-  MessageCircle,
-  Phone,
-  MapPin,
-  Plus,
-  Minus,
-  Check,
   Briefcase,
-  Cake,
-  Utensils,
   Building,
-  Heart,
-  MoreHorizontal,
+  Cake,
+  Check,
+  ChevronDown,
   ChevronLeft,
   ChevronRight,
-  ChevronDown,
   ChevronUp,
+  Clock,
+  FileText,
+  Heart,
+  MessageCircle,
+  Minus,
+  MoreHorizontal,
+  Phone,
+  Plus,
   User,
+  Utensils,
 } from 'lucide-react';
-import { getReservationsData, getHomeData } from '@/lib/api';
+
+import { useTranslation } from '@/hooks/useTranslation';
+
 import {
-  imgHeroBg2,
   imgGallery1,
   imgGallery5,
   imgHeroBg1,
+  imgHeroBg2,
   imageMap,
 } from '../Home/homeAssets';
+
 import './index.css';
 
+type MealCategory = 'Breakfast' | 'Lunch' | 'Dinner';
+
+type GuestInformationItem = {
+  type: string;
+  label: string;
+  value: string;
+};
+
 type Branch = {
+  id: string;
   name: string;
   address: string;
   phone: string;
@@ -39,28 +50,335 @@ type Branch = {
   tags: string[];
 };
 
-type DiningSpace = {
+type DiningSeating = {
+  id: string;
   name: string;
-  tag: string;
-  desc: string;
   img: string;
 };
 
-const iconMap: Record<string, React.ComponentType> = {
+type OccasionItem = {
+  id: string;
+  name: string;
+  icon: string;
+};
+
+type FaqItem = {
+  q: string;
+  a: string;
+};
+
+type ReservationData = {
+  hero: {
+    eyebrow: string;
+    title: string;
+    desc: string;
+    backgroundImage?: string;
+    backgroundAlt: string;
+  };
+  guestInformationTitle: string;
+  guestInformationAria: string;
+  guestInformation: GuestInformationItem[];
+  steps: {
+    branch: {
+      title: string;
+      desc: string;
+    };
+    contact: {
+      title: string;
+      desc: string;
+    };
+    guests: {
+      title: string;
+      desc: string;
+    };
+    dateTime: {
+      title: string;
+      desc: string;
+    };
+    occasion: {
+      title: string;
+      desc: string;
+    };
+    seating: {
+      title: string;
+      desc: string;
+    };
+  };
+  form: {
+    aria: string;
+    labels: {
+      fullName: string;
+      phoneNumber: string;
+      adults: string;
+      children: string;
+      specialRequest: string;
+    };
+    placeholders: {
+      fullName: string;
+      phoneNumber: string;
+      time: string;
+      specialRequest: string;
+    };
+    ariaLabels: {
+      decreaseAdults: string;
+      increaseAdults: string;
+      decreaseChildren: string;
+      increaseChildren: string;
+      previousMonth: string;
+      nextMonth: string;
+    };
+    totalGuests: string;
+    submit: string;
+    cancellationNotice: string;
+  };
+  validation: {
+    contactRequired: string;
+    invalidName: string;
+    invalidPhone: string;
+  };
+  success: {
+    title: string;
+    desc: string;
+    makeAnother: string;
+    valuedGuest: string;
+    notProvided: string;
+    detailLabels: {
+      branch: string;
+      guestName: string;
+      phone: string;
+      guests: string;
+      dateTime: string;
+      seatingOccasion: string;
+    };
+    guestsValue: string;
+    dateTimeValue: string;
+    seatingOccasionValue: string;
+  };
+  summary: {
+    title: string;
+    labels: {
+      branch: string;
+      name: string;
+      contact: string;
+      guests: string;
+      date: string;
+      occasion: string;
+      seating: string;
+    };
+    empty: string;
+    guestBreakdown: string;
+    timeTag: string;
+    arrivalNotice: string;
+    reserveButton: string;
+    contactRestaurant: string;
+    phoneHref: string;
+  };
+  calendar: {
+    months: string[];
+    shortMonths: string[];
+    daysOfWeek: string[];
+  };
+  timeCategories: Record<MealCategory, string>;
+  branches: Branch[];
+  occasions: OccasionItem[];
+  seatingPreferences: DiningSeating[];
+  faq: {
+    eyebrow: string;
+    title: string;
+    items: FaqItem[];
+  };
+};
+
+const iconMap: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>> = {
   hours: Clock,
   phone: Phone,
   time: MessageCircle,
   policy: FileText,
 };
 
-function GuestInformationCard({ info }: { info: any[] }) {
+const occasionIconMap: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>> = {
+  familyDining: Utensils,
+  businessMeeting: Briefcase,
+  birthdayCelebration: Cake,
+  corporateEvent: Building,
+  dateNight: Heart,
+  other: MoreHorizontal,
+};
+
+const timeSuggestions = [
+  '06:00 AM',
+  '06:30 AM',
+  '07:00 AM',
+  '07:30 AM',
+  '08:00 AM',
+  '08:30 AM',
+  '09:00 AM',
+  '09:30 AM',
+  '10:00 AM',
+  '10:30 AM',
+  '11:00 AM',
+  '11:30 AM',
+  '12:00 PM',
+  '12:30 PM',
+  '01:00 PM',
+  '01:30 PM',
+  '02:00 PM',
+  '02:30 PM',
+  '03:00 PM',
+  '03:30 PM',
+  '04:00 PM',
+  '04:30 PM',
+  '05:00 PM',
+  '05:30 PM',
+  '06:00 PM',
+  '06:30 PM',
+  '07:00 PM',
+  '07:30 PM',
+  '08:00 PM',
+  '08:30 PM',
+  '09:00 PM',
+  '09:30 PM',
+  '10:00 PM',
+];
+
+const timeSlots: Record<MealCategory, string[]> = {
+  Breakfast: [
+    '06:00 AM',
+    '06:30 AM',
+    '07:00 AM',
+    '07:30 AM',
+    '08:00 AM',
+    '08:30 AM',
+    '09:00 AM',
+    '09:30 AM',
+    '10:00 AM',
+    '10:30 AM',
+    '11:00 AM',
+    '11:30 AM',
+  ],
+  Lunch: [
+    '11:30 AM',
+    '12:00 PM',
+    '12:30 PM',
+    '01:00 PM',
+    '01:30 PM',
+    '02:00 PM',
+    '02:30 PM',
+    '03:00 PM',
+    '03:30 PM',
+    '04:00 PM',
+  ],
+  Dinner: [
+    '05:00 PM',
+    '05:30 PM',
+    '06:00 PM',
+    '06:30 PM',
+    '07:00 PM',
+    '07:30 PM',
+    '08:00 PM',
+    '08:30 PM',
+    '09:00 PM',
+    '09:30 PM',
+  ],
+};
+
+const getMealCategoryFromTime = (
+  timeStr: string,
+  currentCategory: MealCategory
+): MealCategory | null => {
+  if (!timeStr) {
+    return null;
+  }
+
+  const cleanTime = timeStr.trim().toUpperCase();
+
+  if (timeSlots[currentCategory].includes(cleanTime)) {
+    return currentCategory;
+  }
+
+  for (const cat of ['Breakfast', 'Lunch', 'Dinner'] as const) {
+    if (timeSlots[cat].includes(cleanTime)) {
+      return cat;
+    }
+  }
+
+  const match = cleanTime.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)?$/);
+
+  if (!match) {
+    return null;
+  }
+
+  let hours = parseInt(match[1], 10);
+  const minutes = parseInt(match[2], 10);
+  const ampm = match[3];
+
+  if (ampm === 'PM' && hours !== 12) {
+    hours += 12;
+  } else if (ampm === 'AM' && hours === 12) {
+    hours = 0;
+  }
+
+  const totalMinutes = hours * 60 + minutes;
+
+  if (totalMinutes < 690) {
+    return 'Breakfast';
+  }
+
+  if (totalMinutes < 990) {
+    return 'Lunch';
+  }
+
+  return 'Dinner';
+};
+
+const getImage = (src?: string, fallback = imgHeroBg2) => {
+  if (!src) {
+    return fallback;
+  }
+
+  return imageMap[src] || src;
+};
+
+const formatText = (
+  template: string,
+  values: Record<string, string | number>
+) => {
+  return template.replace(/\{(\w+)\}/g, (_, key: string) => {
+    const value = values[key];
+
+    return value === undefined ? `{${key}}` : String(value);
+  });
+};
+
+async function getReservationDataByLanguage(language: string) {
+  const fileName =
+    language === 'KH' ? 'reservations.kh.json' : 'reservations.en.json';
+
+  const response = await fetch(`/mocks/${fileName}`);
+
+  if (!response.ok) {
+    throw new Error(`Failed to load ${fileName}`);
+  }
+
+  return (await response.json()) as ReservationData;
+}
+
+function GuestInformationCard({
+  info,
+  title,
+  ariaLabel,
+}: {
+  info: GuestInformationItem[];
+  title: string;
+  ariaLabel: string;
+}) {
   return (
-    <aside className="reservation-guest-card" aria-label="Guest information">
-      <h2>Guest Information</h2>
+    <aside className="reservation-guest-card" aria-label={ariaLabel}>
+      <h2>{title}</h2>
 
       <div className="reservation-guest-list">
         {info.map((item) => {
-          const Icon = item.icon;
+          const Icon = iconMap[item.type] || Clock;
 
           return (
             <div key={item.label} className="reservation-guest-item">
@@ -80,12 +398,12 @@ function GuestInformationCard({ info }: { info: any[] }) {
   );
 }
 
-function ReservationHero({ hero, info }: { hero: any; info: any[] }) {
+function ReservationHero({ data }: { data: ReservationData }) {
   return (
     <section className="reservation-hero" aria-labelledby="reservation-title">
       <img
-        src={imgHeroBg2}
-        alt="One More Restaurant dining room"
+        src={getImage(data.hero.backgroundImage, imgHeroBg2)}
+        alt={data.hero.backgroundAlt}
         className="reservation-hero-image"
       />
 
@@ -93,61 +411,42 @@ function ReservationHero({ hero, info }: { hero: any; info: any[] }) {
 
       <div className="reservation-hero-container">
         <div className="reservation-hero-copy">
-          <p className="reservation-hero-eyebrow">{hero.eyebrow}</p>
+          <p className="reservation-hero-eyebrow">{data.hero.eyebrow}</p>
 
-          <h1 id="reservation-title">{hero.title}</h1>
+          <h1 id="reservation-title">{data.hero.title}</h1>
 
-          <p className="reservation-hero-description">
-            {hero.desc}
-          </p>
+          <p className="reservation-hero-description">{data.hero.desc}</p>
         </div>
 
-        <GuestInformationCard info={info} />
+        <GuestInformationCard
+          info={data.guestInformation}
+          title={data.guestInformationTitle}
+          ariaLabel={data.guestInformationAria}
+        />
       </div>
     </section>
   );
 }
 
-function FaqSection() {
+function FaqSection({ faq }: { faq: ReservationData['faq'] }) {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(0);
-
-  const faqs = [
-    {
-      q: 'What is the dress code?',
-      a: 'We recommend smart casual attire. Traditional Khmer attire is also very welcome for special occasions.',
-    },
-    {
-      q: 'Do you offer vegetarian or vegan options?',
-      a: 'Yes, we have a variety of vegetarian and vegan options available. Please inform your waiter or mention it in the special requests section when booking.',
-    },
-    {
-      q: 'Is there parking available at the branches?',
-      a: 'Yes, both our Toul Kork and Boeung Kak branches feature spacious, secure parking lots with complimentary valet service.',
-    },
-    {
-      q: 'Can I bring my own wine?',
-      a: 'Yes, you may bring your own wine. A corkage fee of $15 per bottle applies.',
-    },
-    {
-      q: 'Are pets allowed?',
-      a: 'To ensure a comfortable dining environment for all guests, pets are only allowed in our outdoor garden areas.',
-    },
-  ];
 
   return (
     <section className="faq-section" aria-labelledby="faq-section-title">
       <div className="faq-container">
-        <span className="faq-eyebrow">Assistance</span>
+        <span className="faq-eyebrow">{faq.eyebrow}</span>
+
         <h2 id="faq-section-title" className="faq-title font-serif">
-          Frequently Asked Questions
+          {faq.title}
         </h2>
 
         <div className="faq-list">
-          {faqs.map((faq, index) => {
+          {faq.items.map((item, index) => {
             const isExpanded = expandedIndex === index;
+
             return (
               <div
-                key={index}
+                key={`${item.q}-${index}`}
                 className={`faq-item ${isExpanded ? 'faq-item-expanded' : ''}`}
               >
                 <button
@@ -156,20 +455,22 @@ function FaqSection() {
                   onClick={() => setExpandedIndex(isExpanded ? null : index)}
                   aria-expanded={isExpanded}
                 >
-                  <span>{faq.q}</span>
+                  <span>{item.q}</span>
+
                   {isExpanded ? (
                     <ChevronUp className="faq-arrow" />
                   ) : (
                     <ChevronDown className="faq-arrow" />
                   )}
                 </button>
+
                 <div
                   className={`faq-answer-wrapper ${
                     isExpanded ? 'faq-answer-expanded' : ''
                   }`}
                 >
                   <div className="faq-answer">
-                    <p>{faq.a}</p>
+                    <p>{item.a}</p>
                   </div>
                 </div>
               </div>
@@ -181,133 +482,81 @@ function FaqSection() {
   );
 }
 
-const timeSuggestions = [
-  '06:00 AM', '06:30 AM', '07:00 AM', '07:30 AM',
-  '08:00 AM', '08:30 AM', '09:00 AM', '09:30 AM',
-  '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM',
-  '12:00 PM', '12:30 PM', '01:00 PM', '01:30 PM',
-  '02:00 PM', '02:30 PM', '03:00 PM', '03:30 PM',
-  '04:00 PM', '04:30 PM', '05:00 PM', '05:30 PM',
-  '06:00 PM', '06:30 PM', '07:00 PM', '07:30 PM',
-  '08:00 PM', '08:30 PM', '09:00 PM', '09:30 PM',
-  '10:00 PM'
-];
-
-const timeSlots = {
-  Breakfast: [
-    '06:00 AM', '06:30 AM', '07:00 AM', '07:30 AM',
-    '08:00 AM', '08:30 AM', '09:00 AM', '09:30 AM',
-    '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM'
-  ],
-  Lunch: [
-    '11:30 AM', '12:00 PM', '12:30 PM', '01:00 PM',
-    '01:30 PM', '02:00 PM', '02:30 PM', '03:00 PM',
-    '03:30 PM', '04:00 PM'
-  ],
-  Dinner: [
-    '05:00 PM', '05:30 PM', '06:00 PM', '06:30 PM',
-    '07:00 PM', '07:30 PM', '08:00 PM', '08:30 PM',
-    '09:00 PM', '09:30 PM'
-  ]
-};
-
-const getMealCategoryFromTime = (
-  timeStr: string,
-  currentCategory: 'Breakfast' | 'Lunch' | 'Dinner'
-): 'Breakfast' | 'Lunch' | 'Dinner' | null => {
-  if (!timeStr) return null;
-  const cleanTime = timeStr.trim().toUpperCase();
-
-  // 1. If it exists in the current category's slots, keep it
-  if (timeSlots[currentCategory].includes(cleanTime)) {
-    return currentCategory;
-  }
-
-  // 2. See if it matches another category exactly
-  for (const cat of ['Breakfast', 'Lunch', 'Dinner'] as const) {
-    if (timeSlots[cat].includes(cleanTime)) {
-      return cat;
-    }
-  }
-
-  // 3. Fallback: Parse custom input (e.g. "06:00 PM")
-  const match = cleanTime.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)?$/);
-  if (!match) return null;
-
-  let hours = parseInt(match[1], 10);
-  const minutes = parseInt(match[2], 10);
-  const ampm = match[3];
-
-  if (ampm === 'PM' && hours !== 12) {
-    hours += 12;
-  } else if (ampm === 'AM' && hours === 12) {
-    hours = 0;
-  }
-
-  const totalMinutes = hours * 60 + minutes;
-
-  if (totalMinutes < 690) { // Before 11:30 AM
-    return 'Breakfast';
-  } else if (totalMinutes < 990) { // Before 4:30 PM
-    return 'Lunch';
-  } else { // 4:30 PM onwards
-    return 'Dinner';
-  }
-};
-
 export default function ReservationPage() {
-  const [resData, setResData] = useState<any>(null);
-  const [homeData, setHomeData] = useState<any>(null);
+  const { language, t } = useTranslation();
+
+  const today = new Date();
+
+  const [resData, setResData] = useState<ReservationData | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [errorKey, setErrorKey] = useState<string | null>(null);
 
-  // Step 1: Branch
-  const [selectedBranch, setSelectedBranch] = useState('Toul Kork');
+  const [selectedBranch, setSelectedBranch] = useState('toulKork');
 
-  // Step 2: Contact Info
   const [fullName, setFullName] = useState('');
   const [phone, setPhone] = useState('');
 
-  // Step 3: Guests
   const [adults, setAdults] = useState(4);
   const [childrenCount, setChildrenCount] = useState(2);
 
-  // Step 3 (repeated): Date & Time
-  const [currentYear, setCurrentYear] = useState(2026);
-  const [currentMonth, setCurrentMonth] = useState(5); // June (0-indexed, so 5)
-  const [selectedDate, setSelectedDate] = useState<Date>(new Date(2026, 5, 18));
-  const [timeCategory, setTimeCategory] = useState<'Breakfast' | 'Lunch' | 'Dinner'>('Breakfast');
+  const [currentYear, setCurrentYear] = useState(today.getFullYear());
+  const [currentMonth, setCurrentMonth] = useState(today.getMonth());
+  const [selectedDate, setSelectedDate] = useState<Date>(today);
+  const [timeCategory, setTimeCategory] = useState<MealCategory>('Breakfast');
   const [selectedTime, setSelectedTime] = useState('06:30 AM');
   const [customTime, setCustomTime] = useState('');
 
-  // Automatically update active timeCategory tab when selectedTime or customTime changes
+  const [showTimeDropdown, setShowTimeDropdown] = useState(false);
+  const timeInputWrapperRef = useRef<HTMLDivElement>(null);
+
+  const [selectedOccasion, setSelectedOccasion] = useState(
+    'birthdayCelebration'
+  );
+  const [selectedSeating, setSelectedSeating] = useState('privateRoom');
+  const [specialRequest, setSpecialRequest] = useState('');
+
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  useEffect(() => {
+    let mounted = true;
+
+    setLoading(true);
+    setErrorKey(null);
+
+    getReservationDataByLanguage(language)
+      .then((res) => {
+        if (!mounted) {
+          return;
+        }
+
+        setResData(res);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+
+        if (!mounted) {
+          return;
+        }
+
+        setErrorKey('reservation.errors.load');
+        setLoading(false);
+      });
+
+    return () => {
+      mounted = false;
+    };
+  }, [language]);
+
   useEffect(() => {
     const timeToParse = customTime || selectedTime;
     const detectedCategory = getMealCategoryFromTime(timeToParse, timeCategory);
+
     if (detectedCategory && detectedCategory !== timeCategory) {
       setTimeCategory(detectedCategory);
     }
   }, [selectedTime, customTime, timeCategory]);
 
-  // Time autocomplete dropdown state
-  const [showTimeDropdown, setShowTimeDropdown] = useState(false);
-  const timeInputWrapperRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    Promise.all([getReservationsData(), getHomeData()])
-      .then(([reservationsRes, homeRes]) => {
-        setResData(reservationsRes);
-        setHomeData(homeRes);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error(err);
-        setError('Failed to load reservation data.');
-        setLoading(false);
-      });
-  }, []);
-
-  // Close dropdown on click outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
@@ -317,13 +566,14 @@ export default function ReservationPage() {
         setShowTimeDropdown(false);
       }
     }
+
     document.addEventListener('mousedown', handleClickOutside);
+
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
-  // Filter suggestions based on typed input
   const filteredTimeSuggestions = timeSuggestions.filter((time) =>
     time.toLowerCase().includes(customTime.toLowerCase())
   );
@@ -334,75 +584,108 @@ export default function ReservationPage() {
     setShowTimeDropdown(false);
   };
 
-  // Step 4: Occasion
-  const [selectedOccasion, setSelectedOccasion] = useState('Birthday Celebration');
-
-  // Step 5: Seating
-  const [selectedSeating, setSelectedSeating] = useState('Private Room');
-  const [specialRequest, setSpecialRequest] = useState('');
-
-  // Booking submit status
-  const [isSubmitted, setIsSubmitted] = useState(false);
-
   if (loading) {
     return (
       <div className="pt-28 pb-20 text-center text-olive font-serif text-xl min-h-screen flex items-center justify-center">
-        Loading reservations...
+        {t('reservation.loading', undefined, 'Loading reservations...')}
       </div>
     );
   }
 
-  if (error || !resData || !homeData) {
+  if (errorKey || !resData) {
     return (
       <div className="pt-28 pb-20 text-center text-red-500 font-serif text-xl min-h-screen flex items-center justify-center">
-        {error || 'No reservation data available.'}
+        {errorKey
+          ? t(errorKey, undefined, 'Failed to load reservation data.')
+          : t('reservation.errors.noData', undefined, 'No reservation data available.')}
       </div>
     );
   }
 
-  const branchesList: Branch[] = homeData.branches.map((branch: any) => ({
+  const branchesList = resData.branches.map((branch) => ({
     ...branch,
-    img: imageMap[branch.img] || branch.img,
+    img: getImage(branch.img, imgHeroBg2),
   }));
 
-  const diningSpacesList: DiningSpace[] = homeData.diningSpaces.map((space: any) => ({
-    ...space,
-    img: imageMap[space.img] || space.img,
+  const seatingPreferences = resData.seatingPreferences.map((seating) => ({
+    ...seating,
+    img:
+      seating.img === 'imgGallery1'
+        ? imgGallery1
+        : seating.img === 'imgGallery5'
+          ? imgGallery5
+          : getImage(seating.img, imgHeroBg1),
   }));
 
-  const guestInfoList = resData.guestInformation.map((item: any) => ({
-    icon: iconMap[item.type] || Clock,
-    label: item.label,
-    value: item.value,
-  }));
+  const selectedBranchData =
+    branchesList.find((branch) => branch.id === selectedBranch) ||
+    branchesList[0];
 
-  // Helper date calculations
-  const daysInMonth = (year: number, month: number) => new Date(year, month + 1, 0).getDate();
-  const startDayOfMonth = (year: number, month: number) => new Date(year, month, 1).getDay();
+  const selectedOccasionData =
+    resData.occasions.find((occasion) => occasion.id === selectedOccasion) ||
+    resData.occasions[0];
 
-  const monthNames = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'
-  ];
+  const selectedSeatingData =
+    seatingPreferences.find((seating) => seating.id === selectedSeating) ||
+    seatingPreferences[0];
 
-  const daysOfWeek = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+  const daysInMonth = (year: number, month: number) =>
+    new Date(year, month + 1, 0).getDate();
+
+  const startDayOfMonth = (year: number, month: number) =>
+    new Date(year, month, 1).getDay();
+
+  const getOrdinalSuffix = (day: number) => {
+    if (language === 'KH') {
+      return '';
+    }
+
+    if (day > 3 && day < 21) {
+      return 'th';
+    }
+
+    switch (day % 10) {
+      case 1:
+        return 'st';
+      case 2:
+        return 'nd';
+      case 3:
+        return 'rd';
+      default:
+        return 'th';
+    }
+  };
+
+  const formatDateDisplay = (date: Date) => {
+    const monthName = resData.calendar.shortMonths[date.getMonth()];
+    const dayNum = date.getDate();
+    const yearNum = date.getFullYear();
+
+    if (language === 'KH') {
+      return `${dayNum} ${monthName} ${yearNum}`;
+    }
+
+    return `${monthName} ${dayNum}${getOrdinalSuffix(dayNum)} ${yearNum}`;
+  };
 
   const handlePrevMonth = () => {
     if (currentMonth === 0) {
       setCurrentMonth(11);
       setCurrentYear((prev) => prev - 1);
-    } else {
-      setCurrentMonth((prev) => prev - 1);
+      return;
     }
+
+    setCurrentMonth((prev) => prev - 1);
   };
 
   const handleNextMonth = () => {
     if (currentMonth === 11) {
       setCurrentMonth(0);
       setCurrentYear((prev) => prev + 1);
-    } else {
-      setCurrentMonth((prev) => prev + 1);
+      return;
     }
+
+    setCurrentMonth((prev) => prev + 1);
   };
 
   const getCalendarDays = () => {
@@ -410,13 +693,13 @@ export default function ReservationPage() {
     const startDay = startDayOfMonth(currentYear, currentMonth);
     const days = [];
 
-    // Prev month padding
     const prevMonthYear = currentMonth === 0 ? currentYear - 1 : currentYear;
     const prevMonthVal = currentMonth === 0 ? 11 : currentMonth - 1;
     const prevMonthTotalDays = daysInMonth(prevMonthYear, prevMonthVal);
 
     for (let i = startDay - 1; i >= 0; i--) {
       const dayVal = prevMonthTotalDays - i;
+
       days.push({
         day: dayVal,
         isCurrentMonth: false,
@@ -424,7 +707,6 @@ export default function ReservationPage() {
       });
     }
 
-    // Current month days
     for (let i = 1; i <= totalDays; i++) {
       days.push({
         day: i,
@@ -433,10 +715,10 @@ export default function ReservationPage() {
       });
     }
 
-    // Next month padding
     const nextMonthYear = currentMonth === 11 ? currentYear + 1 : currentYear;
     const nextMonthVal = currentMonth === 11 ? 0 : currentMonth + 1;
     const remainingCells = 42 - days.length;
+
     for (let i = 1; i <= remainingCells; i++) {
       days.push({
         day: i,
@@ -448,78 +730,55 @@ export default function ReservationPage() {
     return days;
   };
 
-  const occasions = [
-    { name: 'Family Dining', icon: Utensils },
-    { name: 'Business Meeting', icon: Briefcase },
-    { name: 'Birthday Celebration', icon: Cake },
-    { name: 'Corporate Event', icon: Building },
-    { name: 'Date Night', icon: Heart },
-    { name: 'Other', icon: MoreHorizontal }
-  ];
-
-  const seatingPreferences = [
-    { name: 'Indoor', img: diningSpacesList[3]?.img || imgHeroBg1 },
-    { name: 'Outdoor', img: imgGallery1 },
-    { name: 'Private Room', img: diningSpacesList[4]?.img || imgHeroBg2 },
-    { name: 'Big Room', img: imgGallery5 }
-  ];
-
-  const getOrdinalSuffix = (day: number) => {
-    if (day > 3 && day < 21) return 'th';
-    switch (day % 10) {
-      case 1:  return 'st';
-      case 2:  return 'nd';
-      case 3:  return 'rd';
-      default: return 'th';
-    }
-  };
-
-  const formatDateDisplay = (date: Date) => {
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    const monthName = months[date.getMonth()];
-    const dayNum = date.getDate();
-    const yearNum = date.getFullYear();
-    
-    return `${monthName} ${dayNum}${getOrdinalSuffix(dayNum)} ${yearNum}`;
-  };
-
-  const handleReservationSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
+  const validateAndSubmit = () => {
     if (!fullName.trim() || !phone.trim()) {
-      alert("Please fill in your Contact Details (Name & Phone Number) to complete your reservation.");
-      
-      const targetInput = !fullName.trim() ? "fullName" : "phoneNumber";
+      window.alert(resData.validation.contactRequired);
+
+      const targetInput = !fullName.trim() ? 'fullName' : 'phoneNumber';
       const element = document.getElementById(targetInput);
+
       if (element) {
         element.scrollIntoView({ behavior: 'smooth', block: 'center' });
         element.focus();
       }
+
       return;
     }
 
     if (fullName.trim().length < 2) {
-      alert("Please enter a valid Full Name (at least 2 characters).");
-      const element = document.getElementById("fullName");
+      window.alert(resData.validation.invalidName);
+
+      const element = document.getElementById('fullName');
+
       if (element) {
         element.scrollIntoView({ behavior: 'smooth', block: 'center' });
         element.focus();
       }
+
       return;
     }
 
     const phoneDigits = phone.replace(/\D/g, '');
+
     if (phoneDigits.length < 9 || phoneDigits.length > 12) {
-      alert("Please enter a valid Phone Number (typically 9 to 11 digits).");
-      const element = document.getElementById("phoneNumber");
+      window.alert(resData.validation.invalidPhone);
+
+      const element = document.getElementById('phoneNumber');
+
       if (element) {
         element.scrollIntoView({ behavior: 'smooth', block: 'center' });
         element.focus();
       }
+
       return;
     }
 
     setIsSubmitted(true);
+  };
+
+  const handleReservationSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    validateAndSubmit();
   };
 
   const handleReset = () => {
@@ -527,17 +786,20 @@ export default function ReservationPage() {
     setPhone('');
     setAdults(4);
     setChildrenCount(2);
-    setSelectedDate(new Date(2026, 5, 18));
+    setSelectedDate(today);
+    setCurrentYear(today.getFullYear());
+    setCurrentMonth(today.getMonth());
     setSelectedTime('06:30 AM');
-    setSelectedOccasion('Birthday Celebration');
-    setSelectedSeating('Private Room');
+    setCustomTime('');
+    setSelectedOccasion('birthdayCelebration');
+    setSelectedSeating('privateRoom');
     setSpecialRequest('');
     setIsSubmitted(false);
   };
 
   return (
     <div className="reservation-page">
-      <ReservationHero hero={resData.hero} info={guestInfoList} />
+      <ReservationHero data={resData} />
 
       {isSubmitted ? (
         <section className="reservation-form-section flex items-center justify-center py-24">
@@ -545,53 +807,83 @@ export default function ReservationPage() {
             <div className="success-icon-wrapper">
               <Check className="w-12 h-12 text-[#6b9158]" />
             </div>
-            <h2 className="font-serif text-3xl text-[#212d1b] text-center mb-4">Reservation Confirmed!</h2>
+
+            <h2 className="font-serif text-3xl text-[#212d1b] text-center mb-4">
+              {resData.success.title}
+            </h2>
+
             <p className="text-center text-[#646860] mb-8 max-w-md">
-              Thank you for booking with One More Restaurant. A confirmation message has been sent to your phone number.
+              {resData.success.desc}
             </p>
-            
+
             <div className="success-details mb-8">
               <div className="success-detail-row">
-                <span>Branch</span>
-                <strong>One More {selectedBranch}</strong>
+                <span>{resData.success.detailLabels.branch}</span>
+                <strong>{selectedBranchData.name}</strong>
               </div>
+
               <div className="success-detail-row">
-                <span>Guest Name</span>
-                <strong>{fullName || 'Valued Guest'}</strong>
+                <span>{resData.success.detailLabels.guestName}</span>
+                <strong>{fullName || resData.success.valuedGuest}</strong>
               </div>
+
               <div className="success-detail-row">
-                <span>Phone</span>
-                <strong>{phone || 'Not provided'}</strong>
+                <span>{resData.success.detailLabels.phone}</span>
+                <strong>{phone || resData.success.notProvided}</strong>
               </div>
+
               <div className="success-detail-row">
-                <span>Guests</span>
-                <strong>{adults + childrenCount} Guests ({adults} Adults, {childrenCount} Kids)</strong>
+                <span>{resData.success.detailLabels.guests}</span>
+                <strong>
+                  {formatText(resData.success.guestsValue, {
+                    total: adults + childrenCount,
+                    adults,
+                    children: childrenCount,
+                  })}
+                </strong>
               </div>
+
               <div className="success-detail-row">
-                <span>Date & Time</span>
-                <strong>{formatDateDisplay(selectedDate)} at {customTime || selectedTime}</strong>
+                <span>{resData.success.detailLabels.dateTime}</span>
+                <strong>
+                  {formatText(resData.success.dateTimeValue, {
+                    date: formatDateDisplay(selectedDate),
+                    time: customTime || selectedTime,
+                  })}
+                </strong>
               </div>
+
               <div className="success-detail-row">
-                <span>Seating & Occasion</span>
-                <strong>{selectedSeating} · {selectedOccasion}</strong>
+                <span>{resData.success.detailLabels.seatingOccasion}</span>
+                <strong>
+                  {formatText(resData.success.seatingOccasionValue, {
+                    seating: selectedSeatingData.name,
+                    occasion: selectedOccasionData.name,
+                  })}
+                </strong>
               </div>
             </div>
 
-            <button type="button" onClick={handleReset} className="reserve-btn-primary w-full">
-              Make Another Booking
+            <button
+              type="button"
+              onClick={handleReset}
+              className="reserve-btn-primary w-full"
+            >
+              {resData.success.makeAnother}
             </button>
           </div>
         </section>
       ) : (
-        <section className="reservation-form-section" aria-label="Reservation form">
+        <section className="reservation-form-section" aria-label={resData.form.aria}>
           <div className="reservation-form-container">
-            {/* Form Main Area */}
-            <form className="reservation-form-main" onSubmit={handleReservationSubmit}>
-              
-              {/* Step 1: Choose Branch */}
+            <form
+              className="reservation-form-main"
+              onSubmit={handleReservationSubmit}
+            >
               <div className="step-container">
                 <div className="reservation-step-heading mb-8">
                   <span>1</span>
+
                   <div>
                     <h2>{resData.steps.branch.title}</h2>
                     <p>{resData.steps.branch.desc}</p>
@@ -599,79 +891,69 @@ export default function ReservationPage() {
                 </div>
 
                 <div className="branch-selection-grid">
-                  {/* Toul Kork Card */}
-                  <button
-                    type="button"
-                    onClick={() => setSelectedBranch('Toul Kork')}
-                    className={`branch-card-btn text-left ${selectedBranch === 'Toul Kork' ? 'branch-card-btn-active' : ''}`}
-                  >
-                    <div className="branch-card-image-wrapper">
-                      <img src={branchesList[0]?.img} alt="Toul Kork Branch" />
-                    </div>
-                    <div className="branch-card-content">
-                      <div className="branch-card-header">
-                        <h3>One More Restaurant Toul Kork</h3>
-                        {selectedBranch === 'Toul Kork' && (
-                          <span className="branch-check-badge">
-                            <Check className="w-3.5 h-3.5 text-white" />
-                          </span>
-                        )}
-                      </div>
-                      <div className="branch-card-tags">
-                        {branchesList[0]?.tags.map((tag: string) => (
-                          <span key={tag} className="branch-tag">{tag}</span>
-                        ))}
-                      </div>
-                    </div>
-                  </button>
+                  {branchesList.map((branch) => {
+                    const isSelected = selectedBranch === branch.id;
 
-                  {/* Boeung Kak Card */}
-                  <button
-                    type="button"
-                    onClick={() => setSelectedBranch('Boeung Kak')}
-                    className={`branch-card-btn text-left ${selectedBranch === 'Boeung Kak' ? 'branch-card-btn-active' : ''}`}
-                  >
-                    <div className="branch-card-image-wrapper">
-                      <img src={branchesList[1]?.img} alt="Boeung Kak Branch" />
-                    </div>
-                    <div className="branch-card-content">
-                      <div className="branch-card-header">
-                        <h3>One More Restaurant Boeung Kak</h3>
-                        {selectedBranch === 'Boeung Kak' && (
-                          <span className="branch-check-badge">
-                            <Check className="w-3.5 h-3.5 text-white" />
-                          </span>
-                        )}
-                      </div>
-                      <div className="branch-card-tags">
-                        {branchesList[1]?.tags.map((tag: string) => (
-                          <span key={tag} className="branch-tag">{tag}</span>
-                        ))}
-                      </div>
-                    </div>
-                  </button>
+                    return (
+                      <button
+                        key={branch.id}
+                        type="button"
+                        onClick={() => setSelectedBranch(branch.id)}
+                        className={`branch-card-btn text-left ${
+                          isSelected ? 'branch-card-btn-active' : ''
+                        }`}
+                      >
+                        <div className="branch-card-image-wrapper">
+                          <img src={branch.img} alt={branch.name} />
+                        </div>
+
+                        <div className="branch-card-content">
+                          <div className="branch-card-header">
+                            <h3>{branch.name}</h3>
+
+                            {isSelected && (
+                              <span className="branch-check-badge">
+                                <Check className="w-3.5 h-3.5 text-white" />
+                              </span>
+                            )}
+                          </div>
+
+                          <div className="branch-card-tags">
+                            {branch.tags.map((tag) => (
+                              <span key={tag} className="branch-tag">
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
 
               <div className="step-divider" />
 
-              {/* Step 2: Contact Details */}
               <div className="step-container">
                 <div className="reservation-step-heading mb-8">
                   <span>2</span>
+
                   <div>
-                    <h2>Contact Details</h2>
-                    <p>Enter your information so we can contact you regarding your booking</p>
+                    <h2>{resData.steps.contact.title}</h2>
+                    <p>{resData.steps.contact.desc}</p>
                   </div>
                 </div>
 
                 <div className="contact-details-grid">
                   <div className="form-group">
-                    <label htmlFor="fullName">Full Name *</label>
+                    <label htmlFor="fullName">
+                      {resData.form.labels.fullName}
+                    </label>
+
                     <input
                       type="text"
                       id="fullName"
-                      placeholder="Enter full name"
+                      placeholder={resData.form.placeholders.fullName}
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
                       required
@@ -679,11 +961,14 @@ export default function ReservationPage() {
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="phoneNumber">Phone Number *</label>
+                    <label htmlFor="phoneNumber">
+                      {resData.form.labels.phoneNumber}
+                    </label>
+
                     <input
                       type="tel"
                       id="phoneNumber"
-                      placeholder="Enter phone number"
+                      placeholder={resData.form.placeholders.phoneNumber}
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
                       required
@@ -694,33 +979,38 @@ export default function ReservationPage() {
 
               <div className="step-divider" />
 
-              {/* Step 3: Guests */}
               <div className="step-container">
                 <div className="reservation-step-heading mb-8">
                   <span>3</span>
+
                   <div>
-                    <h2>Guests</h2>
-                    <p>Tell us how many people will be joining you</p>
+                    <h2>{resData.steps.guests.title}</h2>
+                    <p>{resData.steps.guests.desc}</p>
                   </div>
                 </div>
 
                 <div className="guests-counter-container">
                   <div className="counter-row">
-                    <span className="counter-label">Adults</span>
+                    <span className="counter-label">
+                      {resData.form.labels.adults}
+                    </span>
+
                     <div className="counter-control">
                       <button
                         type="button"
                         onClick={() => setAdults((prev) => Math.max(1, prev - 1))}
                         disabled={adults <= 1}
-                        aria-label="Decrease adults"
+                        aria-label={resData.form.ariaLabels.decreaseAdults}
                       >
                         <Minus className="w-4 h-4" />
                       </button>
+
                       <span className="counter-value">{adults}</span>
+
                       <button
                         type="button"
                         onClick={() => setAdults((prev) => prev + 1)}
-                        aria-label="Increase adults"
+                        aria-label={resData.form.ariaLabels.increaseAdults}
                       >
                         <Plus className="w-4 h-4" />
                       </button>
@@ -728,21 +1018,28 @@ export default function ReservationPage() {
                   </div>
 
                   <div className="counter-row">
-                    <span className="counter-label">Children</span>
+                    <span className="counter-label">
+                      {resData.form.labels.children}
+                    </span>
+
                     <div className="counter-control">
                       <button
                         type="button"
-                        onClick={() => setChildrenCount((prev) => Math.max(0, prev - 1))}
+                        onClick={() =>
+                          setChildrenCount((prev) => Math.max(0, prev - 1))
+                        }
                         disabled={childrenCount <= 0}
-                        aria-label="Decrease children"
+                        aria-label={resData.form.ariaLabels.decreaseChildren}
                       >
                         <Minus className="w-4 h-4" />
                       </button>
+
                       <span className="counter-value">{childrenCount}</span>
+
                       <button
                         type="button"
                         onClick={() => setChildrenCount((prev) => prev + 1)}
-                        aria-label="Increase children"
+                        aria-label={resData.form.ariaLabels.increaseChildren}
                       >
                         <Plus className="w-4 h-4" />
                       </button>
@@ -752,7 +1049,12 @@ export default function ReservationPage() {
                   <div className="total-guests-pill-wrapper">
                     <div className="total-guests-pill">
                       <User className="w-4 h-4 text-[#6b9158]" />
-                      <span>Total {adults + childrenCount} Guests</span>
+
+                      <span>
+                        {formatText(resData.form.totalGuests, {
+                          count: adults + childrenCount,
+                        })}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -760,35 +1062,44 @@ export default function ReservationPage() {
 
               <div className="step-divider" />
 
-              {/* Step 3 (repeated): Select Date & Time */}
               <div className="step-container">
                 <div className="reservation-step-heading mb-8">
-                  <span>3</span>
+                  <span>4</span>
+
                   <div>
-                    <h2>Select Date & Time</h2>
-                    <p>Choose when you would like to dine with us</p>
+                    <h2>{resData.steps.dateTime.title}</h2>
+                    <p>{resData.steps.dateTime.desc}</p>
                   </div>
                 </div>
 
                 <div className="date-time-picker-grid">
-                  {/* Left Column: Calendar */}
                   <div className="custom-calendar-widget">
                     <div className="calendar-header">
                       <span className="calendar-month-year">
-                        {monthNames[currentMonth]} {currentYear}
+                        {resData.calendar.months[currentMonth]} {currentYear}
                       </span>
+
                       <div className="calendar-nav">
-                        <button type="button" onClick={handlePrevMonth} aria-label="Previous month">
+                        <button
+                          type="button"
+                          onClick={handlePrevMonth}
+                          aria-label={resData.form.ariaLabels.previousMonth}
+                        >
                           <ChevronLeft className="w-4 h-4" />
                         </button>
-                        <button type="button" onClick={handleNextMonth} aria-label="Next month">
+
+                        <button
+                          type="button"
+                          onClick={handleNextMonth}
+                          aria-label={resData.form.ariaLabels.nextMonth}
+                        >
                           <ChevronRight className="w-4 h-4" />
                         </button>
                       </div>
                     </div>
 
                     <div className="calendar-grid">
-                      {daysOfWeek.map((day, index) => (
+                      {resData.calendar.daysOfWeek.map((day, index) => (
                         <div key={`${day}-${index}`} className="calendar-day-header">
                           {day}
                         </div>
@@ -805,9 +1116,9 @@ export default function ReservationPage() {
                             key={idx}
                             type="button"
                             onClick={() => setSelectedDate(date)}
-                            className={`calendar-cell ${!isCurrentMonth ? 'calendar-cell-other-month' : ''} ${
-                              isSelected ? 'calendar-cell-selected' : ''
-                            }`}
+                            className={`calendar-cell ${
+                              !isCurrentMonth ? 'calendar-cell-other-month' : ''
+                            } ${isSelected ? 'calendar-cell-selected' : ''}`}
                           >
                             <span>{day}</span>
                           </button>
@@ -816,7 +1127,6 @@ export default function ReservationPage() {
                     </div>
                   </div>
 
-                  {/* Right Column: Time slots */}
                   <div className="time-picker-widget">
                     <div className="time-tabs">
                       {(['Breakfast', 'Lunch', 'Dinner'] as const).map((cat) => (
@@ -826,10 +1136,13 @@ export default function ReservationPage() {
                           onClick={() => {
                             setTimeCategory(cat);
                             setSelectedTime(timeSlots[cat][0]);
+                            setCustomTime('');
                           }}
-                          className={`time-tab-btn ${timeCategory === cat ? 'time-tab-btn-active' : ''}`}
+                          className={`time-tab-btn ${
+                            timeCategory === cat ? 'time-tab-btn-active' : ''
+                          }`}
                         >
-                          {cat}
+                          {resData.timeCategories[cat]}
                         </button>
                       ))}
                     </div>
@@ -846,7 +1159,9 @@ export default function ReservationPage() {
                               setSelectedTime(slot);
                               setCustomTime('');
                             }}
-                            className={`time-slot-btn ${isSelected ? 'time-slot-btn-selected' : ''}`}
+                            className={`time-slot-btn ${
+                              isSelected ? 'time-slot-btn-selected' : ''
+                            }`}
                           >
                             {slot}
                           </button>
@@ -856,9 +1171,10 @@ export default function ReservationPage() {
 
                     <div ref={timeInputWrapperRef} className="custom-time-input-wrapper">
                       <Clock className="custom-time-icon" />
+
                       <input
                         type="text"
-                        placeholder="Enter time..."
+                        placeholder={resData.form.placeholders.time}
                         value={customTime}
                         onChange={(e) => {
                           setCustomTime(e.target.value);
@@ -872,20 +1188,23 @@ export default function ReservationPage() {
                           }
                         }}
                       />
-                      {showTimeDropdown && customTime.trim().length > 0 && filteredTimeSuggestions.length > 0 && (
-                        <div className="time-dropdown-list">
-                          {filteredTimeSuggestions.map((time) => (
-                            <button
-                              key={time}
-                              type="button"
-                              className="time-dropdown-item"
-                              onClick={() => handleSelectSuggestion(time)}
-                            >
-                              {time}
-                            </button>
-                          ))}
-                        </div>
-                      )}
+
+                      {showTimeDropdown &&
+                        customTime.trim().length > 0 &&
+                        filteredTimeSuggestions.length > 0 && (
+                          <div className="time-dropdown-list">
+                            {filteredTimeSuggestions.map((time) => (
+                              <button
+                                key={time}
+                                type="button"
+                                className="time-dropdown-item"
+                                onClick={() => handleSelectSuggestion(time)}
+                              >
+                                {time}
+                              </button>
+                            ))}
+                          </div>
+                        )}
                     </div>
                   </div>
                 </div>
@@ -893,30 +1212,32 @@ export default function ReservationPage() {
 
               <div className="step-divider" />
 
-              {/* Step 4: Occasion */}
               <div className="step-container">
                 <div className="reservation-step-heading mb-8">
-                  <span>4</span>
+                  <span>5</span>
+
                   <div>
-                    <h2>Special Occasion</h2>
-                    <p>Let us know if you are celebrating a special event</p>
+                    <h2>{resData.steps.occasion.title}</h2>
+                    <p>{resData.steps.occasion.desc}</p>
                   </div>
                 </div>
 
                 <div className="occasion-grid">
-                  {occasions.map((occ) => {
-                    const OccIcon = occ.icon;
-                    const isSelected = selectedOccasion === occ.name;
+                  {resData.occasions.map((occasion) => {
+                    const OccIcon = occasionIconMap[occasion.icon] || MoreHorizontal;
+                    const isSelected = selectedOccasion === occasion.id;
 
                     return (
                       <button
-                        key={occ.name}
+                        key={occasion.id}
                         type="button"
-                        onClick={() => setSelectedOccasion(occ.name)}
-                        className={`occasion-btn-card ${isSelected ? 'occasion-btn-card-active' : ''}`}
+                        onClick={() => setSelectedOccasion(occasion.id)}
+                        className={`occasion-btn-card ${
+                          isSelected ? 'occasion-btn-card-active' : ''
+                        }`}
                       >
                         <OccIcon className="w-5 h-5 mb-2 shrink-0" />
-                        <span>{occ.name}</span>
+                        <span>{occasion.name}</span>
                       </button>
                     );
                   })}
@@ -925,30 +1246,33 @@ export default function ReservationPage() {
 
               <div className="step-divider" />
 
-              {/* Step 5: Seating Preference */}
               <div className="step-container">
                 <div className="reservation-step-heading mb-8">
-                  <span>5</span>
+                  <span>6</span>
+
                   <div>
-                    <h2>Seating Preference</h2>
-                    <p>Choose where you would like to be seated</p>
+                    <h2>{resData.steps.seating.title}</h2>
+                    <p>{resData.steps.seating.desc}</p>
                   </div>
                 </div>
 
                 <div className="seating-grid">
                   {seatingPreferences.map((seating) => {
-                    const isSelected = selectedSeating === seating.name;
+                    const isSelected = selectedSeating === seating.id;
 
                     return (
                       <button
-                        key={seating.name}
+                        key={seating.id}
                         type="button"
-                        onClick={() => setSelectedSeating(seating.name)}
-                        className={`seating-btn-card text-left ${isSelected ? 'seating-btn-card-active' : ''}`}
+                        onClick={() => setSelectedSeating(seating.id)}
+                        className={`seating-btn-card text-left ${
+                          isSelected ? 'seating-btn-card-active' : ''
+                        }`}
                       >
                         <div className="seating-card-image-wrapper">
                           <img src={seating.img} alt={seating.name} />
                         </div>
+
                         <div className="seating-card-label">
                           <span>{seating.name}</span>
                         </div>
@@ -958,11 +1282,14 @@ export default function ReservationPage() {
                 </div>
 
                 <div className="special-request-wrapper mt-8">
-                  <label htmlFor="specialRequest">Special Request</label>
+                  <label htmlFor="specialRequest">
+                    {resData.form.labels.specialRequest}
+                  </label>
+
                   <textarea
                     id="specialRequest"
                     rows={4}
-                    placeholder="Allergies, seating requests, etc."
+                    placeholder={resData.form.placeholders.specialRequest}
                     value={specialRequest}
                     onChange={(e) => setSpecialRequest(e.target.value)}
                   />
@@ -970,82 +1297,93 @@ export default function ReservationPage() {
 
                 <div className="submit-area mt-8">
                   <button type="submit" className="reserve-btn-primary w-full">
-                    Reserve a Table
+                    {resData.form.submit}
                   </button>
+
                   <p className="cancel-notice text-center mt-3">
-                    Free cancellation up to 24 hours before your reservation.
+                    {resData.form.cancellationNotice}
                   </p>
                 </div>
               </div>
-
             </form>
 
-            {/* Sticky Sidebar Booking Summary */}
             <aside className="reservation-summary-card">
-              <h2>Booking Summary</h2>
+              <h2>{resData.summary.title}</h2>
 
               <div className="summary-content">
                 <div className="summary-list">
                   <div className="summary-item summary-item-branch">
-                    <span>Branch</span>
-                    <strong>One More {selectedBranch}</strong>
+                    <span>{resData.summary.labels.branch}</span>
+                    <strong>{selectedBranchData.name}</strong>
                   </div>
 
                   <div className="summary-item">
-                    <span>Name</span>
-                    <strong>{fullName || '—'}</strong>
+                    <span>{resData.summary.labels.name}</span>
+                    <strong>{fullName || resData.summary.empty}</strong>
                   </div>
 
                   <div className="summary-item">
-                    <span>Contact</span>
-                    <strong>{phone || '—'}</strong>
+                    <span>{resData.summary.labels.contact}</span>
+                    <strong>{phone || resData.summary.empty}</strong>
                   </div>
 
                   <div className="summary-item">
-                    <span>Guests</span>
+                    <span>{resData.summary.labels.guests}</span>
                     <strong>
-                      {adults + childrenCount} Guests
-                      <span className="guest-breakdown">({adults} Adults, {childrenCount} Kids)</span>
+                      {formatText(resData.form.totalGuests, {
+                        count: adults + childrenCount,
+                      })}
+
+                      <span className="guest-breakdown">
+                        {formatText(resData.summary.guestBreakdown, {
+                          adults,
+                          children: childrenCount,
+                        })}
+                      </span>
                     </strong>
                   </div>
 
                   <div className="summary-item">
-                    <span>Date</span>
+                    <span>{resData.summary.labels.date}</span>
                     <strong>
                       {formatDateDisplay(selectedDate)}
-                      <span className="time-tag">({(customTime || selectedTime).toLowerCase()} {timeCategory.toLowerCase()})</span>
+
+                      <span className="time-tag">
+                        {formatText(resData.summary.timeTag, {
+                          time: customTime || selectedTime,
+                          category: resData.timeCategories[timeCategory],
+                        })}
+                      </span>
                     </strong>
                   </div>
 
                   <div className="summary-item">
-                    <span>Occasion</span>
-                    <strong>{selectedOccasion}</strong>
+                    <span>{resData.summary.labels.occasion}</span>
+                    <strong>{selectedOccasionData.name}</strong>
                   </div>
 
                   <div className="summary-item">
-                    <span>Seating</span>
-                    <strong>{selectedSeating}</strong>
+                    <span>{resData.summary.labels.seating}</span>
+                    <strong>{selectedSeatingData.name}</strong>
                   </div>
                 </div>
 
-                <p className="arrival-notice">
-                  Please arrive 10 mins early. Reservations are held for 15 mins after the scheduled time.
-                </p>
+                <p className="arrival-notice">{resData.summary.arrivalNotice}</p>
 
                 <div className="summary-actions">
                   <button
                     type="button"
-                    onClick={handleReservationSubmit}
+                    onClick={validateAndSubmit}
                     className="reserve-btn-primary w-full"
                   >
-                    Reserve a Table
+                    {resData.summary.reserveButton}
                   </button>
 
                   <a
-                    href="tel:+85523888222"
+                    href={resData.summary.phoneHref}
                     className="reserve-btn-secondary w-full text-center"
                   >
-                    Contact Restaurant
+                    {resData.summary.contactRestaurant}
                   </a>
                 </div>
               </div>
@@ -1054,8 +1392,7 @@ export default function ReservationPage() {
         </section>
       )}
 
-      {/* FAQ Section */}
-      <FaqSection />
+      <FaqSection faq={resData.faq} />
     </div>
   );
 }

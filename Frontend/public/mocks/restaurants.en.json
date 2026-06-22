@@ -1,0 +1,116 @@
+{
+  "header": {
+    "title": "Every Location Has Its Own Story.",
+    "desc": "From the quiet Riverside Garden to the vibrant City Centre, each of our locations is a chapter in the story of traditional Cambodian flavors, served in spaces designed to feel like home."
+  },
+  "ui": {
+    "reserveCta": "Reserve a Table",
+    "heroMapAlt": "Map of branch locations",
+    "comparison": {
+      "eyebrow": "What's different",
+      "title": "Compare Our Locations",
+      "featureLabel": "Feature",
+      "featureDesc": "Compare venue highlights",
+      "toulKorkTitle": "Toul Kork",
+      "boeungKakTitle": "Boeung Kak",
+      "venueTag": "Venue",
+      "toulKorkAlt": "Toul Kork venue",
+      "boeungKakAlt": "Boeung Kak venue"
+    },
+    "findUs": {
+      "eyebrow": "Our Locations",
+      "title": "Find us here",
+      "description": "Two distinct dining destinations, one unforgettable culinary story."
+    },
+    "map": {
+      "eyebrow": "See the Map",
+      "title": "See us on Map",
+      "description": "Two distinct dining destinations, one unforgettable culinary story.",
+      "imageAlt": "Locations map view full"
+    },
+    "modal": {
+      "closeAria": "Close details",
+      "venueDetails": "Venue details",
+      "highlightsTitle": "Key Venue Highlights",
+      "reserveCta": "Reserve a Table"
+    }
+  },
+  "comparison": {
+    "features": [
+      {
+        "name": "Family Dining",
+        "toulKork": true,
+        "boeungKak": true
+      },
+      {
+        "name": "Private Room",
+        "toulKork": true,
+        "boeungKak": true
+      },
+      {
+        "name": "Business Meeting",
+        "toulKork": true,
+        "boeungKak": true
+      },
+      {
+        "name": "Event Space",
+        "toulKork": true,
+        "boeungKak": true
+      },
+      {
+        "name": "Parking",
+        "toulKork": true,
+        "boeungKak": true
+      },
+      {
+        "name": "Capacity",
+        "toulKork": "200+ guests",
+        "boeungKak": "300+ guests"
+      }
+    ]
+  },
+  "locations": [
+    {
+      "id": "toulKork",
+      "name": "One More Restaurant Toul Kork",
+      "address": "37 St 315, Phnom Penh 120407",
+      "phone": "023 888 222",
+      "hours": "Daily: 06:00 AM - 10:00 PM",
+      "image": "@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.png",
+      "tags": [
+        "Family Friendly",
+        "Business Meeting",
+        "Private Room"
+      ],
+      "description": "Our signature branch in Toul Kork offers a beautiful garden dining experience and elegant private rooms. Features a layout designed for family gatherings, professional business meetings, and celebrations.",
+      "highlights": [
+        "Capacity for up to 200+ guests",
+        "6 Private VIP Rooms with full AV setup",
+        "Dedicated kids play zone for family comfort",
+        "Complimentary secure valet parking",
+        "Beautifully landscaped outdoor garden area"
+      ]
+    },
+    {
+      "id": "boeungKak",
+      "name": "One More Restaurant Boeung Kak",
+      "address": "G2 Street R11, Phnom Penh 120210",
+      "phone": "021 888 222",
+      "hours": "Daily: 06:00 AM - 10:00 PM",
+      "image": "@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.png",
+      "tags": [
+        "Event Space",
+        "Large Groups",
+        "Corporate"
+      ],
+      "description": "Our Boeung Kak branch showcases striking modern architectural design and expansive layouts. An ideal setting for large-scale corporate events, banquets, and memorable dining experiences.",
+      "highlights": [
+        "Capacity for up to 300+ guests",
+        "Large event space with stage & sound system",
+        "Modern chic architecture & photography spots",
+        "High-capacity parking area",
+        "Special banquet & group catering menus"
+      ]
+    }
+  ]
+}

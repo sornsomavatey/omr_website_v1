@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Phone, MapPin, Clock, Check, X } from 'lucide-react';
-import { getRestaurantsData } from '@/lib/api';
+import { Check, X } from 'lucide-react';
+
 import { Button } from '@/components/ui/button';
 import LocationCard from '@/components/LocationCard';
 import SectionHeader from '@/components/SectionHeader';
-import './index.css';
+import { useTranslation } from '@/hooks/useTranslation';
 
-// Asset imports
 import locationImg from '@/assets/location.png';
 import imgBranchToulKork from '@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.png';
 import imgBranchBoeungKak from '@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.png';
+
+import './index.css';
 
 type LocationItem = {
   id: string;
@@ -35,44 +36,110 @@ type RestaurantsData = {
     title: string;
     desc: string;
   };
+  ui: {
+    reserveCta: string;
+    heroMapAlt: string;
+    comparison: {
+      eyebrow: string;
+      title: string;
+      featureLabel: string;
+      featureDesc: string;
+      toulKorkTitle: string;
+      boeungKakTitle: string;
+      venueTag: string;
+      toulKorkAlt: string;
+      boeungKakAlt: string;
+    };
+    findUs: {
+      eyebrow: string;
+      title: string;
+      description: string;
+    };
+    map: {
+      eyebrow: string;
+      title: string;
+      description: string;
+      imageAlt: string;
+    };
+    modal: {
+      closeAria: string;
+      venueDetails: string;
+      highlightsTitle: string;
+      reserveCta: string;
+    };
+  };
   comparison: {
     features: ComparisonFeature[];
   };
   locations: LocationItem[];
 };
 
-// Map JSON image paths to imported local assets
 const imageMapper: Record<string, string> = {
-  '@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.png': imgBranchToulKork,
-  '@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.png': imgBranchBoeungKak,
+  '@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.png':
+    imgBranchToulKork,
+  '@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.png':
+    imgBranchBoeungKak,
 };
 
+async function getRestaurantsDataByLanguage(language: string) {
+  const fileName =
+    language === 'KH' ? 'restaurants.kh.json' : 'restaurants.en.json';
+
+  const response = await fetch(`/mocks/${fileName}`);
+
+  if (!response.ok) {
+    throw new Error(`Failed to load ${fileName}`);
+  }
+
+  return (await response.json()) as RestaurantsData;
+}
+
 export default function Branches() {
+  const { language, t } = useTranslation();
+
   const [data, setData] = useState<RestaurantsData | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [errorKey, setErrorKey] = useState<string | null>(null);
   const [activeModal, setActiveModal] = useState<LocationItem | null>(null);
 
   useEffect(() => {
-    getRestaurantsData()
+    let mounted = true;
+
+    setLoading(true);
+    setErrorKey(null);
+
+    getRestaurantsDataByLanguage(language)
       .then((res) => {
+        if (!mounted) {
+          return;
+        }
+
         setData(res);
         setLoading(false);
       })
       .catch((err) => {
         console.error(err);
-        setError('Failed to load locations.');
+
+        if (!mounted) {
+          return;
+        }
+
+        setErrorKey('branches.errors.load');
         setLoading(false);
       });
-  }, []);
 
-  // Prevent scroll when modal is open
+    return () => {
+      mounted = false;
+    };
+  }, [language]);
+
   useEffect(() => {
     if (activeModal) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
     }
+
     return () => {
       document.body.style.overflow = 'unset';
     };
@@ -81,23 +148,26 @@ export default function Branches() {
   if (loading) {
     return (
       <div className="pt-32 pb-20 text-center text-olive font-serif text-xl min-h-screen flex items-center justify-center">
-        Loading locations...
+        {t('branches.loading', undefined, 'Loading locations...')}
       </div>
     );
   }
 
-  if (error || !data) {
+  if (errorKey || !data) {
     return (
       <div className="pt-32 pb-20 text-center text-red-500 font-serif text-xl min-h-screen flex items-center justify-center">
-        {error || 'No data available.'}
+        {errorKey
+          ? t(errorKey, undefined, 'Failed to load locations.')
+          : t('branches.errors.noData', undefined, 'No data available.')}
       </div>
     );
   }
 
-  const { header, comparison, locations } = data;
+  const { header, comparison, locations, ui } = data;
 
   const handleScrollToMap = () => {
     const mapSection = document.getElementById('see-us-on-map');
+
     if (mapSection) {
       mapSection.scrollIntoView({ behavior: 'smooth' });
     }
@@ -105,24 +175,18 @@ export default function Branches() {
 
   return (
     <div className="branches-container">
-      
-      {/* 1. HERO SECTION */}
       <section className="branches-hero">
         <div className="branches-hero-glow-1" />
         <div className="branches-hero-glow-2" />
 
         <div className="branches-hero-inner">
           <div className="hero-text-side">
-            <h1 className="hero-title">
-              {header.title}
-            </h1>
-            
-            <p className="hero-desc">
-              {header.desc}
-            </p>
-            
+            <h1 className="hero-title">{header.title}</h1>
+
+            <p className="hero-desc">{header.desc}</p>
+
             <Button asChild className="hero-cta-button">
-              <Link to="/reservations">Reserve a Table</Link>
+              <Link to="/reservations">{ui.reserveCta}</Link>
             </Button>
           </div>
 
@@ -130,7 +194,7 @@ export default function Branches() {
             <div className="hero-map-frame">
               <img
                 src={locationImg}
-                alt="Map of branch locations"
+                alt={ui.heroMapAlt}
                 className="hero-map-image"
               />
             </div>
@@ -138,79 +202,75 @@ export default function Branches() {
         </div>
       </section>
 
-      {/* 2. COMPARE OUR LOCATIONS */}
       <section className="comparison-section">
         <div className="comparison-inner">
           <SectionHeader
-            eyebrow="What's different"
-            title="Compare Our Locations"
+            eyebrow={ui.comparison.eyebrow}
+            title={ui.comparison.title}
           />
 
           <div className="comparison-table-container">
             <div className="comparison-scroll-wrapper">
-              
-              {/* Table Headers */}
               <div className="comparison-headers-grid">
-                {/* Feature Description Card */}
                 <div className="feature-info-card">
                   <span className="feature-info-label">
-                    Feature
+                    {ui.comparison.featureLabel}
                   </span>
+
                   <span className="feature-info-desc">
-                    Compare venue highlights
+                    {ui.comparison.featureDesc}
                   </span>
                 </div>
 
-                {/* Toul Kork Card */}
                 <div className="branch-header-card">
                   <img
                     src={imgBranchToulKork}
-                    alt="Toul Kork Venue"
+                    alt={ui.comparison.toulKorkAlt}
                     className="branch-header-image"
                   />
+
                   <div className="branch-header-overlay" />
+
                   <div className="branch-header-content">
                     <h4 className="branch-header-title">
-                      Toul Kork
+                      {ui.comparison.toulKorkTitle}
                     </h4>
+
                     <span className="branch-header-tag">
-                      Venue
+                      {ui.comparison.venueTag}
                     </span>
                   </div>
                 </div>
 
-                {/* Boeung Kak Card */}
                 <div className="branch-header-card">
                   <img
                     src={imgBranchBoeungKak}
-                    alt="Boeung Kak Venue"
+                    alt={ui.comparison.boeungKakAlt}
                     className="branch-header-image"
                   />
+
                   <div className="branch-header-overlay" />
+
                   <div className="branch-header-content">
                     <h4 className="branch-header-title">
-                      Boeung Kak
+                      {ui.comparison.boeungKakTitle}
                     </h4>
+
                     <span className="branch-header-tag">
-                      Venue
+                      {ui.comparison.venueTag}
                     </span>
                   </div>
                 </div>
               </div>
 
-              {/* Table Rows */}
               <div className="comparison-rows-list">
                 {comparison.features.map((feature, idx) => (
                   <div
                     key={`${feature.name}-${idx}`}
                     className="comparison-row-item"
                   >
-                    {/* Feature Name */}
-                    <div className="feature-name">
-                      {feature.name}
-                    </div>
+                    <div className="feature-name">{feature.name}</div>
 
-                    {/* Toul Kork Option */}
                     <div className="feature-value-cell">
                       {typeof feature.toulKork === 'boolean' ? (
                         feature.toulKork ? (
@@ -223,13 +283,10 @@ export default function Branches() {
                           </div>
                         )
                       ) : (
-                        <span className="text-value">
-                          {feature.toulKork}
-                        </span>
+                        <span className="text-value">{feature.toulKork}</span>
                       )}
                     </div>
 
-                    {/* Boeung Kak Option */}
                     <div className="feature-value-cell">
                       {typeof feature.boeungKak === 'boolean' ? (
                         feature.boeungKak ? (
@@ -242,28 +299,23 @@ export default function Branches() {
                           </div>
                         )
                       ) : (
-                        <span className="text-value">
-                          {feature.boeungKak}
-                        </span>
+                        <span className="text-value">{feature.boeungKak}</span>
                       )}
                     </div>
                   </div>
                 ))}
               </div>
-
             </div>
           </div>
         </div>
       </section>
 
-      {/* 3. FIND US HERE */}
       <section className="find-us-section">
         <div className="comparison-inner text-center">
-          
           <SectionHeader
-            eyebrow="Our Locations"
-            title="Find us here"
-            description="Two distinct dining destinations, one unforgettable culinary story."
+            eyebrow={ui.findUs.eyebrow}
+            title={ui.findUs.title}
+            description={ui.findUs.description}
           />
 
           <div className="find-us-grid">
@@ -271,80 +323,70 @@ export default function Branches() {
               <LocationCard
                 key={loc.id}
                 branch={loc}
-                onDetailClick={(b) => setActiveModal(b as LocationItem)}
+                onDetailClick={(branch) =>
+                  setActiveModal(branch as LocationItem)
+                }
                 onMapClick={handleScrollToMap}
                 imageMapper={imageMapper}
               />
             ))}
           </div>
-
         </div>
       </section>
 
-      {/* 4. SEE US ON MAP */}
       <section id="see-us-on-map" className="map-section">
         <div className="map-wrapper text-center">
-          
           <SectionHeader
-            eyebrow="See the Map"
-            title="See us on Map"
-            description="Two distinct dining destinations, one unforgettable culinary story."
+            eyebrow={ui.map.eyebrow}
+            title={ui.map.title}
+            description={ui.map.description}
           />
 
           <div className="map-frame">
             <img
               src={locationImg}
-              alt="Locations map view full"
+              alt={ui.map.imageAlt}
               className="map-image-large"
             />
           </div>
-
         </div>
       </section>
 
-      {/* INTERACTIVE DETAIL DIALOG / MODAL */}
       {activeModal && (
         <div className="modal-backdrop">
-          
-          {/* Modal Backdrop click handler */}
           <div
             className="modal-click-overlay"
             onClick={() => setActiveModal(null)}
           />
 
           <div className="modal-window">
-            
-            {/* Close Button */}
             <Button
               onClick={() => setActiveModal(null)}
               variant="ghost"
               size="icon"
               className="modal-close-button"
-              aria-label="Close details"
+              aria-label={ui.modal.closeAria}
             >
               <X size={18} />
             </Button>
 
-            {/* Top Image */}
             <div className="modal-hero-image-wrapper">
               <img
                 src={imageMapper[activeModal.image] || activeModal.image}
                 alt={activeModal.name}
                 className="modal-hero-image"
               />
+
               <div className="modal-hero-overlay" />
+
               <div className="modal-hero-badge">
-                Venue details
+                {ui.modal.venueDetails}
               </div>
             </div>
 
-            {/* Content Area */}
             <div className="modal-content">
-              <h3 className="modal-title">
-                {activeModal.name}
-              </h3>
+              <h3 className="modal-title">{activeModal.name}</h3>
 
-              {/* Badges */}
               <div className="modal-badges-row">
                 {activeModal.tags.map((tag) => (
                   <span key={tag} className="pill-badge">
@@ -353,16 +395,13 @@ export default function Branches() {
                 ))}
               </div>
 
-              {/* Description */}
-              <p className="modal-desc">
-                {activeModal.description}
-              </p>
+              <p className="modal-desc">{activeModal.description}</p>
 
-              {/* Highlights */}
               <div className="modal-highlights-container">
                 <h4 className="modal-highlights-header">
-                  Key Venue Highlights
+                  {ui.modal.highlightsTitle}
                 </h4>
+
                 <ul className="modal-highlights-list">
                   {activeModal.highlights.map((highlight, index) => (
                     <li key={index} className="modal-highlight-item">
@@ -373,21 +412,18 @@ export default function Branches() {
                 </ul>
               </div>
 
-              {/* Reserve Button */}
-              <Button
-                asChild
-                className="modal-reserve-button"
-              >
-                <Link to="/reservations" onClick={() => setActiveModal(null)}>
-                  Reserve a Table
+              <Button asChild className="modal-reserve-button">
+                <Link
+                  to="/reservations"
+                  onClick={() => setActiveModal(null)}
+                >
+                  {ui.modal.reserveCta}
                 </Link>
               </Button>
             </div>
-
           </div>
         </div>
       )}
-
     </div>
   );
 }
