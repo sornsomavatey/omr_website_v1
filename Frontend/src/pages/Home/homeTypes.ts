@@ -1,31 +1,31 @@
 export type SignatureDish = {
-  name: string;
-  category: string;
-  desc: string;
+  nameKey: string;
+  categoryKey: string;
+  descKey: string;
   img: string;
   price: string;
-  badge: string;
+  badgeKey: string;
 };
 
 export type DiningSpace = {
-  name: string;
-  tag: string;
-  desc: string;
+  nameKey: string;
+  tagKey: string;
+  descKey: string;
   img: string;
 };
 
 export type Branch = {
-  name: string;
-  address: string;
+  nameKey: string;
+  addressKey: string;
   phone: string;
-  hours: string;
+  hoursKey: string;
   img: string;
-  tags: string[];
+  tagKeys: string[];
 };
 
 export type Testimonial = {
   name: string;
-  date: string;
-  text: string;
+  dateKey: string;
+  textKey: string;
   avatar: string;
 };

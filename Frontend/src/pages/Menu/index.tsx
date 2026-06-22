@@ -1,7 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+
 import DishCard from '@/components/ui/dish-card';
 import { getMenuData } from '@/lib/api';
-import './index.css';
+import { useTranslation } from '@/hooks/useTranslation';
+
 import imgLotusHalf from '@/assets/lotus-half.png';
 
 // Background assets
@@ -29,6 +31,8 @@ import imgDessert1 from '@/assets/Food/Dessert/five-signature-dessert.png';
 // Fallback high-res food images for visual variety
 import imgDish2 from '@/assets/home-v2/35b5b5843bc3a879390cc05c8e6b33eae70c2a8a.png';
 import imgDish3 from '@/assets/home-v2/7ce88d9bf1af040daf36af037fc63627a61522c9.png';
+
+import './index.css';
 
 type MenuCategory = 'Breakfast' | 'Lunch' | 'Dinner' | 'Dessert' | 'Drinks';
 
@@ -60,15 +64,33 @@ const imageMapper: Record<string, string> = {
   '@/assets/home-v2/7ce88d9bf1af040daf36af037fc63627a61522c9.png': imgDish3,
 };
 
+const categories: MenuCategory[] = [
+  'Breakfast',
+  'Lunch',
+  'Dinner',
+  'Dessert',
+  'Drinks',
+];
+
+const categoryKeyMap: Record<MenuCategory, string> = {
+  Breakfast: 'menu.categories.breakfast',
+  Lunch: 'menu.categories.lunch',
+  Dinner: 'menu.categories.dinner',
+  Dessert: 'menu.categories.dessert',
+  Drinks: 'menu.categories.drinks',
+};
+
 export default function Menu() {
+  const { t } = useTranslation();
+
   const [menuDataState, setMenuDataState] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [activeCategory, setActiveCategory] = useState<MenuCategory>('Breakfast');
+  const [errorKey, setErrorKey] = useState<string | null>(null);
+  const [activeCategory, setActiveCategory] =
+    useState<MenuCategory>('Breakfast');
   const [isStickyVisible, setIsStickyVisible] = useState(false);
-  const observerRef = useRef<IntersectionObserver | null>(null);
 
-  const categories: MenuCategory[] = ['Breakfast', 'Lunch', 'Dinner', 'Dessert', 'Drinks'];
+  const observerRef = useRef<IntersectionObserver | null>(null);
 
   useEffect(() => {
     getMenuData()
@@ -78,7 +100,7 @@ export default function Menu() {
       })
       .catch((err) => {
         console.error(err);
-        setError('Failed to load menu data.');
+        setErrorKey('menu.errors.load');
         setLoading(false);
       });
   }, []);
@@ -86,6 +108,7 @@ export default function Menu() {
   useEffect(() => {
     const handleScroll = () => {
       const threshold = window.innerWidth >= 768 ? 480 : 400;
+
       setIsStickyVisible(window.scrollY > threshold);
     };
 
@@ -98,7 +121,9 @@ export default function Menu() {
   }, []);
 
   useEffect(() => {
-    if (loading || error || !menuDataState) return;
+    if (loading || errorKey || !menuDataState) {
+      return;
+    }
 
     const observerOptions = {
       root: null,
@@ -108,27 +133,37 @@ export default function Menu() {
 
     const handleIntersection = (entries: IntersectionObserverEntry[]) => {
       const intersectingEntries = entries.filter((entry) => entry.isIntersecting);
-      if (intersectingEntries.length > 0) {
-        const closest = intersectingEntries.reduce((prev, curr) => {
-          return Math.abs(curr.boundingClientRect.top - 180) < Math.abs(prev.boundingClientRect.top - 180)
-            ? curr
-            : prev;
-        });
 
-        const categoryId = closest.target.id;
-        const matchedCategory = categories.find(
-          (c) => c.toLowerCase() === categoryId
-        );
-        if (matchedCategory) {
-          setActiveCategory(matchedCategory);
-        }
+      if (intersectingEntries.length === 0) {
+        return;
+      }
+
+      const closest = intersectingEntries.reduce((prev, curr) =>
+        Math.abs(curr.boundingClientRect.top - 180) <
+        Math.abs(prev.boundingClientRect.top - 180)
+          ? curr
+          : prev
+      );
+
+      const categoryId = closest.target.id;
+
+      const matchedCategory = categories.find(
+        (category) => category.toLowerCase() === categoryId
+      );
+
+      if (matchedCategory) {
+        setActiveCategory(matchedCategory);
       }
     };
 
-    observerRef.current = new IntersectionObserver(handleIntersection, observerOptions);
+    observerRef.current = new IntersectionObserver(
+      handleIntersection,
+      observerOptions
+    );
 
     categories.forEach((category) => {
       const element = document.getElementById(category.toLowerCase());
+
       if (element) {
         observerRef.current?.observe(element);
       }
@@ -137,96 +172,129 @@ export default function Menu() {
     return () => {
       observerRef.current?.disconnect();
     };
-  }, [loading, error, menuDataState]);
+  }, [loading, errorKey, menuDataState]);
 
   const handleCategoryClick = (category: MenuCategory) => {
     const element = document.getElementById(category.toLowerCase());
-    if (element) {
-      if (observerRef.current) {
-        categories.forEach((cat) => {
-          const el = document.getElementById(cat.toLowerCase());
-          if (el) observerRef.current?.unobserve(el);
-        });
-      }
 
-      setActiveCategory(category);
-
-      element.scrollIntoView({ behavior: 'smooth' });
-
-      setTimeout(() => {
-        categories.forEach((cat) => {
-          const el = document.getElementById(cat.toLowerCase());
-          if (el) observerRef.current?.observe(el);
-        });
-      }, 850);
+    if (!element) {
+      return;
     }
+
+    if (observerRef.current) {
+      categories.forEach((cat) => {
+        const el = document.getElementById(cat.toLowerCase());
+
+        if (el) {
+          observerRef.current?.unobserve(el);
+        }
+      });
+    }
+
+    setActiveCategory(category);
+
+    element.scrollIntoView({ behavior: 'smooth' });
+
+    window.setTimeout(() => {
+      categories.forEach((cat) => {
+        const el = document.getElementById(cat.toLowerCase());
+
+        if (el) {
+          observerRef.current?.observe(el);
+        }
+      });
+    }, 850);
+  };
+
+  const getCategoryLabel = (category: MenuCategory) =>
+    t(categoryKeyMap[category], undefined, category);
+
+  const getMenuItemText = (
+    category: MenuCategory,
+    index: number,
+    field: 'name' | 'category' | 'desc' | 'badge',
+    fallback?: string
+  ) => {
+    return t(
+      `menu.items.${category.toLowerCase()}.${index}.${field}`,
+      undefined,
+      fallback
+    );
   };
 
   if (loading) {
     return (
       <div className="pt-28 pb-20 text-center text-olive font-serif text-xl min-h-screen flex items-center justify-center">
-        Loading menu...
+        {t('menu.loading', undefined, 'Loading menu...')}
       </div>
     );
   }
 
-  if (error || !menuDataState) {
+  if (errorKey || !menuDataState) {
     return (
       <div className="pt-28 pb-20 text-center text-red-500 font-serif text-xl min-h-screen flex items-center justify-center">
-        {error || 'No menu data available.'}
+        {errorKey
+          ? t(errorKey, undefined, 'Failed to load menu data.')
+          : t('menu.errors.noData', undefined, 'No menu data available.')}
       </div>
     );
   }
 
-  // Parse item images
-  const menuItemsData: Record<MenuCategory, MenuItem[]> = Object.keys(menuDataState.items).reduce((acc, cat) => {
-    const category = cat as MenuCategory;
-    acc[category] = (menuDataState.items as any)[category].map((item: any) => ({
-      ...item,
-      img: imageMapper[item.img] || item.img,
-    }));
-    return acc;
-  }, {} as Record<MenuCategory, MenuItem[]>);
+  const menuItemsData: Record<MenuCategory, MenuItem[]> = categories.reduce(
+    (acc, category) => {
+      const rawItems = (menuDataState.items as any)?.[category] ?? [];
+
+      acc[category] = rawItems.map((item: any) => ({
+        ...item,
+        img: imageMapper[item.img] || item.img,
+      }));
+
+      return acc;
+    },
+    {} as Record<MenuCategory, MenuItem[]>
+  );
 
   const { hero } = menuDataState;
-  const heroBg = imageMapper[hero.backgroundImage] || imgHeroBg;
+  const heroBg = imageMapper[hero?.backgroundImage] || imgHeroBg;
 
   return (
     <div className="bg-white flex flex-col items-center w-full min-h-screen">
-      {/* Hero Header Section */}
       <section className="relative w-full h-[500px] md:h-[580px] flex flex-col items-center justify-center overflow-hidden">
         <div className="absolute inset-0 w-full h-full pointer-events-none z-0">
           <img
-            alt="Menu Header Background"
+            alt={t('menu.hero.backgroundAlt')}
             className="absolute inset-0 w-full h-full object-cover"
             src={heroBg}
           />
+
           <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/35 to-black/65" />
         </div>
 
         <div className="relative z-10 text-center text-white max-w-[1260px] px-6 pt-16 flex flex-col items-center">
           <h1 className="font-serif text-5xl md:text-6xl lg:text-[70px] leading-tight mb-4 font-normal tracking-wide drop-shadow-md">
-            {hero.title}
+            {t('menu.hero.title', undefined, hero?.title)}
           </h1>
 
           <p className="text-white/80 text-base md:text-lg font-sans font-light max-w-xl mx-auto leading-relaxed drop-shadow-sm mb-10">
-            {hero.subtitle}
+            {t('menu.hero.subtitle', undefined, hero?.subtitle)}
           </p>
 
-          {/* Hero Category Filter Tabs */}
           <div className="menu-hero-tabs-container">
             {categories.map((category) => {
               const isActive = activeCategory === category;
+
               return (
                 <button
                   key={category}
                   type="button"
                   onClick={() => handleCategoryClick(category)}
                   className={`hero-category-pill-btn ${
-                    isActive ? 'hero-category-pill-btn-active' : 'hero-category-pill-btn-inactive'
+                    isActive
+                      ? 'hero-category-pill-btn-active'
+                      : 'hero-category-pill-btn-inactive'
                   }`}
                 >
-                  {category}
+                  {getCategoryLabel(category)}
                 </button>
               );
             })}
@@ -234,11 +302,17 @@ export default function Menu() {
         </div>
       </section>
 
-      {/* Sticky Category Filter Tabs */}
-      <div className={`menu-sticky-tabs-container ${isStickyVisible ? 'menu-sticky-tabs-visible' : 'menu-sticky-tabs-hidden'}`}>
+      <div
+        className={`menu-sticky-tabs-container ${
+          isStickyVisible
+            ? 'menu-sticky-tabs-visible'
+            : 'menu-sticky-tabs-hidden'
+        }`}
+      >
         <div className="menu-sticky-tabs-inner">
           {categories.map((category) => {
             const isActive = activeCategory === category;
+
             return (
               <button
                 key={category}
@@ -248,18 +322,19 @@ export default function Menu() {
                   isActive ? 'category-pill-btn-active' : 'category-pill-btn-inactive'
                 }`}
               >
-                {category}
+                {getCategoryLabel(category)}
               </button>
             );
           })}
         </div>
       </div>
 
-      {/* Menu Grid Sections */}
       <section className="w-full py-16 bg-white flex flex-col items-center relative overflow-hidden">
-        {/* Lotus Background Pattern */}
         <div className="lotus-bg-wrapper">
-          <div className="lotus-bg-pattern" style={{ backgroundImage: `url("${imgLotusHalf}")` }} />
+          <div
+            className="lotus-bg-pattern"
+            style={{ backgroundImage: `url("${imgLotusHalf}")` }}
+          />
         </div>
 
         <div className="max-w-[1440px] w-full px-6 md:px-[64px] text-center flex flex-col items-center relative z-10">
@@ -270,21 +345,34 @@ export default function Menu() {
               className="menu-section w-full py-16 first:pt-4 last:pb-16 border-b border-[#dde0dc]/50 last:border-b-0"
             >
               <h2 className="font-serif text-4xl md:text-5xl font-normal tracking-wide mb-16 text-[#212d1b]">
-                {category}
+                {getCategoryLabel(category)}
               </h2>
 
-              {/* Grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-16 w-full text-left">
                 {menuItemsData[category].map((dish, index) => (
                   <DishCard
                     key={`${dish.name}-${index}`}
                     index={index}
-                    name={dish.name}
-                    category={dish.category}
-                    description={dish.desc}
+                    name={getMenuItemText(category, index, 'name', dish.name)}
+                    category={getMenuItemText(
+                      category,
+                      index,
+                      'category',
+                      dish.category
+                    )}
+                    description={getMenuItemText(
+                      category,
+                      index,
+                      'desc',
+                      dish.desc
+                    )}
                     image={dish.img}
                     price={dish.price}
-                    badge={dish.badge}
+                    badge={
+                      dish.badge
+                        ? getMenuItemText(category, index, 'badge', dish.badge)
+                        : undefined
+                    }
                   />
                 ))}
               </div>
