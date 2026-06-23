@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import {
   Clock,
   FileText,
@@ -539,14 +540,15 @@ export default function ReservationPage() {
     <div className="reservation-page">
       <ReservationHero hero={resData.hero} info={guestInfoList} />
 
-      {isSubmitted ? (
-        <section className="reservation-form-section flex items-center justify-center py-24">
-          <div className="reservation-success-card">
+      {isSubmitted && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+          <div className="absolute inset-0" onClick={handleReset} />
+          <div className="reservation-success-card relative z-10 animate-in fade-in zoom-in duration-300 max-h-[90vh] overflow-y-auto no-scrollbar w-full max-w-md shadow-2xl">
             <div className="success-icon-wrapper">
               <Check className="w-12 h-12 text-[#6b9158]" />
             </div>
             <h2 className="font-serif text-3xl text-[#212d1b] text-center mb-4">Reservation Confirmed!</h2>
-            <p className="text-center text-[#646860] mb-8 max-w-md">
+            <p className="text-center text-[#646860] mb-8 max-w-md mx-auto">
               Thank you for booking with One More Restaurant. A confirmation message has been sent to your phone number.
             </p>
             
@@ -577,13 +579,19 @@ export default function ReservationPage() {
               </div>
             </div>
 
-            <button type="button" onClick={handleReset} className="reserve-btn-primary w-full">
+            <button type="button" onClick={handleReset} className="reserve-btn-primary w-full mb-4">
               Make Another Booking
             </button>
+            <div className="text-center pb-2">
+              <Link to="/" className="text-[#6b9158] hover:text-[#4d6a3f] font-sans text-sm font-medium underline underline-offset-4 transition-colors">
+                Back to Home
+              </Link>
+            </div>
           </div>
-        </section>
-      ) : (
-        <section className="reservation-form-section" aria-label="Reservation form">
+        </div>
+      )}
+
+      <section className="reservation-form-section" aria-label="Reservation form">
           <div className="reservation-form-container">
             {/* Form Main Area */}
             <form className="reservation-form-main" onSubmit={handleReservationSubmit}>
@@ -1052,7 +1060,6 @@ export default function ReservationPage() {
             </aside>
           </div>
         </section>
-      )}
 
       {/* FAQ Section */}
       <FaqSection />

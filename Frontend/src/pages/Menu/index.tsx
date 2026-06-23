@@ -66,6 +66,7 @@ export default function Menu() {
   const [error, setError] = useState<string | null>(null);
   const [activeCategory, setActiveCategory] = useState<MenuCategory>('Breakfast');
   const [isStickyVisible, setIsStickyVisible] = useState(false);
+  const [hasScrolled, setHasScrolled] = useState(false);
   const observerRef = useRef<IntersectionObserver | null>(null);
 
   const categories: MenuCategory[] = ['Breakfast', 'Lunch', 'Dinner', 'Dessert', 'Drinks'];
@@ -87,6 +88,9 @@ export default function Menu() {
     const handleScroll = () => {
       const threshold = window.innerWidth >= 768 ? 480 : 400;
       setIsStickyVisible(window.scrollY > threshold);
+      if (window.scrollY > 15) {
+        setHasScrolled(true);
+      }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -138,6 +142,39 @@ export default function Menu() {
       observerRef.current?.disconnect();
     };
   }, [loading, error, menuDataState]);
+
+  useEffect(() => {
+    if (loading || error || !menuDataState) return;
+
+    const revealOptions = {
+      root: null,
+      rootMargin: '0px 0px -100px 0px', // trigger slightly before entering the screen
+      threshold: 0.05,
+    };
+
+    const handleReveal = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        // Only reveal if the user has scrolled
+        if (entry.isIntersecting && hasScrolled) {
+          entry.target.classList.add('section-visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    };
+
+    const revealObserver = new IntersectionObserver(handleReveal, revealOptions);
+
+    categories.forEach((category) => {
+      const element = document.getElementById(category.toLowerCase());
+      if (element) {
+        revealObserver.observe(element);
+      }
+    });
+
+    return () => {
+      revealObserver.disconnect();
+    };
+  }, [loading, error, menuDataState, hasScrolled]);
 
   const handleCategoryClick = (category: MenuCategory) => {
     const element = document.getElementById(category.toLowerCase());
@@ -258,7 +295,7 @@ export default function Menu() {
       {/* Menu Grid Sections */}
       <section className="w-full py-16 bg-white flex flex-col items-center relative overflow-hidden">
         {/* Lotus Background Pattern */}
-        <div className="lotus-bg-wrapper">
+        <div className={`lotus-bg-wrapper ${hasScrolled ? 'lotus-bg-visible' : ''}`}>
           <div className="lotus-bg-pattern" style={{ backgroundImage: `url("${imgLotusHalf}")` }} />
         </div>
 

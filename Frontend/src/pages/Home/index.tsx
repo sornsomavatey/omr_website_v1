@@ -540,6 +540,8 @@ export default function HomePage() {
         onDetailClick={(branch) => {
           if (branch.id === 'toulKork') {
             navigate('/branches/toul-kork');
+          } else if (branch.id === 'boeungKak') {
+            navigate('/branches/boeung-kak');
           } else {
             navigate('/branches');
           }
