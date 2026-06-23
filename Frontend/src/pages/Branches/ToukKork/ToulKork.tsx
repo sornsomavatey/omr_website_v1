@@ -11,18 +11,26 @@ import {
   ChevronRight, 
   Star, 
   ArrowRight,
-  Info
+  Info,
+  Users,
+  Briefcase,
+  UserCheck,
+  CalendarDays
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import SectionHeader from '@/components/SectionHeader';
 import DishCard from '@/components/ui/dish-card';
+import SharpImageCard from '@/components/SharpImageCard';
 import './ToulKork.css';
 
 // Asset imports matching homeAssets
 import imgBranchToulKork from '@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.png'; // Toul Kork Building
-import imgSpace1 from '@/assets/home-v2/e8f4b56e423777f3f6c3df39c6ef78914b278e17.png'; // Curved wood interior
-import imgSpace2 from '@/assets/home-v2/31b0910d38c033be0ce5292cf4a1d68688308c6b.png'; // Long dark wood table
-import imgGallery1 from '@/assets/home-v2/480cb1d76af2706b9692b726ad26ec2bf396f8c8.png'; // Long pink tablecloth setup
+import imgHeritageMain from '@/assets/home-v2/43310dd2158ca5c7f7d098abf280dc14124d42de.png'; // Curved wood interior (main left)
+import imgHeritageTopLeft from '@/assets/home-v2/480cb1d76af2706b9692b726ad26ec2bf396f8c8.png'; // Dark wood table with garden window (top-left)
+import imgHeritageTopRight from '@/assets/home-v2/31b0910d38c033be0ce5292cf4a1d68688308c6b.png'; // Blue bow-tie event hall (top-right)
+import imgHeritageBottom from '@/assets/home-v2/e900cacb721f9c81cd07b8415a03f20f42a39856.png'; // Long table with waitress and pink flowers (bottom)
+import imgSpace2 from '@/assets/home-v2/31b0910d38c033be0ce5292cf4a1d68688308c6b.png'; // Event hall (used in private rooms)
+import imgGallery1 from '@/assets/home-v2/480cb1d76af2706b9692b726ad26ec2bf396f8c8.png'; // Dark wood table (used in private rooms)
 import imgGallery2 from '@/assets/home-v2/07e47044152ad38cdbb1bda5ae392fb848e3a37a.png'; // Round tables private dining
 import imgGallery3 from '@/assets/home-v2/13a7aa4dee36d6ba805abc6f982eb04ec7df4c4c.png'; // Event hall with balloons
 import imgGallery4 from '@/assets/home-v2/80bc2f874a3b8b65fc3bd247f23046db8632d909.png'; // People dining
@@ -39,7 +47,7 @@ import imgAvatar2 from '@/assets/home-v2/0f84921deb64774c6b9d8e0f6b9cd098e318d66
 import imgAvatar3 from '@/assets/home-v2/ea74517d10d49de5ec0cc6665fb3c27a5e86b047.png';
 
 // Map asset
-import locationImg from '@/assets/location.png';
+import locationImg from '@/assets/Location Tk.png';
 
 export default function ToulKork() {
   const navigate = useNavigate();
@@ -115,23 +123,23 @@ export default function ToulKork() {
         <div className="tk-heritage-grid">
           <div className="tk-heritage-left">
             <div className="tk-image-wrapper tk-large-image">
-              <img src={imgGallery2} alt="Kids coloring zone" />
+              <img src={imgHeritageMain} alt="Curved wood interior" />
               <div className="tk-image-mask" />
             </div>
           </div>
           <div className="tk-heritage-right">
             <div className="tk-heritage-right-top">
               <div className="tk-image-wrapper tk-sub-image-top-half">
-                <img src={imgGallery3} alt="Indoor banquet hall" />
+                <img src={imgHeritageTopLeft} alt="Dark wood table with garden view" />
                 <div className="tk-image-mask" />
               </div>
               <div className="tk-image-wrapper tk-sub-image-top-half">
-                <img src={imgDish2} alt="Signature chicken dish" />
+                <img src={imgHeritageTopRight} alt="Blue bow-tie event hall" />
                 <div className="tk-image-mask" />
               </div>
             </div>
             <div className="tk-image-wrapper tk-sub-image-bottom-full">
-              <img src={imgGallery6} alt="Indoor dining area next to glass window" />
+              <img src={imgHeritageBottom} alt="Long table with waitress and pink flowers" />
               <div className="tk-image-mask" />
             </div>
           </div>
@@ -145,27 +153,27 @@ export default function ToulKork() {
             <span className="tk-eyebrow">Our Philosophy</span>
             <h2 className="tk-section-title">The Art of Cambodian Hospitality</h2>
             <p className="tk-desc-para">
-              At One More Toul Kork, we welcome culinary stories with a passion for authenticity, providing an aesthetic blend of traditional Khmer and modern influences. Whether it is a casual family dinner or a high-profile corporate meeting, our service is tailored to create lasting memories.
+              At One More Toul Kork, we believe dining is more than just a meal—it is a cultural immersion. Our space combines traditional Khmer craftsmanship with modern sophistication, creating an atmosphere that is both grand and intimate. Whether it is a quiet family dinner or a high-stakes executive meeting, our service is tailored to exceed expectations.
             </p>
           </div>
           <div className="tk-hospitality-box">
-            <span className="tk-box-tag">Ideal For</span>
+            <span className="tk-box-tag">Best For</span>
             <ul className="tk-box-list">
               <li className="tk-box-item">
-                <span className="tk-box-icon">A</span>
+                <span className="tk-box-icon"><Users size={20} /></span>
                 <span className="tk-box-label">Family Dining</span>
               </li>
               <li className="tk-box-item">
-                <span className="tk-box-icon">B</span>
-                <span className="tk-box-label">Big Groups / Banquets</span>
+                <span className="tk-box-icon"><Briefcase size={20} /></span>
+                <span className="tk-box-label">Business Meetings</span>
               </li>
               <li className="tk-box-item">
-                <span className="tk-box-icon">C</span>
-                <span className="tk-box-label">Corporate Events</span>
+                <span className="tk-box-icon"><UserCheck size={20} /></span>
+                <span className="tk-box-label">Corporate Lunch</span>
               </li>
               <li className="tk-box-item">
-                <span className="tk-box-icon">D</span>
-                <span className="tk-box-label">Special Celebrations</span>
+                <span className="tk-box-icon"><CalendarDays size={20} /></span>
+                <span className="tk-box-label">Special Occasions</span>
               </li>
             </ul>
           </div>
@@ -174,21 +182,21 @@ export default function ToulKork() {
 
       {/* 4. PRIVATE DINING ROOMS */}
       <section className="tk-section tk-rooms">
-        <SectionHeader eyebrow="Exclusive" title="Private Dining Rooms" />
+        <SectionHeader eyebrow="Exclusivity" title="Private Dining Rooms" />
         
         <div className="tk-rooms-grid">
-          {/* Room 1 */}
+          {/* Room 1 — Neang Tev */}
           <div className="tk-room-card">
             <div className="tk-room-img-wrapper">
-              <img src={imgSpace2} alt="Neang Sor Private Room" />
+              <img src={imgHeritageTopLeft} alt="Neang Tev Private Room" />
               <div className="tk-room-badge">8-12 guests</div>
             </div>
             <div className="tk-room-body">
-              <h3 className="tk-room-name">Neang Teav</h3>
+              <h3 className="tk-room-name">Neang Tev</h3>
               <ul className="tk-room-highlights">
-                <li><Check size={14} className="text-olive" /> Elegant Khmer decoration</li>
-                <li><Check size={14} className="text-olive" /> Fully air-conditioned</li>
-                <li><Check size={14} className="text-olive" /> Premium sound system</li>
+                <li><Check size={14} className="text-olive" /> Integrated AV system</li>
+                <li><Check size={14} className="text-olive" /> Personal butler service</li>
+                <li><Check size={14} className="text-olive" /> Garden views</li>
               </ul>
               <Button asChild className="tk-room-button">
                 <Link to="/reservations">Reserve Private Room</Link>
@@ -196,18 +204,18 @@ export default function ToulKork() {
             </div>
           </div>
 
-          {/* Room 2 */}
+          {/* Room 2 — Orn Tit Tom */}
           <div className="tk-room-card">
             <div className="tk-room-img-wrapper">
-              <img src={imgGallery1} alt="Deuk Thla Room" />
+              <img src={imgHeritageBottom} alt="Orn Tit Tom Private Room" />
               <div className="tk-room-badge">8-12 guests</div>
             </div>
             <div className="tk-room-body">
               <h3 className="tk-room-name">Orn Tit Tom</h3>
               <ul className="tk-room-highlights">
-                <li><Check size={14} className="text-olive" /> Private garden access</li>
-                <li><Check size={14} className="text-olive" /> Fully air-conditioned</li>
-                <li><Check size={14} className="text-olive" /> Smart TV screen</li>
+                <li><Check size={14} className="text-olive" /> Integrated AV system</li>
+                <li><Check size={14} className="text-olive" /> Personal butler service</li>
+                <li><Check size={14} className="text-olive" /> Garden views</li>
               </ul>
               <Button asChild className="tk-room-button">
                 <Link to="/reservations">Reserve Private Room</Link>
@@ -215,18 +223,18 @@ export default function ToulKork() {
             </div>
           </div>
 
-          {/* Room 3 */}
+          {/* Room 3 — VVIP */}
           <div className="tk-room-card">
             <div className="tk-room-img-wrapper">
-              <img src={imgGallery3} alt="VIP Hall Room" />
+              <img src={imgHeritageTopRight} alt="VVIP Hall" />
               <div className="tk-room-badge">8-12 guests</div>
             </div>
             <div className="tk-room-body">
               <h3 className="tk-room-name">VVIP</h3>
               <ul className="tk-room-highlights">
-                <li><Check size={14} className="text-olive" /> Large stage & presentation screen</li>
-                <li><Check size={14} className="text-olive" /> Professional AV setup</li>
-                <li><Check size={14} className="text-olive" /> Buffet setup options</li>
+                <li><Check size={14} className="text-olive" /> Integrated AV system</li>
+                <li><Check size={14} className="text-olive" /> Personal butler service</li>
+                <li><Check size={14} className="text-olive" /> Garden views</li>
               </ul>
               <Button asChild className="tk-room-button">
                 <Link to="/reservations">Reserve Private Room</Link>
@@ -284,68 +292,41 @@ export default function ToulKork() {
 
       {/* 6. EVENTS & CELEBRATIONS */}
       <section className="tk-section tk-events">
-        <SectionHeader eyebrow="Our Services" title="Events & Celebrations" />
-        
+        <SectionHeader eyebrow="Host With Us" title="Events & Celebrations" align="left" />
+
         <div className="tk-events-grid">
-          {/* Card 1 */}
-          <div className="tk-event-card">
-            <div className="tk-event-img-wrapper">
-              <img src={imgGallery3} alt="Birthday Celebrations" />
-              <div className="tk-event-overlay" />
-              <div className="tk-event-info">
-                <h3 className="tk-event-title">Birthday Celebrations</h3>
-                <p className="tk-event-desc">Celebrate your special day in a private room or garden setting.</p>
-                <Button asChild variant="secondary" className="tk-event-btn">
-                  <Link to="/reservations">Plan Your Event</Link>
-                </Button>
-              </div>
-            </div>
-          </div>
-
-          {/* Card 2 */}
-          <div className="tk-event-card">
-            <div className="tk-event-img-wrapper">
-              <img src={imgGallery2} alt="Engagement dinners" />
-              <div className="tk-event-overlay" />
-              <div className="tk-event-info">
-                <h3 className="tk-event-title">Engagement Dinners</h3>
-                <p className="tk-event-desc">An elegant setting for your pre-wedding celebrations.</p>
-                <Button asChild variant="secondary" className="tk-event-btn">
-                  <Link to="/reservations">Plan Your Event</Link>
-                </Button>
-              </div>
-            </div>
-          </div>
-
-          {/* Card 3 */}
-          <div className="tk-event-card">
-            <div className="tk-event-img-wrapper">
-              <img src={imgGallery4} alt="Family gatherings" />
-              <div className="tk-event-overlay" />
-              <div className="tk-event-info">
-                <h3 className="tk-event-title">Family Gatherings</h3>
-                <p className="tk-event-desc">Perfect layout for family dining and reunions.</p>
-                <Button asChild variant="secondary" className="tk-event-btn">
-                  <Link to="/reservations">Plan Your Event</Link>
-                </Button>
-              </div>
-            </div>
-          </div>
-
-          {/* Card 4 */}
-          <div className="tk-event-card">
-            <div className="tk-event-img-wrapper">
-              <img src={imgGallery6} alt="Corporate seminars" />
-              <div className="tk-event-overlay" />
-              <div className="tk-event-info">
-                <h3 className="tk-event-title">Corporate Events</h3>
-                <p className="tk-event-desc">Professional setups for meetings and seminars.</p>
-                <Button asChild variant="secondary" className="tk-event-btn">
-                  <Link to="/reservations">Plan Your Event</Link>
-                </Button>
-              </div>
-            </div>
-          </div>
+          <SharpImageCard
+            image={imgGallery3}
+            alt="Birthday Celebrations"
+            title="Birthday Celebrations"
+            description="Create lasting memories with our bespoke party planning."
+            buttonLabel="Plan Your Event"
+            buttonHref="/reservations"
+          />
+          <SharpImageCard
+            image={imgHeritageBottom}
+            alt="Engagement Dinners"
+            title="Engagement Dinners"
+            description="Intimate and romantic settings for your big announcement."
+            buttonLabel="Plan Your Event"
+            buttonHref="/reservations"
+          />
+          <SharpImageCard
+            image={imgGallery4}
+            alt="Family Gatherings"
+            title="Family Gatherings"
+            description="Spacious enough for the whole family to share heritage recipes."
+            buttonLabel="Plan Your Event"
+            buttonHref="/reservations"
+          />
+          <SharpImageCard
+            image={imgGallery2}
+            alt="Corporate Events"
+            title="Corporate Events"
+            description="The perfect professional backdrop for meetings and launches."
+            buttonLabel="Plan Your Event"
+            buttonHref="/reservations"
+          />
         </div>
       </section>
 
@@ -406,23 +387,22 @@ export default function ToulKork() {
       {/* 8. VISIT US */}
       <section className="tk-section tk-visit">
         <div className="tk-visit-container">
+          {/* Left: Map image */}
           <div className="tk-visit-map">
-            <div className="tk-map-frame">
-              <img src={locationImg} alt="Map locator of Toul Kork Branch" className="tk-map-img" />
-              <div className="tk-map-pin-overlay">
-                <MapPin size={32} className="text-olive animate-bounce" fill="#6b9158" />
-              </div>
-            </div>
+            <img src={locationImg} alt="Map of One More Restaurant Toul Kork" className="tk-map-img" />
           </div>
+
+          {/* Right: Contact details */}
           <div className="tk-visit-details">
             <h2 className="tk-visit-title">Visit Us</h2>
-            
+            <span className="tk-visit-divider" />
+
             <ul className="tk-details-list">
               <li className="tk-detail-item">
                 <MapPin size={20} className="tk-detail-icon text-olive" />
                 <div>
                   <h4 className="tk-detail-label">Address</h4>
-                  <p className="tk-detail-value">37 St 315, Phnom Penh 120407</p>
+                  <p className="tk-detail-value">63 Street R11, Phnom Penh 120210</p>
                 </div>
               </li>
               <li className="tk-detail-item">
@@ -433,36 +413,36 @@ export default function ToulKork() {
                 </div>
               </li>
               <li className="tk-detail-item">
-                <Mail size={20} className="tk-detail-icon text-olive" />
+                <ArrowRight size={20} className="tk-detail-icon text-olive" />
                 <div>
-                  <h4 className="tk-detail-label">Email</h4>
-                  <p className="tk-detail-value">info@onemorerestaurant.kh</p>
+                  <h4 className="tk-detail-label">Telegram</h4>
+                  <p className="tk-detail-value">@OneMoreRestaurant</p>
                 </div>
               </li>
               <li className="tk-detail-item">
                 <Clock size={20} className="tk-detail-icon text-olive" />
                 <div>
-                  <h4 className="tk-detail-label">Hours</h4>
-                  <p className="tk-detail-value">Daily: 06:00 AM - 10:00 PM</p>
+                  <h4 className="tk-detail-label">Opening Hours</h4>
+                  <p className="tk-detail-value">Daily: 11:00 AM – 10:00 PM</p>
                 </div>
               </li>
               <li className="tk-detail-item">
                 <Car size={20} className="tk-detail-icon text-olive" />
                 <div>
                   <h4 className="tk-detail-label">Parking</h4>
-                  <p className="tk-detail-value">Free secure valet parking available</p>
+                  <p className="tk-detail-value">Free secure parking available</p>
                 </div>
               </li>
             </ul>
-            
+
             <div className="tk-visit-actions">
               <Button asChild className="tk-btn-directions">
                 <a href="https://maps.google.com/?q=One+More+Restaurant+Toul+Kork" target="_blank" rel="noopener noreferrer">
                   Get Directions
                 </a>
               </Button>
-              <Button variant="outline" className="tk-btn-close" onClick={() => navigate('/branches')}>
-                Call Now
+              <Button asChild variant="outline" className="tk-btn-close">
+                <a href="tel:023888222">Call Now</a>
               </Button>
             </div>
           </div>
