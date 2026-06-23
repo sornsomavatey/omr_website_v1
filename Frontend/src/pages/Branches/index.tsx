@@ -271,6 +271,8 @@ export default function Branches() {
                 onDetailClick={(branch) => {
                   if (branch.id === 'toulKork') {
                     navigate('/branches/toul-kork');
+                  } else if (b.id === 'boeungKak') {
+                    navigate('/branches/boeung-kak');
                   } else {
                     setActiveModal(branch as LocationItem);
                   }

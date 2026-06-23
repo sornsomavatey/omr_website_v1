@@ -1063,6 +1063,9 @@
   justify-content: center;
   height: 80px;
   width: 80px;
+  min-height: 80px;
+  min-width: 80px;
+  flex-shrink: 0;
   margin-bottom: 24px;
 }
 

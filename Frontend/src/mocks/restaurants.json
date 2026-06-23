@@ -3,20 +3,65 @@
     "title": "Our Locations",
     "desc": "Experience our hospitality in our beautifully designed spaces, perfect for family dining or business gatherings."
   },
+  "comparison": {
+    "features": [
+      {
+        "name": "Private Dining Rooms",
+        "toulKork": true,
+        "boeungKak": true
+      },
+      {
+        "name": "Event Space Capacity",
+        "toulKork": "Up to 120 guests",
+        "boeungKak": "Up to 150 guests"
+      },
+      {
+        "name": "Outdoor Garden Seating",
+        "toulKork": true,
+        "boeungKak": false
+      },
+      {
+        "name": "Valet Parking",
+        "toulKork": true,
+        "boeungKak": true
+      },
+      {
+        "name": "Live Traditional Music",
+        "toulKork": "Weekends only",
+        "boeungKak": "Daily"
+      }
+    ]
+  },
   "locations": [
     {
-      "name": "One More Restaurant Tuol Kork",
-      "address": "No. 37, Street 315, Boeung Kak I, Tuol Kork, Phnom Penh",
-      "phone": "+855 23 888 555",
-      "hours": "6:00 AM - 10:00 PM Daily",
-      "image": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&q=80&w=800"
+      "id": "toulKork",
+      "name": "One More Restaurant Toul Kork",
+      "address": "63 Street R11, Phnom Penh 120210",
+      "phone": "023 888 222",
+      "hours": "11:00 AM - 10:00 PM Daily",
+      "image": "@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.png",
+      "tags": ["Flagship", "Heritage", "Family"],
+      "description": "Our original flagship branch offering an immersive journey into traditional Cambodian architecture and culinary arts.",
+      "highlights": [
+        "Curved wood interior design",
+        "Extensive garden views",
+        "Exclusive VVIP halls"
+      ]
     },
     {
+      "id": "boeungKak",
       "name": "One More Restaurant Boeung Kak",
-      "address": "No. 12, Street 608, Boeung Kak II, Tuol Kork, Phnom Penh",
-      "phone": "+855 12 345 678",
-      "hours": "11:00 AM - 11:00 PM Daily",
-      "image": "https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&q=80&w=800"
+      "address": "Boeung Kak Lake Area, Phnom Penh",
+      "phone": "023 888 333",
+      "hours": "11:00 AM - 10:00 PM Daily",
+      "image": "@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.png",
+      "tags": ["Modern", "Events", "Corporate"],
+      "description": "A modern take on our classic heritage, offering expansive event halls and contemporary dining experiences.",
+      "highlights": [
+        "Large event space for up to 150 guests",
+        "Modern minimalist aesthetic",
+        "Premium corporate meeting rooms"
+      ]
     }
   ]
 }

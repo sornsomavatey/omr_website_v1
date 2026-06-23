@@ -105,6 +105,9 @@ export default function Navbar() {
   const isToulKorkPage =
     location.pathname === '/branches/toul-kork' ||
     location.pathname === '/restaurants/toul-kork';
+  const isBoeungKakPage =
+    location.pathname === '/branches/boeung-kak' ||
+    location.pathname === '/restaurants/boeung-kak';
 
   const isReservationPage =
     location.pathname === '/reservations' ||
@@ -117,10 +120,11 @@ export default function Navbar() {
     }
 
     const handleScroll = () => {
-      if (isHomePage || isToulKorkPage) {
+      if (isHomePage || isToulKorkPage || isBoeungKakPage) {
         const heroSection =
           document.getElementById('home-hero') ||
-          document.getElementById('toulkork-hero');
+          document.getElementById('toulkork-hero') ||
+          document.getElementById('boeungkak-hero');
 
         if (!heroSection) {
           setScrolled(false);

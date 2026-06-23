@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import {
   Briefcase,
   Building,
@@ -750,9 +751,10 @@ export default function ReservationPage() {
     <div className="reservation-page">
       <ReservationHero data={resData} />
 
-      {isSubmitted ? (
-        <section className="reservation-form-section flex items-center justify-center py-24">
-          <div className="reservation-success-card">
+      {isSubmitted && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+          <div className="absolute inset-0" onClick={handleReset} />
+          <div className="reservation-success-card relative z-10 animate-in fade-in zoom-in duration-300 max-h-[90vh] overflow-y-auto no-scrollbar w-full max-w-md shadow-2xl">
             <div className="success-icon-wrapper">
               <Check className="w-12 h-12 text-[#6b9158]" />
             </div>
@@ -816,17 +818,26 @@ export default function ReservationPage() {
             <button
               type="button"
               onClick={handleReset}
-              className="reserve-btn-primary w-full"
+              className="reserve-btn-primary w-full mb-4"
             >
               {resData.success.makeAnother}
             </button>
+            <div className="text-center pb-2">
+              <Link
+                to="/"
+                className="text-[#6b9158] hover:text-[#4d6a3f] font-sans text-sm font-medium underline underline-offset-4 transition-colors"
+              >
+                Back to Home
+              </Link>
+            </div>
           </div>
-        </section>
-      ) : (
-        <section
-          className="reservation-form-section"
-          aria-label={resData.form.aria}
-        >
+        </div>
+      )}
+
+      <section
+        className="reservation-form-section"
+        aria-label={resData.form.aria}
+      >
           <div className="reservation-form-container">
             <form
               className="reservation-form-main"
@@ -1358,8 +1369,7 @@ export default function ReservationPage() {
               </div>
             </aside>
           </div>
-        </section>
-      )}
+      </section>
 
       <FaqSection faq={resData.faq} />
     </div>
