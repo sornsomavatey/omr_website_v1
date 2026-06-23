@@ -344,5 +344,401 @@
       "load": "Failed to load reservation data.",
       "noData": "No reservation data available."
     }
+  },
+  "branchesPage": {
+    "header": {
+      "title": "Every Location Has Its Own Story.",
+      "desc": "From the quiet Riverside Garden to the vibrant City Centre, each of our locations is a chapter in the story of traditional Cambodian flavors, served in spaces designed to feel like home."
+    },
+    "ui": {
+      "reserveCta": "Reserve a Table",
+      "heroMapAlt": "Map of branch locations",
+      "comparison": {
+        "eyebrow": "What's different",
+        "title": "Compare Our Locations",
+        "featureLabel": "Feature",
+        "featureDesc": "Compare venue highlights",
+        "toulKorkTitle": "Toul Kork",
+        "boeungKakTitle": "Boeung Kak",
+        "venueTag": "Venue",
+        "toulKorkAlt": "Toul Kork venue",
+        "boeungKakAlt": "Boeung Kak venue"
+      },
+      "findUs": {
+        "eyebrow": "Our Locations",
+        "title": "Find us here",
+        "description": "Two distinct dining destinations, one unforgettable culinary story."
+      },
+      "map": {
+        "eyebrow": "See the Map",
+        "title": "See us on Map",
+        "description": "Two distinct dining destinations, one unforgettable culinary story.",
+        "imageAlt": "Locations map view full"
+      },
+      "modal": {
+        "closeAria": "Close details",
+        "venueDetails": "Venue details",
+        "highlightsTitle": "Key Venue Highlights",
+        "reserveCta": "Reserve a Table"
+      }
+    },
+    "comparison": {
+      "features": [
+        {
+          "name": "Family Dining",
+          "toulKork": true,
+          "boeungKak": true
+        },
+        {
+          "name": "Private Room",
+          "toulKork": true,
+          "boeungKak": true
+        },
+        {
+          "name": "Business Meeting",
+          "toulKork": true,
+          "boeungKak": true
+        },
+        {
+          "name": "Event Space",
+          "toulKork": true,
+          "boeungKak": true
+        },
+        {
+          "name": "Parking",
+          "toulKork": true,
+          "boeungKak": true
+        },
+        {
+          "name": "Capacity",
+          "toulKork": "200+ guests",
+          "boeungKak": "300+ guests"
+        }
+      ]
+    },
+    "locations": [
+      {
+        "id": "toulKork",
+        "name": "One More Restaurant Toul Kork",
+        "address": "37 St 315, Phnom Penh 120407",
+        "phone": "023 888 222",
+        "hours": "Daily: 06:00 AM - 10:00 PM",
+        "image": "@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.png",
+        "tags": [
+          "Family Friendly",
+          "Business Meeting",
+          "Private Room"
+        ],
+        "description": "Our signature branch in Toul Kork offers a beautiful garden dining experience and elegant private rooms. Features a layout designed for family gatherings, professional business meetings, and celebrations.",
+        "highlights": [
+          "Capacity for up to 200+ guests",
+          "6 Private VIP Rooms with full AV setup",
+          "Dedicated kids play zone for family comfort",
+          "Complimentary secure valet parking",
+          "Beautifully landscaped outdoor garden area"
+        ]
+      },
+      {
+        "id": "boeungKak",
+        "name": "One More Restaurant Boeung Kak",
+        "address": "G2 Street R11, Phnom Penh 120210",
+        "phone": "021 888 222",
+        "hours": "Daily: 06:00 AM - 10:00 PM",
+        "image": "@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.png",
+        "tags": [
+          "Event Space",
+          "Large Groups",
+          "Corporate"
+        ],
+        "description": "Our Boeung Kak branch showcases striking modern architectural design and expansive layouts. An ideal setting for large-scale corporate events, banquets, and memorable dining experiences.",
+        "highlights": [
+          "Capacity for up to 300+ guests",
+          "Large event space with stage & sound system",
+          "Modern chic architecture & photography spots",
+          "High-capacity parking area",
+          "Special banquet & group catering menus"
+        ]
+      }
+    ]
+  },
+  "reservationPage": {
+    "hero": {
+      "eyebrow": "EST. 2008 · PHNOM PENH",
+      "title": "Reserve Your Table",
+      "desc": "Experience the pinnacle of Khmer culinary heritage. A journey of forgotten flavors rediscovered in a setting of timeless luxury.",
+      "backgroundImage": "@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.png",
+      "backgroundAlt": "One More Restaurant dining room"
+    },
+    "guestInformationTitle": "Guest Information",
+    "guestInformationAria": "Guest information",
+    "guestInformation": [
+      {
+        "type": "hours",
+        "label": "Opening Hours",
+        "value": "06:00 AM - 10:00 PM"
+      },
+      {
+        "type": "phone",
+        "label": "Contact Number",
+        "value": "+855 23 888 222"
+      },
+      {
+        "type": "time",
+        "label": "Response Time",
+        "value": "Within 15 Minutes"
+      },
+      {
+        "type": "policy",
+        "label": "Reservation Policy",
+        "value": "Free cancellation up to 24h"
+      }
+    ],
+    "steps": {
+      "branch": {
+        "title": "Choose Branch",
+        "desc": "Select your preferred location in Phnom Penh"
+      },
+      "contact": {
+        "title": "Contact Details",
+        "desc": "Enter your information so we can contact you regarding your booking"
+      },
+      "guests": {
+        "title": "Guests",
+        "desc": "Tell us how many people will be joining you"
+      },
+      "dateTime": {
+        "title": "Select Date & Time",
+        "desc": "Choose when you would like to dine with us"
+      },
+      "occasion": {
+        "title": "Special Occasion",
+        "desc": "Let us know if you are celebrating a special event"
+      },
+      "seating": {
+        "title": "Seating Preference",
+        "desc": "Choose where you would like to be seated"
+      }
+    },
+    "form": {
+      "aria": "Reservation form",
+      "labels": {
+        "fullName": "Full Name *",
+        "phoneNumber": "Phone Number *",
+        "adults": "Adults",
+        "children": "Children",
+        "specialRequest": "Special Request"
+      },
+      "placeholders": {
+        "fullName": "Enter full name",
+        "phoneNumber": "Enter phone number",
+        "time": "Enter time...",
+        "specialRequest": "Allergies, seating requests, etc."
+      },
+      "ariaLabels": {
+        "decreaseAdults": "Decrease adults",
+        "increaseAdults": "Increase adults",
+        "decreaseChildren": "Decrease children",
+        "increaseChildren": "Increase children",
+        "previousMonth": "Previous month",
+        "nextMonth": "Next month"
+      },
+      "totalGuests": "Total {count} Guests",
+      "submit": "Reserve a Table",
+      "cancellationNotice": "Free cancellation up to 24 hours before your reservation."
+    },
+    "validation": {
+      "contactRequired": "Please fill in your Contact Details (Name & Phone Number) to complete your reservation.",
+      "invalidName": "Please enter a valid Full Name (at least 2 characters).",
+      "invalidPhone": "Please enter a valid Phone Number (typically 9 to 11 digits)."
+    },
+    "success": {
+      "title": "Reservation Confirmed!",
+      "desc": "Thank you for booking with One More Restaurant. A confirmation message has been sent to your phone number.",
+      "makeAnother": "Make Another Booking",
+      "valuedGuest": "Valued Guest",
+      "notProvided": "Not provided",
+      "detailLabels": {
+        "branch": "Branch",
+        "guestName": "Guest Name",
+        "phone": "Phone",
+        "guests": "Guests",
+        "dateTime": "Date & Time",
+        "seatingOccasion": "Seating & Occasion"
+      },
+      "guestsValue": "{total} Guests ({adults} Adults, {children} Kids)",
+      "dateTimeValue": "{date} at {time}",
+      "seatingOccasionValue": "{seating} · {occasion}"
+    },
+    "summary": {
+      "title": "Booking Summary",
+      "labels": {
+        "branch": "Branch",
+        "name": "Name",
+        "contact": "Contact",
+        "guests": "Guests",
+        "date": "Date",
+        "occasion": "Occasion",
+        "seating": "Seating"
+      },
+      "empty": "—",
+      "guestBreakdown": "({adults} Adults, {children} Kids)",
+      "timeTag": "({time} {category})",
+      "arrivalNotice": "Please arrive 10 mins early. Reservations are held for 15 mins after the scheduled time.",
+      "reserveButton": "Reserve a Table",
+      "contactRestaurant": "Contact Restaurant",
+      "phoneHref": "tel:+85523888222"
+    },
+    "calendar": {
+      "months": [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+      ],
+      "shortMonths": [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec"
+      ],
+      "daysOfWeek": [
+        "S",
+        "M",
+        "T",
+        "W",
+        "T",
+        "F",
+        "S"
+      ]
+    },
+    "timeCategories": {
+      "Breakfast": "Breakfast",
+      "Lunch": "Lunch",
+      "Dinner": "Dinner"
+    },
+    "branches": [
+      {
+        "id": "toulKork",
+        "name": "One More Restaurant Toul Kork",
+        "address": "37 St 315, Phnom Penh 120407",
+        "phone": "023 888 222",
+        "hours": "Daily: 06:00 AM - 10:00 PM",
+        "img": "@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.png",
+        "tags": [
+          "Family Friendly",
+          "Business Meeting",
+          "Private Room"
+        ]
+      },
+      {
+        "id": "boeungKak",
+        "name": "One More Restaurant Boeung Kak",
+        "address": "G2 Street R11, Phnom Penh 120210",
+        "phone": "021 888 222",
+        "hours": "Daily: 06:00 AM - 10:00 PM",
+        "img": "@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.png",
+        "tags": [
+          "Event Space",
+          "Large Groups",
+          "Corporate"
+        ]
+      }
+    ],
+    "occasions": [
+      {
+        "id": "familyDining",
+        "name": "Family Dining",
+        "icon": "familyDining"
+      },
+      {
+        "id": "businessMeeting",
+        "name": "Business Meeting",
+        "icon": "businessMeeting"
+      },
+      {
+        "id": "birthdayCelebration",
+        "name": "Birthday Celebration",
+        "icon": "birthdayCelebration"
+      },
+      {
+        "id": "corporateEvent",
+        "name": "Corporate Event",
+        "icon": "corporateEvent"
+      },
+      {
+        "id": "dateNight",
+        "name": "Date Night",
+        "icon": "dateNight"
+      },
+      {
+        "id": "other",
+        "name": "Other",
+        "icon": "other"
+      }
+    ],
+    "seatingPreferences": [
+      {
+        "id": "indoor",
+        "name": "Indoor",
+        "img": "@/assets/home-v2/e8f4b56e423777f3f6c3df39c6ef78914b278e17.png"
+      },
+      {
+        "id": "outdoor",
+        "name": "Outdoor",
+        "img": "imgGallery1"
+      },
+      {
+        "id": "privateRoom",
+        "name": "Private Room",
+        "img": "@/assets/home-v2/31b0910d38c033be0ce5292cf4a1d68688308c6b.png"
+      },
+      {
+        "id": "bigRoom",
+        "name": "Big Room",
+        "img": "imgGallery5"
+      }
+    ],
+    "faq": {
+      "eyebrow": "Assistance",
+      "title": "Frequently Asked Questions",
+      "items": [
+        {
+          "q": "What is the dress code?",
+          "a": "We recommend smart casual attire. Traditional Khmer attire is also very welcome for special occasions."
+        },
+        {
+          "q": "Do you offer vegetarian or vegan options?",
+          "a": "Yes, we have a variety of vegetarian and vegan options available. Please inform your waiter or mention it in the special requests section when booking."
+        },
+        {
+          "q": "Is there parking available at the branches?",
+          "a": "Yes, both our Toul Kork and Boeung Kak branches feature spacious, secure parking lots with complimentary valet service."
+        },
+        {
+          "q": "Can I bring my own wine?",
+          "a": "Yes, you may bring your own wine. A corkage fee of $15 per bottle applies."
+        },
+        {
+          "q": "Are pets allowed?",
+          "a": "To ensure a comfortable dining environment for all guests, pets are only allowed in our outdoor garden areas."
+        }
+      ]
+    }
   }
 }

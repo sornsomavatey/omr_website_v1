@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from "react";
 import {
   Briefcase,
   Building,
@@ -18,9 +18,9 @@ import {
   Plus,
   User,
   Utensils,
-} from 'lucide-react';
+} from "lucide-react";
 
-import { useTranslation } from '@/hooks/useTranslation';
+import { useTranslation } from "@/hooks/useTranslation";
 
 import {
   imgGallery1,
@@ -28,11 +28,11 @@ import {
   imgHeroBg1,
   imgHeroBg2,
   imageMap,
-} from '../Home/homeAssets';
+} from "../Home/homeAssets";
 
-import './index.css';
+import "./index.css";
 
-type MealCategory = 'Breakfast' | 'Lunch' | 'Dinner';
+type MealCategory = "Breakfast" | "Lunch" | "Dinner";
 
 type GuestInformationItem = {
   type: string;
@@ -189,14 +189,20 @@ type ReservationData = {
   };
 };
 
-const iconMap: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>> = {
+const iconMap: Record<
+  string,
+  React.ComponentType<React.SVGProps<SVGSVGElement>>
+> = {
   hours: Clock,
   phone: Phone,
   time: MessageCircle,
   policy: FileText,
 };
 
-const occasionIconMap: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>> = {
+const occasionIconMap: Record<
+  string,
+  React.ComponentType<React.SVGProps<SVGSVGElement>>
+> = {
   familyDining: Utensils,
   businessMeeting: Briefcase,
   birthdayCelebration: Cake,
@@ -206,85 +212,85 @@ const occasionIconMap: Record<string, React.ComponentType<React.SVGProps<SVGSVGE
 };
 
 const timeSuggestions = [
-  '06:00 AM',
-  '06:30 AM',
-  '07:00 AM',
-  '07:30 AM',
-  '08:00 AM',
-  '08:30 AM',
-  '09:00 AM',
-  '09:30 AM',
-  '10:00 AM',
-  '10:30 AM',
-  '11:00 AM',
-  '11:30 AM',
-  '12:00 PM',
-  '12:30 PM',
-  '01:00 PM',
-  '01:30 PM',
-  '02:00 PM',
-  '02:30 PM',
-  '03:00 PM',
-  '03:30 PM',
-  '04:00 PM',
-  '04:30 PM',
-  '05:00 PM',
-  '05:30 PM',
-  '06:00 PM',
-  '06:30 PM',
-  '07:00 PM',
-  '07:30 PM',
-  '08:00 PM',
-  '08:30 PM',
-  '09:00 PM',
-  '09:30 PM',
-  '10:00 PM',
+  "06:00 AM",
+  "06:30 AM",
+  "07:00 AM",
+  "07:30 AM",
+  "08:00 AM",
+  "08:30 AM",
+  "09:00 AM",
+  "09:30 AM",
+  "10:00 AM",
+  "10:30 AM",
+  "11:00 AM",
+  "11:30 AM",
+  "12:00 PM",
+  "12:30 PM",
+  "01:00 PM",
+  "01:30 PM",
+  "02:00 PM",
+  "02:30 PM",
+  "03:00 PM",
+  "03:30 PM",
+  "04:00 PM",
+  "04:30 PM",
+  "05:00 PM",
+  "05:30 PM",
+  "06:00 PM",
+  "06:30 PM",
+  "07:00 PM",
+  "07:30 PM",
+  "08:00 PM",
+  "08:30 PM",
+  "09:00 PM",
+  "09:30 PM",
+  "10:00 PM",
 ];
 
 const timeSlots: Record<MealCategory, string[]> = {
   Breakfast: [
-    '06:00 AM',
-    '06:30 AM',
-    '07:00 AM',
-    '07:30 AM',
-    '08:00 AM',
-    '08:30 AM',
-    '09:00 AM',
-    '09:30 AM',
-    '10:00 AM',
-    '10:30 AM',
-    '11:00 AM',
-    '11:30 AM',
+    "06:00 AM",
+    "06:30 AM",
+    "07:00 AM",
+    "07:30 AM",
+    "08:00 AM",
+    "08:30 AM",
+    "09:00 AM",
+    "09:30 AM",
+    "10:00 AM",
+    "10:30 AM",
+    "11:00 AM",
+    "11:30 AM",
   ],
   Lunch: [
-    '11:30 AM',
-    '12:00 PM',
-    '12:30 PM',
-    '01:00 PM',
-    '01:30 PM',
-    '02:00 PM',
-    '02:30 PM',
-    '03:00 PM',
-    '03:30 PM',
-    '04:00 PM',
+    "11:30 AM",
+    "12:00 PM",
+    "12:30 PM",
+    "01:00 PM",
+    "01:30 PM",
+    "02:00 PM",
+    "02:30 PM",
+    "03:00 PM",
+    "03:30 PM",
+    "04:00 PM",
   ],
   Dinner: [
-    '05:00 PM',
-    '05:30 PM',
-    '06:00 PM',
-    '06:30 PM',
-    '07:00 PM',
-    '07:30 PM',
-    '08:00 PM',
-    '08:30 PM',
-    '09:00 PM',
-    '09:30 PM',
+    "05:00 PM",
+    "05:30 PM",
+    "06:00 PM",
+    "06:30 PM",
+    "07:00 PM",
+    "07:30 PM",
+    "08:00 PM",
+    "08:30 PM",
+    "09:00 PM",
+    "09:30 PM",
   ],
 };
 
 const getMealCategoryFromTime = (
   timeStr: string,
-  currentCategory: MealCategory
+  currentCategory: MealCategory,
 ): MealCategory | null => {
   if (!timeStr) {
     return null;
@@ -296,7 +302,7 @@ const getMealCategoryFromTime = (
     return currentCategory;
   }
 
-  for (const cat of ['Breakfast', 'Lunch', 'Dinner'] as const) {
+  for (const cat of ["Breakfast", "Lunch", "Dinner"] as const) {
     if (timeSlots[cat].includes(cleanTime)) {
       return cat;
     }
@@ -312,23 +318,23 @@ const getMealCategoryFromTime = (
   const minutes = parseInt(match[2], 10);
   const ampm = match[3];
 
-  if (ampm === 'PM' && hours !== 12) {
+  if (ampm === "PM" && hours !== 12) {
     hours += 12;
-  } else if (ampm === 'AM' && hours === 12) {
+  } else if (ampm === "AM" && hours === 12) {
     hours = 0;
   }
 
   const totalMinutes = hours * 60 + minutes;
 
   if (totalMinutes < 690) {
-    return 'Breakfast';
+    return "Breakfast";
   }
 
   if (totalMinutes < 990) {
-    return 'Lunch';
+    return "Lunch";
   }
 
-  return 'Dinner';
+  return "Dinner";
 };
 
 const getImage = (src?: string, fallback = imgHeroBg2) => {
@@ -341,7 +347,7 @@ const getImage = (src?: string, fallback = imgHeroBg2) => {
 
 const formatText = (
   template: string,
-  values: Record<string, string | number>
+  values: Record<string, string | number>,
 ) => {
   return template.replace(/\{(\w+)\}/g, (_, key: string) => {
     const value = values[key];
@@ -349,19 +355,6 @@ const formatText = (
     return value === undefined ? `{${key}}` : String(value);
   });
 };
-
-async function getReservationDataByLanguage(language: string) {
-  const fileName =
-    language === 'KH' ? 'reservations.kh.json' : 'reservations.en.json';
-
-  const response = await fetch(`/mocks/${fileName}`);
-
-  if (!response.ok) {
-    throw new Error(`Failed to load ${fileName}`);
-  }
-
-  return (await response.json()) as ReservationData;
-}
 
 function GuestInformationCard({
   info,
@@ -428,7 +421,7 @@ function ReservationHero({ data }: { data: ReservationData }) {
   );
 }
 
-function FaqSection({ faq }: { faq: ReservationData['faq'] }) {
+function FaqSection({ faq }: { faq: ReservationData["faq"] }) {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(0);
 
   return (
@@ -447,7 +440,7 @@ function FaqSection({ faq }: { faq: ReservationData['faq'] }) {
             return (
               <div
                 key={`${item.q}-${index}`}
-                className={`faq-item ${isExpanded ? 'faq-item-expanded' : ''}`}
+                className={`faq-item ${isExpanded ? "faq-item-expanded" : ""}`}
               >
                 <button
                   type="button"
@@ -466,7 +459,7 @@ function FaqSection({ faq }: { faq: ReservationData['faq'] }) {
 
                 <div
                   className={`faq-answer-wrapper ${
-                    isExpanded ? 'faq-answer-expanded' : ''
+                    isExpanded ? "faq-answer-expanded" : ""
                   }`}
                 >
                   <div className="faq-answer">
@@ -483,18 +476,15 @@ function FaqSection({ faq }: { faq: ReservationData['faq'] }) {
 }
 
 export default function ReservationPage() {
-  const { language, t } = useTranslation();
+  const { getObject, language, t } = useTranslation();
 
+  const resData = getObject<ReservationData | null>("reservationPage", null);
   const today = new Date();
 
-  const [resData, setResData] = useState<ReservationData | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [errorKey, setErrorKey] = useState<string | null>(null);
+  const [selectedBranch, setSelectedBranch] = useState("toulKork");
 
-  const [selectedBranch, setSelectedBranch] = useState('toulKork');
-
-  const [fullName, setFullName] = useState('');
-  const [phone, setPhone] = useState('');
+  const [fullName, setFullName] = useState("");
+  const [phone, setPhone] = useState("");
 
   const [adults, setAdults] = useState(4);
   const [childrenCount, setChildrenCount] = useState(2);
@@ -502,51 +492,20 @@ export default function ReservationPage() {
   const [currentYear, setCurrentYear] = useState(today.getFullYear());
   const [currentMonth, setCurrentMonth] = useState(today.getMonth());
   const [selectedDate, setSelectedDate] = useState<Date>(today);
-  const [timeCategory, setTimeCategory] = useState<MealCategory>('Breakfast');
-  const [selectedTime, setSelectedTime] = useState('06:30 AM');
-  const [customTime, setCustomTime] = useState('');
+  const [timeCategory, setTimeCategory] = useState<MealCategory>("Breakfast");
+  const [selectedTime, setSelectedTime] = useState("06:30 AM");
+  const [customTime, setCustomTime] = useState("");
 
   const [showTimeDropdown, setShowTimeDropdown] = useState(false);
   const timeInputWrapperRef = useRef<HTMLDivElement>(null);
 
   const [selectedOccasion, setSelectedOccasion] = useState(
-    'birthdayCelebration'
+    "birthdayCelebration",
   );
-  const [selectedSeating, setSelectedSeating] = useState('privateRoom');
-  const [specialRequest, setSpecialRequest] = useState('');
+  const [selectedSeating, setSelectedSeating] = useState("privateRoom");
+  const [specialRequest, setSpecialRequest] = useState("");
 
   const [isSubmitted, setIsSubmitted] = useState(false);
-
-  useEffect(() => {
-    let mounted = true;
-
-    setLoading(true);
-    setErrorKey(null);
-
-    getReservationDataByLanguage(language)
-      .then((res) => {
-        if (!mounted) {
-          return;
-        }
-
-        setResData(res);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error(err);
-
-        if (!mounted) {
-          return;
-        }
-
-        setErrorKey('reservation.errors.load');
-        setLoading(false);
-      });
-
-    return () => {
-      mounted = false;
-    };
-  }, [language]);
 
   useEffect(() => {
     const timeToParse = customTime || selectedTime;
@@ -567,37 +526,27 @@ export default function ReservationPage() {
       }
     }
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
   const filteredTimeSuggestions = timeSuggestions.filter((time) =>
-    time.toLowerCase().includes(customTime.toLowerCase())
+    time.toLowerCase().includes(customTime.toLowerCase()),
   );
 
   const handleSelectSuggestion = (time: string) => {
     setCustomTime(time);
-    setSelectedTime('');
+    setSelectedTime("");
     setShowTimeDropdown(false);
   };
 
-  if (loading) {
+  if (!resData) {
     return (
       <div className="pt-28 pb-20 text-center text-olive font-serif text-xl min-h-screen flex items-center justify-center">
-        {t('reservation.loading', undefined, 'Loading reservations...')}
-      </div>
-    );
-  }
-
-  if (errorKey || !resData) {
-    return (
-      <div className="pt-28 pb-20 text-center text-red-500 font-serif text-xl min-h-screen flex items-center justify-center">
-        {errorKey
-          ? t(errorKey, undefined, 'Failed to load reservation data.')
-          : t('reservation.errors.noData', undefined, 'No reservation data available.')}
+        {t("reservation.loading", undefined, "Loading reservations...")}
       </div>
     );
   }
@@ -610,9 +559,9 @@ export default function ReservationPage() {
   const seatingPreferences = resData.seatingPreferences.map((seating) => ({
     ...seating,
     img:
-      seating.img === 'imgGallery1'
+      seating.img === "imgGallery1"
         ? imgGallery1
-        : seating.img === 'imgGallery5'
+        : seating.img === "imgGallery5"
           ? imgGallery5
           : getImage(seating.img, imgHeroBg1),
   }));
@@ -636,23 +585,23 @@ export default function ReservationPage() {
     new Date(year, month, 1).getDay();
 
   const getOrdinalSuffix = (day: number) => {
-    if (language === 'KH') {
-      return '';
+    if (language === "KH") {
+      return "";
     }
 
     if (day > 3 && day < 21) {
-      return 'th';
+      return "th";
     }
 
     switch (day % 10) {
       case 1:
-        return 'st';
+        return "st";
       case 2:
-        return 'nd';
+        return "nd";
       case 3:
-        return 'rd';
+        return "rd";
       default:
-        return 'th';
+        return "th";
     }
   };
 
@@ -661,7 +610,7 @@ export default function ReservationPage() {
     const dayNum = date.getDate();
     const yearNum = date.getFullYear();
 
-    if (language === 'KH') {
+    if (language === "KH") {
       return `${dayNum} ${monthName} ${yearNum}`;
     }
 
@@ -734,11 +683,11 @@ export default function ReservationPage() {
     if (!fullName.trim() || !phone.trim()) {
       window.alert(resData.validation.contactRequired);
 
-      const targetInput = !fullName.trim() ? 'fullName' : 'phoneNumber';
+      const targetInput = !fullName.trim() ? "fullName" : "phoneNumber";
       const element = document.getElementById(targetInput);
 
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        element.scrollIntoView({ behavior: "smooth", block: "center" });
         element.focus();
       }
 
@@ -748,25 +697,25 @@ export default function ReservationPage() {
     if (fullName.trim().length < 2) {
       window.alert(resData.validation.invalidName);
 
-      const element = document.getElementById('fullName');
+      const element = document.getElementById("fullName");
 
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        element.scrollIntoView({ behavior: "smooth", block: "center" });
         element.focus();
       }
 
       return;
     }
 
-    const phoneDigits = phone.replace(/\D/g, '');
+    const phoneDigits = phone.replace(/\D/g, "");
 
     if (phoneDigits.length < 9 || phoneDigits.length > 12) {
       window.alert(resData.validation.invalidPhone);
 
-      const element = document.getElementById('phoneNumber');
+      const element = document.getElementById("phoneNumber");
 
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        element.scrollIntoView({ behavior: "smooth", block: "center" });
         element.focus();
       }
 
@@ -782,18 +731,18 @@ export default function ReservationPage() {
   };
 
   const handleReset = () => {
-    setFullName('');
-    setPhone('');
+    setFullName("");
+    setPhone("");
     setAdults(4);
     setChildrenCount(2);
     setSelectedDate(today);
     setCurrentYear(today.getFullYear());
     setCurrentMonth(today.getMonth());
-    setSelectedTime('06:30 AM');
-    setCustomTime('');
-    setSelectedOccasion('birthdayCelebration');
-    setSelectedSeating('privateRoom');
-    setSpecialRequest('');
+    setSelectedTime("06:30 AM");
+    setCustomTime("");
+    setSelectedOccasion("birthdayCelebration");
+    setSelectedSeating("privateRoom");
+    setSpecialRequest("");
     setIsSubmitted(false);
   };
 
@@ -874,7 +823,10 @@ export default function ReservationPage() {
           </div>
         </section>
       ) : (
-        <section className="reservation-form-section" aria-label={resData.form.aria}>
+        <section
+          className="reservation-form-section"
+          aria-label={resData.form.aria}
+        >
           <div className="reservation-form-container">
             <form
               className="reservation-form-main"
@@ -900,7 +852,7 @@ export default function ReservationPage() {
                         type="button"
                         onClick={() => setSelectedBranch(branch.id)}
                         className={`branch-card-btn text-left ${
-                          isSelected ? 'branch-card-btn-active' : ''
+                          isSelected ? "branch-card-btn-active" : ""
                         }`}
                       >
                         <div className="branch-card-image-wrapper">
@@ -998,7 +950,9 @@ export default function ReservationPage() {
                     <div className="counter-control">
                       <button
                         type="button"
-                        onClick={() => setAdults((prev) => Math.max(1, prev - 1))}
+                        onClick={() =>
+                          setAdults((prev) => Math.max(1, prev - 1))
+                        }
                         disabled={adults <= 1}
                         aria-label={resData.form.ariaLabels.decreaseAdults}
                       >
@@ -1100,51 +1054,60 @@ export default function ReservationPage() {
 
                     <div className="calendar-grid">
                       {resData.calendar.daysOfWeek.map((day, index) => (
-                        <div key={`${day}-${index}`} className="calendar-day-header">
+                        <div
+                          key={`${day}-${index}`}
+                          className="calendar-day-header"
+                        >
                           {day}
                         </div>
                       ))}
 
-                      {getCalendarDays().map(({ day, isCurrentMonth, date }, idx) => {
-                        const isSelected =
-                          selectedDate.getDate() === day &&
-                          selectedDate.getMonth() === date.getMonth() &&
-                          selectedDate.getFullYear() === date.getFullYear();
+                      {getCalendarDays().map(
+                        ({ day, isCurrentMonth, date }, idx) => {
+                          const isSelected =
+                            selectedDate.getDate() === day &&
+                            selectedDate.getMonth() === date.getMonth() &&
+                            selectedDate.getFullYear() === date.getFullYear();
 
-                        return (
-                          <button
-                            key={idx}
-                            type="button"
-                            onClick={() => setSelectedDate(date)}
-                            className={`calendar-cell ${
-                              !isCurrentMonth ? 'calendar-cell-other-month' : ''
-                            } ${isSelected ? 'calendar-cell-selected' : ''}`}
-                          >
-                            <span>{day}</span>
-                          </button>
-                        );
-                      })}
+                          return (
+                            <button
+                              key={idx}
+                              type="button"
+                              onClick={() => setSelectedDate(date)}
+                              className={`calendar-cell ${
+                                !isCurrentMonth
+                                  ? "calendar-cell-other-month"
+                                  : ""
+                              } ${isSelected ? "calendar-cell-selected" : ""}`}
+                            >
+                              <span>{day}</span>
+                            </button>
+                          );
+                        },
+                      )}
                     </div>
                   </div>
 
                   <div className="time-picker-widget">
                     <div className="time-tabs">
-                      {(['Breakfast', 'Lunch', 'Dinner'] as const).map((cat) => (
-                        <button
-                          key={cat}
-                          type="button"
-                          onClick={() => {
-                            setTimeCategory(cat);
-                            setSelectedTime(timeSlots[cat][0]);
-                            setCustomTime('');
-                          }}
-                          className={`time-tab-btn ${
-                            timeCategory === cat ? 'time-tab-btn-active' : ''
-                          }`}
-                        >
-                          {resData.timeCategories[cat]}
-                        </button>
-                      ))}
+                      {(["Breakfast", "Lunch", "Dinner"] as const).map(
+                        (cat) => (
+                          <button
+                            key={cat}
+                            type="button"
+                            onClick={() => {
+                              setTimeCategory(cat);
+                              setSelectedTime(timeSlots[cat][0]);
+                              setCustomTime("");
+                            }}
+                            className={`time-tab-btn ${
+                              timeCategory === cat ? "time-tab-btn-active" : ""
+                            }`}
+                          >
+                            {resData.timeCategories[cat]}
+                          </button>
+                        ),
+                      )}
                     </div>
 
                     <div className="time-slots-grid">
@@ -1157,10 +1120,10 @@ export default function ReservationPage() {
                             type="button"
                             onClick={() => {
                               setSelectedTime(slot);
-                              setCustomTime('');
+                              setCustomTime("");
                             }}
                             className={`time-slot-btn ${
-                              isSelected ? 'time-slot-btn-selected' : ''
+                              isSelected ? "time-slot-btn-selected" : ""
                             }`}
                           >
                             {slot}
@@ -1169,7 +1132,10 @@ export default function ReservationPage() {
                       })}
                     </div>
 
-                    <div ref={timeInputWrapperRef} className="custom-time-input-wrapper">
+                    <div
+                      ref={timeInputWrapperRef}
+                      className="custom-time-input-wrapper"
+                    >
                       <Clock className="custom-time-icon" />
 
                       <input
@@ -1178,12 +1144,12 @@ export default function ReservationPage() {
                         value={customTime}
                         onChange={(e) => {
                           setCustomTime(e.target.value);
-                          setSelectedTime('');
+                          setSelectedTime("");
                           setShowTimeDropdown(true);
                         }}
                         onFocus={() => setShowTimeDropdown(true)}
                         onKeyDown={(e) => {
-                          if (e.key === 'Escape' || e.key === 'Enter') {
+                          if (e.key === "Escape" || e.key === "Enter") {
                             setShowTimeDropdown(false);
                           }
                         }}
@@ -1224,7 +1190,8 @@ export default function ReservationPage() {
 
                 <div className="occasion-grid">
                   {resData.occasions.map((occasion) => {
-                    const OccIcon = occasionIconMap[occasion.icon] || MoreHorizontal;
+                    const OccIcon =
+                      occasionIconMap[occasion.icon] || MoreHorizontal;
                     const isSelected = selectedOccasion === occasion.id;
 
                     return (
@@ -1233,7 +1200,7 @@ export default function ReservationPage() {
                         type="button"
                         onClick={() => setSelectedOccasion(occasion.id)}
                         className={`occasion-btn-card ${
-                          isSelected ? 'occasion-btn-card-active' : ''
+                          isSelected ? "occasion-btn-card-active" : ""
                         }`}
                       >
                         <OccIcon className="w-5 h-5 mb-2 shrink-0" />
@@ -1266,7 +1233,7 @@ export default function ReservationPage() {
                         type="button"
                         onClick={() => setSelectedSeating(seating.id)}
                         className={`seating-btn-card text-left ${
-                          isSelected ? 'seating-btn-card-active' : ''
+                          isSelected ? "seating-btn-card-active" : ""
                         }`}
                       >
                         <div className="seating-card-image-wrapper">
@@ -1368,7 +1335,9 @@ export default function ReservationPage() {
                   </div>
                 </div>
 
-                <p className="arrival-notice">{resData.summary.arrivalNotice}</p>
+                <p className="arrival-notice">
+                  {resData.summary.arrivalNotice}
+                </p>
 
                 <div className="summary-actions">
                   <button

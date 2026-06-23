@@ -81,57 +81,11 @@ const imageMapper: Record<string, string> = {
     imgBranchBoeungKak,
 };
 
-async function getRestaurantsDataByLanguage(language: string) {
-  const fileName =
-    language === 'KH' ? 'restaurants.kh.json' : 'restaurants.en.json';
-
-  const response = await fetch(`/mocks/${fileName}`);
-
-  if (!response.ok) {
-    throw new Error(`Failed to load ${fileName}`);
-  }
-
-  return (await response.json()) as RestaurantsData;
-}
-
 export default function Branches() {
-  const { language, t } = useTranslation();
+  const { getObject, t } = useTranslation();
 
-  const [data, setData] = useState<RestaurantsData | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [errorKey, setErrorKey] = useState<string | null>(null);
+  const data = getObject<RestaurantsData | null>('branchesPage', null);
   const [activeModal, setActiveModal] = useState<LocationItem | null>(null);
-
-  useEffect(() => {
-    let mounted = true;
-
-    setLoading(true);
-    setErrorKey(null);
-
-    getRestaurantsDataByLanguage(language)
-      .then((res) => {
-        if (!mounted) {
-          return;
-        }
-
-        setData(res);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error(err);
-
-        if (!mounted) {
-          return;
-        }
-
-        setErrorKey('branches.errors.load');
-        setLoading(false);
-      });
-
-    return () => {
-      mounted = false;
-    };
-  }, [language]);
 
   useEffect(() => {
     if (activeModal) {
@@ -145,20 +99,10 @@ export default function Branches() {
     };
   }, [activeModal]);
 
-  if (loading) {
+  if (!data) {
     return (
       <div className="pt-32 pb-20 text-center text-olive font-serif text-xl min-h-screen flex items-center justify-center">
         {t('branches.loading', undefined, 'Loading locations...')}
-      </div>
-    );
-  }
-
-  if (errorKey || !data) {
-    return (
-      <div className="pt-32 pb-20 text-center text-red-500 font-serif text-xl min-h-screen flex items-center justify-center">
-        {errorKey
-          ? t(errorKey, undefined, 'Failed to load locations.')
-          : t('branches.errors.noData', undefined, 'No data available.')}
       </div>
     );
   }

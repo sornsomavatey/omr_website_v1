@@ -1,13 +1,95 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Kantumruy+Pro:wght@400;500;600;700&display=swap");
+@import "tailwindcss";
+
 /* =========================
-   Font language override
-   Keep this at the VERY END of global.css
+   Tailwind Theme Tokens
 ========================= */
 
-:root {
-  --font-sans: "Inter", sans-serif;
-  --font-serif: "Gloock", serif;
-  --font-heading: var(--font-serif);
+@theme {
+  --font-sans: "Playfair Display", serif;
+  --font-serif: "Playfair Display", serif;
+
+  --color-cream: #f6fdf2;
+  --color-light-cream: #e7f6df;
+  --color-dark-green: #212d1b;
+  --color-olive: #6b9158;
+  --color-soft-green: #c9dfbd;
+  --color-muted-green: #9db98f;
+  --color-charcoal: #1a2416;
+  --color-warm-white: #fafaf9;
 }
+
+/* =========================
+   Base Reset
+========================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  min-height: 100vh;
+  background: #f6fdf2;
+  color: #212d1b;
+  font-family: var(--font-sans);
+  font-weight: 400;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  border: 0;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul,
+ol {
+  padding: 0;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* =========================
+   Font Defaults
+========================= */
 
 body,
 button,
@@ -22,17 +104,135 @@ h2,
 h3,
 h4,
 h5,
-h6 {
+h6,
+.font-serif {
   font-family: var(--font-serif);
 }
 
-/* Khmer mode is controlled by useTranslation.ts:
-   document.documentElement.lang = language === 'KH' ? 'km' : 'en';
-*/
+/* =========================
+   Useful Global Utilities
+========================= */
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.zoom-image-hover {
+  overflow: hidden;
+}
+
+.zoom-image-hover img {
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.zoom-image-hover:hover img {
+  transform: scale(1.06);
+}
+
+/* =========================
+   Shared Buttons
+========================= */
+
+.custom-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 14px 30px;
+  border-radius: 999px;
+  background: #6b9158;
+  color: #ffffff;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  box-shadow: 0 16px 34px rgba(107, 145, 88, 0.28);
+  transition:
+    transform 0.25s ease,
+    background-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.custom-btn-primary:hover {
+  background: #5b7d4a;
+  transform: translateY(-2px);
+  box-shadow: 0 20px 42px rgba(107, 145, 88, 0.34);
+}
+
+.custom-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 14px 30px;
+  border-radius: 999px;
+  border: 1px solid rgba(246, 253, 242, 0.62);
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition:
+    transform 0.25s ease,
+    background-color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.custom-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.custom-btn-outline-green {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 14px 32px;
+  border-radius: 999px;
+  border: 2px solid #6b9158;
+  color: #6b9158;
+  background: transparent;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition:
+    color 0.25s ease,
+    background-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.custom-btn-outline-green:hover {
+  color: #ffffff;
+  background: #6b9158;
+  transform: translateY(-2px);
+}
+
+/* =========================
+   Khmer Font Override
+   useTranslation.ts controls:
+   document.documentElement.lang = language === "KH" ? "km" : "en";
+========================= */
+
 html[lang="km"] {
-  --font-sans: "Siemreap", sans-serif;
-  --font-serif: "Siemreap", serif;
-  --font-heading: "Siemreap", sans-serif;
+  --font-sans: "Kantumruy Pro", sans-serif;
+  --font-serif: "Kantumruy Pro", serif;
+  --font-heading: "Kantumruy Pro", sans-serif;
 }
 
 html[lang="km"] body,
@@ -40,7 +240,7 @@ html[lang="km"] button,
 html[lang="km"] input,
 html[lang="km"] textarea,
 html[lang="km"] select {
-  font-family: "Siemreap", sans-serif;
+  font-family: "Kantumruy Pro", sans-serif;
 }
 
 html[lang="km"] h1,
@@ -50,7 +250,7 @@ html[lang="km"] h4,
 html[lang="km"] h5,
 html[lang="km"] h6,
 html[lang="km"] .font-serif {
-  font-family: "Siemreap", serif;
+  font-family: "Kantumruy Pro", sans-serif;
   line-height: 1.45;
   letter-spacing: 0;
 }
@@ -59,6 +259,9 @@ html[lang="km"] p,
 html[lang="km"] a,
 html[lang="km"] li,
 html[lang="km"] span,
-html[lang="km"] label {
+html[lang="km"] label,
+html[lang="km"] button,
+html[lang="km"] input,
+html[lang="km"] textarea {
   line-height: 1.65;
 }
