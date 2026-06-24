@@ -5,7 +5,8 @@
   left: 0;
   top: 0;
   bottom: 0;
-  width: 160px; /* Width of the left column holding the lotus pattern */
+  width: 200px;
+  /* Width of the left column holding the lotus pattern */
   pointer-events: none;
   z-index: 0;
   user-select: none;
@@ -18,20 +19,22 @@
   background-position: left top;
   background-repeat: repeat-y;
   background-size: 100% auto;
-  opacity: 0; /* Default hidden for scroll entrance animation */
-  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 0;
+  /* Default hidden for scroll entrance animation */
+  transition: opacity 1.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .lotus-bg-visible .lotus-bg-pattern {
-  opacity: 0.35; /* More extreme background line art opacity */
+  opacity: 0.35;
 }
 
 @media (max-width: 1023px) {
   .lotus-bg-wrapper {
-    width: 110px;
+    width: 500px;
   }
+
   .lotus-bg-visible .lotus-bg-pattern {
-    opacity: 0.25; /* More extreme background line art opacity */
+    opacity: 0.25;
   }
 }
 
@@ -39,23 +42,24 @@
   .lotus-bg-wrapper {
     width: 70px;
   }
+
   .lotus-bg-visible .lotus-bg-pattern {
-    opacity: 0.18; /* More extreme background line art opacity */
+    opacity: 0.18;
   }
 }
 
 /* Individual Menu Section scroll reveal animations */
 .menu-section h2 {
   opacity: 0;
-  transform: translateY(60px);
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(45px);
+  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .menu-section .grid {
   opacity: 0;
-  transform: translateY(60px);
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  transition-delay: 0.1s; /* Subtle stagger for content pop-up */
+  transform: translateY(45px);
+  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: 0.15s;
 }
 
 .menu-section.section-visible h2 {
@@ -119,6 +123,7 @@
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
   }
+
   .menu-sticky-tabs-inner::-webkit-scrollbar {
     display: none;
   }
@@ -157,12 +162,14 @@
 
 
 .menu-section {
-  scroll-margin-top: 172px; /* height of sticky navbar (82px) + sticky category bar (approx 72px) + buffer */
+  scroll-margin-top: 172px;
+  /* height of sticky navbar (82px) + sticky category bar (approx 72px) + buffer */
 }
 
 @media (max-width: 1023px) {
   .menu-section {
-    scroll-margin-top: 154px; /* mobile offset adjustment */
+    scroll-margin-top: 154px;
+    /* mobile offset adjustment */
   }
 }
 
@@ -191,7 +198,8 @@
 }
 
 .hero-category-pill-btn-active {
-  background-color: #6b9158; /* Premium green to match screenshot active button */
+  background-color: #6b9158;
+  /* Premium green to match screenshot active button */
   color: #ffffff;
   border: 1px solid #6b9158;
 }
@@ -215,9 +223,9 @@
     gap: 10px;
     padding: 0 16px;
   }
+
   .hero-category-pill-btn {
     font-size: 12px;
     padding: 8px 20px;
   }
 }
-

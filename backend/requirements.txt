@@ -1,6 +1,8 @@
 fastapi==0.115.0
-uvicorn[standard]==0.23.3
+uvicorn[standard]==0.23.2
 pydantic==2.9.0
+pydantic-settings==2.5.2
 python-dotenv==1.0.0
 alembic==1.11.1
 psycopg2-binary==2.9.12
+email-validator>=2.0.0

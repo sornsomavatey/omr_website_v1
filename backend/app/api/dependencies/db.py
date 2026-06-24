@@ -3,8 +3,8 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import os
 
-# SQLite is the default database for easy local development.
-# For production, set the DATABASE_URL environment variable (e.g. for PostgreSQL).
+
+# For production, set the DATABASE_URL environment variable 
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./omr_restaurant.db")
 
 engine = create_engine(

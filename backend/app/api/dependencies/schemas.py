@@ -65,7 +65,7 @@ class MenuItemResponse(MenuItemBase):
 # ----------------- RESERVATION SCHEMAS -----------------
 class ReservationCreate(BaseModel):
     customer_name: str = Field(..., min_length=2)
-    customer_email: EmailStr
+    customer_email: Optional[EmailStr] = None
     customer_phone: str = Field(..., min_length=8)
     branch_id: int
     reservation_date: str
