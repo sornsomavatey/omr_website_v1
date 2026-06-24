@@ -22,7 +22,7 @@ import {
 } from "lucide-react";
 
 import { useTranslation } from "@/hooks/useTranslation";
-
+import { createReservation } from "@/lib/api";
 import {
   imgGallery1,
   imgGallery5,
@@ -723,7 +723,26 @@ export default function ReservationPage() {
       return;
     }
 
-    setIsSubmitted(true);
+    // Prepare reservation payload matching FastAPI Pydantic schema
+    const payload = {
+      customer_name: fullName.trim(),
+      customer_phone: phone.trim(),
+      branch_id: selectedBranch === 'Toul Kork' ? 1 : 2,
+      reservation_date: selectedDate.toISOString().split('T')[0],
+      reservation_time: customTime || selectedTime,
+      guest_count: adults + childrenCount,
+      area: selectedSeating || 'Standard',
+      special_requests: specialRequest.trim() || null
+    };
+
+    createReservation(payload)
+      .then(() => {
+        setIsSubmitted(true);
+      })
+      .catch((err) => {
+        console.error("Failed to submit reservation:", err);
+        alert("There was an error processing your reservation. Please make sure the backend server is running.");
+      });
   };
 
   const handleReservationSubmit = (e: React.FormEvent) => {

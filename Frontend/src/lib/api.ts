@@ -39,4 +39,14 @@ export const getReservationsData = async () => {
   return response.data;
 };
 
+// Target FastAPI backend for dynamic API requests (e.g. creating reservations)
+export const backendApi = axios.create({
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8000/api',
+});
+
+export const createReservation = async (reservationData: any) => {
+  const response = await backendApi.post('/reservations/', reservationData);
+  return response.data;
+};
+
 export default api;
