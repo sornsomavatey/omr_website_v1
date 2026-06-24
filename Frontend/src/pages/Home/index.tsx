@@ -217,11 +217,6 @@ export default function HomePage() {
         className="relative w-full min-h-screen flex items-center justify-center bg-black overflow-hidden"
       >
         <div className="absolute inset-0 w-full h-full pointer-events-none z-0">
-          <img
-            alt=""
-            className="absolute inset-0 w-full h-full object-cover opacity-35"
-            src={imgHeroBg1}
-          />
 
           <img
             alt=""
@@ -229,7 +224,7 @@ export default function HomePage() {
             src={imgHeroBg2}
           />
 
-          <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black/80" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/40" />
         </div>
 
         <div className="relative z-10 text-center text-white max-w-[1260px] px-6 pt-32">

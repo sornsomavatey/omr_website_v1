@@ -1,6 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Kantumruy+Pro:wght@400;500;600;700&display=swap");
-@import "tailwindcss";
-
 /* =========================
    Tailwind Theme Tokens
 ========================= */
@@ -225,13 +222,11 @@ h6,
 
 /* =========================
    Khmer Font Override
-   useTranslation.ts controls:
-   document.documentElement.lang = language === "KH" ? "km" : "en";
 ========================= */
 
 html[lang="km"] {
   --font-sans: "Kantumruy Pro", sans-serif;
-  --font-serif: "Kantumruy Pro", serif;
+  --font-serif: "Kantumruy Pro", sans-serif;
   --font-heading: "Kantumruy Pro", sans-serif;
 }
 
@@ -251,17 +246,40 @@ html[lang="km"] h5,
 html[lang="km"] h6,
 html[lang="km"] .font-serif {
   font-family: "Kantumruy Pro", sans-serif;
-  line-height: 1.45;
+  line-height: 1.25;
   letter-spacing: 0;
 }
 
 html[lang="km"] p,
-html[lang="km"] a,
 html[lang="km"] li,
+html[lang="km"] label {
+  line-height: 1.55;
+}
+
 html[lang="km"] span,
-html[lang="km"] label,
-html[lang="km"] button,
-html[lang="km"] input,
-html[lang="km"] textarea {
-  line-height: 1.65;
+html[lang="km"] a,
+html[lang="km"] button {
+  line-height: 1.25;
+}
+/* =========================
+   Khmer Navbar Font Fix
+========================= */
+
+html[lang="km"] .navbar,
+html[lang="km"] .navbar *,
+html[lang="km"] .navbar-desktop-link,
+html[lang="km"] .navbar-mobile-link,
+html[lang="km"] .navbar-reservation-button,
+html[lang="km"] .navbar-language-button,
+html[lang="km"] .navbar-mobile-language-button,
+html[lang="km"] .navbar-mobile-menu-button,
+html[lang="km"] .navbar-mobile-close-button {
+  font-family: "Kantumruy Pro", sans-serif !important;
+  letter-spacing: 0;
+}
+
+html[lang="km"] .navbar-desktop-link,
+html[lang="km"] .navbar-mobile-link,
+html[lang="km"] .navbar-reservation-button {
+  line-height: 1.25;
 }

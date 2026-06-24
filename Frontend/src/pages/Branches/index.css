@@ -872,3 +872,36 @@
     opacity: 1;
   }
 }
+/* =========================
+   Khmer Branch Card Fix
+========================= */
+
+html[lang="km"] .location-card h3,
+html[lang="km"] .branch-card-title,
+html[lang="km"] .modal-title {
+  font-size: clamp(32px, 8vw, 44px);
+  line-height: 1.25;
+  letter-spacing: 0;
+}
+
+html[lang="km"] .location-card p,
+html[lang="km"] .location-card span,
+html[lang="km"] .location-card a,
+html[lang="km"] .location-card button {
+  line-height: 1.35;
+}
+
+html[lang="km"] .location-card-actions,
+html[lang="km"] .branch-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+html[lang="km"] .location-card-actions button,
+html[lang="km"] .location-card-actions a,
+html[lang="km"] .branch-card-actions button,
+html[lang="km"] .branch-card-actions a {
+  min-height: 52px;
+  white-space: nowrap;
+}
