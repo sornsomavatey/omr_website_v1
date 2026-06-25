@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Phone, MapPin, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useTranslation } from '@/hooks/useTranslation';
 
 export type BranchData = {
   id: string;
@@ -28,6 +29,7 @@ export default function LocationCard({
   onMapClick,
   imageMapper,
 }: LocationCardProps) {
+  const { t } = useTranslation();
   const resolvedImage = imageMapper && imageMapper[branch.image] ? imageMapper[branch.image] : branch.image;
 
   return (
@@ -88,7 +90,7 @@ export default function LocationCard({
               variant="outline"
               className="btn-action-outline"
             >
-              Detail
+              {t('home.locations.detail', undefined, 'Detail')}
             </Button>
           ) : (
             <Button
@@ -96,7 +98,7 @@ export default function LocationCard({
               variant="outline"
               className="btn-action-outline"
             >
-              <Link to="/contact">Detail</Link>
+              <Link to="/contact">{t('home.locations.detail', undefined, 'Detail')}</Link>
             </Button>
           )}
 
@@ -106,7 +108,7 @@ export default function LocationCard({
               variant="outline"
               className="btn-action-outline"
             >
-              Map
+              {t('home.locations.map', undefined, 'Map')}
             </Button>
           ) : (
             <Button
@@ -114,12 +116,12 @@ export default function LocationCard({
               variant="outline"
               className="btn-action-outline"
             >
-              <Link to="/contact">Map</Link>
+              <Link to="/contact">{t('home.locations.map', undefined, 'Map')}</Link>
             </Button>
           )}
 
           <Button asChild className="btn-action-primary">
-            <Link to="/reservations">Reserve a Table</Link>
+            <Link to="/reservations">{t('home.locations.reserve', undefined, 'Reserve a Table')}</Link>
           </Button>
         </div>
       </div>

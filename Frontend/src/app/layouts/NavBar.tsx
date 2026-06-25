@@ -1,29 +1,36 @@
 import { useEffect, useState } from 'react';
 import type { CSSProperties } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
-
 import whiteLogo from '@/assets/omr_logo_white.png';
-import { useTranslation } from '@/hooks/useTranslation';
 import { useAppStore } from '../store';
-
+import { useTranslation } from '@/hooks/useTranslation';
 import './NavBar.css';
 
+const navLinksKeys: Record<string, string> = {
+  'Home': 'nav.home',
+  'Menu': 'nav.menu',
+  'Events': 'nav.events',
+  'Branches': 'nav.branches',
+  'Gallery': 'nav.gallery',
+  'About Us': 'nav.about',
+};
+
 const navLinks = [
-  { labelKey: 'nav.home', path: '/' },
-  { labelKey: 'nav.menu', path: '/menu' },
-  { labelKey: 'nav.events', path: '/events' },
-  { labelKey: 'nav.branches', path: '/branches' },
-  { labelKey: 'nav.gallery', path: '/gallery' },
-  { labelKey: 'nav.about', path: '/about' },
+  { name: 'Home', path: '/' },
+  { name: 'Menu', path: '/menu' },
+  { name: 'Events', path: '/events' },
+  { name: 'Branches', path: '/branches' },
+  { name: 'Gallery', path: '/gallery' },
+  { name: 'About Us', path: '/about' },
 ];
 
 const mobileNavLinks = [
-  { labelKey: 'nav.home', path: '/' },
-  { labelKey: 'nav.menu', path: '/menu' },
-  { labelKey: 'nav.events', path: '/events' },
-  { labelKey: 'nav.gallery', path: '/gallery' },
-  { labelKey: 'nav.branches', path: '/branches' },
-  { labelKey: 'nav.about', path: '/about' },
+  { name: 'Home', path: '/' },
+  { name: 'Menu', path: '/menu' },
+  { name: 'Events', path: '/events' },
+  { name: 'Gallery', path: '/gallery' },
+  { name: 'Branches', path: '/branches' },
+  { name: 'About Us', path: '/about' },
 ];
 
 type NavigationVersion = 'v1' | 'v2';
@@ -183,11 +190,6 @@ export default function Navbar() {
     setMobileMenuOpen(false);
   };
 
-  const languageButtonLabel =
-    language === 'EN'
-      ? t('language.switchToKhmer', undefined, 'Switch to Khmer')
-      : t('language.switchToEnglish', undefined, 'Switch to English');
-
   const renderNavigation = (version: NavigationVersion) => {
     const isV2 = version === 'v2';
 
@@ -200,7 +202,7 @@ export default function Navbar() {
         <div className="navbar-inner">
           <Link
             to="/"
-            aria-label={t('nav.aria.home', undefined, 'Go to homepage')}
+            aria-label={t('nav.aria.home')}
             className="navbar-logo-link"
             onClick={closeMobileMenu}
           >
@@ -212,7 +214,7 @@ export default function Navbar() {
           <div className="navbar-desktop-nav">
             {navLinks.map((link) => (
               <NavLink
-                key={`${version}-${link.path}`}
+                key={`${version}-${link.name}`}
                 to={link.path}
                 className={({ isActive }) =>
                   `navbar-desktop-link ${
@@ -220,7 +222,7 @@ export default function Navbar() {
                   }`
                 }
               >
-                {t(link.labelKey)}
+                {t(navLinksKeys[link.name] || link.name)}
               </NavLink>
             ))}
           </div>
@@ -239,8 +241,12 @@ export default function Navbar() {
               type="button"
               onClick={toggleLanguage}
               className="navbar-language-button"
-              aria-label={languageButtonLabel}
-              title={languageButtonLabel}
+              aria-label="Change language"
+              title={
+                language === 'EN'
+                  ? t('language.switchToKhmer')
+                  : t('language.switchToEnglish')
+              }
             >
               <LanguageFlag language={language} />
             </button>
@@ -252,7 +258,7 @@ export default function Navbar() {
               className={`navbar-mobile-menu-button ${
                 mobileMenuOpen ? 'navbar-mobile-menu-button-open' : ''
               }`}
-              aria-label={t('nav.aria.openMenu', undefined, 'Open navigation menu')}
+              aria-label={t('nav.aria.openMenu')}
               aria-expanded={mobileMenuOpen}
               onClick={() => setMobileMenuOpen(true)}
             >
@@ -272,7 +278,7 @@ export default function Navbar() {
               <div className="navbar-mobile-menu-header">
                 <Link
                   to="/"
-                  aria-label={t('nav.aria.home', undefined, 'Go to homepage')}
+                  aria-label={t('nav.aria.home')}
                   className="navbar-mobile-logo-link"
                   onClick={closeMobileMenu}
                 >
@@ -286,8 +292,12 @@ export default function Navbar() {
                     type="button"
                     onClick={toggleLanguage}
                     className="navbar-mobile-language-button"
-                    aria-label={languageButtonLabel}
-                    title={languageButtonLabel}
+                    aria-label="Change language"
+                    title={
+                      language === 'EN'
+                        ? t('language.switchToKhmer')
+                        : t('language.switchToEnglish')
+                    }
                   >
                     <LanguageFlag language={language} />
                   </button>
@@ -295,7 +305,7 @@ export default function Navbar() {
                   <button
                     type="button"
                     className="navbar-mobile-close-button"
-                    aria-label={t('nav.aria.closeMenu', undefined, 'Close navigation menu')}
+                    aria-label={t('nav.aria.closeMenu')}
                     onClick={closeMobileMenu}
                   >
                     <span />
@@ -308,7 +318,7 @@ export default function Navbar() {
                 <div className="navbar-mobile-links">
                   {mobileNavLinks.map((link) => (
                     <NavLink
-                      key={`mobile-${version}-${link.path}`}
+                      key={`mobile-${version}-${link.name}`}
                       to={link.path}
                       onClick={closeMobileMenu}
                       className={({ isActive }) =>
@@ -317,7 +327,7 @@ export default function Navbar() {
                         }`
                       }
                     >
-                      {t(link.labelKey)}
+                      {t(navLinksKeys[link.name] || link.name)}
                     </NavLink>
                   ))}
                 </div>

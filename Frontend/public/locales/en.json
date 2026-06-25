@@ -9,8 +9,8 @@
     "events": "Events",
     "branches": "Branches",
     "gallery": "Gallery",
-    "about": "About Us",
-    "reservation": "Reservation",
+    "about": "About",
+    "reservation": "Reservations",
     "aria": {
       "home": "Go to homepage",
       "openMenu": "Open navigation menu",
@@ -51,12 +51,12 @@
   },
   "home": {
     "hero": {
-      "titleLine1": "A Modern Celebration of",
+      "titleLine1": "Experience Authentic",
       "titleHighlight": "Khmer Cuisine",
-      "description": "Discover refined Cambodian flavors, warm hospitality, and elegant spaces designed for memorable dining experiences.",
+      "description": "Traditional Cambodian flavors served in a modern dining experience.",
       "reserveButton": "Reserve a Table",
       "menuButton": "Explore Menu",
-      "scroll": "Scroll",
+      "scroll": "SCROLL",
       "scrollAria": "Scroll to featured cuisine section"
     },
     "signature": {

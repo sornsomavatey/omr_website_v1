@@ -1,48 +1,38 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import {
-  Briefcase,
-  Building,
-  Cake,
-  Check,
-  ChevronDown,
-  ChevronLeft,
-  ChevronRight,
-  ChevronUp,
   Clock,
   FileText,
-  Heart,
   MessageCircle,
-  Minus,
-  MoreHorizontal,
   Phone,
+  MapPin,
   Plus,
-  User,
+  Minus,
+  Check,
+  Briefcase,
+  Cake,
   Utensils,
-} from "lucide-react";
-
-import { useTranslation } from "@/hooks/useTranslation";
-import { createReservation } from "@/lib/api";
+  Building,
+  Heart,
+  MoreHorizontal,
+  ChevronLeft,
+  ChevronRight,
+  ChevronDown,
+  ChevronUp,
+  User,
+} from 'lucide-react';
+import { getReservationsData, getHomeData, createReservation } from '@/lib/api';
+import { useTranslation } from '@/hooks/useTranslation';
 import {
+  imgHeroBg2,
   imgGallery1,
   imgGallery5,
   imgHeroBg1,
-  imgHeroBg2,
   imageMap,
-} from "../Home/homeAssets";
-
-import "./index.css";
-
-type MealCategory = "Breakfast" | "Lunch" | "Dinner";
-
-type GuestInformationItem = {
-  type: string;
-  label: string;
-  value: string;
-};
+} from '../Home/homeAssets';
+import './index.css';
 
 type Branch = {
-  id: string;
   name: string;
   address: string;
   phone: string;
@@ -51,328 +41,29 @@ type Branch = {
   tags: string[];
 };
 
-type DiningSeating = {
-  id: string;
+type DiningSpace = {
   name: string;
+  tag: string;
+  desc: string;
   img: string;
 };
 
-type OccasionItem = {
-  id: string;
-  name: string;
-  icon: string;
-};
-
-type FaqItem = {
-  q: string;
-  a: string;
-};
-
-type ReservationData = {
-  hero: {
-    eyebrow: string;
-    title: string;
-    desc: string;
-    backgroundImage?: string;
-    backgroundAlt: string;
-  };
-  guestInformationTitle: string;
-  guestInformationAria: string;
-  guestInformation: GuestInformationItem[];
-  steps: {
-    branch: {
-      title: string;
-      desc: string;
-    };
-    contact: {
-      title: string;
-      desc: string;
-    };
-    guests: {
-      title: string;
-      desc: string;
-    };
-    dateTime: {
-      title: string;
-      desc: string;
-    };
-    occasion: {
-      title: string;
-      desc: string;
-    };
-    seating: {
-      title: string;
-      desc: string;
-    };
-  };
-  form: {
-    aria: string;
-    labels: {
-      fullName: string;
-      phoneNumber: string;
-      adults: string;
-      children: string;
-      specialRequest: string;
-    };
-    placeholders: {
-      fullName: string;
-      phoneNumber: string;
-      time: string;
-      specialRequest: string;
-    };
-    ariaLabels: {
-      decreaseAdults: string;
-      increaseAdults: string;
-      decreaseChildren: string;
-      increaseChildren: string;
-      previousMonth: string;
-      nextMonth: string;
-    };
-    totalGuests: string;
-    submit: string;
-    cancellationNotice: string;
-  };
-  validation: {
-    contactRequired: string;
-    invalidName: string;
-    invalidPhone: string;
-  };
-  success: {
-    title: string;
-    desc: string;
-    makeAnother: string;
-    valuedGuest: string;
-    notProvided: string;
-    detailLabels: {
-      branch: string;
-      guestName: string;
-      phone: string;
-      guests: string;
-      dateTime: string;
-      seatingOccasion: string;
-    };
-    guestsValue: string;
-    dateTimeValue: string;
-    seatingOccasionValue: string;
-  };
-  summary: {
-    title: string;
-    labels: {
-      branch: string;
-      name: string;
-      contact: string;
-      guests: string;
-      date: string;
-      occasion: string;
-      seating: string;
-    };
-    empty: string;
-    guestBreakdown: string;
-    timeTag: string;
-    arrivalNotice: string;
-    reserveButton: string;
-    contactRestaurant: string;
-    phoneHref: string;
-  };
-  calendar: {
-    months: string[];
-    shortMonths: string[];
-    daysOfWeek: string[];
-  };
-  timeCategories: Record<MealCategory, string>;
-  branches: Branch[];
-  occasions: OccasionItem[];
-  seatingPreferences: DiningSeating[];
-  faq: {
-    eyebrow: string;
-    title: string;
-    items: FaqItem[];
-  };
-};
-
-const iconMap: Record<
-  string,
-  React.ComponentType<React.SVGProps<SVGSVGElement>>
-> = {
+const iconMap: Record<string, React.ComponentType> = {
   hours: Clock,
   phone: Phone,
   time: MessageCircle,
   policy: FileText,
 };
 
-const occasionIconMap: Record<
-  string,
-  React.ComponentType<React.SVGProps<SVGSVGElement>>
-> = {
-  familyDining: Utensils,
-  businessMeeting: Briefcase,
-  birthdayCelebration: Cake,
-  corporateEvent: Building,
-  dateNight: Heart,
-  other: MoreHorizontal,
-};
-
-const timeSuggestions = [
-  "06:00 AM",
-  "06:30 AM",
-  "07:00 AM",
-  "07:30 AM",
-  "08:00 AM",
-  "08:30 AM",
-  "09:00 AM",
-  "09:30 AM",
-  "10:00 AM",
-  "10:30 AM",
-  "11:00 AM",
-  "11:30 AM",
-  "12:00 PM",
-  "12:30 PM",
-  "01:00 PM",
-  "01:30 PM",
-  "02:00 PM",
-  "02:30 PM",
-  "03:00 PM",
-  "03:30 PM",
-  "04:00 PM",
-  "04:30 PM",
-  "05:00 PM",
-  "05:30 PM",
-  "06:00 PM",
-  "06:30 PM",
-  "07:00 PM",
-  "07:30 PM",
-  "08:00 PM",
-  "08:30 PM",
-  "09:00 PM",
-  "09:30 PM",
-  "10:00 PM",
-];
-
-const timeSlots: Record<MealCategory, string[]> = {
-  Breakfast: [
-    "06:00 AM",
-    "06:30 AM",
-    "07:00 AM",
-    "07:30 AM",
-    "08:00 AM",
-    "08:30 AM",
-    "09:00 AM",
-    "09:30 AM",
-    "10:00 AM",
-    "10:30 AM",
-    "11:00 AM",
-    "11:30 AM",
-  ],
-  Lunch: [
-    "11:30 AM",
-    "12:00 PM",
-    "12:30 PM",
-    "01:00 PM",
-    "01:30 PM",
-    "02:00 PM",
-    "02:30 PM",
-    "03:00 PM",
-    "03:30 PM",
-    "04:00 PM",
-  ],
-  Dinner: [
-    "05:00 PM",
-    "05:30 PM",
-    "06:00 PM",
-    "06:30 PM",
-    "07:00 PM",
-    "07:30 PM",
-    "08:00 PM",
-    "08:30 PM",
-    "09:00 PM",
-    "09:30 PM",
-  ],
-};
-
-const getMealCategoryFromTime = (
-  timeStr: string,
-  currentCategory: MealCategory,
-): MealCategory | null => {
-  if (!timeStr) {
-    return null;
-  }
-
-  const cleanTime = timeStr.trim().toUpperCase();
-
-  if (timeSlots[currentCategory].includes(cleanTime)) {
-    return currentCategory;
-  }
-
-  for (const cat of ["Breakfast", "Lunch", "Dinner"] as const) {
-    if (timeSlots[cat].includes(cleanTime)) {
-      return cat;
-    }
-  }
-
-  const match = cleanTime.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)?$/);
-
-  if (!match) {
-    return null;
-  }
-
-  let hours = parseInt(match[1], 10);
-  const minutes = parseInt(match[2], 10);
-  const ampm = match[3];
-
-  if (ampm === "PM" && hours !== 12) {
-    hours += 12;
-  } else if (ampm === "AM" && hours === 12) {
-    hours = 0;
-  }
-
-  const totalMinutes = hours * 60 + minutes;
-
-  if (totalMinutes < 690) {
-    return "Breakfast";
-  }
-
-  if (totalMinutes < 990) {
-    return "Lunch";
-  }
-
-  return "Dinner";
-};
-
-const getImage = (src?: string, fallback = imgHeroBg2) => {
-  if (!src) {
-    return fallback;
-  }
-
-  return imageMap[src] || src;
-};
-
-const formatText = (
-  template: string,
-  values: Record<string, string | number>,
-) => {
-  return template.replace(/\{(\w+)\}/g, (_, key: string) => {
-    const value = values[key];
-
-    return value === undefined ? `{${key}}` : String(value);
-  });
-};
-
-function GuestInformationCard({
-  info,
-  title,
-  ariaLabel,
-}: {
-  info: GuestInformationItem[];
-  title: string;
-  ariaLabel: string;
-}) {
+function GuestInformationCard({ info }: { info: any[] }) {
+  const { t } = useTranslation();
   return (
-    <aside className="reservation-guest-card" aria-label={ariaLabel}>
-      <h2>{title}</h2>
+    <aside className="reservation-guest-card" aria-label={t('reservationPage.guestInformationAria', undefined, 'Guest information')}>
+      <h2>{t('reservationPage.guestInformationTitle', undefined, 'Guest Information')}</h2>
 
       <div className="reservation-guest-list">
         {info.map((item) => {
-          const Icon = iconMap[item.type] || Clock;
+          const Icon = item.icon;
 
           return (
             <div key={item.label} className="reservation-guest-item">
@@ -392,12 +83,13 @@ function GuestInformationCard({
   );
 }
 
-function ReservationHero({ data }: { data: ReservationData }) {
+function ReservationHero({ hero, info }: { hero: any; info: any[] }) {
+  const { t } = useTranslation();
   return (
     <section className="reservation-hero" aria-labelledby="reservation-title">
       <img
-        src={getImage(data.hero.backgroundImage, imgHeroBg2)}
-        alt={data.hero.backgroundAlt}
+        src={imgHeroBg2}
+        alt={t('reservationPage.hero.backgroundAlt', undefined, 'One More Restaurant dining room')}
         className="reservation-hero-image"
       />
 
@@ -405,43 +97,65 @@ function ReservationHero({ data }: { data: ReservationData }) {
 
       <div className="reservation-hero-container">
         <div className="reservation-hero-copy">
-          <p className="reservation-hero-eyebrow">{data.hero.eyebrow}</p>
+          <p className="reservation-hero-eyebrow">{t('reservationPage.hero.eyebrow', undefined, hero.eyebrow)}</p>
 
-          <h1 id="reservation-title">{data.hero.title}</h1>
+          <h1 id="reservation-title">{t('reservationPage.hero.title', undefined, hero.title)}</h1>
 
-          <p className="reservation-hero-description">{data.hero.desc}</p>
+          <p className="reservation-hero-description">
+            {t('reservationPage.hero.desc', undefined, hero.desc)}
+          </p>
         </div>
 
-        <GuestInformationCard
-          info={data.guestInformation}
-          title={data.guestInformationTitle}
-          ariaLabel={data.guestInformationAria}
-        />
+        <GuestInformationCard info={info} />
       </div>
     </section>
   );
 }
 
-function FaqSection({ faq }: { faq: ReservationData["faq"] }) {
+function FaqSection() {
+  const { t, getObject } = useTranslation();
   const [expandedIndex, setExpandedIndex] = useState<number | null>(0);
+
+  const defaultFaqs = [
+    {
+      q: 'What is the dress code?',
+      a: 'We recommend smart casual attire. Traditional Khmer attire is also very welcome for special occasions.',
+    },
+    {
+      q: 'Do you offer vegetarian or vegan options?',
+      a: 'Yes, we have a variety of vegetarian and vegan options available. Please inform your waiter or mention it in the special requests section when booking.',
+    },
+    {
+      q: 'Is there parking available at the branches?',
+      a: 'Yes, both our Toul Kork and Boeung Kak branches feature spacious, secure parking lots with complimentary valet service.',
+    },
+    {
+      q: 'Can I bring my own wine?',
+      a: 'Yes, you may bring your own wine. A corkage fee of $15 per bottle applies.',
+    },
+    {
+      q: 'Are pets allowed?',
+      a: 'To ensure a comfortable dining environment for all guests, pets are only allowed in our outdoor garden areas.',
+    },
+  ];
+
+  const faqs = getObject<any[]>('reservationPage.faq.items', defaultFaqs);
 
   return (
     <section className="faq-section" aria-labelledby="faq-section-title">
       <div className="faq-container">
-        <span className="faq-eyebrow">{faq.eyebrow}</span>
-
+        <span className="faq-eyebrow">{t('reservationPage.faq.eyebrow', undefined, 'Assistance')}</span>
         <h2 id="faq-section-title" className="faq-title font-serif">
-          {faq.title}
+          {t('reservationPage.faq.title', undefined, 'Frequently Asked Questions')}
         </h2>
 
         <div className="faq-list">
-          {faq.items.map((item, index) => {
+          {faqs.map((faq, index) => {
             const isExpanded = expandedIndex === index;
-
             return (
               <div
-                key={`${item.q}-${index}`}
-                className={`faq-item ${isExpanded ? "faq-item-expanded" : ""}`}
+                key={index}
+                className={`faq-item ${isExpanded ? 'faq-item-expanded' : ''}`}
               >
                 <button
                   type="button"
@@ -449,22 +163,20 @@ function FaqSection({ faq }: { faq: ReservationData["faq"] }) {
                   onClick={() => setExpandedIndex(isExpanded ? null : index)}
                   aria-expanded={isExpanded}
                 >
-                  <span>{item.q}</span>
-
+                  <span>{faq.q}</span>
                   {isExpanded ? (
                     <ChevronUp className="faq-arrow" />
                   ) : (
                     <ChevronDown className="faq-arrow" />
                   )}
                 </button>
-
                 <div
                   className={`faq-answer-wrapper ${
-                    isExpanded ? "faq-answer-expanded" : ""
+                    isExpanded ? 'faq-answer-expanded' : ''
                   }`}
                 >
                   <div className="faq-answer">
-                    <p>{item.a}</p>
+                    <p>{faq.a}</p>
                   </div>
                 </div>
               </div>
@@ -476,47 +188,134 @@ function FaqSection({ faq }: { faq: ReservationData["faq"] }) {
   );
 }
 
+const timeSuggestions = [
+  '06:00 AM', '06:30 AM', '07:00 AM', '07:30 AM',
+  '08:00 AM', '08:30 AM', '09:00 AM', '09:30 AM',
+  '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM',
+  '12:00 PM', '12:30 PM', '01:00 PM', '01:30 PM',
+  '02:00 PM', '02:30 PM', '03:00 PM', '03:30 PM',
+  '04:00 PM', '04:30 PM', '05:00 PM', '05:30 PM',
+  '06:00 PM', '06:30 PM', '07:00 PM', '07:30 PM',
+  '08:00 PM', '08:30 PM', '09:00 PM', '09:30 PM',
+  '10:00 PM'
+];
+
+const timeSlots = {
+  Breakfast: [
+    '06:00 AM', '06:30 AM', '07:00 AM', '07:30 AM',
+    '08:00 AM', '08:30 AM', '09:00 AM', '09:30 AM',
+    '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM'
+  ],
+  Lunch: [
+    '11:30 AM', '12:00 PM', '12:30 PM', '01:00 PM',
+    '01:30 PM', '02:00 PM', '02:30 PM', '03:00 PM',
+    '03:30 PM', '04:00 PM'
+  ],
+  Dinner: [
+    '05:00 PM', '05:30 PM', '06:00 PM', '06:30 PM',
+    '07:00 PM', '07:30 PM', '08:00 PM', '08:30 PM',
+    '09:00 PM', '09:30 PM'
+  ]
+};
+
+const getMealCategoryFromTime = (
+  timeStr: string,
+  currentCategory: 'Breakfast' | 'Lunch' | 'Dinner'
+): 'Breakfast' | 'Lunch' | 'Dinner' | null => {
+  if (!timeStr) return null;
+  const cleanTime = timeStr.trim().toUpperCase();
+
+  // 1. If it exists in the current category's slots, keep it
+  if (timeSlots[currentCategory].includes(cleanTime)) {
+    return currentCategory;
+  }
+
+  // 2. See if it matches another category exactly
+  for (const cat of ['Breakfast', 'Lunch', 'Dinner'] as const) {
+    if (timeSlots[cat].includes(cleanTime)) {
+      return cat;
+    }
+  }
+
+  // 3. Fallback: Parse custom input (e.g. "06:00 PM")
+  const match = cleanTime.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)?$/);
+  if (!match) return null;
+
+  let hours = parseInt(match[1], 10);
+  const minutes = parseInt(match[2], 10);
+  const ampm = match[3];
+
+  if (ampm === 'PM' && hours !== 12) {
+    hours += 12;
+  } else if (ampm === 'AM' && hours === 12) {
+    hours = 0;
+  }
+
+  const totalMinutes = hours * 60 + minutes;
+
+  if (totalMinutes < 690) { // Before 11:30 AM
+    return 'Breakfast';
+  } else if (totalMinutes < 990) { // Before 4:30 PM
+    return 'Lunch';
+  } else { // 4:30 PM onwards
+    return 'Dinner';
+  }
+};
+
 export default function ReservationPage() {
-  const { getObject, language, t } = useTranslation();
+  const { t, getObject } = useTranslation();
+  const [resData, setResData] = useState<any>(null);
+  const [homeData, setHomeData] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const resData = getObject<ReservationData | null>("reservationPage", null);
-  const today = new Date();
+  // Step 1: Branch
+  const [selectedBranch, setSelectedBranch] = useState('Toul Kork');
 
-  const [selectedBranch, setSelectedBranch] = useState("toulKork");
+  // Step 2: Contact Info
+  const [fullName, setFullName] = useState('');
+  const [phone, setPhone] = useState('');
 
-  const [fullName, setFullName] = useState("");
-  const [phone, setPhone] = useState("");
-
+  // Step 3: Guests
   const [adults, setAdults] = useState(4);
   const [childrenCount, setChildrenCount] = useState(2);
 
-  const [currentYear, setCurrentYear] = useState(today.getFullYear());
-  const [currentMonth, setCurrentMonth] = useState(today.getMonth());
-  const [selectedDate, setSelectedDate] = useState<Date>(today);
-  const [timeCategory, setTimeCategory] = useState<MealCategory>("Breakfast");
-  const [selectedTime, setSelectedTime] = useState("06:30 AM");
-  const [customTime, setCustomTime] = useState("");
+  // Step 3 (repeated): Date & Time
+  const [currentYear, setCurrentYear] = useState(2026);
+  const [currentMonth, setCurrentMonth] = useState(5); // June (0-indexed, so 5)
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date(2026, 5, 18));
+  const [timeCategory, setTimeCategory] = useState<'Breakfast' | 'Lunch' | 'Dinner'>('Breakfast');
+  const [selectedTime, setSelectedTime] = useState('06:30 AM');
+  const [customTime, setCustomTime] = useState('');
 
-  const [showTimeDropdown, setShowTimeDropdown] = useState(false);
-  const timeInputWrapperRef = useRef<HTMLDivElement>(null);
-
-  const [selectedOccasion, setSelectedOccasion] = useState(
-    "birthdayCelebration",
-  );
-  const [selectedSeating, setSelectedSeating] = useState("privateRoom");
-  const [specialRequest, setSpecialRequest] = useState("");
-
-  const [isSubmitted, setIsSubmitted] = useState(false);
-
+  // Automatically update active timeCategory tab when selectedTime or customTime changes
   useEffect(() => {
     const timeToParse = customTime || selectedTime;
     const detectedCategory = getMealCategoryFromTime(timeToParse, timeCategory);
-
     if (detectedCategory && detectedCategory !== timeCategory) {
       setTimeCategory(detectedCategory);
     }
   }, [selectedTime, customTime, timeCategory]);
 
+  // Time autocomplete dropdown state
+  const [showTimeDropdown, setShowTimeDropdown] = useState(false);
+  const timeInputWrapperRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    Promise.all([getReservationsData(), getHomeData()])
+      .then(([reservationsRes, homeRes]) => {
+        setResData(reservationsRes);
+        setHomeData(homeRes);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setError('Failed to load reservation data.');
+        setLoading(false);
+      });
+  }, []);
+
+  // Close dropdown on click outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
@@ -526,116 +325,96 @@ export default function ReservationPage() {
         setShowTimeDropdown(false);
       }
     }
-
-    document.addEventListener("mousedown", handleClickOutside);
-
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
+  // Filter suggestions based on typed input
   const filteredTimeSuggestions = timeSuggestions.filter((time) =>
-    time.toLowerCase().includes(customTime.toLowerCase()),
+    time.toLowerCase().includes(customTime.toLowerCase())
   );
 
   const handleSelectSuggestion = (time: string) => {
     setCustomTime(time);
-    setSelectedTime("");
+    setSelectedTime('');
     setShowTimeDropdown(false);
   };
 
-  if (!resData) {
+  // Step 4: Occasion
+  const [selectedOccasion, setSelectedOccasion] = useState('Birthday Celebration');
+
+  // Step 5: Seating
+  const [selectedSeating, setSelectedSeating] = useState('Private Room');
+  const [specialRequest, setSpecialRequest] = useState('');
+
+  // Booking submit status
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  if (loading) {
     return (
       <div className="pt-28 pb-20 text-center text-olive font-serif text-xl min-h-screen flex items-center justify-center">
-        {t("reservation.loading", undefined, "Loading reservations...")}
+        {t('reservation.loading', undefined, 'Loading reservations...')}
       </div>
     );
   }
 
-  const branchesList = resData.branches.map((branch) => ({
+  if (error || !resData || !homeData) {
+    return (
+      <div className="pt-28 pb-20 text-center text-red-500 font-serif text-xl min-h-screen flex items-center justify-center">
+        {error ? t('reservation.errors.load', undefined, error) : t('reservation.errors.noData', undefined, 'No reservation data available.')}
+      </div>
+    );
+  }
+
+  const branchesList: Branch[] = homeData.branches.map((branch: any) => ({
     ...branch,
-    img: getImage(branch.img, imgHeroBg2),
+    img: imageMap[branch.img] || branch.img,
   }));
 
-  const seatingPreferences = resData.seatingPreferences.map((seating) => ({
-    ...seating,
-    img:
-      seating.img === "imgGallery1"
-        ? imgGallery1
-        : seating.img === "imgGallery5"
-          ? imgGallery5
-          : getImage(seating.img, imgHeroBg1),
+  const diningSpacesList: DiningSpace[] = homeData.diningSpaces.map((space: any) => ({
+    ...space,
+    img: imageMap[space.img] || space.img,
   }));
 
-  const selectedBranchData =
-    branchesList.find((branch) => branch.id === selectedBranch) ||
-    branchesList[0];
+  const translatedGuestInfoList = getObject<any[]>('reservationPage.guestInformation', []);
+  const guestInfoList = resData.guestInformation.map((item: any, idx: number) => {
+    const transItem = translatedGuestInfoList[idx] || {};
+    return {
+      icon: iconMap[item.type] || Clock,
+      label: transItem.label || item.label,
+      value: transItem.value || item.value,
+    };
+  });
 
-  const selectedOccasionData =
-    resData.occasions.find((occasion) => occasion.id === selectedOccasion) ||
-    resData.occasions[0];
+  // Helper date calculations
+  const daysInMonth = (year: number, month: number) => new Date(year, month + 1, 0).getDate();
+  const startDayOfMonth = (year: number, month: number) => new Date(year, month, 1).getDay();
 
-  const selectedSeatingData =
-    seatingPreferences.find((seating) => seating.id === selectedSeating) ||
-    seatingPreferences[0];
+  const monthNames = getObject<string[]>('reservationPage.calendar.months', [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ]);
 
-  const daysInMonth = (year: number, month: number) =>
-    new Date(year, month + 1, 0).getDate();
-
-  const startDayOfMonth = (year: number, month: number) =>
-    new Date(year, month, 1).getDay();
-
-  const getOrdinalSuffix = (day: number) => {
-    if (language === "KH") {
-      return "";
-    }
-
-    if (day > 3 && day < 21) {
-      return "th";
-    }
-
-    switch (day % 10) {
-      case 1:
-        return "st";
-      case 2:
-        return "nd";
-      case 3:
-        return "rd";
-      default:
-        return "th";
-    }
-  };
-
-  const formatDateDisplay = (date: Date) => {
-    const monthName = resData.calendar.shortMonths[date.getMonth()];
-    const dayNum = date.getDate();
-    const yearNum = date.getFullYear();
-
-    if (language === "KH") {
-      return `${dayNum} ${monthName} ${yearNum}`;
-    }
-
-    return `${monthName} ${dayNum}${getOrdinalSuffix(dayNum)} ${yearNum}`;
-  };
+  const daysOfWeek = getObject<string[]>('reservationPage.calendar.daysOfWeek', ['S', 'M', 'T', 'W', 'T', 'F', 'S']);
 
   const handlePrevMonth = () => {
     if (currentMonth === 0) {
       setCurrentMonth(11);
       setCurrentYear((prev) => prev - 1);
-      return;
+    } else {
+      setCurrentMonth((prev) => prev - 1);
     }
-
-    setCurrentMonth((prev) => prev - 1);
   };
 
   const handleNextMonth = () => {
     if (currentMonth === 11) {
       setCurrentMonth(0);
       setCurrentYear((prev) => prev + 1);
-      return;
+    } else {
+      setCurrentMonth((prev) => prev + 1);
     }
-
-    setCurrentMonth((prev) => prev + 1);
   };
 
   const getCalendarDays = () => {
@@ -643,13 +422,13 @@ export default function ReservationPage() {
     const startDay = startDayOfMonth(currentYear, currentMonth);
     const days = [];
 
+    // Prev month padding
     const prevMonthYear = currentMonth === 0 ? currentYear - 1 : currentYear;
     const prevMonthVal = currentMonth === 0 ? 11 : currentMonth - 1;
     const prevMonthTotalDays = daysInMonth(prevMonthYear, prevMonthVal);
 
     for (let i = startDay - 1; i >= 0; i--) {
       const dayVal = prevMonthTotalDays - i;
-
       days.push({
         day: dayVal,
         isCurrentMonth: false,
@@ -657,6 +436,7 @@ export default function ReservationPage() {
       });
     }
 
+    // Current month days
     for (let i = 1; i <= totalDays; i++) {
       days.push({
         day: i,
@@ -665,10 +445,10 @@ export default function ReservationPage() {
       });
     }
 
+    // Next month padding
     const nextMonthYear = currentMonth === 11 ? currentYear + 1 : currentYear;
     const nextMonthVal = currentMonth === 11 ? 0 : currentMonth + 1;
     const remainingCells = 42 - days.length;
-
     for (let i = 1; i <= remainingCells; i++) {
       days.push({
         day: i,
@@ -680,46 +460,94 @@ export default function ReservationPage() {
     return days;
   };
 
-  const validateAndSubmit = () => {
-    if (!fullName.trim() || !phone.trim()) {
-      window.alert(resData.validation.contactRequired);
+  const occasionsList = getObject<any[]>('reservationPage.occasions', []);
+  const occasions = [
+    { id: 'familyDining', name: 'Family Dining', icon: Utensils },
+    { id: 'businessMeeting', name: 'Business Meeting', icon: Briefcase },
+    { id: 'birthdayCelebration', name: 'Birthday Celebration', icon: Cake },
+    { id: 'corporateEvent', name: 'Corporate Event', icon: Building },
+    { id: 'dateNight', name: 'Date Night', icon: Heart },
+    { id: 'other', name: 'Other', icon: MoreHorizontal }
+  ].map((occ) => {
+    const transOcc = occasionsList.find((o) => o.id === occ.id) || {};
+    return {
+      ...occ,
+      name: transOcc.name || occ.name,
+    };
+  });
 
+  const seatingList = getObject<any[]>('reservationPage.seatingPreferences', []);
+  const seatingPreferences = [
+    { id: 'indoor', name: 'Indoor', img: diningSpacesList[3]?.img || imgHeroBg1 },
+    { id: 'outdoor', name: 'Outdoor', img: imgGallery1 },
+    { id: 'privateRoom', name: 'Private Room', img: diningSpacesList[4]?.img || imgHeroBg2 },
+    { id: 'bigRoom', name: 'Big Room', img: imgGallery5 }
+  ].map((seating) => {
+    const transSeating = seatingList.find((s) => s.id === seating.id) || {};
+    return {
+      ...seating,
+      name: transSeating.name || seating.name,
+    };
+  });
+
+  const getOrdinalSuffix = (day: number) => {
+    if (day > 3 && day < 21) return 'th';
+    switch (day % 10) {
+      case 1:  return 'st';
+      case 2:  return 'nd';
+      case 3:  return 'rd';
+      default: return 'th';
+    }
+  };
+
+  const formatDateDisplay = (date: Date) => {
+    const months = getObject<string[]>('reservationPage.calendar.shortMonths', [
+      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+    ]);
+    const monthName = months[date.getMonth()];
+    const dayNum = date.getDate();
+    const yearNum = date.getFullYear();
+    
+    return `${monthName} ${dayNum}${getOrdinalSuffix(dayNum)} ${yearNum}`;
+  };
+
+  const translatedTimeCategory = (cat: 'Breakfast' | 'Lunch' | 'Dinner') => {
+    return t(`reservationPage.timeCategories.${cat}`, undefined, cat);
+  };
+
+  const handleReservationSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!fullName.trim() || !phone.trim()) {
+      alert(t('reservationPage.validation.contactRequired', undefined, "Please fill in your Contact Details (Name & Phone Number) to complete your reservation."));
+      
       const targetInput = !fullName.trim() ? "fullName" : "phoneNumber";
       const element = document.getElementById(targetInput);
-
       if (element) {
-        element.scrollIntoView({ behavior: "smooth", block: "center" });
+        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
         element.focus();
       }
-
       return;
     }
 
     if (fullName.trim().length < 2) {
-      window.alert(resData.validation.invalidName);
-
+      alert(t('reservationPage.validation.invalidName', undefined, "Please enter a valid Full Name (at least 2 characters)."));
       const element = document.getElementById("fullName");
-
       if (element) {
-        element.scrollIntoView({ behavior: "smooth", block: "center" });
+        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
         element.focus();
       }
-
       return;
     }
 
-    const phoneDigits = phone.replace(/\D/g, "");
-
+    const phoneDigits = phone.replace(/\D/g, '');
     if (phoneDigits.length < 9 || phoneDigits.length > 12) {
-      window.alert(resData.validation.invalidPhone);
-
+      alert(t('reservationPage.validation.invalidPhone', undefined, "Please enter a valid Phone Number (typically 9 to 11 digits)."));
       const element = document.getElementById("phoneNumber");
-
       if (element) {
-        element.scrollIntoView({ behavior: "smooth", block: "center" });
+        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
         element.focus();
       }
-
       return;
     }
 
@@ -745,30 +573,41 @@ export default function ReservationPage() {
       });
   };
 
-  const handleReservationSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    validateAndSubmit();
-  };
-
   const handleReset = () => {
-    setFullName("");
-    setPhone("");
+    setFullName('');
+    setPhone('');
     setAdults(4);
     setChildrenCount(2);
-    setSelectedDate(today);
-    setCurrentYear(today.getFullYear());
-    setCurrentMonth(today.getMonth());
-    setSelectedTime("06:30 AM");
-    setCustomTime("");
-    setSelectedOccasion("birthdayCelebration");
-    setSelectedSeating("privateRoom");
-    setSpecialRequest("");
+    setSelectedDate(new Date(2026, 5, 18));
+    setSelectedTime('06:30 AM');
+    setSelectedOccasion('Birthday Celebration');
+    setSelectedSeating('Private Room');
+    setSpecialRequest('');
     setIsSubmitted(false);
   };
 
+  // Translate step headings
+  const stepBranchTitle = t('reservationPage.steps.branch.title', undefined, resData.steps.branch.title);
+  const stepBranchDesc = t('reservationPage.steps.branch.desc', undefined, resData.steps.branch.desc);
+
+  const stepContactTitle = t('reservationPage.steps.contact.title', undefined, 'Contact Details');
+  const stepContactDesc = t('reservationPage.steps.contact.desc', undefined, 'Enter your information so we can contact you regarding your booking');
+
+  const stepGuestsTitle = t('reservationPage.steps.guests.title', undefined, 'Guests');
+  const stepGuestsDesc = t('reservationPage.steps.guests.desc', undefined, 'Tell us how many people will be joining you');
+
+  const stepDateTimeTitle = t('reservationPage.steps.dateTime.title', undefined, 'Select Date & Time');
+  const stepDateTimeDesc = t('reservationPage.steps.dateTime.desc', undefined, 'Choose when you would like to dine with us');
+
+  const stepOccasionTitle = t('reservationPage.steps.occasion.title', undefined, 'Special Occasion');
+  const stepOccasionDesc = t('reservationPage.steps.occasion.desc', undefined, 'Let us know if you are celebrating a special event');
+
+  const stepSeatingTitle = t('reservationPage.steps.seating.title', undefined, 'Seating Preference');
+  const stepSeatingDesc = t('reservationPage.steps.seating.desc', undefined, 'Choose where you would like to be seated');
+
   return (
     <div className="reservation-page">
-      <ReservationHero data={resData} />
+      <ReservationHero hero={resData.hero} info={guestInfoList} />
 
       {isSubmitted && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
@@ -777,75 +616,59 @@ export default function ReservationPage() {
             <div className="success-icon-wrapper">
               <Check className="w-12 h-12 text-[#6b9158]" />
             </div>
-
-            <h2 className="font-serif text-3xl text-[#212d1b] text-center mb-4">
-              {resData.success.title}
-            </h2>
-
-            <p className="text-center text-[#646860] mb-8 max-w-md">
-              {resData.success.desc}
+            <h2 className="font-serif text-3xl text-[#212d1b] text-center mb-4">{t('reservationPage.success.title', undefined, 'Reservation Confirmed!')}</h2>
+            <p className="text-center text-[#646860] mb-8 max-w-md mx-auto">
+              {t('reservationPage.success.desc', undefined, 'Thank you for booking with One More Restaurant. A confirmation message has been sent to your phone number.')}
             </p>
-
+            
             <div className="success-details mb-8">
               <div className="success-detail-row">
-                <span>{resData.success.detailLabels.branch}</span>
-                <strong>{selectedBranchData.name}</strong>
+                <span>{t('reservationPage.success.detailLabels.branch', undefined, 'Branch')}</span>
+                <strong>One More {selectedBranch}</strong>
               </div>
-
               <div className="success-detail-row">
-                <span>{resData.success.detailLabels.guestName}</span>
-                <strong>{fullName || resData.success.valuedGuest}</strong>
+                <span>{t('reservationPage.success.detailLabels.guestName', undefined, 'Guest Name')}</span>
+                <strong>{fullName || t('reservationPage.success.valuedGuest', undefined, 'Valued Guest')}</strong>
               </div>
-
               <div className="success-detail-row">
-                <span>{resData.success.detailLabels.phone}</span>
-                <strong>{phone || resData.success.notProvided}</strong>
+                <span>{t('reservationPage.success.detailLabels.phone', undefined, 'Phone')}</span>
+                <strong>{phone || t('reservationPage.success.notProvided', undefined, 'Not provided')}</strong>
               </div>
-
               <div className="success-detail-row">
-                <span>{resData.success.detailLabels.guests}</span>
+                <span>{t('reservationPage.success.detailLabels.guests', undefined, 'Guests')}</span>
                 <strong>
-                  {formatText(resData.success.guestsValue, {
+                  {t('reservationPage.success.guestsValue', {
                     total: adults + childrenCount,
                     adults,
-                    children: childrenCount,
+                    children: childrenCount
                   })}
                 </strong>
               </div>
-
               <div className="success-detail-row">
-                <span>{resData.success.detailLabels.dateTime}</span>
+                <span>{t('reservationPage.success.detailLabels.dateTime', undefined, 'Date & Time')}</span>
                 <strong>
-                  {formatText(resData.success.dateTimeValue, {
+                  {t('reservationPage.success.dateTimeValue', {
                     date: formatDateDisplay(selectedDate),
-                    time: customTime || selectedTime,
+                    time: customTime || selectedTime
                   })}
                 </strong>
               </div>
-
               <div className="success-detail-row">
-                <span>{resData.success.detailLabels.seatingOccasion}</span>
+                <span>{t('reservationPage.success.detailLabels.seatingOccasion', undefined, 'Seating & Occasion')}</span>
                 <strong>
-                  {formatText(resData.success.seatingOccasionValue, {
-                    seating: selectedSeatingData.name,
-                    occasion: selectedOccasionData.name,
+                  {t('reservationPage.success.seatingOccasionValue', {
+                    seating: selectedSeating,
+                    occasion: selectedOccasion
                   })}
                 </strong>
               </div>
             </div>
 
-            <button
-              type="button"
-              onClick={handleReset}
-              className="reserve-btn-primary w-full mb-4"
-            >
-              {resData.success.makeAnother}
+            <button type="button" onClick={handleReset} className="reserve-btn-primary w-full mb-4">
+              {t('reservationPage.success.makeAnother', undefined, 'Make Another Booking')}
             </button>
             <div className="text-center pb-2">
-              <Link
-                to="/"
-                className="text-[#6b9158] hover:text-[#4d6a3f] font-sans text-sm font-medium underline underline-offset-4 transition-colors"
-              >
+              <Link to="/" className="text-[#6b9158] hover:text-[#4d6a3f] font-sans text-sm font-medium underline underline-offset-4 transition-colors">
                 Back to Home
               </Link>
             </div>
@@ -853,89 +676,95 @@ export default function ReservationPage() {
         </div>
       )}
 
-      <section
-        className="reservation-form-section"
-        aria-label={resData.form.aria}
-      >
+      <section className="reservation-form-section" aria-label={t('reservationPage.form.aria', undefined, 'Reservation form')}>
           <div className="reservation-form-container">
-            <form
-              className="reservation-form-main"
-              onSubmit={handleReservationSubmit}
-            >
+            {/* Form Main Area */}
+            <form className="reservation-form-main" onSubmit={handleReservationSubmit}>
+              
+              {/* Step 1: Choose Branch */}
               <div className="step-container">
                 <div className="reservation-step-heading mb-8">
                   <span>1</span>
-
                   <div>
-                    <h2>{resData.steps.branch.title}</h2>
-                    <p>{resData.steps.branch.desc}</p>
+                    <h2>{stepBranchTitle}</h2>
+                    <p>{stepBranchDesc}</p>
                   </div>
                 </div>
 
                 <div className="branch-selection-grid">
-                  {branchesList.map((branch) => {
-                    const isSelected = selectedBranch === branch.id;
+                  {/* Toul Kork Card */}
+                  <button
+                    type="button"
+                    onClick={() => setSelectedBranch('Toul Kork')}
+                    className={`branch-card-btn text-left ${selectedBranch === 'Toul Kork' ? 'branch-card-btn-active' : ''}`}
+                  >
+                    <div className="branch-card-image-wrapper">
+                      <img src={branchesList[0]?.img} alt="Toul Kork Branch" />
+                    </div>
+                    <div className="branch-card-content">
+                      <div className="branch-card-header">
+                        <h3>One More Restaurant Toul Kork</h3>
+                        {selectedBranch === 'Toul Kork' && (
+                          <span className="branch-check-badge">
+                            <Check className="w-3.5 h-3.5 text-white" />
+                          </span>
+                        )}
+                      </div>
+                      <div className="branch-card-tags">
+                        {branchesList[0]?.tags.map((tag: string) => (
+                          <span key={tag} className="branch-tag">{tag}</span>
+                        ))}
+                      </div>
+                    </div>
+                  </button>
 
-                    return (
-                      <button
-                        key={branch.id}
-                        type="button"
-                        onClick={() => setSelectedBranch(branch.id)}
-                        className={`branch-card-btn text-left ${
-                          isSelected ? "branch-card-btn-active" : ""
-                        }`}
-                      >
-                        <div className="branch-card-image-wrapper">
-                          <img src={branch.img} alt={branch.name} />
-                        </div>
-
-                        <div className="branch-card-content">
-                          <div className="branch-card-header">
-                            <h3>{branch.name}</h3>
-
-                            {isSelected && (
-                              <span className="branch-check-badge">
-                                <Check className="w-3.5 h-3.5 text-white" />
-                              </span>
-                            )}
-                          </div>
-
-                          <div className="branch-card-tags">
-                            {branch.tags.map((tag) => (
-                              <span key={tag} className="branch-tag">
-                                {tag}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      </button>
-                    );
-                  })}
+                  {/* Boeung Kak Card */}
+                  <button
+                    type="button"
+                    onClick={() => setSelectedBranch('Boeung Kak')}
+                    className={`branch-card-btn text-left ${selectedBranch === 'Boeung Kak' ? 'branch-card-btn-active' : ''}`}
+                  >
+                    <div className="branch-card-image-wrapper">
+                      <img src={branchesList[1]?.img} alt="Boeung Kak Branch" />
+                    </div>
+                    <div className="branch-card-content">
+                      <div className="branch-card-header">
+                        <h3>One More Restaurant Boeung Kak</h3>
+                        {selectedBranch === 'Boeung Kak' && (
+                          <span className="branch-check-badge">
+                            <Check className="w-3.5 h-3.5 text-white" />
+                          </span>
+                        )}
+                      </div>
+                      <div className="branch-card-tags">
+                        {branchesList[1]?.tags.map((tag: string) => (
+                          <span key={tag} className="branch-tag">{tag}</span>
+                        ))}
+                      </div>
+                    </div>
+                  </button>
                 </div>
               </div>
 
               <div className="step-divider" />
 
+              {/* Step 2: Contact Details */}
               <div className="step-container">
                 <div className="reservation-step-heading mb-8">
                   <span>2</span>
-
                   <div>
-                    <h2>{resData.steps.contact.title}</h2>
-                    <p>{resData.steps.contact.desc}</p>
+                    <h2>{stepContactTitle}</h2>
+                    <p>{stepContactDesc}</p>
                   </div>
                 </div>
 
                 <div className="contact-details-grid">
                   <div className="form-group">
-                    <label htmlFor="fullName">
-                      {resData.form.labels.fullName}
-                    </label>
-
+                    <label htmlFor="fullName">{t('reservationPage.form.labels.fullName', undefined, 'Full Name *')}</label>
                     <input
                       type="text"
                       id="fullName"
-                      placeholder={resData.form.placeholders.fullName}
+                      placeholder={t('reservationPage.form.placeholders.fullName', undefined, 'Enter full name')}
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
                       required
@@ -943,14 +772,11 @@ export default function ReservationPage() {
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="phoneNumber">
-                      {resData.form.labels.phoneNumber}
-                    </label>
-
+                    <label htmlFor="phoneNumber">{t('reservationPage.form.labels.phoneNumber', undefined, 'Phone Number *')}</label>
                     <input
                       type="tel"
                       id="phoneNumber"
-                      placeholder={resData.form.placeholders.phoneNumber}
+                      placeholder={t('reservationPage.form.placeholders.phoneNumber', undefined, 'Enter phone number')}
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
                       required
@@ -961,40 +787,33 @@ export default function ReservationPage() {
 
               <div className="step-divider" />
 
+              {/* Step 3: Guests */}
               <div className="step-container">
                 <div className="reservation-step-heading mb-8">
                   <span>3</span>
-
                   <div>
-                    <h2>{resData.steps.guests.title}</h2>
-                    <p>{resData.steps.guests.desc}</p>
+                    <h2>{stepGuestsTitle}</h2>
+                    <p>{stepGuestsDesc}</p>
                   </div>
                 </div>
 
                 <div className="guests-counter-container">
                   <div className="counter-row">
-                    <span className="counter-label">
-                      {resData.form.labels.adults}
-                    </span>
-
+                    <span className="counter-label">{t('reservationPage.form.labels.adults', undefined, 'Adults')}</span>
                     <div className="counter-control">
                       <button
                         type="button"
-                        onClick={() =>
-                          setAdults((prev) => Math.max(1, prev - 1))
-                        }
+                        onClick={() => setAdults((prev) => Math.max(1, prev - 1))}
                         disabled={adults <= 1}
-                        aria-label={resData.form.ariaLabels.decreaseAdults}
+                        aria-label={t('reservationPage.form.ariaLabels.decreaseAdults', undefined, 'Decrease adults')}
                       >
                         <Minus className="w-4 h-4" />
                       </button>
-
                       <span className="counter-value">{adults}</span>
-
                       <button
                         type="button"
                         onClick={() => setAdults((prev) => prev + 1)}
-                        aria-label={resData.form.ariaLabels.increaseAdults}
+                        aria-label={t('reservationPage.form.ariaLabels.increaseAdults', undefined, 'Increase adults')}
                       >
                         <Plus className="w-4 h-4" />
                       </button>
@@ -1002,28 +821,21 @@ export default function ReservationPage() {
                   </div>
 
                   <div className="counter-row">
-                    <span className="counter-label">
-                      {resData.form.labels.children}
-                    </span>
-
+                    <span className="counter-label">{t('reservationPage.form.labels.children', undefined, 'Children')}</span>
                     <div className="counter-control">
                       <button
                         type="button"
-                        onClick={() =>
-                          setChildrenCount((prev) => Math.max(0, prev - 1))
-                        }
+                        onClick={() => setChildrenCount((prev) => Math.max(0, prev - 1))}
                         disabled={childrenCount <= 0}
-                        aria-label={resData.form.ariaLabels.decreaseChildren}
+                        aria-label={t('reservationPage.form.ariaLabels.decreaseChildren', undefined, 'Decrease children')}
                       >
                         <Minus className="w-4 h-4" />
                       </button>
-
                       <span className="counter-value">{childrenCount}</span>
-
                       <button
                         type="button"
                         onClick={() => setChildrenCount((prev) => prev + 1)}
-                        aria-label={resData.form.ariaLabels.increaseChildren}
+                        aria-label={t('reservationPage.form.ariaLabels.increaseChildren', undefined, 'Increase children')}
                       >
                         <Plus className="w-4 h-4" />
                       </button>
@@ -1033,12 +845,7 @@ export default function ReservationPage() {
                   <div className="total-guests-pill-wrapper">
                     <div className="total-guests-pill">
                       <User className="w-4 h-4 text-[#6b9158]" />
-
-                      <span>
-                        {formatText(resData.form.totalGuests, {
-                          count: adults + childrenCount,
-                        })}
-                      </span>
+                      <span>{t('reservationPage.form.totalGuests', { count: adults + childrenCount })}</span>
                     </div>
                   </div>
                 </div>
@@ -1046,98 +853,78 @@ export default function ReservationPage() {
 
               <div className="step-divider" />
 
+              {/* Step 3 (repeated): Select Date & Time */}
               <div className="step-container">
                 <div className="reservation-step-heading mb-8">
-                  <span>4</span>
-
+                  <span>3</span>
                   <div>
-                    <h2>{resData.steps.dateTime.title}</h2>
-                    <p>{resData.steps.dateTime.desc}</p>
+                    <h2>{stepDateTimeTitle}</h2>
+                    <p>{stepDateTimeDesc}</p>
                   </div>
                 </div>
 
                 <div className="date-time-picker-grid">
+                  {/* Left Column: Calendar */}
                   <div className="custom-calendar-widget">
                     <div className="calendar-header">
                       <span className="calendar-month-year">
-                        {resData.calendar.months[currentMonth]} {currentYear}
+                        {monthNames[currentMonth]} {currentYear}
                       </span>
-
                       <div className="calendar-nav">
-                        <button
-                          type="button"
-                          onClick={handlePrevMonth}
-                          aria-label={resData.form.ariaLabels.previousMonth}
-                        >
+                        <button type="button" onClick={handlePrevMonth} aria-label={t('reservationPage.form.ariaLabels.previousMonth', undefined, 'Previous month')}>
                           <ChevronLeft className="w-4 h-4" />
                         </button>
-
-                        <button
-                          type="button"
-                          onClick={handleNextMonth}
-                          aria-label={resData.form.ariaLabels.nextMonth}
-                        >
+                        <button type="button" onClick={handleNextMonth} aria-label={t('reservationPage.form.ariaLabels.nextMonth', undefined, 'Next month')}>
                           <ChevronRight className="w-4 h-4" />
                         </button>
                       </div>
                     </div>
 
                     <div className="calendar-grid">
-                      {resData.calendar.daysOfWeek.map((day, index) => (
-                        <div
-                          key={`${day}-${index}`}
-                          className="calendar-day-header"
-                        >
+                      {daysOfWeek.map((day, index) => (
+                        <div key={`${day}-${index}`} className="calendar-day-header">
                           {day}
                         </div>
                       ))}
 
-                      {getCalendarDays().map(
-                        ({ day, isCurrentMonth, date }, idx) => {
-                          const isSelected =
-                            selectedDate.getDate() === day &&
-                            selectedDate.getMonth() === date.getMonth() &&
-                            selectedDate.getFullYear() === date.getFullYear();
+                      {getCalendarDays().map(({ day, isCurrentMonth, date }, idx) => {
+                        const isSelected =
+                          selectedDate.getDate() === day &&
+                          selectedDate.getMonth() === date.getMonth() &&
+                          selectedDate.getFullYear() === date.getFullYear();
 
-                          return (
-                            <button
-                              key={idx}
-                              type="button"
-                              onClick={() => setSelectedDate(date)}
-                              className={`calendar-cell ${
-                                !isCurrentMonth
-                                  ? "calendar-cell-other-month"
-                                  : ""
-                              } ${isSelected ? "calendar-cell-selected" : ""}`}
-                            >
-                              <span>{day}</span>
-                            </button>
-                          );
-                        },
-                      )}
+                        return (
+                          <button
+                            key={idx}
+                            type="button"
+                            onClick={() => setSelectedDate(date)}
+                            className={`calendar-cell ${!isCurrentMonth ? 'calendar-cell-other-month' : ''} ${
+                              isSelected ? 'calendar-cell-selected' : ''
+                            }`}
+                          >
+                            <span>{day}</span>
+                          </button>
+                        );
+                      })}
                     </div>
                   </div>
 
+                  {/* Right Column: Time slots */}
                   <div className="time-picker-widget">
                     <div className="time-tabs">
-                      {(["Breakfast", "Lunch", "Dinner"] as const).map(
-                        (cat) => (
-                          <button
-                            key={cat}
-                            type="button"
-                            onClick={() => {
-                              setTimeCategory(cat);
-                              setSelectedTime(timeSlots[cat][0]);
-                              setCustomTime("");
-                            }}
-                            className={`time-tab-btn ${
-                              timeCategory === cat ? "time-tab-btn-active" : ""
-                            }`}
-                          >
-                            {resData.timeCategories[cat]}
-                          </button>
-                        ),
-                      )}
+                      {(['Breakfast', 'Lunch', 'Dinner'] as const).map((cat) => (
+                        <button
+                          key={cat}
+                          type="button"
+                          onClick={() => {
+                            setTimeCategory(cat);
+                            setSelectedTime(timeSlots[cat][0]);
+                          }}
+                          className={`time-tab-btn ${timeCategory === cat ? 'time-tab-btn-active' : ''}`}
+                        >
+                          {translatedTimeCategory(cat)}
+                        </button>
+                      ))}
                     </div>
 
                     <div className="time-slots-grid">
@@ -1150,11 +937,9 @@ export default function ReservationPage() {
                             type="button"
                             onClick={() => {
                               setSelectedTime(slot);
-                              setCustomTime("");
+                              setCustomTime('');
                             }}
-                            className={`time-slot-btn ${
-                              isSelected ? "time-slot-btn-selected" : ""
-                            }`}
+                            className={`time-slot-btn ${isSelected ? 'time-slot-btn-selected' : ''}`}
                           >
                             {slot}
                           </button>
@@ -1162,45 +947,38 @@ export default function ReservationPage() {
                       })}
                     </div>
 
-                    <div
-                      ref={timeInputWrapperRef}
-                      className="custom-time-input-wrapper"
-                    >
+                    <div ref={timeInputWrapperRef} className="custom-time-input-wrapper">
                       <Clock className="custom-time-icon" />
-
                       <input
                         type="text"
-                        placeholder={resData.form.placeholders.time}
+                        placeholder={t('reservationPage.form.placeholders.time', undefined, 'Enter time...')}
                         value={customTime}
                         onChange={(e) => {
                           setCustomTime(e.target.value);
-                          setSelectedTime("");
+                          setSelectedTime('');
                           setShowTimeDropdown(true);
                         }}
                         onFocus={() => setShowTimeDropdown(true)}
                         onKeyDown={(e) => {
-                          if (e.key === "Escape" || e.key === "Enter") {
+                          if (e.key === 'Escape' || e.key === 'Enter') {
                             setShowTimeDropdown(false);
                           }
                         }}
                       />
-
-                      {showTimeDropdown &&
-                        customTime.trim().length > 0 &&
-                        filteredTimeSuggestions.length > 0 && (
-                          <div className="time-dropdown-list">
-                            {filteredTimeSuggestions.map((time) => (
-                              <button
-                                key={time}
-                                type="button"
-                                className="time-dropdown-item"
-                                onClick={() => handleSelectSuggestion(time)}
-                              >
-                                {time}
-                              </button>
-                            ))}
-                          </div>
-                        )}
+                      {showTimeDropdown && customTime.trim().length > 0 && filteredTimeSuggestions.length > 0 && (
+                        <div className="time-dropdown-list">
+                          {filteredTimeSuggestions.map((time) => (
+                            <button
+                              key={time}
+                              type="button"
+                              className="time-dropdown-item"
+                              onClick={() => handleSelectSuggestion(time)}
+                            >
+                              {time}
+                            </button>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -1208,33 +986,30 @@ export default function ReservationPage() {
 
               <div className="step-divider" />
 
+              {/* Step 4: Occasion */}
               <div className="step-container">
                 <div className="reservation-step-heading mb-8">
-                  <span>5</span>
-
+                  <span>4</span>
                   <div>
-                    <h2>{resData.steps.occasion.title}</h2>
-                    <p>{resData.steps.occasion.desc}</p>
+                    <h2>{stepOccasionTitle}</h2>
+                    <p>{stepOccasionDesc}</p>
                   </div>
                 </div>
 
                 <div className="occasion-grid">
-                  {resData.occasions.map((occasion) => {
-                    const OccIcon =
-                      occasionIconMap[occasion.icon] || MoreHorizontal;
-                    const isSelected = selectedOccasion === occasion.id;
+                  {occasions.map((occ) => {
+                    const OccIcon = occ.icon;
+                    const isSelected = selectedOccasion === occ.name;
 
                     return (
                       <button
-                        key={occasion.id}
+                        key={occ.name}
                         type="button"
-                        onClick={() => setSelectedOccasion(occasion.id)}
-                        className={`occasion-btn-card ${
-                          isSelected ? "occasion-btn-card-active" : ""
-                        }`}
+                        onClick={() => setSelectedOccasion(occ.name)}
+                        className={`occasion-btn-card ${isSelected ? 'occasion-btn-card-active' : ''}`}
                       >
                         <OccIcon className="w-5 h-5 mb-2 shrink-0" />
-                        <span>{occasion.name}</span>
+                        <span>{occ.name}</span>
                       </button>
                     );
                   })}
@@ -1243,33 +1018,30 @@ export default function ReservationPage() {
 
               <div className="step-divider" />
 
+              {/* Step 5: Seating Preference */}
               <div className="step-container">
                 <div className="reservation-step-heading mb-8">
-                  <span>6</span>
-
+                  <span>5</span>
                   <div>
-                    <h2>{resData.steps.seating.title}</h2>
-                    <p>{resData.steps.seating.desc}</p>
+                    <h2>{stepSeatingTitle}</h2>
+                    <p>{stepSeatingDesc}</p>
                   </div>
                 </div>
 
                 <div className="seating-grid">
                   {seatingPreferences.map((seating) => {
-                    const isSelected = selectedSeating === seating.id;
+                    const isSelected = selectedSeating === seating.name;
 
                     return (
                       <button
-                        key={seating.id}
+                        key={seating.name}
                         type="button"
-                        onClick={() => setSelectedSeating(seating.id)}
-                        className={`seating-btn-card text-left ${
-                          isSelected ? "seating-btn-card-active" : ""
-                        }`}
+                        onClick={() => setSelectedSeating(seating.name)}
+                        className={`seating-btn-card text-left ${isSelected ? 'seating-btn-card-active' : ''}`}
                       >
                         <div className="seating-card-image-wrapper">
                           <img src={seating.img} alt={seating.name} />
                         </div>
-
                         <div className="seating-card-label">
                           <span>{seating.name}</span>
                         </div>
@@ -1279,14 +1051,11 @@ export default function ReservationPage() {
                 </div>
 
                 <div className="special-request-wrapper mt-8">
-                  <label htmlFor="specialRequest">
-                    {resData.form.labels.specialRequest}
-                  </label>
-
+                  <label htmlFor="specialRequest">{t('reservationPage.form.labels.specialRequest', undefined, 'Special Request')}</label>
                   <textarea
                     id="specialRequest"
                     rows={4}
-                    placeholder={resData.form.placeholders.specialRequest}
+                    placeholder={t('reservationPage.form.placeholders.specialRequest', undefined, 'Allergies, seating requests, etc.')}
                     value={specialRequest}
                     onChange={(e) => setSpecialRequest(e.target.value)}
                   />
@@ -1294,103 +1063,98 @@ export default function ReservationPage() {
 
                 <div className="submit-area mt-8">
                   <button type="submit" className="reserve-btn-primary w-full">
-                    {resData.form.submit}
+                    {t('reservationPage.form.submit', undefined, 'Reserve a Table')}
                   </button>
-
                   <p className="cancel-notice text-center mt-3">
-                    {resData.form.cancellationNotice}
+                    {t('reservationPage.form.cancellationNotice', undefined, 'Free cancellation up to 24 hours before your reservation.')}
                   </p>
                 </div>
               </div>
+
             </form>
 
+            {/* Sticky Sidebar Booking Summary */}
             <aside className="reservation-summary-card">
-              <h2>{resData.summary.title}</h2>
+              <h2>{t('reservationPage.summary.title', undefined, 'Booking Summary')}</h2>
 
               <div className="summary-content">
                 <div className="summary-list">
                   <div className="summary-item summary-item-branch">
-                    <span>{resData.summary.labels.branch}</span>
-                    <strong>{selectedBranchData.name}</strong>
+                    <span>{t('reservationPage.summary.labels.branch', undefined, 'Branch')}</span>
+                    <strong>One More {selectedBranch}</strong>
                   </div>
 
                   <div className="summary-item">
-                    <span>{resData.summary.labels.name}</span>
-                    <strong>{fullName || resData.summary.empty}</strong>
+                    <span>{t('reservationPage.summary.labels.name', undefined, 'Name')}</span>
+                    <strong>{fullName || t('reservationPage.summary.empty', undefined, '—')}</strong>
                   </div>
 
                   <div className="summary-item">
-                    <span>{resData.summary.labels.contact}</span>
-                    <strong>{phone || resData.summary.empty}</strong>
+                    <span>{t('reservationPage.summary.labels.contact', undefined, 'Contact')}</span>
+                    <strong>{phone || t('reservationPage.summary.empty', undefined, '—')}</strong>
                   </div>
 
                   <div className="summary-item">
-                    <span>{resData.summary.labels.guests}</span>
+                    <span>{t('reservationPage.summary.labels.guests', undefined, 'Guests')}</span>
                     <strong>
-                      {formatText(resData.form.totalGuests, {
-                        count: adults + childrenCount,
-                      })}
-
+                      {t('reservationPage.form.totalGuests', { count: adults + childrenCount })}
                       <span className="guest-breakdown">
-                        {formatText(resData.summary.guestBreakdown, {
-                          adults,
-                          children: childrenCount,
-                        })}
+                        {t('reservationPage.summary.guestBreakdown', { adults, children: childrenCount })}
                       </span>
                     </strong>
                   </div>
 
                   <div className="summary-item">
-                    <span>{resData.summary.labels.date}</span>
+                    <span>{t('reservationPage.summary.labels.date', undefined, 'Date')}</span>
                     <strong>
                       {formatDateDisplay(selectedDate)}
-
                       <span className="time-tag">
-                        {formatText(resData.summary.timeTag, {
-                          time: customTime || selectedTime,
-                          category: resData.timeCategories[timeCategory],
+                        {t('reservationPage.summary.timeTag', {
+                          time: (customTime || selectedTime).toLowerCase(),
+                          category: translatedTimeCategory(timeCategory).toLowerCase()
                         })}
                       </span>
                     </strong>
                   </div>
 
                   <div className="summary-item">
-                    <span>{resData.summary.labels.occasion}</span>
-                    <strong>{selectedOccasionData.name}</strong>
+                    <span>{t('reservationPage.summary.labels.occasion', undefined, 'Occasion')}</span>
+                    <strong>{selectedOccasion}</strong>
                   </div>
 
                   <div className="summary-item">
-                    <span>{resData.summary.labels.seating}</span>
-                    <strong>{selectedSeatingData.name}</strong>
+                    <span>{t('reservationPage.summary.labels.seating', undefined, 'Seating')}</span>
+                    <strong>{selectedSeating}</strong>
                   </div>
                 </div>
 
                 <p className="arrival-notice">
-                  {resData.summary.arrivalNotice}
+                  {t('reservationPage.summary.arrivalNotice', undefined, 'Please arrive 10 mins early. Reservations are held for 15 mins after the scheduled time.')}
                 </p>
 
                 <div className="summary-actions">
                   <button
                     type="button"
-                    onClick={validateAndSubmit}
+                    onClick={handleReservationSubmit}
                     className="reserve-btn-primary w-full"
                   >
-                    {resData.summary.reserveButton}
+                    {t('reservationPage.summary.reserveButton', undefined, 'Reserve a Table')}
                   </button>
 
                   <a
-                    href={resData.summary.phoneHref}
+                    href={t('reservationPage.summary.phoneHref', undefined, 'tel:+85523888222')}
                     className="reserve-btn-secondary w-full text-center"
                   >
-                    {resData.summary.contactRestaurant}
+                    {t('reservationPage.summary.contactRestaurant', undefined, 'Contact Restaurant')}
                   </a>
                 </div>
               </div>
             </aside>
           </div>
-      </section>
+        </section>
 
-      <FaqSection faq={resData.faq} />
+      {/* FAQ Section */}
+      <FaqSection />
     </div>
   );
 }

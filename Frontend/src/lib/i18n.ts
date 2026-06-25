@@ -15,7 +15,8 @@ export async function loadDictionary(language: Language): Promise<Dictionary> {
     return cache[language]!;
   }
 
-  const response = await fetch(languageFiles[language]);
+  const cacheBuster = import.meta.env.DEV ? String(Date.now()) : '1.0.0';
+  const response = await fetch(`${languageFiles[language]}?v=${cacheBuster}`);
 
   if (!response.ok) {
     throw new Error(`Failed to load ${language} translation file`);

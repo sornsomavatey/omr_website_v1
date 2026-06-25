@@ -1,33 +1,47 @@
 import { Link } from 'react-router-dom';
-
 import whiteLogo from '@/assets/omr_logo_white.png';
 import { useTranslation } from '@/hooks/useTranslation';
-
 import './Footer.css';
 
+const footerLinkKeys: Record<string, string> = {
+  'Menu': 'footer.links.menu',
+  'Branches': 'footer.links.branches',
+  'Story': 'footer.links.story',
+  'Gift Cards': 'footer.links.giftCards',
+  'Terms': 'footer.links.terms',
+  'Privacy': 'footer.links.privacy',
+  'Sustainability': 'footer.links.sustainability',
+  'Booking Inquiry': 'footer.links.bookingInquiry',
+  'Press': 'footer.links.press',
+  'Careers': 'footer.links.careers',
+  'Instagram': 'footer.social.instagram',
+  'Facebook': 'footer.social.facebook',
+  'TripAdvisor': 'footer.social.tripAdvisor',
+};
+
 const exploreLinks = [
-  { labelKey: 'footer.links.menu', path: '/menu' },
-  { labelKey: 'footer.links.branches', path: '/branches' },
-  { labelKey: 'footer.links.story', path: '/about' },
-  { labelKey: 'footer.links.giftCards', path: '/gift-cards' },
+  { name: 'Menu', path: '/menu' },
+  { name: 'Branches', path: '/branches' },
+  { name: 'Story', path: '/about' },
+  { name: 'Gift Cards', path: '/gift-cards' },
 ];
 
 const legalLinks = [
-  { labelKey: 'footer.links.terms', path: '/terms' },
-  { labelKey: 'footer.links.privacy', path: '/privacy' },
-  { labelKey: 'footer.links.sustainability', path: '/sustainability' },
+  { name: 'Terms', path: '/terms' },
+  { name: 'Privacy', path: '/privacy' },
+  { name: 'Sustainability', path: '/sustainability' },
 ];
 
 const contactLinks = [
-  { labelKey: 'footer.links.bookingInquiry', path: '/reservations' },
-  { labelKey: 'footer.links.press', path: '/press' },
-  { labelKey: 'footer.links.careers', path: '/careers' },
+  { name: 'Booking Inquiry', path: '/reservations' },
+  { name: 'Press', path: '/press' },
+  { name: 'Careers', path: '/careers' },
 ];
 
 const socialLinks = [
-  { labelKey: 'footer.social.instagram', href: 'https://www.instagram.com/' },
-  { labelKey: 'footer.social.facebook', href: 'https://www.facebook.com/' },
-  { labelKey: 'footer.social.tripAdvisor', href: 'https://www.tripadvisor.com/' },
+  { name: 'Instagram', href: 'https://www.instagram.com/' },
+  { name: 'Facebook', href: 'https://www.facebook.com/' },
+  { name: 'TripAdvisor', href: 'https://www.tripadvisor.com/' },
 ];
 
 export default function Footer() {
@@ -40,16 +54,12 @@ export default function Footer() {
           <div className="site-footer-brand">
             <Link
               to="/"
-              aria-label={t(
-                'footer.aria.home',
-                undefined,
-                'One More Restaurant home'
-              )}
+              aria-label={t('footer.aria.home')}
               className="site-footer-logo-link"
             >
               <img
                 src={whiteLogo}
-                alt={t('footer.logoAlt', undefined, 'One More Restaurant')}
+                alt={t('footer.logoAlt')}
                 className="site-footer-logo-image"
                 draggable={false}
               />
@@ -60,63 +70,38 @@ export default function Footer() {
             </p>
           </div>
 
-          <nav
-            className="site-footer-nav"
-            aria-label={t(
-              'footer.aria.navigation',
-              undefined,
-              'Footer navigation'
-            )}
-          >
+          <nav className="site-footer-nav" aria-label={t('footer.aria.navigation')}>
             <div className="site-footer-column">
-              <h4 className="site-footer-heading">
-                {t('footer.headings.explore')}
-              </h4>
+              <h4 className="site-footer-heading">{t('footer.headings.explore')}</h4>
 
               <div className="site-footer-links">
                 {exploreLinks.map((link) => (
-                  <Link
-                    key={link.path}
-                    to={link.path}
-                    className="site-footer-link"
-                  >
-                    {t(link.labelKey)}
+                  <Link key={link.name} to={link.path} className="site-footer-link">
+                    {t(footerLinkKeys[link.name] || link.name)}
                   </Link>
                 ))}
               </div>
             </div>
 
             <div className="site-footer-column">
-              <h4 className="site-footer-heading">
-                {t('footer.headings.legal')}
-              </h4>
+              <h4 className="site-footer-heading">{t('footer.headings.legal')}</h4>
 
               <div className="site-footer-links">
                 {legalLinks.map((link) => (
-                  <Link
-                    key={link.path}
-                    to={link.path}
-                    className="site-footer-link"
-                  >
-                    {t(link.labelKey)}
+                  <Link key={link.name} to={link.path} className="site-footer-link">
+                    {t(footerLinkKeys[link.name] || link.name)}
                   </Link>
                 ))}
               </div>
             </div>
 
             <div className="site-footer-column">
-              <h4 className="site-footer-heading">
-                {t('footer.headings.contact')}
-              </h4>
+              <h4 className="site-footer-heading">{t('footer.headings.contact')}</h4>
 
               <div className="site-footer-links">
                 {contactLinks.map((link) => (
-                  <Link
-                    key={link.path}
-                    to={link.path}
-                    className="site-footer-link"
-                  >
-                    {t(link.labelKey)}
+                  <Link key={link.name} to={link.path} className="site-footer-link">
+                    {t(footerLinkKeys[link.name] || link.name)}
                   </Link>
                 ))}
               </div>
@@ -129,23 +114,16 @@ export default function Footer() {
         <div className="site-footer-bottom">
           <p>{t('footer.copyright')}</p>
 
-          <div
-            className="site-footer-socials"
-            aria-label={t(
-              'footer.aria.socialLinks',
-              undefined,
-              'Social links'
-            )}
-          >
+          <div className="site-footer-socials" aria-label={t('footer.aria.socialLinks')}>
             {socialLinks.map((link) => (
               <a
-                key={link.href}
+                key={link.name}
                 href={link.href}
                 className="site-footer-social-link"
                 target="_blank"
                 rel="noreferrer"
               >
-                {t(link.labelKey)}
+                {t(footerLinkKeys[link.name] || link.name)}
               </a>
             ))}
           </div>
