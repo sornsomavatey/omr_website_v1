@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import DishCard from '@/components/ui/dish-card';
 import { getMenuData } from '@/lib/api';
+import { useTranslation } from '@/hooks/useTranslation';
 import './index.css';
 import imgLotusHalf from '@/assets/lotus-half.png';
 
@@ -61,6 +62,7 @@ const imageMapper: Record<string, string> = {
 };
 
 export default function Menu() {
+  const { t, getObject } = useTranslation();
   const [menuDataState, setMenuDataState] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -70,6 +72,14 @@ export default function Menu() {
   const observerRef = useRef<IntersectionObserver | null>(null);
 
   const categories: MenuCategory[] = ['Breakfast', 'Lunch', 'Dinner', 'Dessert', 'Drinks'];
+
+  const translatedCategoryNames: Record<MenuCategory, string> = {
+    Breakfast: t('menu.categories.breakfast', undefined, 'Breakfast'),
+    Lunch: t('menu.categories.lunch', undefined, 'Lunch'),
+    Dinner: t('menu.categories.dinner', undefined, 'Dinner'),
+    Dessert: t('menu.categories.dessert', undefined, 'Dessert'),
+    Drinks: t('menu.categories.drinks', undefined, 'Drinks'),
+  };
 
   useEffect(() => {
     getMenuData()
@@ -148,7 +158,7 @@ export default function Menu() {
 
     const revealOptions = {
       root: null,
-      rootMargin: '0px 0px -100px 0px', // trigger slightly before entering the screen
+      rootMargin: '0px 0px -100px 0px', 
       threshold: 0.05,
     };
 
@@ -202,7 +212,7 @@ export default function Menu() {
   if (loading) {
     return (
       <div className="pt-28 pb-20 text-center text-olive font-serif text-xl min-h-screen flex items-center justify-center">
-        Loading menu...
+        {t('menu.loading', undefined, 'Loading menu...')}
       </div>
     );
   }
@@ -210,18 +220,29 @@ export default function Menu() {
   if (error || !menuDataState) {
     return (
       <div className="pt-28 pb-20 text-center text-red-500 font-serif text-xl min-h-screen flex items-center justify-center">
-        {error || 'No menu data available.'}
+        {error ? t('menu.errors.load', undefined, error) : t('menu.errors.noData', undefined, 'No menu data available.')}
       </div>
     );
   }
 
-  // Parse item images
+  // Parse item images and translate properties
   const menuItemsData: Record<MenuCategory, MenuItem[]> = Object.keys(menuDataState.items).reduce((acc, cat) => {
     const category = cat as MenuCategory;
-    acc[category] = (menuDataState.items as any)[category].map((item: any) => ({
-      ...item,
-      img: imageMapper[item.img] || item.img,
-    }));
+    const itemsList = (menuDataState.items as any)[category];
+    const lowercaseCategory = category.toLowerCase();
+    const translatedList = getObject<any[]>(`menu.items.${lowercaseCategory}`, []);
+
+    acc[category] = itemsList.map((item: any, index: number) => {
+      const translatedItem = translatedList[index] || {};
+      return {
+        ...item,
+        name: translatedItem.name || item.name,
+        category: translatedItem.category || item.category,
+        desc: translatedItem.desc || item.desc,
+        badge: translatedItem.badge || item.badge,
+        img: imageMapper[item.img] || item.img,
+      };
+    });
     return acc;
   }, {} as Record<MenuCategory, MenuItem[]>);
 
@@ -234,7 +255,7 @@ export default function Menu() {
       <section className="relative w-full h-[500px] md:h-[580px] flex flex-col items-center justify-center overflow-hidden">
         <div className="absolute inset-0 w-full h-full pointer-events-none z-0">
           <img
-            alt="Menu Header Background"
+            alt={t('menu.hero.backgroundAlt', undefined, 'Menu Header Background')}
             className="absolute inset-0 w-full h-full object-cover"
             src={heroBg}
           />
@@ -243,11 +264,11 @@ export default function Menu() {
 
         <div className="relative z-10 text-center text-white max-w-[1260px] px-6 pt-16 flex flex-col items-center">
           <h1 className="font-serif text-5xl md:text-6xl lg:text-[70px] leading-tight mb-4 font-normal tracking-wide drop-shadow-md">
-            {hero.title}
+            {t('menu.hero.title', undefined, hero.title)}
           </h1>
 
           <p className="text-white/80 text-base md:text-lg font-sans font-light max-w-xl mx-auto leading-relaxed drop-shadow-sm mb-10">
-            {hero.subtitle}
+            {t('menu.hero.subtitle', undefined, hero.subtitle)}
           </p>
 
           {/* Hero Category Filter Tabs */}
@@ -263,7 +284,7 @@ export default function Menu() {
                     isActive ? 'hero-category-pill-btn-active' : 'hero-category-pill-btn-inactive'
                   }`}
                 >
-                  {category}
+                  {translatedCategoryNames[category]}
                 </button>
               );
             })}
@@ -285,7 +306,7 @@ export default function Menu() {
                   isActive ? 'category-pill-btn-active' : 'category-pill-btn-inactive'
                 }`}
               >
-                {category}
+                {translatedCategoryNames[category]}
               </button>
             );
           })}
@@ -307,7 +328,7 @@ export default function Menu() {
               className="menu-section w-full py-16 first:pt-4 last:pb-16 border-b border-[#dde0dc]/50 last:border-b-0"
             >
               <h2 className="font-serif text-4xl md:text-5xl font-normal tracking-wide mb-16 text-[#212d1b]">
-                {category}
+                {translatedCategoryNames[category]}
               </h2>
 
               {/* Grid */}

@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { getHomeData } from '@/lib/api';
 import SignatureDishes from '@/components/SignatureDishes';
 import LocationCard from '@/components/LocationCard';
+import { useTranslation } from '@/hooks/useTranslation';
 import {
   ArrowRight,
   ChevronLeft,
@@ -38,6 +39,7 @@ import SectionHeader from '@/components/SectionHeader';
 
 
 function HeroSection({ hero }: { hero: any }) {
+  const { t } = useTranslation();
   const handleScrollDown = () => {
     const targetSection = document.getElementById('menu');
 
@@ -68,28 +70,22 @@ function HeroSection({ hero }: { hero: any }) {
 
       <div className="relative z-10 text-center text-white max-w-[1260px] px-6 pt-32">
         <h1 className="font-serif text-5xl md:text-7xl lg:text-[80px] leading-tight mb-8 font-normal tracking-wide drop-shadow-lg">
-          {hero.title.includes('Khmer Cuisine') ? (
-            <>
-              {hero.title.replace('Khmer Cuisine', '')}
-              <br />
-              <span className="text-[#E7F6DF]">Khmer Cuisine</span>
-            </>
-          ) : (
-            hero.title
-          )}
+          {t('home.hero.titleLine1')}
+          <br />
+          <span className="text-[#E7F6DF]">{t('home.hero.titleHighlight')}</span>
         </h1>
 
         <p className="text-white/80 text-lg md:text-xl font-sans font-light max-w-2xl mx-auto leading-relaxed mb-12">
-          {hero.subtitle}
+          {t('home.hero.description')}
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
           <Link to="/reservations" className="custom-btn-primary">
-            {hero.cta_reserve}
+            {t('home.hero.reserveButton')}
           </Link>
 
           <Link to="/menu" className="custom-btn-secondary">
-            {hero.cta_menu} <ArrowRight className="w-4 h-4" />
+            {t('home.hero.menuButton')} <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
       </div>
@@ -98,9 +94,9 @@ function HeroSection({ hero }: { hero: any }) {
         type="button"
         onClick={handleScrollDown}
         className="hero-scroll-button"
-        aria-label="Scroll to featured cuisine section"
+        aria-label={t('home.hero.scrollAria')}
       >
-        <span>SCROLL</span>
+        <span>{t('home.hero.scroll')}</span>
 
         <svg
           className="hero-scroll-icon"
@@ -152,6 +148,7 @@ function SpaceCard({ space }: { space: DiningSpace }) {
 }
 
 function SpacesSection({ spaces }: { spaces: DiningSpace[] }) {
+  const { t } = useTranslation();
   const spaceScrollContainerRef = useRef<HTMLDivElement>(null);
 
   const scrollSpaces = (direction: 'left' | 'right') => {
@@ -165,13 +162,15 @@ function SpacesSection({ spaces }: { spaces: DiningSpace[] }) {
     });
   };
 
+  const spaceKeys = ['family', 'privateRoom', 'business', 'kidZone', 'event'];
+
   return (
     <section className="w-full py-24 bg-[#212d1b] text-white flex flex-col items-center">
       <div className="max-w-[1440px] w-full px-6 md:px-[64px] flex flex-col items-center">
         <SectionHeader
-          eyebrow="Our Space"
-          title="Designed for Every Occasion"
-          description="From intimate family meals to polished boardroom lunches, every corner of One More is crafted to make your moment feel extraordinary."
+          eyebrow={t('home.spaces.eyebrow')}
+          title={t('home.spaces.title')}
+          description={t('home.spaces.description')}
           dark
         />
 
@@ -180,9 +179,16 @@ function SpacesSection({ spaces }: { spaces: DiningSpace[] }) {
             ref={spaceScrollContainerRef}
             className="w-full flex gap-6 overflow-x-auto no-scrollbar snap-x snap-mandatory py-4"
           >
-            {spaces.map((space, index) => (
-              <SpaceCard key={`${space.name}-${index}`} space={space} />
-            ))}
+            {spaces.map((space, index) => {
+              const key = spaceKeys[index] || 'family';
+              const translatedSpace = {
+                ...space,
+                name: t(`home.spaces.items.${key}.name`, undefined, space.name),
+                tag: t(`home.spaces.items.${key}.tag`, undefined, space.tag),
+                desc: t(`home.spaces.items.${key}.description`, undefined, space.desc),
+              };
+              return <SpaceCard key={`${space.name}-${index}`} space={translatedSpace} />;
+            })}
           </div>
 
           <div className="flex gap-4">
@@ -190,7 +196,7 @@ function SpacesSection({ spaces }: { spaces: DiningSpace[] }) {
               type="button"
               onClick={() => scrollSpaces('left')}
               className="w-12 h-12 rounded-full border border-white/20 hover:border-white/50 flex items-center justify-center text-white/80 hover:text-white transition-all cursor-pointer active:scale-95"
-              aria-label="Scroll spaces left"
+              aria-label={t('home.spaces.previous')}
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
@@ -199,7 +205,7 @@ function SpacesSection({ spaces }: { spaces: DiningSpace[] }) {
               type="button"
               onClick={() => scrollSpaces('right')}
               className="w-12 h-12 rounded-full border border-white/20 hover:border-white/50 flex items-center justify-center text-white/80 hover:text-white transition-all cursor-pointer active:scale-95"
-              aria-label="Scroll spaces right"
+              aria-label={t('home.spaces.next')}
             >
               <ChevronRight className="w-5 h-5" />
             </button>
@@ -217,23 +223,44 @@ function LocationsSection({
   branches: any[];
   onDetailClick?: (branch: any) => void;
 }) {
+  const { t } = useTranslation();
+
+  const tagKeyMap: Record<string, string> = {
+    "Family Friendly": "home.locations.tags.familyFriendly",
+    "Business Meeting": "home.locations.tags.businessMeeting",
+    "Private Room": "home.locations.tags.privateRoom",
+    "Event Space": "home.locations.tags.eventSpace",
+    "Large Groups": "home.locations.tags.largeGroups",
+    "Corporate": "home.locations.tags.corporate",
+  };
+
   return (
     <section className="w-full py-24 bg-white flex flex-col items-center">
       <div className="max-w-[1440px] w-full px-6 md:px-[64px] text-center">
         <SectionHeader
-          eyebrow="Our Locations"
-          title="Choose Your Experience"
-          description="Two distinct dining destinations, one unforgettable culinary story."
+          eyebrow={t('home.locations.eyebrow')}
+          title={t('home.locations.title')}
+          description={t('home.locations.description')}
         />
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-[1200px] mx-auto text-left">
-          {branches.map((branch) => (
-            <LocationCard
-              key={branch.id}
-              branch={branch}
-              onDetailClick={onDetailClick}
-            />
-          ))}
+          {branches.map((branch) => {
+            const key = branch.id;
+            const translatedBranch = {
+              ...branch,
+              name: t(`home.locations.items.${key}.name`, undefined, branch.name),
+              address: t(`home.locations.items.${key}.address`, undefined, branch.address),
+              hours: t(`home.locations.items.${key}.hours`, undefined, branch.hours),
+              tags: branch.tags.map((tag: string) => t(tagKeyMap[tag] || tag, undefined, tag)),
+            };
+            return (
+              <LocationCard
+                key={branch.id}
+                branch={translatedBranch}
+                onDetailClick={onDetailClick}
+              />
+            );
+          })}
         </div>
       </div>
     </section>
@@ -241,18 +268,23 @@ function LocationsSection({
 }
 
 function GallerySection({ gallery }: { gallery: any[] }) {
-  const images = gallery.map((item) => ({
-    src: imageMap[item.src] || item.src,
-    alt: item.alt,
-  }));
+  const { t } = useTranslation();
+  const imageKeys = ['one', 'two', 'three', 'four', 'five', 'six'];
+  const images = gallery.map((item, index) => {
+    const key = imageKeys[index] || 'one';
+    return {
+      src: imageMap[item.src] || item.src,
+      alt: t(`home.gallery.images.${key}`, undefined, item.alt),
+    };
+  });
 
   return (
     <section className="w-full py-24 bg-[#fafaf9] flex flex-col items-center">
       <div className="max-w-[1440px] w-full px-6 md:px-[64px] text-center flex flex-col items-center">
         <SectionHeader
-          eyebrow="Our Story in Frames"
-          title="Moments of Excellence"
-          description="Every frame is a feeling — from the first flame to the final toast."
+          eyebrow={t('home.gallery.eyebrow')}
+          title={t('home.gallery.title')}
+          description={t('home.gallery.description')}
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-[1200px] mb-12">
@@ -317,7 +349,7 @@ function GallerySection({ gallery }: { gallery: any[] }) {
           to="/gallery"
           className="px-8 py-3.5 border-2 border-[#6b9158] hover:bg-[#6b9158] text-[#6b9158] hover:text-white text-xs font-sans font-bold uppercase tracking-wider rounded-full transition-all duration-300"
         >
-          View Full Gallery
+          {t('home.gallery.viewFull')}
         </Link>
       </div>
     </section>
@@ -366,6 +398,7 @@ function TestimonialCard({
 }
 
 function TestimonialsSection({ testimonials }: { testimonials: Testimonial[] }) {
+  const { t } = useTranslation();
   const [currentTestimonialIndex, setCurrentTestimonialIndex] =
     useState(0);
 
@@ -400,9 +433,9 @@ function TestimonialsSection({ testimonials }: { testimonials: Testimonial[] }) 
     >
       <div className="testimonials-container">
         <SectionHeader
-          eyebrow="Testimonials"
-          title="What Our Guests Say"
-          description="Experiences shared by our valued customers"
+          eyebrow={t('home.testimonials.eyebrow')}
+          title={t('home.testimonials.title')}
+          description={t('home.testimonials.description')}
         />
 
         <div className="testimonials-viewport">
@@ -425,7 +458,7 @@ function TestimonialsSection({ testimonials }: { testimonials: Testimonial[] }) 
             className="testimonial-navigation-button"
             onClick={handlePrevTestimonial}
             disabled={currentTestimonialIndex === 0}
-            aria-label="Previous testimonial"
+            aria-label={t('home.testimonials.previous')}
           >
             <ChevronLeft aria-hidden="true" />
           </button>
@@ -459,7 +492,7 @@ function TestimonialsSection({ testimonials }: { testimonials: Testimonial[] }) 
             disabled={
               currentTestimonialIndex === testimonials.length - 1
             }
-            aria-label="Next testimonial"
+            aria-label={t('home.testimonials.next')}
           >
             <ChevronRight aria-hidden="true" />
           </button>
@@ -471,6 +504,7 @@ function TestimonialsSection({ testimonials }: { testimonials: Testimonial[] }) 
 
 export default function HomePage() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -491,7 +525,7 @@ export default function HomePage() {
   if (loading) {
     return (
       <div className="pt-28 pb-20 text-center text-olive font-serif text-xl min-h-screen flex items-center justify-center">
-        Loading home...
+        {t('home.loading', undefined, 'Loading home...')}
       </div>
     );
   }
@@ -525,10 +559,16 @@ export default function HomePage() {
     tags: branch.tags,
   }));
 
-  const testimonialsList: Testimonial[] = data.testimonials.map((t: any) => ({
-    ...t,
-    avatar: imageMap[t.avatar] || t.avatar,
-  }));
+  const testimonialKeys = ['sophea', 'david', 'piseth', 'emma'];
+  const testimonialsList: Testimonial[] = data.testimonials.map((item: any, index: number) => {
+    const key = testimonialKeys[index] || 'sophea';
+    return {
+      ...item,
+      text: t(`home.testimonials.items.${key}.text`, undefined, item.text),
+      date: t(`home.testimonials.items.${key}.date`, undefined, item.date),
+      avatar: imageMap[item.avatar] || item.avatar,
+    };
+  });
 
   return (
     <div className="bg-white flex flex-col items-center w-full overflow-x-hidden">

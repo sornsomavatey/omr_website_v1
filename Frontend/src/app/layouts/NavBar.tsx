@@ -3,7 +3,17 @@ import type { CSSProperties } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import whiteLogo from '@/assets/omr_logo_white.png';
 import { useAppStore } from '../store';
+import { useTranslation } from '@/hooks/useTranslation';
 import './NavBar.css';
+
+const navLinksKeys: Record<string, string> = {
+  'Home': 'nav.home',
+  'Menu': 'nav.menu',
+  'Events': 'nav.events',
+  'Branches': 'nav.branches',
+  'Gallery': 'nav.gallery',
+  'About Us': 'nav.about',
+};
 
 const navLinks = [
   { name: 'Home', path: '/' },
@@ -87,6 +97,7 @@ function LanguageFlag({ language }: { language: string }) {
 
 export default function Navbar() {
   const location = useLocation();
+  const { t } = useTranslation();
 
   const {
     language,
@@ -191,7 +202,7 @@ export default function Navbar() {
         <div className="navbar-inner">
           <Link
             to="/"
-            aria-label="Go to homepage"
+            aria-label={t('nav.aria.home')}
             className="navbar-logo-link"
             onClick={closeMobileMenu}
           >
@@ -211,7 +222,7 @@ export default function Navbar() {
                   }`
                 }
               >
-                {link.name}
+                {t(navLinksKeys[link.name] || link.name)}
               </NavLink>
             ))}
           </div>
@@ -222,7 +233,7 @@ export default function Navbar() {
                 to="/reservations"
                 className="navbar-reservation-button"
               >
-                Reservation
+                {t('nav.reservation')}
               </Link>
             )}
 
@@ -233,8 +244,8 @@ export default function Navbar() {
               aria-label="Change language"
               title={
                 language === 'EN'
-                  ? 'Switch to Khmer'
-                  : 'Switch to English'
+                  ? t('language.switchToKhmer')
+                  : t('language.switchToEnglish')
               }
             >
               <LanguageFlag language={language} />
@@ -247,7 +258,7 @@ export default function Navbar() {
               className={`navbar-mobile-menu-button ${
                 mobileMenuOpen ? 'navbar-mobile-menu-button-open' : ''
               }`}
-              aria-label="Open navigation menu"
+              aria-label={t('nav.aria.openMenu')}
               aria-expanded={mobileMenuOpen}
               onClick={() => setMobileMenuOpen(true)}
             >
@@ -267,7 +278,7 @@ export default function Navbar() {
               <div className="navbar-mobile-menu-header">
                 <Link
                   to="/"
-                  aria-label="Go to homepage"
+                  aria-label={t('nav.aria.home')}
                   className="navbar-mobile-logo-link"
                   onClick={closeMobileMenu}
                 >
@@ -284,8 +295,8 @@ export default function Navbar() {
                     aria-label="Change language"
                     title={
                       language === 'EN'
-                        ? 'Switch to Khmer'
-                        : 'Switch to English'
+                        ? t('language.switchToKhmer')
+                        : t('language.switchToEnglish')
                     }
                   >
                     <LanguageFlag language={language} />
@@ -294,7 +305,7 @@ export default function Navbar() {
                   <button
                     type="button"
                     className="navbar-mobile-close-button"
-                    aria-label="Close navigation menu"
+                    aria-label={t('nav.aria.closeMenu')}
                     onClick={closeMobileMenu}
                   >
                     <span />
@@ -316,7 +327,7 @@ export default function Navbar() {
                         }`
                       }
                     >
-                      {link.name}
+                      {t(navLinksKeys[link.name] || link.name)}
                     </NavLink>
                   ))}
                 </div>
@@ -326,7 +337,7 @@ export default function Navbar() {
                   onClick={closeMobileMenu}
                   className="navbar-mobile-reservation-button navbar-reservation-button"
                 >
-                  Reservation
+                  {t('nav.reservation')}
                 </Link>
               </div>
             </div>

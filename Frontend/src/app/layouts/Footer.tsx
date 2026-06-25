@@ -1,6 +1,23 @@
 import { Link } from 'react-router-dom';
 import whiteLogo from '@/assets/omr_logo_white.png';
+import { useTranslation } from '@/hooks/useTranslation';
 import './Footer.css';
+
+const footerLinkKeys: Record<string, string> = {
+  'Menu': 'footer.links.menu',
+  'Branches': 'footer.links.branches',
+  'Story': 'footer.links.story',
+  'Gift Cards': 'footer.links.giftCards',
+  'Terms': 'footer.links.terms',
+  'Privacy': 'footer.links.privacy',
+  'Sustainability': 'footer.links.sustainability',
+  'Booking Inquiry': 'footer.links.bookingInquiry',
+  'Press': 'footer.links.press',
+  'Careers': 'footer.links.careers',
+  'Instagram': 'footer.social.instagram',
+  'Facebook': 'footer.social.facebook',
+  'TripAdvisor': 'footer.social.tripAdvisor',
+};
 
 const exploreLinks = [
   { name: 'Menu', path: '/menu' },
@@ -28,6 +45,8 @@ const socialLinks = [
 ];
 
 export default function Footer() {
+  const { t } = useTranslation();
+
   return (
     <footer className="site-footer">
       <div className="site-footer-container">
@@ -35,55 +54,54 @@ export default function Footer() {
           <div className="site-footer-brand">
             <Link
               to="/"
-              aria-label="One More Restaurant home"
+              aria-label={t('footer.aria.home')}
               className="site-footer-logo-link"
             >
               <img
                 src={whiteLogo}
-                alt="One More Restaurant"
+                alt={t('footer.logoAlt')}
                 className="site-footer-logo-image"
                 draggable={false}
               />
             </Link>
 
             <p className="site-footer-brand-text">
-              Redefining the boundaries of Khmer gastronomy through a commitment
-              to heritage and innovation.
+              {t('footer.brandText')}
             </p>
           </div>
 
-          <nav className="site-footer-nav" aria-label="Footer navigation">
+          <nav className="site-footer-nav" aria-label={t('footer.aria.navigation')}>
             <div className="site-footer-column">
-              <h4 className="site-footer-heading">Explore</h4>
+              <h4 className="site-footer-heading">{t('footer.headings.explore')}</h4>
 
               <div className="site-footer-links">
                 {exploreLinks.map((link) => (
                   <Link key={link.name} to={link.path} className="site-footer-link">
-                    {link.name}
+                    {t(footerLinkKeys[link.name] || link.name)}
                   </Link>
                 ))}
               </div>
             </div>
 
             <div className="site-footer-column">
-              <h4 className="site-footer-heading">Legal</h4>
+              <h4 className="site-footer-heading">{t('footer.headings.legal')}</h4>
 
               <div className="site-footer-links">
                 {legalLinks.map((link) => (
                   <Link key={link.name} to={link.path} className="site-footer-link">
-                    {link.name}
+                    {t(footerLinkKeys[link.name] || link.name)}
                   </Link>
                 ))}
               </div>
             </div>
 
             <div className="site-footer-column">
-              <h4 className="site-footer-heading">Contact</h4>
+              <h4 className="site-footer-heading">{t('footer.headings.contact')}</h4>
 
               <div className="site-footer-links">
                 {contactLinks.map((link) => (
                   <Link key={link.name} to={link.path} className="site-footer-link">
-                    {link.name}
+                    {t(footerLinkKeys[link.name] || link.name)}
                   </Link>
                 ))}
               </div>
@@ -94,9 +112,9 @@ export default function Footer() {
         <div className="site-footer-divider" />
 
         <div className="site-footer-bottom">
-          <p>© 2024 One More Restaurant. All Rights Reserved.</p>
+          <p>{t('footer.copyright')}</p>
 
-          <div className="site-footer-socials" aria-label="Social links">
+          <div className="site-footer-socials" aria-label={t('footer.aria.socialLinks')}>
             {socialLinks.map((link) => (
               <a
                 key={link.name}
@@ -105,7 +123,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noreferrer"
               >
-                {link.name}
+                {t(footerLinkKeys[link.name] || link.name)}
               </a>
             ))}
           </div>

@@ -5,6 +5,7 @@ import { getRestaurantsData } from '@/lib/api';
 import { Button } from '@/components/ui/button';
 import LocationCard from '@/components/LocationCard';
 import SectionHeader from '@/components/SectionHeader';
+import { useTranslation } from '@/hooks/useTranslation';
 import './index.css';
 
 // Asset imports
@@ -49,6 +50,7 @@ const imageMapper: Record<string, string> = {
 
 export default function Branches() {
   const navigate = useNavigate();
+  const { t, getObject } = useTranslation();
   const [data, setData] = useState<RestaurantsData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -82,7 +84,7 @@ export default function Branches() {
   if (loading) {
     return (
       <div className="pt-32 pb-20 text-center text-olive font-serif text-xl min-h-screen flex items-center justify-center">
-        Loading locations...
+        {t('branches.loading', undefined, 'Loading locations...')}
       </div>
     );
   }
@@ -90,12 +92,39 @@ export default function Branches() {
   if (error || !data) {
     return (
       <div className="pt-32 pb-20 text-center text-red-500 font-serif text-xl min-h-screen flex items-center justify-center">
-        {error || 'No data available.'}
+        {error ? t('branches.errors.load', undefined, error) : t('branches.errors.noData', undefined, 'No data available.')}
       </div>
     );
   }
 
   const { header, comparison, locations } = data;
+
+  // Translate locations
+  const translatedLocationsList = getObject<any[]>('branchesPage.locations', []);
+  const translatedLocations = locations.map((loc) => {
+    const transLoc = translatedLocationsList.find((l) => l.id === loc.id) || {};
+    return {
+      ...loc,
+      name: transLoc.name || loc.name,
+      address: transLoc.address || loc.address,
+      hours: transLoc.hours || loc.hours,
+      tags: transLoc.tags || loc.tags,
+      description: transLoc.description || loc.description,
+      highlights: transLoc.highlights || loc.highlights,
+    };
+  });
+
+  // Translate features
+  const translatedFeaturesList = getObject<any[]>('branchesPage.comparison.features', []);
+  const translatedFeatures = comparison.features.map((feature, idx) => {
+    const transFeature = translatedFeaturesList[idx] || {};
+    return {
+      ...feature,
+      name: transFeature.name || feature.name,
+      toulKork: transFeature.toulKork !== undefined ? transFeature.toulKork : feature.toulKork,
+      boeungKak: transFeature.boeungKak !== undefined ? transFeature.boeungKak : feature.boeungKak,
+    };
+  });
 
   const handleScrollToMap = () => {
     const mapSection = document.getElementById('see-us-on-map');
@@ -115,15 +144,15 @@ export default function Branches() {
         <div className="branches-hero-inner">
           <div className="hero-text-side">
             <h1 className="hero-title">
-              {header.title}
+              {t('branchesPage.header.title', undefined, header.title)}
             </h1>
             
             <p className="hero-desc">
-              {header.desc}
+              {t('branchesPage.header.desc', undefined, header.desc)}
             </p>
             
             <Button asChild className="hero-cta-button">
-              <Link to="/reservations">Reserve a Table</Link>
+              <Link to="/reservations">{t('branchesPage.ui.reserveCta', undefined, 'Reserve a Table')}</Link>
             </Button>
           </div>
 
@@ -131,7 +160,7 @@ export default function Branches() {
             <div className="hero-map-frame">
               <img
                 src={locationImg}
-                alt="Map of branch locations"
+                alt={t('branchesPage.ui.heroMapAlt', undefined, 'Map of branch locations')}
                 className="hero-map-image"
               />
             </div>
@@ -143,8 +172,8 @@ export default function Branches() {
       <section className="comparison-section">
         <div className="comparison-inner">
           <SectionHeader
-            eyebrow="What's different"
-            title="Compare Our Locations"
+            eyebrow={t('branchesPage.ui.comparison.eyebrow', undefined, "What's different")}
+            title={t('branchesPage.ui.comparison.title', undefined, 'Compare Our Locations')}
           />
 
           <div className="comparison-table-container">
@@ -155,10 +184,10 @@ export default function Branches() {
                 {/* Feature Description Card */}
                 <div className="feature-info-card">
                   <span className="feature-info-label">
-                    Feature
+                    {t('branchesPage.ui.comparison.featureLabel', undefined, 'Feature')}
                   </span>
                   <span className="feature-info-desc">
-                    Compare venue highlights
+                    {t('branchesPage.ui.comparison.featureDesc', undefined, 'Compare venue highlights')}
                   </span>
                 </div>
 
@@ -166,16 +195,16 @@ export default function Branches() {
                 <div className="branch-header-card">
                   <img
                     src={imgBranchToulKork}
-                    alt="Toul Kork Venue"
+                    alt={t('branchesPage.ui.comparison.toulKorkAlt', undefined, 'Toul Kork venue')}
                     className="branch-header-image"
                   />
                   <div className="branch-header-overlay" />
                   <div className="branch-header-content">
                     <h4 className="branch-header-title">
-                      Toul Kork
+                      {t('branchesPage.ui.comparison.toulKorkTitle', undefined, 'Toul Kork')}
                     </h4>
                     <span className="branch-header-tag">
-                      Venue
+                      {t('branchesPage.ui.comparison.venueTag', undefined, 'Venue')}
                     </span>
                   </div>
                 </div>
@@ -184,16 +213,16 @@ export default function Branches() {
                 <div className="branch-header-card">
                   <img
                     src={imgBranchBoeungKak}
-                    alt="Boeung Kak Venue"
+                    alt={t('branchesPage.ui.comparison.boeungKakAlt', undefined, 'Boeung Kak venue')}
                     className="branch-header-image"
                   />
                   <div className="branch-header-overlay" />
                   <div className="branch-header-content">
                     <h4 className="branch-header-title">
-                      Boeung Kak
+                      {t('branchesPage.ui.comparison.boeungKakTitle', undefined, 'Boeung Kak')}
                     </h4>
                     <span className="branch-header-tag">
-                      Venue
+                      {t('branchesPage.ui.comparison.venueTag', undefined, 'Venue')}
                     </span>
                   </div>
                 </div>
@@ -201,7 +230,7 @@ export default function Branches() {
 
               {/* Table Rows */}
               <div className="comparison-rows-list">
-                {comparison.features.map((feature, idx) => (
+                {translatedFeatures.map((feature, idx) => (
                   <div
                     key={`${feature.name}-${idx}`}
                     className="comparison-row-item"
@@ -262,13 +291,13 @@ export default function Branches() {
         <div className="comparison-inner text-center">
           
           <SectionHeader
-            eyebrow="Our Locations"
-            title="Find us here"
-            description="Two distinct dining destinations, one unforgettable culinary story."
+            eyebrow={t('branchesPage.ui.findUs.eyebrow')}
+            title={t('branchesPage.ui.findUs.title')}
+            description={t('branchesPage.ui.findUs.description')}
           />
 
           <div className="find-us-grid">
-            {locations.map((loc) => (
+            {translatedLocations.map((loc) => (
               <LocationCard
                 key={loc.id}
                 branch={loc}
@@ -295,15 +324,15 @@ export default function Branches() {
         <div className="map-wrapper text-center">
           
           <SectionHeader
-            eyebrow="See the Map"
-            title="See us on Map"
-            description="Two distinct dining destinations, one unforgettable culinary story."
+            eyebrow={t('branchesPage.ui.map.eyebrow')}
+            title={t('branchesPage.ui.map.title')}
+            description={t('branchesPage.ui.map.description')}
           />
 
           <div className="map-frame">
             <img
               src={locationImg}
-              alt="Locations map view full"
+              alt={t('branchesPage.ui.map.imageAlt')}
               className="map-image-large"
             />
           </div>
@@ -329,7 +358,7 @@ export default function Branches() {
               variant="ghost"
               size="icon"
               className="modal-close-button"
-              aria-label="Close details"
+              aria-label={t('branchesPage.ui.modal.closeAria')}
             >
               <X size={18} />
             </Button>
@@ -343,7 +372,7 @@ export default function Branches() {
               />
               <div className="modal-hero-overlay" />
               <div className="modal-hero-badge">
-                Venue details
+                {t('branchesPage.ui.modal.venueDetails')}
               </div>
             </div>
 
@@ -370,7 +399,7 @@ export default function Branches() {
               {/* Highlights */}
               <div className="modal-highlights-container">
                 <h4 className="modal-highlights-header">
-                  Key Venue Highlights
+                  {t('branchesPage.ui.modal.highlightsTitle')}
                 </h4>
                 <ul className="modal-highlights-list">
                   {activeModal.highlights.map((highlight, index) => (
@@ -388,7 +417,7 @@ export default function Branches() {
                 className="modal-reserve-button"
               >
                 <Link to="/reservations" onClick={() => setActiveModal(null)}>
-                  Reserve a Table
+                  {t('branchesPage.ui.modal.reserveCta')}
                 </Link>
               </Button>
             </div>

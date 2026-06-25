@@ -1,17 +1,20 @@
 import { Link } from 'react-router-dom';
 import { SignatureDish } from '@/pages/Home/homeTypes';
 import SectionHeader from '@/components/SectionHeader';
+import { useTranslation } from '@/hooks/useTranslation';
 
 export default function SignatureDishes({ dishes }: { dishes: SignatureDish[] }) {
+  const { t } = useTranslation();
+
   return (
     <section id="menu" className="featured-cuisine-section">
       <div className="featured-cuisine-pattern" aria-hidden="true" />
 
       <div className="featured-cuisine-container">
         <SectionHeader
-          eyebrow="Our Signature Dishes"
-          title="Featured Khmer Cuisine"
-          description="Each dish tells a story of Cambodia's culinary heritage, crafted with heirloom recipes and seasonal ingredients."
+          eyebrow={t('home.signature.eyebrow')}
+          title={t('home.signature.title')}
+          description={t('home.signature.description')}
         />
 
         <div className="featured-cuisine-collage">
@@ -63,7 +66,7 @@ export default function SignatureDishes({ dishes }: { dishes: SignatureDish[] })
         </div>
 
         <Link to="/menu" className="custom-btn-outline-green">
-          View all menu
+          {t('home.signature.viewAll')}
         </Link>
       </div>
     </section>

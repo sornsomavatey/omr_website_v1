@@ -22,6 +22,7 @@ import {
   User,
 } from 'lucide-react';
 import { getReservationsData, getHomeData, createReservation } from '@/lib/api';
+import { useTranslation } from '@/hooks/useTranslation';
 import {
   imgHeroBg2,
   imgGallery1,
@@ -55,9 +56,10 @@ const iconMap: Record<string, React.ComponentType> = {
 };
 
 function GuestInformationCard({ info }: { info: any[] }) {
+  const { t } = useTranslation();
   return (
-    <aside className="reservation-guest-card" aria-label="Guest information">
-      <h2>Guest Information</h2>
+    <aside className="reservation-guest-card" aria-label={t('reservationPage.guestInformationAria', undefined, 'Guest information')}>
+      <h2>{t('reservationPage.guestInformationTitle', undefined, 'Guest Information')}</h2>
 
       <div className="reservation-guest-list">
         {info.map((item) => {
@@ -82,11 +84,12 @@ function GuestInformationCard({ info }: { info: any[] }) {
 }
 
 function ReservationHero({ hero, info }: { hero: any; info: any[] }) {
+  const { t } = useTranslation();
   return (
     <section className="reservation-hero" aria-labelledby="reservation-title">
       <img
         src={imgHeroBg2}
-        alt="One More Restaurant dining room"
+        alt={t('reservationPage.hero.backgroundAlt', undefined, 'One More Restaurant dining room')}
         className="reservation-hero-image"
       />
 
@@ -94,12 +97,12 @@ function ReservationHero({ hero, info }: { hero: any; info: any[] }) {
 
       <div className="reservation-hero-container">
         <div className="reservation-hero-copy">
-          <p className="reservation-hero-eyebrow">{hero.eyebrow}</p>
+          <p className="reservation-hero-eyebrow">{t('reservationPage.hero.eyebrow', undefined, hero.eyebrow)}</p>
 
-          <h1 id="reservation-title">{hero.title}</h1>
+          <h1 id="reservation-title">{t('reservationPage.hero.title', undefined, hero.title)}</h1>
 
           <p className="reservation-hero-description">
-            {hero.desc}
+            {t('reservationPage.hero.desc', undefined, hero.desc)}
           </p>
         </div>
 
@@ -110,9 +113,10 @@ function ReservationHero({ hero, info }: { hero: any; info: any[] }) {
 }
 
 function FaqSection() {
+  const { t, getObject } = useTranslation();
   const [expandedIndex, setExpandedIndex] = useState<number | null>(0);
 
-  const faqs = [
+  const defaultFaqs = [
     {
       q: 'What is the dress code?',
       a: 'We recommend smart casual attire. Traditional Khmer attire is also very welcome for special occasions.',
@@ -135,12 +139,14 @@ function FaqSection() {
     },
   ];
 
+  const faqs = getObject<any[]>('reservationPage.faq.items', defaultFaqs);
+
   return (
     <section className="faq-section" aria-labelledby="faq-section-title">
       <div className="faq-container">
-        <span className="faq-eyebrow">Assistance</span>
+        <span className="faq-eyebrow">{t('reservationPage.faq.eyebrow', undefined, 'Assistance')}</span>
         <h2 id="faq-section-title" className="faq-title font-serif">
-          Frequently Asked Questions
+          {t('reservationPage.faq.title', undefined, 'Frequently Asked Questions')}
         </h2>
 
         <div className="faq-list">
@@ -257,6 +263,7 @@ const getMealCategoryFromTime = (
 };
 
 export default function ReservationPage() {
+  const { t, getObject } = useTranslation();
   const [resData, setResData] = useState<any>(null);
   const [homeData, setHomeData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -348,7 +355,7 @@ export default function ReservationPage() {
   if (loading) {
     return (
       <div className="pt-28 pb-20 text-center text-olive font-serif text-xl min-h-screen flex items-center justify-center">
-        Loading reservations...
+        {t('reservation.loading', undefined, 'Loading reservations...')}
       </div>
     );
   }
@@ -356,7 +363,7 @@ export default function ReservationPage() {
   if (error || !resData || !homeData) {
     return (
       <div className="pt-28 pb-20 text-center text-red-500 font-serif text-xl min-h-screen flex items-center justify-center">
-        {error || 'No reservation data available.'}
+        {error ? t('reservation.errors.load', undefined, error) : t('reservation.errors.noData', undefined, 'No reservation data available.')}
       </div>
     );
   }
@@ -371,22 +378,26 @@ export default function ReservationPage() {
     img: imageMap[space.img] || space.img,
   }));
 
-  const guestInfoList = resData.guestInformation.map((item: any) => ({
-    icon: iconMap[item.type] || Clock,
-    label: item.label,
-    value: item.value,
-  }));
+  const translatedGuestInfoList = getObject<any[]>('reservationPage.guestInformation', []);
+  const guestInfoList = resData.guestInformation.map((item: any, idx: number) => {
+    const transItem = translatedGuestInfoList[idx] || {};
+    return {
+      icon: iconMap[item.type] || Clock,
+      label: transItem.label || item.label,
+      value: transItem.value || item.value,
+    };
+  });
 
   // Helper date calculations
   const daysInMonth = (year: number, month: number) => new Date(year, month + 1, 0).getDate();
   const startDayOfMonth = (year: number, month: number) => new Date(year, month, 1).getDay();
 
-  const monthNames = [
+  const monthNames = getObject<string[]>('reservationPage.calendar.months', [
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
-  ];
+  ]);
 
-  const daysOfWeek = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+  const daysOfWeek = getObject<string[]>('reservationPage.calendar.daysOfWeek', ['S', 'M', 'T', 'W', 'T', 'F', 'S']);
 
   const handlePrevMonth = () => {
     if (currentMonth === 0) {
@@ -449,21 +460,35 @@ export default function ReservationPage() {
     return days;
   };
 
+  const occasionsList = getObject<any[]>('reservationPage.occasions', []);
   const occasions = [
-    { name: 'Family Dining', icon: Utensils },
-    { name: 'Business Meeting', icon: Briefcase },
-    { name: 'Birthday Celebration', icon: Cake },
-    { name: 'Corporate Event', icon: Building },
-    { name: 'Date Night', icon: Heart },
-    { name: 'Other', icon: MoreHorizontal }
-  ];
+    { id: 'familyDining', name: 'Family Dining', icon: Utensils },
+    { id: 'businessMeeting', name: 'Business Meeting', icon: Briefcase },
+    { id: 'birthdayCelebration', name: 'Birthday Celebration', icon: Cake },
+    { id: 'corporateEvent', name: 'Corporate Event', icon: Building },
+    { id: 'dateNight', name: 'Date Night', icon: Heart },
+    { id: 'other', name: 'Other', icon: MoreHorizontal }
+  ].map((occ) => {
+    const transOcc = occasionsList.find((o) => o.id === occ.id) || {};
+    return {
+      ...occ,
+      name: transOcc.name || occ.name,
+    };
+  });
 
+  const seatingList = getObject<any[]>('reservationPage.seatingPreferences', []);
   const seatingPreferences = [
-    { name: 'Indoor', img: diningSpacesList[3]?.img || imgHeroBg1 },
-    { name: 'Outdoor', img: imgGallery1 },
-    { name: 'Private Room', img: diningSpacesList[4]?.img || imgHeroBg2 },
-    { name: 'Big Room', img: imgGallery5 }
-  ];
+    { id: 'indoor', name: 'Indoor', img: diningSpacesList[3]?.img || imgHeroBg1 },
+    { id: 'outdoor', name: 'Outdoor', img: imgGallery1 },
+    { id: 'privateRoom', name: 'Private Room', img: diningSpacesList[4]?.img || imgHeroBg2 },
+    { id: 'bigRoom', name: 'Big Room', img: imgGallery5 }
+  ].map((seating) => {
+    const transSeating = seatingList.find((s) => s.id === seating.id) || {};
+    return {
+      ...seating,
+      name: transSeating.name || seating.name,
+    };
+  });
 
   const getOrdinalSuffix = (day: number) => {
     if (day > 3 && day < 21) return 'th';
@@ -476,7 +501,9 @@ export default function ReservationPage() {
   };
 
   const formatDateDisplay = (date: Date) => {
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const months = getObject<string[]>('reservationPage.calendar.shortMonths', [
+      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+    ]);
     const monthName = months[date.getMonth()];
     const dayNum = date.getDate();
     const yearNum = date.getFullYear();
@@ -484,11 +511,15 @@ export default function ReservationPage() {
     return `${monthName} ${dayNum}${getOrdinalSuffix(dayNum)} ${yearNum}`;
   };
 
+  const translatedTimeCategory = (cat: 'Breakfast' | 'Lunch' | 'Dinner') => {
+    return t(`reservationPage.timeCategories.${cat}`, undefined, cat);
+  };
+
   const handleReservationSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!fullName.trim() || !phone.trim()) {
-      alert("Please fill in your Contact Details (Name & Phone Number) to complete your reservation.");
+      alert(t('reservationPage.validation.contactRequired', undefined, "Please fill in your Contact Details (Name & Phone Number) to complete your reservation."));
       
       const targetInput = !fullName.trim() ? "fullName" : "phoneNumber";
       const element = document.getElementById(targetInput);
@@ -500,7 +531,7 @@ export default function ReservationPage() {
     }
 
     if (fullName.trim().length < 2) {
-      alert("Please enter a valid Full Name (at least 2 characters).");
+      alert(t('reservationPage.validation.invalidName', undefined, "Please enter a valid Full Name (at least 2 characters)."));
       const element = document.getElementById("fullName");
       if (element) {
         element.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -511,7 +542,7 @@ export default function ReservationPage() {
 
     const phoneDigits = phone.replace(/\D/g, '');
     if (phoneDigits.length < 9 || phoneDigits.length > 12) {
-      alert("Please enter a valid Phone Number (typically 9 to 11 digits).");
+      alert(t('reservationPage.validation.invalidPhone', undefined, "Please enter a valid Phone Number (typically 9 to 11 digits)."));
       const element = document.getElementById("phoneNumber");
       if (element) {
         element.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -555,6 +586,25 @@ export default function ReservationPage() {
     setIsSubmitted(false);
   };
 
+  // Translate step headings
+  const stepBranchTitle = t('reservationPage.steps.branch.title', undefined, resData.steps.branch.title);
+  const stepBranchDesc = t('reservationPage.steps.branch.desc', undefined, resData.steps.branch.desc);
+
+  const stepContactTitle = t('reservationPage.steps.contact.title', undefined, 'Contact Details');
+  const stepContactDesc = t('reservationPage.steps.contact.desc', undefined, 'Enter your information so we can contact you regarding your booking');
+
+  const stepGuestsTitle = t('reservationPage.steps.guests.title', undefined, 'Guests');
+  const stepGuestsDesc = t('reservationPage.steps.guests.desc', undefined, 'Tell us how many people will be joining you');
+
+  const stepDateTimeTitle = t('reservationPage.steps.dateTime.title', undefined, 'Select Date & Time');
+  const stepDateTimeDesc = t('reservationPage.steps.dateTime.desc', undefined, 'Choose when you would like to dine with us');
+
+  const stepOccasionTitle = t('reservationPage.steps.occasion.title', undefined, 'Special Occasion');
+  const stepOccasionDesc = t('reservationPage.steps.occasion.desc', undefined, 'Let us know if you are celebrating a special event');
+
+  const stepSeatingTitle = t('reservationPage.steps.seating.title', undefined, 'Seating Preference');
+  const stepSeatingDesc = t('reservationPage.steps.seating.desc', undefined, 'Choose where you would like to be seated');
+
   return (
     <div className="reservation-page">
       <ReservationHero hero={resData.hero} info={guestInfoList} />
@@ -566,40 +616,56 @@ export default function ReservationPage() {
             <div className="success-icon-wrapper">
               <Check className="w-12 h-12 text-[#6b9158]" />
             </div>
-            <h2 className="font-serif text-3xl text-[#212d1b] text-center mb-4">Reservation Confirmed!</h2>
+            <h2 className="font-serif text-3xl text-[#212d1b] text-center mb-4">{t('reservationPage.success.title', undefined, 'Reservation Confirmed!')}</h2>
             <p className="text-center text-[#646860] mb-8 max-w-md mx-auto">
-              Thank you for booking with One More Restaurant. A confirmation message has been sent to your phone number.
+              {t('reservationPage.success.desc', undefined, 'Thank you for booking with One More Restaurant. A confirmation message has been sent to your phone number.')}
             </p>
             
             <div className="success-details mb-8">
               <div className="success-detail-row">
-                <span>Branch</span>
+                <span>{t('reservationPage.success.detailLabels.branch', undefined, 'Branch')}</span>
                 <strong>One More {selectedBranch}</strong>
               </div>
               <div className="success-detail-row">
-                <span>Guest Name</span>
-                <strong>{fullName || 'Valued Guest'}</strong>
+                <span>{t('reservationPage.success.detailLabels.guestName', undefined, 'Guest Name')}</span>
+                <strong>{fullName || t('reservationPage.success.valuedGuest', undefined, 'Valued Guest')}</strong>
               </div>
               <div className="success-detail-row">
-                <span>Phone</span>
-                <strong>{phone || 'Not provided'}</strong>
+                <span>{t('reservationPage.success.detailLabels.phone', undefined, 'Phone')}</span>
+                <strong>{phone || t('reservationPage.success.notProvided', undefined, 'Not provided')}</strong>
               </div>
               <div className="success-detail-row">
-                <span>Guests</span>
-                <strong>{adults + childrenCount} Guests ({adults} Adults, {childrenCount} Kids)</strong>
+                <span>{t('reservationPage.success.detailLabels.guests', undefined, 'Guests')}</span>
+                <strong>
+                  {t('reservationPage.success.guestsValue', {
+                    total: adults + childrenCount,
+                    adults,
+                    children: childrenCount
+                  })}
+                </strong>
               </div>
               <div className="success-detail-row">
-                <span>Date & Time</span>
-                <strong>{formatDateDisplay(selectedDate)} at {customTime || selectedTime}</strong>
+                <span>{t('reservationPage.success.detailLabels.dateTime', undefined, 'Date & Time')}</span>
+                <strong>
+                  {t('reservationPage.success.dateTimeValue', {
+                    date: formatDateDisplay(selectedDate),
+                    time: customTime || selectedTime
+                  })}
+                </strong>
               </div>
               <div className="success-detail-row">
-                <span>Seating & Occasion</span>
-                <strong>{selectedSeating} · {selectedOccasion}</strong>
+                <span>{t('reservationPage.success.detailLabels.seatingOccasion', undefined, 'Seating & Occasion')}</span>
+                <strong>
+                  {t('reservationPage.success.seatingOccasionValue', {
+                    seating: selectedSeating,
+                    occasion: selectedOccasion
+                  })}
+                </strong>
               </div>
             </div>
 
             <button type="button" onClick={handleReset} className="reserve-btn-primary w-full mb-4">
-              Make Another Booking
+              {t('reservationPage.success.makeAnother', undefined, 'Make Another Booking')}
             </button>
             <div className="text-center pb-2">
               <Link to="/" className="text-[#6b9158] hover:text-[#4d6a3f] font-sans text-sm font-medium underline underline-offset-4 transition-colors">
@@ -610,7 +676,7 @@ export default function ReservationPage() {
         </div>
       )}
 
-      <section className="reservation-form-section" aria-label="Reservation form">
+      <section className="reservation-form-section" aria-label={t('reservationPage.form.aria', undefined, 'Reservation form')}>
           <div className="reservation-form-container">
             {/* Form Main Area */}
             <form className="reservation-form-main" onSubmit={handleReservationSubmit}>
@@ -620,8 +686,8 @@ export default function ReservationPage() {
                 <div className="reservation-step-heading mb-8">
                   <span>1</span>
                   <div>
-                    <h2>{resData.steps.branch.title}</h2>
-                    <p>{resData.steps.branch.desc}</p>
+                    <h2>{stepBranchTitle}</h2>
+                    <p>{stepBranchDesc}</p>
                   </div>
                 </div>
 
@@ -687,18 +753,18 @@ export default function ReservationPage() {
                 <div className="reservation-step-heading mb-8">
                   <span>2</span>
                   <div>
-                    <h2>Contact Details</h2>
-                    <p>Enter your information so we can contact you regarding your booking</p>
+                    <h2>{stepContactTitle}</h2>
+                    <p>{stepContactDesc}</p>
                   </div>
                 </div>
 
                 <div className="contact-details-grid">
                   <div className="form-group">
-                    <label htmlFor="fullName">Full Name *</label>
+                    <label htmlFor="fullName">{t('reservationPage.form.labels.fullName', undefined, 'Full Name *')}</label>
                     <input
                       type="text"
                       id="fullName"
-                      placeholder="Enter full name"
+                      placeholder={t('reservationPage.form.placeholders.fullName', undefined, 'Enter full name')}
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
                       required
@@ -706,11 +772,11 @@ export default function ReservationPage() {
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="phoneNumber">Phone Number *</label>
+                    <label htmlFor="phoneNumber">{t('reservationPage.form.labels.phoneNumber', undefined, 'Phone Number *')}</label>
                     <input
                       type="tel"
                       id="phoneNumber"
-                      placeholder="Enter phone number"
+                      placeholder={t('reservationPage.form.placeholders.phoneNumber', undefined, 'Enter phone number')}
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
                       required
@@ -726,20 +792,20 @@ export default function ReservationPage() {
                 <div className="reservation-step-heading mb-8">
                   <span>3</span>
                   <div>
-                    <h2>Guests</h2>
-                    <p>Tell us how many people will be joining you</p>
+                    <h2>{stepGuestsTitle}</h2>
+                    <p>{stepGuestsDesc}</p>
                   </div>
                 </div>
 
                 <div className="guests-counter-container">
                   <div className="counter-row">
-                    <span className="counter-label">Adults</span>
+                    <span className="counter-label">{t('reservationPage.form.labels.adults', undefined, 'Adults')}</span>
                     <div className="counter-control">
                       <button
                         type="button"
                         onClick={() => setAdults((prev) => Math.max(1, prev - 1))}
                         disabled={adults <= 1}
-                        aria-label="Decrease adults"
+                        aria-label={t('reservationPage.form.ariaLabels.decreaseAdults', undefined, 'Decrease adults')}
                       >
                         <Minus className="w-4 h-4" />
                       </button>
@@ -747,7 +813,7 @@ export default function ReservationPage() {
                       <button
                         type="button"
                         onClick={() => setAdults((prev) => prev + 1)}
-                        aria-label="Increase adults"
+                        aria-label={t('reservationPage.form.ariaLabels.increaseAdults', undefined, 'Increase adults')}
                       >
                         <Plus className="w-4 h-4" />
                       </button>
@@ -755,13 +821,13 @@ export default function ReservationPage() {
                   </div>
 
                   <div className="counter-row">
-                    <span className="counter-label">Children</span>
+                    <span className="counter-label">{t('reservationPage.form.labels.children', undefined, 'Children')}</span>
                     <div className="counter-control">
                       <button
                         type="button"
                         onClick={() => setChildrenCount((prev) => Math.max(0, prev - 1))}
                         disabled={childrenCount <= 0}
-                        aria-label="Decrease children"
+                        aria-label={t('reservationPage.form.ariaLabels.decreaseChildren', undefined, 'Decrease children')}
                       >
                         <Minus className="w-4 h-4" />
                       </button>
@@ -769,7 +835,7 @@ export default function ReservationPage() {
                       <button
                         type="button"
                         onClick={() => setChildrenCount((prev) => prev + 1)}
-                        aria-label="Increase children"
+                        aria-label={t('reservationPage.form.ariaLabels.increaseChildren', undefined, 'Increase children')}
                       >
                         <Plus className="w-4 h-4" />
                       </button>
@@ -779,7 +845,7 @@ export default function ReservationPage() {
                   <div className="total-guests-pill-wrapper">
                     <div className="total-guests-pill">
                       <User className="w-4 h-4 text-[#6b9158]" />
-                      <span>Total {adults + childrenCount} Guests</span>
+                      <span>{t('reservationPage.form.totalGuests', { count: adults + childrenCount })}</span>
                     </div>
                   </div>
                 </div>
@@ -792,8 +858,8 @@ export default function ReservationPage() {
                 <div className="reservation-step-heading mb-8">
                   <span>3</span>
                   <div>
-                    <h2>Select Date & Time</h2>
-                    <p>Choose when you would like to dine with us</p>
+                    <h2>{stepDateTimeTitle}</h2>
+                    <p>{stepDateTimeDesc}</p>
                   </div>
                 </div>
 
@@ -805,10 +871,10 @@ export default function ReservationPage() {
                         {monthNames[currentMonth]} {currentYear}
                       </span>
                       <div className="calendar-nav">
-                        <button type="button" onClick={handlePrevMonth} aria-label="Previous month">
+                        <button type="button" onClick={handlePrevMonth} aria-label={t('reservationPage.form.ariaLabels.previousMonth', undefined, 'Previous month')}>
                           <ChevronLeft className="w-4 h-4" />
                         </button>
-                        <button type="button" onClick={handleNextMonth} aria-label="Next month">
+                        <button type="button" onClick={handleNextMonth} aria-label={t('reservationPage.form.ariaLabels.nextMonth', undefined, 'Next month')}>
                           <ChevronRight className="w-4 h-4" />
                         </button>
                       </div>
@@ -856,7 +922,7 @@ export default function ReservationPage() {
                           }}
                           className={`time-tab-btn ${timeCategory === cat ? 'time-tab-btn-active' : ''}`}
                         >
-                          {cat}
+                          {translatedTimeCategory(cat)}
                         </button>
                       ))}
                     </div>
@@ -885,7 +951,7 @@ export default function ReservationPage() {
                       <Clock className="custom-time-icon" />
                       <input
                         type="text"
-                        placeholder="Enter time..."
+                        placeholder={t('reservationPage.form.placeholders.time', undefined, 'Enter time...')}
                         value={customTime}
                         onChange={(e) => {
                           setCustomTime(e.target.value);
@@ -925,8 +991,8 @@ export default function ReservationPage() {
                 <div className="reservation-step-heading mb-8">
                   <span>4</span>
                   <div>
-                    <h2>Special Occasion</h2>
-                    <p>Let us know if you are celebrating a special event</p>
+                    <h2>{stepOccasionTitle}</h2>
+                    <p>{stepOccasionDesc}</p>
                   </div>
                 </div>
 
@@ -957,8 +1023,8 @@ export default function ReservationPage() {
                 <div className="reservation-step-heading mb-8">
                   <span>5</span>
                   <div>
-                    <h2>Seating Preference</h2>
-                    <p>Choose where you would like to be seated</p>
+                    <h2>{stepSeatingTitle}</h2>
+                    <p>{stepSeatingDesc}</p>
                   </div>
                 </div>
 
@@ -985,11 +1051,11 @@ export default function ReservationPage() {
                 </div>
 
                 <div className="special-request-wrapper mt-8">
-                  <label htmlFor="specialRequest">Special Request</label>
+                  <label htmlFor="specialRequest">{t('reservationPage.form.labels.specialRequest', undefined, 'Special Request')}</label>
                   <textarea
                     id="specialRequest"
                     rows={4}
-                    placeholder="Allergies, seating requests, etc."
+                    placeholder={t('reservationPage.form.placeholders.specialRequest', undefined, 'Allergies, seating requests, etc.')}
                     value={specialRequest}
                     onChange={(e) => setSpecialRequest(e.target.value)}
                   />
@@ -997,10 +1063,10 @@ export default function ReservationPage() {
 
                 <div className="submit-area mt-8">
                   <button type="submit" className="reserve-btn-primary w-full">
-                    Reserve a Table
+                    {t('reservationPage.form.submit', undefined, 'Reserve a Table')}
                   </button>
                   <p className="cancel-notice text-center mt-3">
-                    Free cancellation up to 24 hours before your reservation.
+                    {t('reservationPage.form.cancellationNotice', undefined, 'Free cancellation up to 24 hours before your reservation.')}
                   </p>
                 </div>
               </div>
@@ -1009,54 +1075,61 @@ export default function ReservationPage() {
 
             {/* Sticky Sidebar Booking Summary */}
             <aside className="reservation-summary-card">
-              <h2>Booking Summary</h2>
+              <h2>{t('reservationPage.summary.title', undefined, 'Booking Summary')}</h2>
 
               <div className="summary-content">
                 <div className="summary-list">
                   <div className="summary-item summary-item-branch">
-                    <span>Branch</span>
+                    <span>{t('reservationPage.summary.labels.branch', undefined, 'Branch')}</span>
                     <strong>One More {selectedBranch}</strong>
                   </div>
 
                   <div className="summary-item">
-                    <span>Name</span>
-                    <strong>{fullName || '—'}</strong>
+                    <span>{t('reservationPage.summary.labels.name', undefined, 'Name')}</span>
+                    <strong>{fullName || t('reservationPage.summary.empty', undefined, '—')}</strong>
                   </div>
 
                   <div className="summary-item">
-                    <span>Contact</span>
-                    <strong>{phone || '—'}</strong>
+                    <span>{t('reservationPage.summary.labels.contact', undefined, 'Contact')}</span>
+                    <strong>{phone || t('reservationPage.summary.empty', undefined, '—')}</strong>
                   </div>
 
                   <div className="summary-item">
-                    <span>Guests</span>
+                    <span>{t('reservationPage.summary.labels.guests', undefined, 'Guests')}</span>
                     <strong>
-                      {adults + childrenCount} Guests
-                      <span className="guest-breakdown">({adults} Adults, {childrenCount} Kids)</span>
+                      {t('reservationPage.form.totalGuests', { count: adults + childrenCount })}
+                      <span className="guest-breakdown">
+                        {t('reservationPage.summary.guestBreakdown', { adults, children: childrenCount })}
+                      </span>
                     </strong>
                   </div>
 
                   <div className="summary-item">
-                    <span>Date</span>
+                    <span>{t('reservationPage.summary.labels.date', undefined, 'Date')}</span>
                     <strong>
                       {formatDateDisplay(selectedDate)}
-                      <span className="time-tag">({(customTime || selectedTime).toLowerCase()} {timeCategory.toLowerCase()})</span>
+                      <span className="time-tag">
+                        {t('reservationPage.summary.timeTag', {
+                          time: (customTime || selectedTime).toLowerCase(),
+                          category: translatedTimeCategory(timeCategory).toLowerCase()
+                        })}
+                      </span>
                     </strong>
                   </div>
 
                   <div className="summary-item">
-                    <span>Occasion</span>
+                    <span>{t('reservationPage.summary.labels.occasion', undefined, 'Occasion')}</span>
                     <strong>{selectedOccasion}</strong>
                   </div>
 
                   <div className="summary-item">
-                    <span>Seating</span>
+                    <span>{t('reservationPage.summary.labels.seating', undefined, 'Seating')}</span>
                     <strong>{selectedSeating}</strong>
                   </div>
                 </div>
 
                 <p className="arrival-notice">
-                  Please arrive 10 mins early. Reservations are held for 15 mins after the scheduled time.
+                  {t('reservationPage.summary.arrivalNotice', undefined, 'Please arrive 10 mins early. Reservations are held for 15 mins after the scheduled time.')}
                 </p>
 
                 <div className="summary-actions">
@@ -1065,14 +1138,14 @@ export default function ReservationPage() {
                     onClick={handleReservationSubmit}
                     className="reserve-btn-primary w-full"
                   >
-                    Reserve a Table
+                    {t('reservationPage.summary.reserveButton', undefined, 'Reserve a Table')}
                   </button>
 
                   <a
-                    href="tel:+85523888222"
+                    href={t('reservationPage.summary.phoneHref', undefined, 'tel:+85523888222')}
                     className="reserve-btn-secondary w-full text-center"
                   >
-                    Contact Restaurant
+                    {t('reservationPage.summary.contactRestaurant', undefined, 'Contact Restaurant')}
                   </a>
                 </div>
               </div>

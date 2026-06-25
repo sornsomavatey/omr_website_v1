@@ -1,0 +1,744 @@
+{
+  "language": {
+    "switchToKhmer": "Switch to Khmer",
+    "switchToEnglish": "Switch to English"
+  },
+  "nav": {
+    "home": "Home",
+    "menu": "Menu",
+    "events": "Events",
+    "branches": "Branches",
+    "gallery": "Gallery",
+    "about": "About",
+    "reservation": "Reservations",
+    "aria": {
+      "home": "Go to homepage",
+      "openMenu": "Open navigation menu",
+      "closeMenu": "Close navigation menu"
+    }
+  },
+  "footer": {
+    "logoAlt": "One More Restaurant",
+    "brandText": "Redefining the boundaries of Khmer gastronomy through a commitment to heritage and innovation.",
+    "copyright": "© 2024 One More Restaurant. All Rights Reserved.",
+    "headings": {
+      "explore": "Explore",
+      "legal": "Legal",
+      "contact": "Contact"
+    },
+    "links": {
+      "menu": "Menu",
+      "branches": "Branches",
+      "story": "Story",
+      "giftCards": "Gift Cards",
+      "terms": "Terms",
+      "privacy": "Privacy",
+      "sustainability": "Sustainability",
+      "bookingInquiry": "Booking Inquiry",
+      "press": "Press",
+      "careers": "Careers"
+    },
+    "social": {
+      "instagram": "Instagram",
+      "facebook": "Facebook",
+      "tripAdvisor": "TripAdvisor"
+    },
+    "aria": {
+      "home": "One More Restaurant home",
+      "navigation": "Footer navigation",
+      "socialLinks": "Social links"
+    }
+  },
+  "home": {
+    "hero": {
+      "titleLine1": "Experience Authentic",
+      "titleHighlight": "Khmer Cuisine",
+      "description": "Traditional Cambodian flavors served in a modern dining experience.",
+      "reserveButton": "Reserve a Table",
+      "menuButton": "Explore Menu",
+      "scroll": "SCROLL",
+      "scrollAria": "Scroll to featured cuisine section"
+    },
+    "signature": {
+      "eyebrow": "Our Signature Dishes",
+      "title": "Featured Khmer Cuisine",
+      "description": "Each dish tells a story of Cambodia's culinary heritage, crafted with heirloom recipes and seasonal ingredients.",
+      "viewAll": "View All Menu",
+      "items": {
+        "amok": {
+          "name": "Royal Fish Amok",
+          "category": "Traditional Khmer",
+          "description": "A fragrant steamed fish curry with coconut cream, kroeung paste, and banana leaf aroma.",
+          "badge": "Chef's Choice"
+        },
+        "lokLak": {
+          "name": "Beef Lok Lak",
+          "category": "House Favorite",
+          "description": "Tender marinated beef served with fresh greens, rice, and a bright Kampot pepper lime sauce.",
+          "badge": "Best Seller"
+        },
+        "bbq": {
+          "name": "Khmer BBQ Platter",
+          "category": "Sharing Plate",
+          "description": "Grilled meats and seasonal vegetables served with traditional Cambodian dipping sauces.",
+          "badge": "Signature"
+        }
+      }
+    },
+    "spaces": {
+      "eyebrow": "Dining Spaces",
+      "title": "Designed for Every Occasion",
+      "description": "From family meals to private celebrations, our spaces blend Cambodian warmth with refined comfort.",
+      "previous": "Previous space",
+      "next": "Next space",
+      "items": {
+        "family": {
+          "name": "Family Dining Hall",
+          "tag": "Family Friendly",
+          "description": "A welcoming dining space for relaxed meals, celebrations, and everyday gatherings."
+        },
+        "privateRoom": {
+          "name": "Private Dining Room",
+          "tag": "Private Experience",
+          "description": "An intimate room for birthdays, business dinners, and special moments that deserve privacy."
+        },
+        "business": {
+          "name": "Business Dining Area",
+          "tag": "Professional Setting",
+          "description": "A calm and polished environment for client meetings, team meals, and formal dining."
+        },
+        "kidZone": {
+          "name": "Kid-Friendly Corner",
+          "tag": "For Families",
+          "description": "A comfortable area where families can enjoy meals while children feel welcome and safe."
+        },
+        "event": {
+          "name": "Event Space",
+          "tag": "Celebrations",
+          "description": "A flexible space for group events, ceremonies, corporate meals, and private gatherings."
+        }
+      }
+    },
+    "locations": {
+      "eyebrow": "Our Branches",
+      "title": "Visit One More Restaurant",
+      "description": "Choose the branch that best fits your dining occasion.",
+      "detail": "View Details",
+      "map": "View Map",
+      "reserve": "Reserve",
+      "tags": {
+        "familyFriendly": "Family Friendly",
+        "businessMeeting": "Business Meeting",
+        "privateRoom": "Private Room",
+        "eventSpace": "Event Space",
+        "largeGroups": "Large Groups",
+        "corporate": "Corporate"
+      },
+      "items": {
+        "toulKork": {
+          "name": "One More Toul Kork",
+          "address": "Toul Kork, Phnom Penh, Cambodia",
+          "hours": "Open daily · 06:00 AM - 10:00 PM"
+        },
+        "boeungKak": {
+          "name": "One More Boeung Kak",
+          "address": "Boeung Kak, Phnom Penh, Cambodia",
+          "hours": "Open daily · 06:00 AM - 10:00 PM"
+        }
+      }
+    },
+    "gallery": {
+      "eyebrow": "Gallery",
+      "title": "Moments at One More",
+      "description": "A glimpse into our food, spaces, and hospitality.",
+      "viewFull": "View Full Gallery",
+      "images": {
+        "one": "Dining room at One More Restaurant",
+        "two": "Khmer cuisine dish",
+        "three": "Restaurant interior detail",
+        "four": "Shared dining experience",
+        "five": "Signature dish presentation",
+        "six": "Elegant restaurant space"
+      }
+    },
+    "testimonials": {
+      "eyebrow": "Testimonials",
+      "title": "What Our Guests Say",
+      "description": "Experiences shared by our valued customers.",
+      "previous": "Previous testimonial",
+      "next": "Next testimonial",
+      "items": {
+        "sophea": {
+          "date": "Visited in March 2024",
+          "text": "The food felt deeply Cambodian but presented with a modern touch. The service was warm, thoughtful, and professional."
+        },
+        "david": {
+          "date": "Visited in April 2024",
+          "text": "A beautiful place for dinner with clients. The private room was quiet, elegant, and the dishes were excellent."
+        },
+        "piseth": {
+          "date": "Visited in May 2024",
+          "text": "One of the best places in Phnom Penh for family dining. Great atmosphere, good food, and friendly staff."
+        },
+        "emma": {
+          "date": "Visited in June 2024",
+          "text": "The restaurant has a wonderful balance of tradition and comfort. I loved the Khmer flavors and the calm interior."
+        }
+      }
+    }
+  },
+  "menu": {
+    "loading": "Loading menu...",
+    "errors": {
+      "load": "Failed to load menu data.",
+      "noData": "No menu data available."
+    },
+    "hero": {
+      "title": "Our Menu",
+      "subtitle": "Traditional Cambodian flavors served with modern warmth and refined presentation.",
+      "backgroundAlt": "Menu header background"
+    },
+    "categories": {
+      "breakfast": "Breakfast",
+      "lunch": "Lunch",
+      "dinner": "Dinner",
+      "dessert": "Dessert",
+      "drinks": "Drinks"
+    },
+    "items": {
+      "breakfast": [
+        {
+          "name": "Khmer Noodle Soup",
+          "category": "Breakfast",
+          "desc": "A comforting Cambodian noodle soup with clear broth, fresh herbs, and tender toppings.",
+          "badge": "Popular"
+        },
+        {
+          "name": "Bean Sprout Fried Noodle",
+          "category": "Breakfast",
+          "desc": "Wok-fried noodles with crisp bean sprouts, vegetables, and house seasoning.",
+          "badge": "Fresh"
+        },
+        {
+          "name": "Beef Fried Noodle",
+          "category": "Breakfast",
+          "desc": "Savory fried noodles tossed with tender beef, vegetables, and fragrant sauce.",
+          "badge": "Best Seller"
+        },
+        {
+          "name": "Seafood Fried Noodle",
+          "category": "Breakfast",
+          "desc": "Golden fried noodles with seafood, fresh vegetables, and light Khmer seasoning.",
+          "badge": "Seafood"
+        },
+        {
+          "name": "Pork Bone Soup",
+          "category": "Breakfast",
+          "desc": "A rich pork bone broth simmered slowly for deep flavor and comforting warmth.",
+          "badge": "Comfort"
+        },
+        {
+          "name": "Meatball Kuyteav",
+          "category": "Breakfast",
+          "desc": "Classic kuyteav noodle soup with meatballs, herbs, and a clean savory broth.",
+          "badge": "Classic"
+        }
+      ],
+      "lunch": [
+        {
+          "name": "Fish Amok Coconut",
+          "category": "Lunch",
+          "desc": "Steamed fish curry with coconut cream, kroeung paste, and banana leaf aroma.",
+          "badge": "Signature"
+        },
+        {
+          "name": "Banana Blossom Chicken Salad",
+          "category": "Lunch",
+          "desc": "A bright salad with shredded banana blossom, chicken, herbs, and tangy dressing.",
+          "badge": "Light"
+        },
+        {
+          "name": "Stir-Fried Cockles with Tamarind",
+          "category": "Lunch",
+          "desc": "Fresh cockles stir-fried with tamarind sauce, herbs, and a gentle chili kick.",
+          "badge": "Bold"
+        },
+        {
+          "name": "Beef Lok Lak",
+          "category": "Lunch",
+          "desc": "Tender marinated beef served with rice, fresh greens, and Kampot pepper lime sauce.",
+          "badge": "Favorite"
+        },
+        {
+          "name": "Curry Lobster",
+          "category": "Lunch",
+          "desc": "Lobster cooked in fragrant curry with coconut richness and Cambodian spices.",
+          "badge": "Premium"
+        },
+        {
+          "name": "Samlor Korko Catfish",
+          "category": "Lunch",
+          "desc": "A traditional Cambodian soup with catfish, vegetables, herbs, and roasted rice aroma.",
+          "badge": "Traditional"
+        }
+      ],
+      "dinner": [
+        {
+          "name": "Fish Amok Coconut",
+          "category": "Dinner",
+          "desc": "Steamed fish curry with coconut cream, kroeung paste, and banana leaf aroma.",
+          "badge": "Signature"
+        },
+        {
+          "name": "Banana Blossom Chicken Salad",
+          "category": "Dinner",
+          "desc": "A bright salad with shredded banana blossom, chicken, herbs, and tangy dressing.",
+          "badge": "Light"
+        },
+        {
+          "name": "Stir-Fried Cockles with Tamarind",
+          "category": "Dinner",
+          "desc": "Fresh cockles stir-fried with tamarind sauce, herbs, and a gentle chili kick.",
+          "badge": "Bold"
+        },
+        {
+          "name": "Beef Lok Lak",
+          "category": "Dinner",
+          "desc": "Tender marinated beef served with rice, fresh greens, and Kampot pepper lime sauce.",
+          "badge": "Favorite"
+        },
+        {
+          "name": "Curry Lobster",
+          "category": "Dinner",
+          "desc": "Lobster cooked in fragrant curry with coconut richness and Cambodian spices.",
+          "badge": "Premium"
+        },
+        {
+          "name": "Samlor Korko Catfish",
+          "category": "Dinner",
+          "desc": "A traditional Cambodian soup with catfish, vegetables, herbs, and roasted rice aroma.",
+          "badge": "Traditional"
+        }
+      ],
+      "dessert": [
+        {
+          "name": "Five Signature Desserts",
+          "category": "Dessert",
+          "desc": "A curated set of house desserts inspired by Cambodian sweets and seasonal flavors.",
+          "badge": "Sweet"
+        }
+      ],
+      "drinks": []
+    }
+  },
+  "branches": {
+    "loading": "Loading locations...",
+    "errors": {
+      "load": "Failed to load locations.",
+      "noData": "No data available."
+    }
+  },
+  "reservation": {
+    "loading": "Loading reservations...",
+    "errors": {
+      "load": "Failed to load reservation data.",
+      "noData": "No reservation data available."
+    }
+  },
+  "branchesPage": {
+    "header": {
+      "title": "Every Location Has Its Own Story.",
+      "desc": "From the quiet Riverside Garden to the vibrant City Centre, each of our locations is a chapter in the story of traditional Cambodian flavors, served in spaces designed to feel like home."
+    },
+    "ui": {
+      "reserveCta": "Reserve a Table",
+      "heroMapAlt": "Map of branch locations",
+      "comparison": {
+        "eyebrow": "What's different",
+        "title": "Compare Our Locations",
+        "featureLabel": "Feature",
+        "featureDesc": "Compare venue highlights",
+        "toulKorkTitle": "Toul Kork",
+        "boeungKakTitle": "Boeung Kak",
+        "venueTag": "Venue",
+        "toulKorkAlt": "Toul Kork venue",
+        "boeungKakAlt": "Boeung Kak venue"
+      },
+      "findUs": {
+        "eyebrow": "Our Locations",
+        "title": "Find us here",
+        "description": "Two distinct dining destinations, one unforgettable culinary story."
+      },
+      "map": {
+        "eyebrow": "See the Map",
+        "title": "See us on Map",
+        "description": "Two distinct dining destinations, one unforgettable culinary story.",
+        "imageAlt": "Locations map view full"
+      },
+      "modal": {
+        "closeAria": "Close details",
+        "venueDetails": "Venue details",
+        "highlightsTitle": "Key Venue Highlights",
+        "reserveCta": "Reserve a Table"
+      }
+    },
+    "comparison": {
+      "features": [
+        {
+          "name": "Family Dining",
+          "toulKork": true,
+          "boeungKak": true
+        },
+        {
+          "name": "Private Room",
+          "toulKork": true,
+          "boeungKak": true
+        },
+        {
+          "name": "Business Meeting",
+          "toulKork": true,
+          "boeungKak": true
+        },
+        {
+          "name": "Event Space",
+          "toulKork": true,
+          "boeungKak": true
+        },
+        {
+          "name": "Parking",
+          "toulKork": true,
+          "boeungKak": true
+        },
+        {
+          "name": "Capacity",
+          "toulKork": "200+ guests",
+          "boeungKak": "300+ guests"
+        }
+      ]
+    },
+    "locations": [
+      {
+        "id": "toulKork",
+        "name": "One More Restaurant Toul Kork",
+        "address": "37 St 315, Phnom Penh 120407",
+        "phone": "023 888 222",
+        "hours": "Daily: 06:00 AM - 10:00 PM",
+        "image": "@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.png",
+        "tags": [
+          "Family Friendly",
+          "Business Meeting",
+          "Private Room"
+        ],
+        "description": "Our signature branch in Toul Kork offers a beautiful garden dining experience and elegant private rooms. Features a layout designed for family gatherings, professional business meetings, and celebrations.",
+        "highlights": [
+          "Capacity for up to 200+ guests",
+          "6 Private VIP Rooms with full AV setup",
+          "Dedicated kids play zone for family comfort",
+          "Complimentary secure valet parking",
+          "Beautifully landscaped outdoor garden area"
+        ]
+      },
+      {
+        "id": "boeungKak",
+        "name": "One More Restaurant Boeung Kak",
+        "address": "G2 Street R11, Phnom Penh 120210",
+        "phone": "021 888 222",
+        "hours": "Daily: 06:00 AM - 10:00 PM",
+        "image": "@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.png",
+        "tags": [
+          "Event Space",
+          "Large Groups",
+          "Corporate"
+        ],
+        "description": "Our Boeung Kak branch showcases striking modern architectural design and expansive layouts. An ideal setting for large-scale corporate events, banquets, and memorable dining experiences.",
+        "highlights": [
+          "Capacity for up to 300+ guests",
+          "Large event space with stage & sound system",
+          "Modern chic architecture & photography spots",
+          "High-capacity parking area",
+          "Special banquet & group catering menus"
+        ]
+      }
+    ]
+  },
+  "reservationPage": {
+    "hero": {
+      "eyebrow": "EST. 2008 · PHNOM PENH",
+      "title": "Reserve Your Table",
+      "desc": "Experience the pinnacle of Khmer culinary heritage. A journey of forgotten flavors rediscovered in a setting of timeless luxury.",
+      "backgroundImage": "@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.png",
+      "backgroundAlt": "One More Restaurant dining room"
+    },
+    "guestInformationTitle": "Guest Information",
+    "guestInformationAria": "Guest information",
+    "guestInformation": [
+      {
+        "type": "hours",
+        "label": "Opening Hours",
+        "value": "06:00 AM - 10:00 PM"
+      },
+      {
+        "type": "phone",
+        "label": "Contact Number",
+        "value": "+855 23 888 222"
+      },
+      {
+        "type": "time",
+        "label": "Response Time",
+        "value": "Within 15 Minutes"
+      },
+      {
+        "type": "policy",
+        "label": "Reservation Policy",
+        "value": "Free cancellation up to 24h"
+      }
+    ],
+    "steps": {
+      "branch": {
+        "title": "Choose Branch",
+        "desc": "Select your preferred location in Phnom Penh"
+      },
+      "contact": {
+        "title": "Contact Details",
+        "desc": "Enter your information so we can contact you regarding your booking"
+      },
+      "guests": {
+        "title": "Guests",
+        "desc": "Tell us how many people will be joining you"
+      },
+      "dateTime": {
+        "title": "Select Date & Time",
+        "desc": "Choose when you would like to dine with us"
+      },
+      "occasion": {
+        "title": "Special Occasion",
+        "desc": "Let us know if you are celebrating a special event"
+      },
+      "seating": {
+        "title": "Seating Preference",
+        "desc": "Choose where you would like to be seated"
+      }
+    },
+    "form": {
+      "aria": "Reservation form",
+      "labels": {
+        "fullName": "Full Name *",
+        "phoneNumber": "Phone Number *",
+        "adults": "Adults",
+        "children": "Children",
+        "specialRequest": "Special Request"
+      },
+      "placeholders": {
+        "fullName": "Enter full name",
+        "phoneNumber": "Enter phone number",
+        "time": "Enter time...",
+        "specialRequest": "Allergies, seating requests, etc."
+      },
+      "ariaLabels": {
+        "decreaseAdults": "Decrease adults",
+        "increaseAdults": "Increase adults",
+        "decreaseChildren": "Decrease children",
+        "increaseChildren": "Increase children",
+        "previousMonth": "Previous month",
+        "nextMonth": "Next month"
+      },
+      "totalGuests": "Total {count} Guests",
+      "submit": "Reserve a Table",
+      "cancellationNotice": "Free cancellation up to 24 hours before your reservation."
+    },
+    "validation": {
+      "contactRequired": "Please fill in your Contact Details (Name & Phone Number) to complete your reservation.",
+      "invalidName": "Please enter a valid Full Name (at least 2 characters).",
+      "invalidPhone": "Please enter a valid Phone Number (typically 9 to 11 digits)."
+    },
+    "success": {
+      "title": "Reservation Confirmed!",
+      "desc": "Thank you for booking with One More Restaurant. A confirmation message has been sent to your phone number.",
+      "makeAnother": "Make Another Booking",
+      "valuedGuest": "Valued Guest",
+      "notProvided": "Not provided",
+      "detailLabels": {
+        "branch": "Branch",
+        "guestName": "Guest Name",
+        "phone": "Phone",
+        "guests": "Guests",
+        "dateTime": "Date & Time",
+        "seatingOccasion": "Seating & Occasion"
+      },
+      "guestsValue": "{total} Guests ({adults} Adults, {children} Kids)",
+      "dateTimeValue": "{date} at {time}",
+      "seatingOccasionValue": "{seating} · {occasion}"
+    },
+    "summary": {
+      "title": "Booking Summary",
+      "labels": {
+        "branch": "Branch",
+        "name": "Name",
+        "contact": "Contact",
+        "guests": "Guests",
+        "date": "Date",
+        "occasion": "Occasion",
+        "seating": "Seating"
+      },
+      "empty": "—",
+      "guestBreakdown": "({adults} Adults, {children} Kids)",
+      "timeTag": "({time} {category})",
+      "arrivalNotice": "Please arrive 10 mins early. Reservations are held for 15 mins after the scheduled time.",
+      "reserveButton": "Reserve a Table",
+      "contactRestaurant": "Contact Restaurant",
+      "phoneHref": "tel:+85523888222"
+    },
+    "calendar": {
+      "months": [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+      ],
+      "shortMonths": [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec"
+      ],
+      "daysOfWeek": [
+        "S",
+        "M",
+        "T",
+        "W",
+        "T",
+        "F",
+        "S"
+      ]
+    },
+    "timeCategories": {
+      "Breakfast": "Breakfast",
+      "Lunch": "Lunch",
+      "Dinner": "Dinner"
+    },
+    "branches": [
+      {
+        "id": "toulKork",
+        "name": "One More Restaurant Toul Kork",
+        "address": "37 St 315, Phnom Penh 120407",
+        "phone": "023 888 222",
+        "hours": "Daily: 06:00 AM - 10:00 PM",
+        "img": "@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.png",
+        "tags": [
+          "Family Friendly",
+          "Business Meeting",
+          "Private Room"
+        ]
+      },
+      {
+        "id": "boeungKak",
+        "name": "One More Restaurant Boeung Kak",
+        "address": "G2 Street R11, Phnom Penh 120210",
+        "phone": "021 888 222",
+        "hours": "Daily: 06:00 AM - 10:00 PM",
+        "img": "@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.png",
+        "tags": [
+          "Event Space",
+          "Large Groups",
+          "Corporate"
+        ]
+      }
+    ],
+    "occasions": [
+      {
+        "id": "familyDining",
+        "name": "Family Dining",
+        "icon": "familyDining"
+      },
+      {
+        "id": "businessMeeting",
+        "name": "Business Meeting",
+        "icon": "businessMeeting"
+      },
+      {
+        "id": "birthdayCelebration",
+        "name": "Birthday Celebration",
+        "icon": "birthdayCelebration"
+      },
+      {
+        "id": "corporateEvent",
+        "name": "Corporate Event",
+        "icon": "corporateEvent"
+      },
+      {
+        "id": "dateNight",
+        "name": "Date Night",
+        "icon": "dateNight"
+      },
+      {
+        "id": "other",
+        "name": "Other",
+        "icon": "other"
+      }
+    ],
+    "seatingPreferences": [
+      {
+        "id": "indoor",
+        "name": "Indoor",
+        "img": "@/assets/home-v2/e8f4b56e423777f3f6c3df39c6ef78914b278e17.png"
+      },
+      {
+        "id": "outdoor",
+        "name": "Outdoor",
+        "img": "imgGallery1"
+      },
+      {
+        "id": "privateRoom",
+        "name": "Private Room",
+        "img": "@/assets/home-v2/31b0910d38c033be0ce5292cf4a1d68688308c6b.png"
+      },
+      {
+        "id": "bigRoom",
+        "name": "Big Room",
+        "img": "imgGallery5"
+      }
+    ],
+    "faq": {
+      "eyebrow": "Assistance",
+      "title": "Frequently Asked Questions",
+      "items": [
+        {
+          "q": "What is the dress code?",
+          "a": "We recommend smart casual attire. Traditional Khmer attire is also very welcome for special occasions."
+        },
+        {
+          "q": "Do you offer vegetarian or vegan options?",
+          "a": "Yes, we have a variety of vegetarian and vegan options available. Please inform your waiter or mention it in the special requests section when booking."
+        },
+        {
+          "q": "Is there parking available at the branches?",
+          "a": "Yes, both our Toul Kork and Boeung Kak branches feature spacious, secure parking lots with complimentary valet service."
+        },
+        {
+          "q": "Can I bring my own wine?",
+          "a": "Yes, you may bring your own wine. A corkage fee of $15 per bottle applies."
+        },
+        {
+          "q": "Are pets allowed?",
+          "a": "To ensure a comfortable dining environment for all guests, pets are only allowed in our outdoor garden areas."
+        }
+      ]
+    }
+  }
+}
