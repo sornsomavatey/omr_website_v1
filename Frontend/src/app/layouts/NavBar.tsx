@@ -109,6 +109,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
 
   const isHomePage = location.pathname === '/';
+  const isGalleryPage = location.pathname === '/gallery';
   const isToulKorkPage =
     location.pathname === '/branches/toul-kork' ||
     location.pathname === '/restaurants/toul-kork';
@@ -228,7 +229,7 @@ export default function Navbar() {
           </div>
 
           <div className="navbar-desktop-actions">
-            {isV2 && (
+            {(isV2 || isGalleryPage) && (
               <Link
                 to="/reservations"
                 className="navbar-reservation-button"

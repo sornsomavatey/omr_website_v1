@@ -1,16 +1,16 @@
 export type SignatureDish = {
-  nameKey: string;
-  categoryKey: string;
-  descKey: string;
+  name: string;
+  category: string;
+  desc: string;
   img: string;
   price: string;
-  badgeKey: string;
+  badge: string;
 };
 
 export type DiningSpace = {
-  nameKey: string;
-  tagKey: string;
-  descKey: string;
+  name: string;
+  tag: string;
+  desc: string;
   img: string;
 };
 
@@ -25,7 +25,7 @@ export type Branch = {
 
 export type Testimonial = {
   name: string;
-  dateKey: string;
-  textKey: string;
+  date: string;
+  text: string;
   avatar: string;
 };

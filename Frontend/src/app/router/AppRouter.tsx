@@ -5,6 +5,7 @@ import MainLayouts from '@/app/layouts/MainLayouts';
 import HomePage from '@/pages/Home';
 import MenuPage from '@/pages/Menu';
 import BranchesPage from '@/pages/Branches';
+import EventsPage from '@/pages/Events';
 import ToulKorkPage from '@/pages/Branches/ToukKork/ToulKork';
 import BoeungKakPage from '@/pages/Branches/BoeungKak/BoeungKak';
 import GalleryPage from '@/pages/Gallery';
@@ -21,6 +22,7 @@ export default function AppRouter() {
           <Route index element={<HomePage />} />
 
           <Route path="/menu" element={<MenuPage />} />
+          <Route path="/events" element={<EventsPage />} />
           <Route path="/restaurants" element={<Navigate to="/branches" replace />} />
           <Route path="/restaurants/toul-kork" element={<Navigate to="/branches/toul-kork" replace />} />
           <Route path="/restaurants/boeung-kak" element={<Navigate to="/branches/boeung-kak" replace />} />

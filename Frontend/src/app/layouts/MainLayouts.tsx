@@ -19,6 +19,8 @@ export default function MainLayouts() {
     location.pathname === '/reservation';
 
   const isMenuPage = location.pathname === '/menu';
+  const isEventsPage = location.pathname === '/events';
+  const isGalleryPage = location.pathname === '/gallery';
   const isRestaurantsPage =
     location.pathname === '/restaurants' ||
     location.pathname === '/branches';
@@ -33,6 +35,8 @@ export default function MainLayouts() {
     !isHomePage &&
     !isReservationPage &&
     !isMenuPage &&
+    !isEventsPage &&
+    !isGalleryPage &&
     !isRestaurantsPage &&
     !isToulKorkPage &&
     !isBoeungKakPage;

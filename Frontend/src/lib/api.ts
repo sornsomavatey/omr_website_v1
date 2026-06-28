@@ -29,6 +29,11 @@ export const getGalleryData = async () => {
   return response.data;
 };
 
+export const getEventsData = async () => {
+  const response = await api.get('/mocks/events.json');
+  return response.data;
+};
+
 export const getRestaurantsData = async () => {
   const response = await api.get('/mocks/restaurants.json');
   return response.data;
