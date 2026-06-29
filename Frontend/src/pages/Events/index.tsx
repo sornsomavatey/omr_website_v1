@@ -4,6 +4,7 @@ import { Check, ChevronDown, ChevronLeft, ChevronRight, Clock, FileText, Mail, S
 
 import FeaturePackageCard from '@/components/FeaturePackageCard';
 import SectionHeader from '@/components/SectionHeader';
+import EventSpaceCard from '@/components/EventSpaceCard';
 
 
 import imgHero     from '@/assets/home-v2/e900cacb721f9c81cd07b8415a03f20f42a39856.png';
@@ -65,22 +66,28 @@ const packages = [
 
 const spaces = [
   {
-    id: 'ballroom',
-    label: 'Main Hall',
-    name: 'The Grand Ballroom',
-    capacity: '120 guests',
-    area: '450 m²',
-    img: imgSpace1,
-    features: ['Natural Daylight', 'Stage & Dance Floor', 'Full AV Setup', 'Air Conditioning', 'Private Entrance', 'Outdoor Terrace'],
+    id: 'vip',
+    name: 'VIP Room',
+    guestTag: '8–12 guests',
+    badgeTag: 'Best for Private Dinners',
+    img: imgSpace2,
+    features: ['Integrated AV system', 'Personal butler service', 'Garden views', 'Personal butler service'],
   },
   {
-    id: 'vip',
-    label: 'Private Room',
-    name: 'The VIP Suite',
-    capacity: '30 guests',
-    area: '120 m²',
-    img: imgSpace2,
-    features: ['Intimate Setting', 'Dedicated Butler', 'Custom Lighting', 'Wine Cellar Access', 'Premium Sound System', 'Private Garden'],
+    id: 'private',
+    name: 'Private Room',
+    guestTag: '8–12 guests',
+    badgeTag: 'Best for Private Dinners',
+    img: imgSpace1,
+    features: ['Integrated AV system', 'Personal butler service', 'Garden views', 'Personal butler service'],
+  },
+  {
+    id: 'main-hall',
+    name: 'Main Hall',
+    guestTag: '8–12 guests',
+    badgeTag: 'Best for Private Dinners',
+    img: imgHero,
+    features: ['Integrated AV system', 'Personal butler service', 'Garden views', 'Personal butler service'],
   },
 ];
 
@@ -150,27 +157,6 @@ const faqs = [
 // ── Sub-components ───────────────────────────────────────────
 function Stars({ count }: { count: number }) {
   return <div className="events-stars">{'★'.repeat(count)}</div>;
-}
-
-function SpaceContent({ space }: { space: typeof spaces[0] }) {
-  return (
-    <div className="events-space-content">
-      <div className="events-space-top">
-        <span className="events-space-label">{space.label}</span>
-        <span style={{ fontSize: 11, color: '#7a9070' }}>{space.capacity} · {space.area}</span>
-      </div>
-      <h3>{space.name}</h3>
-      <ul>
-        {space.features.map((f) => (
-          <li key={f}><Check size={13} />{f}</li>
-        ))}
-      </ul>
-      <div className="events-space-actions">
-        <a href="#inquiry" className="events-button events-button-primary">Inquire Now</a>
-        <a href="#inquiry" className="events-button events-button-outline" style={{ color: '#1b301a', borderColor: '#b0cc9e' }}>View Details</a>
-      </div>
-    </div>
-  );
 }
 
 // ── Main ─────────────────────────────────────────────────────
@@ -265,18 +251,21 @@ export default function EventsPage() {
       {/* ── SPACES ──────────────────────────── */}
       <section className="events-section events-spaces-section" id="spaces">
         <div className="events-section-heading events-section-heading-light">
-          <div className="events-eyebrow"><span />VENUES<span /></div>
+          <div className="events-eyebrow"><span />Event Spaces<span /></div>
           <h2>Beautiful Spaces For Every Occasion</h2>
         </div>
 
         <div className="events-spaces-list">
-          {spaces.map((space, idx) => (
-            <div key={space.id} className="events-space-card">
-              {idx % 2 === 0
-                ? <><img src={space.img} alt={space.name} /><SpaceContent space={space} /></>
-                : <><SpaceContent space={space} /><img src={space.img} alt={space.name} /></>
-              }
-            </div>
+          {spaces.map((space) => (
+            <EventSpaceCard
+              key={space.id}
+              id={space.id}
+              name={space.name}
+              guestTag={space.guestTag}
+              badgeTag={space.badgeTag}
+              image={space.img}
+              features={space.features}
+            />
           ))}
         </div>
       </section>

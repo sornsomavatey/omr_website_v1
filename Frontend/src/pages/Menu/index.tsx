@@ -69,6 +69,7 @@ export default function Menu() {
   const [activeCategory, setActiveCategory] = useState<MenuCategory>('Breakfast');
   const [isStickyVisible, setIsStickyVisible] = useState(false);
   const [hasScrolled, setHasScrolled] = useState(false);
+  const [isLotusVisible, setIsLotusVisible] = useState(false);
   const observerRef = useRef<IntersectionObserver | null>(null);
 
   const categories: MenuCategory[] = ['Breakfast', 'Lunch', 'Dinner', 'Dessert', 'Drinks'];
@@ -167,6 +168,7 @@ export default function Menu() {
         // Only reveal if the user has scrolled
         if (entry.isIntersecting && hasScrolled) {
           entry.target.classList.add('section-visible');
+          setIsLotusVisible(true);
           revealObserver.unobserve(entry.target);
         }
       });
@@ -189,6 +191,8 @@ export default function Menu() {
   const handleCategoryClick = (category: MenuCategory) => {
     const element = document.getElementById(category.toLowerCase());
     if (element) {
+      element.classList.add('section-visible');
+      setIsLotusVisible(true);
       if (observerRef.current) {
         categories.forEach((cat) => {
           const el = document.getElementById(cat.toLowerCase());
@@ -313,7 +317,7 @@ export default function Menu() {
       {/* Menu Grid Sections */}
       <section className="w-full py-16 bg-white flex flex-col items-center relative overflow-hidden">
         {/* Lotus Background Pattern */}
-        <div className={`lotus-bg-wrapper ${hasScrolled ? 'lotus-bg-visible' : ''}`}>
+        <div className={`lotus-bg-wrapper ${isLotusVisible ? 'lotus-bg-visible' : ''}`}>
           <div className="lotus-bg-pattern" style={{ backgroundImage: `url("${imgLotusHalf}")` }} />
         </div>
 
@@ -322,7 +326,7 @@ export default function Menu() {
             <div
               key={category}
               id={category.toLowerCase()}
-              className="menu-section w-full py-16 first:pt-4 last:pb-16 border-b border-[#dde0dc]/50 last:border-b-0"
+              className="menu-section section-animate w-full py-16 first:pt-4 last:pb-16 border-b border-[#dde0dc]/50 last:border-b-0"
             >
               <h2 className="font-serif text-4xl md:text-5xl font-normal tracking-wide mb-16 text-[#212d1b]">
                 {translatedCategoryNames[category]}

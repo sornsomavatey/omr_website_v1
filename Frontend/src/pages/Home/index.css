@@ -83,7 +83,7 @@
 
   background-color: #1a2416;
 
-  border-radius: 1.5rem;
+  border-radius: 0px;
 
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
 
@@ -744,14 +744,14 @@
   top: 50%;
   z-index: 6;
 
-  width: 190px;
-  height: 190px;
+  width: 250px;
+  height: 250px;
 
   overflow: hidden;
 
   background-color: #ffffff;
 
-  border: 8px solid #ffffff;
+  border: 10px solid #ffffff;
   border-radius: 50%;
 
   box-shadow: 0 12px 28px rgba(33, 45, 27, 0.16);
@@ -847,10 +847,10 @@
   }
 
   .cuisine-center-circle {
-    width: 155px;
-    height: 155px;
+    width: 200px;
+    height: 200px;
 
-    border-width: 7px;
+    border-width: 8px;
   }
 
   .cuisine-decoration {
@@ -890,10 +890,10 @@
   }
 
   .cuisine-center-circle {
-    width: 126px;
-    height: 126px;
+    width: 160px;
+    height: 160px;
 
-    border-width: 6px;
+    border-width: 7px;
   }
 
   .cuisine-decoration {
