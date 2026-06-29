@@ -21,6 +21,7 @@ import { Button } from '@/components/ui/button';
 import SectionHeader from '@/components/SectionHeader';
 import DishCard from '@/components/ui/dish-card';
 import SharpImageCard from '@/components/SharpImageCard';
+import { useTranslation } from '@/hooks/useTranslation';
 import './BoeungKak.css';
 
 // Asset imports matching homeAssets
@@ -51,28 +52,29 @@ import locationImg from '@/assets/Location Bk.png';
 
 export default function BoeungKak() {
   const navigate = useNavigate();
+  const { t, isKhmer } = useTranslation();
   
   // Testimonial state
   const testimonials = [
     {
       id: 1,
-      name: "Sovan Dara",
-      date: "2 weeks ago",
-      text: "An absolute gem in Boeung Kak. The traditional architecture is stunning, and the private rooms are perfect for business dinners. The service is top-notch.",
+      name: t('branchDetails.testimonials.items.boeungKak.0.name', undefined, "Sovan Dara"),
+      date: t('branchDetails.testimonials.items.boeungKak.0.date', undefined, "2 weeks ago"),
+      text: t('branchDetails.testimonials.items.boeungKak.0.text', undefined, "An absolute gem in Boeung Kak. The traditional architecture is stunning, and the private rooms are perfect for business dinners. The service is top-notch."),
       avatar: imgAvatar1
     },
     {
       id: 2,
-      name: "Vichea Pok",
-      date: "1 month ago",
-      text: "The best place to experience authentic Khmer fine dining. Beautiful garden setting and the Amok Trey is outstanding. Highly recommended!",
+      name: t('branchDetails.testimonials.items.boeungKak.1.name', undefined, "Vichea Pok"),
+      date: t('branchDetails.testimonials.items.boeungKak.1.date', undefined, "1 month ago"),
+      text: t('branchDetails.testimonials.items.boeungKak.1.text', undefined, "The best place to experience authentic Khmer fine dining. Beautiful garden setting and the Amok Trey is outstanding. Highly recommended!"),
       avatar: imgAvatar2
     },
     {
       id: 3,
-      name: "Chanthy Chea",
-      date: "1 month ago",
-      text: "Excellent venue for corporate events. We hosted a seminar in their VIP room, and the AV setup and catering exceeded our expectations.",
+      name: t('branchDetails.testimonials.items.boeungKak.2.name', undefined, "Chanthy Chea"),
+      date: t('branchDetails.testimonials.items.boeungKak.2.date', undefined, "1 month ago"),
+      text: t('branchDetails.testimonials.items.boeungKak.2.text', undefined, "Excellent venue for corporate events. We hosted a seminar in their VIP room, and the AV setup and catering exceeded our expectations."),
       avatar: imgAvatar3
     }
   ];
@@ -89,12 +91,14 @@ export default function BoeungKak() {
 
   // Set document title & SEO meta
   useEffect(() => {
-    document.title = "One More Restaurant - Boeung Kak Branch";
+    document.title = isKhmer ? "ភោជនីយដ្ឋាន វ័នម័រ - សាខាបឹងកក់" : "One More Restaurant - Boeung Kak Branch";
     const metaDesc = document.querySelector('meta[name="description"]');
     if (metaDesc) {
-      metaDesc.setAttribute('content', 'Experience authentic Cambodian dining at One More Restaurant Boeung Kak. Ideal for family gatherings, business meetings, and elegant events in Phnom Penh.');
+      metaDesc.setAttribute('content', isKhmer 
+        ? "ទទួលបទពិសោធន៍ទទួលទានអាហារខ្មែរពិតប្រាកដនៅភោជនីយដ្ឋាន វ័នម័រ បឹងកក់។ ស័ក្តិសមសម្រាប់ការជួបជុំគ្រួសារ ការប្រជុំអាជីវកម្ម និងព្រឹត្តិការណ៍ផ្សេងៗ។" 
+        : "Experience authentic Cambodian dining at One More Restaurant Boeung Kak. Ideal for family gatherings, business meetings, and elegant events in Phnom Penh.");
     }
-  }, []);
+  }, [isKhmer]);
 
   return (
     <div className="bk-page-container">
@@ -102,23 +106,28 @@ export default function BoeungKak() {
       {/* 1. HERO BANNER */}
       <section id="boeungkak-hero" className="bk-hero">
         <div className="bk-hero-bg">
-          <img src={imgBranchBoeungKak} alt="One More Restaurant Boeung Kak Building" className="bk-hero-image" />
+          <img src={imgBranchBoeungKak} alt={isKhmer ? "អគារភោជនីយដ្ឋានវ័នម័រ បឹងកក់" : "One More Restaurant Boeung Kak Building"} className="bk-hero-image" />
           <div className="bk-hero-overlay" />
         </div>
         <div className="bk-hero-content">
-          <h1 className="bk-hero-title">One More Restaurant<br />Boeung Kak</h1>
+          <h1 className="bk-hero-title">
+            {isKhmer ? <>ភោជនីយដ្ឋាន វ័នម័រ<br />បឹងកក់</> : <>One More Restaurant<br />Boeung Kak</>}
+          </h1>
           <p className="bk-hero-desc">
-            A premium dining destination designed for family gatherings and business meetings, serving the finest Cambodian heritage cuisine.
+            {t('branchDetails.hero.boeungKak.desc')}
           </p>
           <Button asChild className="hero-cta-button">
-            <Link to="/reservations">Reserve a Table</Link>
+            <Link to="/reservations">{t('branchDetails.hero.cta')}</Link>
           </Button>
         </div>
       </section>
 
       {/* 2. ARCHITECTURAL HERITAGE & ELEGANCE */}
       <section className="bk-section bk-heritage">
-        <SectionHeader eyebrow="Our Space" title="Architectural Heritage & Elegance" />
+        <SectionHeader 
+          eyebrow={t('branchDetails.space.eyebrow')} 
+          title={t('branchDetails.space.title')} 
+        />
         
         <div className="bk-heritage-grid">
           <div className="bk-heritage-left">
@@ -150,30 +159,30 @@ export default function BoeungKak() {
       <section className="bk-section bk-hospitality">
         <div className="bk-hospitality-container">
           <div className="bk-hospitality-text">
-            <span className="bk-eyebrow">Our Philosophy</span>
-            <h2 className="bk-section-title">The Art of Cambodian Hospitality</h2>
+            <span className="bk-eyebrow">{t('branchDetails.philosophy.eyebrow')}</span>
+            <h2 className="bk-section-title">{t('branchDetails.philosophy.title')}</h2>
             <p className="bk-desc-para">
-              At One More Boeung Kak, we believe dining is more than just a meal—it is a cultural immersion. Our space combines traditional Khmer craftsmanship with modern sophistication, creating an atmosphere that is both grand and intimate. Whether it is a quiet family dinner or a high-stakes executive meeting, our service is tailored to exceed expectations.
+              {t('branchDetails.philosophy.boeungKakDesc')}
             </p>
           </div>
           <div className="bk-hospitality-box">
-            <span className="bk-box-tag">Best For</span>
+            <span className="bk-box-tag">{t('branchDetails.philosophy.bestFor')}</span>
             <ul className="bk-box-list">
               <li className="bk-box-item">
                 <span className="bk-box-icon"><Users size={20} /></span>
-                <span className="bk-box-label">Family Dining</span>
+                <span className="bk-box-label">{t('branchDetails.philosophy.family')}</span>
               </li>
               <li className="bk-box-item">
                 <span className="bk-box-icon"><Briefcase size={20} /></span>
-                <span className="bk-box-label">Business Meetings</span>
+                <span className="bk-box-label">{t('branchDetails.philosophy.business')}</span>
               </li>
               <li className="bk-box-item">
                 <span className="bk-box-icon"><UserCheck size={20} /></span>
-                <span className="bk-box-label">Corporate Lunch</span>
+                <span className="bk-box-label">{t('branchDetails.philosophy.corporate')}</span>
               </li>
               <li className="bk-box-item">
                 <span className="bk-box-icon"><CalendarDays size={20} /></span>
-                <span className="bk-box-label">Special Occasions</span>
+                <span className="bk-box-label">{t('branchDetails.philosophy.special')}</span>
               </li>
             </ul>
           </div>
@@ -182,24 +191,27 @@ export default function BoeungKak() {
 
       {/* 4. PRIVATE DINING ROOMS */}
       <section className="bk-section bk-rooms">
-        <SectionHeader eyebrow="Exclusivity" title="Private Dining Rooms" />
+        <SectionHeader 
+          eyebrow={t('branchDetails.rooms.eyebrow')} 
+          title={t('branchDetails.rooms.title')} 
+        />
         
         <div className="bk-rooms-grid">
           {/* Room 1 — Neang Tev */}
           <div className="bk-room-card">
             <div className="bk-room-img-wrapper">
               <img src={imgHeritageTopLeft} alt="Neang Tev Private Room" />
-              <div className="bk-room-badge">8-12 guests</div>
+              <div className="bk-room-badge">{t('branchDetails.rooms.guestBadge')}</div>
             </div>
             <div className="bk-room-body">
-              <h3 className="bk-room-name">Neang Tev</h3>
+              <h3 className="bk-room-name">{isKhmer ? "នាងទេវី" : "Neang Tev"}</h3>
               <ul className="bk-room-highlights">
-                <li><Check size={14} className="text-olive" /> Integrated AV system</li>
-                <li><Check size={14} className="text-olive" /> Personal butler service</li>
-                <li><Check size={14} className="text-olive" /> Garden views</li>
+                <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.av')}</li>
+                <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.butler')}</li>
+                <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.views')}</li>
               </ul>
               <Button asChild className="bk-room-button">
-                <Link to="/reservations">Reserve Private Room</Link>
+                <Link to="/reservations">{t('branchDetails.rooms.reserveCta')}</Link>
               </Button>
             </div>
           </div>
@@ -208,17 +220,17 @@ export default function BoeungKak() {
           <div className="bk-room-card">
             <div className="bk-room-img-wrapper">
               <img src={imgHeritageBottom} alt="Orn Tit Tom Private Room" />
-              <div className="bk-room-badge">8-12 guests</div>
+              <div className="bk-room-badge">{t('branchDetails.rooms.guestBadge')}</div>
             </div>
             <div className="bk-room-body">
-              <h3 className="bk-room-name">Orn Tit Tom</h3>
+              <h3 className="bk-room-name">{isKhmer ? "អនទិត្យទុំ" : "Orn Tit Tom"}</h3>
               <ul className="bk-room-highlights">
-                <li><Check size={14} className="text-olive" /> Integrated AV system</li>
-                <li><Check size={14} className="text-olive" /> Personal butler service</li>
-                <li><Check size={14} className="text-olive" /> Garden views</li>
+                <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.av')}</li>
+                <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.butler')}</li>
+                <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.views')}</li>
               </ul>
               <Button asChild className="bk-room-button">
-                <Link to="/reservations">Reserve Private Room</Link>
+                <Link to="/reservations">{t('branchDetails.rooms.reserveCta')}</Link>
               </Button>
             </div>
           </div>
@@ -227,17 +239,17 @@ export default function BoeungKak() {
           <div className="bk-room-card">
             <div className="bk-room-img-wrapper">
               <img src={imgHeritageTopRight} alt="VVIP Hall" />
-              <div className="bk-room-badge">8-12 guests</div>
+              <div className="bk-room-badge">{t('branchDetails.rooms.guestBadge')}</div>
             </div>
             <div className="bk-room-body">
-              <h3 className="bk-room-name">VVIP</h3>
+              <h3 className="bk-room-name">{isKhmer ? "បន្ទប់ VVIP" : "VVIP"}</h3>
               <ul className="bk-room-highlights">
-                <li><Check size={14} className="text-olive" /> Integrated AV system</li>
-                <li><Check size={14} className="text-olive" /> Personal butler service</li>
-                <li><Check size={14} className="text-olive" /> Garden views</li>
+                <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.av')}</li>
+                <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.butler')}</li>
+                <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.views')}</li>
               </ul>
               <Button asChild className="bk-room-button">
-                <Link to="/reservations">Reserve Private Room</Link>
+                <Link to="/reservations">{t('branchDetails.rooms.reserveCta')}</Link>
               </Button>
             </div>
           </div>
@@ -246,85 +258,98 @@ export default function BoeungKak() {
 
       {/* 5. CHEF'S RECOMMENDATIONS */}
       <section className="bk-section bk-menu-recs">
-        <SectionHeader eyebrow="Our Menu" title="Chef's Recommendations" />
+        <SectionHeader 
+          eyebrow={t('branchDetails.chefRecs.eyebrow')} 
+          title={t('branchDetails.chefRecs.title')} 
+        />
         
         <div className="bk-menu-grid">
           <DishCard
-            name="Amok Trey"
-            category="Signature"
-            description="A classic Khmer dish of fish steamed in a thick savory coconut curry custard wrapped in banana leaves."
+            name={isKhmer ? "អាម៉ុកត្រីបែបបុរាណ" : "Traditional Fish Amok"}
+            category={isKhmer ? "ការណែនាំ" : "Recommendation"}
+            description={isKhmer 
+              ? "ម្ហូបខ្មែរបុរាណធ្វើពីត្រីចំហុយក្នុងទឹកគ្រឿងខ្ទិះដូងខាប់ រុំក្នុងស្លឹកចេក។"
+              : "A classic Khmer dish of fish steamed in a thick savory coconut curry custard wrapped in banana leaves."}
             image={imgDish1}
             price="$24"
-            priceSuffix="USD / Net"
-            actionText="ADD TO CART"
+            priceSuffix={isKhmer ? "ដុល្លារ / សុទ្ធ" : "USD / Net"}
+            actionText={t('branchDetails.chefRecs.addToCart')}
             index={0}
           />
 
           <DishCard
-            name="Amok Trey"
-            category="Signature"
-            description="Savory Cambodian fish amok cooked in traditional spices, coconut cream, and sweet leaf bush."
+            name={isKhmer ? "អាម៉ុកត្រីស្លឹកញរ" : "Fish Amok with Noni Leaf"}
+            category={isKhmer ? "ការណែនាំ" : "Recommendation"}
+            description={isKhmer
+              ? "អាម៉ុកត្រីខ្មែររសជាតិឈ្ងុយឆ្ងាញ់ ចម្អិនជាមួយគ្រឿងទេសប្រពៃណី ខ្ទិះដូង និងស្លឹកញរ។"
+              : "Savory Cambodian fish amok cooked in traditional spices, coconut cream, and noni leaf."}
             image={imgDish2}
             price="$24"
-            priceSuffix="USD / Net"
-            actionText="ADD TO CART"
+            priceSuffix={isKhmer ? "ដុល្លារ / សុទ្ធ" : "USD / Net"}
+            actionText={t('branchDetails.chefRecs.addToCart')}
             index={1}
           />
 
           <DishCard
-            name="Amok Trey"
-            category="Signature"
-            description="Rich Khmer style steamed fish curry with local herbs, kaffir lime leaf, lemongrass paste, and coconut milk."
+            name={isKhmer ? "ការីត្រីចំហុយខ្មែរ" : "Khmer Steamed Fish Curry"}
+            category={isKhmer ? "ការណែនាំ" : "Recommendation"}
+            description={isKhmer
+              ? "ការីត្រីចំហុយតាមបែបខ្មែរ សម្បូរទៅដោយជីរក្នុងស្រុក ស្លឹកក្រូចសើច គ្រឿងគល់ស្លឹកគ្រៃ និងខ្ទិះដូង។"
+              : "Rich Khmer style steamed fish curry with local herbs, kaffir lime leaf, lemongrass paste, and coconut milk."}
             image={imgDish3}
             price="$24"
-            priceSuffix="USD / Net"
-            actionText="ADD TO CART"
+            priceSuffix={isKhmer ? "ដុល្លារ / សុទ្ធ" : "USD / Net"}
+            actionText={t('branchDetails.chefRecs.addToCart')}
             index={2}
           />
         </div>
 
         <div className="text-center mt-12">
           <Button asChild variant="outline" className="bk-btn-menu-full">
-            <Link to="/menu">View Full Menu</Link>
+            <Link to="/menu">{t('branchDetails.chefRecs.viewFullMenu')}</Link>
           </Button>
         </div>
       </section>
 
       {/* 6. EVENTS & CELEBRATIONS */}
       <section className="bk-section bk-events">
-        <SectionHeader eyebrow="Host With Us" title="Events & Celebrations" align="left" />
+        <SectionHeader 
+          eyebrow={t('branchDetails.events.eyebrow')} 
+          title={t('branchDetails.events.title')} 
+          align="left" 
+        />
 
         <div className="bk-events-grid">
           <SharpImageCard
             image={imgGallery3}
-            alt="Birthday Celebrations"
-            title="Birthday Celebrations"
-            description="Create lasting memories with our bespoke party planning."
-            buttonLabel="Plan Your Event"
+            alt={t('branchDetails.events.items.birthday.title')}
+            title={t('branchDetails.events.items.birthday.title')}
+            description={t('branchDetails.events.items.birthday.desc')}
+            buttonLabel={t('branchDetails.events.planCta')}
             buttonHref="/reservations"
           />
           <SharpImageCard
             image={imgHeritageBottom}
-            alt="Engagement Dinners"
-            title="Engagement Dinners"
-            description="Intimate and romantic settings for your big announcement."
-            buttonLabel="Plan Your Event"
+            alt={t('branchDetails.events.items.engagement.title')}
+            title={t('branchDetails.events.items.engagement.title')}
+            description={t('branchDetails.events.items.engagement.desc')}
+            buttonLabel={t('branchDetails.events.planCta')}
             buttonHref="/reservations"
           />
           <SharpImageCard
             image={imgGallery4}
-            alt="Family Gatherings"
-            title="Family Gatherings"
-            description="Spacious enough for the whole family to share heritage recipes."
-            buttonLabel="Plan Your Event"
+            alt={t('branchDetails.events.items.family.title')}
+            title={t('branchDetails.events.items.family.title')}
+            description={t('branchDetails.events.items.family.desc')}
+            buttonLabel={t('branchDetails.events.planCta')}
             buttonHref="/reservations"
           />
           <SharpImageCard
             image={imgGallery2}
-            alt="Corporate Events"
-            title="Corporate Events"
-            description="The perfect professional backdrop for meetings and launches."
-            buttonLabel="Plan Your Event"
+            alt={t('branchDetails.events.items.corporate.title')}
+            title={t('branchDetails.events.items.corporate.title')}
+            description={t('branchDetails.events.items.corporate.desc')}
+            buttonLabel={t('branchDetails.events.planCta')}
             buttonHref="/reservations"
           />
         </div>
@@ -332,7 +357,11 @@ export default function BoeungKak() {
 
       {/* 7. WHAT OUR GUESTS SAY */}
       <section className="bk-section bk-testimonials">
-        <SectionHeader eyebrow="Reviews" title="What Our Guests Say" description="Experiences shared by our valued customers" />
+        <SectionHeader 
+          eyebrow={t('branchDetails.testimonials.eyebrow')} 
+          title={t('branchDetails.testimonials.title')} 
+          description={t('branchDetails.testimonials.desc')} 
+        />
         
         <div className="bk-testimonial-slider">
           <div className="bk-testimonial-card">
@@ -364,7 +393,7 @@ export default function BoeungKak() {
           </div>
           
           <div className="bk-slider-nav">
-            <button onClick={prevTestimonial} className="bk-slider-btn" aria-label="Previous review">
+            <button onClick={prevTestimonial} className="bk-slider-btn" aria-label={isKhmer ? "ការវាយតម្លៃមុន" : "Previous review"}>
               <ChevronLeft size={20} />
             </button>
             <div className="bk-slider-dots">
@@ -373,11 +402,11 @@ export default function BoeungKak() {
                   key={index} 
                   onClick={() => setCurrentTestimonial(index)}
                   className={`bk-slider-dot ${currentTestimonial === index ? 'active' : ''}`}
-                  aria-label={`Go to review ${index + 1}`}
+                  aria-label={isKhmer ? `ទៅកាន់ការវាយតម្លៃទី ${index + 1}` : `Go to review ${index + 1}`}
                 />
               ))}
             </div>
-            <button onClick={nextTestimonial} className="bk-slider-btn" aria-label="Next review">
+            <button onClick={nextTestimonial} className="bk-slider-btn" aria-label={isKhmer ? "ការវាយតម្លៃបន្ទាប់" : "Next review"}>
               <ChevronRight size={20} />
             </button>
           </div>
@@ -389,60 +418,60 @@ export default function BoeungKak() {
         <div className="bk-visit-container">
           {/* Left: Map image */}
           <div className="bk-visit-map">
-            <img src={locationImg} alt="Map of One More Restaurant Boeung Kak" className="bk-map-img" />
+            <img src={locationImg} alt={isKhmer ? "ផែនទីភោជនីយដ្ឋាន វ័នម័រ បឹងកក់" : "Map of One More Restaurant Boeung Kak"} className="bk-map-img" />
           </div>
 
           {/* Right: Contact details */}
           <div className="bk-visit-details">
-            <h2 className="bk-visit-title">Visit Us</h2>
+            <h2 className="bk-visit-title">{t('branchDetails.visit.title')}</h2>
             <span className="bk-visit-divider" />
 
             <ul className="bk-details-list">
               <li className="bk-detail-item">
                 <MapPin size={20} className="bk-detail-icon text-olive" />
                 <div>
-                  <h4 className="bk-detail-label">Address</h4>
-                  <p className="bk-detail-value">63 Street R11, Phnom Penh 120210</p>
+                  <h4 className="bk-detail-label">{t('branchDetails.visit.labels.address')}</h4>
+                  <p className="bk-detail-value">{t('branchDetails.visit.values.boeungKakAddress')}</p>
                 </div>
               </li>
               <li className="bk-detail-item">
                 <Phone size={20} className="bk-detail-icon text-olive" />
                 <div>
-                  <h4 className="bk-detail-label">Phone</h4>
+                  <h4 className="bk-detail-label">{t('branchDetails.visit.labels.phone')}</h4>
                   <p className="bk-detail-value">023 888 222</p>
                 </div>
               </li>
               <li className="bk-detail-item">
                 <ArrowRight size={20} className="bk-detail-icon text-olive" />
                 <div>
-                  <h4 className="bk-detail-label">Telegram</h4>
+                  <h4 className="bk-detail-label">{t('branchDetails.visit.labels.telegram')}</h4>
                   <p className="bk-detail-value">@OneMoreRestaurant</p>
                 </div>
               </li>
               <li className="bk-detail-item">
                 <Clock size={20} className="bk-detail-icon text-olive" />
                 <div>
-                  <h4 className="bk-detail-label">Opening Hours</h4>
-                  <p className="bk-detail-value">Daily: 11:00 AM – 10:00 PM</p>
+                  <h4 className="bk-detail-label">{t('branchDetails.visit.labels.hours')}</h4>
+                  <p className="bk-detail-value">{t('branchDetails.visit.values.hours')}</p>
                 </div>
               </li>
               <li className="bk-detail-item">
                 <Car size={20} className="bk-detail-icon text-olive" />
                 <div>
-                  <h4 className="bk-detail-label">Parking</h4>
-                  <p className="bk-detail-value">Free secure parking available</p>
+                  <h4 className="bk-detail-label">{t('branchDetails.visit.labels.parking')}</h4>
+                  <p className="bk-detail-value">{t('branchDetails.visit.values.parking')}</p>
                 </div>
               </li>
             </ul>
 
             <div className="bk-visit-actions">
               <Button asChild className="bk-btn-directions">
-                <a href="https://maps.google.com/?q=One+More+Restaurant+Toul+Kork" target="_blank" rel="noopener noreferrer">
-                  Get Directions
+                <a href="https://maps.google.com/?q=One+More+Restaurant+Boeung+Kak" target="_blank" rel="noopener noreferrer">
+                  {t('branchDetails.visit.directions')}
                 </a>
               </Button>
               <Button asChild variant="outline" className="bk-btn-close">
-                <a href="tel:023888222">Call Now</a>
+                <a href="tel:023888222">{t('branchDetails.visit.call')}</a>
               </Button>
             </div>
           </div>

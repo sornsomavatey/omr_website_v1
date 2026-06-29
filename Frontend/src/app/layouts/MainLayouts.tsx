@@ -28,6 +28,12 @@ export default function MainLayouts() {
   const isBoeungKakPage =
     location.pathname === '/branches/boeung-kak' ||
     location.pathname === '/restaurants/boeung-kak';
+  
+  const isGalleryPage = location.pathname === '/gallery';
+  const isEventsPage = location.pathname === '/events';
+  const isAboutPage = location.pathname === '/about';
+  const isCareersPage = location.pathname === '/careers';
+  const isContactPage = location.pathname === '/contact';
 
   const needsTopPadding =
     !isHomePage &&
@@ -35,7 +41,12 @@ export default function MainLayouts() {
     !isMenuPage &&
     !isRestaurantsPage &&
     !isToulKorkPage &&
-    !isBoeungKakPage;
+    !isBoeungKakPage &&
+    !isGalleryPage &&
+    !isEventsPage &&
+    !isAboutPage &&
+    !isCareersPage &&
+    !isContactPage;
 
   return (
     <div

@@ -62,7 +62,7 @@ const imageMapper: Record<string, string> = {
 };
 
 export default function Menu() {
-  const { t, getObject } = useTranslation();
+  const { t, getObject, isKhmer } = useTranslation();
   const [menuDataState, setMenuDataState] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -225,22 +225,19 @@ export default function Menu() {
     );
   }
 
-  // Parse item images and translate properties
+  // Parse item images and translate properties dynamically
   const menuItemsData: Record<MenuCategory, MenuItem[]> = Object.keys(menuDataState.items).reduce((acc, cat) => {
     const category = cat as MenuCategory;
     const itemsList = (menuDataState.items as any)[category];
-    const lowercaseCategory = category.toLowerCase();
-    const translatedList = getObject<any[]>(`menu.items.${lowercaseCategory}`, []);
 
-    acc[category] = itemsList.map((item: any, index: number) => {
-      const translatedItem = translatedList[index] || {};
+    acc[category] = itemsList.map((item: any) => {
       return {
-        ...item,
-        name: translatedItem.name || item.name,
-        category: translatedItem.category || item.category,
-        desc: translatedItem.desc || item.desc,
-        badge: translatedItem.badge || item.badge,
-        img: imageMapper[item.img] || item.img,
+        name: isKhmer ? (item.name_kh || item.name) : item.name,
+        category: isKhmer ? translatedCategoryNames[category] : category,
+        desc: item.desc || '',
+        badge: item.badge,
+        img: item.img,
+        price: item.price,
       };
     });
     return acc;

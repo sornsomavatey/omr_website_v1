@@ -1,0 +1,176 @@
+/* Sharp-edge feature/package card — shared with branch room cards */
+.fpc-card {
+  background: #ffffff;
+  border-radius: 0;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  transition:
+    transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+    box-shadow 0.3s ease;
+}
+
+.fpc-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(33, 45, 27, 0.08);
+}
+
+.fpc-image-wrap {
+  position: relative;
+  height: 280px;
+  overflow: hidden;
+}
+
+.fpc-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 0;
+  transition: transform 0.6s ease;
+}
+
+.fpc-card:hover .fpc-image {
+  transform: scale(1.05);
+}
+
+.fpc-guest-badge {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid #b5d4a8;
+  background: #f3faf0;
+  color: #6b9158;
+  font-family: var(--font-sans, 'Inter', sans-serif);
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.fpc-body {
+  padding: 28px;
+}
+
+.fpc-title {
+  font-family: var(--font-serif, 'Playfair Display', serif);
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #212d1b;
+  margin: 0 0 18px;
+  line-height: 1.25;
+}
+
+.fpc-features {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.fpc-features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-family: var(--font-sans, 'Inter', sans-serif);
+  font-size: 0.875rem;
+  color: #5c6758;
+  line-height: 1.45;
+}
+
+.fpc-check {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: #6b9158;
+  stroke-width: 2.5;
+}
+
+.fpc-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 20px;
+  margin-top: 28px;
+}
+
+.fpc-price small {
+  display: block;
+  margin-bottom: 4px;
+  font-family: var(--font-sans, 'Inter', sans-serif);
+  font-size: 0.6875rem;
+  font-weight: 400;
+  color: #8b9188;
+}
+
+.fpc-price strong {
+  font-family: var(--font-serif, 'Playfair Display', serif);
+  font-size: 1.625rem;
+  font-weight: 400;
+  color: #212d1b;
+  line-height: 1.1;
+}
+
+.fpc-price em {
+  font-family: var(--font-serif, 'Playfair Display', serif);
+  font-size: 0.9375rem;
+  font-weight: 400;
+  font-style: normal;
+  color: #6d776a;
+}
+
+.fpc-book-btn {
+  min-height: 40px;
+  min-width: 120px;
+  padding: 0 24px;
+  border-radius: 999px;
+  border: 1px solid #c8d4c2;
+  background: #ffffff;
+  color: #212d1b;
+  font-family: var(--font-sans, 'Inter', sans-serif);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease;
+}
+
+.fpc-book-btn:hover {
+  background: #6b9158;
+  border-color: #6b9158;
+  color: #ffffff;
+}
+
+@media (max-width: 720px) {
+  .fpc-image-wrap {
+    height: 240px;
+  }
+
+  .fpc-body {
+    padding: 22px 20px;
+  }
+
+  .fpc-title {
+    font-size: 1.375rem;
+  }
+
+  .fpc-features li {
+    font-size: 0.8125rem;
+  }
+
+  .fpc-footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .fpc-book-btn {
+    width: 100%;
+    min-height: 44px;
+  }
+}

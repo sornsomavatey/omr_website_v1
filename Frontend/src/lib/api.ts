@@ -10,8 +10,69 @@ export const getHomeData = async () => {
 };
 
 export const getMenuData = async () => {
-  const response = await api.get('/mocks/menu.json');
-  return response.data;
+  const webappImageUrl = import.meta.env.VITE_WEBAPP_IMAGE_URL || 'https://omd.a2hosted.com';
+  const baseUrl = webappImageUrl.endsWith('/') ? webappImageUrl : `${webappImageUrl}/`;
+  
+  const response = await axios.get(`${baseUrl}api/website/products`, {
+    headers: {
+      'Accept': 'application/json'
+    }
+  });
+  
+  const products = response.data.data || [];
+
+  const items: Record<string, any[]> = {
+    Breakfast: [],
+    Lunch: [],
+    Dinner: [],
+    Dessert: [],
+    Drinks: [],
+  };
+
+  products.forEach((product: any) => {
+    const categoryIds = (product.categories || []).map((cat: any) => Number(cat.id));
+    const cleanImageUrl = product.image_url
+      ? (product.image_url.startsWith('http')
+        ? product.image_url
+        : `${baseUrl}public/storage/${product.image_url.replace(/^\//, '')}`)
+      : '';
+
+    const item = {
+      id: product.id,
+      name: product.name,
+      name_kh: product.name_kh,
+      price: product.price ? `$${parseFloat(product.price).toFixed(2)}` : '',
+      desc: product.description || '',
+      img: cleanImageUrl,
+      badge: (product.is_out_of_stock === '1' || (product.menu_out_of_stock && product.menu_out_of_stock.length > 0)) ? 'Out of Stock' : undefined,
+    };
+
+    if (categoryIds.includes(10)) {
+      items.Breakfast.push({ ...item, category: 'BREAKFAST' });
+    }
+    if (categoryIds.includes(11)) {
+      items.Lunch.push({ ...item, category: 'LUNCH' });
+    }
+    if (categoryIds.includes(12)) {
+      items.Dinner.push({ ...item, category: 'DINNER' });
+    }
+    if (categoryIds.includes(17)) {
+      items.Dessert.push({ ...item, category: 'DESSERT' });
+    }
+    if (categoryIds.includes(15)) {
+      items.Drinks.push({ ...item, category: 'DRINKS' });
+    }
+  });
+
+  return {
+    hero: {
+      title: "Our Menu",
+      subtitle: "Traditional Cambodian flavors served with modern warmth and refined presentation.",
+      backgroundImage: "@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.png"
+    },
+    categories: ["Breakfast", "Lunch", "Dinner", "Dessert", "Drinks"],
+    items
+  };
 };
 
 export const getAboutData = async () => {
@@ -24,10 +85,16 @@ export const getCareersData = async () => {
   return response.data;
 };
 
+export const getEventsData = async () => {
+  const response = await api.get('/mocks/events.json');
+  return response.data;
+};
+
 export const getGalleryData = async () => {
   const response = await api.get('/mocks/gallery.json');
   return response.data;
 };
+
 
 export const getRestaurantsData = async () => {
   const response = await api.get('/mocks/restaurants.json');
@@ -39,7 +106,6 @@ export const getReservationsData = async () => {
   return response.data;
 };
 
-// Target FastAPI backend for dynamic API requests (e.g. creating reservations)
 export const backendApi = axios.create({
   baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8000/api',
 });

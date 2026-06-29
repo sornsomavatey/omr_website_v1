@@ -1,26 +1,73 @@
 {
-  "header": {
-    "title": "Special Events & Celebrations",
-    "desc": "Host your memorable moments at One More Restaurant or join our exclusive culinary events."
+  "hero": {
+    "title": "Celebrate Every Special Moment",
+    "description": "From intimate gatherings to grand celebrations, One More Restaurant provides beautiful spaces, exceptional cuisine, and unforgettable experiences.",
+    "primaryCta": "Plan Your Event",
+    "secondaryCta": "Contact Event Team",
+    "backgroundImage": "@/assets/home-v2/e900cacb721f9c81cd07b8415a03f20f42a39856.png"
   },
-  "events": [
+  "contact": {
+    "title": "Event Contact Info",
+    "hotlineLabel": "Event Inquiry",
+    "hotline": "+855 23 888 222",
+    "emailLabel": "Email",
+    "email": "events@onemorerestaurant.com",
+    "policyLabel": "Reservation Policy",
+    "policy": "Free cancellation up to 24h"
+  },
+  "packages": [
     {
-      "title": "Khmer New Year Banquet",
-      "date": "April 14 - 16, 2026",
-      "desc": "A festive three-day culinary celebration featuring traditional dances and special family set menus.",
-      "image": "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&q=80&w=800"
+      "id": "family",
+      "name": "Family Celebration",
+      "guests": "30 guests",
+      "price": "$65",
+      "image": "@/assets/home-v2/80bc2f874a3b8b65fc3bd247f23046db8632d909.png",
+      "features": [
+        "Private VIP Room",
+        "Custom 6-Course Menu",
+        "Basic Table Decor",
+        "Dedicated Service Staff"
+      ]
     },
     {
-      "title": "Exclusive Wine Pairing Dinner",
-      "date": "Every First Friday",
-      "desc": "A curated 5-course Khmer fusion menu paired with premium French and Australian wines.",
-      "image": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&q=80&w=800"
+      "id": "engagement",
+      "name": "Engagement Package",
+      "guests": "8 guests",
+      "price": "$65",
+      "image": "@/assets/Event & Celebrations card-2.png",
+      "features": [
+        "Full Ballroom Access",
+        "Gourmet Buffet or Family Style",
+        "Premium Floral Decor",
+        "Traditional Live Music",
+        "Garden Views"
+      ]
     },
     {
-      "title": "Private Cooking Workshop",
-      "date": "By Request",
-      "desc": "Learn heirloom Khmer recipes directly from our master chefs in our professional kitchen.",
-      "image": "https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&q=80&w=800"
+      "id": "catering",
+      "name": "Catering Services",
+      "guests": "30 guests",
+      "price": "$65",
+      "image": "@/assets/Event & Celebrations card 03.png",
+      "features": [
+        "Private VIP Room",
+        "Custom 6-Course Menu",
+        "Basic Table Decor",
+        "Dedicated Service Staff"
+      ]
+    },
+    {
+      "id": "corporate",
+      "name": "Corporate Package",
+      "guests": "8 guests",
+      "price": "$65",
+      "image": "@/assets/home-v2/9826b8c118c911c852174f3c0d0204245fd0da48.png",
+      "features": [
+        "Private Hall Access",
+        "Audio-Visual Equipment",
+        "Premium Working Lunch",
+        "Morning & Afternoon Coffee Breaks"
+      ]
     }
   ]
 }

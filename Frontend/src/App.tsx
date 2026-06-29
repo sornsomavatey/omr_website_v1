@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import MainLayouts from './app/layouts/MainLayouts';
 import Home from './pages/Home';
 import Menu from './pages/Menu';
+import Events from './pages/Events';
 import Reservations from './pages/Reservations';
 import Careers from './pages/Careers';
 import Branches from './pages/Branches';
@@ -19,6 +20,7 @@ export default function App() {
         <Route path="/" element={<MainLayouts />}>
           <Route index element={<Home />} />
           <Route path="menu" element={<Menu />} />
+          <Route path="events" element={<Events />} />
           <Route path="reservations" element={<Reservations />} />
           <Route path="careers" element={<Careers />} />
           <Route path="branches" element={<Branches />} />

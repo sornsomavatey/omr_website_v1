@@ -21,6 +21,7 @@ import { Button } from '@/components/ui/button';
 import SectionHeader from '@/components/SectionHeader';
 import DishCard from '@/components/ui/dish-card';
 import SharpImageCard from '@/components/SharpImageCard';
+import { useTranslation } from '@/hooks/useTranslation';
 import './ToulKork.css';
 
 // Asset imports matching homeAssets
@@ -51,28 +52,29 @@ import locationImg from '@/assets/Location Tk.png';
 
 export default function ToulKork() {
   const navigate = useNavigate();
+  const { t, isKhmer } = useTranslation();
   
   // Testimonial state
   const testimonials = [
     {
       id: 1,
-      name: "Sovan Dara",
-      date: "2 weeks ago",
-      text: "An absolute gem in Toul Kork. The traditional architecture is stunning, and the private rooms are perfect for business dinners. The service is top-notch.",
+      name: t('branchDetails.testimonials.items.toulKork.0.name', undefined, "Sovan Dara"),
+      date: t('branchDetails.testimonials.items.toulKork.0.date', undefined, "2 weeks ago"),
+      text: t('branchDetails.testimonials.items.toulKork.0.text', undefined, "An absolute gem in Toul Kork. The traditional architecture is stunning, and the private rooms are perfect for business dinners. The service is top-notch."),
       avatar: imgAvatar1
     },
     {
       id: 2,
-      name: "Vichea Pok",
-      date: "1 month ago",
-      text: "The best place to experience authentic Khmer fine dining. Beautiful garden setting and the Amok Trey is outstanding. Highly recommended!",
+      name: t('branchDetails.testimonials.items.toulKork.1.name', undefined, "Vichea Pok"),
+      date: t('branchDetails.testimonials.items.toulKork.1.date', undefined, "1 month ago"),
+      text: t('branchDetails.testimonials.items.toulKork.1.text', undefined, "The best place to experience authentic Khmer fine dining. Beautiful garden setting and the Amok Trey is outstanding. Highly recommended!"),
       avatar: imgAvatar2
     },
     {
       id: 3,
-      name: "Chanthy Chea",
-      date: "1 month ago",
-      text: "Excellent venue for corporate events. We hosted a seminar in their VIP room, and the AV setup and catering exceeded our expectations.",
+      name: t('branchDetails.testimonials.items.toulKork.2.name', undefined, "Chanthy Chea"),
+      date: t('branchDetails.testimonials.items.toulKork.2.date', undefined, "1 month ago"),
+      text: t('branchDetails.testimonials.items.toulKork.2.text', undefined, "Excellent venue for corporate events. We hosted a seminar in their VIP room, and the AV setup and catering exceeded our expectations."),
       avatar: imgAvatar3
     }
   ];
@@ -89,12 +91,14 @@ export default function ToulKork() {
 
   // Set document title & SEO meta
   useEffect(() => {
-    document.title = "One More Restaurant - Toul Kork Branch";
+    document.title = isKhmer ? "ភោជនីយដ្ឋាន វ័នម័រ - សាខាទួលគោក" : "One More Restaurant - Toul Kork Branch";
     const metaDesc = document.querySelector('meta[name="description"]');
     if (metaDesc) {
-      metaDesc.setAttribute('content', 'Experience authentic Cambodian dining at One More Restaurant Toul Kork. Ideal for family gatherings, business meetings, and elegant events in Phnom Penh.');
+      metaDesc.setAttribute('content', isKhmer 
+        ? "ទទួលបទពិសោធន៍ទទួលទានអាហារខ្មែរពិតប្រាកដនៅភោជនីយដ្ឋាន វ័នម័រ ទួលគោក។ ស័ក្តិសមសម្រាប់ការជួបជុំគ្រួសារ ការប្រជុំអាជីវកម្ម និងព្រឹត្តិការណ៍ផ្សេងៗ។" 
+        : "Experience authentic Cambodian dining at One More Restaurant Toul Kork. Ideal for family gatherings, business meetings, and elegant events in Phnom Penh.");
     }
-  }, []);
+  }, [isKhmer]);
 
   return (
     <div className="tk-page-container">
@@ -102,23 +106,28 @@ export default function ToulKork() {
       {/* 1. HERO BANNER */}
       <section id="toulkork-hero" className="tk-hero">
         <div className="tk-hero-bg">
-          <img src={imgBranchToulKork} alt="One More Restaurant Toul Kork Building" className="tk-hero-image" />
+          <img src={imgBranchToulKork} alt={isKhmer ? "អគារភោជនីយដ្ឋានវ័នម័រ ទួលគោក" : "One More Restaurant Toul Kork Building"} className="tk-hero-image" />
           <div className="tk-hero-overlay" />
         </div>
         <div className="tk-hero-content">
-          <h1 className="tk-hero-title">One More Restaurant<br />Toul Kork</h1>
+          <h1 className="tk-hero-title">
+            {isKhmer ? <>ភោជនីយដ្ឋាន វ័នម័រ<br />ទួលគោក</> : <>One More Restaurant<br />Toul Kork</>}
+          </h1>
           <p className="tk-hero-desc">
-            A premium dining destination designed for family gatherings and business meetings, serving the finest Cambodian heritage cuisine.
+            {t('branchDetails.hero.toulKork.desc')}
           </p>
           <Button asChild className="hero-cta-button">
-            <Link to="/reservations">Reserve a Table</Link>
+            <Link to="/reservations">{t('branchDetails.hero.cta')}</Link>
           </Button>
         </div>
       </section>
 
       {/* 2. ARCHITECTURAL HERITAGE & ELEGANCE */}
       <section className="tk-section tk-heritage">
-        <SectionHeader eyebrow="Our Space" title="Architectural Heritage & Elegance" />
+        <SectionHeader 
+          eyebrow={t('branchDetails.space.eyebrow')} 
+          title={t('branchDetails.space.title')} 
+        />
         
         <div className="tk-heritage-grid">
           <div className="tk-heritage-left">
@@ -150,30 +159,30 @@ export default function ToulKork() {
       <section className="tk-section tk-hospitality">
         <div className="tk-hospitality-container">
           <div className="tk-hospitality-text">
-            <span className="tk-eyebrow">Our Philosophy</span>
-            <h2 className="tk-section-title">The Art of Cambodian Hospitality</h2>
+            <span className="tk-eyebrow">{t('branchDetails.philosophy.eyebrow')}</span>
+            <h2 className="tk-section-title">{t('branchDetails.philosophy.title')}</h2>
             <p className="tk-desc-para">
-              At One More Toul Kork, we believe dining is more than just a meal—it is a cultural immersion. Our space combines traditional Khmer craftsmanship with modern sophistication, creating an atmosphere that is both grand and intimate. Whether it is a quiet family dinner or a high-stakes executive meeting, our service is tailored to exceed expectations.
+              {t('branchDetails.philosophy.toulKorkDesc')}
             </p>
           </div>
           <div className="tk-hospitality-box">
-            <span className="tk-box-tag">Best For</span>
+            <span className="tk-box-tag">{t('branchDetails.philosophy.bestFor')}</span>
             <ul className="tk-box-list">
               <li className="tk-box-item">
                 <span className="tk-box-icon"><Users size={20} /></span>
-                <span className="tk-box-label">Family Dining</span>
+                <span className="tk-box-label">{t('branchDetails.philosophy.family')}</span>
               </li>
               <li className="tk-box-item">
                 <span className="tk-box-icon"><Briefcase size={20} /></span>
-                <span className="tk-box-label">Business Meetings</span>
+                <span className="tk-box-label">{t('branchDetails.philosophy.business')}</span>
               </li>
               <li className="tk-box-item">
                 <span className="tk-box-icon"><UserCheck size={20} /></span>
-                <span className="tk-box-label">Corporate Lunch</span>
+                <span className="tk-box-label">{t('branchDetails.philosophy.corporate')}</span>
               </li>
               <li className="tk-box-item">
                 <span className="tk-box-icon"><CalendarDays size={20} /></span>
-                <span className="tk-box-label">Special Occasions</span>
+                <span className="tk-box-label">{t('branchDetails.philosophy.special')}</span>
               </li>
             </ul>
           </div>
@@ -182,24 +191,27 @@ export default function ToulKork() {
 
       {/* 4. PRIVATE DINING ROOMS */}
       <section className="tk-section tk-rooms">
-        <SectionHeader eyebrow="Exclusivity" title="Private Dining Rooms" />
+        <SectionHeader 
+          eyebrow={t('branchDetails.rooms.eyebrow')} 
+          title={t('branchDetails.rooms.title')} 
+        />
         
         <div className="tk-rooms-grid">
           {/* Room 1 — Neang Tev */}
           <div className="tk-room-card">
             <div className="tk-room-img-wrapper">
               <img src={imgHeritageTopLeft} alt="Neang Tev Private Room" />
-              <div className="tk-room-badge">8-12 guests</div>
+              <div className="tk-room-badge">{t('branchDetails.rooms.guestBadge')}</div>
             </div>
             <div className="tk-room-body">
-              <h3 className="tk-room-name">Neang Tev</h3>
+              <h3 className="tk-room-name">{isKhmer ? "នាងទេវី" : "Neang Tev"}</h3>
               <ul className="tk-room-highlights">
-                <li><Check size={14} className="text-olive" /> Integrated AV system</li>
-                <li><Check size={14} className="text-olive" /> Personal butler service</li>
-                <li><Check size={14} className="text-olive" /> Garden views</li>
+                <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.av')}</li>
+                <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.butler')}</li>
+                <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.views')}</li>
               </ul>
               <Button asChild className="tk-room-button">
-                <Link to="/reservations">Reserve Private Room</Link>
+                <Link to="/reservations">{t('branchDetails.rooms.reserveCta')}</Link>
               </Button>
             </div>
           </div>
@@ -208,17 +220,17 @@ export default function ToulKork() {
           <div className="tk-room-card">
             <div className="tk-room-img-wrapper">
               <img src={imgHeritageBottom} alt="Orn Tit Tom Private Room" />
-              <div className="tk-room-badge">8-12 guests</div>
+              <div className="tk-room-badge">{t('branchDetails.rooms.guestBadge')}</div>
             </div>
             <div className="tk-room-body">
-              <h3 className="tk-room-name">Orn Tit Tom</h3>
+              <h3 className="tk-room-name">{isKhmer ? "អនទិត្យទុំ" : "Orn Tit Tom"}</h3>
               <ul className="tk-room-highlights">
-                <li><Check size={14} className="text-olive" /> Integrated AV system</li>
-                <li><Check size={14} className="text-olive" /> Personal butler service</li>
-                <li><Check size={14} className="text-olive" /> Garden views</li>
+                <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.av')}</li>
+                <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.butler')}</li>
+                <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.views')}</li>
               </ul>
               <Button asChild className="tk-room-button">
-                <Link to="/reservations">Reserve Private Room</Link>
+                <Link to="/reservations">{t('branchDetails.rooms.reserveCta')}</Link>
               </Button>
             </div>
           </div>
@@ -227,17 +239,17 @@ export default function ToulKork() {
           <div className="tk-room-card">
             <div className="tk-room-img-wrapper">
               <img src={imgHeritageTopRight} alt="VVIP Hall" />
-              <div className="tk-room-badge">8-12 guests</div>
+              <div className="tk-room-badge">{t('branchDetails.rooms.guestBadge')}</div>
             </div>
             <div className="tk-room-body">
-              <h3 className="tk-room-name">VVIP</h3>
+              <h3 className="tk-room-name">{isKhmer ? "បន្ទប់ VVIP" : "VVIP"}</h3>
               <ul className="tk-room-highlights">
-                <li><Check size={14} className="text-olive" /> Integrated AV system</li>
-                <li><Check size={14} className="text-olive" /> Personal butler service</li>
-                <li><Check size={14} className="text-olive" /> Garden views</li>
+                <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.av')}</li>
+                <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.butler')}</li>
+                <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.views')}</li>
               </ul>
               <Button asChild className="tk-room-button">
-                <Link to="/reservations">Reserve Private Room</Link>
+                <Link to="/reservations">{t('branchDetails.rooms.reserveCta')}</Link>
               </Button>
             </div>
           </div>
@@ -246,85 +258,98 @@ export default function ToulKork() {
 
       {/* 5. CHEF'S RECOMMENDATIONS */}
       <section className="tk-section tk-menu-recs">
-        <SectionHeader eyebrow="Our Menu" title="Chef's Recommendations" />
+        <SectionHeader 
+          eyebrow={t('branchDetails.chefRecs.eyebrow')} 
+          title={t('branchDetails.chefRecs.title')} 
+        />
         
         <div className="tk-menu-grid">
           <DishCard
-            name="Amok Trey"
-            category="Signature"
-            description="A classic Khmer dish of fish steamed in a thick savory coconut curry custard wrapped in banana leaves."
+            name={isKhmer ? "អាម៉ុកត្រីបែបបុរាណ" : "Traditional Fish Amok"}
+            category={isKhmer ? "ការណែនាំ" : "Recommendation"}
+            description={isKhmer 
+              ? "ម្ហូបខ្មែរបុរាណធ្វើពីត្រីចំហុយក្នុងទឹកគ្រឿងខ្ទិះដូងខាប់ រុំក្នុងស្លឹកចេក។"
+              : "A classic Khmer dish of fish steamed in a thick savory coconut curry custard wrapped in banana leaves."}
             image={imgDish1}
             price="$24"
-            priceSuffix="USD / Net"
-            actionText="ADD TO CART"
+            priceSuffix={isKhmer ? "ដុល្លារ / សុទ្ធ" : "USD / Net"}
+            actionText={t('branchDetails.chefRecs.addToCart')}
             index={0}
           />
 
           <DishCard
-            name="Amok Trey"
-            category="Signature"
-            description="Savory Cambodian fish amok cooked in traditional spices, coconut cream, and sweet leaf bush."
+            name={isKhmer ? "អាម៉ុកត្រីស្លឹកញរ" : "Fish Amok with Noni Leaf"}
+            category={isKhmer ? "ការណែនាំ" : "Recommendation"}
+            description={isKhmer
+              ? "អាម៉ុកត្រីខ្មែររសជាតិឈ្ងុយឆ្ងាញ់ ចម្អិនជាមួយគ្រឿងទេសប្រពៃណី ខ្ទិះដូង និងស្លឹកញរ។"
+              : "Savory Cambodian fish amok cooked in traditional spices, coconut cream, and noni leaf."}
             image={imgDish2}
             price="$24"
-            priceSuffix="USD / Net"
-            actionText="ADD TO CART"
+            priceSuffix={isKhmer ? "ដុល្លារ / សុទ្ធ" : "USD / Net"}
+            actionText={t('branchDetails.chefRecs.addToCart')}
             index={1}
           />
 
           <DishCard
-            name="Amok Trey"
-            category="Signature"
-            description="Rich Khmer style steamed fish curry with local herbs, kaffir lime leaf, lemongrass paste, and coconut milk."
+            name={isKhmer ? "ការីត្រីចំហុយខ្មែរ" : "Khmer Steamed Fish Curry"}
+            category={isKhmer ? "ការណែនាំ" : "Recommendation"}
+            description={isKhmer
+              ? "ការីត្រីចំហុយតាមបែបខ្មែរ សម្បូរទៅដោយជីរក្នុងស្រុក ស្លឹកក្រូចសើច គ្រឿងគល់ស្លឹកគ្រៃ និងខ្ទិះដូង។"
+              : "Rich Khmer style steamed fish curry with local herbs, kaffir lime leaf, lemongrass paste, and coconut milk."}
             image={imgDish3}
             price="$24"
-            priceSuffix="USD / Net"
-            actionText="ADD TO CART"
+            priceSuffix={isKhmer ? "ដុល្លារ / សុទ្ធ" : "USD / Net"}
+            actionText={t('branchDetails.chefRecs.addToCart')}
             index={2}
           />
         </div>
 
         <div className="text-center mt-12">
           <Button asChild variant="outline" className="tk-btn-menu-full">
-            <Link to="/menu">View Full Menu</Link>
+            <Link to="/menu">{t('branchDetails.chefRecs.viewFullMenu')}</Link>
           </Button>
         </div>
       </section>
 
       {/* 6. EVENTS & CELEBRATIONS */}
       <section className="tk-section tk-events">
-        <SectionHeader eyebrow="Host With Us" title="Events & Celebrations" align="left" />
+        <SectionHeader 
+          eyebrow={t('branchDetails.events.eyebrow')} 
+          title={t('branchDetails.events.title')} 
+          align="left" 
+        />
 
         <div className="tk-events-grid">
           <SharpImageCard
             image={imgGallery3}
-            alt="Birthday Celebrations"
-            title="Birthday Celebrations"
-            description="Create lasting memories with our bespoke party planning."
-            buttonLabel="Plan Your Event"
+            alt={t('branchDetails.events.items.birthday.title')}
+            title={t('branchDetails.events.items.birthday.title')}
+            description={t('branchDetails.events.items.birthday.desc')}
+            buttonLabel={t('branchDetails.events.planCta')}
             buttonHref="/reservations"
           />
           <SharpImageCard
             image={imgHeritageBottom}
-            alt="Engagement Dinners"
-            title="Engagement Dinners"
-            description="Intimate and romantic settings for your big announcement."
-            buttonLabel="Plan Your Event"
+            alt={t('branchDetails.events.items.engagement.title')}
+            title={t('branchDetails.events.items.engagement.title')}
+            description={t('branchDetails.events.items.engagement.desc')}
+            buttonLabel={t('branchDetails.events.planCta')}
             buttonHref="/reservations"
           />
           <SharpImageCard
             image={imgGallery4}
-            alt="Family Gatherings"
-            title="Family Gatherings"
-            description="Spacious enough for the whole family to share heritage recipes."
-            buttonLabel="Plan Your Event"
+            alt={t('branchDetails.events.items.family.title')}
+            title={t('branchDetails.events.items.family.title')}
+            description={t('branchDetails.events.items.family.desc')}
+            buttonLabel={t('branchDetails.events.planCta')}
             buttonHref="/reservations"
           />
           <SharpImageCard
             image={imgGallery2}
-            alt="Corporate Events"
-            title="Corporate Events"
-            description="The perfect professional backdrop for meetings and launches."
-            buttonLabel="Plan Your Event"
+            alt={t('branchDetails.events.items.corporate.title')}
+            title={t('branchDetails.events.items.corporate.title')}
+            description={t('branchDetails.events.items.corporate.desc')}
+            buttonLabel={t('branchDetails.events.planCta')}
             buttonHref="/reservations"
           />
         </div>
@@ -332,7 +357,11 @@ export default function ToulKork() {
 
       {/* 7. WHAT OUR GUESTS SAY */}
       <section className="tk-section tk-testimonials">
-        <SectionHeader eyebrow="Reviews" title="What Our Guests Say" description="Experiences shared by our valued customers" />
+        <SectionHeader 
+          eyebrow={t('branchDetails.testimonials.eyebrow')} 
+          title={t('branchDetails.testimonials.title')} 
+          description={t('branchDetails.testimonials.desc')} 
+        />
         
         <div className="tk-testimonial-slider">
           <div className="tk-testimonial-card">
@@ -364,7 +393,7 @@ export default function ToulKork() {
           </div>
           
           <div className="tk-slider-nav">
-            <button onClick={prevTestimonial} className="tk-slider-btn" aria-label="Previous review">
+            <button onClick={prevTestimonial} className="tk-slider-btn" aria-label={isKhmer ? "ការវាយតម្លៃមុន" : "Previous review"}>
               <ChevronLeft size={20} />
             </button>
             <div className="tk-slider-dots">
@@ -373,11 +402,11 @@ export default function ToulKork() {
                   key={index} 
                   onClick={() => setCurrentTestimonial(index)}
                   className={`tk-slider-dot ${currentTestimonial === index ? 'active' : ''}`}
-                  aria-label={`Go to review ${index + 1}`}
+                  aria-label={isKhmer ? `ទៅកាន់ការវាយតម្លៃទី ${index + 1}` : `Go to review ${index + 1}`}
                 />
               ))}
             </div>
-            <button onClick={nextTestimonial} className="tk-slider-btn" aria-label="Next review">
+            <button onClick={nextTestimonial} className="tk-slider-btn" aria-label={isKhmer ? "ការវាយតម្លៃបន្ទាប់" : "Next review"}>
               <ChevronRight size={20} />
             </button>
           </div>
@@ -389,48 +418,48 @@ export default function ToulKork() {
         <div className="tk-visit-container">
           {/* Left: Map image */}
           <div className="tk-visit-map">
-            <img src={locationImg} alt="Map of One More Restaurant Toul Kork" className="tk-map-img" />
+            <img src={locationImg} alt={isKhmer ? "ផែនទីភោជនីយដ្ឋាន វ័នម័រ ទួលគោក" : "Map of One More Restaurant Toul Kork"} className="bk-map-img" />
           </div>
 
           {/* Right: Contact details */}
           <div className="tk-visit-details">
-            <h2 className="tk-visit-title">Visit Us</h2>
+            <h2 className="tk-visit-title">{t('branchDetails.visit.title')}</h2>
             <span className="tk-visit-divider" />
 
             <ul className="tk-details-list">
               <li className="tk-detail-item">
                 <MapPin size={20} className="tk-detail-icon text-olive" />
                 <div>
-                  <h4 className="tk-detail-label">Address</h4>
-                  <p className="tk-detail-value">63 Street R11, Phnom Penh 120210</p>
+                  <h4 className="tk-detail-label">{t('branchDetails.visit.labels.address')}</h4>
+                  <p className="tk-detail-value">{t('branchDetails.visit.values.toulKorkAddress')}</p>
                 </div>
               </li>
               <li className="tk-detail-item">
                 <Phone size={20} className="tk-detail-icon text-olive" />
                 <div>
-                  <h4 className="tk-detail-label">Phone</h4>
+                  <h4 className="tk-detail-label">{t('branchDetails.visit.labels.phone')}</h4>
                   <p className="tk-detail-value">023 888 222</p>
                 </div>
               </li>
               <li className="tk-detail-item">
                 <ArrowRight size={20} className="tk-detail-icon text-olive" />
                 <div>
-                  <h4 className="tk-detail-label">Telegram</h4>
+                  <h4 className="tk-detail-label">{t('branchDetails.visit.labels.telegram')}</h4>
                   <p className="tk-detail-value">@OneMoreRestaurant</p>
                 </div>
               </li>
               <li className="tk-detail-item">
                 <Clock size={20} className="tk-detail-icon text-olive" />
                 <div>
-                  <h4 className="tk-detail-label">Opening Hours</h4>
-                  <p className="tk-detail-value">Daily: 11:00 AM – 10:00 PM</p>
+                  <h4 className="tk-detail-label">{t('branchDetails.visit.labels.hours')}</h4>
+                  <p className="tk-detail-value">{t('branchDetails.visit.values.hours')}</p>
                 </div>
               </li>
               <li className="tk-detail-item">
                 <Car size={20} className="tk-detail-icon text-olive" />
                 <div>
-                  <h4 className="tk-detail-label">Parking</h4>
-                  <p className="tk-detail-value">Free secure parking available</p>
+                  <h4 className="tk-detail-label">{t('branchDetails.visit.labels.parking')}</h4>
+                  <p className="tk-detail-value">{t('branchDetails.visit.values.parking')}</p>
                 </div>
               </li>
             </ul>
@@ -438,11 +467,11 @@ export default function ToulKork() {
             <div className="tk-visit-actions">
               <Button asChild className="tk-btn-directions">
                 <a href="https://maps.google.com/?q=One+More+Restaurant+Toul+Kork" target="_blank" rel="noopener noreferrer">
-                  Get Directions
+                  {t('branchDetails.visit.directions')}
                 </a>
               </Button>
               <Button asChild variant="outline" className="tk-btn-close">
-                <a href="tel:023888222">Call Now</a>
+                <a href="tel:023888222">{t('branchDetails.visit.call')}</a>
               </Button>
             </div>
           </div>

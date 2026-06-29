@@ -115,6 +115,8 @@ export default function Navbar() {
   const isBoeungKakPage =
     location.pathname === '/branches/boeung-kak' ||
     location.pathname === '/restaurants/boeung-kak';
+  const isGalleryPage = location.pathname === '/gallery';
+  const isEventsPage = location.pathname === '/events';
 
   const isReservationPage =
     location.pathname === '/reservations' ||
@@ -127,11 +129,13 @@ export default function Navbar() {
     }
 
     const handleScroll = () => {
-      if (isHomePage || isToulKorkPage || isBoeungKakPage) {
+      if (isHomePage || isToulKorkPage || isBoeungKakPage || isGalleryPage || isEventsPage) {
         const heroSection =
           document.getElementById('home-hero') ||
           document.getElementById('toulkork-hero') ||
-          document.getElementById('boeungkak-hero');
+          document.getElementById('boeungkak-hero') ||
+          document.getElementById('gallery-hero') ||
+          document.getElementById('events-hero');
 
         if (!heroSection) {
           setScrolled(false);
@@ -154,7 +158,7 @@ export default function Navbar() {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleScroll);
     };
-  }, [isHomePage, isReservationPage]);
+  }, [isHomePage, isReservationPage, isGalleryPage, isEventsPage, isToulKorkPage, isBoeungKakPage]);
 
   useEffect(() => {
     setMobileMenuOpen(false);
@@ -195,9 +199,8 @@ export default function Navbar() {
 
     return (
       <nav
-        className={`navbar navbar-${version} ${
-          isReservationPage ? 'navbar-reservation-static' : ''
-        }`}
+        className={`navbar navbar-${version} ${isReservationPage ? 'navbar-reservation-static' : ''
+          }`}
       >
         <div className="navbar-inner">
           <Link
@@ -217,8 +220,7 @@ export default function Navbar() {
                 key={`${version}-${link.name}`}
                 to={link.path}
                 className={({ isActive }) =>
-                  `navbar-desktop-link ${
-                    isActive ? 'navbar-desktop-link-active' : ''
+                  `navbar-desktop-link ${isActive ? 'navbar-desktop-link-active' : ''
                   }`
                 }
               >
@@ -255,9 +257,8 @@ export default function Navbar() {
           <div className="navbar-mobile-wrapper">
             <button
               type="button"
-              className={`navbar-mobile-menu-button ${
-                mobileMenuOpen ? 'navbar-mobile-menu-button-open' : ''
-              }`}
+              className={`navbar-mobile-menu-button ${mobileMenuOpen ? 'navbar-mobile-menu-button-open' : ''
+                }`}
               aria-label={t('nav.aria.openMenu')}
               aria-expanded={mobileMenuOpen}
               onClick={() => setMobileMenuOpen(true)}
@@ -270,9 +271,8 @@ export default function Navbar() {
             </button>
 
             <div
-              className={`navbar-mobile-menu ${
-                mobileMenuOpen ? 'navbar-mobile-menu-open' : ''
-              }`}
+              className={`navbar-mobile-menu ${mobileMenuOpen ? 'navbar-mobile-menu-open' : ''
+                }`}
               aria-hidden={!mobileMenuOpen}
             >
               <div className="navbar-mobile-menu-header">
@@ -322,8 +322,7 @@ export default function Navbar() {
                       to={link.path}
                       onClick={closeMobileMenu}
                       className={({ isActive }) =>
-                        `navbar-mobile-link ${
-                          isActive ? 'navbar-mobile-link-active' : ''
+                        `navbar-mobile-link ${isActive ? 'navbar-mobile-link-active' : ''
                         }`
                       }
                     >

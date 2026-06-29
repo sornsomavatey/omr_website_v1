@@ -8,6 +8,7 @@ import BranchesPage from '@/pages/Branches';
 import ToulKorkPage from '@/pages/Branches/ToukKork/ToulKork';
 import BoeungKakPage from '@/pages/Branches/BoeungKak/BoeungKak';
 import GalleryPage from '@/pages/Gallery';
+import EventsPage from '@/pages/Events';
 import AboutPage from '@/pages/About';
 import ReservationPage from '@/pages/Reservations';
 import CareersPage from '@/pages/Careers';
@@ -28,6 +29,7 @@ export default function AppRouter() {
           <Route path="/branches/toul-kork" element={<ToulKorkPage />} />
           <Route path="/branches/boeung-kak" element={<BoeungKakPage />} />
           <Route path="/gallery" element={<GalleryPage />} />
+          <Route path="/events" element={<EventsPage />} />
           <Route path="/about" element={<AboutPage />} />
 
           <Route path="/careers" element={<CareersPage />} />

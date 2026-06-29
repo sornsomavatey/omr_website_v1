@@ -517,6 +517,12 @@
       "seating": {
         "title": "Seating Preference",
         "desc": "Choose where you would like to be seated"
+      },
+      "preOrder": {
+        "title": "Pre-order Dishes",
+        "desc": "Choose your favorite dishes in advance",
+        "button": "Pre-order Menu",
+        "note": "Pre-ordering helps us prepare your food to perfection and serve it hot as soon as you are seated. You can view our menu in a new tab."
       }
     },
     "form": {
@@ -739,6 +745,133 @@
           "a": "To ensure a comfortable dining environment for all guests, pets are only allowed in our outdoor garden areas."
         }
       ]
+    }
+  },
+  "branchDetails": {
+    "hero": {
+      "toulKork": {
+        "title": "One More Restaurant Toul Kork",
+        "desc": "A premium dining destination designed for family gatherings and business meetings, serving the finest Cambodian heritage cuisine."
+      },
+      "boeungKak": {
+        "title": "One More Restaurant Boeung Kak",
+        "desc": "A premium dining destination designed for family gatherings and business meetings, serving the finest Cambodian heritage cuisine."
+      },
+      "cta": "Reserve a Table"
+    },
+    "space": {
+      "eyebrow": "Our Space",
+      "title": "Architectural Heritage & Elegance"
+    },
+    "philosophy": {
+      "eyebrow": "Our Philosophy",
+      "title": "The Art of Cambodian Hospitality",
+      "toulKorkDesc": "At One More Toul Kork, we believe dining is more than just a meal—it is a cultural immersion. Our space combines traditional Khmer craftsmanship with modern sophistication, creating an atmosphere that is both grand and intimate. Whether it is a quiet family dinner or a high-stakes executive meeting, our service is tailored to exceed expectations.",
+      "boeungKakDesc": "At One More Boeung Kak, we believe dining is more than just a meal—it is a cultural immersion. Our space combines traditional Khmer craftsmanship with modern sophistication, creating an atmosphere that is both grand and intimate. Whether it is a quiet family dinner or a high-stakes executive meeting, our service is tailored to exceed expectations.",
+      "bestFor": "Best For",
+      "family": "Family Dining",
+      "business": "Business Meetings",
+      "corporate": "Corporate Lunch",
+      "special": "Special Occasions"
+    },
+    "rooms": {
+      "eyebrow": "Exclusivity",
+      "title": "Private Dining Rooms",
+      "guestBadge": "8-12 guests",
+      "highlights": {
+        "av": "Integrated AV system",
+        "butler": "Personal butler service",
+        "views": "Garden views"
+      },
+      "reserveCta": "Reserve Private Room"
+    },
+    "chefRecs": {
+      "eyebrow": "Our Menu",
+      "title": "Chef's Recommendations",
+      "addToCart": "ADD TO CART",
+      "viewFullMenu": "View Full Menu"
+    },
+    "events": {
+      "eyebrow": "Host With Us",
+      "title": "Events & Celebrations",
+      "planCta": "Plan Your Event",
+      "items": {
+        "birthday": {
+          "title": "Birthday Celebrations",
+          "desc": "Create lasting memories with our bespoke party planning."
+        },
+        "engagement": {
+          "title": "Engagement Dinners",
+          "desc": "Intimate and romantic settings for your big announcement."
+        },
+        "family": {
+          "title": "Family Gatherings",
+          "desc": "Spacious enough for the whole family to share heritage recipes."
+        },
+        "corporate": {
+          "title": "Corporate Events",
+          "desc": "The perfect professional backdrop for meetings and launches."
+        }
+      }
+    },
+    "testimonials": {
+      "eyebrow": "Reviews",
+      "title": "What Our Guests Say",
+      "desc": "Experiences shared by our valued customers",
+      "items": {
+        "toulKork": [
+          {
+            "name": "Sovan Dara",
+            "date": "2 weeks ago",
+            "text": "An absolute gem in Toul Kork. The traditional architecture is stunning, and the private rooms are perfect for business dinners. The service is top-notch."
+          },
+          {
+            "name": "Vichea Pok",
+            "date": "1 month ago",
+            "text": "The best place to experience authentic Khmer fine dining. Beautiful garden setting and the Amok Trey is outstanding. Highly recommended!"
+          },
+          {
+            "name": "Chanthy Chea",
+            "date": "1 month ago",
+            "text": "Excellent venue for corporate events. We hosted a seminar in their VIP room, and the AV setup and catering exceeded our expectations."
+          }
+        ],
+        "boeungKak": [
+          {
+            "name": "Sovan Dara",
+            "date": "2 weeks ago",
+            "text": "An absolute gem in Boeung Kak. The traditional architecture is stunning, and the private rooms are perfect for business dinners. The service is top-notch."
+          },
+          {
+            "name": "Vichea Pok",
+            "date": "1 month ago",
+            "text": "The best place to experience authentic Khmer fine dining. Beautiful garden setting and the Amok Trey is outstanding. Highly recommended!"
+          },
+          {
+            "name": "Chanthy Chea",
+            "date": "1 month ago",
+            "text": "Excellent venue for corporate events. We hosted a seminar in their VIP room, and the AV setup and catering exceeded our expectations."
+          }
+        ]
+      }
+    },
+    "visit": {
+      "title": "Visit Us",
+      "labels": {
+        "address": "Address",
+        "phone": "Phone",
+        "telegram": "Telegram",
+        "hours": "Opening Hours",
+        "parking": "Parking"
+      },
+      "values": {
+        "toulKorkAddress": "37 St 315, Phnom Penh 120407",
+        "boeungKakAddress": "G2 Street R11, Phnom Penh 120210",
+        "hours": "Daily: 11:00 AM – 10:00 PM",
+        "parking": "Free secure parking available"
+      },
+      "directions": "Get Directions",
+      "call": "Call Now"
     }
   }
 }
