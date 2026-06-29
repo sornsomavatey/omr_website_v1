@@ -13,6 +13,7 @@ import imgRoom from '@/assets/home-v2/480cb1d76af2706b9692b726ad26ec2bf396f8c8.p
 import imgEvent from '@/assets/home-v2/e900cacb721f9c81cd07b8415a03f20f42a39856.png';
 import imgChildren from '@/assets/home-v2/e8f4b56e423777f3f6c3df39c6ef78914b278e17.png';
 import imgExterior from '@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.png';
+import { useTranslation } from '@/hooks/useTranslation';
 
 import './index.css';
 
@@ -49,7 +50,29 @@ const galleryColumnBlueprint = [
   ['Khmer Cooking Workshop', 'A Day To Remember', 'Canopy Entrance', 'Curves & Craft'],
 ];
 
+const galleryKhmer = {
+  filters: {
+    All: 'ទាំងអស់', Wedding: 'មង្គលការ', Corporate: 'កម្មវិធីក្រុមហ៊ុន', Birthday: 'ខួបកំណើត',
+    Engagement: 'ពិធីភ្ជាប់ពាក្យ', Conference: 'សន្និសីទ', 'Private Party': 'កម្មវិធីឯកជន',
+  } satisfies Record<Filter, string>,
+  items: [
+    { alt: 'ភ្ញៀវកំពុងរីករាយនៅសាលទទួលទានអាហារធំ', title: 'ការទទួលទានអាហារនៅសាលធំ', tag: 'ភោជនីយដ្ឋាន' },
+    { alt: 'គុយទាវសាច់គោខ្មែរមួយចាន', title: 'រសជាតិតាមដងផ្លូវ', tag: 'ម្ហូបអាហារ' },
+    { alt: 'សិក្ខាសាលាធ្វើម្ហូបខ្មែរបែបប្រពៃណី', title: 'សិក្ខាសាលាធ្វើម្ហូបខ្មែរ', tag: 'បទពិសោធន៍' },
+    { alt: 'មាន់ខ្មែរជាមួយបាយក្រអូប', title: 'ទំនៀមក្នុងផ្ទះបាយ', tag: 'ម្ហូបអាហារ' },
+    { alt: 'ការរៀបចំអាម៉ុកត្រីបែបប្រពៃណី', title: 'សិល្បៈនៃការរៀបចំម្ហូប', tag: 'ម្ហូបអាហារ' },
+    { alt: 'កម្មវិធីជប់លៀងនៅខាងក្រៅ', title: 'ការជួបជុំឯកជន', tag: 'កម្មវិធី' },
+    { alt: 'សេវាកម្មដ៏កក់ក្តៅនៅទីធ្លាភោជនីយដ្ឋាន', title: 'បដិសណ្ឋារកិច្ចខ្មែរ', tag: 'មនុស្ស' },
+    { alt: 'បន្ទប់ទទួលទានអាហារឯកជនរៀបចំសម្រាប់ភ្ញៀវ', title: 'បន្ទប់ឯកជន', tag: 'ភោជនីយដ្ឋាន' },
+    { alt: 'សាលកម្មវិធីតុបតែងដោយផ្កាសម្រាប់ការប្រារព្ធពិធី', title: 'ថ្ងៃមួយដែលគួរឱ្យចងចាំ', tag: 'កម្មវិធី' },
+    { alt: 'កុមារកំពុងរីករាយជាមួយសកម្មភាពច្នៃប្រឌិត', title: 'ពេលវេលាតូចៗ', tag: 'គ្រួសារ' },
+    { alt: 'ផ្នែកខាងក្រៅនៃភោជនីយដ្ឋាន វ័នម័រ', title: 'ច្រកចូលក្រោមម្លប់', tag: 'ភោជនីយដ្ឋាន' },
+    { alt: 'បន្ទប់ទទួលទានអាហារដែលមានស្ថាបត្យកម្មស្រស់ស្អាត', title: 'ខ្សែកោង និងស្នាដៃ', tag: 'ការរចនា' },
+  ],
+};
+
 export default function GalleryPage() {
+  const { isKhmer } = useTranslation();
   const [activeFilter, setActiveFilter] = useState<Filter>('All');
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
@@ -92,20 +115,25 @@ export default function GalleryPage() {
   }, [selectedIndex, visibleItems.length]);
 
   const selectedItem = selectedIndex === null ? null : visibleItems[selectedIndex];
+  const localizeItem = (item: GalleryItem) => {
+    if (!isKhmer) return item;
+    const translation = galleryKhmer.items[galleryItems.indexOf(item)];
+    return { ...item, ...translation };
+  };
 
   return (
     <main className="gallery-page">
       <section className="gallery-hero" style={{ backgroundImage: `url(${imgHero})` }} id="gallery-hero">
         <div className="gallery-hero-overlay" />
         <div className="gallery-hero-content">
-          <span>One More Restaurant</span>
-          <h1>Gallery</h1>
-          <p>A visual journey through the flavors, craft, and atmosphere of authentic Khmer hospitality.</p>
+          <span>{isKhmer ? 'ភោជនីយដ្ឋាន វ័នម័រ' : 'One More Restaurant'}</span>
+          <h1>{isKhmer ? 'វិចិត្រសាល' : 'Gallery'}</h1>
+          <p>{isKhmer ? 'ដំណើរទស្សនារូបភាពនៃរសជាតិ ស្នាដៃ និងបរិយាកាសនៃបដិសណ្ឋារកិច្ចខ្មែរដ៏ពិតប្រាកដ។' : 'A visual journey through the flavors, craft, and atmosphere of authentic Khmer hospitality.'}</p>
         </div>
       </section>
 
-      <section className="gallery-content" aria-label="Restaurant gallery">
-        <div className="gallery-filter-bar" role="group" aria-label="Filter gallery by event type">
+      <section className="gallery-content" aria-label={isKhmer ? 'វិចិត្រសាលភោជនីយដ្ឋាន' : 'Restaurant gallery'}>
+        <div className="gallery-filter-bar" role="group" aria-label={isKhmer ? 'ចម្រាញ់វិចិត្រសាលតាមប្រភេទកម្មវិធី' : 'Filter gallery by event type'}>
           {filters.map((filter) => (
             <button
               type="button"
@@ -117,7 +145,7 @@ export default function GalleryPage() {
                 setSelectedIndex(null);
               }}
             >
-              {filter}
+              {isKhmer ? galleryKhmer.filters[filter] : filter}
             </button>
           ))}
         </div>
@@ -127,13 +155,14 @@ export default function GalleryPage() {
             <div className="gallery-column" key={`gallery-column-${columnIndex}`}>
               {column.map((item) => {
                 const lightboxIndex = visibleItems.indexOf(item);
+                const localizedItem = localizeItem(item);
                 return (
                   <article className="gallery-card" key={`${item.title}-${item.src}`}>
-                    <button type="button" className={`gallery-image-button gallery-image-${item.shape}`} onClick={() => setSelectedIndex(lightboxIndex)} aria-label={`Open ${item.title}`}>
-                      <img src={item.src} alt={item.alt} loading={lightboxIndex > 5 ? 'lazy' : 'eager'} />
-                      <span className="gallery-image-hover"><ZoomIn size={24} /><small>View image</small></span>
+                    <button type="button" className={`gallery-image-button gallery-image-${item.shape}`} onClick={() => setSelectedIndex(lightboxIndex)} aria-label={isKhmer ? `បើករូបភាព ${localizedItem.title}` : `Open ${item.title}`}>
+                      <img src={item.src} alt={localizedItem.alt} loading={lightboxIndex > 5 ? 'lazy' : 'eager'} />
+                      <span className="gallery-image-hover"><ZoomIn size={24} /><small>{isKhmer ? 'មើលរូបភាព' : 'View image'}</small></span>
                     </button>
-                    <div className="gallery-card-caption"><h2>{item.title}</h2><span>{item.tag}</span></div>
+                    <div className="gallery-card-caption"><h2>{localizedItem.title}</h2><span>{localizedItem.tag}</span></div>
                   </article>
                 );
               })}
@@ -141,18 +170,18 @@ export default function GalleryPage() {
           ))}
         </div>
 
-        {visibleItems.length === 0 && <p className="gallery-empty">More moments from this collection are coming soon.</p>}
+        {visibleItems.length === 0 && <p className="gallery-empty">{isKhmer ? 'រូបភាពជាច្រើនទៀតក្នុងបណ្តុំនេះនឹងមកដល់ឆាប់ៗ។' : 'More moments from this collection are coming soon.'}</p>}
       </section>
 
       {selectedItem && (
-        <div className="gallery-lightbox" role="dialog" aria-modal="true" aria-label={selectedItem.title} onMouseDown={(event) => event.target === event.currentTarget && closeLightbox()}>
-          <button type="button" className="gallery-lightbox-close" onClick={closeLightbox} aria-label="Close image"><X size={24} /></button>
-          <button type="button" className="gallery-lightbox-arrow gallery-lightbox-previous" onClick={showPrevious} aria-label="Previous image"><ChevronLeft size={30} /></button>
+        <div className="gallery-lightbox" role="dialog" aria-modal="true" aria-label={localizeItem(selectedItem).title} onMouseDown={(event) => event.target === event.currentTarget && closeLightbox()}>
+          <button type="button" className="gallery-lightbox-close" onClick={closeLightbox} aria-label={isKhmer ? 'បិទរូបភាព' : 'Close image'}><X size={24} /></button>
+          <button type="button" className="gallery-lightbox-arrow gallery-lightbox-previous" onClick={showPrevious} aria-label={isKhmer ? 'រូបភាពមុន' : 'Previous image'}><ChevronLeft size={30} /></button>
           <figure>
-            <img src={selectedItem.src} alt={selectedItem.alt} />
-            <figcaption><strong>{selectedItem.title}</strong><span>{selectedItem.tag}</span></figcaption>
+            <img src={selectedItem.src} alt={localizeItem(selectedItem).alt} />
+            <figcaption><strong>{localizeItem(selectedItem).title}</strong><span>{localizeItem(selectedItem).tag}</span></figcaption>
           </figure>
-          <button type="button" className="gallery-lightbox-arrow gallery-lightbox-next" onClick={showNext} aria-label="Next image"><ChevronRight size={30} /></button>
+          <button type="button" className="gallery-lightbox-arrow gallery-lightbox-next" onClick={showNext} aria-label={isKhmer ? 'រូបភាពបន្ទាប់' : 'Next image'}><ChevronRight size={30} /></button>
         </div>
       )}
     </main>
