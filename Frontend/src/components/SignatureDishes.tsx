@@ -8,7 +8,6 @@ export default function SignatureDishes({ dishes }: { dishes: SignatureDish[] })
 
   return (
     <section id="menu" className="featured-cuisine-section">
-      <div className="featured-cuisine-pattern" aria-hidden="true" />
 
       <div className="featured-cuisine-container">
         <SectionHeader
@@ -27,6 +26,11 @@ export default function SignatureDishes({ dishes }: { dishes: SignatureDish[] })
                 className={`cuisine-tile cuisine-tile-${index + 1}`}
               >
                 <img src={dish.img} alt={dish.name} />
+                <div className="cuisine-tile-overlay">
+                  <div className="cuisine-tile-overlay-content">
+                    <h4>{dish.name}</h4>
+                  </div>
+                </div>
               </div>
             );
           })}
@@ -62,6 +66,11 @@ export default function SignatureDishes({ dishes }: { dishes: SignatureDish[] })
               src={dishes[0]?.img}
               alt={dishes[0]?.name}
             />
+            <div className="cuisine-circle-overlay">
+              <div className="cuisine-circle-overlay-content">
+                <h4>{dishes[0]?.name}</h4>
+              </div>
+            </div>
           </div>
         </div>
 

@@ -1,5 +1,6 @@
 import { ChevronLeft, ChevronRight, X, ZoomIn } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
+import { useTranslation } from '@/hooks/useTranslation';
 
 import imgHero from '@/assets/home-v2/43310dd2158ca5c7f7d098abf280dc14124d42de.png';
 import imgDining from '@/assets/Event & Celebrations card 03.png';
@@ -50,23 +51,37 @@ const galleryColumnBlueprint = [
 ];
 
 export default function GalleryPage() {
+  const { t } = useTranslation();
   const [activeFilter, setActiveFilter] = useState<Filter>('All');
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
+  const translatedGalleryItems = useMemo(() => {
+    return galleryItems.map(item => ({
+      ...item,
+      title: t(`galleryPage.items.${item.title}.title`, undefined, item.title),
+      tag: t(`galleryPage.items.${item.title}.tag`, undefined, item.tag),
+    }));
+  }, [t]);
+
   const visibleItems = useMemo(
-    () => activeFilter === 'All' ? galleryItems : galleryItems.filter((item) => item.category === activeFilter),
-    [activeFilter],
+    () => activeFilter === 'All' ? translatedGalleryItems : translatedGalleryItems.filter((item) => item.category === activeFilter),
+    [activeFilter, translatedGalleryItems],
   );
 
   const visibleColumns = useMemo(() => {
     const visibleTitles = new Set(visibleItems.map((item) => item.title));
     return galleryColumnBlueprint
       .map((titles) => titles
-        .map((title) => galleryItems.find((item) => item.title === title))
-        .filter((item): item is GalleryItem => Boolean(item))
+        .map((title) => {
+          const originalItem = galleryItems.find((item) => item.title === title);
+          if (!originalItem) return undefined;
+          const originalIndex = galleryItems.indexOf(originalItem);
+          return translatedGalleryItems[originalIndex];
+        })
+        .filter((item): item is typeof translatedGalleryItems[number] => Boolean(item))
         .filter((item) => visibleTitles.has(item.title)))
       .filter((column) => column.length > 0);
-  }, [visibleItems]);
+  }, [visibleItems, translatedGalleryItems]);
 
   const closeLightbox = () => setSelectedIndex(null);
   const showPrevious = () => setSelectedIndex((index) => index === null ? null : (index - 1 + visibleItems.length) % visibleItems.length);
@@ -98,9 +113,8 @@ export default function GalleryPage() {
       <section className="gallery-hero" style={{ backgroundImage: `url(${imgHero})` }} id="gallery-hero">
         <div className="gallery-hero-overlay" />
         <div className="gallery-hero-content">
-          <span>One More Restaurant</span>
-          <h1>Gallery</h1>
-          <p>A visual journey through the flavors, craft, and atmosphere of authentic Khmer hospitality.</p>
+          <h1>{t('galleryPage.hero.title', undefined, 'Gallery')}</h1>
+          <p>{t('galleryPage.hero.desc', undefined, 'A visual journey through the flavors, craft, and atmosphere of authentic Khmer hospitality.')}</p>
         </div>
       </section>
 
@@ -117,7 +131,7 @@ export default function GalleryPage() {
                 setSelectedIndex(null);
               }}
             >
-              {filter}
+              {t(`galleryPage.filters.${filter}`, undefined, filter)}
             </button>
           ))}
         </div>
@@ -131,7 +145,7 @@ export default function GalleryPage() {
                   <article className="gallery-card" key={`${item.title}-${item.src}`}>
                     <button type="button" className={`gallery-image-button gallery-image-${item.shape}`} onClick={() => setSelectedIndex(lightboxIndex)} aria-label={`Open ${item.title}`}>
                       <img src={item.src} alt={item.alt} loading={lightboxIndex > 5 ? 'lazy' : 'eager'} />
-                      <span className="gallery-image-hover"><ZoomIn size={24} /><small>View image</small></span>
+                      <span className="gallery-image-hover"><ZoomIn size={24} /><small>{t('galleryPage.aria.view', undefined, 'View image')}</small></span>
                     </button>
                     <div className="gallery-card-caption"><h2>{item.title}</h2><span>{item.tag}</span></div>
                   </article>
@@ -141,18 +155,18 @@ export default function GalleryPage() {
           ))}
         </div>
 
-        {visibleItems.length === 0 && <p className="gallery-empty">More moments from this collection are coming soon.</p>}
+        {visibleItems.length === 0 && <p className="gallery-empty">{t('galleryPage.empty', undefined, 'More moments from this collection are coming soon.')}</p>}
       </section>
 
       {selectedItem && (
         <div className="gallery-lightbox" role="dialog" aria-modal="true" aria-label={selectedItem.title} onMouseDown={(event) => event.target === event.currentTarget && closeLightbox()}>
-          <button type="button" className="gallery-lightbox-close" onClick={closeLightbox} aria-label="Close image"><X size={24} /></button>
-          <button type="button" className="gallery-lightbox-arrow gallery-lightbox-previous" onClick={showPrevious} aria-label="Previous image"><ChevronLeft size={30} /></button>
+          <button type="button" className="gallery-lightbox-close" onClick={closeLightbox} aria-label={t('galleryPage.aria.close', undefined, 'Close image')}><X size={24} /></button>
+          <button type="button" className="gallery-lightbox-arrow gallery-lightbox-previous" onClick={showPrevious} aria-label={t('galleryPage.aria.previous', undefined, 'Previous image')}><ChevronLeft size={30} /></button>
           <figure>
             <img src={selectedItem.src} alt={selectedItem.alt} />
             <figcaption><strong>{selectedItem.title}</strong><span>{selectedItem.tag}</span></figcaption>
           </figure>
-          <button type="button" className="gallery-lightbox-arrow gallery-lightbox-next" onClick={showNext} aria-label="Next image"><ChevronRight size={30} /></button>
+          <button type="button" className="gallery-lightbox-arrow gallery-lightbox-next" onClick={showNext} aria-label={t('galleryPage.aria.next', undefined, 'Next image')}><ChevronRight size={30} /></button>
         </div>
       )}
     </main>

@@ -7,7 +7,7 @@ import SectionHeader from '@/components/SectionHeader';
 import EventSpaceCard from '@/components/EventSpaceCard';
 import TestimonialSection from '@/components/TestimonialSection';
 import { createEventBooking } from '@/lib/api';
-
+import { useTranslation } from '@/hooks/useTranslation';
 
 import imgHero     from '@/assets/home-v2/e900cacb721f9c81cd07b8415a03f20f42a39856.png';
 import imgPkg1     from '@/assets/home-v2/80bc2f874a3b8b65fc3bd247f23046db8632d909.png';
@@ -25,7 +25,6 @@ import imgInquiry  from '@/assets/Weeding.png';
 import imgFinalCta from '@/assets/Weeding.png';
 
 import './index.css';
-
 
 const packages = [
   {
@@ -163,14 +162,112 @@ function Stars({ count }: { count: number }) {
 
 // ── Main ─────────────────────────────────────────────────────
 export default function EventsPage() {
+  const { t, getObject } = useTranslation();
   const [galleryFilter, setGalleryFilter] = useState<GalleryFilter>('All');
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [formSuccess, setFormSuccess] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
 
+  const packagesList = [
+    {
+      id: 'family',
+      name: t('eventsPage.packages.items.family.name', undefined, packages[0].name),
+      guests: t('eventsPage.packages.items.family.guests', undefined, packages[0].guests),
+      price: '$65',
+      unit: t('eventsPage.packages.unit', undefined, '/ person'),
+      img: imgPkg1,
+      features: getObject<string[]>('eventsPage.packages.items.family.features', packages[0].features),
+    },
+    {
+      id: 'engagement',
+      name: t('eventsPage.packages.items.engagement.name', undefined, packages[1].name),
+      guests: t('eventsPage.packages.items.engagement.guests', undefined, packages[1].guests),
+      price: '$65',
+      unit: t('eventsPage.packages.unit', undefined, '/ person'),
+      img: imgPkg2,
+      features: getObject<string[]>('eventsPage.packages.items.engagement.features', packages[1].features),
+    },
+    {
+      id: 'catering',
+      name: t('eventsPage.packages.items.catering.name', undefined, packages[2].name),
+      guests: t('eventsPage.packages.items.catering.guests', undefined, packages[2].guests),
+      price: '$65',
+      unit: t('eventsPage.packages.unit', undefined, '/ person'),
+      img: imgPkg3,
+      features: getObject<string[]>('eventsPage.packages.items.catering.features', packages[2].features),
+    },
+    {
+      id: 'corporate',
+      name: t('eventsPage.packages.items.corporate.name', undefined, packages[3].name),
+      guests: t('eventsPage.packages.items.corporate.guests', undefined, packages[3].guests),
+      price: '$65',
+      unit: t('eventsPage.packages.unit', undefined, '/ person'),
+      img: imgPkg4,
+      features: getObject<string[]>('eventsPage.packages.items.corporate.features', packages[3].features),
+    },
+  ];
+
+  const spacesList = [
+    {
+      id: 'vip',
+      name: t('eventsPage.spaces.items.vip.name', undefined, spaces[0].name),
+      guestTag: t('eventsPage.spaces.items.vip.guestTag', undefined, spaces[0].guestTag),
+      badgeTag: t('eventsPage.spaces.items.vip.badgeTag', undefined, spaces[0].badgeTag),
+      img: imgSpace2,
+      features: getObject<string[]>('eventsPage.spaces.items.vip.features', spaces[0].features),
+    },
+    {
+      id: 'private',
+      name: t('eventsPage.spaces.items.private.name', undefined, spaces[1].name),
+      guestTag: t('eventsPage.spaces.items.private.guestTag', undefined, spaces[1].guestTag),
+      badgeTag: t('eventsPage.spaces.items.private.badgeTag', undefined, spaces[1].badgeTag),
+      img: imgSpace1,
+      features: getObject<string[]>('eventsPage.spaces.items.private.features', spaces[1].features),
+    },
+    {
+      id: 'main-hall',
+      name: t('eventsPage.spaces.items.main-hall.name', undefined, spaces[2].name),
+      guestTag: t('eventsPage.spaces.items.main-hall.guestTag', undefined, spaces[2].guestTag),
+      badgeTag: t('eventsPage.spaces.items.main-hall.badgeTag', undefined, spaces[2].badgeTag),
+      img: imgHero,
+      features: getObject<string[]>('eventsPage.spaces.items.main-hall.features', spaces[2].features),
+    },
+  ];
+
+  const servicesList = [
+    { icon: <Users size={20} />, title: t('eventsPage.services.items.planning.title', undefined, services[0].title), desc: t('eventsPage.services.items.planning.desc', undefined, services[0].desc), link: '/contact' },
+    { icon: <DecorIcon />, title: t('eventsPage.services.items.decor.title', undefined, services[1].title), desc: t('eventsPage.services.items.decor.desc', undefined, services[1].desc), link: '/contact' },
+    { icon: <MusicIcon />, title: t('eventsPage.services.items.music.title', undefined, services[2].title), desc: t('eventsPage.services.items.music.desc', undefined, services[2].desc), link: '/contact' },
+    { icon: <VideoIcon />, title: t('eventsPage.services.items.photo.title', undefined, services[3].title), desc: t('eventsPage.services.items.photo.desc', undefined, services[3].desc), link: '/contact' },
+    { icon: <CateringIcon />, title: t('eventsPage.services.items.catering.title', undefined, services[4].title), desc: t('eventsPage.services.items.catering.desc', undefined, services[4].desc), link: '/menu' },
+    { icon: <Shield size={20} />, title: t('eventsPage.services.items.coordination.title', undefined, services[5].title), desc: t('eventsPage.services.items.coordination.desc', undefined, services[5].desc), link: '/contact' },
+  ];
+
+  const translatedGalleryItems = galleryItems.map(item => ({
+    ...item,
+    caption: t(`eventsPage.gallery.captions.${item.caption}`, undefined, item.caption)
+  }));
+
+  const testimonialsList = [
+    {
+      text: t('eventsPage.testimonials.items.sophea.text', undefined, testimonials[0].text),
+      name: 'Sopheak & Dara', role: t('eventsPage.gallery.filters.Wedding', undefined, 'Wedding Reception'), stars: 5,
+    },
+    {
+      text: t('eventsPage.testimonials.items.david.text', undefined, testimonials[1].text),
+      name: 'Chen Wei', role: t('eventsPage.gallery.filters.Corporate', undefined, 'Corporate Event'), stars: 5,
+    },
+    {
+      text: t('eventsPage.testimonials.items.piseth.text', undefined, testimonials[2].text),
+      name: 'Vannak Phal', role: t('eventsPage.gallery.filters.Birthday', undefined, 'Birthday Celebration'), stars: 5,
+    },
+  ];
+
+  const faqsList = getObject<any[]>('eventsPage.faq.items', faqs);
+
   const visibleGallery = galleryFilter === 'All'
-    ? galleryItems
-    : galleryItems.filter((g) => g.cat === galleryFilter);
+    ? translatedGalleryItems
+    : translatedGalleryItems.filter((g) => g.cat === galleryFilter);
 
   async function handleFormSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -216,6 +313,7 @@ export default function EventsPage() {
   return (
     <main className="events-page">
 
+
       {/* ── HERO ────────────────────────────── */}
       <section
         className="events-hero"
@@ -225,30 +323,46 @@ export default function EventsPage() {
         <div className="events-hero-shade" />
         <div className="events-hero-inner">
           <div className="events-hero-copy">
-            <h1 className="font-serif">Celebrate Every<br />Special Moment</h1>
+            <h1 className="font-serif">
+              {t('eventsPage.hero.title', undefined, 'Celebrate Every\nSpecial Moment').split('\n').map((line, idx) => (
+                <span key={idx}>{line}{idx === 0 && <br />}</span>
+              ))}
+            </h1>
             <p>
-              From intimate gatherings to grand celebrations, One More Restaurant
-              provides beautiful spaces, exceptional cuisine, and unforgettable experiences.
+              {t('eventsPage.hero.desc', undefined, 'From intimate gatherings to grand celebrations, One More Restaurant provides beautiful spaces, exceptional cuisine, and unforgettable experiences.')}
             </p>
             <div className="events-hero-actions">
-              <a href="#inquiry" className="events-button events-button-primary">Plan Your Event</a>
-              <a href="#inquiry" className="events-button events-button-outline">Contact Event Team</a>
+              <a href="#inquiry" className="events-button events-button-primary">
+                {t('eventsPage.hero.planCta', undefined, 'Plan Your Event')}
+              </a>
+              <a href="#inquiry" className="events-button events-button-outline">
+                {t('eventsPage.hero.contactCta', undefined, 'Contact Event Team')}
+              </a>
             </div>
           </div>
 
           <div className="events-contact-card">
-            <h2 className="font-serif">Event Contact Info</h2>
+            <h2 className="font-serif">{t('eventsPage.hero.contactInfo', undefined, 'Event Contact Info')}</h2>
             <div className="events-contact-row">
               <span className="events-contact-icon"><Clock size={16} /></span>
-              <div><small>Event Hotline</small><strong>+855 23 888 999</strong></div>
+              <div>
+                <small>{t('eventsPage.hero.hotline', undefined, 'Event Hotline')}</small>
+                <strong>+855 23 888 999</strong>
+              </div>
             </div>
             <div className="events-contact-row">
               <span className="events-contact-icon"><Mail size={16} /></span>
-              <div><small>Email Inquiry</small><strong>events@onemorerestaurant.com</strong></div>
+              <div>
+                <small>{t('eventsPage.hero.email', undefined, 'Email Inquiry')}</small>
+                <strong>events@onemorerestaurant.com</strong>
+              </div>
             </div>
             <div className="events-contact-row">
               <span className="events-contact-icon"><FileText size={16} /></span>
-              <div><small>Reservation Policy</small><strong>Free cancellation up to 24h</strong></div>
+              <div>
+                <small>{t('eventsPage.hero.policyLabel', undefined, 'Reservation Policy')}</small>
+                <strong>{t('eventsPage.hero.policyValue', undefined, 'Free cancellation up to 24h')}</strong>
+              </div>
             </div>
           </div>
         </div>
@@ -257,12 +371,12 @@ export default function EventsPage() {
       {/* ── PACKAGES ────────────────────────── */}
       <section className="events-section events-packages-section">
         <SectionHeader
-          eyebrow="Event Packages"
-          title="Choose The Perfect Package"
+          eyebrow={t('eventsPage.packages.eyebrow', undefined, 'Event Packages')}
+          title={t('eventsPage.packages.title', undefined, 'Choose The Perfect Package')}
         />
 
         <div className="events-package-grid">
-          {packages.map((pkg) => (
+          {packagesList.map((pkg) => (
             <FeaturePackageCard
               key={pkg.id}
               image={pkg.img}
@@ -281,12 +395,12 @@ export default function EventsPage() {
       {/* ── SPACES ──────────────────────────── */}
       <section className="events-section events-spaces-section" id="spaces">
         <div className="events-section-heading events-section-heading-light">
-          <div className="events-eyebrow"><span />Event Spaces<span /></div>
-          <h2>Beautiful Spaces For Every Occasion</h2>
+          <div className="events-eyebrow"><span />{t('eventsPage.spaces.eyebrow', undefined, 'Event Spaces')}<span /></div>
+          <h2>{t('eventsPage.spaces.title', undefined, 'Beautiful Spaces For Every Occasion')}</h2>
         </div>
 
         <div className="events-spaces-list">
-          {spaces.map((space) => (
+          {spacesList.map((space) => (
             <EventSpaceCard
               key={space.id}
               id={space.id}
@@ -303,17 +417,17 @@ export default function EventsPage() {
       {/* ── SERVICES ────────────────────────── */}
       <section className="events-section events-services-section">
         <div className="events-section-heading">
-          <div className="events-eyebrow"><span />SERVICES<span /></div>
-          <h2>Curated Services For Every Detail</h2>
+          <div className="events-eyebrow"><span />{t('eventsPage.services.eyebrow', undefined, 'SERVICES')}<span /></div>
+          <h2>{t('eventsPage.services.title', undefined, 'Curated Services For Every Detail')}</h2>
         </div>
 
         <div className="events-service-grid">
-          {services.map((svc) => (
+          {servicesList.map((svc) => (
             <div key={svc.title} className="events-service-card">
               <span>{svc.icon}</span>
               <h3>{svc.title}</h3>
               <p>{svc.desc}</p>
-              <Link to={svc.link}>Learn more →</Link>
+              <Link to={svc.link}>{t('eventsPage.services.learnMore', undefined, 'Learn more →')}</Link>
             </div>
           ))}
         </div>
@@ -322,8 +436,8 @@ export default function EventsPage() {
       {/* ── GALLERY ─────────────────────────── */}
       <section className="events-section events-gallery-section">
         <div className="events-section-heading">
-          <div className="events-eyebrow"><span />GALLERY<span /></div>
-          <h2>Moments We Are Proud Of</h2>
+          <div className="events-eyebrow"><span />{t('eventsPage.gallery.eyebrow', undefined, 'GALLERY')}<span /></div>
+          <h2>{t('eventsPage.gallery.title', undefined, 'Moments We Are Proud Of')}</h2>
         </div>
 
         <div className="events-gallery-filters">
@@ -334,7 +448,7 @@ export default function EventsPage() {
               className={galleryFilter === f ? 'active' : ''}
               onClick={() => setGalleryFilter(f)}
             >
-              {f}
+              {t(`eventsPage.gallery.filters.${f}`, undefined, f)}
             </button>
           ))}
         </div>
@@ -349,16 +463,18 @@ export default function EventsPage() {
         </div>
 
         <div className="events-gallery-link">
-          <Link to="/gallery" className="events-pill-link">View Full Gallery</Link>
+          <Link to="/gallery" className="events-pill-link">
+            {t('eventsPage.gallery.viewFull', undefined, 'View Full Gallery')}
+          </Link>
         </div>
       </section>
 
       {/* TESTIMONIALS */}
       <TestimonialSection
-        eyebrow="REVIEWS"
-        title="What Our Guests Say"
-        description="Experiences shared by our valued customers"
-        testimonials={testimonials}
+        eyebrow={t('eventsPage.testimonials.eyebrow', undefined, 'REVIEWS')}
+        title={t('eventsPage.testimonials.title', undefined, 'What Our Guests Say')}
+        description={t('eventsPage.testimonials.desc', undefined, 'Experiences shared by our valued customers')}
+        testimonials={testimonialsList}
       />
 
       {/* ── INQUIRY ─────────────────────────── */}
@@ -369,63 +485,93 @@ export default function EventsPage() {
             style={{ backgroundImage: `url(${imgInquiry})` }}
           >
             <div>
-              <h2 className="font-serif">Let's Create Something Amazing Together</h2>
+              <h2 className="font-serif">
+                {t('eventsPage.inquiry.visual.title', undefined, "Let's Create Something Amazing Together")}
+              </h2>
               <p>
-                Whether it's a small milestone or a lifetime commitment, we are here to bring your vision to life with Khmer warmth and modern luxury.
+                {t('eventsPage.inquiry.visual.desc', undefined, 'Whether it is a small milestone or a lifetime commitment, we are here to bring your vision to life with Khmer warmth and modern luxury.')}
               </p>
             </div>
           </div>
 
           <div className="events-inquiry-form-container">
             <div className="events-inquiry-form">
-              <h2 className="font-serif">Inquiry Form</h2>
+              <h2 className="font-serif">{t('eventsPage.inquiry.form.title', undefined, 'Inquiry Form')}</h2>
               <form ref={formRef} onSubmit={handleFormSubmit}>
                 <div className="events-form-grid">
                   <label>
-                    Full Name *
-                    <input name="name" type="text" placeholder="Enter full name" required />
+                    {t('eventsPage.inquiry.form.labels.name', undefined, 'Full Name *')}
+                    <input
+                      name="name"
+                      type="text"
+                      placeholder={t('eventsPage.inquiry.form.placeholders.name', undefined, 'Enter full name')}
+                      required
+                    />
                   </label>
                   <label>
-                    Phone Number *
-                    <input name="phone" type="tel" placeholder="Enter phone number" required />
+                    {t('eventsPage.inquiry.form.labels.phone', undefined, 'Phone Number *')}
+                    <input
+                      name="phone"
+                      type="tel"
+                      placeholder={t('eventsPage.inquiry.form.placeholders.phone', undefined, 'Enter phone number')}
+                      required
+                    />
                   </label>
                   <label>
-                    Company Name
-                    <input name="company" type="text" placeholder="Company Name" />
+                    {t('eventsPage.inquiry.form.labels.company', undefined, 'Company Name')}
+                    <input
+                      name="company"
+                      type="text"
+                      placeholder={t('eventsPage.inquiry.form.placeholders.company', undefined, 'Company Name')}
+                    />
                   </label>
                   <label>
-                    Email Address (Optional)
-                    <input name="email" type="email" placeholder="Enter email address" />
+                    {t('eventsPage.inquiry.form.labels.email', undefined, 'Email Address (Optional)')}
+                    <input
+                      name="email"
+                      type="email"
+                      placeholder={t('eventsPage.inquiry.form.placeholders.email', undefined, 'Enter email address')}
+                    />
                   </label>
                   <label>
-                    Event Type
+                    {t('eventsPage.inquiry.form.labels.eventType', undefined, 'Event Type')}
                     <div className="events-select-wrapper">
                       <select name="event_type" defaultValue="Wedding">
-                        <option value="Wedding">Wedding</option>
-                        <option value="Birthday">Birthday</option>
-                        <option value="Corporate Event">Corporate Event</option>
-                        <option value="Engagement">Engagement</option>
-                        <option value="Private Dining">Private Dining</option>
-                        <option value="Other">Other</option>
+                        <option value="Wedding">{t('eventsPage.inquiry.form.eventTypes.Wedding', undefined, 'Wedding')}</option>
+                        <option value="Birthday">{t('eventsPage.inquiry.form.eventTypes.Birthday', undefined, 'Birthday')}</option>
+                        <option value="Corporate Event">{t('eventsPage.inquiry.form.eventTypes.Corporate Event', undefined, 'Corporate Event')}</option>
+                        <option value="Engagement">{t('eventsPage.inquiry.form.eventTypes.Engagement', undefined, 'Engagement')}</option>
+                        <option value="Private Dining">{t('eventsPage.inquiry.form.eventTypes.Private Dining', undefined, 'Private Dining')}</option>
+                        <option value="Other">{t('eventsPage.inquiry.form.eventTypes.Other', undefined, 'Other')}</option>
                       </select>
                       <ChevronDown size={18} className="events-select-icon" />
                     </div>
                   </label>
                   <label>
-                    Guests
-                    <input name="guest_count" type="number" min={1} placeholder="e.g. 150" required />
+                    {t('eventsPage.inquiry.form.labels.guests', undefined, 'Guests')}
+                    <input
+                      name="guest_count"
+                      type="number"
+                      min={1}
+                      placeholder={t('eventsPage.inquiry.form.placeholders.guests', undefined, 'e.g. 150')}
+                      required
+                    />
                   </label>
                   <label className="events-form-wide">
-                    Special Requirements
-                    <textarea name="special_requirements" rows={4} placeholder="Tell us more about your event..." />
+                    {t('eventsPage.inquiry.form.labels.requirements', undefined, 'Special Requirements')}
+                    <textarea
+                      name="special_requirements"
+                      rows={4}
+                      placeholder={t('eventsPage.inquiry.form.placeholders.requirements', undefined, 'Tell us more about your event...')}
+                    />
                   </label>
                 </div>
                 <button type="submit" className="events-inquiry-submit">
-                  Submit Inquiry
+                  {t('eventsPage.inquiry.form.submit', undefined, 'Submit Inquiry')}
                 </button>
                 {formSuccess && (
                   <p className="events-form-success">
-                    ✓ Thank you! Our team will reach out within 24 hours.
+                    {t('eventsPage.inquiry.form.success', undefined, '✓ Thank you! Our team will reach out within 24 hours.')}
                   </p>
                 )}
               </form>
@@ -437,12 +583,12 @@ export default function EventsPage() {
       {/* ── FAQ ─────────────────────────────── */}
       <section className="events-section events-faq-section">
         <div className="events-section-heading">
-          <div className="events-eyebrow"><span />FAQ<span /></div>
-          <h2>Frequently Asked Questions</h2>
+          <div className="events-eyebrow"><span />{t('eventsPage.faq.eyebrow', undefined, 'FAQ')}<span /></div>
+          <h2>{t('eventsPage.faq.title', undefined, 'Frequently Asked Questions')}</h2>
         </div>
 
         <div className="events-faq-list">
-          {faqs.map((faq, i) => (
+          {faqsList.map((faq, i) => (
             <div key={i} className={`events-faq-item${openFaq === i ? ' open' : ''}`}>
               <button type="button" onClick={() => setOpenFaq(openFaq === i ? null : i)}>
                 {faq.q}
@@ -464,14 +610,18 @@ export default function EventsPage() {
         <div>
           <p className="events-eyebrow" style={{ color: 'rgba(255,255,255,.7)', fontSize: 11 }}>
             <span style={{ background: 'rgba(255,255,255,.4)' }} />
-            ONE MORE RESTAURANT
+            {t('eventsPage.finalCta.eyebrow', undefined, 'ONE MORE RESTAURANT')}
             <span style={{ background: 'rgba(255,255,255,.4)' }} />
           </p>
-          <h2>Ready To Plan Your Event?</h2>
-          <p>Contact our team today and let's bring your vision to life.</p>
+          <h2>{t('eventsPage.finalCta.title', undefined, 'Ready To Plan Your Event?')}</h2>
+          <p>{t('eventsPage.finalCta.desc', undefined, 'Contact our team today and let\'s bring your vision to life.')}</p>
           <div>
-            <a href="#inquiry" className="events-button events-button-primary">Book Now</a>
-            <Link to="/contact" className="events-button events-button-outline">Get In Touch</Link>
+            <a href="#inquiry" className="events-button events-button-primary">
+              {t('eventsPage.finalCta.bookNow', undefined, 'Book Now')}
+            </a>
+            <Link to="/contact" className="events-button events-button-outline">
+              {t('eventsPage.finalCta.getInTouch', undefined, 'Get In Touch')}
+            </Link>
           </div>
         </div>
       </section>

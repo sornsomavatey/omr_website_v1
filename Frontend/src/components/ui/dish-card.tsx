@@ -49,7 +49,7 @@ export function DishCard({
   return (
     <div
       className={cn(
-        "group/dish-card group flex flex-col text-left bg-white border border-[#dde0dc]/80 shadow-[0_10px_30px_-10px_rgba(33,45,27,0.04)] transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:shadow-[0_15px_35px_-10px_rgba(33,45,27,0.08)] relative overflow-hidden",
+        "group/dish-card group flex flex-col text-left bg-white transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 relative overflow-hidden",
         cardContainerRadius[activeVariant],
         className
       )}

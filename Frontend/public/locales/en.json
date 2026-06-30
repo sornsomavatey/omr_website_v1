@@ -873,5 +873,261 @@
       "directions": "Get Directions",
       "call": "Call Now"
     }
+  },
+  "eventsPage": {
+    "hero": {
+      "eyebrow": "One More Restaurant",
+      "title": "Celebrate Every\nSpecial Moment",
+      "desc": "From intimate gatherings to grand celebrations, One More Restaurant provides beautiful spaces, exceptional cuisine, and unforgettable experiences.",
+      "planCta": "Plan Your Event",
+      "contactCta": "Contact Event Team",
+      "contactInfo": "Event Contact Info",
+      "hotline": "Event Hotline",
+      "email": "Email Inquiry",
+      "policyLabel": "Reservation Policy",
+      "policyValue": "Free cancellation up to 24h"
+    },
+    "packages": {
+      "eyebrow": "Event Packages",
+      "title": "Choose The Perfect Package",
+      "items": {
+        "family": {
+          "name": "Family Celebration",
+          "guests": "8–12 guests",
+          "features": ["Private VIP Room", "Custom 6-Course Menu", "Basic Table Decor", "Dedicated Service Staff"]
+        },
+        "engagement": {
+          "name": "Engagement Package",
+          "guests": "30 guests",
+          "features": ["Full Ballroom Access", "Gourmet Buffet or Family Style", "Premium Floral Decor", "Traditional Live Music", "Garden views"]
+        },
+        "catering": {
+          "name": "Catering Services",
+          "guests": "30+ guests",
+          "features": ["Private VIP Room", "Custom 6-Course Menu", "Basic Table Decor", "Dedicated Service Staff"]
+        },
+        "corporate": {
+          "name": "Corporate Package",
+          "guests": "8–80 guests",
+          "features": ["Private Hall Access", "Audio-Visual Equipment", "Premium Working Lunch", "Morning & Afternoon Coffee Breaks"]
+        }
+      }
+    },
+    "spaces": {
+      "eyebrow": "Event Spaces",
+      "title": "Beautiful Spaces For Every Occasion",
+      "items": {
+        "vip": {
+          "name": "VIP Room",
+          "guestTag": "8–12 guests",
+          "badgeTag": "Best for Private Dinners",
+          "features": ["Integrated AV system", "Personal butler service", "Garden views", "Personal butler service"]
+        },
+        "private": {
+          "name": "Private Room",
+          "guestTag": "8–12 guests",
+          "badgeTag": "Best for Private Dinners",
+          "features": ["Integrated AV system", "Personal butler service", "Garden views", "Personal butler service"]
+        },
+        "main-hall": {
+          "name": "Main Hall",
+          "guestTag": "8–12 guests",
+          "badgeTag": "Best for Private Dinners",
+          "features": ["Integrated AV system", "Personal butler service", "Garden views", "Personal butler service"]
+        }
+      }
+    },
+    "services": {
+      "eyebrow": "SERVICES",
+      "title": "Curated Services For Every Detail",
+      "items": {
+        "planning": {
+          "title": "Event Planning",
+          "desc": "Our dedicated event coordinators work with you from concept to celebration, handling every detail with care."
+        },
+        "decor": {
+          "title": "Floral & Décor",
+          "desc": "Stunning floral arrangements and thematic décor to transform any space into your dream venue."
+        },
+        "music": {
+          "title": "Live Entertainment",
+          "desc": "Traditional Khmer music, contemporary bands, and cultural performances for a truly memorable atmosphere."
+        },
+        "photo": {
+          "title": "Photography",
+          "desc": "Professional photography and videography packages to capture every precious moment of your special day."
+        },
+        "catering": {
+          "title": "Custom Catering",
+          "desc": "Bespoke menus crafted by our executive chefs, from traditional Khmer feasts to international cuisines."
+        },
+        "coordination": {
+          "title": "Full Coordination",
+          "desc": "On-the-day coordination service ensuring everything runs seamlessly from arrival to farewell."
+        }
+      },
+      "learnMore": "Learn more →"
+    },
+    "gallery": {
+      "eyebrow": "GALLERY",
+      "title": "Moments We Are Proud Of",
+      "filters": {
+        "All": "All",
+        "Wedding": "Wedding",
+        "Corporate": "Corporate",
+        "Birthday": "Birthday",
+        "Private": "Private"
+      },
+      "captions": {
+        "Garden Gathering": "Garden Gathering",
+        "Artisanal Plating": "Artisanal Plating",
+        "Bridal Dinner": "Bridal Dinner",
+        "Venue Ambiance": "Venue Ambiance",
+        "Grand Ballroom": "Grand Ballroom"
+      },
+      "viewFull": "View Full Gallery"
+    },
+    "inquiry": {
+      "visual": {
+        "title": "Let's Create Something Amazing Together",
+        "desc": "Whether it's a small milestone or a lifetime commitment, we are here to bring your vision to life with Khmer warmth and modern luxury."
+      },
+      "form": {
+        "title": "Inquiry Form",
+        "labels": {
+          "name": "Full Name *",
+          "phone": "Phone Number *",
+          "company": "Company Name",
+          "email": "Email Address (Optional)",
+          "eventType": "Event Type",
+          "guests": "Guests",
+          "requirements": "Special Requirements"
+        },
+        "placeholders": {
+          "name": "Enter full name",
+          "phone": "Enter phone number",
+          "company": "Company Name",
+          "email": "Enter email address",
+          "guests": "e.g. 150",
+          "requirements": "Tell us more about your event..."
+        },
+        "eventTypes": {
+          "Wedding": "Wedding",
+          "Birthday": "Birthday",
+          "Corporate Event": "Corporate Event",
+          "Engagement": "Engagement",
+          "Private Dining": "Private Dining",
+          "Other": "Other"
+        },
+        "submit": "Submit Inquiry",
+        "success": "✓ Thank you! Our team will reach out within 24 hours."
+      }
+    },
+    "faq": {
+      "eyebrow": "FAQ",
+      "title": "Frequently Asked Questions",
+      "items": [
+        {
+          "q": "How far in advance should I book my event?",
+          "a": "We recommend booking at least 4–6 weeks in advance for smaller events and 3–6 months for large weddings or corporate functions. This ensures your preferred date and space are available."
+        },
+        {
+          "q": "What is your minimum guest count for private events?",
+          "a": "Our private VIP suite accommodates 8–30 guests. The Grand Ballroom is ideal for 40–120 guests. For smaller intimate dinners, we can arrange semi-private sections starting from 6 guests."
+        },
+        {
+          "q": "Can I bring my own cake or decoration items?",
+          "a": "Yes! You are welcome to bring your own cake and personal decorations. Our team will help set everything up at no additional charge. A small corkage fee may apply for external beverages."
+        },
+        {
+          "q": "What is the cancellation and deposit policy?",
+          "a": "A 30% deposit secures your event date. Full cancellations made more than 14 days before the event receive a full deposit refund. Cancellations within 14 days forfeit the deposit."
+        },
+        {
+          "q": "Do you offer menu tasting sessions before the event?",
+          "a": "Absolutely. We offer complimentary tasting sessions for groups of 4+ on package bookings. Our executive chef will personally guide you through the selected menu options."
+        }
+      ]
+    },
+    "finalCta": {
+      "eyebrow": "ONE MORE RESTAURANT",
+      "title": "Ready To Plan Your Event?",
+      "desc": "Contact our team today and let's bring your vision to life.",
+      "bookNow": "Book Now",
+      "getInTouch": "Get In Touch"
+    }
+  },
+  "galleryPage": {
+    "hero": {
+      "eyebrow": "One More Restaurant",
+      "title": "Gallery",
+      "desc": "A visual journey through the flavors, craft, and atmosphere of authentic Khmer hospitality."
+    },
+    "filters": {
+      "All": "All",
+      "Wedding": "Wedding",
+      "Corporate": "Corporate",
+      "Birthday": "Birthday",
+      "Engagement": "Engagement",
+      "Conference": "Conference",
+      "Private Party": "Private Party"
+    },
+    "empty": "More moments from this collection are coming soon.",
+    "aria": {
+      "close": "Close image",
+      "previous": "Previous image",
+      "next": "Next image",
+      "view": "View image"
+    },
+    "items": {
+      "Main Hall Dining": {
+        "title": "Main Hall Dining",
+        "tag": "Restaurant"
+      },
+      "Street Flavors": {
+        "title": "Street Flavors",
+        "tag": "Food"
+      },
+      "Khmer Cooking Workshop": {
+        "title": "Khmer Cooking Workshop",
+        "tag": "Experience"
+      },
+      "Kitchen Rituals": {
+        "title": "Kitchen Rituals",
+        "tag": "Food"
+      },
+      "Artisanal Plating": {
+        "title": "Artisanal Plating",
+        "tag": "Food"
+      },
+      "Private Gatherings": {
+        "title": "Private Gatherings",
+        "tag": "Events"
+      },
+      "Khmer Hospitality": {
+        "title": "Khmer Hospitality",
+        "tag": "People"
+      },
+      "The Private Room": {
+        "title": "The Private Room",
+        "tag": "Restaurant"
+      },
+      "A Day To Remember": {
+        "title": "A Day To Remember",
+        "tag": "Events"
+      },
+      "Little Moments": {
+        "title": "Little Moments",
+        "tag": "Family"
+      },
+      "Canopy Entrance": {
+        "title": "Canopy Entrance",
+        "tag": "Restaurant"
+      },
+      "Curves & Craft": {
+        "title": "Curves & Craft",
+        "tag": "Design"
+      }
+    }
   }
 }
