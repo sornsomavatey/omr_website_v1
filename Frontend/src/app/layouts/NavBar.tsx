@@ -4,6 +4,14 @@ import { Link, NavLink, useLocation } from 'react-router-dom';
 import whiteLogo from '@/assets/omr_logo_white.png';
 import { useAppStore } from '../store';
 import { useTranslation } from '@/hooks/useTranslation';
+import {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb';
 import './NavBar.css';
 
 const navLinksKeys: Record<string, string> = {
@@ -202,17 +210,49 @@ export default function Navbar() {
         className={`navbar navbar-${version} ${isReservationPage ? 'navbar-reservation-static' : ''
           }`}
       >
-        <div className="navbar-inner">
-          <Link
-            to="/"
-            aria-label={t('nav.aria.home')}
-            className="navbar-logo-link"
-            onClick={closeMobileMenu}
-          >
-            <span className="navbar-logo-frame">
-              <NavbarLogo />
-            </span>
-          </Link>
+        <div className={`navbar-inner ${(isToulKorkPage || isBoeungKakPage) ? 'navbar-inner-with-breadcrumb' : ''}`}>
+          <div className="flex items-center gap-3 justify-self-start">
+            <Link
+              to="/"
+              aria-label={t('nav.aria.home')}
+              className="navbar-logo-link"
+              onClick={closeMobileMenu}
+            >
+              <span className="navbar-logo-frame">
+                <NavbarLogo />
+              </span>
+            </Link>
+
+            {(isToulKorkPage || isBoeungKakPage) && (
+              <>
+                <span className="opacity-30 hidden lg:inline">/</span>
+                <Breadcrumb className="hidden lg:block">
+                  <BreadcrumbList className="text-current flex items-center gap-1.5 text-[11px] font-sans uppercase tracking-widest">
+                    <BreadcrumbItem className="opacity-60 hover:opacity-100 transition-opacity">
+                      <BreadcrumbLink asChild>
+                        <Link to="/">{t('nav.home', undefined, 'Home')}</Link>
+                      </BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator className="opacity-30" />
+                    <BreadcrumbItem className="opacity-60 hover:opacity-100 transition-opacity">
+                      <BreadcrumbLink asChild>
+                        <Link to="/branches">{t('nav.branches', undefined, 'Branches')}</Link>
+                      </BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator className="opacity-30" />
+                    <BreadcrumbItem>
+                      <BreadcrumbPage className="text-current font-semibold">
+                        {isBoeungKakPage 
+                          ? t('branchesPage.comparison.boeungKakTitle', undefined, 'Boeung Kak')
+                          : t('branchesPage.comparison.toulKorkTitle', undefined, 'Toul Kork')
+                        }
+                      </BreadcrumbPage>
+                    </BreadcrumbItem>
+                  </BreadcrumbList>
+                </Breadcrumb>
+              </>
+            )}
+          </div>
 
           <div className="navbar-desktop-nav">
             {navLinks.map((link) => (

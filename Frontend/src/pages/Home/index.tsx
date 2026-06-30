@@ -347,7 +347,7 @@ function GallerySection({ gallery }: { gallery: any[] }) {
 
         <Link
           to="/gallery"
-          className="px-8 py-3.5 border-2 border-[#6b9158] hover:bg-[#6b9158] text-[#6b9158] hover:text-white text-xs font-sans font-bold uppercase tracking-wider rounded-full transition-all duration-300"
+          className="inline-flex items-center justify-center min-h-[48px] px-9 rounded-full bg-white border border-[#c8dfc3] text-[#354330] hover:border-[#6b9659] hover:text-[#6b9659] hover:bg-[#6b9659]/5 text-sm font-sans font-medium transition-all duration-200"
         >
           {t('home.gallery.viewFull')}
         </Link>

@@ -542,7 +542,30 @@
 .events-gallery-link {
   width: max-content;
   margin: 32px auto 0;
-  display: flex
+  display: flex;
+}
+
+.events-pill-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 36px;
+  border-radius: 9999px;
+  background-color: #ffffff;
+  border: 1px solid #c8dfc3;
+  color: #354330;
+  font-family: var(--font-sans, "Inter", sans-serif);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.events-pill-link:hover {
+  border-color: #6b9659;
+  color: #6b9659;
+  background-color: rgba(107, 150, 89, 0.04);
 }
 
 .events-testimonials-section {

@@ -248,7 +248,7 @@ html[data-lang="kh"] select {
   font-family: "Kantumruy Pro", sans-serif;
 }
 
-/* Default headings (h1-h6) and font-serif elements to Kantumruy Pro bold in Khmer */
+
 html[lang="km"] h1,
 html[lang="km"] h2,
 html[lang="km"] h3,
@@ -299,13 +299,19 @@ html[data-lang="kh"] h2 * {
 
 html[lang="km"] p,
 html[lang="km"] li,
-html[lang="km"] label {
+html[lang="km"] label,
+html[data-lang="kh"] p,
+html[data-lang="kh"] li,
+html[data-lang="kh"] label {
   line-height: 1.55;
 }
 
 html[lang="km"] span,
 html[lang="km"] a,
-html[lang="km"] button {
+html[lang="km"] button,
+html[data-lang="kh"] span,
+html[data-lang="kh"] a,
+html[data-lang="kh"] button {
   line-height: 1.25;
 }
 
@@ -321,13 +327,25 @@ html[lang="km"] .navbar-reservation-button,
 html[lang="km"] .navbar-language-button,
 html[lang="km"] .navbar-mobile-language-button,
 html[lang="km"] .navbar-mobile-menu-button,
-html[lang="km"] .navbar-mobile-close-button {
+html[lang="km"] .navbar-mobile-close-button,
+html[data-lang="kh"] .navbar,
+html[data-lang="kh"] .navbar *,
+html[data-lang="kh"] .navbar-desktop-link,
+html[data-lang="kh"] .navbar-mobile-link,
+html[data-lang="kh"] .navbar-reservation-button,
+html[data-lang="kh"] .navbar-language-button,
+html[data-lang="kh"] .navbar-mobile-language-button,
+html[data-lang="kh"] .navbar-mobile-menu-button,
+html[data-lang="kh"] .navbar-mobile-close-button {
   font-family: "Kantumruy Pro", sans-serif !important;
   letter-spacing: 0;
 }
 
 html[lang="km"] .navbar-desktop-link,
 html[lang="km"] .navbar-mobile-link,
-html[lang="km"] .navbar-reservation-button {
+html[lang="km"] .navbar-reservation-button,
+html[data-lang="kh"] .navbar-desktop-link,
+html[data-lang="kh"] .navbar-mobile-link,
+html[data-lang="kh"] .navbar-reservation-button {
   line-height: 1.25;
 }

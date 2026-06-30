@@ -5,6 +5,7 @@ import { Check, ChevronDown, ChevronLeft, ChevronRight, Clock, FileText, Mail, S
 import FeaturePackageCard from '@/components/FeaturePackageCard';
 import SectionHeader from '@/components/SectionHeader';
 import EventSpaceCard from '@/components/EventSpaceCard';
+import TestimonialSection from '@/components/TestimonialSection';
 
 
 import imgHero     from '@/assets/home-v2/e900cacb721f9c81cd07b8415a03f20f42a39856.png';
@@ -19,8 +20,8 @@ import imgGal2     from '@/assets/home-v2/35b5b5843bc3a879390cc05c8e6b33eae70c2a
 import imgGal3     from '@/assets/home-v2/13a7aa4dee36d6ba805abc6f982eb04ec7df4c4c.png';
 import imgGal4     from '@/assets/home-v2/43310dd2158ca5c7f7d098abf280dc14124d42de.png';
 import imgGal5     from '@/assets/home-v2/9826b8c118c911c852174f3c0d0204245fd0da48.png';
-import imgInquiry  from '@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.png';
-import imgFinalCta from '@/assets/home-v2/36191a3943135f3542a0fe8b80adee304f122115.png';
+import imgInquiry  from '@/assets/Weeding.png';
+import imgFinalCta from '@/assets/Weeding.png';
 
 import './index.css';
 
@@ -133,15 +134,15 @@ const galleryItems: { src: string; alt: string; caption: string; cat: Exclude<Ga
 
 const testimonials = [
   {
-    quote: 'The team at One More Restaurant made our wedding reception absolutely perfect. Every detail was taken care of and the food was outstanding.',
+    text: 'The team at One More Restaurant made our wedding reception absolutely perfect. Every detail was taken care of and the food was outstanding.',
     name: 'Sopheak & Dara', role: 'Wedding Reception', stars: 5,
   },
   {
-    quote: 'We hosted our annual corporate dinner here and the experience was flawless. Professional staff, beautiful décor, and exceptional cuisine.',
+    text: 'We hosted our annual corporate dinner here and the experience was flawless. Professional staff, beautiful décor, and exceptional cuisine.',
     name: 'Chen Wei', role: 'Corporate Event', stars: 5,
   },
   {
-    quote: 'The private VIP suite was perfect for our family celebration. Intimate, elegant and the service was beyond our expectations.',
+    text: 'The private VIP suite was perfect for our family celebration. Intimate, elegant and the service was beyond our expectations.',
     name: 'Vannak Phal', role: 'Birthday Celebration', stars: 5,
   },
 ];
@@ -162,7 +163,6 @@ function Stars({ count }: { count: number }) {
 // ── Main ─────────────────────────────────────────────────────
 export default function EventsPage() {
   const [galleryFilter, setGalleryFilter] = useState<GalleryFilter>('All');
-  const [testimonialIdx, setTestimonialIdx] = useState(0);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [formSuccess, setFormSuccess] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
@@ -170,11 +170,6 @@ export default function EventsPage() {
   const visibleGallery = galleryFilter === 'All'
     ? galleryItems
     : galleryItems.filter((g) => g.cat === galleryFilter);
-
-  const prevTestimonial = () =>
-    setTestimonialIdx((i) => (i - 1 + testimonials.length) % testimonials.length);
-  const nextTestimonial = () =>
-    setTestimonialIdx((i) => (i + 1) % testimonials.length);
 
   function handleFormSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -319,62 +314,17 @@ export default function EventsPage() {
         </div>
 
         <div className="events-gallery-link">
-          <Link to="/gallery" className="events-pill-link">View Full Gallery →</Link>
+          <Link to="/gallery" className="events-pill-link">View Full Gallery</Link>
         </div>
       </section>
 
-      {/* ── TESTIMONIALS ────────────────────── */}
-      <section className="events-section events-testimonials-section">
-        <div className="events-section-heading">
-          <div className="events-eyebrow"><span />REVIEWS<span /></div>
-          <h2>What Our Guests Say</h2>
-        </div>
-
-        <div className="events-testimonial-grid">
-          {testimonials.map((t, i) => {
-            const offset = (i - testimonialIdx + testimonials.length) % testimonials.length;
-            return (
-              <div
-                key={t.name}
-                className="events-testimonial-card"
-                style={{ opacity: offset === 0 ? 1 : offset === 1 ? 0.85 : 0.7 }}
-              >
-                <Stars count={t.stars} />
-                <div className="events-quote">"</div>
-                <p>{t.quote}</p>
-                <div className="events-guest">
-                  <div style={{
-                    width: 40, height: 40, borderRadius: '50%',
-                    background: '#d0e8c5', display: 'flex', alignItems: 'center',
-                    justifyContent: 'center', color: '#4f7541', fontWeight: 700, fontSize: 16,
-                    flexShrink: 0,
-                  }}>
-                    {t.name[0]}
-                  </div>
-                  <div>
-                    <strong>{t.name}</strong>
-                    <small>{t.role}</small>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-
-        <div className="events-slider-controls">
-          <button type="button" onClick={prevTestimonial} aria-label="Previous review">
-            <ChevronLeft size={16} />
-          </button>
-          <span>
-            {testimonials.map((_, i) => (
-              <i key={i} className={i === testimonialIdx ? 'active' : ''} />
-            ))}
-          </span>
-          <button type="button" onClick={nextTestimonial} aria-label="Next review">
-            <ChevronRight size={16} />
-          </button>
-        </div>
-      </section>
+      {/* TESTIMONIALS */}
+      <TestimonialSection
+        eyebrow="REVIEWS"
+        title="What Our Guests Say"
+        description="Experiences shared by our valued customers"
+        testimonials={testimonials}
+      />
 
       {/* ── INQUIRY ─────────────────────────── */}
       <section id="inquiry">

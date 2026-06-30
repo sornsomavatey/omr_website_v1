@@ -32,7 +32,7 @@
 
   border-bottom: 1px solid rgba(33, 48, 28, 0.1);
 
-  box-shadow: 0 18px 45px rgba(33, 48, 28, 0.12);
+  box-shadow: none;
 
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
@@ -144,7 +144,7 @@
   color: currentColor;
   background: transparent;
 
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans, "Inter", sans-serif);
   font-size: 14px;
   font-weight: 400;
   line-height: 1;
@@ -215,6 +215,7 @@
   justify-content: center;
 
   height: 36px;
+  min-width: 140px;
   padding: 0 18px;
 
   color: #ffffff;
@@ -223,7 +224,7 @@
   border: 1px solid rgba(107, 145, 88, 0.3);
   border-radius: 999px;
 
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans, "Inter", sans-serif);
   font-size: 13px;
   font-weight: 600;
   line-height: 1;
@@ -609,7 +610,7 @@
 
   color: rgba(246, 253, 242, 0.62);
 
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans, "Inter", sans-serif);
   font-size: 27px;
   font-weight: 500;
   line-height: 1;
@@ -716,5 +717,21 @@
   .navbar-mobile-language-button,
   .navbar-mobile-link {
     transition: none;
+  }
+}
+
+/* =========================
+   Breadcrumbs in Navbar
+========================= */
+
+.navbar-inner.navbar-inner-with-breadcrumb {
+  grid-template-columns: auto minmax(0, 1fr) 240px;
+  gap: 20px;
+}
+
+@media (max-width: 1023px) {
+  .navbar-inner.navbar-inner-with-breadcrumb {
+    grid-template-columns: auto 1fr auto;
+    gap: 0;
   }
 }

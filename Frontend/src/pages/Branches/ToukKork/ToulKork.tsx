@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import SectionHeader from '@/components/SectionHeader';
+import TestimonialSection from '@/components/TestimonialSection';
 import DishCard from '@/components/ui/dish-card';
 import SharpImageCard from '@/components/SharpImageCard';
 import { useTranslation } from '@/hooks/useTranslation';
@@ -79,16 +80,6 @@ export default function ToulKork() {
     }
   ];
 
-  const [currentTestimonial, setCurrentTestimonial] = useState(0);
-
-  const nextTestimonial = () => {
-    setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
-  };
-
-  const prevTestimonial = () => {
-    setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length);
-  };
-
   // Set document title & SEO meta
   useEffect(() => {
     document.title = isKhmer ? "ភោជនីយដ្ឋាន វ័នម័រ - សាខាទួលគោក" : "One More Restaurant - Toul Kork Branch";
@@ -109,6 +100,7 @@ export default function ToulKork() {
           <img src={imgBranchToulKork} alt={isKhmer ? "អគារភោជនីយដ្ឋានវ័នម័រ ទួលគោក" : "One More Restaurant Toul Kork Building"} className="tk-hero-image" />
           <div className="tk-hero-overlay" />
         </div>
+
         <div className="tk-hero-content">
           <h1 className="tk-hero-title">
             {isKhmer ? <>ភោជនីយដ្ឋាន វ័នម័រ<br />ទួលគោក</> : <>One More Restaurant<br />Toul Kork</>}
@@ -356,62 +348,13 @@ export default function ToulKork() {
       </section>
 
       {/* 7. WHAT OUR GUESTS SAY */}
-      <section className="tk-section tk-testimonials">
-        <SectionHeader 
-          eyebrow={t('branchDetails.testimonials.eyebrow')} 
-          title={t('branchDetails.testimonials.title')} 
-          description={t('branchDetails.testimonials.desc')} 
-        />
-        
-        <div className="tk-testimonial-slider">
-          <div className="tk-testimonial-card">
-            <div className="tk-stars">
-              <Star size={16} fill="#6b9158" className="text-olive" />
-              <Star size={16} fill="#6b9158" className="text-olive" />
-              <Star size={16} fill="#6b9158" className="text-olive" />
-              <Star size={16} fill="#6b9158" className="text-olive" />
-              <Star size={16} fill="#6b9158" className="text-olive" />
-            </div>
-            
-            <span className="tk-quote-mark">“</span>
-            
-            <p className="tk-testimonial-text">
-              {testimonials[currentTestimonial].text}
-            </p>
-            
-            <div className="tk-testimonial-user">
-              <img 
-                src={testimonials[currentTestimonial].avatar} 
-                alt={testimonials[currentTestimonial].name} 
-                className="tk-avatar" 
-              />
-              <div className="tk-user-info">
-                <h4 className="tk-user-name">{testimonials[currentTestimonial].name}</h4>
-                <span className="tk-user-date">{testimonials[currentTestimonial].date}</span>
-              </div>
-            </div>
-          </div>
-          
-          <div className="tk-slider-nav">
-            <button onClick={prevTestimonial} className="tk-slider-btn" aria-label={isKhmer ? "ការវាយតម្លៃមុន" : "Previous review"}>
-              <ChevronLeft size={20} />
-            </button>
-            <div className="tk-slider-dots">
-              {testimonials.map((_, index) => (
-                <button 
-                  key={index} 
-                  onClick={() => setCurrentTestimonial(index)}
-                  className={`tk-slider-dot ${currentTestimonial === index ? 'active' : ''}`}
-                  aria-label={isKhmer ? `ទៅកាន់ការវាយតម្លៃទី ${index + 1}` : `Go to review ${index + 1}`}
-                />
-              ))}
-            </div>
-            <button onClick={nextTestimonial} className="tk-slider-btn" aria-label={isKhmer ? "ការវាយតម្លៃបន្ទាប់" : "Next review"}>
-              <ChevronRight size={20} />
-            </button>
-          </div>
-        </div>
-      </section>
+      <TestimonialSection
+        eyebrow={t('branchDetails.testimonials.eyebrow')}
+        title={t('branchDetails.testimonials.title')}
+        description={t('branchDetails.testimonials.desc')}
+        testimonials={testimonials}
+        isKhmer={isKhmer}
+      />
 
       {/* 8. VISIT US */}
       <section className="tk-section tk-visit">

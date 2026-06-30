@@ -92,7 +92,7 @@
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   border-bottom: 1px solid rgba(33, 48, 28, 0.08);
-  box-shadow: 0 10px 30px -10px rgba(33, 45, 27, 0.05);
+  box-shadow: none;
   transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
