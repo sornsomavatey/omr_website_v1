@@ -1249,7 +1249,7 @@
 
   .reservation-summary-card {
     position: static;
-    order: -1; /* Summary card goes to top on smaller screens */
+    order: initial; /* Keep summary below the completed selections */
     width: 100%;
     max-width: 100%;
   }
