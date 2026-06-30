@@ -6,6 +6,7 @@ import FeaturePackageCard from '@/components/FeaturePackageCard';
 import SectionHeader from '@/components/SectionHeader';
 import EventSpaceCard from '@/components/EventSpaceCard';
 import TestimonialSection from '@/components/TestimonialSection';
+import { createEventBooking } from '@/lib/api';
 
 
 import imgHero     from '@/assets/home-v2/e900cacb721f9c81cd07b8415a03f20f42a39856.png';
@@ -171,11 +172,45 @@ export default function EventsPage() {
     ? galleryItems
     : galleryItems.filter((g) => g.cat === galleryFilter);
 
-  function handleFormSubmit(e: React.FormEvent) {
+  async function handleFormSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setFormSuccess(true);
-    formRef.current?.reset();
-    setTimeout(() => setFormSuccess(false), 5000);
+    if (!formRef.current) return;
+
+    const formData = new FormData(formRef.current);
+    const name = formData.get('name') as string;
+    const phone = formData.get('phone') as string;
+    const company = formData.get('company') as string;
+    const emailInput = formData.get('email') as string;
+    const event_type = formData.get('event_type') as string;
+    const guest_count = Number(formData.get('guest_count') || 1);
+    const special_requirements = formData.get('special_requirements') as string;
+
+    // Construct valid payload
+    const email = emailInput || 'noemail@onemore.com';
+    const event_date = new Date().toISOString().split('T')[0]; // Current date
+
+    const package_details = [
+      company ? `Company Name: ${company}` : '',
+      special_requirements ? `Requirements: ${special_requirements}` : ''
+    ].filter(Boolean).join('\n') || 'None';
+
+    try {
+      await createEventBooking({
+        name,
+        email,
+        phone,
+        event_type,
+        guest_count,
+        event_date,
+        package_details
+      });
+      setFormSuccess(true);
+      formRef.current.reset();
+      setTimeout(() => setFormSuccess(false), 5000);
+    } catch (err) {
+      console.error(err);
+      alert('Failed to submit inquiry. Please try again.');
+    }
   }
 
   return (
@@ -348,24 +383,24 @@ export default function EventsPage() {
                 <div className="events-form-grid">
                   <label>
                     Full Name *
-                    <input type="text" placeholder="Enter full name" required />
+                    <input name="name" type="text" placeholder="Enter full name" required />
                   </label>
                   <label>
                     Phone Number *
-                    <input type="tel" placeholder="Enter phone number" required />
+                    <input name="phone" type="tel" placeholder="Enter phone number" required />
                   </label>
                   <label>
                     Company Name
-                    <input type="text" placeholder="Company Name" />
+                    <input name="company" type="text" placeholder="Company Name" />
                   </label>
                   <label>
                     Email Address (Optional)
-                    <input type="email" placeholder="Enter email address" />
+                    <input name="email" type="email" placeholder="Enter email address" />
                   </label>
                   <label>
                     Event Type
                     <div className="events-select-wrapper">
-                      <select defaultValue="Wedding">
+                      <select name="event_type" defaultValue="Wedding">
                         <option value="Wedding">Wedding</option>
                         <option value="Birthday">Birthday</option>
                         <option value="Corporate Event">Corporate Event</option>
@@ -378,11 +413,11 @@ export default function EventsPage() {
                   </label>
                   <label>
                     Guests
-                    <input type="number" min={1} placeholder="e.g. 150" />
+                    <input name="guest_count" type="number" min={1} placeholder="e.g. 150" required />
                   </label>
                   <label className="events-form-wide">
                     Special Requirements
-                    <textarea rows={4} placeholder="Tell us more about your event..." />
+                    <textarea name="special_requirements" rows={4} placeholder="Tell us more about your event..." />
                   </label>
                 </div>
                 <button type="submit" className="events-inquiry-submit">

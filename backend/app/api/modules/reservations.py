@@ -43,7 +43,7 @@ def create_reservation(res: ReservationCreate, db: Session = Depends(get_db)):
 
     # Format and send Telegram Alert
     alert_message = (
-        f"🚨 New Table Reservation Booking!\n"
+        f"📋 <b>Booking table</b>\n\n"
         f"• Customer: {db_res.customer_name}\n"
         f"• Phone: {db_res.customer_phone}\n"
         f"• Date: {db_res.reservation_date}\n"
@@ -56,13 +56,13 @@ def create_reservation(res: ReservationCreate, db: Session = Depends(get_db)):
     send_telegram_alert(alert_message)
 
     # Format and send Email Alert
-    email_subject = "OMR Reservation"
+    email_subject = "Booking table"
     email_text = alert_message
     email_html = f"""
     <html>
     <body style="font-family: Arial, sans-serif; color: #333; line-height: 1.6; max-width: 600px; margin: 0 auto; padding: 20px;">
         <h2 style="color: #d9534f; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-bottom: 20px;">
-            🚨 New Table Reservation Booking!
+            📋 Booking table
         </h2>
         <div style="background-color: #f9f9f9; border: 1px solid #e3e3e3; border-radius: 4px; padding: 20px; margin-bottom: 20px;">
             <table style="width: 100%; border-collapse: collapse;">

@@ -4,6 +4,8 @@ from typing import List
 from ..dependencies.db import get_db
 from ..dependencies.models import EventBooking
 from ..dependencies.schemas import EventBookingCreate, EventBookingResponse
+from ..utils.telegram import send_telegram_alert
+from ..utils.email import send_email_alert
 
 router = APIRouter()
 
@@ -22,6 +24,69 @@ def create_event_booking(event: EventBookingCreate, db: Session = Depends(get_db
     db.add(db_event)
     db.commit()
     db.refresh(db_event)
+
+    # Format and send Telegram Alert
+    alert_message = (
+        f"📋 <b>Booking events</b>\n\n"
+        f"• Customer: {db_event.name}\n"
+        f"• Phone: {db_event.phone}\n"
+        f"• Email: {db_event.email}\n"
+        f"• Event Type: {db_event.event_type}\n"
+        f"• Guest Count: {db_event.guest_count}\n"
+        f"• Date: {db_event.event_date}\n"
+        f"• Details / Requirements:\n{db_event.package_details or 'None'}"
+    )
+    send_telegram_alert(alert_message)
+
+    # Format and send Email Alert
+    email_subject = "Booking events"
+    email_text = alert_message
+    email_html = f"""
+    <html>
+    <body style="font-family: Arial, sans-serif; color: #333; line-height: 1.6; max-width: 600px; margin: 0 auto; padding: 20px;">
+        <h2 style="color: #6b9158; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-bottom: 20px;">
+            📋 Booking events
+        </h2>
+        <div style="background-color: #f9f9f9; border: 1px solid #e3e3e3; border-radius: 4px; padding: 20px; margin-bottom: 20px;">
+            <table style="width: 100%; border-collapse: collapse;">
+                <tr>
+                    <td style="padding: 8px 0; font-weight: bold; width: 140px; border-bottom: 1px solid #eee;">Customer:</td>
+                    <td style="padding: 8px 0; border-bottom: 1px solid #eee;">{db_event.name}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px 0; font-weight: bold; border-bottom: 1px solid #eee;">Phone:</td>
+                    <td style="padding: 8px 0; border-bottom: 1px solid #eee;">{db_event.phone}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px 0; font-weight: bold; border-bottom: 1px solid #eee;">Email:</td>
+                    <td style="padding: 8px 0; border-bottom: 1px solid #eee;">{db_event.email}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px 0; font-weight: bold; border-bottom: 1px solid #eee;">Event Type:</td>
+                    <td style="padding: 8px 0; border-bottom: 1px solid #eee;">{db_event.event_type}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px 0; font-weight: bold; border-bottom: 1px solid #eee;">Guest Count:</td>
+                    <td style="padding: 8px 0; border-bottom: 1px solid #eee;">{db_event.guest_count}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px 0; font-weight: bold; border-bottom: 1px solid #eee;">Date:</td>
+                    <td style="padding: 8px 0; border-bottom: 1px solid #eee;">{db_event.event_date}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px 0; font-weight: bold; vertical-align: top;">Details / Requirements:</td>
+                    <td style="padding: 8px 0; white-space: pre-wrap;">{db_event.package_details or 'None'}</td>
+                </tr>
+            </table>
+        </div>
+        <p style="font-size: 12px; color: #777; text-align: center; margin-top: 30px; border-top: 1px solid #eee; padding-top: 15px;">
+            This is an automated notification from the One More Restaurant booking system.
+        </p>
+    </body>
+    </html>
+    """
+    send_email_alert(email_subject, email_html, email_text)
+
     return db_event
 
 @router.get("/", response_model=List[EventBookingResponse])

@@ -115,4 +115,9 @@ export const createReservation = async (reservationData: any) => {
   return response.data;
 };
 
+export const createEventBooking = async (eventBookingData: any) => {
+  const response = await backendApi.post('/event-bookings/', eventBookingData);
+  return response.data;
+};
+
 export default api;
