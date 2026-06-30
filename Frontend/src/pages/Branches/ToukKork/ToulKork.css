@@ -1054,6 +1054,103 @@
 }
 
 
+/* Mobile-only refinements. Desktop and tablet layouts remain unchanged. */
+@media (max-width: 767px) {
+  .tk-page-container { overflow-x: clip; }
+
+  .tk-hero {
+    height: 100svh;
+    min-height: 560px;
+    max-height: 760px;
+  }
+
+  .tk-hero-content { padding: 88px 18px 40px; }
+
+  .tk-hero-title {
+    font-size: clamp(38px, 12vw, 52px);
+    line-height: 1.08;
+  }
+
+  .tk-hero-desc {
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .tk-hero .hero-cta-button {
+    width: min(100%, 280px);
+    min-height: 48px;
+    padding-right: 1.25rem !important;
+    padding-left: 1.25rem !important;
+  }
+
+  .tk-section { padding: 56px 16px; }
+
+  .tk-section-title,
+  .tk-heritage .text-center h2 {
+    font-size: clamp(28px, 9vw, 36px);
+  }
+
+  .tk-heritage-grid,
+  .tk-heritage-right,
+  .tk-heritage-right-top { gap: 10px; }
+
+  .tk-large-image { height: 250px; }
+  .tk-sub-image-top-half { height: 130px; }
+  .tk-sub-image-bottom-full { height: 180px; }
+
+  .tk-hospitality-container {
+    padding: 56px 16px;
+    gap: 32px;
+  }
+
+  .tk-hospitality-box { padding: 24px 20px; }
+  .tk-box-item { min-width: 0; }
+
+  .tk-room-img-wrapper,
+  .tk-menu-img-wrapper { height: 220px; }
+
+  .tk-room-body,
+  .tk-menu-body { padding: 22px 20px; }
+
+  .tk-menu-desc {
+    height: auto;
+    min-height: 0;
+  }
+
+  .tk-menu-footer {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .tk-btn-menu-full {
+    width: 100%;
+    min-height: 46px;
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+
+  .tk-events-grid .sic-card,
+  .tk-event-card { height: 280px; }
+
+  .tk-event-info { padding: 22px 20px; }
+  .tk-testimonial-card { padding: 30px 20px; }
+  .tk-testimonial-text { font-size: 16px; }
+  .tk-visit-map { height: 240px; }
+  .tk-visit-details { padding: 30px 20px; }
+  .tk-detail-item > div { min-width: 0; }
+  .tk-detail-value { overflow-wrap: anywhere; }
+
+  .tk-visit-actions { flex-direction: column; }
+
+  .tk-btn-directions,
+  .tk-btn-close {
+    width: 100%;
+    min-width: 0;
+    min-height: 46px;
+  }
+}
+
+
 /* KEYFRAMES FOR TRANSITION EFFECTS */
 @keyframes fadeInUp {
   from {

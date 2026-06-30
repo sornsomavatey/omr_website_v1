@@ -3,6 +3,8 @@ import { Link } from "react-router-dom"
 import { cn } from "@/lib/utils"
 import { DishImageFrame, type DishFrameVariant, variantClasses } from "./dish-image-frame"
 import { ChefBadge } from "./chef-badge"
+import { useTranslation } from "@/hooks/useTranslation"
+import { formatPrice } from "@/lib/price"
 
 export interface DishCardProps extends React.HTMLAttributes<HTMLDivElement> {
   name: string
@@ -42,6 +44,11 @@ export function DishCard({
   onActionClick,
   ...props
 }: DishCardProps) {
+  const { isKhmer } = useTranslation()
+  const localizedPrice = formatPrice(price, isKhmer)
+  const localizedPriceSuffix = isKhmer
+    ? (priceSuffix === "per person" ? "" : priceSuffix)
+    : priceSuffix
   
   const shapes: DishFrameVariant[] = ["right-leaf", "dome", "left-leaf"]
   const activeVariant = variant || (typeof index === "number" ? shapes[index % 3] : "right-leaf")
@@ -82,11 +89,11 @@ export function DishCard({
         <div className="flex items-center justify-between pt-2 mt-auto">
           <div className="flex items-baseline">
             <span className="text-[#212d1b] font-serif text-[32px] font-bold leading-none">
-              {price}
+              {localizedPrice}
             </span>
-            {priceSuffix && (
+            {localizedPriceSuffix && (
               <span className="text-xs text-[#646860]/80 font-sans font-light ml-1.5">
-                {priceSuffix}
+                {localizedPriceSuffix}
               </span>
             )}
           </div>

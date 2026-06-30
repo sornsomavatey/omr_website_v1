@@ -1054,6 +1054,103 @@
 }
 
 
+/* Mobile-only refinements. Desktop and tablet layouts remain unchanged. */
+@media (max-width: 767px) {
+  .bk-page-container { overflow-x: clip; }
+
+  .bk-hero {
+    height: 100svh;
+    min-height: 560px;
+    max-height: 760px;
+  }
+
+  .bk-hero-content { padding: 88px 18px 40px; }
+
+  .bk-hero-title {
+    font-size: clamp(38px, 12vw, 52px);
+    line-height: 1.08;
+  }
+
+  .bk-hero-desc {
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .bk-hero .hero-cta-button {
+    width: min(100%, 280px);
+    min-height: 48px;
+    padding-right: 1.25rem !important;
+    padding-left: 1.25rem !important;
+  }
+
+  .bk-section { padding: 56px 16px; }
+
+  .bk-section-title,
+  .bk-heritage .text-center h2 {
+    font-size: clamp(28px, 9vw, 36px);
+  }
+
+  .bk-heritage-grid,
+  .bk-heritage-right,
+  .bk-heritage-right-top { gap: 10px; }
+
+  .bk-large-image { height: 250px; }
+  .bk-sub-image-top-half { height: 130px; }
+  .bk-sub-image-bottom-full { height: 180px; }
+
+  .bk-hospitality-container {
+    padding: 56px 16px;
+    gap: 32px;
+  }
+
+  .bk-hospitality-box { padding: 24px 20px; }
+  .bk-box-item { min-width: 0; }
+
+  .bk-room-img-wrapper,
+  .bk-menu-img-wrapper { height: 220px; }
+
+  .bk-room-body,
+  .bk-menu-body { padding: 22px 20px; }
+
+  .bk-menu-desc {
+    height: auto;
+    min-height: 0;
+  }
+
+  .bk-menu-footer {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .bk-btn-menu-full {
+    width: 100%;
+    min-height: 46px;
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+
+  .bk-events-grid .sic-card,
+  .bk-event-card { height: 280px; }
+
+  .bk-event-info { padding: 22px 20px; }
+  .bk-testimonial-card { padding: 30px 20px; }
+  .bk-testimonial-text { font-size: 16px; }
+  .bk-visit-map { height: 240px; }
+  .bk-visit-details { padding: 30px 20px; }
+  .bk-detail-item > div { min-width: 0; }
+  .bk-detail-value { overflow-wrap: anywhere; }
+
+  .bk-visit-actions { flex-direction: column; }
+
+  .bk-btn-directions,
+  .bk-btn-close {
+    width: 100%;
+    min-width: 0;
+    min-height: 46px;
+  }
+}
+
+
 /* KEYFRAMES FOR TRANSITION EFFECTS */
 @keyframes fadeInUp {
   from {

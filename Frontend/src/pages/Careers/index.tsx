@@ -52,21 +52,21 @@ export default function Careers() {
   const { header, jobs } = data;
 
   return (
-    <div className="pt-28 pb-20 max-w-7xl mx-auto px-4">
-      <div className="max-w-2xl mx-auto text-center mb-12">
-        <h1 className="text-4xl font-bold font-serif text-dark-green mb-4">{header.title}</h1>
+    <div className="pt-24 sm:pt-28 pb-14 sm:pb-20 max-w-7xl mx-auto px-5 sm:px-6">
+      <div className="max-w-2xl mx-auto text-center mb-9 sm:mb-12">
+        <h1 className="text-3xl sm:text-4xl font-bold font-serif text-dark-green mb-4">{header.title}</h1>
         <p className="text-olive">
           {header.desc}
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-8">
         {jobs.map((job) => (
-          <div key={job.title} className="border border-gold/15 bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-all">
+          <div key={job.title} className="border border-gold/15 bg-white p-5 sm:p-6 rounded-lg shadow-sm hover:shadow-md transition-all">
             <span className="text-[10px] uppercase font-bold text-gold tracking-widest">{job.type}</span>
             <h3 className="text-xl font-bold font-serif text-dark-green mt-1 mb-3">{job.title}</h3>
             <p className="text-sm text-olive/80 mb-6">{job.desc}</p>
-            <button className="text-xs uppercase font-bold tracking-wider text-dark-green hover:text-gold transition-colors">
+            <button className="min-h-11 text-xs uppercase font-bold tracking-wider text-dark-green hover:text-gold transition-colors">
               Apply Now &rarr;
             </button>
           </div>

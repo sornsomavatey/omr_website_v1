@@ -264,7 +264,7 @@ export default function ToulKork() {
               : "A classic Khmer dish of fish steamed in a thick savory coconut curry custard wrapped in banana leaves."}
             image={imgDish1}
             price="$24"
-            priceSuffix={isKhmer ? "ដុល្លារ / សុទ្ធ" : "USD / Net"}
+            priceSuffix={isKhmer ? "សុទ្ធ" : "USD / Net"}
             actionText={t('branchDetails.chefRecs.addToCart')}
             index={0}
           />
@@ -277,7 +277,7 @@ export default function ToulKork() {
               : "Savory Cambodian fish amok cooked in traditional spices, coconut cream, and noni leaf."}
             image={imgDish2}
             price="$24"
-            priceSuffix={isKhmer ? "ដុល្លារ / សុទ្ធ" : "USD / Net"}
+            priceSuffix={isKhmer ? "សុទ្ធ" : "USD / Net"}
             actionText={t('branchDetails.chefRecs.addToCart')}
             index={1}
           />
@@ -290,7 +290,7 @@ export default function ToulKork() {
               : "Rich Khmer style steamed fish curry with local herbs, kaffir lime leaf, lemongrass paste, and coconut milk."}
             image={imgDish3}
             price="$24"
-            priceSuffix={isKhmer ? "ដុល្លារ / សុទ្ធ" : "USD / Net"}
+            priceSuffix={isKhmer ? "សុទ្ធ" : "USD / Net"}
             actionText={t('branchDetails.chefRecs.addToCart')}
             index={2}
           />

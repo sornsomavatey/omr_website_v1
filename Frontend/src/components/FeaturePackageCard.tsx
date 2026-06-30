@@ -1,6 +1,8 @@
 import { Check } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
+import { useTranslation } from '@/hooks/useTranslation';
+import { formatPrice } from '@/lib/price';
 
 import './FeaturePackageCard.css';
 
@@ -31,6 +33,10 @@ export default function FeaturePackageCard({
   bookHref = '#inquiry',
   className = '',
 }: FeaturePackageCardProps) {
+  const { isKhmer } = useTranslation();
+  const localizedPrice = formatPrice(price, isKhmer);
+  const localizedPriceUnit = isKhmer ? '/ ម្នាក់' : priceUnit;
+
   return (
     <article className={`fpc-card ${className}`.trim()}>
       <div className="fpc-image-wrap">
@@ -54,8 +60,8 @@ export default function FeaturePackageCard({
           <div className="fpc-price">
             <small>{priceLabel}</small>
             <strong>
-              {price}
-              <em>{priceUnit}</em>
+              {localizedPrice}
+              <em>{localizedPriceUnit}</em>
             </strong>
           </div>
 

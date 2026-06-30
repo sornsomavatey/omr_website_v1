@@ -1232,6 +1232,16 @@
 ========================= */
 
 @media (max-width: 1023px) {
+  .reservation-hero-container {
+    padding: 128px 32px 72px;
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .reservation-guest-card {
+    max-width: 560px;
+  }
+
   .reservation-form-container {
     grid-template-columns: 1fr;
     gap: 40px;
@@ -1262,6 +1272,40 @@
 }
 
 @media (max-width: 768px) {
+  .reservation-hero {
+    min-height: auto;
+  }
+
+  .reservation-hero-container {
+    padding: 118px 20px 56px;
+    gap: 32px;
+  }
+
+  .reservation-hero-copy h1 {
+    font-size: clamp(40px, 13vw, 58px);
+  }
+
+  .reservation-hero-description {
+    margin-top: 20px;
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  .reservation-guest-card {
+    padding: 26px 22px;
+    border-radius: 18px;
+  }
+
+  .reservation-form-section,
+  .reservation-faq-section {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
+  .reservation-form-main {
+    padding: 28px 20px;
+  }
+
   .branch-selection-grid {
     grid-template-columns: 1fr;
   }
@@ -1286,6 +1330,25 @@
 }
 
 @media (max-width: 480px) {
+  .reservation-hero-container {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
+  .reservation-guest-item {
+    grid-template-columns: 34px minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .reservation-guest-icon {
+    width: 34px;
+    height: 34px;
+  }
+
+  .reservation-step-heading {
+    gap: 12px;
+  }
+
   .reservation-form-main {
     padding: 24px 16px;
   }

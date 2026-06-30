@@ -238,4 +238,41 @@
     font-size: 12px;
     padding: 8px 20px;
   }
+
+  .menu-sticky-tabs-inner {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
+  .category-pill-btn {
+    min-height: 42px;
+    padding: 9px 20px;
+  }
+
+  .menu-section {
+    scroll-margin-top: 142px;
+  }
+}
+
+@media (max-width: 480px) {
+  .menu-hero-tabs-container {
+    gap: 8px;
+    padding: 0 8px;
+  }
+
+  .hero-category-pill-btn {
+    padding: 8px 14px;
+  }
+}
+
+/* Keep every food section visible on phones. This must remain after the
+   desktop reveal rules so category buttons are never required to show food. */
+@media (max-width: 768px) {
+  .menu-section.section-animate h2,
+  .menu-section.section-animate .grid,
+  .menu-section.section-animate.section-visible h2,
+  .menu-section.section-animate.section-visible .grid {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
