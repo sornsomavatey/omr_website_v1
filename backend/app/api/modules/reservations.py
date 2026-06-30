@@ -34,6 +34,8 @@ def create_reservation(res: ReservationCreate, db: Session = Depends(get_db)):
         reservation_date=formatted_date,
         reservation_time=res.reservation_time,
         guest_count=res.guest_count,
+        adults=res.adults,
+        kids=res.kids,
         area=res.area,
         special_requests=res.special_requests
     )
@@ -48,7 +50,7 @@ def create_reservation(res: ReservationCreate, db: Session = Depends(get_db)):
         f"• Phone: {db_res.customer_phone}\n"
         f"• Date: {db_res.reservation_date}\n"
         f"• Time Slot: {db_res.reservation_time}\n"
-        f"• Guest Count: {db_res.guest_count}\n"
+        f"• Guest Count: {db_res.guest_count} ({db_res.adults or 1} Adults, {db_res.kids or 0} Kids)\n"
         f"• Branch: {branch.name}\n"
         f"• Area: {db_res.area or 'Standard'}\n"
         f"• Special Requests: {db_res.special_requests or 'None'}"
@@ -84,7 +86,7 @@ def create_reservation(res: ReservationCreate, db: Session = Depends(get_db)):
                 </tr>
                 <tr>
                     <td style="padding: 8px 0; font-weight: bold; border-bottom: 1px solid #eee;">Guest Count:</td>
-                    <td style="padding: 8px 0; border-bottom: 1px solid #eee;">{db_res.guest_count}</td>
+                    <td style="padding: 8px 0; border-bottom: 1px solid #eee;">{db_res.guest_count} ({db_res.adults or 1} Adults, {db_res.kids or 0} Kids)</td>
                 </tr>
                 <tr>
                     <td style="padding: 8px 0; font-weight: bold; border-bottom: 1px solid #eee;">Branch:</td>

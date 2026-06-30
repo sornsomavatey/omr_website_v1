@@ -1,7 +1,7 @@
 import * as React from "react"
 import { Link } from "react-router-dom"
 import { cn } from "@/lib/utils"
-import { DishImageFrame, type DishFrameVariant } from "./dish-image-frame"
+import { DishImageFrame, type DishFrameVariant, variantClasses } from "./dish-image-frame"
 import { ChefBadge } from "./chef-badge"
 
 export interface DishCardProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -17,6 +17,13 @@ export interface DishCardProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?: DishFrameVariant
   index?: number
   onActionClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void
+}
+
+const cardContainerRadius = {
+  "left-leaf": "rounded-[24px_0px_24px_24px]",
+  "circle": "rounded-[24px_24px_24px_24px]",
+  "dome": "rounded-[24px_24px_24px_24px]",
+  "right-leaf": "rounded-[0px_24px_24px_24px]",
 }
 
 export function DishCard({
@@ -35,14 +42,15 @@ export function DishCard({
   onActionClick,
   ...props
 }: DishCardProps) {
-  // Determine variant based on index if variant is not explicitly provided
-  const shapes: DishFrameVariant[] = ["left-leaf", "dome", "right-leaf"]
-  const activeVariant = variant || (typeof index === "number" ? shapes[index % 3] : "left-leaf")
+  
+  const shapes: DishFrameVariant[] = ["right-leaf", "dome", "left-leaf"]
+  const activeVariant = variant || (typeof index === "number" ? shapes[index % 3] : "right-leaf")
 
   return (
     <div
       className={cn(
-        "group/dish-card group flex flex-col text-left bg-transparent border-0 shadow-none transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 relative",
+        "group/dish-card group flex flex-col text-left bg-white border border-[#dde0dc]/80 shadow-[0_10px_30px_-10px_rgba(33,45,27,0.04)] transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:shadow-[0_15px_35px_-10px_rgba(33,45,27,0.08)] relative overflow-hidden",
+        cardContainerRadius[activeVariant],
         className
       )}
       {...props}
@@ -56,7 +64,7 @@ export function DishCard({
         )}
       </div>
 
-      <div className="flex flex-col flex-grow mt-6">
+      <div className="flex flex-col flex-grow p-6 md:p-8 pt-4 md:pt-6">
         <span className="text-[#6b9158] font-sans text-[11px] font-bold uppercase tracking-[0.15em] mb-2 block">
           {category}
         </span>
@@ -65,9 +73,11 @@ export function DishCard({
           {name}
         </h3>
 
-        <p className="text-[#646860] text-sm font-sans font-light leading-relaxed mb-6">
-          {description}
-        </p>
+        {description && (
+          <p className="text-[#646860] text-sm font-sans font-light leading-relaxed mb-6">
+            {description}
+          </p>
+        )}
 
         <div className="flex items-center justify-between pt-2 mt-auto">
           <div className="flex items-baseline">

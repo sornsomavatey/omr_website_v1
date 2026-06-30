@@ -300,6 +300,7 @@ export default function ReservationPage() {
   // Time autocomplete dropdown state
   const [showTimeDropdown, setShowTimeDropdown] = useState(false);
   const timeInputWrapperRef = useRef<HTMLDivElement>(null);
+  const timeInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     Promise.all([getReservationsData(), getHomeData()])
@@ -550,8 +551,7 @@ export default function ReservationPage() {
       }
       return;
     }
-
-    // Prepare reservation payload matching FastAPI Pydantic schema
+    // Prepare reservation payload 
     const payload = {
       customer_name: fullName.trim(),
       customer_phone: phone.trim(),
@@ -559,6 +559,8 @@ export default function ReservationPage() {
       reservation_date: selectedDate.toISOString().split('T')[0],
       reservation_time: customTime || selectedTime,
       guest_count: adults + childrenCount,
+      adults: adults,
+      kids: childrenCount,
       area: selectedSeating || 'Standard',
       special_requests: specialRequest.trim() || null
     };
@@ -948,8 +950,12 @@ export default function ReservationPage() {
                     </div>
 
                     <div ref={timeInputWrapperRef} className="custom-time-input-wrapper">
-                      <Clock className="custom-time-icon" />
+                      <Clock
+                        className="custom-time-icon cursor-pointer"
+                        onClick={() => timeInputRef.current?.focus()}
+                      />
                       <input
+                        ref={timeInputRef}
                         type="text"
                         placeholder={t('reservationPage.form.placeholders.time', undefined, 'Enter time...')}
                         value={customTime}
@@ -965,7 +971,7 @@ export default function ReservationPage() {
                           }
                         }}
                       />
-                      {showTimeDropdown && customTime.trim().length > 0 && filteredTimeSuggestions.length > 0 && (
+                      {showTimeDropdown && filteredTimeSuggestions.length > 0 && (
                         <div className="time-dropdown-list">
                           {filteredTimeSuggestions.map((time) => (
                             <button

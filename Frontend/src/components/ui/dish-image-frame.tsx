@@ -11,11 +11,11 @@ export interface DishImageFrameProps extends React.HTMLAttributes<HTMLDivElement
   imageClassName?: string
 }
 
-const variantClasses = {
-  "left-leaf": "rounded-[200px_16px_200px_16px]",
-  "circle": "rounded-[200px_200px_16px_16px]", // dome alias for index mapping
-  "dome": "rounded-[200px_200px_16px_16px]",
-  "right-leaf": "rounded-[16px_200px_16px_200px]",
+export const variantClasses = {
+  "left-leaf": "rounded-[200px_0px_200px_0px]",
+  "circle": "rounded-[200px_200px_0px_0px]", // dome alias for index mapping
+  "dome": "rounded-[200px_200px_0px_0px]",
+  "right-leaf": "rounded-[0px_200px_0px_200px]",
   "menu-redesign": "rounded-[160px_16px_16px_16px]",
 }
 

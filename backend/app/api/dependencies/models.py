@@ -56,6 +56,8 @@ class Reservation(Base):
     reservation_date = Column(String(50), nullable=False)  # ISO Date String
     reservation_time = Column(String(50), nullable=False)  # Time Slot
     guest_count = Column(Integer, nullable=False)
+    adults = Column(Integer, nullable=True, default=1)
+    kids = Column(Integer, nullable=True, default=0)
     area = Column(String(100), nullable=False)  # Hall, Garden, VIP, VVIP
     special_requests = Column(Text, nullable=True)
     status = Column(String(50), default="Pending")  # Pending, Confirmed, Cancelled

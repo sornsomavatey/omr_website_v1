@@ -71,6 +71,8 @@ class ReservationCreate(BaseModel):
     reservation_date: str
     reservation_time: str
     guest_count: int = Field(..., gt=0)
+    adults: Optional[int] = 1
+    kids: Optional[int] = 0
     area: str
     special_requests: Optional[str] = None
 

@@ -3,7 +3,7 @@ import DishCard from '@/components/ui/dish-card';
 import { getMenuData } from '@/lib/api';
 import { useTranslation } from '@/hooks/useTranslation';
 import './index.css';
-import imgLotusHalf from '@/assets/lotus-half.png';
+import imgLotusHalf from '@/assets/Half lotus.png';
 
 // Background assets
 import imgHeroBg from '@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.png';
