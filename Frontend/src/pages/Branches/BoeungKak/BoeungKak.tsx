@@ -263,8 +263,8 @@ export default function BoeungKak() {
               ? "ម្ហូបខ្មែរបុរាណធ្វើពីត្រីចំហុយក្នុងទឹកគ្រឿងខ្ទិះដូងខាប់ រុំក្នុងស្លឹកចេក។"
               : "A classic Khmer dish of fish steamed in a thick savory coconut curry custard wrapped in banana leaves."}
             image={imgDish1}
-            price="$24"
-            priceSuffix={isKhmer ? "សុទ្ធ" : "USD / Net"}
+            price="USD 24"
+            priceSuffix={isKhmer ? "សុទ្ធ" : "/ Net"}
             actionText={t('branchDetails.chefRecs.addToCart')}
             index={0}
           />
@@ -276,8 +276,8 @@ export default function BoeungKak() {
               ? "អាម៉ុកត្រីខ្មែររសជាតិឈ្ងុយឆ្ងាញ់ ចម្អិនជាមួយគ្រឿងទេសប្រពៃណី ខ្ទិះដូង និងស្លឹកញរ។"
               : "Savory Cambodian fish amok cooked in traditional spices, coconut cream, and noni leaf."}
             image={imgDish2}
-            price="$24"
-            priceSuffix={isKhmer ? "សុទ្ធ" : "USD / Net"}
+            price="USD 24"
+            priceSuffix={isKhmer ? "សុទ្ធ" : "/ Net"}
             actionText={t('branchDetails.chefRecs.addToCart')}
             index={1}
           />
@@ -289,8 +289,8 @@ export default function BoeungKak() {
               ? "ការីត្រីចំហុយតាមបែបខ្មែរ សម្បូរទៅដោយជីរក្នុងស្រុក ស្លឹកក្រូចសើច គ្រឿងគល់ស្លឹកគ្រៃ និងខ្ទិះដូង។"
               : "Rich Khmer style steamed fish curry with local herbs, kaffir lime leaf, lemongrass paste, and coconut milk."}
             image={imgDish3}
-            price="$24"
-            priceSuffix={isKhmer ? "សុទ្ធ" : "USD / Net"}
+            price="USD 24"
+            priceSuffix={isKhmer ? "សុទ្ធ" : "/ Net"}
             actionText={t('branchDetails.chefRecs.addToCart')}
             index={2}
           />

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Check } from 'lucide-react';
+import { useTranslation } from '@/hooks/useTranslation';
 import './EventSpaceCard.css';
 
 export interface EventSpaceCardProps {
@@ -24,6 +25,8 @@ export const EventSpaceCard: React.FC<EventSpaceCardProps> = ({
   onViewDetailsClick,
   className = '',
 }) => {
+  const { isKhmer } = useTranslation();
+
   return (
     <div className={`event-space-card-component events-space-card ${className}`}>
       <div className="event-space-image-container">
@@ -53,14 +56,14 @@ export const EventSpaceCard: React.FC<EventSpaceCardProps> = ({
             onClick={onReserveClick}
             className="event-space-btn-primary"
           >
-            Reserve Space
+            {isKhmer ? 'កក់ឥឡូវនេះ' : 'Reserve Space'}
           </a>
           <a
             href="#inquiry"
             onClick={onViewDetailsClick}
             className="event-space-btn-secondary"
           >
-            View Details
+            {isKhmer ? 'ព័ត៌មានលម្អិត' : 'View Details'}
           </a>
         </div>
       </div>

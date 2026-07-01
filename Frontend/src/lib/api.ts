@@ -41,7 +41,7 @@ export const getMenuData = async () => {
       id: product.id,
       name: product.name,
       name_kh: product.name_kh,
-      price: product.price ? `$${parseFloat(product.price).toFixed(2)}` : '',
+      price: product.price ? `USD ${parseFloat(product.price).toFixed(2)}` : '',
       desc: product.description || '',
       img: cleanImageUrl,
       badge: (product.is_out_of_stock === '1' || (product.menu_out_of_stock && product.menu_out_of_stock.length > 0)) ? 'Out of Stock' : undefined,

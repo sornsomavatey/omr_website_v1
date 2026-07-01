@@ -6,8 +6,12 @@ export function toKhmerDigits(value: string) {
 }
 
 export function formatPrice(price: string, isKhmer: boolean) {
-  if (!isKhmer || !price) {
+  if (!price) {
     return price;
+  }
+
+  if (!isKhmer) {
+    return price.replace(/\$\s*/g, 'USD ');
   }
 
   const isAlreadyRiel = /រៀល|KHR/i.test(price);

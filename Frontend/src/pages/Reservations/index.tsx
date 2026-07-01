@@ -132,7 +132,7 @@ function FaqSection() {
     },
     {
       q: 'Can I bring my own wine?',
-      a: 'Yes, you may bring your own wine. A corkage fee of $15 per bottle applies.',
+      a: 'Yes, you may bring your own wine. A corkage fee of USD 15 per bottle applies.',
     },
     {
       q: 'Are pets allowed?',
