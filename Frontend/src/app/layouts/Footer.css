@@ -265,6 +265,8 @@ html[lang="km"] .site-footer * {
 
   .site-footer-column {
     min-width: 0;
+    align-items: center;
+    text-align: center;
   }
 
   .site-footer-heading {
@@ -272,12 +274,35 @@ html[lang="km"] .site-footer * {
   }
 
   .site-footer-links {
+    align-items: flex-start;
     gap: 12px;
+    text-align: left;
   }
 
   .site-footer-link {
     font-size: 12px;
     line-height: 1.4;
+  }
+
+  html[data-lang="kh"] .site-footer-column,
+  html[lang="km"] .site-footer-column {
+    width: max-content;
+    max-width: 100%;
+    justify-self: center;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  html[data-lang="kh"] .site-footer-heading,
+  html[lang="km"] .site-footer-heading,
+  html[data-lang="kh"] .site-footer-links,
+  html[lang="km"] .site-footer-links {
+    width: 100%;
+  }
+
+  html[data-lang="kh"] .site-footer-heading,
+  html[lang="km"] .site-footer-heading {
+    text-align: left;
   }
 
   .site-footer-divider {
