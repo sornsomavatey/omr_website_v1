@@ -233,6 +233,19 @@
   align-items: start;
 }
 
+/* Keep all reservation form and summary copy in Kantumruy when Khmer is active. */
+html[lang="km"] .reservation-form-container,
+html[lang="km"] .reservation-form-container *,
+html[data-lang="kh"] .reservation-form-container,
+html[data-lang="kh"] .reservation-form-container * {
+  font-family: "Kantumruy Pro", sans-serif !important;
+}
+
+html[lang="km"] .reservation-form-container ::placeholder,
+html[data-lang="kh"] .reservation-form-container ::placeholder {
+  font-family: "Kantumruy Pro", sans-serif !important;
+}
+
 .reservation-form-main {
   background-color: #ffffff;
   border: 1px solid rgba(107, 145, 88, 0.12);
