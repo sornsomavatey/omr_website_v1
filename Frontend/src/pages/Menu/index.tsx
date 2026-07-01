@@ -337,6 +337,7 @@ export default function Menu() {
                 {menuItemsData[category].map((dish, index) => (
                   <DishCard
                     key={`${dish.name}-${index}`}
+                    className="menu-dish-card"
                     index={index}
                     name={dish.name}
                     category={dish.category}
@@ -344,6 +345,7 @@ export default function Menu() {
                     image={dish.img}
                     price={dish.price}
                     badge={dish.badge}
+                    actionText={isKhmer ? 'កម្មង់ឥឡូវនេះ' : 'Add to Order'}
                   />
                 ))}
               </div>

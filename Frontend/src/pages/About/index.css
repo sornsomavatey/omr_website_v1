@@ -118,8 +118,17 @@
 html[data-lang="kh"] .about-hero h1,
 html[lang="km"] .about-hero h1 {
   font-size: clamp(40px, 5vw, 62px);
-  line-height: 1.5 !important;
-  letter-spacing: 0;
+  line-height: 1.65 !important;
+  letter-spacing: .02em;
+  word-spacing: .12em;
+  padding-block: .08em;
+}
+
+html[data-lang="kh"] .about-hero .about-eyebrow,
+html[lang="km"] .about-hero .about-eyebrow {
+  margin-bottom: 20px;
+  line-height: 1.6;
+  letter-spacing: .06em;
 }
 
 html[data-lang="kh"] .about-page h2,

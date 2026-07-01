@@ -328,6 +328,13 @@ html[data-lang="kh"] h2 * {
   line-height: 1.7 !important;
 }
 
+/* Use Kantumruy for Khmer UI copy that component styles otherwise leave in
+   Inter/Playfair. The Moulpali h1/h2 system above is deliberately excluded. */
+html[lang="km"] body *:not(h1, h1 *, h2, h2 *),
+html[data-lang="kh"] body *:not(h1, h1 *, h2, h2 *) {
+  font-family: "Kantumruy Pro", sans-serif !important;
+}
+
 html[lang="km"] p,
 html[lang="km"] li,
 html[lang="km"] label,

@@ -76,7 +76,7 @@ export function DishCard({
           {category}
         </span>
 
-        <h3 className="font-serif text-[32px] text-[#212d1b] font-semibold tracking-wide leading-tight mb-3">
+        <h3 className="dish-card-title font-serif text-[32px] text-[#212d1b] font-semibold tracking-wide leading-tight mb-3">
           {name}
         </h3>
 
@@ -86,9 +86,9 @@ export function DishCard({
           </p>
         )}
 
-        <div className="flex items-center justify-between pt-2 mt-auto">
+        <div className="dish-card-footer flex items-center justify-between pt-2 mt-auto">
           <div className="flex items-baseline">
-            <span className="text-[#212d1b] font-serif text-[32px] font-bold leading-none">
+            <span className="dish-card-price text-[#212d1b] font-serif text-[32px] font-bold leading-none">
               {localizedPrice}
             </span>
             {localizedPriceSuffix && (
@@ -101,7 +101,7 @@ export function DishCard({
           <Link
             to={href}
             onClick={onActionClick}
-            className="text-[#4b653c] hover:text-[#384c2d] font-sans font-semibold text-sm tracking-wide transition-colors duration-200 flex items-center gap-1"
+            className="dish-card-action text-[#4b653c] hover:text-[#384c2d] font-sans font-semibold text-sm tracking-wide transition-colors duration-200 flex items-center gap-1"
           >
             {actionText} →
           </Link>
