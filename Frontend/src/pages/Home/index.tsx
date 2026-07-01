@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { getHomeData } from '@/lib/api';
 import SignatureDishes from '@/components/SignatureDishes';
 import LocationCard from '@/components/LocationCard';
+import SharedTestimonialSection from '@/components/TestimonialSection';
 import { useTranslation } from '@/hooks/useTranslation';
 import {
   ArrowRight,
@@ -223,7 +224,7 @@ function LocationsSection({
   branches: any[];
   onDetailClick?: (branch: any) => void;
 }) {
-  const { t } = useTranslation();
+  const { t, isKhmer } = useTranslation();
 
   const tagKeyMap: Record<string, string> = {
     "Family Friendly": "home.locations.tags.familyFriendly",
@@ -235,11 +236,11 @@ function LocationsSection({
   };
 
   return (
-    <section className="w-full py-24 bg-white flex flex-col items-center">
+    <section className="home-locations-section w-full py-24 bg-white flex flex-col items-center">
       <div className="max-w-[1440px] w-full px-6 md:px-[64px] text-center">
         <SectionHeader
           eyebrow={t('home.locations.eyebrow')}
-          title={t('home.locations.title')}
+          title={isKhmer ? <>ភោជនីយដ្ឋាន<br />វ័នម័រ</> : t('home.locations.title')}
           description={t('home.locations.description')}
         />
 
@@ -504,7 +505,7 @@ function TestimonialsSection({ testimonials }: { testimonials: Testimonial[] }) 
 
 export default function HomePage() {
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const { t, isKhmer } = useTranslation();
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -588,7 +589,13 @@ export default function HomePage() {
         }}
       />
       <GallerySection gallery={data.gallery} />
-      <TestimonialsSection testimonials={testimonialsList} />
+      <SharedTestimonialSection
+        eyebrow={t('home.testimonials.eyebrow')}
+        title={t('home.testimonials.title')}
+        description={t('home.testimonials.description')}
+        testimonials={testimonialsList}
+        isKhmer={isKhmer}
+      />
     </div>
   );
 }

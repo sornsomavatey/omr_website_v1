@@ -162,7 +162,7 @@ function Stars({ count }: { count: number }) {
 
 // ── Main ─────────────────────────────────────────────────────
 export default function EventsPage() {
-  const { t, getObject } = useTranslation();
+  const { t, getObject, isKhmer } = useTranslation();
   const [galleryFilter, setGalleryFilter] = useState<GalleryFilter>('All');
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [formSuccess, setFormSuccess] = useState(false);
@@ -475,6 +475,7 @@ export default function EventsPage() {
         title={t('eventsPage.testimonials.title', undefined, 'What Our Guests Say')}
         description={t('eventsPage.testimonials.desc', undefined, 'Experiences shared by our valued customers')}
         testimonials={testimonialsList}
+        isKhmer={isKhmer}
       />
 
       {/* ── INQUIRY ─────────────────────────── */}
