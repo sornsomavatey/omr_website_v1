@@ -54,12 +54,30 @@
 /* Custom base adjustments */
 html {
   scroll-behavior: smooth;
+  overflow-x: clip;
 }
 
 body {
   background-color: var(--color-cream);
   color: var(--color-dark-green);
   font-family: 'Playfair Display', serif;
+  min-width: 320px;
+  overflow-x: clip;
+}
+
+img,
+svg,
+video,
+canvas,
+iframe {
+  max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+  max-width: 100%;
 }
 
 h1,
@@ -224,6 +242,19 @@ h6 {
   background-color: #5b7d4a !important;
 }
 
+@media (max-width: 640px) {
+  input,
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+
+  .scroll-to-top-btn {
+    right: max(16px, env(safe-area-inset-right)) !important;
+    bottom: max(16px, env(safe-area-inset-bottom)) !important;
+  }
+}
+
 /* =========================
    Khmer Font Override
 ========================= */
@@ -295,6 +326,13 @@ html[lang="km"] h2 *,
 html[data-lang="kh"] h2,
 html[data-lang="kh"] h2 * {
   line-height: 1.7 !important;
+}
+
+/* Use Kantumruy for Khmer UI copy that component styles otherwise leave in
+   Inter/Playfair. The Moulpali h1/h2 system above is deliberately excluded. */
+html[lang="km"] body *:not(h1, h1 *, h2, h2 *),
+html[data-lang="kh"] body *:not(h1, h1 *, h2, h2 *) {
+  font-family: "Kantumruy Pro", sans-serif !important;
 }
 
 html[lang="km"] p,

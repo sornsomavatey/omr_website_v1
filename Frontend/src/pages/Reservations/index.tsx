@@ -23,6 +23,7 @@ import {
 } from 'lucide-react';
 import { getReservationsData, getHomeData, createReservation } from '@/lib/api';
 import { useTranslation } from '@/hooks/useTranslation';
+import { toKhmerDigits } from '@/lib/price';
 import {
   imgHeroBg2,
   imgGallery1,
@@ -56,7 +57,7 @@ const iconMap: Record<string, React.ComponentType> = {
 };
 
 function GuestInformationCard({ info }: { info: any[] }) {
-  const { t } = useTranslation();
+  const { t, isKhmer } = useTranslation();
   return (
     <aside className="reservation-guest-card" aria-label={t('reservationPage.guestInformationAria', undefined, 'Guest information')}>
       <h2>{t('reservationPage.guestInformationTitle', undefined, 'Guest Information')}</h2>
@@ -73,7 +74,7 @@ function GuestInformationCard({ info }: { info: any[] }) {
 
               <div className="reservation-guest-copy">
                 <p>{item.label}</p>
-                <strong>{item.value}</strong>
+                <strong>{isKhmer ? toKhmerDigits(String(item.value)) : item.value}</strong>
               </div>
             </div>
           );
@@ -131,7 +132,7 @@ function FaqSection() {
     },
     {
       q: 'Can I bring my own wine?',
-      a: 'Yes, you may bring your own wine. A corkage fee of $15 per bottle applies.',
+      a: 'Yes, you may bring your own wine. A corkage fee of USD 15 per bottle applies.',
     },
     {
       q: 'Are pets allowed?',
@@ -263,7 +264,7 @@ const getMealCategoryFromTime = (
 };
 
 export default function ReservationPage() {
-  const { t, getObject } = useTranslation();
+  const { t, getObject, isKhmer } = useTranslation();
   const [resData, setResData] = useState<any>(null);
   const [homeData, setHomeData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -344,10 +345,10 @@ export default function ReservationPage() {
   };
 
   // Step 4: Occasion
-  const [selectedOccasion, setSelectedOccasion] = useState('Birthday Celebration');
+  const [selectedOccasion, setSelectedOccasion] = useState('birthdayCelebration');
 
   // Step 5: Seating
-  const [selectedSeating, setSelectedSeating] = useState('Private Room');
+  const [selectedSeating, setSelectedSeating] = useState('privateRoom');
   const [specialRequest, setSpecialRequest] = useState('');
 
   // Booking submit status
@@ -369,8 +370,10 @@ export default function ReservationPage() {
     );
   }
 
-  const branchesList: Branch[] = homeData.branches.map((branch: any) => ({
+  const translatedBranches = getObject<any[]>('reservationPage.branches', []);
+  const branchesList: Branch[] = homeData.branches.map((branch: any, index: number) => ({
     ...branch,
+    ...(translatedBranches[index] || {}),
     img: imageMap[branch.img] || branch.img,
   }));
 
@@ -388,6 +391,19 @@ export default function ReservationPage() {
       value: transItem.value || item.value,
     };
   });
+
+  const localizeNumber = (value: string | number) =>
+    isKhmer ? toKhmerDigits(String(value)) : String(value);
+
+  const formatTimeDisplay = (time: string) => {
+    if (!isKhmer) return time;
+    return toKhmerDigits(time)
+      .replace(/\s*AM/i, ' ព្រឹក')
+      .replace(/\s*PM/i, ' ល្ងាច');
+  };
+
+  const selectedBranchIndex = selectedBranch === 'Toul Kork' ? 0 : 1;
+  const selectedBranchDisplay = branchesList[selectedBranchIndex]?.name || selectedBranch;
 
   // Helper date calculations
   const daysInMonth = (year: number, month: number) => new Date(year, month + 1, 0).getDate();
@@ -477,6 +493,9 @@ export default function ReservationPage() {
     };
   });
 
+  const selectedOccasionDisplay =
+    occasions.find((occasion) => occasion.id === selectedOccasion)?.name || selectedOccasion;
+
   const seatingList = getObject<any[]>('reservationPage.seatingPreferences', []);
   const seatingPreferences = [
     { id: 'indoor', name: 'Indoor', img: diningSpacesList[3]?.img || imgHeroBg1 },
@@ -490,6 +509,9 @@ export default function ReservationPage() {
       name: transSeating.name || seating.name,
     };
   });
+
+  const selectedSeatingDisplay =
+    seatingPreferences.find((seating) => seating.id === selectedSeating)?.name || selectedSeating;
 
   const getOrdinalSuffix = (day: number) => {
     if (day > 3 && day < 21) return 'th';
@@ -509,6 +531,10 @@ export default function ReservationPage() {
     const dayNum = date.getDate();
     const yearNum = date.getFullYear();
     
+    if (isKhmer) {
+      return `${localizeNumber(dayNum)} ${monthName} ${localizeNumber(yearNum)}`;
+    }
+
     return `${monthName} ${dayNum}${getOrdinalSuffix(dayNum)} ${yearNum}`;
   };
 
@@ -561,7 +587,12 @@ export default function ReservationPage() {
       guest_count: adults + childrenCount,
       adults: adults,
       kids: childrenCount,
-      area: selectedSeating || 'Standard',
+      area: ({
+        indoor: 'Indoor',
+        outdoor: 'Outdoor',
+        privateRoom: 'Private Room',
+        bigRoom: 'Big Room',
+      } as Record<string, string>)[selectedSeating] || 'Standard',
       special_requests: specialRequest.trim() || null
     };
 
@@ -571,7 +602,9 @@ export default function ReservationPage() {
       })
       .catch((err) => {
         console.error("Failed to submit reservation:", err);
-        alert("There was an error processing your reservation. Please make sure the backend server is running.");
+        alert(isKhmer
+          ? 'មានបញ្ហាក្នុងការដំណើរការកក់តុរបស់អ្នក។ សូមពិនិត្យថាម៉ាស៊ីនមេកំពុងដំណើរការ។'
+          : 'There was an error processing your reservation. Please make sure the backend server is running.');
       });
   };
 
@@ -582,8 +615,8 @@ export default function ReservationPage() {
     setChildrenCount(2);
     setSelectedDate(new Date(2026, 5, 18));
     setSelectedTime('06:30 AM');
-    setSelectedOccasion('Birthday Celebration');
-    setSelectedSeating('Private Room');
+    setSelectedOccasion('birthdayCelebration');
+    setSelectedSeating('privateRoom');
     setSpecialRequest('');
     setIsSubmitted(false);
   };
@@ -626,7 +659,7 @@ export default function ReservationPage() {
             <div className="success-details mb-8">
               <div className="success-detail-row">
                 <span>{t('reservationPage.success.detailLabels.branch', undefined, 'Branch')}</span>
-                <strong>One More {selectedBranch}</strong>
+                <strong>{selectedBranchDisplay}</strong>
               </div>
               <div className="success-detail-row">
                 <span>{t('reservationPage.success.detailLabels.guestName', undefined, 'Guest Name')}</span>
@@ -640,9 +673,9 @@ export default function ReservationPage() {
                 <span>{t('reservationPage.success.detailLabels.guests', undefined, 'Guests')}</span>
                 <strong>
                   {t('reservationPage.success.guestsValue', {
-                    total: adults + childrenCount,
-                    adults,
-                    children: childrenCount
+                    total: localizeNumber(adults + childrenCount),
+                    adults: localizeNumber(adults),
+                    children: localizeNumber(childrenCount)
                   })}
                 </strong>
               </div>
@@ -651,7 +684,7 @@ export default function ReservationPage() {
                 <strong>
                   {t('reservationPage.success.dateTimeValue', {
                     date: formatDateDisplay(selectedDate),
-                    time: customTime || selectedTime
+                    time: formatTimeDisplay(customTime || selectedTime)
                   })}
                 </strong>
               </div>
@@ -659,8 +692,8 @@ export default function ReservationPage() {
                 <span>{t('reservationPage.success.detailLabels.seatingOccasion', undefined, 'Seating & Occasion')}</span>
                 <strong>
                   {t('reservationPage.success.seatingOccasionValue', {
-                    seating: selectedSeating,
-                    occasion: selectedOccasion
+                    seating: selectedSeatingDisplay,
+                    occasion: selectedOccasionDisplay
                   })}
                 </strong>
               </div>
@@ -671,7 +704,7 @@ export default function ReservationPage() {
             </button>
             <div className="text-center pb-2">
               <Link to="/" className="text-[#6b9158] hover:text-[#4d6a3f] font-sans text-sm font-medium underline underline-offset-4 transition-colors">
-                Back to Home
+                {isKhmer ? 'ត្រឡប់ទៅទំព័រដើម' : 'Back to Home'}
               </Link>
             </div>
           </div>
@@ -686,7 +719,7 @@ export default function ReservationPage() {
               {/* Step 1: Choose Branch */}
               <div className="step-container">
                 <div className="reservation-step-heading mb-8">
-                  <span>1</span>
+                  <span>{localizeNumber(1)}</span>
                   <div>
                     <h2>{stepBranchTitle}</h2>
                     <p>{stepBranchDesc}</p>
@@ -701,11 +734,11 @@ export default function ReservationPage() {
                     className={`branch-card-btn text-left ${selectedBranch === 'Toul Kork' ? 'branch-card-btn-active' : ''}`}
                   >
                     <div className="branch-card-image-wrapper">
-                      <img src={branchesList[0]?.img} alt="Toul Kork Branch" />
+                      <img src={branchesList[0]?.img} alt={branchesList[0]?.name} />
                     </div>
                     <div className="branch-card-content">
                       <div className="branch-card-header">
-                        <h3>One More Restaurant Toul Kork</h3>
+                        <h3>{branchesList[0]?.name}</h3>
                         {selectedBranch === 'Toul Kork' && (
                           <span className="branch-check-badge">
                             <Check className="w-3.5 h-3.5 text-white" />
@@ -727,11 +760,11 @@ export default function ReservationPage() {
                     className={`branch-card-btn text-left ${selectedBranch === 'Boeung Kak' ? 'branch-card-btn-active' : ''}`}
                   >
                     <div className="branch-card-image-wrapper">
-                      <img src={branchesList[1]?.img} alt="Boeung Kak Branch" />
+                      <img src={branchesList[1]?.img} alt={branchesList[1]?.name} />
                     </div>
                     <div className="branch-card-content">
                       <div className="branch-card-header">
-                        <h3>One More Restaurant Boeung Kak</h3>
+                        <h3>{branchesList[1]?.name}</h3>
                         {selectedBranch === 'Boeung Kak' && (
                           <span className="branch-check-badge">
                             <Check className="w-3.5 h-3.5 text-white" />
@@ -753,7 +786,7 @@ export default function ReservationPage() {
               {/* Step 2: Contact Details */}
               <div className="step-container">
                 <div className="reservation-step-heading mb-8">
-                  <span>2</span>
+                  <span>{localizeNumber(2)}</span>
                   <div>
                     <h2>{stepContactTitle}</h2>
                     <p>{stepContactDesc}</p>
@@ -792,7 +825,7 @@ export default function ReservationPage() {
               {/* Step 3: Guests */}
               <div className="step-container">
                 <div className="reservation-step-heading mb-8">
-                  <span>3</span>
+                  <span>{localizeNumber(3)}</span>
                   <div>
                     <h2>{stepGuestsTitle}</h2>
                     <p>{stepGuestsDesc}</p>
@@ -811,7 +844,7 @@ export default function ReservationPage() {
                       >
                         <Minus className="w-4 h-4" />
                       </button>
-                      <span className="counter-value">{adults}</span>
+                      <span className="counter-value">{localizeNumber(adults)}</span>
                       <button
                         type="button"
                         onClick={() => setAdults((prev) => prev + 1)}
@@ -833,7 +866,7 @@ export default function ReservationPage() {
                       >
                         <Minus className="w-4 h-4" />
                       </button>
-                      <span className="counter-value">{childrenCount}</span>
+                      <span className="counter-value">{localizeNumber(childrenCount)}</span>
                       <button
                         type="button"
                         onClick={() => setChildrenCount((prev) => prev + 1)}
@@ -847,7 +880,7 @@ export default function ReservationPage() {
                   <div className="total-guests-pill-wrapper">
                     <div className="total-guests-pill">
                       <User className="w-4 h-4 text-[#6b9158]" />
-                      <span>{t('reservationPage.form.totalGuests', { count: adults + childrenCount })}</span>
+                      <span>{t('reservationPage.form.totalGuests', { count: localizeNumber(adults + childrenCount) })}</span>
                     </div>
                   </div>
                 </div>
@@ -858,7 +891,7 @@ export default function ReservationPage() {
               {/* Step 3 (repeated): Select Date & Time */}
               <div className="step-container">
                 <div className="reservation-step-heading mb-8">
-                  <span>3</span>
+                  <span>{localizeNumber(3)}</span>
                   <div>
                     <h2>{stepDateTimeTitle}</h2>
                     <p>{stepDateTimeDesc}</p>
@@ -870,7 +903,7 @@ export default function ReservationPage() {
                   <div className="custom-calendar-widget">
                     <div className="calendar-header">
                       <span className="calendar-month-year">
-                        {monthNames[currentMonth]} {currentYear}
+                        {monthNames[currentMonth]} {localizeNumber(currentYear)}
                       </span>
                       <div className="calendar-nav">
                         <button type="button" onClick={handlePrevMonth} aria-label={t('reservationPage.form.ariaLabels.previousMonth', undefined, 'Previous month')}>
@@ -904,7 +937,7 @@ export default function ReservationPage() {
                               isSelected ? 'calendar-cell-selected' : ''
                             }`}
                           >
-                            <span>{day}</span>
+                            <span>{localizeNumber(day)}</span>
                           </button>
                         );
                       })}
@@ -943,7 +976,7 @@ export default function ReservationPage() {
                             }}
                             className={`time-slot-btn ${isSelected ? 'time-slot-btn-selected' : ''}`}
                           >
-                            {slot}
+                            {formatTimeDisplay(slot)}
                           </button>
                         );
                       })}
@@ -980,7 +1013,7 @@ export default function ReservationPage() {
                               className="time-dropdown-item"
                               onClick={() => handleSelectSuggestion(time)}
                             >
-                              {time}
+                              {formatTimeDisplay(time)}
                             </button>
                           ))}
                         </div>
@@ -995,7 +1028,7 @@ export default function ReservationPage() {
               {/* Step 4: Occasion */}
               <div className="step-container">
                 <div className="reservation-step-heading mb-8">
-                  <span>4</span>
+                  <span>{localizeNumber(4)}</span>
                   <div>
                     <h2>{stepOccasionTitle}</h2>
                     <p>{stepOccasionDesc}</p>
@@ -1005,13 +1038,13 @@ export default function ReservationPage() {
                 <div className="occasion-grid">
                   {occasions.map((occ) => {
                     const OccIcon = occ.icon;
-                    const isSelected = selectedOccasion === occ.name;
+                    const isSelected = selectedOccasion === occ.id;
 
                     return (
                       <button
                         key={occ.name}
                         type="button"
-                        onClick={() => setSelectedOccasion(occ.name)}
+                        onClick={() => setSelectedOccasion(occ.id)}
                         className={`occasion-btn-card ${isSelected ? 'occasion-btn-card-active' : ''}`}
                       >
                         <OccIcon className="w-5 h-5 mb-2 shrink-0" />
@@ -1027,7 +1060,7 @@ export default function ReservationPage() {
               {/* Step 5: Seating Preference */}
               <div className="step-container">
                 <div className="reservation-step-heading mb-8">
-                  <span>5</span>
+                  <span>{localizeNumber(5)}</span>
                   <div>
                     <h2>{stepSeatingTitle}</h2>
                     <p>{stepSeatingDesc}</p>
@@ -1036,13 +1069,13 @@ export default function ReservationPage() {
 
                 <div className="seating-grid">
                   {seatingPreferences.map((seating) => {
-                    const isSelected = selectedSeating === seating.name;
+                    const isSelected = selectedSeating === seating.id;
 
                     return (
                       <button
                         key={seating.name}
                         type="button"
-                        onClick={() => setSelectedSeating(seating.name)}
+                        onClick={() => setSelectedSeating(seating.id)}
                         className={`seating-btn-card text-left ${isSelected ? 'seating-btn-card-active' : ''}`}
                       >
                         <div className="seating-card-image-wrapper">
@@ -1087,7 +1120,7 @@ export default function ReservationPage() {
                 <div className="summary-list">
                   <div className="summary-item summary-item-branch">
                     <span>{t('reservationPage.summary.labels.branch', undefined, 'Branch')}</span>
-                    <strong>One More {selectedBranch}</strong>
+                    <strong>{selectedBranchDisplay}</strong>
                   </div>
 
                   <div className="summary-item">
@@ -1103,9 +1136,12 @@ export default function ReservationPage() {
                   <div className="summary-item">
                     <span>{t('reservationPage.summary.labels.guests', undefined, 'Guests')}</span>
                     <strong>
-                      {t('reservationPage.form.totalGuests', { count: adults + childrenCount })}
+                      {t('reservationPage.form.totalGuests', { count: localizeNumber(adults + childrenCount) })}
                       <span className="guest-breakdown">
-                        {t('reservationPage.summary.guestBreakdown', { adults, children: childrenCount })}
+                        {t('reservationPage.summary.guestBreakdown', {
+                          adults: localizeNumber(adults),
+                          children: localizeNumber(childrenCount)
+                        })}
                       </span>
                     </strong>
                   </div>
@@ -1116,8 +1152,8 @@ export default function ReservationPage() {
                       {formatDateDisplay(selectedDate)}
                       <span className="time-tag">
                         {t('reservationPage.summary.timeTag', {
-                          time: (customTime || selectedTime).toLowerCase(),
-                          category: translatedTimeCategory(timeCategory).toLowerCase()
+                          time: formatTimeDisplay(customTime || selectedTime),
+                          category: translatedTimeCategory(timeCategory)
                         })}
                       </span>
                     </strong>
@@ -1125,12 +1161,12 @@ export default function ReservationPage() {
 
                   <div className="summary-item">
                     <span>{t('reservationPage.summary.labels.occasion', undefined, 'Occasion')}</span>
-                    <strong>{selectedOccasion}</strong>
+                    <strong>{selectedOccasionDisplay}</strong>
                   </div>
 
                   <div className="summary-item">
                     <span>{t('reservationPage.summary.labels.seating', undefined, 'Seating')}</span>
-                    <strong>{selectedSeating}</strong>
+                    <strong>{selectedSeatingDisplay}</strong>
                   </div>
                 </div>
 

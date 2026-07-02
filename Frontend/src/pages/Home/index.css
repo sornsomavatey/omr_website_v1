@@ -1473,6 +1473,27 @@
     width: 20px;
     height: 20px;
   }
+
+  html[data-lang="kh"] .hero-scroll-button,
+  html[lang="km"] .hero-scroll-button {
+    bottom: 6px;
+    flex-direction: row;
+    gap: 5px;
+    padding: 4px 8px;
+  }
+
+  html[data-lang="kh"] .hero-scroll-button span,
+  html[lang="km"] .hero-scroll-button span {
+    line-height: 1.4;
+    letter-spacing: 0;
+    white-space: nowrap;
+  }
+
+  html[data-lang="kh"] .hero-scroll-icon,
+  html[lang="km"] .hero-scroll-icon {
+    width: 16px;
+    height: 16px;
+  }
 }
 
 /* Signature Dishes Hover Overlays */

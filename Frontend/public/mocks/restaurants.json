@@ -20,7 +20,7 @@
       "address": "37 St 315, Phnom Penh 120407",
       "phone": "023 888 222",
       "hours": "Daily: 06:00 AM - 10:00 PM",
-      "image": "@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.png",
+      "image": "@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.webp",
       "tags": ["Family Friendly", "Business Meeting", "Private Room"],
       "description": "Our signature branch in Toul Kork offers a beautiful garden dining experience and elegant private rooms. Features a layout designed for family gatherings, professional business meetings, and celebrations.",
       "highlights": [
@@ -37,7 +37,7 @@
       "address": "G2 Street R11, Phnom Penh 120210",
       "phone": "021 888 222",
       "hours": "Daily: 06:00 AM - 10:00 PM",
-      "image": "@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.png",
+      "image": "@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.webp",
       "tags": ["Event Space", "Large Groups", "Corporate"],
       "description": "Our Boeung Kak branch showcases striking modern architectural design and expansive layouts. An ideal setting for large-scale corporate events, banquets, and memorable dining experiences.",
       "highlights": [

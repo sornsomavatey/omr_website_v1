@@ -9,20 +9,21 @@ import TestimonialSection from '@/components/TestimonialSection';
 import { createEventBooking } from '@/lib/api';
 import { useTranslation } from '@/hooks/useTranslation';
 
-import imgHero     from '@/assets/home-v2/e900cacb721f9c81cd07b8415a03f20f42a39856.png';
-import imgPkg1     from '@/assets/home-v2/80bc2f874a3b8b65fc3bd247f23046db8632d909.png';
-import imgPkg2     from '@/assets/Event & Celebrations card-2.png';
-import imgPkg3     from '@/assets/Event & Celebrations card 03.png';
-import imgPkg4     from '@/assets/home-v2/9826b8c118c911c852174f3c0d0204245fd0da48.png';
-import imgSpace1   from '@/assets/home-v2/480cb1d76af2706b9692b726ad26ec2bf396f8c8.png';
-import imgSpace2   from '@/assets/home-v2/e8f4b56e423777f3f6c3df39c6ef78914b278e17.png';
-import imgGal1     from '@/assets/home-v2/07e47044152ad38cdbb1bda5ae392fb848e3a37a.png';
-import imgGal2     from '@/assets/home-v2/35b5b5843bc3a879390cc05c8e6b33eae70c2a8a.png';
-import imgGal3     from '@/assets/home-v2/13a7aa4dee36d6ba805abc6f982eb04ec7df4c4c.png';
-import imgGal4     from '@/assets/home-v2/43310dd2158ca5c7f7d098abf280dc14124d42de.png';
-import imgGal5     from '@/assets/home-v2/9826b8c118c911c852174f3c0d0204245fd0da48.png';
-import imgInquiry  from '@/assets/Weeding.png';
-import imgFinalCta from '@/assets/Weeding.png';
+import imgHero     from '@/assets/home-v2/e900cacb721f9c81cd07b8415a03f20f42a39856.webp';
+import imgPkg1     from '@/assets/home-v2/80bc2f874a3b8b65fc3bd247f23046db8632d909.webp';
+import imgPkg2     from '@/assets/Event & Celebrations card-2.webp';
+import imgPkg3     from '@/assets/Event & Celebrations card 03.webp';
+import imgPkg4     from '@/assets/home-v2/9826b8c118c911c852174f3c0d0204245fd0da48.webp';
+import imgSpace1   from '@/assets/home-v2/480cb1d76af2706b9692b726ad26ec2bf396f8c8.webp';
+import imgSpace2   from '@/assets/home-v2/e8f4b56e423777f3f6c3df39c6ef78914b278e17.webp';
+import imgGal1     from '@/assets/home-v2/07e47044152ad38cdbb1bda5ae392fb848e3a37a.webp';
+import imgGal2     from '@/assets/home-v2/35b5b5843bc3a879390cc05c8e6b33eae70c2a8a.webp';
+import imgGal3     from '@/assets/home-v2/13a7aa4dee36d6ba805abc6f982eb04ec7df4c4c.webp';
+import imgGal4     from '@/assets/home-v2/43310dd2158ca5c7f7d098abf280dc14124d42de.webp';
+import imgGal5     from '@/assets/home-v2/9826b8c118c911c852174f3c0d0204245fd0da48.webp';
+import imgInquiry  from '@/assets/Weeding.webp';
+import imgFinalCta from '@/assets/Weeding.webp';
+import { imgAvatar1, imgAvatar2, imgAvatar3, imgAvatar4 } from '@/pages/Home/homeAssets';
 
 import './index.css';
 
@@ -31,7 +32,7 @@ const packages = [
     id: 'family',
     name: 'Family Celebration',
     guests: '8–12 guests',
-    price: '$65',
+    price: 'USD 65',
     unit: '/ person',
     img: imgPkg1,
     features: ['Private VIP Room', 'Custom 6-Course Menu', 'Basic Table Decor', 'Dedicated Service Staff'],
@@ -40,7 +41,7 @@ const packages = [
     id: 'engagement',
     name: 'Engagement Package',
     guests: '30 guests',
-    price: '$65',
+    price: 'USD 65',
     unit: '/ person',
     img: imgPkg2,
     features: ['Full Ballroom Access', 'Gourmet Buffet or Family Style', 'Premium Floral Decor', 'Traditional Live Music', 'Garden views'],
@@ -49,7 +50,7 @@ const packages = [
     id: 'catering',
     name: 'Catering Services',
     guests: '30+ guests',
-    price: '$65',
+    price: 'USD 65',
     unit: '/ person',
     img: imgPkg3,
     features: ['Private VIP Room', 'Custom 6-Course Menu', 'Basic Table Decor', 'Dedicated Service Staff'],
@@ -58,7 +59,7 @@ const packages = [
     id: 'corporate',
     name: 'Corporate Package',
     guests: '8–80 guests',
-    price: '$65',
+    price: 'USD 65',
     unit: '/ person',
     img: imgPkg4,
     features: ['Private Hall Access', 'Audio-Visual Equipment', 'Premium Working Lunch', 'Morning & Afternoon Coffee Breaks'],
@@ -132,21 +133,6 @@ const galleryItems: { src: string; alt: string; caption: string; cat: Exclude<Ga
   { src: imgGal5, alt: 'Grand dining hall', caption: 'Grand Ballroom', cat: 'Wedding' },
 ];
 
-const testimonials = [
-  {
-    text: 'The team at One More Restaurant made our wedding reception absolutely perfect. Every detail was taken care of and the food was outstanding.',
-    name: 'Sopheak & Dara', role: 'Wedding Reception', stars: 5,
-  },
-  {
-    text: 'We hosted our annual corporate dinner here and the experience was flawless. Professional staff, beautiful décor, and exceptional cuisine.',
-    name: 'Chen Wei', role: 'Corporate Event', stars: 5,
-  },
-  {
-    text: 'The private VIP suite was perfect for our family celebration. Intimate, elegant and the service was beyond our expectations.',
-    name: 'Vannak Phal', role: 'Birthday Celebration', stars: 5,
-  },
-];
-
 const faqs = [
   { q: 'How far in advance should I book my event?', a: 'We recommend booking at least 4–6 weeks in advance for smaller events and 3–6 months for large weddings or corporate functions. This ensures your preferred date and space are available.' },
   { q: 'What is your minimum guest count for private events?', a: 'Our private VIP suite accommodates 8–30 guests. The Grand Ballroom is ideal for 40–120 guests. For smaller intimate dinners, we can arrange semi-private sections starting from 6 guests.' },
@@ -162,7 +148,7 @@ function Stars({ count }: { count: number }) {
 
 // ── Main ─────────────────────────────────────────────────────
 export default function EventsPage() {
-  const { t, getObject } = useTranslation();
+  const { t, getObject, isKhmer } = useTranslation();
   const [galleryFilter, setGalleryFilter] = useState<GalleryFilter>('All');
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [formSuccess, setFormSuccess] = useState(false);
@@ -173,7 +159,7 @@ export default function EventsPage() {
       id: 'family',
       name: t('eventsPage.packages.items.family.name', undefined, packages[0].name),
       guests: t('eventsPage.packages.items.family.guests', undefined, packages[0].guests),
-      price: '$65',
+      price: 'USD 65',
       unit: t('eventsPage.packages.unit', undefined, '/ person'),
       img: imgPkg1,
       features: getObject<string[]>('eventsPage.packages.items.family.features', packages[0].features),
@@ -182,7 +168,7 @@ export default function EventsPage() {
       id: 'engagement',
       name: t('eventsPage.packages.items.engagement.name', undefined, packages[1].name),
       guests: t('eventsPage.packages.items.engagement.guests', undefined, packages[1].guests),
-      price: '$65',
+      price: 'USD 65',
       unit: t('eventsPage.packages.unit', undefined, '/ person'),
       img: imgPkg2,
       features: getObject<string[]>('eventsPage.packages.items.engagement.features', packages[1].features),
@@ -191,7 +177,7 @@ export default function EventsPage() {
       id: 'catering',
       name: t('eventsPage.packages.items.catering.name', undefined, packages[2].name),
       guests: t('eventsPage.packages.items.catering.guests', undefined, packages[2].guests),
-      price: '$65',
+      price: 'USD 65',
       unit: t('eventsPage.packages.unit', undefined, '/ person'),
       img: imgPkg3,
       features: getObject<string[]>('eventsPage.packages.items.catering.features', packages[2].features),
@@ -200,7 +186,7 @@ export default function EventsPage() {
       id: 'corporate',
       name: t('eventsPage.packages.items.corporate.name', undefined, packages[3].name),
       guests: t('eventsPage.packages.items.corporate.guests', undefined, packages[3].guests),
-      price: '$65',
+      price: 'USD 65',
       unit: t('eventsPage.packages.unit', undefined, '/ person'),
       img: imgPkg4,
       features: getObject<string[]>('eventsPage.packages.items.corporate.features', packages[3].features),
@@ -250,16 +236,32 @@ export default function EventsPage() {
 
   const testimonialsList = [
     {
-      text: t('eventsPage.testimonials.items.sophea.text', undefined, testimonials[0].text),
-      name: 'Sopheak & Dara', role: t('eventsPage.gallery.filters.Wedding', undefined, 'Wedding Reception'), stars: 5,
+      name: 'Sophea Prak',
+      date: t('home.testimonials.items.sophea.date', undefined, '1 month ago'),
+      text: t('home.testimonials.items.sophea.text', undefined, 'The Fish Amok here is absolute perfection! Steamed in a banana leaf with rich coconut cream and lemongrass paste. The garden setting makes you feel so relaxed.'),
+      avatar: imgAvatar1,
+      stars: 5,
     },
     {
-      text: t('eventsPage.testimonials.items.david.text', undefined, testimonials[1].text),
-      name: 'Chen Wei', role: t('eventsPage.gallery.filters.Corporate', undefined, 'Corporate Event'), stars: 5,
+      name: 'David Chen',
+      date: t('home.testimonials.items.david.date', undefined, '3 weeks ago'),
+      text: t('home.testimonials.items.david.text', undefined, 'We ordered the Khmer BBQ Platter and Beef Lok Lak. The beef was incredibly tender and flavorful, and the Kampot pepper sauce was out of this world.'),
+      avatar: imgAvatar2,
+      stars: 5,
     },
     {
-      text: t('eventsPage.testimonials.items.piseth.text', undefined, testimonials[2].text),
-      name: 'Vannak Phal', role: t('eventsPage.gallery.filters.Birthday', undefined, 'Birthday Celebration'), stars: 5,
+      name: 'Piseth Bun',
+      date: t('home.testimonials.items.piseth.date', undefined, '2 weeks ago'),
+      text: t('home.testimonials.items.piseth.text', undefined, 'A truly beautiful restaurant serving authentic Khmer cuisine. The soup is delicious, and their commitment to local farmers and sustainability is inspiring.'),
+      avatar: imgAvatar3,
+      stars: 5,
+    },
+    {
+      name: 'Emma Watson',
+      date: t('home.testimonials.items.emma.date', undefined, '1 week ago'),
+      text: t('home.testimonials.items.emma.text', undefined, 'Outstanding service and presentation! Every dish felt like a work of art. The Toul Kork branch is absolutely gorgeous and perfect for business meetings.'),
+      avatar: imgAvatar4,
+      stars: 5,
     },
   ];
 
@@ -427,7 +429,6 @@ export default function EventsPage() {
               <span>{svc.icon}</span>
               <h3>{svc.title}</h3>
               <p>{svc.desc}</p>
-              <Link to={svc.link}>{t('eventsPage.services.learnMore', undefined, 'Learn more →')}</Link>
             </div>
           ))}
         </div>
@@ -471,10 +472,11 @@ export default function EventsPage() {
 
       {/* TESTIMONIALS */}
       <TestimonialSection
-        eyebrow={t('eventsPage.testimonials.eyebrow', undefined, 'REVIEWS')}
-        title={t('eventsPage.testimonials.title', undefined, 'What Our Guests Say')}
-        description={t('eventsPage.testimonials.desc', undefined, 'Experiences shared by our valued customers')}
+        eyebrow={t('home.testimonials.eyebrow', undefined, 'Testimonials')}
+        title={t('home.testimonials.title', undefined, 'What Our Guests Say')}
+        description={t('home.testimonials.description', undefined, 'Experiences shared by our valued customers.')}
         testimonials={testimonialsList}
+        isKhmer={isKhmer}
       />
 
       {/* ── INQUIRY ─────────────────────────── */}

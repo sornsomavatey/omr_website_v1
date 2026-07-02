@@ -678,7 +678,7 @@
 
 @media (max-width: 480px) {
   .navbar-inner {
-    padding: 0 22px;
+    padding: 0 16px;
   }
 
   .navbar-logo-frame,
@@ -694,12 +694,17 @@
   }
 
   .navbar-mobile-menu {
-    padding-right: 24px;
-    padding-left: 24px;
+    padding-right: max(20px, env(safe-area-inset-right));
+    padding-left: max(20px, env(safe-area-inset-left));
   }
 
   .navbar-mobile-link {
     font-size: 20px;
+  }
+
+  .navbar-mobile-reservation-button {
+    width: 100%;
+    min-width: 0;
   }
 }
 

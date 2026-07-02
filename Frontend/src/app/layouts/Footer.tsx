@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import whiteLogo from '@/assets/omr_logo_white.png';
+import whiteLogo from '@/assets/omr_logo_white.webp';
 import { useTranslation } from '@/hooks/useTranslation';
 import './Footer.css';
 
@@ -10,7 +10,6 @@ const footerLinkKeys: Record<string, string> = {
   'Gift Cards': 'footer.links.giftCards',
   'Terms': 'footer.links.terms',
   'Privacy': 'footer.links.privacy',
-  'Sustainability': 'footer.links.sustainability',
   'Booking Inquiry': 'footer.links.bookingInquiry',
   'Press': 'footer.links.press',
   'Careers': 'footer.links.careers',
@@ -29,7 +28,6 @@ const exploreLinks = [
 const legalLinks = [
   { name: 'Terms', path: '/terms' },
   { name: 'Privacy', path: '/privacy' },
-  { name: 'Sustainability', path: '/sustainability' },
 ];
 
 const contactLinks = [

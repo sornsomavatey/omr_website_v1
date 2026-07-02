@@ -3,6 +3,8 @@ import { Link } from "react-router-dom"
 import { cn } from "@/lib/utils"
 import { DishImageFrame, type DishFrameVariant, variantClasses } from "./dish-image-frame"
 import { ChefBadge } from "./chef-badge"
+import { useTranslation } from "@/hooks/useTranslation"
+import { formatPrice } from "@/lib/price"
 
 export interface DishCardProps extends React.HTMLAttributes<HTMLDivElement> {
   name: string
@@ -42,6 +44,11 @@ export function DishCard({
   onActionClick,
   ...props
 }: DishCardProps) {
+  const { isKhmer } = useTranslation()
+  const localizedPrice = formatPrice(price, isKhmer)
+  const localizedPriceSuffix = isKhmer
+    ? (priceSuffix === "per person" ? "" : priceSuffix)
+    : priceSuffix
   
   const shapes: DishFrameVariant[] = ["right-leaf", "dome", "left-leaf"]
   const activeVariant = variant || (typeof index === "number" ? shapes[index % 3] : "right-leaf")
@@ -69,7 +76,7 @@ export function DishCard({
           {category}
         </span>
 
-        <h3 className="font-serif text-[32px] text-[#212d1b] font-semibold tracking-wide leading-tight mb-3">
+        <h3 className="dish-card-title font-serif text-[32px] text-[#212d1b] font-semibold tracking-wide leading-tight mb-3">
           {name}
         </h3>
 
@@ -79,14 +86,14 @@ export function DishCard({
           </p>
         )}
 
-        <div className="flex items-center justify-between pt-2 mt-auto">
+        <div className="dish-card-footer flex items-center justify-between pt-2 mt-auto">
           <div className="flex items-baseline">
-            <span className="text-[#212d1b] font-serif text-[32px] font-bold leading-none">
-              {price}
+            <span className="dish-card-price text-[#212d1b] font-serif text-[32px] font-bold leading-none">
+              {localizedPrice}
             </span>
-            {priceSuffix && (
+            {localizedPriceSuffix && (
               <span className="text-xs text-[#646860]/80 font-sans font-light ml-1.5">
-                {priceSuffix}
+                {localizedPriceSuffix}
               </span>
             )}
           </div>
@@ -94,7 +101,7 @@ export function DishCard({
           <Link
             to={href}
             onClick={onActionClick}
-            className="text-[#4b653c] hover:text-[#384c2d] font-sans font-semibold text-sm tracking-wide transition-colors duration-200 flex items-center gap-1"
+            className="dish-card-action text-[#4b653c] hover:text-[#384c2d] font-sans font-semibold text-sm tracking-wide transition-colors duration-200 flex items-center gap-1"
           >
             {actionText} →
           </Link>

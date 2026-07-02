@@ -2,7 +2,7 @@ import React from 'react';
 
 type SectionHeaderProps = {
   eyebrow: string;
-  title: string;
+  title: React.ReactNode;
   description?: string;
   dark?: boolean;
   align?: 'center' | 'left';

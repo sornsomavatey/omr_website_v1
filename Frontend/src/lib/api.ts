@@ -41,7 +41,7 @@ export const getMenuData = async () => {
       id: product.id,
       name: product.name,
       name_kh: product.name_kh,
-      price: product.price ? `$${parseFloat(product.price).toFixed(2)}` : '',
+      price: product.price ? `USD ${parseFloat(product.price).toFixed(2)}` : '',
       desc: product.description || '',
       img: cleanImageUrl,
       badge: (product.is_out_of_stock === '1' || (product.menu_out_of_stock && product.menu_out_of_stock.length > 0)) ? 'Out of Stock' : undefined,
@@ -68,7 +68,7 @@ export const getMenuData = async () => {
     hero: {
       title: "Our Menu",
       subtitle: "Traditional Cambodian flavors served with modern warmth and refined presentation.",
-      backgroundImage: "@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.png"
+      backgroundImage: "@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.webp"
     },
     categories: ["Breakfast", "Lunch", "Dinner", "Dessert", "Drinks"],
     items

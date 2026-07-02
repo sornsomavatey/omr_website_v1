@@ -162,6 +162,13 @@
   font-size: 13px;
 }
 
+html[data-lang="kh"] .site-footer,
+html[data-lang="kh"] .site-footer *,
+html[lang="km"] .site-footer,
+html[lang="km"] .site-footer * {
+  font-family: "Kantumruy Pro", sans-serif !important;
+}
+
 @media (hover: hover) and (pointer: fine) {
   .site-footer-logo-link:hover {
     opacity: 0.86;
@@ -221,6 +228,19 @@
     padding: 60px 24px 38px;
   }
 
+  .site-footer-main {
+    gap: 42px;
+  }
+
+  .site-footer-brand {
+    width: 100%;
+    max-width: none;
+    display: grid;
+    grid-template-columns: 104px minmax(0, 1fr);
+    align-items: center;
+    gap: 20px;
+  }
+
   .site-footer-logo-link {
     width: 104px;
     height: 104px;
@@ -231,14 +251,22 @@
   }
 
   .site-footer-brand-text {
-    margin-top: 22px;
+    max-width: none;
+    margin: 0;
 
     font-size: 14px;
   }
 
   .site-footer-nav {
-    grid-template-columns: 1fr;
-    gap: 34px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, .75fr) minmax(0, 1.15fr);
+    gap: 12px;
+    width: 100%;
+  }
+
+  .site-footer-column {
+    min-width: 0;
+    align-items: center;
+    text-align: center;
   }
 
   .site-footer-heading {
@@ -246,7 +274,35 @@
   }
 
   .site-footer-links {
+    align-items: flex-start;
     gap: 12px;
+    text-align: left;
+  }
+
+  .site-footer-link {
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  html[data-lang="kh"] .site-footer-column,
+  html[lang="km"] .site-footer-column {
+    width: max-content;
+    max-width: 100%;
+    justify-self: center;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  html[data-lang="kh"] .site-footer-heading,
+  html[lang="km"] .site-footer-heading,
+  html[data-lang="kh"] .site-footer-links,
+  html[lang="km"] .site-footer-links {
+    width: 100%;
+  }
+
+  html[data-lang="kh"] .site-footer-heading,
+  html[lang="km"] .site-footer-heading {
+    text-align: left;
   }
 
   .site-footer-divider {
@@ -255,14 +311,26 @@
 
   .site-footer-bottom {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     gap: 22px;
+    text-align: center;
   }
 
   .site-footer-socials {
     flex-wrap: wrap;
-    justify-content: flex-start;
+    justify-content: center;
     gap: 18px 26px;
+  }
+}
+
+@media (max-width: 360px) {
+  .site-footer-brand {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .site-footer-brand-text {
+    margin-top: 22px;
   }
 }
 
