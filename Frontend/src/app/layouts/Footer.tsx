@@ -7,7 +7,7 @@ const footerLinkKeys: Record<string, string> = {
   'Menu': 'footer.links.menu',
   'Branches': 'footer.links.branches',
   'Story': 'footer.links.story',
-  'Gift Cards': 'footer.links.webptCards',
+  'Gift Cards': 'footer.links.giftCards',
   'Terms': 'footer.links.terms',
   'Privacy': 'footer.links.privacy',
   'Booking Inquiry': 'footer.links.bookingInquiry',
