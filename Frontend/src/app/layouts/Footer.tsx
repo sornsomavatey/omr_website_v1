@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import whiteLogo from '@/assets/omr_logo_white.png';
+import whiteLogo from '@/assets/omr_logo_white.webp';
 import { useTranslation } from '@/hooks/useTranslation';
 import './Footer.css';
 
@@ -7,7 +7,7 @@ const footerLinkKeys: Record<string, string> = {
   'Menu': 'footer.links.menu',
   'Branches': 'footer.links.branches',
   'Story': 'footer.links.story',
-  'Gift Cards': 'footer.links.giftCards',
+  'Gift Cards': 'footer.links.webptCards',
   'Terms': 'footer.links.terms',
   'Privacy': 'footer.links.privacy',
   'Booking Inquiry': 'footer.links.bookingInquiry',

@@ -4,7 +4,7 @@
     "description": "From intimate gatherings to grand celebrations, One More Restaurant provides beautiful spaces, exceptional cuisine, and unforgettable experiences.",
     "primaryCta": "Plan Your Event",
     "secondaryCta": "Contact Event Team",
-    "backgroundImage": "@/assets/home-v2/e900cacb721f9c81cd07b8415a03f20f42a39856.png"
+    "backgroundImage": "@/assets/home-v2/e900cacb721f9c81cd07b8415a03f20f42a39856.webp"
   },
   "contact": {
     "title": "Event Contact Info",
@@ -21,7 +21,7 @@
       "name": "Family Celebration",
       "guests": "30 guests",
       "price": "$65",
-      "image": "@/assets/home-v2/80bc2f874a3b8b65fc3bd247f23046db8632d909.png",
+      "image": "@/assets/home-v2/80bc2f874a3b8b65fc3bd247f23046db8632d909.webp",
       "features": [
         "Private VIP Room",
         "Custom 6-Course Menu",
@@ -34,7 +34,7 @@
       "name": "Engagement Package",
       "guests": "8 guests",
       "price": "$65",
-      "image": "@/assets/Event & Celebrations card-2.png",
+      "image": "@/assets/Event & Celebrations card-2.webp",
       "features": [
         "Full Ballroom Access",
         "Gourmet Buffet or Family Style",
@@ -48,7 +48,7 @@
       "name": "Catering Services",
       "guests": "30 guests",
       "price": "$65",
-      "image": "@/assets/Event & Celebrations card 03.png",
+      "image": "@/assets/Event & Celebrations card 03.webp",
       "features": [
         "Private VIP Room",
         "Custom 6-Course Menu",
@@ -61,7 +61,7 @@
       "name": "Corporate Package",
       "guests": "8 guests",
       "price": "$65",
-      "image": "@/assets/home-v2/9826b8c118c911c852174f3c0d0204245fd0da48.png",
+      "image": "@/assets/home-v2/9826b8c118c911c852174f3c0d0204245fd0da48.webp",
       "features": [
         "Private Hall Access",
         "Audio-Visual Equipment",

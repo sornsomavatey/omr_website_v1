@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { CSSProperties } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import whiteLogo from '@/assets/omr_logo_white.png';
+import whiteLogo from '@/assets/omr_logo_white.webp';
 import { useAppStore } from '../store';
 import { useTranslation } from '@/hooks/useTranslation';
 import {

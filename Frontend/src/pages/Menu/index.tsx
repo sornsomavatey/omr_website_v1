@@ -3,33 +3,33 @@ import DishCard from '@/components/ui/dish-card';
 import { getMenuData } from '@/lib/api';
 import { useTranslation } from '@/hooks/useTranslation';
 import './index.css';
-import imgLotusHalf from '@/assets/Half lotus.png';
+import imgLotusHalf from '@/assets/Half lotus.webp';
 
 // Background assets
-import imgHeroBg from '@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.png';
+import imgHeroBg from '@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.webp';
 
 // Breakfast assets
-import imgBreakfast1 from '@/assets/Food/Breakfast/khmer-noodle-soup.png';
-import imgBreakfast2 from '@/assets/Food/Breakfast/bean-sprout-fried-noodle.png';
-import imgBreakfast3 from '@/assets/Food/Breakfast/beef-fried-noodle.png';
-import imgBreakfast4 from '@/assets/Food/Breakfast/seafood-fried-noodle.png';
-import imgBreakfast5 from '@/assets/Food/Breakfast/pork-bone-soup.png';
-import imgBreakfast6 from '@/assets/Food/Breakfast/meatball-kuyteav.png';
+import imgBreakfast1 from '@/assets/Food/Breakfast/khmer-noodle-soup.webp';
+import imgBreakfast2 from '@/assets/Food/Breakfast/bean-sprout-fried-noodle.webp';
+import imgBreakfast3 from '@/assets/Food/Breakfast/beef-fried-noodle.webp';
+import imgBreakfast4 from '@/assets/Food/Breakfast/seafood-fried-noodle.webp';
+import imgBreakfast5 from '@/assets/Food/Breakfast/pork-bone-soup.webp';
+import imgBreakfast6 from '@/assets/Food/Breakfast/meatball-kuyteav.webp';
 
 // Lunch & Dinner assets
-import imgLunch1 from '@/assets/Food/Lunch and Dinner/fish-amok-coconut.png';
-import imgLunch2 from '@/assets/Food/Lunch and Dinner/banana-blossom-chicken-salad.png';
-import imgLunch3 from '@/assets/Food/Lunch and Dinner/stir-fried-cockles-tamarind.png';
-import imgLunch4 from '@/assets/Food/Lunch and Dinner/britian-loklak.png';
-import imgLunch5 from '@/assets/Food/Lunch and Dinner/curry-lobster.png';
-import imgLunch6 from '@/assets/Food/Lunch and Dinner/samlor-korko-catfish.png';
+import imgLunch1 from '@/assets/Food/Lunch and Dinner/fish-amok-coconut.webp';
+import imgLunch2 from '@/assets/Food/Lunch and Dinner/banana-blossom-chicken-salad.webp';
+import imgLunch3 from '@/assets/Food/Lunch and Dinner/stir-fried-cockles-tamarind.webp';
+import imgLunch4 from '@/assets/Food/Lunch and Dinner/britian-loklak.webp';
+import imgLunch5 from '@/assets/Food/Lunch and Dinner/curry-lobster.webp';
+import imgLunch6 from '@/assets/Food/Lunch and Dinner/samlor-korko-catfish.webp';
 
 // Dessert assets
-import imgDessert1 from '@/assets/Food/Dessert/five-signature-dessert.png';
+import imgDessert1 from '@/assets/Food/Dessert/five-signature-dessert.webp';
 
 // Fallback high-res food images for visual variety
-import imgDish2 from '@/assets/home-v2/35b5b5843bc3a879390cc05c8e6b33eae70c2a8a.png';
-import imgDish3 from '@/assets/home-v2/7ce88d9bf1af040daf36af037fc63627a61522c9.png';
+import imgDish2 from '@/assets/home-v2/35b5b5843bc3a879390cc05c8e6b33eae70c2a8a.webp';
+import imgDish3 from '@/assets/home-v2/7ce88d9bf1af040daf36af037fc63627a61522c9.webp';
 
 type MenuCategory = 'Breakfast' | 'Lunch' | 'Dinner' | 'Dessert' | 'Drinks';
 
@@ -43,22 +43,22 @@ type MenuItem = {
 };
 
 const imageMapper: Record<string, string> = {
-  '@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.png': imgHeroBg,
-  '@/assets/Food/Breakfast/khmer-noodle-soup.png': imgBreakfast1,
-  '@/assets/Food/Breakfast/bean-sprout-fried-noodle.png': imgBreakfast2,
-  '@/assets/Food/Breakfast/beef-fried-noodle.png': imgBreakfast3,
-  '@/assets/Food/Breakfast/seafood-fried-noodle.png': imgBreakfast4,
-  '@/assets/Food/Breakfast/pork-bone-soup.png': imgBreakfast5,
-  '@/assets/Food/Breakfast/meatball-kuyteav.png': imgBreakfast6,
-  '@/assets/Food/Lunch and Dinner/fish-amok-coconut.png': imgLunch1,
-  '@/assets/Food/Lunch and Dinner/banana-blossom-chicken-salad.png': imgLunch2,
-  '@/assets/Food/Lunch and Dinner/stir-fried-cockles-tamarind.png': imgLunch3,
-  '@/assets/Food/Lunch and Dinner/britian-loklak.png': imgLunch4,
-  '@/assets/Food/Lunch and Dinner/curry-lobster.png': imgLunch5,
-  '@/assets/Food/Lunch and Dinner/samlor-korko-catfish.png': imgLunch6,
-  '@/assets/Food/Dessert/five-signature-dessert.png': imgDessert1,
-  '@/assets/home-v2/35b5b5843bc3a879390cc05c8e6b33eae70c2a8a.png': imgDish2,
-  '@/assets/home-v2/7ce88d9bf1af040daf36af037fc63627a61522c9.png': imgDish3,
+  '@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.webp': imgHeroBg,
+  '@/assets/Food/Breakfast/khmer-noodle-soup.webp': imgBreakfast1,
+  '@/assets/Food/Breakfast/bean-sprout-fried-noodle.webp': imgBreakfast2,
+  '@/assets/Food/Breakfast/beef-fried-noodle.webp': imgBreakfast3,
+  '@/assets/Food/Breakfast/seafood-fried-noodle.webp': imgBreakfast4,
+  '@/assets/Food/Breakfast/pork-bone-soup.webp': imgBreakfast5,
+  '@/assets/Food/Breakfast/meatball-kuyteav.webp': imgBreakfast6,
+  '@/assets/Food/Lunch and Dinner/fish-amok-coconut.webp': imgLunch1,
+  '@/assets/Food/Lunch and Dinner/banana-blossom-chicken-salad.webp': imgLunch2,
+  '@/assets/Food/Lunch and Dinner/stir-fried-cockles-tamarind.webp': imgLunch3,
+  '@/assets/Food/Lunch and Dinner/britian-loklak.webp': imgLunch4,
+  '@/assets/Food/Lunch and Dinner/curry-lobster.webp': imgLunch5,
+  '@/assets/Food/Lunch and Dinner/samlor-korko-catfish.webp': imgLunch6,
+  '@/assets/Food/Dessert/five-signature-dessert.webp': imgDessert1,
+  '@/assets/home-v2/35b5b5843bc3a879390cc05c8e6b33eae70c2a8a.webp': imgDish2,
+  '@/assets/home-v2/7ce88d9bf1af040daf36af037fc63627a61522c9.webp': imgDish3,
 };
 
 export default function Menu() {

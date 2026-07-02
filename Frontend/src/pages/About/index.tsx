@@ -9,18 +9,18 @@ import {
 } from 'lucide-react';
 import { useTranslation } from '@/hooks/useTranslation';
 
-import heroImage from '@/assets/home-v2/43310dd2158ca5c7f7d098abf280dc14124d42de.png';
-import toulKorkImage from '@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.png';
-import boeungKakImage from '@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.png';
-import signatureDishImage from '@/assets/home-v2/36191a3943135f3542a0fe8b80adee304f122115.png';
-import diningImage from '@/assets/home-v2/80bc2f874a3b8b65fc3bd247f23046db8632d909.png';
-import privateRoomImage from '@/assets/home-v2/480cb1d76af2706b9692b726ad26ec2bf396f8c8.png';
-import celebrationImage from '@/assets/home-v2/e900cacb721f9c81cd07b8415a03f20f42a39856.png';
-import cateringImage from '@/assets/home-v2/07e47044152ad38cdbb1bda5ae392fb848e3a37a.png';
-import communityImage from '@/assets/home-v2/9826b8c118c911c852174f3c0d0204245fd0da48.png';
-import kidsImage from '@/assets/home-v2/e8f4b56e423777f3f6c3df39c6ef78914b278e17.png';
-import chefImage from '@/assets/home-v2/35b5b5843bc3a879390cc05c8e6b33eae70c2a8a.png';
-import teamImage from '@/assets/Weeding.png';
+import heroImage from '@/assets/home-v2/43310dd2158ca5c7f7d098abf280dc14124d42de.webp';
+import toulKorkImage from '@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.webp';
+import boeungKakImage from '@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.webp';
+import signatureDishImage from '@/assets/home-v2/36191a3943135f3542a0fe8b80adee304f122115.webp';
+import diningImage from '@/assets/home-v2/80bc2f874a3b8b65fc3bd247f23046db8632d909.webp';
+import privateRoomImage from '@/assets/home-v2/480cb1d76af2706b9692b726ad26ec2bf396f8c8.webp';
+import celebrationImage from '@/assets/home-v2/e900cacb721f9c81cd07b8415a03f20f42a39856.webp';
+import cateringImage from '@/assets/home-v2/07e47044152ad38cdbb1bda5ae392fb848e3a37a.webp';
+import communityImage from '@/assets/home-v2/9826b8c118c911c852174f3c0d0204245fd0da48.webp';
+import kidsImage from '@/assets/home-v2/e8f4b56e423777f3f6c3df39c6ef78914b278e17.webp';
+import chefImage from '@/assets/home-v2/35b5b5843bc3a879390cc05c8e6b33eae70c2a8a.webp';
+import teamImage from '@/assets/Weeding.webp';
 import './index.css';
 
 const timeline = [

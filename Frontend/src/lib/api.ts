@@ -68,7 +68,7 @@ export const getMenuData = async () => {
     hero: {
       title: "Our Menu",
       subtitle: "Traditional Cambodian flavors served with modern warmth and refined presentation.",
-      backgroundImage: "@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.png"
+      backgroundImage: "@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.webp"
     },
     categories: ["Breakfast", "Lunch", "Dinner", "Dessert", "Drinks"],
     items

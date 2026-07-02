@@ -2,7 +2,7 @@
   "hero": {
     "title": "Our Menu",
     "subtitle": "Freshly crafted dishes made with love.",
-    "backgroundImage": "@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.png"
+    "backgroundImage": "@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.webp"
   },
   "categories": [
     "Breakfast",
@@ -17,7 +17,7 @@
         "name": "Kuyteav Phnom Penh",
         "category": "BREAKFAST · SOUP",
         "desc": "A classic Cambodian breakfast noodle soup featuring chewy rice noodles in a rich pork broth, topped with sliced pork, meatballs, and fresh herbs.",
-        "img": "@/assets/Food/Breakfast/khmer-noodle-soup.png",
+        "img": "@/assets/Food/Breakfast/khmer-noodle-soup.webp",
         "price": "$18",
         "badge": "Chef's Choice ✦"
       },
@@ -25,7 +25,7 @@
         "name": "Bean Sprout Fried Noodles",
         "category": "BREAKFAST · PAN-FRIED",
         "desc": "Stir-fried yellow noodles tossed with crisp bean sprouts, garlic, green chives, and savory soy seasoning, served with a house sweet chili sauce.",
-        "img": "@/assets/Food/Breakfast/bean-sprout-fried-noodle.png",
+        "img": "@/assets/Food/Breakfast/bean-sprout-fried-noodle.webp",
         "price": "$12",
         "badge": "Chef's Choice ✦"
       },
@@ -33,7 +33,7 @@
         "name": "Beef Fried Kuyteav",
         "category": "BREAKFAST · WOK-FIRED",
         "desc": "Stir-fried flat rice noodles cooked in a roaring wok with tender slices of beef, Chinese broccoli, eggs, and a caramelized sweet soy sauce.",
-        "img": "@/assets/Food/Breakfast/beef-fried-noodle.png",
+        "img": "@/assets/Food/Breakfast/beef-fried-noodle.webp",
         "price": "$16",
         "badge": "Chef's Choice ✦"
       },
@@ -41,7 +41,7 @@
         "name": "Seafood Fried Noodles",
         "category": "BREAKFAST · SEAFOOD",
         "desc": "A delightful mix of fresh river shrimp, squid, and seasonal vegetables stir-fried with wheat noodles in a savory oyster-garlic sauce.",
-        "img": "@/assets/Food/Breakfast/seafood-fried-noodle.png",
+        "img": "@/assets/Food/Breakfast/seafood-fried-noodle.webp",
         "price": "$18",
         "badge": "Chef's Choice ✦"
       },
@@ -49,7 +49,7 @@
         "name": "Pork Bone Kuyteav Soup",
         "category": "BREAKFAST · HEARTY SOUP",
         "desc": "Comforting rice noodle soup served with slow-simmered meaty pork ribs, roasted garlic oil, scallions, and crisp bean sprouts.",
-        "img": "@/assets/Food/Breakfast/pork-bone-soup.png",
+        "img": "@/assets/Food/Breakfast/pork-bone-soup.webp",
         "price": "$15",
         "badge": "Chef's Choice ✦"
       },
@@ -57,7 +57,7 @@
         "name": "Meatball Kuyteav",
         "category": "BREAKFAST · COMFORT",
         "desc": "Savory Khmer noodle soup loaded with house-made beef meatballs, fresh herbs, lime, and chili paste in a clear, sweet bone broth.",
-        "img": "@/assets/Food/Breakfast/meatball-kuyteav.png",
+        "img": "@/assets/Food/Breakfast/meatball-kuyteav.webp",
         "price": "$14",
         "badge": "Chef's Choice ✦"
       }
@@ -67,7 +67,7 @@
         "name": "Fish Amok in Coconut",
         "category": "LUNCH · SIGNATURE",
         "desc": "Tender snakehead fish fillets coated in a rich Lemongrass Kroeung curry paste and coconut cream, gently steamed inside a fresh young coconut.",
-        "img": "@/assets/Food/Lunch and Dinner/fish-amok-coconut.png",
+        "img": "@/assets/Food/Lunch and Dinner/fish-amok-coconut.webp",
         "price": "$24",
         "badge": "Chef's Choice ✦"
       },
@@ -75,14 +75,14 @@
         "name": "Banana Blossom Chicken Salad",
         "category": "LUNCH · LIGHT & FRESH",
         "desc": "Shredded chicken breast tossed with crisp banana blossom, red bell peppers, fragrant Khmer herbs, and a tangy lime-chili dressing.",
-        "img": "@/assets/Food/Lunch and Dinner/banana-blossom-chicken-salad.png",
+        "img": "@/assets/Food/Lunch and Dinner/banana-blossom-chicken-salad.webp",
         "price": "$15"
       },
       {
         "name": "Stir-Fried Cockles in Tamarind",
         "category": "LUNCH · SAVORY",
         "desc": "Fresh local cockles wok-tossed in a sweet, sour, and mildly spicy tamarind sauce, garnished with aromatic holy basil.",
-        "img": "@/assets/Food/Lunch and Dinner/stir-fried-cockles-tamarind.png",
+        "img": "@/assets/Food/Lunch and Dinner/stir-fried-cockles-tamarind.webp",
         "price": "$18",
         "badge": "Chef's Choice ✦"
       },
@@ -90,7 +90,7 @@
         "name": "Beef Lok Lak",
         "category": "LUNCH · CLASSIC",
         "desc": "Stir-fried marinated beef cubes served on a bed of fresh lettuce, tomatoes, and onions, accompanied by a traditional Kampot pepper-lime dipping sauce.",
-        "img": "@/assets/Food/Lunch and Dinner/britian-loklak.png",
+        "img": "@/assets/Food/Lunch and Dinner/britian-loklak.webp",
         "price": "$22"
       }
     ],
@@ -99,7 +99,7 @@
         "name": "Charred Chili Lobster",
         "category": "DINNER · LUXURY SEAFOOD",
         "desc": "Fresh local lobster wok-fried with garlic, chili, sweet onions, and a rich oyster-tamarind reduction, served with Kampot pepper lime dip.",
-        "img": "@/assets/Food/Lunch and Dinner/curry-lobster.png",
+        "img": "@/assets/Food/Lunch and Dinner/curry-lobster.webp",
         "price": "$38",
         "badge": "Chef's Choice ✦"
       },
@@ -107,14 +107,14 @@
         "name": "Samlor Korko with Catfish",
         "category": "DINNER · TRADITIONAL",
         "desc": "A nourishing traditional Khmer green stew with catfish fillets, roasted ground rice, green papaya, pumpkin, eggplant, and mixed organic leafy greens.",
-        "img": "@/assets/Food/Lunch and Dinner/samlor-korko-catfish.png",
+        "img": "@/assets/Food/Lunch and Dinner/samlor-korko-catfish.webp",
         "price": "$19"
       },
       {
         "name": "Traditional Fish Amok",
         "category": "DINNER · CLASSIC",
         "desc": "A timeless Cambodian treasure — tender river fish steamed within a banana leaf parcel, enveloped in a velvety coconut-lemongrass curry mousse.",
-        "img": "@/assets/home-v2/35b5b5843bc3a879390cc05c8e6b33eae70c2a8a.png",
+        "img": "@/assets/home-v2/35b5b5843bc3a879390cc05c8e6b33eae70c2a8a.webp",
         "price": "$24",
         "badge": "Chef's Choice ✦"
       }
@@ -124,7 +124,7 @@
         "name": "Five Signature Dessert Platter",
         "category": "DESSERT · PLATTER",
         "desc": "A beautiful platter featuring a selection of classic Cambodian sweet treats, including pumpkin custard, sticky rice, and coconut jellies.",
-        "img": "@/assets/Food/Dessert/five-signature-dessert.png",
+        "img": "@/assets/Food/Dessert/five-signature-dessert.webp",
         "price": "$14",
         "badge": "Chef's Choice ✦"
       },
@@ -132,7 +132,7 @@
         "name": "Nom Krok (Coconut Pancakes)",
         "category": "DESSERT · TRADITIONAL",
         "desc": "Crispy, sweet, and custardy coconut rice pancakes made in a traditional cast-iron mold, served hot with a sweet coconut dipping cream.",
-        "img": "@/assets/home-v2/35b5b5843bc3a879390cc05c8e6b33eae70c2a8a.png",
+        "img": "@/assets/home-v2/35b5b5843bc3a879390cc05c8e6b33eae70c2a8a.webp",
         "price": "$8"
       }
     ],
@@ -141,7 +141,7 @@
         "name": "Lemongrass Infused Iced Tea",
         "category": "DRINKS · INFUSION",
         "desc": "Chilled house-brewed black tea infused with fresh lemongrass stalks, kaffir lime leaves, and organic honey.",
-        "img": "@/assets/home-v2/35b5b5843bc3a879390cc05c8e6b33eae70c2a8a.png",
+        "img": "@/assets/home-v2/35b5b5843bc3a879390cc05c8e6b33eae70c2a8a.webp",
         "price": "$5",
         "badge": "Chef's Choice ✦"
       },
@@ -149,7 +149,7 @@
         "name": "Wine",
         "category": "DRINKS · WINE",
         "desc": "Discover our curated selection of wines, carefully chosen to complement the rich flavors of Cambodian cuisine.",
-        "img": "@/assets/home-v2/7ce88d9bf1af040daf36af037fc63627a61522c9.png",
+        "img": "@/assets/home-v2/7ce88d9bf1af040daf36af037fc63627a61522c9.webp",
         "price": "$4"
       }
     ]

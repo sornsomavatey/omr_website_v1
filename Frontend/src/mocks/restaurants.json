@@ -39,7 +39,7 @@
       "address": "63 Street R11, Phnom Penh 120210",
       "phone": "023 888 222",
       "hours": "11:00 AM - 10:00 PM Daily",
-      "image": "@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.png",
+      "image": "@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.webp",
       "tags": ["Flagship", "Heritage", "Family"],
       "description": "Our original flagship branch offering an immersive journey into traditional Cambodian architecture and culinary arts.",
       "highlights": [
@@ -54,7 +54,7 @@
       "address": "Boeung Kak Lake Area, Phnom Penh",
       "phone": "023 888 333",
       "hours": "11:00 AM - 10:00 PM Daily",
-      "image": "@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.png",
+      "image": "@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.webp",
       "tags": ["Modern", "Events", "Corporate"],
       "description": "A modern take on our classic heritage, offering expansive event halls and contemporary dining experiences.",
       "highlights": [

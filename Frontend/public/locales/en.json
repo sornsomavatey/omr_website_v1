@@ -423,7 +423,7 @@
         "address": "37 St 315, Phnom Penh 120407",
         "phone": "023 888 222",
         "hours": "Daily: 06:00 AM - 10:00 PM",
-        "image": "@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.png",
+        "image": "@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.webp",
         "tags": [
           "Family Friendly",
           "Business Meeting",
@@ -444,7 +444,7 @@
         "address": "G2 Street R11, Phnom Penh 120210",
         "phone": "021 888 222",
         "hours": "Daily: 06:00 AM - 10:00 PM",
-        "image": "@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.png",
+        "image": "@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.webp",
         "tags": [
           "Event Space",
           "Large Groups",
@@ -466,7 +466,7 @@
       "eyebrow": "EST. 2008 · PHNOM PENH",
       "title": "Reserve Your Table",
       "desc": "Experience the pinnacle of Khmer culinary heritage. A journey of forgotten flavors rediscovered in a setting of timeless luxury.",
-      "backgroundImage": "@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.png",
+      "backgroundImage": "@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.webp",
       "backgroundAlt": "One More Restaurant dining room"
     },
     "guestInformationTitle": "Guest Information",
@@ -645,7 +645,7 @@
         "address": "37 St 315, Phnom Penh 120407",
         "phone": "023 888 222",
         "hours": "Daily: 06:00 AM - 10:00 PM",
-        "img": "@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.png",
+        "img": "@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.webp",
         "tags": [
           "Family Friendly",
           "Business Meeting",
@@ -658,7 +658,7 @@
         "address": "G2 Street R11, Phnom Penh 120210",
         "phone": "021 888 222",
         "hours": "Daily: 06:00 AM - 10:00 PM",
-        "img": "@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.png",
+        "img": "@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.webp",
         "tags": [
           "Event Space",
           "Large Groups",
@@ -702,7 +702,7 @@
       {
         "id": "indoor",
         "name": "Indoor",
-        "img": "@/assets/home-v2/e8f4b56e423777f3f6c3df39c6ef78914b278e17.png"
+        "img": "@/assets/home-v2/e8f4b56e423777f3f6c3df39c6ef78914b278e17.webp"
       },
       {
         "id": "outdoor",
@@ -712,7 +712,7 @@
       {
         "id": "privateRoom",
         "name": "Private Room",
-        "img": "@/assets/home-v2/31b0910d38c033be0ce5292cf4a1d68688308c6b.png"
+        "img": "@/assets/home-v2/31b0910d38c033be0ce5292cf4a1d68688308c6b.webp"
       },
       {
         "id": "bigRoom",
