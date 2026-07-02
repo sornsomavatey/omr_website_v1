@@ -185,6 +185,11 @@
           "text": "The restaurant has a wonderful balance of tradition and comfort. I loved the Khmer flavors and the calm interior."
         }
       }
+    },
+    "partners": {
+      "eyebrow": "Our Partners",
+      "title": "Companies We Work With",
+      "description": "Trusted relationships that help us create better experiences for every guest."
     }
   },
   "menu": {

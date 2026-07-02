@@ -4,6 +4,9 @@ import { getHomeData } from '@/lib/api';
 import SignatureDishes from '@/components/SignatureDishes';
 import LocationCard from '@/components/LocationCard';
 import SharedTestimonialSection from '@/components/TestimonialSection';
+import PartnerCompanySlider, {
+  type PartnerCompany,
+} from '@/components/PartnerCompanySlider';
 import { useTranslation } from '@/hooks/useTranslation';
 import {
   ArrowRight,
@@ -37,6 +40,14 @@ import type {
 import './index.css';
 
 import SectionHeader from '@/components/SectionHeader';
+
+const homepagePartners: PartnerCompany[] = Array.from(
+  { length: 10 },
+  (_, index) => ({
+    id: `partner-${index + 1}`,
+    name: `Partner ${String(index + 1).padStart(2, '0')}`,
+  })
+);
 
 
 function HeroSection({ hero }: { hero: any }) {
@@ -595,6 +606,13 @@ export default function HomePage() {
         description={t('home.testimonials.description')}
         testimonials={testimonialsList}
         isKhmer={isKhmer}
+      />
+      <PartnerCompanySlider
+        partners={homepagePartners}
+        eyebrow={t('home.partners.eyebrow')}
+        title={t('home.partners.title')}
+        description={t('home.partners.description')}
+        durationSeconds={70}
       />
     </div>
   );

@@ -1,0 +1,226 @@
+.partner-slider-section {
+  width: 100%;
+  padding: 88px 0 80px;
+  overflow: hidden;
+  background: #faf9f5;
+}
+
+.partner-slider-container {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 64px;
+}
+
+.partner-slider-viewport {
+  position: relative;
+  width: 100%;
+  margin-top: 44px;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 7%,
+    #000 93%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 7%,
+    #000 93%,
+    transparent
+  );
+}
+
+.partner-slider-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+
+.partner-slider-track-animated {
+  animation: partner-slider-scroll var(--partner-slider-duration, 55s) linear
+    infinite;
+}
+
+.partner-slider-viewport:hover .partner-slider-track-animated,
+.partner-slider-viewport:focus-within .partner-slider-track-animated {
+  animation-play-state: paused;
+}
+
+.partner-slider-group {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding-right: 24px;
+}
+
+.partner-slider-card {
+  width: clamp(180px, 18vw, 248px);
+  height: 132px;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 22px 24px;
+  color: #25321f;
+  background: #ffffff;
+  border: 1px solid rgba(107, 145, 88, 0.18);
+  border-radius: 2px;
+  box-shadow: 0 12px 34px rgba(35, 50, 29, 0.06);
+  text-decoration: none;
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
+}
+
+.partner-slider-logo {
+  max-width: 132px;
+  max-height: 62px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+.partner-slider-logo + .partner-slider-name {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.partner-slider-fallback {
+  width: 48px;
+  height: 48px;
+  flex: 0 0 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  background: #6b9158;
+  border-radius: 50%;
+  font-family: "Inter", sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.partner-slider-name {
+  max-width: 130px;
+  color: #25321f;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  a.partner-slider-card:hover {
+    border-color: rgba(107, 145, 88, 0.45);
+    box-shadow: 0 16px 38px rgba(35, 50, 29, 0.11);
+    transform: translateY(-3px);
+  }
+}
+
+.partner-slider-card:focus-visible {
+  outline: 3px solid rgba(107, 145, 88, 0.32);
+  outline-offset: 3px;
+}
+
+@keyframes partner-slider-scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 1023px) {
+  .partner-slider-section {
+    padding: 76px 0 68px;
+  }
+
+  .partner-slider-container {
+    padding: 0 24px;
+  }
+
+  .partner-slider-card {
+    width: 210px;
+    height: 120px;
+  }
+}
+
+@media (max-width: 640px) {
+  .partner-slider-section {
+    padding: 64px 0 58px;
+  }
+
+  .partner-slider-container {
+    padding: 0 20px;
+  }
+
+  .partner-slider-viewport {
+    margin-top: 34px;
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 4%,
+      #000 96%,
+      transparent
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 4%,
+      #000 96%,
+      transparent
+    );
+  }
+
+  .partner-slider-group {
+    gap: 14px;
+    padding-right: 14px;
+  }
+
+  .partner-slider-card {
+    width: 176px;
+    height: 104px;
+    padding: 18px;
+  }
+
+  .partner-slider-logo {
+    max-width: 116px;
+    max-height: 54px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .partner-slider-viewport {
+    overflow-x: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
+    scrollbar-width: thin;
+  }
+
+  .partner-slider-track-animated {
+    animation: none;
+  }
+
+  .partner-slider-group[aria-hidden='true'] {
+    display: none;
+  }
+
+  .partner-slider-card {
+    transition: none;
+  }
+}
