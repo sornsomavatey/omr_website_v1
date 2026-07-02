@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import DishCard from '@/components/ui/dish-card';
+import { Skeleton } from '@/components/ui/skeleton';
 import { getMenuData } from '@/lib/api';
 import { useTranslation } from '@/hooks/useTranslation';
 import './index.css';
@@ -68,8 +69,8 @@ export default function Menu() {
   const [error, setError] = useState<string | null>(null);
   const [activeCategory, setActiveCategory] = useState<MenuCategory>('Breakfast');
   const [isStickyVisible, setIsStickyVisible] = useState(false);
-  const [hasScrolled, setHasScrolled] = useState(false);
   const [isLotusVisible, setIsLotusVisible] = useState(false);
+  const [revealedSections, setRevealedSections] = useState<Record<string, boolean>>({});
   const observerRef = useRef<IntersectionObserver | null>(null);
 
   const categories: MenuCategory[] = ['Breakfast', 'Lunch', 'Dinner', 'Dessert', 'Drinks'];
@@ -99,9 +100,6 @@ export default function Menu() {
     const handleScroll = () => {
       const threshold = window.innerWidth >= 768 ? 480 : 400;
       setIsStickyVisible(window.scrollY > threshold);
-      if (window.scrollY > 15) {
-        setHasScrolled(true);
-      }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -154,45 +152,48 @@ export default function Menu() {
     };
   }, [loading, error, menuDataState]);
 
+  // Reveal sections and lotus background as they scroll into view
   useEffect(() => {
     if (loading || error || !menuDataState) return;
 
-    const revealOptions = {
-      root: null,
-      rootMargin: '0px 0px -100px 0px', 
-      threshold: 0.05,
-    };
+    const revealOnScroll = () => {
+      const viewportBottom = window.innerHeight + 120; // generous buffer
+      let anyVisible = false;
 
-    const handleReveal = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry) => {
-        // Only reveal if the user has scrolled
-        if (entry.isIntersecting && hasScrolled) {
-          entry.target.classList.add('section-visible');
-          setIsLotusVisible(true);
-          revealObserver.unobserve(entry.target);
+      categories.forEach((category) => {
+        const id = category.toLowerCase();
+        const element = document.getElementById(id);
+        if (!element) return;
+
+        const rect = element.getBoundingClientRect();
+        // Reveal when the top of the section enters the viewport (+ buffer)
+        if (rect.top < viewportBottom) {
+          anyVisible = true;
+          setRevealedSections((prev) => {
+            if (prev[id]) return prev; // already revealed, skip re-render
+            return { ...prev, [id]: true };
+          });
         }
       });
+
+      if (anyVisible) setIsLotusVisible(true);
     };
 
-    const revealObserver = new IntersectionObserver(handleReveal, revealOptions);
+    // Run once immediately in case sections are already in view
+    revealOnScroll();
 
-    categories.forEach((category) => {
-      const element = document.getElementById(category.toLowerCase());
-      if (element) {
-        revealObserver.observe(element);
-      }
-    });
-
-    return () => {
-      revealObserver.disconnect();
-    };
-  }, [loading, error, menuDataState, hasScrolled]);
+    window.addEventListener('scroll', revealOnScroll, { passive: true });
+    return () => window.removeEventListener('scroll', revealOnScroll);
+  }, [loading, error, menuDataState]);
 
   const handleCategoryClick = (category: MenuCategory) => {
-    const element = document.getElementById(category.toLowerCase());
+    const id = category.toLowerCase();
+    setIsLotusVisible(true);
+    // Immediately reveal the clicked section so it's never invisible
+    setRevealedSections((prev) => ({ ...prev, [id]: true }));
+
+    const element = document.getElementById(id);
     if (element) {
-      element.classList.add('section-visible');
-      setIsLotusVisible(true);
       if (observerRef.current) {
         categories.forEach((cat) => {
           const el = document.getElementById(cat.toLowerCase());
@@ -215,8 +216,48 @@ export default function Menu() {
 
   if (loading) {
     return (
-      <div className="pt-28 pb-20 text-center text-olive font-serif text-xl min-h-screen flex items-center justify-center">
-        {t('menu.loading', undefined, 'Loading menu...')}
+      <div className="bg-white flex flex-col items-center w-full min-h-screen">
+        {/* Hero skeleton */}
+        <div className="relative w-full h-[500px] md:h-[580px] flex flex-col items-center justify-center overflow-hidden bg-[#1a2318]">
+          <div className="relative z-10 flex flex-col items-center gap-4 w-full max-w-[700px] px-6 pt-16">
+            <Skeleton className="h-14 w-3/4 md:h-[70px] bg-white/10 rounded-xl" />
+            <Skeleton className="h-5 w-1/2 bg-white/10 rounded-lg mt-2" />
+            <Skeleton className="h-4 w-2/5 bg-white/10 rounded-lg" />
+            {/* Category pill skeletons */}
+            <div className="flex gap-3 mt-6 flex-wrap justify-center">
+              {[120, 80, 90, 100, 80].map((w, i) => (
+                <Skeleton key={i} className="h-10 rounded-full bg-white/10" style={{ width: w }} />
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Dish card grid skeleton */}
+        <div className="w-full max-w-[1440px] px-6 md:px-[64px] py-16">
+          {/* Section heading skeleton */}
+          <Skeleton className="h-10 w-48 mx-auto mb-14 rounded-xl" />
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-16 w-full">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="flex flex-col gap-4">
+                {/* Image placeholder */}
+                <Skeleton className="w-full aspect-[4/3] rounded-2xl" />
+                {/* Category label */}
+                <Skeleton className="h-3 w-20 rounded-full" />
+                {/* Dish name */}
+                <Skeleton className="h-6 w-4/5 rounded-lg" />
+                {/* Description lines */}
+                <Skeleton className="h-3 w-full rounded" />
+                <Skeleton className="h-3 w-3/4 rounded" />
+                {/* Price + button row */}
+                <div className="flex items-center justify-between mt-2">
+                  <Skeleton className="h-6 w-20 rounded-lg" />
+                  <Skeleton className="h-9 w-28 rounded-full" />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     );
   }
@@ -326,7 +367,9 @@ export default function Menu() {
             <div
               key={category}
               id={category.toLowerCase()}
-              className="menu-section section-animate w-full py-16 first:pt-4 last:pb-16 border-b border-[#dde0dc]/50 last:border-b-0"
+              className={`menu-section section-animate w-full py-16 first:pt-4 last:pb-16 border-b border-[#dde0dc]/50 last:border-b-0${
+                revealedSections[category.toLowerCase()] ? ' section-visible' : ''
+              }`}
             >
               <h2 className="font-serif text-4xl md:text-5xl font-normal tracking-wide mb-16 text-[#212d1b]">
                 {translatedCategoryNames[category]}
