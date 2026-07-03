@@ -820,6 +820,12 @@ export default function ReservationPage() {
                   })}
                 </strong>
               </div>
+              {preOrderItemCount > 0 && (
+                <div className="success-detail-row">
+                  <span>{isKhmer ? 'តម្លៃសរុបកុម្ម៉ង់មុន' : 'Pre-order Total'}</span>
+                  <strong className="text-[#6b9158] font-bold">${preOrderTotal.toFixed(2)}</strong>
+                </div>
+              )}
             </div>
 
             <button type="button" onClick={handleReset} className="reserve-btn-primary w-full mb-4">
@@ -1227,9 +1233,11 @@ export default function ReservationPage() {
                   <div className="reservation-step-heading" style={{ marginBottom: 0 }}>
                     <span>{localizeNumber(6)}</span>
                     <div>
-                      <h2 style={{ margin: 0 }}>Pre-order</h2>
+                      <h2 style={{ margin: 0 }}>{isKhmer ? 'កុម្ម៉ង់អាហារទុកមុន' : 'Pre-order'}</h2>
                       <p style={{ margin: '6px 0 0', color: '#737970', fontSize: '13px', lineHeight: 1.5 }}>
-                        Optional — choose dishes ahead of time so they're ready when you arrive
+                        {isKhmer 
+                          ? 'ជម្រើសបន្ថែម — ជ្រើសរើសមុខម្ហូបជាមុន ដើម្បីឲ្យអាហាររួចរាល់នៅពេលលោកអ្នកមកដល់' 
+                          : "Optional — choose dishes ahead of time so they're ready when you arrive"}
                       </p>
                     </div>
                   </div>
@@ -1238,7 +1246,7 @@ export default function ReservationPage() {
                     className="preorder-browse-btn"
                     onClick={() => setIsMenuModalOpen(true)}
                   >
-                    Browse Menu
+                    {isKhmer ? 'មើលបញ្ជីមុខម្ហូប' : 'Browse Menu'}
                   </button>
                 </div>
 

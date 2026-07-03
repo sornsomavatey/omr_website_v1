@@ -4,7 +4,7 @@ import { getMenuData } from '@/lib/api';
 import { useTranslation } from '@/hooks/useTranslation';
 import './MenuModal.css';
 
-// ─── types ───────────────────────────────────────────────────────────────────
+// types 
 
 type MenuCategory = 'Breakfast' | 'Lunch' | 'Dinner' | 'Dessert' | 'Drinks';
 
