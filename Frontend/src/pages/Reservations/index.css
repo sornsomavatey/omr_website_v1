@@ -1315,6 +1315,9 @@ html[data-lang="kh"] .reservation-form-container ::placeholder {
     padding-left: 16px;
   }
 
+  .reservation-form-section { padding-top: var(--mobile-section-space); padding-bottom: var(--mobile-section-space); }
+  .faq-section { padding-top: var(--mobile-section-space); padding-bottom: var(--mobile-section-space); }
+
   .reservation-form-main {
     padding: 28px 20px;
   }

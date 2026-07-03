@@ -773,7 +773,7 @@
   .comparison-section,
   .find-us-section,
   .map-section {
-    padding: 4rem 1rem;
+    padding: var(--mobile-section-space) 1rem;
   }
 
   .section-subtitle {

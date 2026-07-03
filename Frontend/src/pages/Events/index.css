@@ -1009,9 +1009,7 @@
     padding: 25px 22px
   }
 
-  .events-section {
-    padding: 66px 0
-  }
+  .events-section { padding: var(--mobile-section-space) 0 }
 
   .events-section-heading {
     width: calc(100% - 36px);
@@ -1361,10 +1359,7 @@
 }
 
 @media (max-width: 720px) {
-  .events-section {
-    padding-top: 72px;
-    padding-bottom: 72px;
-  }
+  .events-section { padding-block: var(--mobile-section-space); }
 
   .events-section-heading {
     margin-bottom: 38px;

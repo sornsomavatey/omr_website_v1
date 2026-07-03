@@ -1311,7 +1311,7 @@
 
 @media (max-width: 640px) {
   .testimonials-section {
-    padding: 68px 0 56px;
+    padding: var(--mobile-section-space) 0;
   }
 
   .testimonials-container {

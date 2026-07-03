@@ -12,6 +12,27 @@
 .about-page h3,
 .about-page p { margin-top: 0; }
 
+.about-page img {
+  transition: transform .65s cubic-bezier(.16, 1, .3, 1);
+}
+
+.about-image-motion-ready img {
+  opacity: 0;
+  filter: blur(2px);
+  transform: translateY(28px) scale(.985);
+  transition:
+    opacity .75s cubic-bezier(.22, 1, .36, 1) var(--about-image-delay, 0ms),
+    filter .75s cubic-bezier(.22, 1, .36, 1) var(--about-image-delay, 0ms),
+    transform .9s cubic-bezier(.22, 1, .36, 1) var(--about-image-delay, 0ms);
+  will-change: opacity, filter, transform;
+}
+
+.about-image-motion-ready img.about-image-visible {
+  opacity: 1;
+  filter: blur(0);
+  transform: translateY(0) scale(1);
+}
+
 .about-hero {
   position: relative;
   min-height: 620px;
@@ -37,11 +58,21 @@
 .about-hero-description { max-width: 700px; margin: 0 auto 34px; color: rgba(255,255,255,.84); font: 400 16px/1.7 var(--font-sans); }
 .about-hero-actions, .about-final-cta > div > div, .about-careers-actions { display: flex; justify-content: center; gap: 12px; }
 
-.about-button { min-height: 46px; display: inline-flex; align-items: center; justify-content: center; padding: 0 25px; border: 1px solid transparent; border-radius: 999px; font: 600 12px/1 var(--font-sans); transition: .2s ease; }
+.about-button { min-height: 46px; display: inline-flex; align-items: center; justify-content: center; padding: 0 25px; border: 1px solid transparent; border-radius: 999px; font: 600 12px/1 var(--font-sans); transition: color .3s ease, background-color .3s ease, border-color .3s ease, box-shadow .3s ease, transform .3s cubic-bezier(.16, 1, .3, 1); }
 .about-button-primary { color: #fff; background: var(--about-green); }
-.about-button-primary:hover { background: #587b48; transform: translateY(-1px); }
 .about-button-outline { color: #fff; border-color: rgba(255,255,255,.72); background: rgba(0,0,0,.14); }
 .about-button-light { color: var(--about-dark); border-color: #c9d8c3; background: #fff; }
+
+.about-button:focus-visible { outline: 3px solid rgba(107,145,88,.36); outline-offset: 3px; }
+.about-button:active { transform: translateY(0); }
+
+@media (hover: hover) and (pointer: fine) {
+  .about-page img:hover { transform: translateY(-5px); transition-delay: 0ms; }
+  .about-button:hover { transform: translateY(-2px); }
+  .about-button-primary:hover { color: #fff; background: #587b48; box-shadow: 0 15px 30px -5px rgba(107,145,88,.4); }
+  .about-button-outline:hover { color: #fff; border-color: #fff; background: rgba(255,255,255,.12); }
+  .about-button-light:hover { color: #fff; border-color: var(--about-green); background: var(--about-green); box-shadow: 0 10px 22px rgba(75,101,60,.18); }
+}
 
 .about-section { width: min(1180px, calc(100% - 48px)); margin: auto; padding: 105px 0; }
 .about-section-heading { margin-bottom: 52px; text-align: center; }
@@ -87,7 +118,7 @@
 
 .about-numbers { width: 100%; max-width: none; padding-right: max(24px, calc((100% - 1180px) / 2)); padding-left: max(24px, calc((100% - 1180px) / 2)); }
 .about-number-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; text-align: center; }
-.about-number-grid strong { display: block; color: var(--about-green); font: 400 44px/1 var(--font-serif); }
+.about-number-grid strong { display: block; color: var(--about-green); font: 400 44px/1 var(--font-serif); font-variant-numeric: tabular-nums; }
 .about-number-grid span { display: block; margin-top: 12px; font: 600 10px/1.3 var(--font-sans); }
 
 .about-spirit { width: 100%; max-width: none; display: grid; grid-template-columns: 1.2fr .8fr; align-items: center; gap: 80px; padding-right: max(48px, calc((100% - 1250px) / 2)); padding-left: max(48px, calc((100% - 1250px) / 2)); background: var(--about-soft); }
@@ -168,9 +199,9 @@ html[lang="km"] .about-button {
   .about-hero { min-height: 610px; padding: 125px 18px 70px; }
   .about-hero h1 { font-size: 47px; }
   .about-hero-description { font-size: 14px; }
-  .about-hero-actions, .about-final-cta > div > div { flex-direction: column; }
-  .about-button { width: 100%; }
-  .about-section { width: calc(100% - 36px); padding: 72px 0; }
+  .about-hero-actions, .about-final-cta > div > div { flex-direction: column; align-items: center; }
+  .about-button { width: min(100%, 220px); }
+  .about-section { width: calc(100% - 36px); padding: var(--mobile-section-space) 0; }
   .about-section-heading { margin-bottom: 38px; }
   .about-section-heading h2 { font-size: 34px; }
   .about-timeline { grid-template-columns: 1fr; }
@@ -179,13 +210,13 @@ html[lang="km"] .about-button {
   .about-principles-grid, .about-reasons-grid, .about-people-grid { grid-template-columns: 1fr; }
   .about-principles-grid article, .about-reasons-grid article { min-height: auto; padding: 25px 20px; }
   .about-reasons, .about-people, .about-numbers { width: 100%; padding-right: 18px; padding-left: 18px; }
-  .about-promise { padding: 72px 18px; }
+  .about-promise { padding: var(--mobile-section-space) 18px; }
   .about-promise-grid { grid-template-columns: 1fr; gap: 45px; }
   .about-people-grid { gap: 24px; }
   .about-number-grid { grid-template-columns: repeat(2, 1fr); gap: 38px 20px; }
   .about-number-grid div:last-child { grid-column: 1 / 3; }
   .about-number-grid strong { font-size: 38px; }
-  .about-spirit { width: 100%; padding: 72px 18px; gap: 32px; }
+  .about-spirit { width: 100%; padding: var(--mobile-section-space) 18px; gap: 32px; }
   .about-spirit > img { min-height: 0; aspect-ratio: 1; }
   .about-spirit h2 { font-size: 38px; }
   .about-spirit .about-button { width: auto; }
@@ -195,8 +226,8 @@ html[lang="km"] .about-button {
   .about-moments-grid div { min-height: 170px; padding: 20px; }
   .about-careers-grid { grid-template-columns: 1fr; gap: 35px; }
   .about-careers-grid img { min-height: 0; aspect-ratio: 4 / 3; }
-  .about-careers-actions { flex-direction: column; }
-  .about-final-cta { min-height: 520px; padding: 70px 18px; }
+  .about-careers-actions { flex-direction: column; align-items: flex-start; }
+  .about-final-cta { min-height: 520px; padding: var(--mobile-section-space) 18px; }
   .about-final-cta h2 { font-size: 43px; }
 
   html[data-lang="kh"] .about-hero h1,
@@ -204,5 +235,22 @@ html[lang="km"] .about-button {
   html[data-lang="kh"] .about-final-cta h2,
   html[lang="km"] .about-final-cta h2 {
     font-size: 34px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-image-motion-ready img,
+  .about-image-motion-ready img.about-image-visible {
+    opacity: 1;
+    filter: none;
+    transform: none;
+    transition: none;
+  }
+
+  .about-page img:hover,
+  .about-button,
+  .about-button:hover {
+    transform: none;
+    transition: none;
   }
 }

@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   BellRing,
@@ -136,12 +137,96 @@ function SectionHeading({ eyebrow, title }: { eyebrow: string; title: string }) 
   );
 }
 
+function CountUpNumber({ value, suffix = '', isKhmer }: { value: number; suffix?: string; isKhmer: boolean }) {
+  const [displayValue, setDisplayValue] = useState(0);
+  const numberRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const number = numberRef.current;
+    if (!number) return;
+
+    let animationFrame = 0;
+    let observer: IntersectionObserver | undefined;
+
+    const startCounting = () => {
+      const startedAt = performance.now();
+      const duration = 1500;
+
+      const updateCount = (now: number) => {
+        const progress = Math.min((now - startedAt) / duration, 1);
+        const easedProgress = 1 - Math.pow(1 - progress, 3);
+        setDisplayValue(Math.round(value * easedProgress));
+
+        if (progress < 1) animationFrame = requestAnimationFrame(updateCount);
+      };
+
+      animationFrame = requestAnimationFrame(updateCount);
+    };
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setDisplayValue(value);
+    } else if ('IntersectionObserver' in window) {
+      observer = new IntersectionObserver(([entry]) => {
+        if (!entry.isIntersecting) return;
+        observer?.disconnect();
+        startCounting();
+      }, { threshold: 0.4 });
+      observer.observe(number);
+    } else {
+      startCounting();
+    }
+
+    return () => {
+      observer?.disconnect();
+      cancelAnimationFrame(animationFrame);
+    };
+  }, [value]);
+
+  const text = `${displayValue}${suffix}`;
+  return <strong ref={numberRef}>{isKhmer ? toKhmerDigits(text) : text}</strong>;
+}
+
 export default function About() {
   const { isKhmer } = useTranslation();
   const tr = (text: string) => isKhmer ? (khmerCopy[text] || text) : text;
+  const pageRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const page = pageRef.current;
+    if (!page) return;
+
+    const images = Array.from(page.querySelectorAll<HTMLImageElement>('img'));
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+      images.forEach((image) => image.classList.add('about-image-visible'));
+      return;
+    }
+
+    page.classList.add('about-image-motion-ready');
+    images.forEach((image, index) => {
+      image.style.setProperty('--about-image-delay', `${(index % 4) * 90}ms`);
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+
+        entry.target.classList.add('about-image-visible');
+        observer.unobserve(entry.target);
+      });
+    }, {
+      threshold: 0.12,
+      rootMargin: '0px 0px -8% 0px',
+    });
+
+    images.forEach((image) => observer.observe(image));
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <div className="about-page">
+    <div className="about-page" ref={pageRef}>
       <section className="about-hero" style={{ backgroundImage: `url(${heroImage})` }}>
         <div className="about-hero-overlay" />
         <div className="about-hero-content">
@@ -221,11 +306,11 @@ export default function About() {
       <section className="about-section about-numbers">
         <SectionHeading eyebrow={tr('Our Number')} title={tr('One More In Numbers')} />
         <div className="about-number-grid">
-          <div><strong>{isKhmer ? toKhmerDigits('300+') : '300+'}</strong><span>{tr('Menu Items')}</span></div>
-          <div><strong>{isKhmer ? toKhmerDigits('22') : '22'}</strong><span>{tr('Rooms & Event Spaces')}</span></div>
-          <div><strong>{isKhmer ? toKhmerDigits('516') : '516'}</strong><span>{tr('Maximum Capacity')}</span></div>
-          <div><strong>{isKhmer ? toKhmerDigits('2') : '2'}</strong><span>{tr('Branches')}</span></div>
-          <div><strong>{isKhmer ? toKhmerDigits('200+') : '200+'}</strong><span>{tr('Team Members')}</span></div>
+          <div><CountUpNumber value={300} suffix="+" isKhmer={isKhmer} /><span>{tr('Menu Items')}</span></div>
+          <div><CountUpNumber value={22} isKhmer={isKhmer} /><span>{tr('Rooms & Event Spaces')}</span></div>
+          <div><CountUpNumber value={516} isKhmer={isKhmer} /><span>{tr('Maximum Capacity')}</span></div>
+          <div><CountUpNumber value={2} isKhmer={isKhmer} /><span>{tr('Branches')}</span></div>
+          <div><CountUpNumber value={200} suffix="+" isKhmer={isKhmer} /><span>{tr('Team Members')}</span></div>
         </div>
       </section>
 
