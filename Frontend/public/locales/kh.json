@@ -528,8 +528,8 @@
     "form": {
       "aria": "ទម្រង់កក់តុ",
       "labels": {
-        "fullName": "ឈ្មោះពេញ *",
-        "phoneNumber": "លេខទូរស័ព្ទ *",
+        "fullName": "ឈ្មោះពេញ",
+        "phoneNumber": "លេខទូរស័ព្ទ",
         "adults": "មនុស្សពេញវ័យ",
         "children": "កុមារ",
         "specialRequest": "សំណើពិសេស"

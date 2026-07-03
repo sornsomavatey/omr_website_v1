@@ -63,6 +63,12 @@ class MenuItemResponse(MenuItemBase):
 
 
 # ----------------- RESERVATION SCHEMAS -----------------
+class PreorderedItem(BaseModel):
+    id: str
+    name: str
+    price: float
+    qty: int
+
 class ReservationCreate(BaseModel):
     customer_name: str = Field(..., min_length=2)
     customer_email: Optional[EmailStr] = None
@@ -75,6 +81,7 @@ class ReservationCreate(BaseModel):
     kids: Optional[int] = 0
     area: str
     special_requests: Optional[str] = None
+    preordered_items: Optional[List[PreorderedItem]] = None
 
 class ReservationResponse(ReservationCreate):
     id: int

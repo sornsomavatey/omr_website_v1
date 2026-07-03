@@ -19,6 +19,7 @@ export interface DishCardProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?: DishFrameVariant
   index?: number
   onActionClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void
+  showAction?: boolean
 }
 
 const cardContainerRadius = {
@@ -42,6 +43,7 @@ export function DishCard({
   variant,
   index,
   onActionClick,
+  showAction = true,
   ...props
 }: DishCardProps) {
   const { isKhmer } = useTranslation()
@@ -98,13 +100,15 @@ export function DishCard({
             )}
           </div>
 
-          <Link
-            to={href}
-            onClick={onActionClick}
-            className="dish-card-action text-[#4b653c] hover:text-[#384c2d] font-sans font-semibold text-sm tracking-wide transition-colors duration-200 flex items-center gap-1"
-          >
-            {actionText} →
-          </Link>
+          {showAction && (
+            <Link
+              to={href}
+              onClick={onActionClick}
+              className="dish-card-action text-[#4b653c] hover:text-[#384c2d] font-sans font-semibold text-sm tracking-wide transition-colors duration-200 flex items-center gap-1"
+            >
+              {actionText} →
+            </Link>
+          )}
         </div>
       </div>
     </div>

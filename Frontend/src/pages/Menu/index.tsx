@@ -388,7 +388,8 @@ export default function Menu() {
                     image={dish.img}
                     price={dish.price}
                     badge={dish.badge}
-                    actionText={isKhmer ? 'កម្មង់ឥឡូវនេះ' : 'Add to Order'}
+                    showAction={false}
+                    priceSuffix=""
                   />
                 ))}
               </div>
