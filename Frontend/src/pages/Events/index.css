@@ -1006,7 +1006,15 @@
   }
 
   .events-contact-card {
-    padding: 25px 22px
+    padding: 25px 22px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .events-contact-row strong {
+    word-break: break-all;
+    overflow-wrap: break-word;
+    font-size: 15px;
   }
 
   .events-section { padding: var(--mobile-section-space) 0 }
@@ -1106,11 +1114,12 @@
   }
 
   .events-form-grid {
-    grid-template-columns: 1fr
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
   }
 
   .events-form-wide {
-    grid-column: auto
+    grid-column: span 2;
   }
 
   .events-faq-section {
