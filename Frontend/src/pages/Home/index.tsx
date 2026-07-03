@@ -288,9 +288,9 @@ function GallerySection({ gallery }: { gallery: any[] }) {
           description={t('home.gallery.description')}
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-[1200px] mb-12">
-          <div className="flex flex-col gap-6">
-            <div className="h-[400px] rounded-none shadow-sm zoom-image-hover">
+        <div className="home-gallery-grid grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-[1200px] mb-12">
+          <div className="home-gallery-column flex flex-col gap-6">
+            <div className="home-gallery-tile h-[400px] rounded-none shadow-sm zoom-image-hover">
               <img
                 alt={images[0]?.alt}
                 className="w-full h-full object-cover"
@@ -298,8 +298,8 @@ function GallerySection({ gallery }: { gallery: any[] }) {
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-6">
-              <div className="h-[250px] rounded-none shadow-sm zoom-image-hover">
+            <div className="home-gallery-pair grid grid-cols-2 gap-6">
+              <div className="home-gallery-tile h-[250px] rounded-none shadow-sm zoom-image-hover">
                 <img
                   alt={images[1]?.alt}
                   className="w-full h-full object-cover"
@@ -307,7 +307,7 @@ function GallerySection({ gallery }: { gallery: any[] }) {
                 />
               </div>
 
-              <div className="h-[250px] rounded-none shadow-sm zoom-image-hover">
+              <div className="home-gallery-tile h-[250px] rounded-none shadow-sm zoom-image-hover">
                 <img
                   alt={images[2]?.alt}
                   className="w-full h-full object-cover"
@@ -317,9 +317,9 @@ function GallerySection({ gallery }: { gallery: any[] }) {
             </div>
           </div>
 
-          <div className="flex flex-col gap-6">
-            <div className="grid grid-cols-2 gap-6">
-              <div className="h-[250px] rounded-none shadow-sm zoom-image-hover">
+          <div className="home-gallery-column flex flex-col gap-6">
+            <div className="home-gallery-pair grid grid-cols-2 gap-6">
+              <div className="home-gallery-tile h-[250px] rounded-none shadow-sm zoom-image-hover">
                 <img
                   alt={images[3]?.alt}
                   className="w-full h-full object-cover"
@@ -327,7 +327,7 @@ function GallerySection({ gallery }: { gallery: any[] }) {
                 />
               </div>
 
-              <div className="h-[250px] rounded-none shadow-sm zoom-image-hover">
+              <div className="home-gallery-tile h-[250px] rounded-none shadow-sm zoom-image-hover">
                 <img
                   alt={images[4]?.alt}
                   className="w-full h-full object-cover"
@@ -336,7 +336,7 @@ function GallerySection({ gallery }: { gallery: any[] }) {
               </div>
             </div>
 
-            <div className="h-[400px] rounded-none shadow-sm zoom-image-hover">
+            <div className="home-gallery-tile h-[400px] rounded-none shadow-sm zoom-image-hover">
               <img
                 alt={images[5]?.alt}
                 className="w-full h-full object-cover"

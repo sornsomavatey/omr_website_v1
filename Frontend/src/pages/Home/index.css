@@ -1310,6 +1310,23 @@
 ================================== */
 
 @media (max-width: 640px) {
+  .home-gallery-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+
+  .home-gallery-column,
+  .home-gallery-pair {
+    display: contents;
+  }
+
+  .home-gallery-tile {
+    width: 100%;
+    height: auto !important;
+    aspect-ratio: 4 / 5;
+  }
+
   .testimonials-section {
     padding: var(--mobile-section-space) 0;
   }

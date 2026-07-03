@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import {
   BellRing,
   Eye,
+  KeyRound,
   PartyPopper,
   Target,
   UtensilsCrossed,
@@ -14,14 +15,18 @@ import heroImage from '@/assets/home-v2/43310dd2158ca5c7f7d098abf280dc14124d42de
 import toulKorkImage from '@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.webp';
 import boeungKakImage from '@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.webp';
 import signatureDishImage from '@/assets/home-v2/36191a3943135f3542a0fe8b80adee304f122115.webp';
-import diningImage from '@/assets/home-v2/80bc2f874a3b8b65fc3bd247f23046db8632d909.webp';
 import privateRoomImage from '@/assets/home-v2/480cb1d76af2706b9692b726ad26ec2bf396f8c8.webp';
 import celebrationImage from '@/assets/home-v2/e900cacb721f9c81cd07b8415a03f20f42a39856.webp';
 import cateringImage from '@/assets/home-v2/07e47044152ad38cdbb1bda5ae392fb848e3a37a.webp';
 import communityImage from '@/assets/home-v2/9826b8c118c911c852174f3c0d0204245fd0da48.webp';
 import kidsImage from '@/assets/home-v2/e8f4b56e423777f3f6c3df39c6ef78914b278e17.webp';
-import chefImage from '@/assets/home-v2/35b5b5843bc3a879390cc05c8e6b33eae70c2a8a.webp';
-import teamImage from '@/assets/Weeding.webp';
+import hospitalityImage from '@/assets/Event & Celebrations card-2.webp';
+import finalCtaImage from '@/assets/home-v2/31b0910d38c033be0ce5292cf4a1d68688308c6b.webp';
+import headChefImage from '@/assets/about/hor-chanthan.png';
+import serviceTeamImage from '@/assets/about/service-team.png';
+import chefTeamImage from '@/assets/about/chef-team.png';
+import operationsTeamImage from '@/assets/about/operations-team.png';
+import careersTeamImage from '@/assets/about/careers-team.png';
 import './index.css';
 
 const timeline = [
@@ -39,10 +44,10 @@ const reasons = [
 ];
 
 const people = [
-  { image: chefImage, title: 'Our Culinary Team', role: 'Guardians of Khmer Flavor', text: 'Precision, respect for ingredients, and the joy of sharing heritage recipes.' },
-  { image: diningImage, title: 'Service Team', role: 'Genuine Khmer Hospitality', text: 'Warm, attentive, and invested in making every guest feel at home.' },
-  { image: communityImage, title: 'Our Event Team', role: 'Celebrations With Heart', text: 'Creative, experienced, and ready to make every gathering feel personal.' },
-  { image: teamImage, title: 'Operations Team', role: 'The People Behind It All', text: 'Caring for every detail, from planning and sourcing to daily service.' },
+  { image: headChefImage, title: 'Hor Chanthan', role: 'Head Chef', text: 'A kitchen built on precision, respect for ingredients, and the joy of sharing heritage recipes.' },
+  { image: serviceTeamImage, title: 'Service Team', role: '', text: 'Warm, attentive, and genuinely invested in making every guest feel at home.' },
+  { image: chefTeamImage, title: 'Our Chef Team', role: '', text: 'Khmer cuisine is an art form that tells the story of our land. Our mission is to elevate these ancient flavors while remaining fiercely loyal to the techniques passed down through generations.' },
+  { image: operationsTeamImage, title: 'Operations Team', role: '', text: 'Behind every celebration is a team that cares for every detail, from planning to execution.' },
 ];
 
 const toKhmerDigits = (value: string) =>
@@ -230,7 +235,6 @@ export default function About() {
       <section className="about-hero" style={{ backgroundImage: `url(${heroImage})` }}>
         <div className="about-hero-overlay" />
         <div className="about-hero-content">
-          <p className="about-eyebrow">{tr('Our Story Since 2008')}</p>
           <h1>{tr('More Than a Restaurant')}</h1>
           <p className="about-hero-description">
             {tr('Since 2008, One More Restaurant has brought people together through authentic Khmer cuisine, warm hospitality, and memorable celebrations.')}
@@ -292,12 +296,12 @@ export default function About() {
       </section>
 
       <section className="about-section about-people">
-        <SectionHeading eyebrow={tr('Our People')} title={tr('The People Behind One More')} />
+        <SectionHeading eyebrow={tr("Guests' Choice")} title={tr('Why Guests Choose One More')} />
         <div className="about-people-grid">
           {people.map((person) => (
             <article key={person.title}>
               <img src={person.image} alt={person.title} />
-              <div><h3>{tr(person.title)}</h3><span>{tr(person.role)}</span><p>{tr(person.text)}</p></div>
+              <div><h3>{tr(person.title)}</h3>{person.role && <span>{tr(person.role)}</span>}<p>{tr(person.text)}</p></div>
             </article>
           ))}
         </div>
@@ -315,7 +319,7 @@ export default function About() {
       </section>
 
       <section className="about-section about-spirit">
-        <img src={privateRoomImage} alt="Guests sharing a meal at One More Restaurant" />
+        <img src={hospitalityImage} alt="Guests sharing a meal at One More Restaurant" />
         <div>
           <p className="about-eyebrow">{tr('Khmer Culture')}</p>
           <h2>{tr('The Spirit of Khmer Hospitality')}</h2>
@@ -336,22 +340,21 @@ export default function About() {
         </div>
       </section>
 
-      <section className="about-section about-careers">
+      <section id="careers" className="about-section about-careers">
         <SectionHeading eyebrow={tr('Careers')} title={tr('Grow With One More')} />
         <div className="about-careers-grid">
           <div>
             <p>{tr('We are a team of storytellers, chefs, and hosts dedicated to preserving Khmer heritage through exceptional hospitality.')}</p>
-            <ul><li>{tr('Career opportunities across culinary, service, and events.')}</li><li>{tr('A supportive team environment built on respect and excellence.')}</li></ul>
-            <div className="about-careers-actions">
-              <Link to="/careers" className="about-button about-button-primary">{tr('View Careers')}</Link>
-              <Link to="/contact" className="about-button about-button-light">{tr('Send Your CV')}</Link>
-            </div>
+            <ul className="about-careers-list">
+              <li><Users size={17} /><span>{tr('Career opportunities across culinary, service, and events.')}</span></li>
+              <li><KeyRound size={17} /><span>{tr('A supportive team environment built on respect and excellence.')}</span></li>
+            </ul>
           </div>
-          <img src={teamImage} alt="The One More Restaurant team" />
+          <img src={careersTeamImage} alt="The One More Restaurant team" />
         </div>
       </section>
 
-      <section className="about-final-cta" style={{ backgroundImage: `url(${celebrationImage})` }}>
+      <section className="about-final-cta" style={{ backgroundImage: `url(${finalCtaImage})` }}>
         <div>
           <h2>{tr('Experience One More For Yourself')}</h2>
           <p>{tr('Whether you are joining us for a family dinner, business meeting, or special celebration, we look forward to welcoming you.')}</p>

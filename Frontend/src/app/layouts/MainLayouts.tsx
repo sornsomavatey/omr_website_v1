@@ -8,9 +8,21 @@ export default function MainLayouts() {
   const location = useLocation();
 
   useEffect(() => {
-    // Automatically scroll to the top of the page on route changes
+    if (location.hash) {
+      const targetId = decodeURIComponent(location.hash.slice(1));
+      const frame = window.requestAnimationFrame(() => {
+        document.getElementById(targetId)?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        });
+      });
+
+      return () => window.cancelAnimationFrame(frame);
+    }
+
     window.scrollTo(0, 0);
-  }, [location.pathname]);
+    return undefined;
+  }, [location.pathname, location.hash]);
 
   const isHomePage = location.pathname === '/';
 

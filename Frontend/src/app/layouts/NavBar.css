@@ -703,7 +703,7 @@
   }
 
   .navbar-mobile-reservation-button {
-    width: 100%;
+    width: min(100%, 220px);
     min-width: 0;
   }
 }
