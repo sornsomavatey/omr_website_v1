@@ -166,8 +166,12 @@
 }
 
 @media (max-width: 640px) {
+  .ts-section.home-testimonials-section {
+    padding-bottom: 32px;
+  }
+
   .partner-slider-section {
-    padding: 64px 0 58px;
+    padding: 28px 0 58px;
   }
 
   .partner-slider-container {

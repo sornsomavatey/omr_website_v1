@@ -497,6 +497,7 @@ export default function HomePage() {
         title={t('home.testimonials.title')}
         description={t('home.testimonials.description')}
         testimonials={testimonialsList}
+        className="home-testimonials-section"
         isKhmer={isKhmer}
       />
       <PartnerCompanySlider
