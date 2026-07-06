@@ -20,6 +20,9 @@ import {
   ChevronDown,
   ChevronUp,
   User,
+  ShoppingCart,
+  Trash2,
+  Loader2,
 } from 'lucide-react';
 import { getReservationsData, getHomeData, createReservation } from '@/lib/api';
 import { useTranslation } from '@/hooks/useTranslation';
@@ -31,7 +34,92 @@ import {
   imgHeroBg1,
   imageMap,
 } from '../Home/homeAssets';
+import MenuModal, { type PreOrderCart } from '@/components/MenuModal/MenuModal';
 import './index.css';
+
+// Pre-order menu items (static, not yet connected to backend)
+type PreOrderItem = {
+  id: string;
+  name: string;
+  category: 'Breakfast' | 'Lunch & Dinner' | 'Dessert' | 'Drinks';
+  price: number;
+  desc: string;
+  img: string;
+  badge?: string;
+};
+
+const PRE_ORDER_ITEMS: PreOrderItem[] = [
+  {
+    id: 'po-1',
+    name: 'Khmer Noodle Soup',
+    category: 'Breakfast',
+    price: 7,
+    desc: 'Traditional kuy teav with pork broth, rice noodles, fresh herbs & bean sprouts.',
+    img: '/src/assets/Food/Breakfast/khmer-noodle-soup.webp',
+    badge: 'Popular',
+  },
+  {
+    id: 'po-2',
+    name: 'Beef Fried Noodle',
+    category: 'Breakfast',
+    price: 8,
+    desc: 'Wok-tossed rice noodles with tender beef slices, egg & spring onions.',
+    img: '/src/assets/Food/Breakfast/beef-fried-noodle.webp',
+  },
+  {
+    id: 'po-3',
+    name: 'Seafood Fried Noodle',
+    category: 'Breakfast',
+    price: 10,
+    desc: 'Fresh seafood medley stir-fried with flat rice noodles in savory sauce.',
+    img: '/src/assets/Food/Breakfast/seafood-fried-noodle.webp',
+  },
+  {
+    id: 'po-4',
+    name: 'Fish Amok',
+    category: 'Lunch & Dinner',
+    price: 12,
+    desc: 'Creamy Khmer fish curry steamed in banana leaves with coconut & lemongrass.',
+    img: '/src/assets/Food/Lunch and Dinner/fish-amok-coconut.webp',
+    badge: 'Chef\u2019s Pick',
+  },
+  {
+    id: 'po-5',
+    name: 'Curry Lobster',
+    category: 'Lunch & Dinner',
+    price: 28,
+    desc: 'Whole lobster simmered in fragrant Khmer red curry with vegetables.',
+    img: '/src/assets/Food/Lunch and Dinner/curry-lobster.webp',
+    badge: 'Premium',
+  },
+  {
+    id: 'po-6',
+    name: 'Lok Lak',
+    category: 'Lunch & Dinner',
+    price: 14,
+    desc: 'Classic Cambodian stir-fried beef with lime-pepper dipping sauce & fried egg.',
+    img: '/src/assets/Food/Lunch and Dinner/britian-loklak.webp',
+  },
+  {
+    id: 'po-7',
+    name: 'Samlor Korko',
+    category: 'Lunch & Dinner',
+    price: 11,
+    desc: 'Traditional Khmer sour soup with catfish, green papaya & roasted rice.',
+    img: '/src/assets/Food/Lunch and Dinner/samlor-korko-catfish.webp',
+  },
+  {
+    id: 'po-8',
+    name: 'Five Signature Desserts',
+    category: 'Dessert',
+    price: 9,
+    desc: 'A curated platter of five traditional Khmer sweet treats, beautifully presented.',
+    img: '/src/assets/Food/Dessert/five-signature-dessert.webp',
+    badge: 'Signature',
+  },
+];
+
+const PRE_ORDER_CATEGORIES = ['All', 'Breakfast', 'Lunch & Dinner', 'Dessert', 'Drinks'] as const;
 
 type Branch = {
   name: string;
@@ -351,7 +439,28 @@ export default function ReservationPage() {
   const [selectedSeating, setSelectedSeating] = useState('privateRoom');
   const [specialRequest, setSpecialRequest] = useState('');
 
+  // Step 6: Pre-Order
+  const [isMenuModalOpen, setIsMenuModalOpen] = useState(false);
+  const [preOrderCart, setPreOrderCart] = useState<PreOrderCart>({});
+  const [isPreOrderSummaryExpanded, setIsPreOrderSummaryExpanded] = useState(false);
+
+  const preOrderItemCount = Object.values(preOrderCart).reduce((s, i) => s + i.qty, 0);
+  const preOrderTotal = Object.values(preOrderCart).reduce((s, i) => s + i.price * i.qty, 0);
+
+  const handleQtyInBanner = (item: any, delta: number) => {
+    setPreOrderCart((prev) => {
+      const current = prev[item.id]?.qty ?? 0;
+      const next = Math.max(0, current + delta);
+      if (next === 0) {
+        const { [item.id]: _, ...rest } = prev;
+        return rest;
+      }
+      return { ...prev, [item.id]: { ...item, qty: next } };
+    });
+  };
+
   // Booking submit status
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   if (loading) {
@@ -577,6 +686,8 @@ export default function ReservationPage() {
       }
       return;
     }
+    if (isSubmitting) return;
+
     // Prepare reservation payload 
     const payload = {
       customer_name: fullName.trim(),
@@ -593,8 +704,16 @@ export default function ReservationPage() {
         privateRoom: 'Private Room',
         bigRoom: 'Big Room',
       } as Record<string, string>)[selectedSeating] || 'Standard',
-      special_requests: specialRequest.trim() || null
+      special_requests: specialRequest.trim() || null,
+      preordered_items: Object.values(preOrderCart).map((i) => ({
+        id: i.id,
+        name: i.name,
+        price: i.price,
+        qty: i.qty
+      }))
     };
+
+    setIsSubmitting(true);
 
     createReservation(payload)
       .then(() => {
@@ -605,6 +724,9 @@ export default function ReservationPage() {
         alert(isKhmer
           ? 'មានបញ្ហាក្នុងការដំណើរការកក់តុរបស់អ្នក។ សូមពិនិត្យថាម៉ាស៊ីនមេកំពុងដំណើរការ។'
           : 'There was an error processing your reservation. Please make sure the backend server is running.');
+      })
+      .finally(() => {
+        setIsSubmitting(false);
       });
   };
 
@@ -618,6 +740,7 @@ export default function ReservationPage() {
     setSelectedOccasion('birthdayCelebration');
     setSelectedSeating('privateRoom');
     setSpecialRequest('');
+    setPreOrderCart({});
     setIsSubmitted(false);
   };
 
@@ -697,6 +820,12 @@ export default function ReservationPage() {
                   })}
                 </strong>
               </div>
+              {preOrderItemCount > 0 && (
+                <div className="success-detail-row">
+                  <span>{isKhmer ? 'តម្លៃសរុបកុម្ម៉ង់មុន' : 'Pre-order Total'}</span>
+                  <strong className="text-[#6b9158] font-bold">${preOrderTotal.toFixed(2)}</strong>
+                </div>
+              )}
             </div>
 
             <button type="button" onClick={handleReset} className="reserve-btn-primary w-full mb-4">
@@ -795,7 +924,10 @@ export default function ReservationPage() {
 
                 <div className="contact-details-grid">
                   <div className="form-group">
-                    <label htmlFor="fullName">{t('reservationPage.form.labels.fullName', undefined, 'Full Name *')}</label>
+                    <label htmlFor="fullName">
+                      {t('reservationPage.form.labels.fullName', undefined, 'Full Name')}
+                      <span className="required-star"> *</span>
+                    </label>
                     <input
                       type="text"
                       id="fullName"
@@ -807,7 +939,10 @@ export default function ReservationPage() {
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="phoneNumber">{t('reservationPage.form.labels.phoneNumber', undefined, 'Phone Number *')}</label>
+                    <label htmlFor="phoneNumber">
+                      {t('reservationPage.form.labels.phoneNumber', undefined, 'Phone Number')}
+                      <span className="required-star"> *</span>
+                    </label>
                     <input
                       type="tel"
                       id="phoneNumber"
@@ -1088,6 +1223,97 @@ export default function ReservationPage() {
                     );
                   })}
                 </div>
+              </div>
+
+              <div className="step-divider" />
+
+              {/* Step 6: Pre-Order */}
+              <div className="step-container">
+                <div className="preorder-step-row">
+                  <div className="reservation-step-heading" style={{ marginBottom: 0 }}>
+                    <span>{localizeNumber(6)}</span>
+                    <div>
+                      <h2 style={{ margin: 0 }}>{isKhmer ? 'កុម្ម៉ង់អាហារទុកមុន' : 'Pre-order'}</h2>
+                      <p style={{ margin: '6px 0 0', color: '#737970', fontSize: '13px', lineHeight: 1.5 }}>
+                        {isKhmer 
+                          ? 'ជម្រើសបន្ថែម — ជ្រើសរើសមុខម្ហូបជាមុន ដើម្បីឲ្យអាហាររួចរាល់នៅពេលលោកអ្នកមកដល់' 
+                          : "Optional — choose dishes ahead of time so they're ready when you arrive"}
+                      </p>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    className="preorder-browse-btn"
+                    onClick={() => setIsMenuModalOpen(true)}
+                  >
+                    {isKhmer ? 'មើលបញ្ជីមុខម្ហូប' : 'Browse Menu'}
+                  </button>
+                </div>
+
+                {/* Cart pill — shows selected items */}
+                {preOrderItemCount > 0 && (
+                  <div className="preorder-cart-banner mt-6">
+                    <div className="preorder-cart-header">
+                      <div className="preorder-cart-header-left">
+                        <div className="preorder-cart-icon-wrap">
+                          <ShoppingCart className="w-5 h-5" />
+                          <span className="preorder-cart-count">{preOrderItemCount}</span>
+                        </div>
+                        <div>
+                          <p className="preorder-cart-label">{isKhmer ? 'សេចក្តីសង្ខេបនៃការកុម្ម៉ង់មុន' : 'Pre-Order Summary'}</p>
+                          <p className="preorder-cart-items-preview">
+                            {Object.values(preOrderCart)
+                              .map((i) => `${isKhmer ? (i.name_kh || i.name) : i.name} ×${i.qty}`)
+                              .join(' · ')}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="preorder-cart-header-right">
+                        <span className="preorder-cart-header-total">${preOrderTotal.toFixed(2)}</span>
+                        <button
+                          type="button"
+                          className="preorder-clear-btn"
+                          onClick={() => setPreOrderCart({})}
+                          aria-label="Clear pre-order"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="preorder-cart-items-list-container">
+                      {Object.values(preOrderCart).map((item) => (
+                        <div key={item.id} className="preorder-cart-item-row">
+                          <span className="preorder-item-row-name">
+                            {isKhmer ? (item.name_kh || item.name) : item.name}
+                          </span>
+                          <div className="preorder-item-row-actions">
+                            <span className="preorder-item-row-price">${(item.price * item.qty).toFixed(2)}</span>
+                            <div className="preorder-item-row-qty-ctrl">
+                              <button
+                                type="button"
+                                className="qty-btn"
+                                onClick={() => handleQtyInBanner(item, -1)}
+                                aria-label="Decrease quantity"
+                              >
+                                <Minus className="w-3 h-3" />
+                              </button>
+                              <span className="qty-val">{item.qty}</span>
+                              <button
+                                type="button"
+                                className="qty-btn"
+                                onClick={() => handleQtyInBanner(item, 1)}
+                                aria-label="Increase quantity"
+                              >
+                                <Plus className="w-3 h-3" />
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
 
                 <div className="special-request-wrapper mt-8">
                   <label htmlFor="specialRequest">{t('reservationPage.form.labels.specialRequest', undefined, 'Special Request')}</label>
@@ -1101,8 +1327,15 @@ export default function ReservationPage() {
                 </div>
 
                 <div className="submit-area mt-8">
-                  <button type="submit" className="reserve-btn-primary w-full">
-                    {t('reservationPage.form.submit', undefined, 'Reserve a Table')}
+                  <button type="submit" className="reserve-btn-primary w-full flex items-center justify-center gap-2" disabled={isSubmitting}>
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        <span>{isKhmer ? 'កំពុងដំណើរការ...' : 'Processing...'}</span>
+                      </>
+                    ) : (
+                      t('reservationPage.form.submit', undefined, 'Reserve a Table')
+                    )}
                   </button>
                   <p className="cancel-notice text-center mt-3">
                     {t('reservationPage.form.cancellationNotice', undefined, 'Free cancellation up to 24 hours before your reservation.')}
@@ -1168,6 +1401,38 @@ export default function ReservationPage() {
                     <span>{t('reservationPage.summary.labels.seating', undefined, 'Seating')}</span>
                     <strong>{selectedSeatingDisplay}</strong>
                   </div>
+
+                  {preOrderItemCount > 0 && (
+                    <div className="summary-item-preorder">
+                      <button
+                        type="button"
+                        className="summary-preorder-toggle"
+                        onClick={() => setIsPreOrderSummaryExpanded(!isPreOrderSummaryExpanded)}
+                        aria-expanded={isPreOrderSummaryExpanded}
+                      >
+                        <span>{isKhmer ? 'មុខម្ហូបកុម្ម៉ង់មុន' : 'Pre-ordered Items'} ({preOrderItemCount})</span>
+                        {isPreOrderSummaryExpanded ? (
+                          <ChevronUp className="w-4 h-4 text-[#6b9158]" />
+                        ) : (
+                          <ChevronDown className="w-4 h-4 text-[#6b9158]" />
+                        )}
+                      </button>
+                      {isPreOrderSummaryExpanded && (
+                        <div className="summary-preorder-list">
+                          {Object.values(preOrderCart).map((i) => (
+                            <div key={i.id} className="summary-preorder-subitem">
+                              <span className="subitem-name">{isKhmer ? (i.name_kh || i.name) : i.name}</span>
+                              <span className="subitem-qty">×{i.qty}</span>
+                            </div>
+                          ))}
+                          <div className="summary-preorder-total">
+                            <span>{isKhmer ? 'សរុប' : 'Total Price'}:</span>
+                            <strong>${preOrderTotal.toFixed(2)}</strong>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
 
                 <p className="arrival-notice">
@@ -1178,9 +1443,17 @@ export default function ReservationPage() {
                   <button
                     type="button"
                     onClick={handleReservationSubmit}
-                    className="reserve-btn-primary w-full"
+                    className="reserve-btn-primary w-full flex items-center justify-center gap-2"
+                    disabled={isSubmitting}
                   >
-                    {t('reservationPage.summary.reserveButton', undefined, 'Reserve a Table')}
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        <span>{isKhmer ? 'កំពុងដំណើរការ...' : 'Processing...'}</span>
+                      </>
+                    ) : (
+                      t('reservationPage.summary.reserveButton', undefined, 'Reserve a Table')
+                    )}
                   </button>
 
                   <a
@@ -1197,6 +1470,14 @@ export default function ReservationPage() {
 
       {/* FAQ Section */}
       <FaqSection />
+
+      {/* Menu Modal */}
+      <MenuModal
+        isOpen={isMenuModalOpen}
+        onClose={() => setIsMenuModalOpen(false)}
+        cart={preOrderCart}
+        onCartChange={setPreOrderCart}
+      />
     </div>
   );
 }

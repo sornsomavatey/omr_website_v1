@@ -528,8 +528,8 @@
     "form": {
       "aria": "Reservation form",
       "labels": {
-        "fullName": "Full Name *",
-        "phoneNumber": "Phone Number *",
+        "fullName": "Full Name",
+        "phoneNumber": "Phone Number",
         "adults": "Adults",
         "children": "Children",
         "specialRequest": "Special Request"

@@ -1,4 +1,4 @@
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 
 import MainLayouts from '@/app/layouts/MainLayouts';
 
@@ -16,31 +16,29 @@ import ContactPage from '@/pages/Contact';
 
 export default function AppRouter() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route element={<MainLayouts />}>
-          <Route index element={<HomePage />} />
+    <Routes>
+      <Route element={<MainLayouts />}>
+        <Route index element={<HomePage />} />
 
-          <Route path="/menu" element={<MenuPage />} />
-          <Route path="/restaurants" element={<Navigate to="/branches" replace />} />
-          <Route path="/restaurants/toul-kork" element={<Navigate to="/branches/toul-kork" replace />} />
-          <Route path="/restaurants/boeung-kak" element={<Navigate to="/branches/boeung-kak" replace />} />
-          <Route path="/branches" element={<BranchesPage />} />
-          <Route path="/branches/toul-kork" element={<ToulKorkPage />} />
-          <Route path="/branches/boeung-kak" element={<BoeungKakPage />} />
-          <Route path="/gallery" element={<GalleryPage />} />
-          <Route path="/events" element={<EventsPage />} />
-          <Route path="/about" element={<AboutPage />} />
+        <Route path="/menu" element={<MenuPage />} />
+        <Route path="/restaurants" element={<Navigate to="/branches" replace />} />
+        <Route path="/restaurants/toul-kork" element={<Navigate to="/branches/toul-kork" replace />} />
+        <Route path="/restaurants/boeung-kak" element={<Navigate to="/branches/boeung-kak" replace />} />
+        <Route path="/branches" element={<BranchesPage />} />
+        <Route path="/branches/toul-kork" element={<ToulKorkPage />} />
+        <Route path="/branches/boeung-kak" element={<BoeungKakPage />} />
+        <Route path="/gallery" element={<GalleryPage />} />
+        <Route path="/events" element={<EventsPage />} />
+        <Route path="/about" element={<AboutPage />} />
 
-          <Route path="/careers" element={<CareersPage />} />
-          <Route path="/contact" element={<ContactPage />} />
+        <Route path="/careers" element={<CareersPage />} />
+        <Route path="/contact" element={<ContactPage />} />
 
-          <Route path="/reservation" element={<ReservationPage />} />
-          <Route path="/reservations" element={<ReservationPage />} />
+        <Route path="/reservation" element={<ReservationPage />} />
+        <Route path="/reservations" element={<ReservationPage />} />
 
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Route>
+    </Routes>
   );
 }
