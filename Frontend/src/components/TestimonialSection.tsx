@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Quote, Star } from 'lucide-react';
 import SectionHeader from './SectionHeader';
 import './TestimonialSection.css';
 
@@ -23,19 +23,38 @@ interface TestimonialSectionProps {
 
 const TEXT_TRUNCATE_LENGTH = 150;
 
-function TestimonialCard({ testimonial }: { testimonial: TestimonialItem }) {
+function TestimonialCard({
+  testimonial,
+  isKhmer,
+}: {
+  testimonial: TestimonialItem;
+  isKhmer: boolean;
+}) {
   const [expanded, setExpanded] = useState(false);
   const starCount = testimonial.stars || 5;
   const canTruncate = testimonial.text.length > TEXT_TRUNCATE_LENGTH;
 
   return (
     <article className="ts-card">
-      <div className="ts-stars" aria-label={`${starCount} out of 5 stars`}>
-        <span aria-hidden="true">{'★'.repeat(starCount)}</span>
+      <div className="ts-card-topline">
+        <div className="ts-stars" aria-label={`${starCount} out of 5 stars`}>
+          <span aria-hidden="true">
+            {Array.from({ length: 5 }, (_, index) => (
+              <Star
+                key={index}
+                className={index < starCount ? 'ts-star-filled' : ''}
+              />
+            ))}
+          </span>
+        </div>
+
+        <span className="ts-review-label">
+          {isKhmer ? 'មតិភ្ញៀវ' : 'Guest review'}
+        </span>
       </div>
 
       <span className="ts-quote-mark" aria-hidden="true">
-        “
+        <Quote />
       </span>
 
       <p className={`ts-card-text ${expanded ? 'ts-card-text-expanded' : ''}`}>
@@ -117,6 +136,7 @@ export default function TestimonialSection({
               <TestimonialCard
                 key={`${testimonial.name}-${index}`}
                 testimonial={testimonial}
+                isKhmer={isKhmer}
               />
             ))}
           </div>
