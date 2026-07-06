@@ -492,6 +492,7 @@ export default function EventsPage() {
                     <input
                       name="name"
                       type="text"
+                      autoComplete="name"
                       placeholder={t('eventsPage.inquiry.form.placeholders.name', undefined, 'Enter full name')}
                       required
                     />
@@ -501,6 +502,8 @@ export default function EventsPage() {
                     <input
                       name="phone"
                       type="tel"
+                      inputMode="tel"
+                      autoComplete="tel"
                       placeholder={t('eventsPage.inquiry.form.placeholders.phone', undefined, 'Enter phone number')}
                       required
                     />
@@ -510,6 +513,7 @@ export default function EventsPage() {
                     <input
                       name="company"
                       type="text"
+                      autoComplete="organization"
                       placeholder={t('eventsPage.inquiry.form.placeholders.company', undefined, 'Company Name')}
                     />
                   </label>
@@ -518,6 +522,8 @@ export default function EventsPage() {
                     <input
                       name="email"
                       type="email"
+                      inputMode="email"
+                      autoComplete="email"
                       placeholder={t('eventsPage.inquiry.form.placeholders.email', undefined, 'Enter email address')}
                     />
                   </label>
@@ -540,6 +546,7 @@ export default function EventsPage() {
                     <input
                       name="guest_count"
                       type="number"
+                      inputMode="numeric"
                       min={1}
                       placeholder={t('eventsPage.inquiry.form.placeholders.guests', undefined, 'e.g. 150')}
                       required
@@ -607,7 +614,7 @@ export default function EventsPage() {
             <a href="#inquiry" className="events-button events-button-primary">
               {t('eventsPage.finalCta.bookNow', undefined, 'Book Now')}
             </a>
-            <Link to="/contact" className="events-button events-button-outline">
+            <Link to="/reservations" className="events-button events-button-outline">
               {t('eventsPage.finalCta.getInTouch', undefined, 'Get In Touch')}
             </Link>
           </div>

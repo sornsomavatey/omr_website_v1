@@ -4,6 +4,9 @@ import { getHomeData, getTestimonialsData } from '@/lib/api';
 import SignatureDishes from '@/components/SignatureDishes';
 import LocationCard from '@/components/LocationCard';
 import SharedTestimonialSection from '@/components/TestimonialSection';
+import PartnerCompanySlider, {
+  type PartnerCompany,
+} from '@/components/PartnerCompanySlider';
 import { useTranslation } from '@/hooks/useTranslation';
 import {
   ArrowRight,
@@ -37,6 +40,55 @@ import type {
 import './index.css';
 
 import SectionHeader from '@/components/SectionHeader';
+
+const homepagePartners: PartnerCompany[] = [
+  { id: 'amret', name: 'Amret Plc', logo: '/assets/partners/image45.webp' },
+  { id: 'cisco', name: 'CISCO', logo: '/assets/partners/image2.webp' },
+  { id: 'clinton-health', name: 'CLINTON Health Access Initiative', logo: '/assets/partners/image4.webp' },
+  { id: 'danone', name: 'DANONE', logo: '/assets/partners/image1.webp' },
+  { id: 'dynamic-entrepreneur-spark', name: 'Dynamic Enterpreneur Spark', logo: '/assets/partners/image42.webp' },
+  { id: 'etiqa', name: 'eTiQa (General Insurance)', logo: '/assets/partners/image41.webp' },
+  { id: 'jotun', name: 'JOTUN', logo: '/assets/partners/image40.webp' },
+  { id: 'kcr-group', name: 'KCR Group', logo: '/assets/partners/image39.webp' },
+  { id: 'manulife', name: 'Manulife', logo: '/assets/partners/image38.webp' },
+  { id: 'netpoleon', name: 'netpoleon Network and Security', logo: '/assets/partners/image3.webp' },
+  { id: 'octopus', name: 'OCTOPUS', logo: '/assets/partners/image37.webp' },
+  { id: 'proseth-solutions', name: 'Proseth Solutions', logo: '/assets/partners/image36.webp' },
+  { id: 'siemens', name: 'SIEMENS', logo: '/assets/partners/image35.webp' },
+  { id: 'ministry-national-defence', name: 'ក្រសួងការពារជាតិ', logo: '/assets/partners/image44.webp' },
+  { id: 'ministry-womens-affairs', name: 'ក្រសួងកិច្ចការនារី', logo: '/assets/partners/image43.webp' },
+  { id: 'baksey-academy', name: 'Baksey academy', logo: '/assets/partners/image34.webp' },
+  { id: 'tem-trading', name: 'TEM trading', logo: '/assets/partners/image33.webp' },
+  { id: 'cwea', name: 'CWEA - Cambodia Women Entrepreneurs Association | Phnom Penh', logo: '/assets/partners/image32.webp' },
+  { id: 'marketing-solution-asia', name: 'Marketing solution asia ltd', logo: '/assets/partners/image31.webp' },
+  { id: 'bni-unicorn', name: 'BNI Unicorn Chapter', logo: '/assets/partners/image30.webp' },
+  { id: 'dhl', name: 'DHL', logo: '/assets/partners/image29.webp' },
+  { id: 'dksh', name: 'DKSH', logo: '/assets/partners/image28.webp' },
+  { id: 'ggear', name: 'Ggear', logo: '/assets/partners/image27.webp' },
+  { id: 'prudential', name: 'Prudential', logo: '/assets/partners/image26.webp' },
+  { id: 'metfone', name: 'Metfone', logo: '/assets/partners/image25.webp' },
+  { id: 'sambat-finance', name: 'SAMBAT - SAMBAT Finance PLC', logo: '/assets/partners/image24.webp' },
+  { id: 'aws-cambodia', name: 'AWS (CAMBODIA)', logo: '/assets/partners/image23.webp' },
+  { id: 'world-pop-1', name: 'World Pop Travel & Tour Group Co., Ltd.', logo: '/assets/partners/image22.webp' },
+  { id: 'nippon-paint', name: 'Nippon Paint', logo: '/assets/partners/image21.webp' },
+  { id: 'ppm-pharma', name: 'PPM Pharma Product Manufacturing', logo: '/assets/partners/image20.webp' },
+  { id: 'rupp', name: 'RUPP', logo: '/assets/partners/image19.webp' },
+  { id: 'eci-distribution', name: 'ECI Distribution Co., Ltd', logo: '/assets/partners/image18.webp' },
+  { id: 'intermedica', name: 'Intermedica Co., Ltd.', logo: '/assets/partners/image17.webp' },
+  { id: 'world-pop-2', name: 'World Pop Travel & Tour Group Co., Ltd.', logo: '/assets/partners/image22.webp' },
+  { id: 'air-cambodia', name: 'Air Cambodia', logo: '/assets/partners/image16.webp' },
+  { id: 'vietnam-airline', name: 'Vetnam Airline', logo: '/assets/partners/image15.webp' },
+  { id: 'eva-air', name: 'Eva air', logo: '/assets/partners/image14.webp' },
+  { id: 'cjcc', name: 'CJCC', logo: '/assets/partners/image13.webp' },
+  { id: 'ecam-solution', name: 'Ecam Solution', logo: '/assets/partners/image12.webp' },
+  { id: 'hrinc-cambodia', name: 'HRINC (Cambodia) Co., Ltd', logo: '/assets/partners/image11.webp' },
+  { id: 'shinhan-bank', name: 'Shinhan Bank', logo: '/assets/partners/image10.webp' },
+  { id: 'edtcam', name: 'EDTCAM CO.,LTD', logo: '/assets/partners/image9.webp' },
+  { id: 'chief-bank', name: 'Chief Bank', logo: '/assets/partners/image8.webp' },
+  { id: 'angkor-insurance', name: 'Angkor General insurance', logo: '/assets/partners/image7.webp' },
+  { id: 'woori-bank', name: 'Woori Bank Cambodia', logo: '/assets/partners/image6.webp' },
+  { id: 'fwd', name: 'FWD', logo: '/assets/partners/image5.webp' },
+];
 
 
 function HeroSection({ hero }: { hero: any }) {
@@ -446,6 +498,13 @@ export default function HomePage() {
         description={t('home.testimonials.description')}
         testimonials={testimonialsList}
         isKhmer={isKhmer}
+      />
+      <PartnerCompanySlider
+        partners={homepagePartners}
+        eyebrow={t('home.partners.eyebrow')}
+        title={t('home.partners.title')}
+        description={t('home.partners.description')}
+        durationSeconds={70}
       />
     </div>
   );

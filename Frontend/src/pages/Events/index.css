@@ -753,6 +753,7 @@
   align-items: center;
   justify-content: center;
   height: 100%;
+  min-width: 0;
 }
 
 .events-inquiry-form {
@@ -777,6 +778,7 @@
 }
 
 .events-form-grid label {
+  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -815,6 +817,7 @@
 .events-select-wrapper {
   position: relative;
   width: 100%;
+  min-width: 0;
 }
 
 .events-select-wrapper select {
@@ -1136,12 +1139,12 @@
   }
 
   .events-form-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
   }
 
   .events-form-wide {
-    grid-column: span 2;
+    grid-column: auto;
   }
 
   .events-faq-section {
@@ -1449,8 +1452,9 @@
 
   .events-inquiry-section {
     grid-template-columns: 1fr;
-    width: calc(100% - 36px);
-    padding: 60px 0;
+    width: calc(100% - 32px);
+    gap: 20px;
+    padding: 48px 0;
   }
 
   .events-inquiry-visual {
@@ -1462,15 +1466,84 @@
   }
 
   .events-inquiry-form {
-    padding: 32px 24px;
+    padding: 30px 22px;
   }
 
   .events-form-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+  }
+
+  .events-form-wide {
+    grid-column: auto;
+  }
+
+  .events-inquiry-form h2 {
+    margin-bottom: 24px;
+    font-size: clamp(28px, 9vw, 34px);
+  }
+
+  .events-form-grid label {
+    gap: 9px;
+    font-size: 13px;
+    line-height: 1.35;
+  }
+
+  .events-form-grid input,
+  .events-form-grid select,
+  .events-form-grid textarea {
+    min-width: 0;
+    padding: 14px 15px;
+    font-size: 16px;
+  }
+
+  .events-form-grid input,
+  .events-form-grid select {
+    min-height: 50px;
+  }
+
+  .events-form-grid select {
+    min-height: 46px;
+    padding-top: 11px;
+    padding-bottom: 11px;
+    font-size: 14px;
+  }
+
+  .events-form-grid select option {
+    font-size: 14px;
+  }
+
+  .events-form-grid textarea {
+    min-height: 120px;
+    resize: vertical;
+  }
+
+  .events-inquiry-submit {
+    min-height: 52px;
+    height: auto;
+    margin-top: 24px;
+    padding: 14px 20px;
+    font-size: 15px;
   }
 
   .events-faq-item button {
     font-size: 14px;
+  }
+}
+
+@media (max-width: 420px) {
+  .events-inquiry-section {
+    width: calc(100% - 24px);
+    padding: 36px 0;
+  }
+
+  .events-inquiry-visual {
+    min-height: 320px;
+  }
+
+  .events-inquiry-form {
+    padding: 26px 16px;
+    border-radius: 16px;
   }
 }
 

@@ -1232,9 +1232,9 @@ export default function ReservationPage() {
                 <div className="preorder-step-row">
                   <div className="reservation-step-heading" style={{ marginBottom: 0 }}>
                     <span>{localizeNumber(6)}</span>
-                    <div>
-                      <h2 style={{ margin: 0 }}>{isKhmer ? 'កុម្ម៉ង់អាហារទុកមុន' : 'Pre-order'}</h2>
-                      <p style={{ margin: '6px 0 0', color: '#737970', fontSize: '13px', lineHeight: 1.5 }}>
+                    <div className="preorder-step-copy">
+                      <h2>{isKhmer ? 'កុម្ម៉ង់អាហារទុកមុន' : 'Pre-order'}</h2>
+                      <p>
                         {isKhmer 
                           ? 'ជម្រើសបន្ថែម — ជ្រើសរើសមុខម្ហូបជាមុន ដើម្បីឲ្យអាហាររួចរាល់នៅពេលលោកអ្នកមកដល់' 
                           : "Optional — choose dishes ahead of time so they're ready when you arrive"}
