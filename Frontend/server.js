@@ -53,9 +53,22 @@ app.use('*all', async (req, res) => {
 
     const rendered = await render(url)
 
-    const html = template
+    let html = template
       .replace(`<!--app-head-->`, rendered.head ?? '')
       .replace(`<!--app-html-->`, rendered.html ?? '')
+
+    // Dynamically inject server-rendered SEO Title
+    if (rendered.title) {
+      html = html.replace(/<title>.*?<\/title>/, `<title>${rendered.title}</title>`)
+    }
+
+    // Dynamically inject server-rendered SEO Description
+    if (rendered.description) {
+      html = html.replace(
+        /<meta name="description" content=".*?"\s*\/?>/,
+        `<meta name="description" content="${rendered.description}" />`
+      )
+    }
 
     res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
   } catch (e) {

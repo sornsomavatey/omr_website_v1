@@ -2,6 +2,7 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router';
 import AppRouter from '@/app/router/AppRouter';
+import { getSEOMetadata } from '@/lib/seo';
 
 export function render(url: string) {
   const html = renderToString(
@@ -11,5 +12,15 @@ export function render(url: string) {
       </StaticRouter>
     </React.StrictMode>
   );
-  return { html };
+
+  // Get clean path
+  const path = url.split('?')[0];
+  // Default server rendering is English (standard for search engine bots)
+  const seo = getSEOMetadata(path, false);
+
+  return { 
+    html,
+    title: seo.title,
+    description: seo.description
+  };
 }

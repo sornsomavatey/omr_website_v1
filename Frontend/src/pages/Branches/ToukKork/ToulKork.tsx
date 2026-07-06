@@ -18,6 +18,14 @@ import {
   CalendarDays
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb';
 import SectionHeader from '@/components/SectionHeader';
 import TestimonialSection from '@/components/TestimonialSection';
 import DishCard from '@/components/ui/dish-card';
@@ -68,16 +76,7 @@ export default function ToulKork() {
       .catch((err) => console.error(err));
   }, [isKhmer]);
 
-  // Set document title & SEO meta
-  useEffect(() => {
-    document.title = isKhmer ? "ភោជនីយដ្ឋាន វ័នម័រ - សាខាទួលគោក" : "One More Restaurant - Toul Kork Branch";
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', isKhmer 
-        ? "ទទួលបទពិសោធន៍ទទួលទានអាហារខ្មែរពិតប្រាកដនៅភោជនីយដ្ឋាន វ័នម័រ ទួលគោក។ ស័ក្តិសមសម្រាប់ការជួបជុំគ្រួសារ ការប្រជុំអាជីវកម្ម និងព្រឹត្តិការណ៍ផ្សេងៗ។" 
-        : "Experience authentic Cambodian dining at One More Restaurant Toul Kork. Ideal for family gatherings, business meetings, and elegant events in Phnom Penh.");
-    }
-  }, [isKhmer]);
+
 
   return (
     <div className="tk-page-container">
@@ -89,9 +88,34 @@ export default function ToulKork() {
           <div className="tk-hero-overlay" />
         </div>
 
+        {/* Breadcrumb container aligned to the top-left corner matching site grid */}
+        <div className="absolute top-[102px] left-0 right-0 z-10 w-full max-w-[1440px] mx-auto px-6 md:px-16 hidden lg:block">
+          <Breadcrumb className="flex justify-start">
+            <BreadcrumbList className="text-[#f6fdf2] opacity-80 flex items-center gap-1.5 text-[11px] font-sans uppercase tracking-widest">
+              <BreadcrumbItem className="opacity-60 hover:opacity-100 transition-opacity">
+                <BreadcrumbLink asChild>
+                  <Link to="/">{t('nav.home', undefined, 'Home')}</Link>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator className="opacity-30" />
+              <BreadcrumbItem className="opacity-60 hover:opacity-100 transition-opacity">
+                <BreadcrumbLink asChild>
+                  <Link to="/branches">{t('nav.branches', undefined, 'Branches')}</Link>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator className="opacity-30" />
+              <BreadcrumbItem>
+                <BreadcrumbPage className="text-[#f6fdf2] font-semibold">
+                  {t('branchesPage.comparison.toulKorkTitle', undefined, 'Toul Kork')}
+                </BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+        </div>
+
         <div className="tk-hero-content">
           <h1 className="page-hero-title tk-hero-title">
-            {isKhmer ? <>ភោជនីយដ្ឋាន វ័នម័រ<br />ទួលគោក</> : <>One More Restaurant<br />Toul Kork</>}
+            {isKhmer ? <><span className="md:whitespace-nowrap">ភោជនីយដ្ឋាន វ័នម័រ</span><br />ទួលគោក</> : <><span className="md:whitespace-nowrap">One More Restaurant</span><br />Toul Kork</>}
           </h1>
           <p className="tk-hero-desc">
             {t('branchDetails.hero.toulKork.desc')}
