@@ -100,7 +100,7 @@ function ReservationHero({ hero, info }: { hero: any; info: any[] }) {
         <div className="reservation-hero-copy">
           <p className="reservation-hero-eyebrow">{t('reservationPage.hero.eyebrow', undefined, hero.eyebrow)}</p>
 
-          <h1 id="reservation-title">{t('reservationPage.hero.title', undefined, hero.title)}</h1>
+          <h1 className="page-hero-title" id="reservation-title">{t('reservationPage.hero.title', undefined, hero.title)}</h1>
 
           <p className="reservation-hero-description">
             {t('reservationPage.hero.desc', undefined, hero.desc)}

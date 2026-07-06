@@ -27,6 +27,11 @@ import imgAvatar2 from '@/assets/home-v2/0f84921deb64774c6b9d8e0f6b9cd098e318d66
 import imgAvatar3 from '@/assets/home-v2/ea74517d10d49de5ec0cc6665fb3c27a5e86b047.webp';
 import imgAvatar4 from '@/assets/home-v2/7412cda8fb627eef4cb8c5bfb7f0e7c533dee647.webp';
 
+import imgAvatarBuckeyeSam from '@/assets/testimonial-avatar/buckeye-sam.webp';
+import imgAvatarSokhanearyroatUng from '@/assets/testimonial-avatar/sokhanearyroat-ung.webp';
+import imgAvatarPimmyK from '@/assets/testimonial-avatar/pimmy-k.webp';
+import imgAvatarArtiSoejitno from '@/assets/testimonial-avatar/arti-soejitno.webp';
+
 export {
   svgPaths,
   imgHeroBg1,
@@ -47,6 +52,10 @@ export {
   imgAvatar2,
   imgAvatar3,
   imgAvatar4,
+  imgAvatarBuckeyeSam,
+  imgAvatarSokhanearyroatUng,
+  imgAvatarPimmyK,
+  imgAvatarArtiSoejitno,
 };
 
 export const imageMap: Record<string, string> = {
@@ -68,4 +77,8 @@ export const imageMap: Record<string, string> = {
   '@/assets/home-v2/0f84921deb64774c6b9d8e0f6b9cd098e318d66b.webp': imgAvatar2,
   '@/assets/home-v2/ea74517d10d49de5ec0cc6665fb3c27a5e86b047.webp': imgAvatar3,
   '@/assets/home-v2/7412cda8fb627eef4cb8c5bfb7f0e7c533dee647.webp': imgAvatar4,
+  '@/assets/testimonial-avatar/buckeye-sam.webp': imgAvatarBuckeyeSam,
+  '@/assets/testimonial-avatar/sokhanearyroat-ung.webp': imgAvatarSokhanearyroatUng,
+  '@/assets/testimonial-avatar/pimmy-k.webp': imgAvatarPimmyK,
+  '@/assets/testimonial-avatar/arti-soejitno.webp': imgAvatarArtiSoejitno,
 };

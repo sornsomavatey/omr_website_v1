@@ -143,7 +143,7 @@ export default function Branches() {
 
         <div className="branches-hero-inner">
           <div className="hero-text-side">
-            <h1 className="hero-title">
+            <h1 className="page-hero-title hero-title">
               {t('branchesPage.header.title', undefined, header.title)}
             </h1>
             

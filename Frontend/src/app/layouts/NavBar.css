@@ -304,6 +304,8 @@
   display: block;
 
   border-radius: 999px;
+  clip-path: circle(50% at 50% 50%);
+  overflow: hidden;
   object-fit: cover;
 }
 

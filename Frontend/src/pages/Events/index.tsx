@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Check, ChevronDown, ChevronLeft, ChevronRight, Clock, FileText, Mail, Shield, Users } from 'lucide-react';
 
@@ -6,7 +6,7 @@ import FeaturePackageCard from '@/components/FeaturePackageCard';
 import SectionHeader from '@/components/SectionHeader';
 import EventSpaceCard from '@/components/EventSpaceCard';
 import TestimonialSection from '@/components/TestimonialSection';
-import { createEventBooking } from '@/lib/api';
+import { createEventBooking, getTestimonialsData } from '@/lib/api';
 import { useTranslation } from '@/hooks/useTranslation';
 
 import imgHero     from '@/assets/home-v2/e900cacb721f9c81cd07b8415a03f20f42a39856.webp';
@@ -23,7 +23,7 @@ import imgGal4     from '@/assets/home-v2/43310dd2158ca5c7f7d098abf280dc14124d42
 import imgGal5     from '@/assets/home-v2/9826b8c118c911c852174f3c0d0204245fd0da48.webp';
 import imgInquiry  from '@/assets/Weeding.webp';
 import imgFinalCta from '@/assets/Weeding.webp';
-import { imgAvatar1, imgAvatar2, imgAvatar3, imgAvatar4 } from '@/pages/Home/homeAssets';
+import { imageMap } from '@/pages/Home/homeAssets';
 
 import './index.css';
 
@@ -234,36 +234,20 @@ export default function EventsPage() {
     caption: t(`eventsPage.gallery.captions.${item.caption}`, undefined, item.caption)
   }));
 
-  const testimonialsList = [
-    {
-      name: 'Sophea Prak',
-      date: t('home.testimonials.items.sophea.date', undefined, '1 month ago'),
-      text: t('home.testimonials.items.sophea.text', undefined, 'The Fish Amok here is absolute perfection! Steamed in a banana leaf with rich coconut cream and lemongrass paste. The garden setting makes you feel so relaxed.'),
-      avatar: imgAvatar1,
-      stars: 5,
-    },
-    {
-      name: 'David Chen',
-      date: t('home.testimonials.items.david.date', undefined, '3 weeks ago'),
-      text: t('home.testimonials.items.david.text', undefined, 'We ordered the Khmer BBQ Platter and Beef Lok Lak. The beef was incredibly tender and flavorful, and the Kampot pepper sauce was out of this world.'),
-      avatar: imgAvatar2,
-      stars: 5,
-    },
-    {
-      name: 'Piseth Bun',
-      date: t('home.testimonials.items.piseth.date', undefined, '2 weeks ago'),
-      text: t('home.testimonials.items.piseth.text', undefined, 'A truly beautiful restaurant serving authentic Khmer cuisine. The soup is delicious, and their commitment to local farmers and sustainability is inspiring.'),
-      avatar: imgAvatar3,
-      stars: 5,
-    },
-    {
-      name: 'Emma Watson',
-      date: t('home.testimonials.items.emma.date', undefined, '1 week ago'),
-      text: t('home.testimonials.items.emma.text', undefined, 'Outstanding service and presentation! Every dish felt like a work of art. The Toul Kork branch is absolutely gorgeous and perfect for business meetings.'),
-      avatar: imgAvatar4,
-      stars: 5,
-    },
-  ];
+  const [testimonialsList, setTestimonialsList] = useState<any[]>([]);
+
+  useEffect(() => {
+    getTestimonialsData()
+      .then((res) => {
+        const items = (res || []).map((item: any) => ({
+          ...item,
+          ...(isKhmer ? item.translations?.kh : {}),
+          avatar: imageMap[item.avatar] || item.avatar,
+        }));
+        setTestimonialsList(items);
+      })
+      .catch((err) => console.error(err));
+  }, [isKhmer]);
 
   const faqsList = getObject<any[]>('eventsPage.faq.items', faqs);
 
@@ -325,9 +309,9 @@ export default function EventsPage() {
         <div className="events-hero-shade" />
         <div className="events-hero-inner">
           <div className="events-hero-copy">
-            <h1 className="font-serif">
+            <h1 className="page-hero-title font-serif">
               {t('eventsPage.hero.title', undefined, 'Celebrate Every\nSpecial Moment').split('\n').map((line, idx) => (
-                <span key={idx}>{line}{idx === 0 && <br />}</span>
+                <span className="events-hero-title-line" key={idx}>{line}</span>
               ))}
             </h1>
             <p>
@@ -420,7 +404,9 @@ export default function EventsPage() {
       <section className="events-section events-services-section">
         <div className="events-section-heading">
           <div className="events-eyebrow"><span />{t('eventsPage.services.eyebrow', undefined, 'SERVICES')}<span /></div>
-          <h2>{t('eventsPage.services.title', undefined, 'Curated Services For Every Detail')}</h2>
+          <h2 className={isKhmer ? 'events-services-title-khmer' : undefined}>
+            {t('eventsPage.services.title', undefined, 'Curated Services For Every Detail')}
+          </h2>
         </div>
 
         <div className="events-service-grid">

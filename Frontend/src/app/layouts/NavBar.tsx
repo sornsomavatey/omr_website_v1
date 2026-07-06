@@ -62,44 +62,12 @@ function NavbarLogo({ mobile = false }: { mobile?: boolean }) {
 }
 
 function LanguageFlag({ language }: { language: string }) {
-  if (language === 'EN') {
-    return (
-      <svg className="navbar-language-flag" viewBox="0 0 40 24" fill="none">
-        <rect width="40" height="24" fill="#E52B50" />
-        <rect width="40" height="6" fill="#032A75" />
-        <rect y="18" width="40" height="6" fill="#032A75" />
-        <path
-          d="M14 16 h12 v-1.5 h-2 v-2.5 h-1.5 v2.5 h-1.5 v-4.5 h-2 v4.5 h-1.5 v-2.5 h-1.5 v2.5 h-2 v1.5 z"
-          fill="#FFFFFF"
-        />
-      </svg>
-    );
-  }
+  const flagSrc = language === 'EN'
+    ? '/flags/cambodia.svg'
+    : '/flags/united-kingdom.svg';
 
   return (
-    <svg className="navbar-language-flag" viewBox="0 0 60 40" fill="none">
-      <rect width="60" height="40" fill="#00247D" />
-      <path
-        d="M0 0 L60 40 M60 0 L0 40"
-        stroke="#FFFFFF"
-        strokeWidth="6"
-      />
-      <path
-        d="M0 0 L60 40 M60 0 L0 40"
-        stroke="#CF142B"
-        strokeWidth="4"
-      />
-      <path
-        d="M30 0 V40 M0 20 H60"
-        stroke="#FFFFFF"
-        strokeWidth="10"
-      />
-      <path
-        d="M30 0 V40 M0 20 H60"
-        stroke="#CF142B"
-        strokeWidth="6"
-      />
-    </svg>
+    <img className="navbar-language-flag" src={flagSrc} alt="" />
   );
 }
 

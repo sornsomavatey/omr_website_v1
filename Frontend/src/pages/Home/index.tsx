@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { getHomeData } from '@/lib/api';
+import { getHomeData, getTestimonialsData } from '@/lib/api';
 import SignatureDishes from '@/components/SignatureDishes';
 import LocationCard from '@/components/LocationCard';
 import SharedTestimonialSection from '@/components/TestimonialSection';
@@ -70,7 +70,7 @@ function HeroSection({ hero }: { hero: any }) {
       </div>
 
       <div className="relative z-10 text-center text-white max-w-[1260px] px-6 pt-32">
-        <h1 className="font-serif text-5xl md:text-7xl lg:text-[80px] leading-tight mb-8 font-normal tracking-wide drop-shadow-lg">
+        <h1 className="page-hero-title page-hero-title--home font-serif text-5xl md:text-7xl lg:text-[80px] leading-tight mb-8 font-normal tracking-wide drop-shadow-lg">
           {t('home.hero.titleLine1')}
           <br />
           <span className="text-[#E7F6DF]">{t('home.hero.titleHighlight')}</span>
@@ -224,7 +224,7 @@ function LocationsSection({
   branches: any[];
   onDetailClick?: (branch: any) => void;
 }) {
-  const { t, isKhmer } = useTranslation();
+  const { t } = useTranslation();
 
   const tagKeyMap: Record<string, string> = {
     "Family Friendly": "home.locations.tags.familyFriendly",
@@ -240,7 +240,7 @@ function LocationsSection({
       <div className="max-w-[1440px] w-full px-6 md:px-[64px] text-center">
         <SectionHeader
           eyebrow={t('home.locations.eyebrow')}
-          title={isKhmer ? <>ភោជនីយដ្ឋាន<br />វ័នម័រ</> : t('home.locations.title')}
+          title={<span className="home-locations-title">{t('home.locations.title')}</span>}
           description={t('home.locations.description')}
         />
 
@@ -357,163 +357,19 @@ function GallerySection({ gallery }: { gallery: any[] }) {
   );
 }
 
-function TestimonialCard({
-  testimonial,
-}: {
-  testimonial: Testimonial;
-}) {
-  return (
-    <article className="testimonial-card">
-      <div
-        className="testimonial-stars"
-        aria-label="5 out of 5 stars"
-      >
-        <span aria-hidden="true">★★★★★</span>
-      </div>
-
-      <span
-        className="testimonial-quote-mark"
-        aria-hidden="true"
-      >
-        “
-      </span>
-
-      <p className="testimonial-card-text">
-        {testimonial.text}
-      </p>
-
-      <div className="testimonial-author">
-        <img
-          src={testimonial.avatar}
-          alt={testimonial.name}
-          className="testimonial-avatar"
-        />
-
-        <div className="testimonial-author-copy">
-          <h3>{testimonial.name}</h3>
-          <span>{testimonial.date}</span>
-        </div>
-      </div>
-    </article>
-  );
-}
-
-function TestimonialsSection({ testimonials }: { testimonials: Testimonial[] }) {
-  const { t } = useTranslation();
-  const [currentTestimonialIndex, setCurrentTestimonialIndex] =
-    useState(0);
-
-  const orderedTestimonials = Array.from(
-    { length: testimonials.length },
-    (_, offset) =>
-      testimonials[
-        (currentTestimonialIndex + offset) % testimonials.length
-      ]
-  );
-
-  const handlePrevTestimonial = () => {
-    setCurrentTestimonialIndex((previousIndex) =>
-      Math.max(previousIndex - 1, 0)
-    );
-  };
-
-  const handleNextTestimonial = () => {
-    setCurrentTestimonialIndex((previousIndex) =>
-      Math.min(previousIndex + 1, testimonials.length - 1)
-    );
-  };
-
-  const handleDotClick = (index: number) => {
-    setCurrentTestimonialIndex(index);
-  };
-
-  return (
-    <section
-      className="testimonials-section"
-      aria-labelledby="testimonials-title"
-    >
-      <div className="testimonials-container">
-        <SectionHeader
-          eyebrow={t('home.testimonials.eyebrow')}
-          title={t('home.testimonials.title')}
-          description={t('home.testimonials.description')}
-        />
-
-        <div className="testimonials-viewport">
-          <div
-            key={currentTestimonialIndex}
-            className="testimonials-track"
-          >
-            {orderedTestimonials.map((testimonial, index) => (
-              <TestimonialCard
-                key={`${currentTestimonialIndex}-${testimonial.name}-${index}`}
-                testimonial={testimonial}
-              />
-            ))}
-          </div>
-        </div>
-
-        <div className="testimonials-navigation">
-          <button
-            type="button"
-            className="testimonial-navigation-button"
-            onClick={handlePrevTestimonial}
-            disabled={currentTestimonialIndex === 0}
-            aria-label={t('home.testimonials.previous')}
-          >
-            <ChevronLeft aria-hidden="true" />
-          </button>
-
-          <div
-            className="testimonial-dots"
-            aria-label="Choose testimonial"
-          >
-            {testimonials.map((testimonial, index) => (
-              <button
-                key={`${testimonial.name}-${index}`}
-                type="button"
-                className={`testimonial-dot ${
-                  currentTestimonialIndex === index
-                    ? 'testimonial-dot-active'
-                    : ''
-                }`}
-                onClick={() => handleDotClick(index)}
-                aria-label={`Show testimonial ${index + 1}`}
-                aria-current={
-                  currentTestimonialIndex === index ? 'true' : undefined
-                }
-              />
-            ))}
-          </div>
-
-          <button
-            type="button"
-            className="testimonial-navigation-button"
-            onClick={handleNextTestimonial}
-            disabled={
-              currentTestimonialIndex === testimonials.length - 1
-            }
-            aria-label={t('home.testimonials.next')}
-          >
-            <ChevronRight aria-hidden="true" />
-          </button>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 export default function HomePage() {
   const navigate = useNavigate();
   const { t, isKhmer } = useTranslation();
   const [data, setData] = useState<any>(null);
+  const [testimonialsData, setTestimonialsData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    getHomeData()
-      .then((res) => {
-        setData(res);
+    Promise.all([getHomeData(), getTestimonialsData()])
+      .then(([homeRes, testimonialsRes]) => {
+        setData(homeRes);
+        setTestimonialsData(testimonialsRes);
         setLoading(false);
       })
       .catch((err) => {
@@ -560,16 +416,11 @@ export default function HomePage() {
     tags: branch.tags,
   }));
 
-  const testimonialKeys = ['sophea', 'david', 'piseth', 'emma'];
-  const testimonialsList: Testimonial[] = data.testimonials.map((item: any, index: number) => {
-    const key = testimonialKeys[index] || 'sophea';
-    return {
-      ...item,
-      text: t(`home.testimonials.items.${key}.text`, undefined, item.text),
-      date: t(`home.testimonials.items.${key}.date`, undefined, item.date),
-      avatar: imageMap[item.avatar] || item.avatar,
-    };
-  });
+  const testimonialsList: Testimonial[] = (testimonialsData || []).map((item: any) => ({
+    ...item,
+    ...(isKhmer ? item.translations?.kh : {}),
+    avatar: imageMap[item.avatar] || item.avatar,
+  }));
 
   return (
     <div className="bg-white flex flex-col items-center w-full overflow-x-hidden">

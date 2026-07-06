@@ -94,16 +94,23 @@ const khmerCopy: Record<string, string> = {
   'Creating moments worth remembering.': 'បង្កើតពេលវេលាដ៏មានតម្លៃសម្រាប់ការចងចាំ។',
   'Our People': 'ក្រុមការងាររបស់យើង',
   'The People Behind One More': 'មនុស្សនៅពីក្រោយ វ័ន ម័រ',
+  'Hor Chanthan': 'ហ័រ ចាន់ថាន់',
+  'Head Chef': 'មេចុងភៅ',
+  'A kitchen built on precision, respect for ingredients, and the joy of sharing heritage recipes.': 'ផ្ទះបាយមួយដែលផ្អែកលើភាពម៉ត់ចត់ ការគោរពចំពោះគ្រឿងផ្សំ និងសេចក្តីរីករាយក្នុងការចែករំលែករូបមន្តបេតិកភណ្ឌ។',
   'Our Culinary Team': 'ក្រុមចុងភៅរបស់យើង',
+  'Our Chef Team': 'ក្រុមចុងភៅរបស់យើង',
+  'Khmer cuisine is an art form that tells the story of our land. Our mission is to elevate these ancient flavors while remaining fiercely loyal to the techniques passed down through generations.': 'ម្ហូបខ្មែរគឺជាសិល្បៈមួយដែលបង្ហាញពីរឿងរ៉ាវនៃទឹកដីរបស់យើង។ បេសកកម្មរបស់យើងគឺលើកកម្ពស់រសជាតិបុរាណទាំងនេះ ខណៈពេលរក្សាភាពស្មោះត្រង់ចំពោះបច្ចេកទេសដែលបានបន្តពីមួយជំនាន់ទៅមួយជំនាន់។',
   'Guardians of Khmer Flavor': 'អ្នកថែរក្សារសជាតិខ្មែរ',
   'Precision, respect for ingredients, and the joy of sharing heritage recipes.': 'ភាពម៉ត់ចត់ ការគោរពគ្រឿងផ្សំ និងសេចក្តីរីករាយក្នុងការចែករំលែករូបមន្តបេតិកភណ្ឌ។',
   'Service Team': 'ក្រុមសេវាកម្ម',
+  'Warm, attentive, and genuinely invested in making every guest feel at home.': 'កក់ក្តៅ យកចិត្តទុកដាក់ និងខិតខំធ្វើឱ្យភ្ញៀវគ្រប់រូបមានអារម្មណ៍ដូចនៅផ្ទះ។',
   'Genuine Khmer Hospitality': 'បដិសណ្ឋារកិច្ចខ្មែរដ៏ពិតប្រាកដ',
   'Warm, attentive, and invested in making every guest feel at home.': 'កក់ក្តៅ យកចិត្តទុកដាក់ និងធ្វើឱ្យភ្ញៀវគ្រប់រូបមានអារម្មណ៍ដូចនៅផ្ទះ។',
   'Our Event Team': 'ក្រុមរៀបចំកម្មវិធីរបស់យើង',
   'Celebrations With Heart': 'ការប្រារព្ធពិធីដោយយកចិត្តទុកដាក់',
   'Creative, experienced, and ready to make every gathering feel personal.': 'ច្នៃប្រឌិត មានបទពិសោធន៍ និងត្រៀមធ្វើឱ្យគ្រប់ការជួបជុំមានភាពពិសេស។',
   'Operations Team': 'ក្រុមប្រតិបត្តិការ',
+  'Behind every celebration is a team that cares for every detail, from planning to execution.': 'នៅពីក្រោយរាល់កម្មវិធីអបអរសាទរ មានក្រុមការងារដែលយកចិត្តទុកដាក់លើគ្រប់ព័ត៌មានលម្អិត ចាប់ពីការរៀបចំផែនការរហូតដល់ការអនុវត្ត។',
   'The People Behind It All': 'អ្នកនៅពីក្រោយភាពជោគជ័យ',
   'Caring for every detail, from planning and sourcing to daily service.': 'យកចិត្តទុកដាក់លើគ្រប់ព័ត៌មានលម្អិត ចាប់ពីការរៀបចំ និងការផ្គត់ផ្គង់ ដល់សេវាកម្មប្រចាំថ្ងៃ។',
   'Our Number': 'តួលេខរបស់យើង',
@@ -131,6 +138,12 @@ const khmerCopy: Record<string, string> = {
   'Experience One More For Yourself': 'មកទទួលបទពិសោធន៍ វ័ន ម័រ ដោយខ្លួនអ្នក',
   'Whether you are joining us for a family dinner, business meeting, or special celebration, we look forward to welcoming you.': 'មិនថាអ្នកមកទទួលទានអាហារជាមួយគ្រួសារ ប្រជុំអាជីវកម្ម ឬប្រារព្ធកម្មវិធីពិសេស យើងរង់ចាំស្វាគមន៍អ្នកជានិច្ច។',
   'Plan Your Event': 'រៀបចំកម្មវិធីរបស់អ្នក',
+  'Guests sharing a meal at One More Restaurant': 'ភ្ញៀវកំពុងទទួលទានអាហាររួមគ្នានៅភោជនីយដ្ឋាន វ័ន ម័រ',
+  'A celebration at One More': 'កម្មវិធីអបអរសាទរនៅ វ័ន ម័រ',
+  'Event catering': 'សេវាម្ហូបអាហារសម្រាប់កម្មវិធី',
+  'A family activity': 'សកម្មភាពគ្រួសារ',
+  'Khmer cooking experience': 'បទពិសោធន៍ធ្វើម្ហូបខ្មែរ',
+  'The One More Restaurant team': 'ក្រុមការងារភោជនីយដ្ឋាន វ័ន ម័រ',
 };
 
 function SectionHeading({ eyebrow, title }: { eyebrow: string; title: string }) {
@@ -235,7 +248,7 @@ export default function About() {
       <section className="about-hero" style={{ backgroundImage: `url(${heroImage})` }}>
         <div className="about-hero-overlay" />
         <div className="about-hero-content">
-          <h1>{tr('More Than a Restaurant')}</h1>
+          <h1 className="page-hero-title">{tr('More Than a Restaurant')}</h1>
           <p className="about-hero-description">
             {tr('Since 2008, One More Restaurant has brought people together through authentic Khmer cuisine, warm hospitality, and memorable celebrations.')}
           </p>
@@ -252,7 +265,7 @@ export default function About() {
           {timeline.map((item) => (
             <article className="about-timeline-card" key={item.year}>
               <strong>{isKhmer ? toKhmerDigits(tr(item.year)) : tr(item.year)}</strong>
-              <img src={item.image} alt={item.title} />
+              <img src={item.image} alt={tr(item.title)} />
               <h3>{tr(item.title)}</h3>
               <p>{tr(item.text)}</p>
             </article>
@@ -296,11 +309,11 @@ export default function About() {
       </section>
 
       <section className="about-section about-people">
-        <SectionHeading eyebrow={tr("Guests' Choice")} title={tr('Why Guests Choose One More')} />
+        <SectionHeading eyebrow={tr('Our People')} title={tr('The People Behind One More')} />
         <div className="about-people-grid">
           {people.map((person) => (
             <article key={person.title}>
-              <img src={person.image} alt={person.title} />
+              <img src={person.image} alt={tr(person.title)} />
               <div><h3>{tr(person.title)}</h3>{person.role && <span>{tr(person.role)}</span>}<p>{tr(person.text)}</p></div>
             </article>
           ))}
@@ -319,7 +332,7 @@ export default function About() {
       </section>
 
       <section className="about-section about-spirit">
-        <img src={hospitalityImage} alt="Guests sharing a meal at One More Restaurant" />
+        <img src={hospitalityImage} alt={tr('Guests sharing a meal at One More Restaurant')} />
         <div>
           <p className="about-eyebrow">{tr('Khmer Culture')}</p>
           <h2>{tr('The Spirit of Khmer Hospitality')}</h2>
@@ -332,10 +345,10 @@ export default function About() {
       <section className="about-section about-moments">
         <SectionHeading eyebrow={tr('Moments')} title={tr('Moments That Matter')} />
         <div className="about-moments-grid">
-          <img className="about-moment-main" src={celebrationImage} alt="A celebration at One More" />
-          <img src={cateringImage} alt="Event catering" />
-          <img src={kidsImage} alt="A family activity" />
-          <img src={communityImage} alt="Khmer cooking experience" />
+          <img className="about-moment-main" src={celebrationImage} alt={tr('A celebration at One More')} />
+          <img src={cateringImage} alt={tr('Event catering')} />
+          <img src={kidsImage} alt={tr('A family activity')} />
+          <img src={communityImage} alt={tr('Khmer cooking experience')} />
           <div><strong>{isKhmer ? `ជាង ${toKhmerDigits('1,000+')}` : 'Over 1,000+'}</strong><span>{tr('events hosted with care and excellence.')}</span></div>
         </div>
       </section>
@@ -350,7 +363,7 @@ export default function About() {
               <li><KeyRound size={17} /><span>{tr('A supportive team environment built on respect and excellence.')}</span></li>
             </ul>
           </div>
-          <img src={careersTeamImage} alt="The One More Restaurant team" />
+          <img src={careersTeamImage} alt={tr('The One More Restaurant team')} />
         </div>
       </section>
 

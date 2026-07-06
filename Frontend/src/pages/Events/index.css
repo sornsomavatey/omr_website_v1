@@ -83,6 +83,10 @@
   letter-spacing: -.035em
 }
 
+.events-hero-title-line {
+  display: block;
+}
+
 .events-hero-copy p {
   max-width: 620px;
   margin: 0;
@@ -405,6 +409,24 @@
 
 .events-services-section {
   background: var(--event-pale)
+}
+
+@media (min-width: 981px) {
+  .events-services-section .events-section-heading {
+    max-width: 1100px;
+    padding-inline: 32px;
+  }
+
+  .events-services-section .events-section-heading h2 {
+    font-size: clamp(40px, 3.6vw, 54px);
+    white-space: nowrap;
+  }
+
+  .events-services-section .events-section-heading h2.events-services-title-khmer {
+    max-width: 720px;
+    margin-inline: auto;
+    white-space: normal;
+  }
 }
 
 .events-service-grid {
@@ -1445,9 +1467,18 @@
 
 /* Khmer language adjustments for Events page Hero */
 html[data-lang="kh"] .events-hero-copy h1 {
-  font-size: clamp(36px, 4.2vw, 52px) !important;
   line-height: 1.25 !important;
   letter-spacing: normal !important;
+}
+
+@media (min-width: 981px) {
+  html[data-lang="kh"] .events-hero-copy h1 {
+    line-height: 1.4 !important;
+  }
+
+  html[data-lang="kh"] .events-hero-title-line {
+    white-space: nowrap;
+  }
 }
 
 html[data-lang="kh"] .events-hero-copy p {

@@ -89,6 +89,25 @@ h6 {
   font-family: var(--font-serif);
 }
 
+/* One responsive type scale for every page-level hero heading. */
+.page-hero-title {
+  font-size: clamp(48px, 6vw, 76px) !important;
+}
+
+.page-hero-title--home {
+  font-size: clamp(52px, 6.4vw, 84px) !important;
+}
+
+html[lang="km"] .page-hero-title,
+html[data-lang="kh"] .page-hero-title {
+  font-size: clamp(36px, 4.2vw, 52px) !important;
+}
+
+html[lang="km"] .page-hero-title--home,
+html[data-lang="kh"] .page-hero-title--home {
+  font-size: clamp(42px, 5.2vw, 60px) !important;
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
