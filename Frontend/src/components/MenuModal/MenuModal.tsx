@@ -16,6 +16,9 @@ export type PreOrderCartItem = {
   qty: number;
   img: string;
   category: string;
+  desc?: string;
+  desc_kh?: string;
+  badge?: string;
 };
 
 export type PreOrderCart = Record<string, PreOrderCartItem>;
@@ -52,7 +55,7 @@ function DishRow({
   onRemove,
   isKhmer,
 }: {
-  item: { id: string; name: string; name_kh?: string; desc: string; desc_kh?: string; img: string; price: number; badge?: string; category: string };
+  item: { id: string; name: string; name_kh?: string; desc?: string; desc_kh?: string; img: string; price: number; badge?: string; category: string };
   qty: number;
   onAdd: () => void;
   onRemove: () => void;
