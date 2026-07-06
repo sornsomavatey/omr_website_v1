@@ -10,14 +10,36 @@ export default function MainLayouts() {
   const location = useLocation();
   const { isKhmer } = useTranslation();
 
-  // Dynamic SEO handler for client-side routing and language switching
+  // Dynamic SEO handler 
   useEffect(() => {
     const seo = getSEOMetadata(location.pathname, isKhmer);
+    
+    // 1. Title
     document.title = seo.title;
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', seo.description);
-    }
+
+    
+    const setMetaTag = (attributeName: string, attributeValue: string, content: string) => {
+      const element = document.querySelector(`meta[${attributeName}="${attributeValue}"]`);
+      if (element) {
+        element.setAttribute('content', content);
+      }
+    };
+
+    // 2. Description & Keywords
+    setMetaTag('name', 'description', seo.description);
+    setMetaTag('name', 'keywords', seo.keywords);
+
+    // 3. Open Graph (og:*)
+    setMetaTag('property', 'og:title', seo.title);
+    setMetaTag('property', 'og:description', seo.description);
+    setMetaTag('property', 'og:image', seo.ogImage);
+    setMetaTag('property', 'og:url', window.location.href);
+
+    // 4. Twitter (twitter:*)
+    setMetaTag('name', 'twitter:title', seo.title);
+    setMetaTag('name', 'twitter:description', seo.description);
+    setMetaTag('name', 'twitter:image', seo.ogImage);
+
   }, [location.pathname, isKhmer]);
 
   useEffect(() => {
