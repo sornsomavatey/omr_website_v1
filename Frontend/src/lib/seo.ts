@@ -144,19 +144,18 @@ export const seoMetadataKH: Record<string, SEOMetadata> = {
   '/careers': {
     title: 'ឱកាសការងារ និងចូលរួមក្រុមការងារ | ភោជនីយដ្ឋាន វ័នម័រ',
     description: 'កសាងអាជីពរបស់អ្នកក្នុងវិស័យបដិសណ្ឋារកិច្ចជាមួយភោជនីយដ្ឋាន វ័នម័រ។ ស្វែងរកឱកាសការងារផ្នែកចម្អិនអាហារ សេវាកម្ម និងការគ្រប់គ្រង។',
-    keywords: 'ការងារភោជនីយដ្ឋានភ្នំពេញ, ឱកាសការងារចុងភៅ, การងារសេវាកម្មអាហារ, ជ្រើសរើសបុគ្គលិកវ័នម័រ',
+    keywords: 'ការងារភោជនីយដ្ឋានភ្នំពេញ, ឱកាសការងារចុងភៅ, ការងារសេវាកម្មអាហារ, ជ្រើសរើសបុគ្គលិកវ័នម័រ',
     ogImage: '/images/careers-share.jpg'
   },
   '/contact': {
     title: 'ទាក់ទងមកយើងខ្ញុំ និងផែនទីទីតាំង | ភោជនីយដ្ឋាន វ័នម័រ',
-    description: 'ទំនាក់ទំនងមកកាន់ភោជនីយដ្ឋាន វ័នម័រ។ ស្វែងរកព័ត៌មានលម្អិតអំពីអាសយដ្ឋាន លេខទូរស័ព្ទ ម៉ោងបើកដំណើរការ និងផែនទីទីតាំង។',
+    description: 'ទំនាក់ទំនងមកកាន់ភោជនីយដ្ឋាន វ័នម័រ។ ស្វែងរកព័ត៌មានលម្អិតអំពីអាសយដ្ឋាន លេខទូរស័ព្ទ ម៉ោងបើកដំណើរការ និងទីតាំង។',
     keywords: 'លេខទូរស័ព្ទភោជនីយដ្ឋានវ័នម័រ, អាសយដ្ឋានភោជនីយដ្ឋាន, ម៉ោងបើកដំណើរការ, ផែនទីទីតាំងវ័នម័រ',
     ogImage: '/images/contact-share.jpg'
   }
 };
 
 export function getSEOMetadata(pathname: string, isKhmer: boolean): SEOMetadata {
-  // Normalize the pathname: strip leading/trailing slashes and query params
   const cleanPath = '/' + pathname.split('?')[0].replace(/^\/|\/$/g, '');
   const dictionary = isKhmer ? seoMetadataKH : seoMetadataEN;
   return dictionary[cleanPath] || dictionary['/'];
