@@ -12,6 +12,25 @@
   padding: 0 64px;
 }
 
+.home-testimonials-section .ts-container {
+  max-width: none;
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.home-testimonials-section .ts-container > .text-center {
+  padding-right: 24px;
+  padding-left: 24px;
+}
+
+.home-testimonials-section .ts-track {
+  --home-testimonial-edge: clamp(20px, 6.7vw, 128px);
+
+  padding-right: var(--home-testimonial-edge);
+  padding-left: var(--home-testimonial-edge);
+  scroll-padding-left: var(--home-testimonial-edge);
+}
+
 .ts-viewport {
   width: 100%;
   margin-top: 48px;

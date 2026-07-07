@@ -875,7 +875,19 @@
   }
 
   .cuisine-decoration {
-    display: none;
+    --star-scale: 0.38;
+
+    display: block;
+  }
+
+  .cuisine-decoration-left {
+    top: 25%;
+    left: 50%;
+  }
+
+  .cuisine-decoration-right {
+    top: 75%;
+    left: 50%;
   }
 
   .dish-image-leaf {
@@ -922,6 +934,10 @@
     height: 108px;
 
     border-width: 5px;
+  }
+
+  .cuisine-decoration {
+    --star-scale: 0.3;
   }
 
   .dish-image-leaf {
