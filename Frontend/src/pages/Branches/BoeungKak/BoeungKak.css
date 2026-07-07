@@ -1064,7 +1064,7 @@
     max-height: 760px;
   }
 
-  .bk-hero-content { padding: 88px 18px 40px; }
+  .bk-hero-content { padding: 88px 16px 40px; }
 
   .bk-hero-title {
     font-size: clamp(38px, 12vw, 52px);

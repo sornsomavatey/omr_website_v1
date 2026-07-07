@@ -78,24 +78,49 @@
   -webkit-backdrop-filter: blur(18px);
   border-bottom: 1px solid rgba(33, 48, 28, 0.08);
   box-shadow: none;
-  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .menu-sticky-tabs-hidden {
   opacity: 0;
+  visibility: hidden;
   pointer-events: none;
-  transform: translateY(-10px);
 }
 
 .menu-sticky-tabs-visible {
   opacity: 1;
+  visibility: visible;
   pointer-events: auto;
-  transform: translateY(0);
 }
 
 @media (max-width: 1023px) {
   .menu-sticky-tabs-container {
     top: 78px;
+  }
+}
+
+@media (min-width: 1024px) {
+  body.menu-page-nav-compact .menu-sticky-tabs-container {
+    top: 0;
+    z-index: 1001;
+    width: min(620px, calc(100% - 520px));
+    margin-right: auto;
+    margin-left: auto;
+    background: transparent;
+    border-bottom: 0;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  body.menu-page-nav-compact .menu-sticky-tabs-inner {
+    height: 76px;
+    gap: 12px;
+    padding: 0;
+  }
+
+  body.menu-page-nav-compact .category-pill-btn {
+    min-height: 36px;
+    padding: 8px 22px;
+    font-size: 12px;
   }
 }
 
@@ -133,7 +158,7 @@
   padding: 10px 28px;
   border-radius: 999px;
   cursor: pointer;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: none;
   white-space: nowrap;
 }
 
@@ -213,6 +238,23 @@
 }
 
 @media (max-width: 768px) {
+  .menu-section .grid {
+    row-gap: 32px;
+  }
+
+  .menu-dish-card > div:first-child > div {
+    height: 330px;
+  }
+
+  .menu-dish-card > div:last-child {
+    padding: 14px 18px 18px;
+  }
+
+  .menu-dish-card > div:last-child > span {
+    margin-bottom: 6px;
+    font-size: 10px;
+  }
+
   .menu-dish-card .dish-card-title,
   .menu-dish-card .dish-card-price {
     font-size: 20px;
@@ -220,10 +262,12 @@
 
   .menu-dish-card .dish-card-title {
     line-height: 1.3;
+    margin-bottom: 8px;
   }
 
   .menu-dish-card .dish-card-footer {
     gap: 12px;
+    padding-top: 0;
   }
 
   .menu-dish-card .dish-card-action {
@@ -258,6 +302,14 @@
 }
 
 @media (max-width: 480px) {
+  .menu-section .grid {
+    row-gap: 28px;
+  }
+
+  .menu-dish-card > div:first-child > div {
+    height: 310px;
+  }
+
   .menu-hero-tabs-container {
     gap: 8px;
     padding: 0 8px;

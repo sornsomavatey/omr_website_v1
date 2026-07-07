@@ -1010,7 +1010,7 @@
   }
 
   .events-hero-inner {
-    width: min(100% - 36px, 1160px);
+    width: min(100% - 32px, 1160px);
     padding: 126px 0 64px
   }
 
@@ -1045,7 +1045,7 @@
   .events-section { padding: var(--mobile-section-space) 0 }
 
   .events-section-heading {
-    width: calc(100% - 36px);
+    width: calc(100% - 32px);
     margin-bottom: 34px
   }
 
@@ -1059,7 +1059,7 @@
   .events-gallery-grid,
   .events-testimonial-grid,
   .events-faq-list {
-    width: calc(100% - 36px)
+    width: calc(100% - 32px)
   }
 
   .events-package-grid {
@@ -1414,7 +1414,7 @@
   .events-gallery-grid,
   .events-testimonial-grid,
   .events-faq-list {
-    width: calc(100% - 36px);
+    width: calc(100% - 32px);
   }
 
   .events-space-content h3 {
@@ -1533,7 +1533,7 @@
 
 @media (max-width: 420px) {
   .events-inquiry-section {
-    width: calc(100% - 24px);
+    width: calc(100% - 32px);
     padding: 36px 0;
   }
 

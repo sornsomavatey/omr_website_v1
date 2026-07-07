@@ -306,7 +306,7 @@
 }
 
 @media (max-width: 640px) {
-  .gallery-hero { min-height: 610px; padding: 125px 18px 70px; }
+  .gallery-hero { min-height: 610px; padding: 125px 16px 70px; }
   .gallery-hero-content > span { margin-bottom: 12px; font-size: 10px; }
   .gallery-hero h1 { margin-bottom: 14px; font-size: 58px; }
   .gallery-hero p { font-size: 15px; line-height: 1.55; }
@@ -329,7 +329,7 @@
 @media (max-width: 390px) {
   .gallery-hero { padding-right: 16px; padding-left: 16px; }
   .gallery-hero h1 { font-size: clamp(42px, 14vw, 52px); }
-  .gallery-content { width: calc(100% - 24px); }
+  .gallery-content { width: calc(100% - 32px); }
   .gallery-card-caption { gap: 10px; }
   .gallery-lightbox figcaption { flex-direction: column; gap: 5px; }
 }

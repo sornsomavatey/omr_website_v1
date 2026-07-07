@@ -915,8 +915,8 @@
 
 @media (max-width: 480px) {
   .featured-cuisine-section {
-    padding-right: 12px;
-    padding-left: 12px;
+    padding-right: 16px;
+    padding-left: 16px;
   }
 
   .featured-cuisine-collage {

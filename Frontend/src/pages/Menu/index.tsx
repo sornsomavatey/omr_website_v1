@@ -98,15 +98,22 @@ export default function Menu() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const threshold = window.innerWidth >= 768 ? 480 : 400;
-      setIsStickyVisible(window.scrollY > threshold);
+      const heroSection = document.getElementById('menu-hero');
+      if (!heroSection) {
+        setIsStickyVisible(false);
+        return;
+      }
+
+      setIsStickyVisible(heroSection.getBoundingClientRect().bottom <= 0);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll);
     handleScroll();
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
     };
   }, []);
 
@@ -294,7 +301,7 @@ export default function Menu() {
   return (
     <div className="bg-white flex flex-col items-center w-full min-h-screen">
       {/* Hero Header Section */}
-      <section className="relative w-full h-[500px] md:h-[580px] flex flex-col items-center justify-center overflow-hidden">
+      <section id="menu-hero" className="relative w-full h-[500px] md:h-[580px] flex flex-col items-center justify-center overflow-hidden">
         <div className="absolute inset-0 w-full h-full pointer-events-none z-0">
           <img
             alt={t('menu.hero.backgroundAlt', undefined, 'Menu Header Background')}

@@ -505,7 +505,7 @@ export default function HomePage() {
         eyebrow={t('home.partners.eyebrow')}
         title={t('home.partners.title')}
         description={t('home.partners.description')}
-        durationSeconds={70}
+        durationSeconds={150}
       />
     </div>
   );
