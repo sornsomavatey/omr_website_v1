@@ -113,7 +113,7 @@ export default function GalleryPage() {
       <section className="gallery-hero" style={{ backgroundImage: `url(${imgHero})` }} id="gallery-hero">
         <div className="gallery-hero-overlay" />
         <div className="gallery-hero-content">
-          <h1>{t('galleryPage.hero.title', undefined, 'Gallery')}</h1>
+          <h1 className="page-hero-title">{t('galleryPage.hero.title', undefined, 'Gallery')}</h1>
           <p>{t('galleryPage.hero.desc', undefined, 'A visual journey through the flavors, craft, and atmosphere of authentic Khmer hospitality.')}</p>
         </div>
       </section>

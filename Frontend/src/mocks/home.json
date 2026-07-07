@@ -106,32 +106,6 @@
       "tags": ["Event Space", "Large Groups", "Corporate"]
     }
   ],
-  "testimonials": [
-    {
-      "name": "Sophea Prak",
-      "date": "1 month ago",
-      "text": "The Fish Amok here is absolute perfection! Steamed in a banana leaf with rich coconut cream and lemongrass paste. The garden setting makes you feel so relaxed.",
-      "avatar": "@/assets/home-v2/fe0520650c912ce97eb0e3d39282dfb2ecb8c889.webp"
-    },
-    {
-      "name": "David Chen",
-      "date": "3 weeks ago",
-      "text": "We ordered the Khmer BBQ Platter and Beef Lok Lak. The beef was incredibly tender and flavorful, and the Kampot pepper sauce was out of this world.",
-      "avatar": "@/assets/home-v2/0f84921deb64774c6b9d8e0f6b9cd098e318d66b.webp"
-    },
-    {
-      "name": "Piseth Bun",
-      "date": "2 weeks ago",
-      "text": "A truly beautiful restaurant serving authentic Khmer cuisine. The soup is delicious, and their commitment to local farmers and sustainability is inspiring.",
-      "avatar": "@/assets/home-v2/ea74517d10d49de5ec0cc6665fb3c27a5e86b047.webp"
-    },
-    {
-      "name": "Emma Watson",
-      "date": "1 week ago",
-      "text": "Outstanding service and presentation! Every dish felt like a work of art. The Toul Kork branch is absolutely gorgeous and perfect for business meetings.",
-      "avatar": "@/assets/home-v2/7412cda8fb627eef4cb8c5bfb7f0e7c533dee647.webp"
-    }
-  ],
   "gallery": [
     { "src": "@/assets/home-v2/480cb1d76af2706b9692b726ad26ec2bf396f8c8.webp", "alt": "Gallery 1" },
     { "src": "@/assets/home-v2/07e47044152ad38cdbb1bda5ae392fb848e3a37a.webp", "alt": "Gallery 2" },

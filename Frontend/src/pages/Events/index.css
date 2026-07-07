@@ -83,6 +83,10 @@
   letter-spacing: -.035em
 }
 
+.events-hero-title-line {
+  display: block;
+}
+
 .events-hero-copy p {
   max-width: 620px;
   margin: 0;
@@ -405,6 +409,24 @@
 
 .events-services-section {
   background: var(--event-pale)
+}
+
+@media (min-width: 981px) {
+  .events-services-section .events-section-heading {
+    max-width: 1100px;
+    padding-inline: 32px;
+  }
+
+  .events-services-section .events-section-heading h2 {
+    font-size: clamp(40px, 3.6vw, 54px);
+    white-space: nowrap;
+  }
+
+  .events-services-section .events-section-heading h2.events-services-title-khmer {
+    max-width: 720px;
+    margin-inline: auto;
+    white-space: normal;
+  }
 }
 
 .events-service-grid {
@@ -731,6 +753,7 @@
   align-items: center;
   justify-content: center;
   height: 100%;
+  min-width: 0;
 }
 
 .events-inquiry-form {
@@ -755,6 +778,7 @@
 }
 
 .events-form-grid label {
+  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -793,6 +817,7 @@
 .events-select-wrapper {
   position: relative;
   width: 100%;
+  min-width: 0;
 }
 
 .events-select-wrapper select {
@@ -1006,12 +1031,18 @@
   }
 
   .events-contact-card {
-    padding: 25px 22px
+    padding: 25px 22px;
+    width: 100%;
+    box-sizing: border-box;
   }
 
-  .events-section {
-    padding: 66px 0
+  .events-contact-row strong {
+    word-break: break-all;
+    overflow-wrap: break-word;
+    font-size: 15px;
   }
+
+  .events-section { padding: var(--mobile-section-space) 0 }
 
   .events-section-heading {
     width: calc(100% - 36px);
@@ -1108,11 +1139,12 @@
   }
 
   .events-form-grid {
-    grid-template-columns: 1fr
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
   }
 
   .events-form-wide {
-    grid-column: auto
+    grid-column: auto;
   }
 
   .events-faq-section {
@@ -1361,10 +1393,7 @@
 }
 
 @media (max-width: 720px) {
-  .events-section {
-    padding-top: 72px;
-    padding-bottom: 72px;
-  }
+  .events-section { padding-block: var(--mobile-section-space); }
 
   .events-section-heading {
     margin-bottom: 38px;
@@ -1423,8 +1452,9 @@
 
   .events-inquiry-section {
     grid-template-columns: 1fr;
-    width: calc(100% - 36px);
-    padding: 60px 0;
+    width: calc(100% - 32px);
+    gap: 20px;
+    padding: 48px 0;
   }
 
   .events-inquiry-visual {
@@ -1436,11 +1466,64 @@
   }
 
   .events-inquiry-form {
-    padding: 32px 24px;
+    padding: 30px 22px;
   }
 
   .events-form-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+  }
+
+  .events-form-wide {
+    grid-column: auto;
+  }
+
+  .events-inquiry-form h2 {
+    margin-bottom: 24px;
+    font-size: clamp(28px, 9vw, 34px);
+  }
+
+  .events-form-grid label {
+    gap: 9px;
+    font-size: 13px;
+    line-height: 1.35;
+  }
+
+  .events-form-grid input,
+  .events-form-grid select,
+  .events-form-grid textarea {
+    min-width: 0;
+    padding: 14px 15px;
+    font-size: 16px;
+  }
+
+  .events-form-grid input,
+  .events-form-grid select {
+    min-height: 50px;
+  }
+
+  .events-form-grid select {
+    min-height: 46px;
+    padding-top: 11px;
+    padding-bottom: 11px;
+    font-size: 14px;
+  }
+
+  .events-form-grid select option {
+    font-size: 14px;
+  }
+
+  .events-form-grid textarea {
+    min-height: 120px;
+    resize: vertical;
+  }
+
+  .events-inquiry-submit {
+    min-height: 52px;
+    height: auto;
+    margin-top: 24px;
+    padding: 14px 20px;
+    font-size: 15px;
   }
 
   .events-faq-item button {
@@ -1448,11 +1531,36 @@
   }
 }
 
+@media (max-width: 420px) {
+  .events-inquiry-section {
+    width: calc(100% - 24px);
+    padding: 36px 0;
+  }
+
+  .events-inquiry-visual {
+    min-height: 320px;
+  }
+
+  .events-inquiry-form {
+    padding: 26px 16px;
+    border-radius: 16px;
+  }
+}
+
 /* Khmer language adjustments for Events page Hero */
 html[data-lang="kh"] .events-hero-copy h1 {
-  font-size: clamp(36px, 4.2vw, 52px) !important;
   line-height: 1.25 !important;
   letter-spacing: normal !important;
+}
+
+@media (min-width: 981px) {
+  html[data-lang="kh"] .events-hero-copy h1 {
+    line-height: 1.4 !important;
+  }
+
+  html[data-lang="kh"] .events-hero-title-line {
+    white-space: nowrap;
+  }
 }
 
 html[data-lang="kh"] .events-hero-copy p {

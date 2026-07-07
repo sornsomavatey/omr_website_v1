@@ -89,6 +89,25 @@ h6 {
   font-family: var(--font-serif);
 }
 
+/* One responsive type scale for every page-level hero heading. */
+.page-hero-title {
+  font-size: clamp(48px, 6vw, 76px) !important;
+}
+
+.page-hero-title--home {
+  font-size: clamp(52px, 6.4vw, 84px) !important;
+}
+
+html[lang="km"] .page-hero-title,
+html[data-lang="kh"] .page-hero-title {
+  font-size: clamp(36px, 4.2vw, 52px) !important;
+}
+
+html[lang="km"] .page-hero-title--home,
+html[data-lang="kh"] .page-hero-title--home {
+  font-size: clamp(42px, 5.2vw, 60px) !important;
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
@@ -326,6 +345,47 @@ html[lang="km"] h2 *,
 html[data-lang="kh"] h2,
 html[data-lang="kh"] h2 * {
   line-height: 1.7 !important;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --mobile-section-space: 52px;
+  }
+
+  /* Only normalize vertical spacing between Tailwind-based page sections. */
+  main [class~="py-24"],
+  main [class~="py-16"] {
+    padding-block: var(--mobile-section-space) !important;
+  }
+
+  /* Keep page CTAs compact on mobile; navigation and icon controls are excluded. */
+  main :is(
+    .about-button,
+    .custom-btn-primary,
+    .custom-btn-secondary,
+    .custom-btn-outline-green,
+    .events-button,
+    .events-inquiry-submit,
+    .hero-cta-button,
+    .modal-reserve-button,
+    .reserve-btn-primary,
+    .reserve-btn-secondary,
+    .btn-action-primary,
+    .btn-action-outline,
+    .fpc-book-btn,
+    .sic-button,
+    .bk-btn-menu-full,
+    .bk-btn-directions,
+    .bk-btn-close,
+    .tk-btn-menu-full,
+    .tk-btn-directions,
+    .tk-btn-close
+  ),
+  main form button[type="submit"] {
+    width: min(100%, 220px) !important;
+    max-width: 220px;
+    margin-inline: auto;
+  }
 }
 
 /* Use Kantumruy for Khmer UI copy that component styles otherwise leave in

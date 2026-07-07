@@ -1,7 +1,9 @@
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   BellRing,
   Eye,
+  KeyRound,
   PartyPopper,
   Target,
   UtensilsCrossed,
@@ -13,14 +15,18 @@ import heroImage from '@/assets/home-v2/43310dd2158ca5c7f7d098abf280dc14124d42de
 import toulKorkImage from '@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.webp';
 import boeungKakImage from '@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.webp';
 import signatureDishImage from '@/assets/home-v2/36191a3943135f3542a0fe8b80adee304f122115.webp';
-import diningImage from '@/assets/home-v2/80bc2f874a3b8b65fc3bd247f23046db8632d909.webp';
 import privateRoomImage from '@/assets/home-v2/480cb1d76af2706b9692b726ad26ec2bf396f8c8.webp';
 import celebrationImage from '@/assets/home-v2/e900cacb721f9c81cd07b8415a03f20f42a39856.webp';
 import cateringImage from '@/assets/home-v2/07e47044152ad38cdbb1bda5ae392fb848e3a37a.webp';
 import communityImage from '@/assets/home-v2/9826b8c118c911c852174f3c0d0204245fd0da48.webp';
 import kidsImage from '@/assets/home-v2/e8f4b56e423777f3f6c3df39c6ef78914b278e17.webp';
-import chefImage from '@/assets/home-v2/35b5b5843bc3a879390cc05c8e6b33eae70c2a8a.webp';
-import teamImage from '@/assets/Weeding.webp';
+import hospitalityImage from '@/assets/Event & Celebrations card-2.webp';
+import finalCtaImage from '@/assets/home-v2/31b0910d38c033be0ce5292cf4a1d68688308c6b.webp';
+import headChefImage from '@/assets/about/hor-chanthan.png';
+import serviceTeamImage from '@/assets/about/service-team.png';
+import chefTeamImage from '@/assets/about/chef-team.png';
+import operationsTeamImage from '@/assets/about/operations-team.png';
+import careersTeamImage from '@/assets/about/careers-team.png';
 import './index.css';
 
 const timeline = [
@@ -38,10 +44,10 @@ const reasons = [
 ];
 
 const people = [
-  { image: chefImage, title: 'Our Culinary Team', role: 'Guardians of Khmer Flavor', text: 'Precision, respect for ingredients, and the joy of sharing heritage recipes.' },
-  { image: diningImage, title: 'Service Team', role: 'Genuine Khmer Hospitality', text: 'Warm, attentive, and invested in making every guest feel at home.' },
-  { image: communityImage, title: 'Our Event Team', role: 'Celebrations With Heart', text: 'Creative, experienced, and ready to make every gathering feel personal.' },
-  { image: teamImage, title: 'Operations Team', role: 'The People Behind It All', text: 'Caring for every detail, from planning and sourcing to daily service.' },
+  { image: headChefImage, title: 'Hor Chanthan', role: 'Head Chef', text: 'A kitchen built on precision, respect for ingredients, and the joy of sharing heritage recipes.' },
+  { image: serviceTeamImage, title: 'Service Team', role: '', text: 'Warm, attentive, and genuinely invested in making every guest feel at home.' },
+  { image: chefTeamImage, title: 'Our Chef Team', role: '', text: 'Khmer cuisine is an art form that tells the story of our land. Our mission is to elevate these ancient flavors while remaining fiercely loyal to the techniques passed down through generations.' },
+  { image: operationsTeamImage, title: 'Operations Team', role: '', text: 'Behind every celebration is a team that cares for every detail, from planning to execution.' },
 ];
 
 const toKhmerDigits = (value: string) =>
@@ -88,16 +94,23 @@ const khmerCopy: Record<string, string> = {
   'Creating moments worth remembering.': 'បង្កើតពេលវេលាដ៏មានតម្លៃសម្រាប់ការចងចាំ។',
   'Our People': 'ក្រុមការងាររបស់យើង',
   'The People Behind One More': 'មនុស្សនៅពីក្រោយ វ័ន ម័រ',
+  'Hor Chanthan': 'ហ័រ ចាន់ថាន់',
+  'Head Chef': 'មេចុងភៅ',
+  'A kitchen built on precision, respect for ingredients, and the joy of sharing heritage recipes.': 'ផ្ទះបាយមួយដែលផ្អែកលើភាពម៉ត់ចត់ ការគោរពចំពោះគ្រឿងផ្សំ និងសេចក្តីរីករាយក្នុងការចែករំលែករូបមន្តបេតិកភណ្ឌ។',
   'Our Culinary Team': 'ក្រុមចុងភៅរបស់យើង',
+  'Our Chef Team': 'ក្រុមចុងភៅរបស់យើង',
+  'Khmer cuisine is an art form that tells the story of our land. Our mission is to elevate these ancient flavors while remaining fiercely loyal to the techniques passed down through generations.': 'ម្ហូបខ្មែរគឺជាសិល្បៈមួយដែលបង្ហាញពីរឿងរ៉ាវនៃទឹកដីរបស់យើង។ បេសកកម្មរបស់យើងគឺលើកកម្ពស់រសជាតិបុរាណទាំងនេះ ខណៈពេលរក្សាភាពស្មោះត្រង់ចំពោះបច្ចេកទេសដែលបានបន្តពីមួយជំនាន់ទៅមួយជំនាន់។',
   'Guardians of Khmer Flavor': 'អ្នកថែរក្សារសជាតិខ្មែរ',
   'Precision, respect for ingredients, and the joy of sharing heritage recipes.': 'ភាពម៉ត់ចត់ ការគោរពគ្រឿងផ្សំ និងសេចក្តីរីករាយក្នុងការចែករំលែករូបមន្តបេតិកភណ្ឌ។',
   'Service Team': 'ក្រុមសេវាកម្ម',
+  'Warm, attentive, and genuinely invested in making every guest feel at home.': 'កក់ក្តៅ យកចិត្តទុកដាក់ និងខិតខំធ្វើឱ្យភ្ញៀវគ្រប់រូបមានអារម្មណ៍ដូចនៅផ្ទះ។',
   'Genuine Khmer Hospitality': 'បដិសណ្ឋារកិច្ចខ្មែរដ៏ពិតប្រាកដ',
   'Warm, attentive, and invested in making every guest feel at home.': 'កក់ក្តៅ យកចិត្តទុកដាក់ និងធ្វើឱ្យភ្ញៀវគ្រប់រូបមានអារម្មណ៍ដូចនៅផ្ទះ។',
   'Our Event Team': 'ក្រុមរៀបចំកម្មវិធីរបស់យើង',
   'Celebrations With Heart': 'ការប្រារព្ធពិធីដោយយកចិត្តទុកដាក់',
   'Creative, experienced, and ready to make every gathering feel personal.': 'ច្នៃប្រឌិត មានបទពិសោធន៍ និងត្រៀមធ្វើឱ្យគ្រប់ការជួបជុំមានភាពពិសេស។',
   'Operations Team': 'ក្រុមប្រតិបត្តិការ',
+  'Behind every celebration is a team that cares for every detail, from planning to execution.': 'នៅពីក្រោយរាល់កម្មវិធីអបអរសាទរ មានក្រុមការងារដែលយកចិត្តទុកដាក់លើគ្រប់ព័ត៌មានលម្អិត ចាប់ពីការរៀបចំផែនការរហូតដល់ការអនុវត្ត។',
   'The People Behind It All': 'អ្នកនៅពីក្រោយភាពជោគជ័យ',
   'Caring for every detail, from planning and sourcing to daily service.': 'យកចិត្តទុកដាក់លើគ្រប់ព័ត៌មានលម្អិត ចាប់ពីការរៀបចំ និងការផ្គត់ផ្គង់ ដល់សេវាកម្មប្រចាំថ្ងៃ។',
   'Our Number': 'តួលេខរបស់យើង',
@@ -125,6 +138,12 @@ const khmerCopy: Record<string, string> = {
   'Experience One More For Yourself': 'មកទទួលបទពិសោធន៍ វ័ន ម័រ ដោយខ្លួនអ្នក',
   'Whether you are joining us for a family dinner, business meeting, or special celebration, we look forward to welcoming you.': 'មិនថាអ្នកមកទទួលទានអាហារជាមួយគ្រួសារ ប្រជុំអាជីវកម្ម ឬប្រារព្ធកម្មវិធីពិសេស យើងរង់ចាំស្វាគមន៍អ្នកជានិច្ច។',
   'Plan Your Event': 'រៀបចំកម្មវិធីរបស់អ្នក',
+  'Guests sharing a meal at One More Restaurant': 'ភ្ញៀវកំពុងទទួលទានអាហាររួមគ្នានៅភោជនីយដ្ឋាន វ័ន ម័រ',
+  'A celebration at One More': 'កម្មវិធីអបអរសាទរនៅ វ័ន ម័រ',
+  'Event catering': 'សេវាម្ហូបអាហារសម្រាប់កម្មវិធី',
+  'A family activity': 'សកម្មភាពគ្រួសារ',
+  'Khmer cooking experience': 'បទពិសោធន៍ធ្វើម្ហូបខ្មែរ',
+  'The One More Restaurant team': 'ក្រុមការងារភោជនីយដ្ឋាន វ័ន ម័រ',
 };
 
 function SectionHeading({ eyebrow, title }: { eyebrow: string; title: string }) {
@@ -136,17 +155,100 @@ function SectionHeading({ eyebrow, title }: { eyebrow: string; title: string }) 
   );
 }
 
+function CountUpNumber({ value, suffix = '', isKhmer }: { value: number; suffix?: string; isKhmer: boolean }) {
+  const [displayValue, setDisplayValue] = useState(0);
+  const numberRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const number = numberRef.current;
+    if (!number) return;
+
+    let animationFrame = 0;
+    let observer: IntersectionObserver | undefined;
+
+    const startCounting = () => {
+      const startedAt = performance.now();
+      const duration = 1500;
+
+      const updateCount = (now: number) => {
+        const progress = Math.min((now - startedAt) / duration, 1);
+        const easedProgress = 1 - Math.pow(1 - progress, 3);
+        setDisplayValue(Math.round(value * easedProgress));
+
+        if (progress < 1) animationFrame = requestAnimationFrame(updateCount);
+      };
+
+      animationFrame = requestAnimationFrame(updateCount);
+    };
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setDisplayValue(value);
+    } else if ('IntersectionObserver' in window) {
+      observer = new IntersectionObserver(([entry]) => {
+        if (!entry.isIntersecting) return;
+        observer?.disconnect();
+        startCounting();
+      }, { threshold: 0.4 });
+      observer.observe(number);
+    } else {
+      startCounting();
+    }
+
+    return () => {
+      observer?.disconnect();
+      cancelAnimationFrame(animationFrame);
+    };
+  }, [value]);
+
+  const text = `${displayValue}${suffix}`;
+  return <strong ref={numberRef}>{isKhmer ? toKhmerDigits(text) : text}</strong>;
+}
+
 export default function About() {
   const { isKhmer } = useTranslation();
   const tr = (text: string) => isKhmer ? (khmerCopy[text] || text) : text;
+  const pageRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const page = pageRef.current;
+    if (!page) return;
+
+    const images = Array.from(page.querySelectorAll<HTMLImageElement>('img'));
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+      images.forEach((image) => image.classList.add('about-image-visible'));
+      return;
+    }
+
+    page.classList.add('about-image-motion-ready');
+    images.forEach((image, index) => {
+      image.style.setProperty('--about-image-delay', `${(index % 4) * 90}ms`);
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+
+        entry.target.classList.add('about-image-visible');
+        observer.unobserve(entry.target);
+      });
+    }, {
+      threshold: 0.12,
+      rootMargin: '0px 0px -8% 0px',
+    });
+
+    images.forEach((image) => observer.observe(image));
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <div className="about-page">
+    <div className="about-page" ref={pageRef}>
       <section className="about-hero" style={{ backgroundImage: `url(${heroImage})` }}>
         <div className="about-hero-overlay" />
         <div className="about-hero-content">
-          <p className="about-eyebrow">{tr('Our Story Since 2008')}</p>
-          <h1>{tr('More Than a Restaurant')}</h1>
+          <h1 className="page-hero-title">{tr('More Than a Restaurant')}</h1>
           <p className="about-hero-description">
             {tr('Since 2008, One More Restaurant has brought people together through authentic Khmer cuisine, warm hospitality, and memorable celebrations.')}
           </p>
@@ -163,7 +265,7 @@ export default function About() {
           {timeline.map((item) => (
             <article className="about-timeline-card" key={item.year}>
               <strong>{isKhmer ? toKhmerDigits(tr(item.year)) : tr(item.year)}</strong>
-              <img src={item.image} alt={item.title} />
+              <img src={item.image} alt={tr(item.title)} />
               <h3>{tr(item.title)}</h3>
               <p>{tr(item.text)}</p>
             </article>
@@ -211,8 +313,8 @@ export default function About() {
         <div className="about-people-grid">
           {people.map((person) => (
             <article key={person.title}>
-              <img src={person.image} alt={person.title} />
-              <div><h3>{tr(person.title)}</h3><span>{tr(person.role)}</span><p>{tr(person.text)}</p></div>
+              <img src={person.image} alt={tr(person.title)} />
+              <div><h3>{tr(person.title)}</h3>{person.role && <span>{tr(person.role)}</span>}<p>{tr(person.text)}</p></div>
             </article>
           ))}
         </div>
@@ -221,16 +323,16 @@ export default function About() {
       <section className="about-section about-numbers">
         <SectionHeading eyebrow={tr('Our Number')} title={tr('One More In Numbers')} />
         <div className="about-number-grid">
-          <div><strong>{isKhmer ? toKhmerDigits('300+') : '300+'}</strong><span>{tr('Menu Items')}</span></div>
-          <div><strong>{isKhmer ? toKhmerDigits('22') : '22'}</strong><span>{tr('Rooms & Event Spaces')}</span></div>
-          <div><strong>{isKhmer ? toKhmerDigits('516') : '516'}</strong><span>{tr('Maximum Capacity')}</span></div>
-          <div><strong>{isKhmer ? toKhmerDigits('2') : '2'}</strong><span>{tr('Branches')}</span></div>
-          <div><strong>{isKhmer ? toKhmerDigits('200+') : '200+'}</strong><span>{tr('Team Members')}</span></div>
+          <div><CountUpNumber value={300} suffix="+" isKhmer={isKhmer} /><span>{tr('Menu Items')}</span></div>
+          <div><CountUpNumber value={22} isKhmer={isKhmer} /><span>{tr('Rooms & Event Spaces')}</span></div>
+          <div><CountUpNumber value={516} isKhmer={isKhmer} /><span>{tr('Maximum Capacity')}</span></div>
+          <div><CountUpNumber value={2} isKhmer={isKhmer} /><span>{tr('Branches')}</span></div>
+          <div><CountUpNumber value={200} suffix="+" isKhmer={isKhmer} /><span>{tr('Team Members')}</span></div>
         </div>
       </section>
 
       <section className="about-section about-spirit">
-        <img src={privateRoomImage} alt="Guests sharing a meal at One More Restaurant" />
+        <img src={hospitalityImage} alt={tr('Guests sharing a meal at One More Restaurant')} />
         <div>
           <p className="about-eyebrow">{tr('Khmer Culture')}</p>
           <h2>{tr('The Spirit of Khmer Hospitality')}</h2>
@@ -243,30 +345,29 @@ export default function About() {
       <section className="about-section about-moments">
         <SectionHeading eyebrow={tr('Moments')} title={tr('Moments That Matter')} />
         <div className="about-moments-grid">
-          <img className="about-moment-main" src={celebrationImage} alt="A celebration at One More" />
-          <img src={cateringImage} alt="Event catering" />
-          <img src={kidsImage} alt="A family activity" />
-          <img src={communityImage} alt="Khmer cooking experience" />
+          <img className="about-moment-main" src={celebrationImage} alt={tr('A celebration at One More')} />
+          <img src={cateringImage} alt={tr('Event catering')} />
+          <img src={kidsImage} alt={tr('A family activity')} />
+          <img src={communityImage} alt={tr('Khmer cooking experience')} />
           <div><strong>{isKhmer ? `ជាង ${toKhmerDigits('1,000+')}` : 'Over 1,000+'}</strong><span>{tr('events hosted with care and excellence.')}</span></div>
         </div>
       </section>
 
-      <section className="about-section about-careers">
+      <section id="careers" className="about-section about-careers">
         <SectionHeading eyebrow={tr('Careers')} title={tr('Grow With One More')} />
         <div className="about-careers-grid">
           <div>
             <p>{tr('We are a team of storytellers, chefs, and hosts dedicated to preserving Khmer heritage through exceptional hospitality.')}</p>
-            <ul><li>{tr('Career opportunities across culinary, service, and events.')}</li><li>{tr('A supportive team environment built on respect and excellence.')}</li></ul>
-            <div className="about-careers-actions">
-              <Link to="/careers" className="about-button about-button-primary">{tr('View Careers')}</Link>
-              <Link to="/contact" className="about-button about-button-light">{tr('Send Your CV')}</Link>
-            </div>
+            <ul className="about-careers-list">
+              <li><Users size={17} /><span>{tr('Career opportunities across culinary, service, and events.')}</span></li>
+              <li><KeyRound size={17} /><span>{tr('A supportive team environment built on respect and excellence.')}</span></li>
+            </ul>
           </div>
-          <img src={teamImage} alt="The One More Restaurant team" />
+          <img src={careersTeamImage} alt={tr('The One More Restaurant team')} />
         </div>
       </section>
 
-      <section className="about-final-cta" style={{ backgroundImage: `url(${celebrationImage})` }}>
+      <section className="about-final-cta" style={{ backgroundImage: `url(${finalCtaImage})` }}>
         <div>
           <h2>{tr('Experience One More For Yourself')}</h2>
           <p>{tr('Whether you are joining us for a family dinner, business meeting, or special celebration, we look forward to welcoming you.')}</p>

@@ -18,11 +18,21 @@ import {
   CalendarDays
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb';
 import SectionHeader from '@/components/SectionHeader';
 import TestimonialSection from '@/components/TestimonialSection';
 import DishCard from '@/components/ui/dish-card';
 import SharpImageCard from '@/components/SharpImageCard';
 import { useTranslation } from '@/hooks/useTranslation';
+import { getTestimonialsData } from '@/lib/api';
+import { imageMap } from '@/pages/Home/homeAssets';
 import './BoeungKak.css';
 
 // Asset imports matching homeAssets
@@ -43,11 +53,6 @@ import imgDish1 from '@/assets/home-v2/36191a3943135f3542a0fe8b80adee304f122115.
 import imgDish2 from '@/assets/home-v2/35b5b5843bc3a879390cc05c8e6b33eae70c2a8a.webp';
 import imgDish3 from '@/assets/home-v2/7ce88d9bf1af040daf36af037fc63627a61522c9.webp';
 
-// Testimonial Avatars
-import imgAvatar1 from '@/assets/home-v2/fe0520650c912ce97eb0e3d39282dfb2ecb8c889.webp';
-import imgAvatar2 from '@/assets/home-v2/0f84921deb64774c6b9d8e0f6b9cd098e318d66b.webp';
-import imgAvatar3 from '@/assets/home-v2/ea74517d10d49de5ec0cc6665fb3c27a5e86b047.webp';
-
 // Map asset
 import locationImg from '@/assets/Location Bk.webp';
 
@@ -56,40 +61,22 @@ export default function BoeungKak() {
   const { t, isKhmer } = useTranslation();
   
   // Testimonial state
-  const testimonials = [
-    {
-      id: 1,
-      name: t('branchDetails.testimonials.items.boeungKak.0.name', undefined, "Sovan Dara"),
-      date: t('branchDetails.testimonials.items.boeungKak.0.date', undefined, "2 weeks ago"),
-      text: t('branchDetails.testimonials.items.boeungKak.0.text', undefined, "An absolute gem in Boeung Kak. The traditional architecture is stunning, and the private rooms are perfect for business dinners. The service is top-notch."),
-      avatar: imgAvatar1
-    },
-    {
-      id: 2,
-      name: t('branchDetails.testimonials.items.boeungKak.1.name', undefined, "Vichea Pok"),
-      date: t('branchDetails.testimonials.items.boeungKak.1.date', undefined, "1 month ago"),
-      text: t('branchDetails.testimonials.items.boeungKak.1.text', undefined, "The best place to experience authentic Khmer fine dining. Beautiful garden setting and the Amok Trey is outstanding. Highly recommended!"),
-      avatar: imgAvatar2
-    },
-    {
-      id: 3,
-      name: t('branchDetails.testimonials.items.boeungKak.2.name', undefined, "Chanthy Chea"),
-      date: t('branchDetails.testimonials.items.boeungKak.2.date', undefined, "1 month ago"),
-      text: t('branchDetails.testimonials.items.boeungKak.2.text', undefined, "Excellent venue for corporate events. We hosted a seminar in their VIP room, and the AV setup and catering exceeded our expectations."),
-      avatar: imgAvatar3
-    }
-  ];
+  const [testimonials, setTestimonials] = useState<any[]>([]);
 
-  // Set document title & SEO meta
   useEffect(() => {
-    document.title = isKhmer ? "ភោជនីយដ្ឋាន វ័នម័រ - សាខាបឹងកក់" : "One More Restaurant - Boeung Kak Branch";
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', isKhmer 
-        ? "ទទួលបទពិសោធន៍ទទួលទានអាហារខ្មែរពិតប្រាកដនៅភោជនីយដ្ឋាន វ័នម័រ បឹងកក់។ ស័ក្តិសមសម្រាប់ការជួបជុំគ្រួសារ ការប្រជុំអាជីវកម្ម និងព្រឹត្តិការណ៍ផ្សេងៗ។" 
-        : "Experience authentic Cambodian dining at One More Restaurant Boeung Kak. Ideal for family gatherings, business meetings, and elegant events in Phnom Penh.");
-    }
+    getTestimonialsData()
+      .then((res) => {
+        const items = (res || []).map((item: any) => ({
+          ...item,
+          ...(isKhmer ? item.translations?.kh : {}),
+          avatar: imageMap[item.avatar] || item.avatar,
+        }));
+        setTestimonials(items);
+      })
+      .catch((err) => console.error(err));
   }, [isKhmer]);
+
+
 
   return (
     <div className="bk-page-container">
@@ -101,9 +88,34 @@ export default function BoeungKak() {
           <div className="bk-hero-overlay" />
         </div>
 
+        {/* Breadcrumb container aligned to the top-left corner matching site grid */}
+        <div className="absolute top-[102px] left-0 right-0 z-10 w-full max-w-[1440px] mx-auto px-6 md:px-16 hidden lg:block">
+          <Breadcrumb className="flex justify-start">
+            <BreadcrumbList className="text-[#f6fdf2] opacity-80 flex items-center gap-1.5 text-[11px] font-sans uppercase tracking-widest">
+              <BreadcrumbItem className="opacity-60 hover:opacity-100 transition-opacity">
+                <BreadcrumbLink asChild>
+                  <Link to="/">{t('nav.home', undefined, 'Home')}</Link>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator className="opacity-30" />
+              <BreadcrumbItem className="opacity-60 hover:opacity-100 transition-opacity">
+                <BreadcrumbLink asChild>
+                  <Link to="/branches">{t('nav.branches', undefined, 'Branches')}</Link>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator className="opacity-30" />
+              <BreadcrumbItem>
+                <BreadcrumbPage className="text-[#f6fdf2] font-semibold">
+                  {t('branchesPage.comparison.boeungKakTitle', undefined, 'Boeung Kak')}
+                </BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+        </div>
+
         <div className="bk-hero-content">
-          <h1 className="bk-hero-title">
-            {isKhmer ? <>ភោជនីយដ្ឋាន វ័នម័រ<br />បឹងកក់</> : <>One More Restaurant<br />Boeung Kak</>}
+          <h1 className="page-hero-title bk-hero-title">
+            {isKhmer ? <><span className="md:whitespace-nowrap">ភោជនីយដ្ឋាន វ័នម័រ</span><br />បឹងកក់</> : <><span className="md:whitespace-nowrap">One More Restaurant</span><br />Boeung Kak</>}
           </h1>
           <p className="bk-hero-desc">
             {t('branchDetails.hero.boeungKak.desc')}

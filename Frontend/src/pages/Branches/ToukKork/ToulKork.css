@@ -48,7 +48,7 @@
 .tk-hero-content {
   position: relative;
   z-index: 1;
-  max-width: 800px;
+  max-width: 1000px;
   padding: 0 24px;
   margin-top: 60px;
   animation: fadeInUp 1s ease-out;
@@ -1083,7 +1083,7 @@
     padding-left: 1.25rem !important;
   }
 
-  .tk-section { padding: 56px 16px; }
+  .tk-section { padding: var(--mobile-section-space) 16px; }
 
   .tk-section-title,
   .tk-heritage .text-center h2 {
@@ -1099,7 +1099,7 @@
   .tk-sub-image-bottom-full { height: 180px; }
 
   .tk-hospitality-container {
-    padding: 56px 16px;
+    padding: var(--mobile-section-space) 16px;
     gap: 32px;
   }
 

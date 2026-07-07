@@ -11,7 +11,7 @@ class Settings(BaseSettings):
     TELEGRAM_CHAT_ID: str = ''
     FASTAPI_HOST: str = '0.0.0.0'
     FASTAPI_PORT: int = 8000
-    EXPRESS_PORT: int = 3000
+    EXPRESS_PORT: int = 3002
 
     # SMTP/Email Alert Settings
     SMTP_HOST: str = ''

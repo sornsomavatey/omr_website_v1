@@ -304,6 +304,8 @@
   display: block;
 
   border-radius: 999px;
+  clip-path: circle(50% at 50% 50%);
+  overflow: hidden;
   object-fit: cover;
 }
 
@@ -703,7 +705,7 @@
   }
 
   .navbar-mobile-reservation-button {
-    width: 100%;
+    width: min(100%, 220px);
     min-width: 0;
   }
 }

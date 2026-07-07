@@ -3,14 +3,39 @@ import { Outlet, useLocation } from 'react-router-dom';
 import Navbar from './NavBar';
 import Footer from './Footer';
 import ScrollToTop from '../../components/ScrollToTop';
+import { useTranslation } from '@/hooks/useTranslation';
+import { getSEOMetadata } from '@/lib/seo';
 
 export default function MainLayouts() {
   const location = useLocation();
+  const { isKhmer } = useTranslation();
+
+  // Dynamic SEO handler for client-side routing and language switching
+  useEffect(() => {
+    const seo = getSEOMetadata(location.pathname, isKhmer);
+    document.title = seo.title;
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      metaDesc.setAttribute('content', seo.description);
+    }
+  }, [location.pathname, isKhmer]);
 
   useEffect(() => {
-    // Automatically scroll to the top of the page on route changes
+    if (location.hash) {
+      const targetId = decodeURIComponent(location.hash.slice(1));
+      const frame = window.requestAnimationFrame(() => {
+        document.getElementById(targetId)?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        });
+      });
+
+      return () => window.cancelAnimationFrame(frame);
+    }
+
     window.scrollTo(0, 0);
-  }, [location.pathname]);
+    return undefined;
+  }, [location.pathname, location.hash]);
 
   const isHomePage = location.pathname === '/';
 

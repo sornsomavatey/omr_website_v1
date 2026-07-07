@@ -12,7 +12,6 @@ const footerLinkKeys: Record<string, string> = {
   'Privacy': 'footer.links.privacy',
   'Booking Inquiry': 'footer.links.bookingInquiry',
   'Press': 'footer.links.press',
-  'Careers': 'footer.links.careers',
   'Instagram': 'footer.social.instagram',
   'Facebook': 'footer.social.facebook',
   'TripAdvisor': 'footer.social.tripAdvisor',
@@ -33,7 +32,6 @@ const legalLinks = [
 const contactLinks = [
   { name: 'Booking Inquiry', path: '/reservations' },
   { name: 'Press', path: '/press' },
-  { name: 'Careers', path: '/careers' },
 ];
 
 const socialLinks = [

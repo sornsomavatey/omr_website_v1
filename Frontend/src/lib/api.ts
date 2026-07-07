@@ -106,6 +106,11 @@ export const getReservationsData = async () => {
   return response.data;
 };
 
+export const getTestimonialsData = async () => {
+  const response = await api.get('/mocks/testimonials.json');
+  return response.data;
+};
+
 export const backendApi = axios.create({
   baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8000/api',
 });

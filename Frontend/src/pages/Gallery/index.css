@@ -8,10 +8,10 @@
 
 .gallery-hero {
   position: relative;
-  min-height: 640px;
+  min-height: 560px;
   display: grid;
   place-items: center;
-  padding: 150px 24px 90px;
+  padding: 132px 24px 76px;
   color: #fff;
   background-position: center;
   background-size: cover;
@@ -298,24 +298,27 @@
 .gallery-lightbox-next { justify-self: start; }
 
 @media (max-width: 900px) {
-  .gallery-hero { min-height: 570px; }
+  .gallery-hero { min-height: 560px; }
   .gallery-content { width: min(100% - 40px, 760px); }
   .gallery-masonry { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .gallery-masonry-1 { grid-template-columns: 1fr; }
   .gallery-lightbox { grid-template-columns: 50px minmax(0, 1fr) 50px; gap: 10px; padding: 32px 16px; }
 }
 
-@media (max-width: 620px) {
-  .gallery-hero { min-height: 520px; padding: 130px 22px 70px; }
-  .gallery-hero-content > span { font-size: 10px; }
-  .gallery-hero h1 { font-size: 58px; }
-  .gallery-hero p { font-size: 15px; }
-  .gallery-content { width: calc(100% - 32px); padding: 25px 0 80px; }
+@media (max-width: 640px) {
+  .gallery-hero { min-height: 610px; padding: 125px 18px 70px; }
+  .gallery-hero-content > span { margin-bottom: 12px; font-size: 10px; }
+  .gallery-hero h1 { margin-bottom: 14px; font-size: 58px; }
+  .gallery-hero p { font-size: 15px; line-height: 1.55; }
+  .gallery-content { width: calc(100% - 32px); padding: 25px 0 var(--mobile-section-space); }
   .gallery-filter-bar { top: 78px; flex-wrap: nowrap; justify-content: flex-start; margin-right: -16px; margin-left: -16px; padding: 12px 16px; overflow-x: auto; scrollbar-width: none; }
   .gallery-filter-bar::-webkit-scrollbar { display: none; }
   .gallery-filter-bar button { flex: 0 0 auto; min-height: 40px; padding: 0 19px; }
   .gallery-masonry { grid-template-columns: 1fr; }
-  .gallery-card { margin-bottom: 24px; }
+  .gallery-card { margin-bottom: 20px; }
+  .gallery-image-landscape { height: clamp(170px, 52vw, 205px); aspect-ratio: auto; }
+  .gallery-image-square { height: clamp(200px, 62vw, 240px); aspect-ratio: auto; }
+  .gallery-image-portrait { height: clamp(235px, 72vw, 280px); aspect-ratio: auto; }
   .gallery-lightbox { display: flex; align-items: center; justify-content: center; padding: 70px 16px; }
   .gallery-lightbox-arrow { position: absolute; bottom: 18px; }
   .gallery-lightbox-previous { left: calc(50% - 58px); }

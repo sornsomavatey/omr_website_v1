@@ -12,80 +12,190 @@
   padding: 0 64px;
 }
 
+.home-testimonials-section .ts-container {
+  max-width: none;
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.home-testimonials-section .ts-container > .text-center {
+  padding-right: 24px;
+  padding-left: 24px;
+}
+
+.home-testimonials-section .ts-track {
+  --home-testimonial-edge: clamp(20px, 6.7vw, 128px);
+
+  padding-right: var(--home-testimonial-edge);
+  padding-left: var(--home-testimonial-edge);
+  scroll-padding-left: var(--home-testimonial-edge);
+}
+
 .ts-viewport {
   width: 100%;
   margin-top: 48px;
-  overflow: hidden;
 }
 
 .ts-track {
-  width: max-content;
   display: flex;
   align-items: stretch;
-  gap: 16px;
+  gap: 22px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-left: 1px;
+  padding: 10px 6px 26px;
+  margin: -10px -6px -26px;
   animation: ts-track-enter 0.36s ease both;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.ts-track::-webkit-scrollbar {
+  display: none;
 }
 
 .ts-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   flex: 0 0 clamp(280px, 26vw, 360px);
-  min-height: 218px;
-  padding: 20px 20px 18px;
+  min-height: 245px;
+  padding: 24px 24px 22px;
   display: flex;
   flex-direction: column;
   background-color: #e9f5e2;
+  border: 1px solid rgba(105, 142, 82, 0.18);
+  border-radius: 0;
+  box-shadow:
+    0 2px 3px rgba(38, 59, 28, 0.03),
+    0 14px 36px rgba(65, 94, 48, 0.08);
   text-align: left;
+  scroll-snap-align: start;
+  transform: translateY(0);
+  transition:
+    transform 0.35s cubic-bezier(0.2, 0.75, 0.25, 1),
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
+}
+
+.ts-card-topline {
+  min-height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
 }
 
 .ts-stars {
-  height: 16px;
+  height: 18px;
   color: #e2a14f;
+}
+
+.ts-stars span {
+  display: flex;
+  gap: 3px;
+}
+
+.ts-stars svg {
+  width: 15px;
+  height: 15px;
+  fill: transparent;
+  stroke-width: 1.7;
+}
+
+.ts-stars .ts-star-filled {
+  fill: currentColor;
+}
+
+.ts-review-label {
+  color: #718067;
   font-family: "Inter", sans-serif;
-  font-size: 13px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
   line-height: 1;
-  letter-spacing: 2px;
+  text-transform: uppercase;
 }
 
 .ts-quote-mark {
-  display: block;
-  height: 31px;
-  margin-top: 8px;
-  color: #86b36f;
-  font-family: var(--font-serif, "Playfair Display", serif);
-  font-size: 43px;
-  font-weight: 700;
-  line-height: 0.9;
+  width: 38px;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 18px;
+  color: #638e4d;
+  background: rgba(218, 236, 207, 0.72);
+  border-radius: 50% 50% 50% 12px;
+}
+
+.ts-quote-mark svg {
+  width: 17px;
+  height: 17px;
+  fill: currentColor;
+  stroke-width: 1.5;
 }
 
 .ts-card-text {
-  flex: 1;
-  margin: 7px 0 18px;
-  color: #737970;
-  font-family: "Inter", sans-serif;
-  font-size: 13px;
+  margin: 14px 0 0;
+  color: #4e5849;
+  font-family: var(--font-serif, "Playfair Display", Georgia, serif);
+  font-size: 15px;
   font-weight: 400;
-  line-height: 1.55;
+  line-height: 1.65;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.ts-card-text-expanded {
+  -webkit-line-clamp: unset;
+  overflow: visible;
+}
+
+.ts-see-more {
+  align-self: flex-start;
+  margin: 6px 0 18px;
+  padding: 0;
+  color: #6b9158;
+  background: none;
+  border: 0;
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.ts-see-more:hover,
+.ts-see-more:focus-visible {
+  text-decoration: underline;
 }
 
 .ts-author {
+  margin-top: auto;
   display: flex;
   align-items: center;
-  gap: 11px;
-  padding-top: 10px;
-  border-top: 1px solid rgba(107, 145, 88, 0.18);
+  gap: 12px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(107, 145, 88, 0.15);
 }
 
 .ts-avatar {
-  width: 32px;
-  height: 32px;
-  flex: 0 0 32px;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
   border-radius: 50%;
   object-fit: cover;
+  border: 3px solid #ffffff;
+  box-shadow: 0 4px 12px rgba(51, 76, 39, 0.16);
 }
 
 .ts-avatar-fallback {
-  width: 32px;
-  height: 32px;
-  flex: 0 0 32px;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
   border-radius: 50%;
   background-color: #d0e8c5;
   color: #4f7541;
@@ -109,7 +219,7 @@
   color: #1e271a;
   font-family: "Inter", sans-serif;
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 700;
   line-height: 1.2;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -130,7 +240,7 @@
 .ts-navigation {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: center;
   gap: 14px;
   margin-top: 30px;
 }
@@ -160,7 +270,15 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .ts-nav-button:hover:not(:disabled) {
+  .ts-card:hover {
+    border-color: rgba(105, 142, 82, 0.34);
+    box-shadow:
+      0 4px 8px rgba(38, 59, 28, 0.04),
+      0 22px 48px rgba(65, 94, 48, 0.16);
+    transform: translateY(-8px);
+  }
+
+  .ts-nav-button:hover {
     color: #ffffff;
     background-color: #6b9158;
     border-color: #6b9158;
@@ -173,41 +291,8 @@
   outline-offset: 3px;
 }
 
-.ts-nav-button:disabled {
-  color: rgba(107, 145, 88, 0.22);
-  border-color: rgba(107, 145, 88, 0.16);
-  cursor: not-allowed;
-}
-
-.ts-dots {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 7px;
-}
-
-.ts-dot {
-  width: 5px;
-  height: 5px;
-  padding: 0;
-  background-color: rgba(107, 145, 88, 0.16);
-  border: 0;
-  border-radius: 50%;
-  cursor: pointer;
-  transition:
-    background-color 0.2s ease,
-    transform 0.2s ease;
-}
-
-.ts-dot:hover,
-.ts-dot:focus-visible {
-  background-color: rgba(107, 145, 88, 0.55);
-  outline: none;
-}
-
-.ts-dot-active {
-  background-color: #6b9158;
-  transform: scale(1.15);
+.ts-nav-button:active {
+  transform: scale(0.95);
 }
 
 /* ==================================
@@ -253,7 +338,7 @@
 
 @media (max-width: 640px) {
   .ts-section {
-    padding: 68px 0 56px;
+    padding: var(--mobile-section-space) 0;
   }
 
   .ts-container {
@@ -270,11 +355,12 @@
 
   .ts-card {
     flex-basis: calc(100vw - 58px);
-    min-height: 230px;
+    min-height: 245px;
+    padding: 22px 20px 20px;
+    border-radius: 0;
   }
 
   .ts-navigation {
-    justify-content: center;
     margin-top: 26px;
   }
 }
@@ -285,9 +371,10 @@
 
 @media (prefers-reduced-motion: reduce) {
   .ts-track,
-  .ts-nav-button,
-  .ts-dot {
+  .ts-card,
+  .ts-nav-button {
     transition: none;
     animation: none;
+    scroll-behavior: auto;
   }
 }

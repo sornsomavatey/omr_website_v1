@@ -1,9 +1,12 @@
 import { useRef, useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { getHomeData } from '@/lib/api';
+import { getHomeData, getTestimonialsData } from '@/lib/api';
 import SignatureDishes from '@/components/SignatureDishes';
 import LocationCard from '@/components/LocationCard';
 import SharedTestimonialSection from '@/components/TestimonialSection';
+import PartnerCompanySlider, {
+  type PartnerCompany,
+} from '@/components/PartnerCompanySlider';
 import { useTranslation } from '@/hooks/useTranslation';
 import {
   ArrowRight,
@@ -38,6 +41,55 @@ import './index.css';
 
 import SectionHeader from '@/components/SectionHeader';
 
+const homepagePartners: PartnerCompany[] = [
+  { id: 'amret', name: 'Amret Plc', logo: '/assets/partners/image45.webp' },
+  { id: 'cisco', name: 'CISCO', logo: '/assets/partners/image2.webp' },
+  { id: 'clinton-health', name: 'CLINTON Health Access Initiative', logo: '/assets/partners/image4.webp' },
+  { id: 'danone', name: 'DANONE', logo: '/assets/partners/image1.webp' },
+  { id: 'dynamic-entrepreneur-spark', name: 'Dynamic Enterpreneur Spark', logo: '/assets/partners/image42.webp' },
+  { id: 'etiqa', name: 'eTiQa (General Insurance)', logo: '/assets/partners/image41.webp' },
+  { id: 'jotun', name: 'JOTUN', logo: '/assets/partners/image40.webp' },
+  { id: 'kcr-group', name: 'KCR Group', logo: '/assets/partners/image39.webp' },
+  { id: 'manulife', name: 'Manulife', logo: '/assets/partners/image38.webp' },
+  { id: 'netpoleon', name: 'netpoleon Network and Security', logo: '/assets/partners/image3.webp' },
+  { id: 'octopus', name: 'OCTOPUS', logo: '/assets/partners/image37.webp' },
+  { id: 'proseth-solutions', name: 'Proseth Solutions', logo: '/assets/partners/image36.webp' },
+  { id: 'siemens', name: 'SIEMENS', logo: '/assets/partners/image35.webp' },
+  { id: 'ministry-national-defence', name: 'ក្រសួងការពារជាតិ', logo: '/assets/partners/image44.webp' },
+  { id: 'ministry-womens-affairs', name: 'ក្រសួងកិច្ចការនារី', logo: '/assets/partners/image43.webp' },
+  { id: 'baksey-academy', name: 'Baksey academy', logo: '/assets/partners/image34.webp' },
+  { id: 'tem-trading', name: 'TEM trading', logo: '/assets/partners/image33.webp' },
+  { id: 'cwea', name: 'CWEA - Cambodia Women Entrepreneurs Association | Phnom Penh', logo: '/assets/partners/image32.webp' },
+  { id: 'marketing-solution-asia', name: 'Marketing solution asia ltd', logo: '/assets/partners/image31.webp' },
+  { id: 'bni-unicorn', name: 'BNI Unicorn Chapter', logo: '/assets/partners/image30.webp' },
+  { id: 'dhl', name: 'DHL', logo: '/assets/partners/image29.webp' },
+  { id: 'dksh', name: 'DKSH', logo: '/assets/partners/image28.webp' },
+  { id: 'ggear', name: 'Ggear', logo: '/assets/partners/image27.webp' },
+  { id: 'prudential', name: 'Prudential', logo: '/assets/partners/image26.webp' },
+  { id: 'metfone', name: 'Metfone', logo: '/assets/partners/image25.webp' },
+  { id: 'sambat-finance', name: 'SAMBAT - SAMBAT Finance PLC', logo: '/assets/partners/image24.webp' },
+  { id: 'aws-cambodia', name: 'AWS (CAMBODIA)', logo: '/assets/partners/image23.webp' },
+  { id: 'world-pop-1', name: 'World Pop Travel & Tour Group Co., Ltd.', logo: '/assets/partners/image22.webp' },
+  { id: 'nippon-paint', name: 'Nippon Paint', logo: '/assets/partners/image21.webp' },
+  { id: 'ppm-pharma', name: 'PPM Pharma Product Manufacturing', logo: '/assets/partners/image20.webp' },
+  { id: 'rupp', name: 'RUPP', logo: '/assets/partners/image19.webp' },
+  { id: 'eci-distribution', name: 'ECI Distribution Co., Ltd', logo: '/assets/partners/image18.webp' },
+  { id: 'intermedica', name: 'Intermedica Co., Ltd.', logo: '/assets/partners/image17.webp' },
+  { id: 'world-pop-2', name: 'World Pop Travel & Tour Group Co., Ltd.', logo: '/assets/partners/image22.webp' },
+  { id: 'air-cambodia', name: 'Air Cambodia', logo: '/assets/partners/image16.webp' },
+  { id: 'vietnam-airline', name: 'Vetnam Airline', logo: '/assets/partners/image15.webp' },
+  { id: 'eva-air', name: 'Eva air', logo: '/assets/partners/image14.webp' },
+  { id: 'cjcc', name: 'CJCC', logo: '/assets/partners/image13.webp' },
+  { id: 'ecam-solution', name: 'Ecam Solution', logo: '/assets/partners/image12.webp' },
+  { id: 'hrinc-cambodia', name: 'HRINC (Cambodia) Co., Ltd', logo: '/assets/partners/image11.webp' },
+  { id: 'shinhan-bank', name: 'Shinhan Bank', logo: '/assets/partners/image10.webp' },
+  { id: 'edtcam', name: 'EDTCAM CO.,LTD', logo: '/assets/partners/image9.webp' },
+  { id: 'chief-bank', name: 'Chief Bank', logo: '/assets/partners/image8.webp' },
+  { id: 'angkor-insurance', name: 'Angkor General insurance', logo: '/assets/partners/image7.webp' },
+  { id: 'woori-bank', name: 'Woori Bank Cambodia', logo: '/assets/partners/image6.webp' },
+  { id: 'fwd', name: 'FWD', logo: '/assets/partners/image5.webp' },
+];
+
 
 function HeroSection({ hero }: { hero: any }) {
   const { t } = useTranslation();
@@ -70,7 +122,7 @@ function HeroSection({ hero }: { hero: any }) {
       </div>
 
       <div className="relative z-10 text-center text-white max-w-[1260px] px-6 pt-32">
-        <h1 className="font-serif text-5xl md:text-7xl lg:text-[80px] leading-tight mb-8 font-normal tracking-wide drop-shadow-lg">
+        <h1 className="page-hero-title page-hero-title--home font-serif text-5xl md:text-7xl lg:text-[80px] leading-tight mb-8 font-normal tracking-wide drop-shadow-lg">
           {t('home.hero.titleLine1')}
           <br />
           <span className="text-[#E7F6DF]">{t('home.hero.titleHighlight')}</span>
@@ -224,7 +276,7 @@ function LocationsSection({
   branches: any[];
   onDetailClick?: (branch: any) => void;
 }) {
-  const { t, isKhmer } = useTranslation();
+  const { t } = useTranslation();
 
   const tagKeyMap: Record<string, string> = {
     "Family Friendly": "home.locations.tags.familyFriendly",
@@ -240,7 +292,7 @@ function LocationsSection({
       <div className="max-w-[1440px] w-full px-6 md:px-[64px] text-center">
         <SectionHeader
           eyebrow={t('home.locations.eyebrow')}
-          title={isKhmer ? <>ភោជនីយដ្ឋាន<br />វ័នម័រ</> : t('home.locations.title')}
+          title={<span className="home-locations-title">{t('home.locations.title')}</span>}
           description={t('home.locations.description')}
         />
 
@@ -288,9 +340,9 @@ function GallerySection({ gallery }: { gallery: any[] }) {
           description={t('home.gallery.description')}
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-[1200px] mb-12">
-          <div className="flex flex-col gap-6">
-            <div className="h-[400px] rounded-none shadow-sm zoom-image-hover">
+        <div className="home-gallery-grid grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-[1200px] mb-12">
+          <div className="home-gallery-column flex flex-col gap-6">
+            <div className="home-gallery-tile h-[400px] rounded-none shadow-sm zoom-image-hover">
               <img
                 alt={images[0]?.alt}
                 className="w-full h-full object-cover"
@@ -298,8 +350,8 @@ function GallerySection({ gallery }: { gallery: any[] }) {
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-6">
-              <div className="h-[250px] rounded-none shadow-sm zoom-image-hover">
+            <div className="home-gallery-pair grid grid-cols-2 gap-6">
+              <div className="home-gallery-tile h-[250px] rounded-none shadow-sm zoom-image-hover">
                 <img
                   alt={images[1]?.alt}
                   className="w-full h-full object-cover"
@@ -307,7 +359,7 @@ function GallerySection({ gallery }: { gallery: any[] }) {
                 />
               </div>
 
-              <div className="h-[250px] rounded-none shadow-sm zoom-image-hover">
+              <div className="home-gallery-tile h-[250px] rounded-none shadow-sm zoom-image-hover">
                 <img
                   alt={images[2]?.alt}
                   className="w-full h-full object-cover"
@@ -317,9 +369,9 @@ function GallerySection({ gallery }: { gallery: any[] }) {
             </div>
           </div>
 
-          <div className="flex flex-col gap-6">
-            <div className="grid grid-cols-2 gap-6">
-              <div className="h-[250px] rounded-none shadow-sm zoom-image-hover">
+          <div className="home-gallery-column flex flex-col gap-6">
+            <div className="home-gallery-pair grid grid-cols-2 gap-6">
+              <div className="home-gallery-tile h-[250px] rounded-none shadow-sm zoom-image-hover">
                 <img
                   alt={images[3]?.alt}
                   className="w-full h-full object-cover"
@@ -327,7 +379,7 @@ function GallerySection({ gallery }: { gallery: any[] }) {
                 />
               </div>
 
-              <div className="h-[250px] rounded-none shadow-sm zoom-image-hover">
+              <div className="home-gallery-tile h-[250px] rounded-none shadow-sm zoom-image-hover">
                 <img
                   alt={images[4]?.alt}
                   className="w-full h-full object-cover"
@@ -336,7 +388,7 @@ function GallerySection({ gallery }: { gallery: any[] }) {
               </div>
             </div>
 
-            <div className="h-[400px] rounded-none shadow-sm zoom-image-hover">
+            <div className="home-gallery-tile h-[400px] rounded-none shadow-sm zoom-image-hover">
               <img
                 alt={images[5]?.alt}
                 className="w-full h-full object-cover"
@@ -357,163 +409,19 @@ function GallerySection({ gallery }: { gallery: any[] }) {
   );
 }
 
-function TestimonialCard({
-  testimonial,
-}: {
-  testimonial: Testimonial;
-}) {
-  return (
-    <article className="testimonial-card">
-      <div
-        className="testimonial-stars"
-        aria-label="5 out of 5 stars"
-      >
-        <span aria-hidden="true">★★★★★</span>
-      </div>
-
-      <span
-        className="testimonial-quote-mark"
-        aria-hidden="true"
-      >
-        “
-      </span>
-
-      <p className="testimonial-card-text">
-        {testimonial.text}
-      </p>
-
-      <div className="testimonial-author">
-        <img
-          src={testimonial.avatar}
-          alt={testimonial.name}
-          className="testimonial-avatar"
-        />
-
-        <div className="testimonial-author-copy">
-          <h3>{testimonial.name}</h3>
-          <span>{testimonial.date}</span>
-        </div>
-      </div>
-    </article>
-  );
-}
-
-function TestimonialsSection({ testimonials }: { testimonials: Testimonial[] }) {
-  const { t } = useTranslation();
-  const [currentTestimonialIndex, setCurrentTestimonialIndex] =
-    useState(0);
-
-  const orderedTestimonials = Array.from(
-    { length: testimonials.length },
-    (_, offset) =>
-      testimonials[
-        (currentTestimonialIndex + offset) % testimonials.length
-      ]
-  );
-
-  const handlePrevTestimonial = () => {
-    setCurrentTestimonialIndex((previousIndex) =>
-      Math.max(previousIndex - 1, 0)
-    );
-  };
-
-  const handleNextTestimonial = () => {
-    setCurrentTestimonialIndex((previousIndex) =>
-      Math.min(previousIndex + 1, testimonials.length - 1)
-    );
-  };
-
-  const handleDotClick = (index: number) => {
-    setCurrentTestimonialIndex(index);
-  };
-
-  return (
-    <section
-      className="testimonials-section"
-      aria-labelledby="testimonials-title"
-    >
-      <div className="testimonials-container">
-        <SectionHeader
-          eyebrow={t('home.testimonials.eyebrow')}
-          title={t('home.testimonials.title')}
-          description={t('home.testimonials.description')}
-        />
-
-        <div className="testimonials-viewport">
-          <div
-            key={currentTestimonialIndex}
-            className="testimonials-track"
-          >
-            {orderedTestimonials.map((testimonial, index) => (
-              <TestimonialCard
-                key={`${currentTestimonialIndex}-${testimonial.name}-${index}`}
-                testimonial={testimonial}
-              />
-            ))}
-          </div>
-        </div>
-
-        <div className="testimonials-navigation">
-          <button
-            type="button"
-            className="testimonial-navigation-button"
-            onClick={handlePrevTestimonial}
-            disabled={currentTestimonialIndex === 0}
-            aria-label={t('home.testimonials.previous')}
-          >
-            <ChevronLeft aria-hidden="true" />
-          </button>
-
-          <div
-            className="testimonial-dots"
-            aria-label="Choose testimonial"
-          >
-            {testimonials.map((testimonial, index) => (
-              <button
-                key={`${testimonial.name}-${index}`}
-                type="button"
-                className={`testimonial-dot ${
-                  currentTestimonialIndex === index
-                    ? 'testimonial-dot-active'
-                    : ''
-                }`}
-                onClick={() => handleDotClick(index)}
-                aria-label={`Show testimonial ${index + 1}`}
-                aria-current={
-                  currentTestimonialIndex === index ? 'true' : undefined
-                }
-              />
-            ))}
-          </div>
-
-          <button
-            type="button"
-            className="testimonial-navigation-button"
-            onClick={handleNextTestimonial}
-            disabled={
-              currentTestimonialIndex === testimonials.length - 1
-            }
-            aria-label={t('home.testimonials.next')}
-          >
-            <ChevronRight aria-hidden="true" />
-          </button>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 export default function HomePage() {
   const navigate = useNavigate();
   const { t, isKhmer } = useTranslation();
   const [data, setData] = useState<any>(null);
+  const [testimonialsData, setTestimonialsData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    getHomeData()
-      .then((res) => {
-        setData(res);
+    Promise.all([getHomeData(), getTestimonialsData()])
+      .then(([homeRes, testimonialsRes]) => {
+        setData(homeRes);
+        setTestimonialsData(testimonialsRes);
         setLoading(false);
       })
       .catch((err) => {
@@ -560,16 +468,11 @@ export default function HomePage() {
     tags: branch.tags,
   }));
 
-  const testimonialKeys = ['sophea', 'david', 'piseth', 'emma'];
-  const testimonialsList: Testimonial[] = data.testimonials.map((item: any, index: number) => {
-    const key = testimonialKeys[index] || 'sophea';
-    return {
-      ...item,
-      text: t(`home.testimonials.items.${key}.text`, undefined, item.text),
-      date: t(`home.testimonials.items.${key}.date`, undefined, item.date),
-      avatar: imageMap[item.avatar] || item.avatar,
-    };
-  });
+  const testimonialsList: Testimonial[] = (testimonialsData || []).map((item: any) => ({
+    ...item,
+    ...(isKhmer ? item.translations?.kh : {}),
+    avatar: imageMap[item.avatar] || item.avatar,
+  }));
 
   return (
     <div className="bg-white flex flex-col items-center w-full overflow-x-hidden">
@@ -594,7 +497,15 @@ export default function HomePage() {
         title={t('home.testimonials.title')}
         description={t('home.testimonials.description')}
         testimonials={testimonialsList}
+        className="home-testimonials-section"
         isKhmer={isKhmer}
+      />
+      <PartnerCompanySlider
+        partners={homepagePartners}
+        eyebrow={t('home.partners.eyebrow')}
+        title={t('home.partners.title')}
+        description={t('home.partners.description')}
+        durationSeconds={70}
       />
     </div>
   );
