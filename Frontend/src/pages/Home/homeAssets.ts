@@ -31,6 +31,12 @@ import imgAvatarBuckeyeSam from '@/assets/testimonial-avatar/buckeye-sam.webp';
 import imgAvatarSokhanearyroatUng from '@/assets/testimonial-avatar/sokhanearyroat-ung.webp';
 import imgAvatarPimmyK from '@/assets/testimonial-avatar/pimmy-k.webp';
 import imgAvatarArtiSoejitno from '@/assets/testimonial-avatar/arti-soejitno.webp';
+import imgAvatarChristianBreitkreutz from '@/assets/testimonial-avatar/christian-breitkreutz.webp';
+import imgAvatarRachelBarker from '@/assets/testimonial-avatar/rachel-barker.webp';
+import imgAvatarThangDang from '@/assets/testimonial-avatar/thang-dang.webp';
+import imgAvatarAdaCheang from '@/assets/testimonial-avatar/ada-cheang.webp';
+import imgAvatarSodarothVa from '@/assets/testimonial-avatar/sodaroth-va.webp';
+import imgAvatarMonyTep from '@/assets/testimonial-avatar/mony-tep.webp';
 
 export {
   svgPaths,
@@ -56,6 +62,12 @@ export {
   imgAvatarSokhanearyroatUng,
   imgAvatarPimmyK,
   imgAvatarArtiSoejitno,
+  imgAvatarChristianBreitkreutz,
+  imgAvatarRachelBarker,
+  imgAvatarThangDang,
+  imgAvatarAdaCheang,
+  imgAvatarSodarothVa,
+  imgAvatarMonyTep,
 };
 
 export const imageMap: Record<string, string> = {
@@ -81,4 +93,10 @@ export const imageMap: Record<string, string> = {
   '@/assets/testimonial-avatar/sokhanearyroat-ung.webp': imgAvatarSokhanearyroatUng,
   '@/assets/testimonial-avatar/pimmy-k.webp': imgAvatarPimmyK,
   '@/assets/testimonial-avatar/arti-soejitno.webp': imgAvatarArtiSoejitno,
+  '@/assets/testimonial-avatar/christian-breitkreutz.webp': imgAvatarChristianBreitkreutz,
+  '@/assets/testimonial-avatar/rachel-barker.webp': imgAvatarRachelBarker,
+  '@/assets/testimonial-avatar/thang-dang.webp': imgAvatarThangDang,
+  '@/assets/testimonial-avatar/ada-cheang.webp': imgAvatarAdaCheang,
+  '@/assets/testimonial-avatar/sodaroth-va.webp': imgAvatarSodarothVa,
+  '@/assets/testimonial-avatar/mony-tep.webp': imgAvatarMonyTep,
 };

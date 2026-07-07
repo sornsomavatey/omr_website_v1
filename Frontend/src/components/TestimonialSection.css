@@ -12,39 +12,23 @@
   padding: 0 64px;
 }
 
-.home-testimonials-section .ts-container {
-  max-width: none;
-  padding-right: 0;
-  padding-left: 0;
-}
-
-.home-testimonials-section .ts-container > .text-center {
-  padding-right: 24px;
-  padding-left: 24px;
-}
-
-.home-testimonials-section .ts-track {
-  --home-testimonial-edge: clamp(20px, 6.7vw, 128px);
-
-  padding-right: var(--home-testimonial-edge);
-  padding-left: var(--home-testimonial-edge);
-  scroll-padding-left: var(--home-testimonial-edge);
-}
-
 .ts-viewport {
-  width: 100%;
+  width: 100vw;
   margin-top: 48px;
+  margin-left: calc(50% - 50vw);
 }
 
 .ts-track {
+  --ts-track-edge: clamp(20px, 6.7vw, 128px);
+
   display: flex;
   align-items: stretch;
   gap: 22px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  scroll-padding-left: 1px;
-  padding: 10px 6px 26px;
-  margin: -10px -6px -26px;
+  scroll-padding-left: var(--ts-track-edge);
+  padding: 10px var(--ts-track-edge) 26px;
+  margin: -10px 0 -26px;
   animation: ts-track-enter 0.36s ease both;
   -ms-overflow-style: none;
   scrollbar-width: none;
