@@ -309,6 +309,10 @@
   object-fit: cover;
 }
 
+.navbar-language-flag-hidden {
+  opacity: 0;
+}
+
 /* =========================
    Mobile / tablet hamburger
 ========================= */

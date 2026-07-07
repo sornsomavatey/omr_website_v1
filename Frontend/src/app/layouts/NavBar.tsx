@@ -53,10 +53,14 @@ function NavbarLogo({ mobile = false }: { mobile?: boolean }) {
   );
 }
 
-function LanguageFlag({ language }: { language: string }) {
+function LanguageFlag({ language, show }: { language: string; show: boolean }) {
   const flagSrc = language === 'EN'
     ? '/flags/cambodia.svg'
     : '/flags/united-kingdom.svg';
+
+  if (!show) {
+    return <span className="navbar-language-flag navbar-language-flag-hidden" aria-hidden="true" />;
+  }
 
   return (
     <img className="navbar-language-flag" src={flagSrc} alt="" />
@@ -75,6 +79,7 @@ export default function Navbar() {
   } = useAppStore();
 
   const [scrolled, setScrolled] = useState(false);
+  const [showLanguageFlag, setShowLanguageFlag] = useState(false);
 
   const isHomePage = location.pathname === '/';
   const isToulKorkPage =
@@ -90,6 +95,23 @@ export default function Navbar() {
   const isReservationPage =
     location.pathname === '/reservations' ||
     location.pathname === '/reservation';
+
+  useEffect(() => {
+    if (document.readyState === 'complete') {
+      setShowLanguageFlag(true);
+      return undefined;
+    }
+
+    const handleLoad = () => {
+      setShowLanguageFlag(true);
+    };
+
+    window.addEventListener('load', handleLoad, { once: true });
+
+    return () => {
+      window.removeEventListener('load', handleLoad);
+    };
+  }, []);
 
   useEffect(() => {
     if (isReservationPage) {
@@ -236,7 +258,7 @@ export default function Navbar() {
                   : t('language.switchToEnglish')
               }
             >
-              <LanguageFlag language={language} />
+              <LanguageFlag language={language} show={showLanguageFlag} />
             </button>
           </div>
 
@@ -283,10 +305,10 @@ export default function Navbar() {
                       language === 'EN'
                         ? t('language.switchToKhmer')
                         : t('language.switchToEnglish')
-                    }
-                  >
-                    <LanguageFlag language={language} />
-                  </button>
+                      }
+                    >
+                      <LanguageFlag language={language} show={showLanguageFlag} />
+                    </button>
 
                   <button
                     type="button"
