@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Check, ChevronDown, ChevronLeft, ChevronRight, Clock, FileText, Mail, Shield, Users } from 'lucide-react';
+import { Check, ChevronDown, ChevronLeft, ChevronRight, ChevronUp, Clock, FileText, Mail, Shield, Users } from 'lucide-react';
 
 import FeaturePackageCard from '@/components/FeaturePackageCard';
 import SectionHeader from '@/components/SectionHeader';
@@ -576,24 +576,41 @@ export default function EventsPage() {
       </section>
 
       {/* ── FAQ ─────────────────────────────── */}
-      <section className="events-section events-faq-section">
-        <div className="events-section-heading">
-          <div className="events-eyebrow"><span />{t('eventsPage.faq.eyebrow', undefined, 'FAQ')}<span /></div>
-          <h2>{t('eventsPage.faq.title', undefined, 'Frequently Asked Questions')}</h2>
-        </div>
+      <section className="faq-section events-faq-section" aria-labelledby="events-faq-section-title">
+        <div className="faq-container">
+          <span className="faq-eyebrow">{t('eventsPage.faq.eyebrow', undefined, 'FAQ')}</span>
+          <h2 id="events-faq-section-title" className="faq-title font-serif">
+            {t('eventsPage.faq.title', undefined, 'Frequently Asked Questions')}
+          </h2>
 
-        <div className="events-faq-list">
-          {faqsList.map((faq, i) => (
-            <div key={i} className={`events-faq-item${openFaq === i ? ' open' : ''}`}>
-              <button type="button" onClick={() => setOpenFaq(openFaq === i ? null : i)}>
-                {faq.q}
-                <ChevronDown size={18} />
-              </button>
-              <div className="events-faq-answer">
-                <p>{faq.a}</p>
-              </div>
-            </div>
-          ))}
+          <div className="faq-list">
+            {faqsList.map((faq, i) => {
+              const isExpanded = openFaq === i;
+
+              return (
+                <div key={i} className={`faq-item ${isExpanded ? 'faq-item-expanded' : ''}`}>
+                  <button
+                    type="button"
+                    className="faq-question"
+                    onClick={() => setOpenFaq(isExpanded ? null : i)}
+                    aria-expanded={isExpanded}
+                  >
+                    <span>{faq.q}</span>
+                    {isExpanded ? (
+                      <ChevronUp className="faq-arrow" />
+                    ) : (
+                      <ChevronDown className="faq-arrow" />
+                    )}
+                  </button>
+                  <div className={`faq-answer-wrapper ${isExpanded ? 'faq-answer-expanded' : ''}`}>
+                    <div className="faq-answer">
+                      <p>{faq.a}</p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </section>
 
