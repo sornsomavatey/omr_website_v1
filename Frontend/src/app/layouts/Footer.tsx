@@ -36,8 +36,11 @@ const contactLinks = [
 
 const socialLinks = [
   { name: 'Instagram', href: 'https://www.instagram.com/' },
-  { name: 'Facebook', href: 'https://www.facebook.com/' },
-  { name: 'TripAdvisor', href: 'https://www.tripadvisor.com/' },
+  { name: 'Facebook', href: 'https://www.facebook.com/onemorerestaurant' },
+  {
+    name: 'TripAdvisor',
+    href: 'https://www.tripadvisor.com/Restaurant_Review-g293940-d9773439-Reviews-One_More_Restaurant_Toul_Kork-Phnom_Penh.html',
+  },
 ];
 
 export default function Footer() {
