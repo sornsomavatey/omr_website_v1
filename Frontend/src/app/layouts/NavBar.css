@@ -366,6 +366,23 @@
   outline: none;
 }
 
+.navbar-v1 .navbar-mobile-menu-button {
+  color: #5f8a4f;
+  background-color: #ffffff;
+  border-color: rgba(107, 145, 88, 0.55);
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.18);
+}
+
+.navbar-v1 .navbar-mobile-menu-button:hover,
+.navbar-v1 .navbar-mobile-menu-button:focus-visible {
+  background-color: #ffffff;
+}
+
+.navbar-v1 .navbar-mobile-menu-button-open {
+  color: #ffffff;
+  background-color: rgba(107, 145, 88, 0.9);
+}
+
 .navbar-mobile-menu-icon {
   display: flex;
   flex-direction: column;
