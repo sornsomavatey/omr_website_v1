@@ -25,13 +25,17 @@
   align-items: stretch;
   gap: 22px;
   overflow-x: auto;
-  scroll-snap-type: x mandatory;
+  overflow-y: hidden;
+  overscroll-behavior-inline: contain;
+  scroll-snap-type: x proximity;
   scroll-padding-left: var(--ts-track-edge);
   padding: 10px var(--ts-track-edge) 26px;
   margin: -10px 0 -26px;
   animation: ts-track-enter 0.36s ease both;
   -ms-overflow-style: none;
   scrollbar-width: none;
+  touch-action: auto;
+  -webkit-overflow-scrolling: touch;
   cursor: grab;
   user-select: none;
 }
@@ -41,6 +45,11 @@
 }
 
 .ts-track:active {
+  cursor: grabbing;
+}
+
+.ts-track-dragging {
+  scroll-snap-type: none;
   cursor: grabbing;
 }
 
@@ -260,7 +269,7 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .ts-card:hover {
+  .ts-track:not(.ts-track-dragging) .ts-card:hover {
     border-color: rgba(105, 142, 82, 0.34);
     box-shadow:
       0 4px 8px rgba(38, 59, 28, 0.04),

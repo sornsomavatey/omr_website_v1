@@ -114,10 +114,6 @@ export default function TestimonialSection({
   const dragStartXRef = useRef(0);
   const dragStartScrollLeftRef = useRef(0);
 
-  if (!testimonials || testimonials.length === 0) {
-    return null;
-  }
-
   const scrollTestimonials = (direction: 'left' | 'right') => {
     const track = trackRef.current;
     if (!track) return;
@@ -136,10 +132,12 @@ export default function TestimonialSection({
     const track = trackRef.current;
     if (!track) return;
 
-    const scrollAmount =
-      Math.abs(event.deltaX) > Math.abs(event.deltaY)
-        ? event.deltaX
-        : event.deltaY;
+    const hasHorizontalWheel = Math.abs(event.deltaX) > Math.abs(event.deltaY);
+    const scrollAmount = hasHorizontalWheel
+      ? event.deltaX
+      : event.shiftKey
+        ? event.deltaY
+        : 0;
 
     if (!scrollAmount) return;
 
@@ -153,10 +151,12 @@ export default function TestimonialSection({
     const track = trackRef.current;
     if (!track) return;
 
+    event.preventDefault();
     isPointerDraggingRef.current = true;
     didPointerDragRef.current = false;
     dragStartXRef.current = event.clientX;
     dragStartScrollLeftRef.current = track.scrollLeft;
+    track.classList.add('ts-track-dragging');
     track.setPointerCapture(event.pointerId);
   }, []);
 
@@ -178,6 +178,7 @@ export default function TestimonialSection({
     if (!track || !isPointerDraggingRef.current) return;
 
     isPointerDraggingRef.current = false;
+    track.classList.remove('ts-track-dragging');
     if (track.hasPointerCapture(event.pointerId)) {
       track.releasePointerCapture(event.pointerId);
     }
@@ -190,6 +191,10 @@ export default function TestimonialSection({
     event.stopPropagation();
     didPointerDragRef.current = false;
   }, []);
+
+  if (!testimonials || testimonials.length === 0) {
+    return null;
+  }
 
   return (
     <section className={`ts-section ${className}`}>

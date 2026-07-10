@@ -396,6 +396,7 @@ export default function Menu() {
                     price={dish.price}
                     badge={dish.badge}
                     showAction={false}
+                    showCategory={false}
                     priceSuffix=""
                   />
                 ))}

@@ -247,15 +247,23 @@ html[data-lang="kh"] .menu-dish-card .dish-card-price {
   font-weight: 500 !important;
 }
 
+.menu-dish-card .dish-card-title {
+  font-size: 30px !important;
+}
+
+.menu-dish-card .dish-card-price {
+  font-size: 40px !important;
+}
+
 html[lang="km"] .menu-dish-card .dish-card-title,
 html[data-lang="kh"] .menu-dish-card .dish-card-title {
-  font-size: 34px !important;
+  font-size: 32px !important;
   font-weight: 600 !important;
 }
 
 html[lang="km"] .menu-dish-card .dish-card-price,
 html[data-lang="kh"] .menu-dish-card .dish-card-price {
-  font-size: 30px !important;
+  font-size: 28px !important;
 }
 
 .menu-dish-card .dish-card-currency {
@@ -288,7 +296,7 @@ html[data-lang="kh"] .menu-dish-card .dish-card-currency {
 
   .menu-dish-card .dish-card-title,
   .menu-dish-card .dish-card-price {
-    font-size: 24px;
+    font-size: 22px !important;
   }
 
   .menu-dish-card .dish-card-currency {
@@ -297,12 +305,12 @@ html[data-lang="kh"] .menu-dish-card .dish-card-currency {
 
   html[lang="km"] .menu-dish-card .dish-card-title,
   html[data-lang="kh"] .menu-dish-card .dish-card-title {
-    font-size: 24px !important;
+    font-size: 22px !important;
   }
 
   html[lang="km"] .menu-dish-card .dish-card-price,
   html[data-lang="kh"] .menu-dish-card .dish-card-price {
-    font-size: 22px !important;
+    font-size: 20px !important;
   }
 
   html[lang="km"] .menu-dish-card .dish-card-currency,
