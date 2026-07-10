@@ -1,5 +1,10 @@
 /* Menu Page Custom Styles */
 
+html[lang="km"] #menu-hero .page-hero-title,
+html[data-lang="kh"] #menu-hero .page-hero-title {
+  font-weight: 400 !important;
+}
+
 .lotus-bg-wrapper {
   position: absolute;
   left: 0;

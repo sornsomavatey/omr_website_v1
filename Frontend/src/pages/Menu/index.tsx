@@ -312,7 +312,7 @@ export default function Menu() {
         </div>
 
         <div className="relative z-10 text-center text-white max-w-[1260px] px-6 pt-16 flex flex-col items-center">
-          <h1 className="page-hero-title font-serif text-5xl md:text-6xl lg:text-[70px] leading-tight mb-4 font-normal tracking-wide drop-shadow-md">
+          <h1 className="page-hero-title font-serif text-5xl md:text-6xl lg:text-[70px] leading-tight mb-4 tracking-wide drop-shadow-md">
             {t('menu.hero.title', undefined, hero.title)}
           </h1>
 
