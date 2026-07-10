@@ -347,6 +347,11 @@ html[data-lang="kh"] h2 * {
   line-height: 1.7 !important;
 }
 
+html[lang="km"] body :is(h1, h2, h3, h4, h5, h6, .font-serif):not(.page-hero-title),
+html[data-lang="kh"] body :is(h1, h2, h3, h4, h5, h6, .font-serif):not(.page-hero-title) {
+  font-weight: 500 !important;
+}
+
 @media (max-width: 768px) {
   :root {
     --mobile-section-space: 52px;

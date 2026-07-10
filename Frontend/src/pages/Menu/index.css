@@ -242,6 +242,27 @@ html[data-lang="kh"] .menu-dish-card .dish-card-price {
   font-weight: 500 !important;
 }
 
+html[lang="km"] .menu-dish-card .dish-card-title,
+html[data-lang="kh"] .menu-dish-card .dish-card-title {
+  font-size: 34px !important;
+  font-weight: 600 !important;
+}
+
+html[lang="km"] .menu-dish-card .dish-card-price,
+html[data-lang="kh"] .menu-dish-card .dish-card-price {
+  font-size: 30px !important;
+}
+
+.menu-dish-card .dish-card-currency {
+  font-size: 22px !important;
+  font-weight: 400 !important;
+}
+
+html[lang="km"] .menu-dish-card .dish-card-currency,
+html[data-lang="kh"] .menu-dish-card .dish-card-currency {
+  font-size: 18px !important;
+}
+
 @media (max-width: 768px) {
   .menu-section .grid {
     row-gap: 32px;
@@ -266,7 +287,22 @@ html[data-lang="kh"] .menu-dish-card .dish-card-price {
   }
 
   .menu-dish-card .dish-card-currency {
-    font-size: 14px;
+    font-size: 14px !important;
+  }
+
+  html[lang="km"] .menu-dish-card .dish-card-title,
+  html[data-lang="kh"] .menu-dish-card .dish-card-title {
+    font-size: 24px !important;
+  }
+
+  html[lang="km"] .menu-dish-card .dish-card-price,
+  html[data-lang="kh"] .menu-dish-card .dish-card-price {
+    font-size: 22px !important;
+  }
+
+  html[lang="km"] .menu-dish-card .dish-card-currency,
+  html[data-lang="kh"] .menu-dish-card .dish-card-currency {
+    font-size: 12px !important;
   }
 
   .menu-dish-card .dish-card-title {

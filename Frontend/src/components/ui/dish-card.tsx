@@ -52,6 +52,7 @@ export function DishCard({
     ? (priceSuffix === "per person" ? "" : priceSuffix)
     : priceSuffix
   const usdPriceMatch = !isKhmer ? localizedPrice.match(/^USD\s+(.+)$/) : null
+  const khmerPriceMatch = isKhmer ? localizedPrice.match(/^(.+)\s+(\S+)$/) : null
   
   const shapes: DishFrameVariant[] = ["right-leaf", "dome", "left-leaf"]
   const activeVariant = variant || (typeof index === "number" ? shapes[index % 3] : "right-leaf")
@@ -99,6 +100,15 @@ export function DishCard({
                 </span>
                 <span className="dish-card-price text-[#212d1b] font-serif text-[42px] font-medium leading-none">
                   {usdPriceMatch[1]}
+                </span>
+              </>
+            ) : khmerPriceMatch ? (
+              <>
+                <span className="dish-card-price text-[#212d1b] font-serif text-[42px] font-medium leading-none">
+                  {khmerPriceMatch[1]}
+                </span>
+                <span className="dish-card-currency text-[#212d1b] font-sans text-[22px] font-normal leading-none">
+                  {khmerPriceMatch[2]}
                 </span>
               </>
             ) : (
