@@ -254,7 +254,7 @@ export default function MenuModal({ isOpen, onClose, cart, onCartChange }: MenuM
         </div>
 
         {/* ── Footer cart summary ── */}
-        <div className={`mm-footer ${totalItems > 0 ? 'mm-footer--visible' : ''}`}>
+        <div className={`mm-footer ${totalItems > 0 ? 'mm-footer--visible' : 'mm-footer--hidden'}`}>
           {totalItems > 0 && (
             <>
               <div className="mm-footer-left">
@@ -293,11 +293,6 @@ export default function MenuModal({ isOpen, onClose, cart, onCartChange }: MenuM
                 </button>
               </div>
             </>
-          )}
-          {totalItems === 0 && (
-            <button type="button" className="mm-confirm-btn mm-confirm-btn--full" onClick={onClose}>
-              {isKhmer ? 'បិទ' : 'Close'}
-            </button>
           )}
         </div>
       </div>
