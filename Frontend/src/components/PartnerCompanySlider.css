@@ -149,7 +149,7 @@
   }
 
   to {
-    transform: translateX(-50%);
+    transform: translateX(-33.333333%);
   }
 }
 
@@ -258,10 +258,6 @@
 
   .partner-slider-track-animated {
     animation: none;
-  }
-
-  .partner-slider-group[aria-hidden='true'] {
-    display: none;
   }
 
   .partner-slider-card {

@@ -1,4 +1,9 @@
-import type { CSSProperties } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  type CSSProperties,
+} from 'react';
 import SectionHeader from './SectionHeader';
 import './PartnerCompanySlider.css';
 
@@ -88,12 +93,67 @@ export default function PartnerCompanySlider({
   durationSeconds = 55,
   className = '',
 }: PartnerCompanySliderProps) {
-  if (!partners.length) return null;
-
   const canAnimate = partners.length > 1;
+  const viewportRef = useRef<HTMLDivElement | null>(null);
+  const trackRef = useRef<HTMLDivElement | null>(null);
+  const isScrollResettingRef = useRef(false);
+  const loopGroupCount = canAnimate ? 3 : 1;
   const sliderStyle = {
     '--partner-slider-duration': `${Math.max(durationSeconds, 10)}s`,
   } as CSSProperties;
+
+  const getLoopWidth = useCallback(() => {
+    const track = trackRef.current;
+    if (!track || !canAnimate) return 0;
+
+    return track.scrollWidth / loopGroupCount;
+  }, [canAnimate, loopGroupCount]);
+
+  const finishScrollReset = useCallback(() => {
+    requestAnimationFrame(() => {
+      isScrollResettingRef.current = false;
+    });
+  }, []);
+
+  const centerLoop = useCallback(() => {
+    const viewport = viewportRef.current;
+    const loopWidth = getLoopWidth();
+    if (!viewport || !loopWidth) return;
+
+    isScrollResettingRef.current = true;
+    viewport.scrollLeft = loopWidth;
+    finishScrollReset();
+  }, [finishScrollReset, getLoopWidth]);
+
+  const handleScroll = useCallback(() => {
+    const viewport = viewportRef.current;
+    const loopWidth = getLoopWidth();
+    if (!viewport || !loopWidth || isScrollResettingRef.current) return;
+
+    if (viewport.scrollLeft < loopWidth * 0.45) {
+      isScrollResettingRef.current = true;
+      viewport.scrollLeft += loopWidth;
+      finishScrollReset();
+    } else if (viewport.scrollLeft > loopWidth * 1.55) {
+      isScrollResettingRef.current = true;
+      viewport.scrollLeft -= loopWidth;
+      finishScrollReset();
+    }
+  }, [finishScrollReset, getLoopWidth]);
+
+  useEffect(() => {
+    if (!canAnimate) return;
+
+    const frame = requestAnimationFrame(centerLoop);
+    window.addEventListener('resize', centerLoop);
+
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener('resize', centerLoop);
+    };
+  }, [canAnimate, centerLoop, partners.length]);
+
+  if (!partners.length) return null;
 
   return (
     <section
@@ -108,33 +168,37 @@ export default function PartnerCompanySlider({
         />
       </div>
 
-      <div className="partner-slider-viewport">
+      <div
+        className="partner-slider-viewport"
+        ref={viewportRef}
+        onScroll={handleScroll}
+      >
         <div
+          ref={trackRef}
           className={`partner-slider-track ${
             canAnimate ? 'partner-slider-track-animated' : ''
           }`}
           style={sliderStyle}
         >
-          <div className="partner-slider-group">
-            {partners.map((partner, index) => (
-              <PartnerCard
-                key={partner.id || `${partner.name}-${index}`}
-                partner={partner}
-              />
-            ))}
-          </div>
+          {Array.from({ length: loopGroupCount }).map((_, groupIndex) => {
+            const isDuplicate = canAnimate && groupIndex !== 1;
 
-          {canAnimate && (
-            <div className="partner-slider-group" aria-hidden="true">
+            return (
+              <div
+                key={`partner-group-${groupIndex}`}
+                className="partner-slider-group"
+                aria-hidden={isDuplicate || undefined}
+              >
               {partners.map((partner, index) => (
                 <PartnerCard
-                  key={`duplicate-${partner.id || `${partner.name}-${index}`}`}
+                  key={`${groupIndex}-${partner.id || `${partner.name}-${index}`}`}
                   partner={partner}
-                  duplicate
+                  duplicate={isDuplicate}
                 />
               ))}
-            </div>
-          )}
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
