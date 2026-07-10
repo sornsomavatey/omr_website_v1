@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Phone, MapPin, Clock, Check, X } from 'lucide-react';
 import { getRestaurantsData } from '@/lib/api';
 import { Button } from '@/components/ui/button';
+import { Skeleton } from '@/components/ui/skeleton';
 import LocationCard from '@/components/LocationCard';
 import SectionHeader from '@/components/SectionHeader';
 import { useTranslation } from '@/hooks/useTranslation';
@@ -83,8 +84,52 @@ export default function Branches() {
 
   if (loading) {
     return (
-      <div className="pt-32 pb-20 text-center text-olive font-serif text-xl min-h-screen flex items-center justify-center">
-        {t('branches.loading', undefined, 'Loading locations...')}
+      <div className="branches-container min-h-screen pt-24 pb-20 bg-white">
+        {/* 1. HERO SECTION SKELETON */}
+        <section className="branches-hero">
+          <div className="branches-hero-inner flex flex-col lg:flex-row gap-10 items-center justify-between w-full">
+            <div className="hero-text-side flex-1 flex flex-col gap-5">
+              <Skeleton className="h-12 w-4/5 rounded-xl bg-muted" />
+              <div className="flex flex-col gap-2 mt-2">
+                <Skeleton className="h-4 w-full rounded bg-muted" />
+                <Skeleton className="h-4 w-5/6 rounded bg-muted" />
+                <Skeleton className="h-4 w-3/4 rounded bg-muted" />
+              </div>
+              <Skeleton className="h-12 w-44 rounded-lg bg-muted mt-4" />
+            </div>
+
+            <div className="hero-map-side flex-1 w-full max-w-[500px]">
+              <Skeleton className="w-full aspect-[4/3] rounded-2xl bg-muted" />
+            </div>
+          </div>
+        </section>
+
+        {/* 2. COMPARE OUR LOCATIONS SKELETON */}
+        <section className="comparison-section py-20 flex flex-col items-center">
+          <div className="comparison-inner w-full max-w-[1440px] px-6">
+            <div className="flex flex-col items-center mb-10">
+              <Skeleton className="h-4 w-32 mb-3 rounded-full bg-muted" />
+              <Skeleton className="h-9 w-64 rounded-xl bg-muted" />
+            </div>
+
+            <div className="comparison-table-container border border-gold/10 rounded-2xl overflow-hidden bg-white/50 p-6 flex flex-col gap-4">
+              {/* Table Headers */}
+              <div className="grid grid-cols-3 pb-4 border-b border-gold/10">
+                <Skeleton className="h-6 w-32 rounded bg-muted" />
+                <Skeleton className="h-6 w-24 rounded bg-muted justify-self-center" />
+                <Skeleton className="h-6 w-24 rounded bg-muted justify-self-center" />
+              </div>
+              {/* Table Rows */}
+              {Array.from({ length: 5 }).map((_, i) => (
+                <div key={i} className="grid grid-cols-3 py-3 border-b border-gold/5 last:border-b-0">
+                  <Skeleton className="h-4 w-40 rounded bg-muted" />
+                  <Skeleton className="h-5 w-5 rounded bg-muted justify-self-center animate-pulse" />
+                  <Skeleton className="h-5 w-5 rounded bg-muted justify-self-center animate-pulse" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
       </div>
     );
   }

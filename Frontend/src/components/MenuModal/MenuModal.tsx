@@ -46,7 +46,7 @@ const BADGE_COLORS: Record<string, string> = {
   new:      'mm-badge--new',
 };
 
-// ─── sub-components ──────────────────────────────────────────────────────────
+// ─── sub-components ───────
 
 function DishRow({
   item,
@@ -143,24 +143,32 @@ export default function MenuModal({ isOpen, onClose, cart, onCartChange }: MenuM
     return () => window.removeEventListener('keydown', handler);
   }, [onClose]);
 
-  // ── cart helpers ──────────────────────────────────────────────────────────
 
   const handleQty = useCallback((item: PreOrderCartItem, delta: number) => {
+    const current = cart[item.id]?.qty ?? 0;
+    if (delta === -1 && current === 1) {
+      const confirmDelete = window.confirm(
+        isKhmer
+          ? `តើអ្នកចង់លុប ${item.name_kh || item.name} ចេញពីការកុម្ម៉ង់មុនមែនទេ?`
+          : `Are you sure you want to remove ${item.name} from your pre-order?`
+      );
+      if (!confirmDelete) return;
+    }
     onCartChange((prev: PreOrderCart) => {
-      const current = prev[item.id]?.qty ?? 0;
-      const next = Math.max(0, current + delta);
+      const currentQty = prev[item.id]?.qty ?? 0;
+      const next = Math.max(0, currentQty + delta);
       if (next === 0) {
         const { [item.id]: _, ...rest } = prev;
         return rest;
       }
       return { ...prev, [item.id]: { ...item, qty: next } };
     });
-  }, [onCartChange]);
+  }, [onCartChange, cart, isKhmer]);
 
   const totalItems = Object.values(cart).reduce((s, i) => s + i.qty, 0);
   const totalPrice = Object.values(cart).reduce((s, i) => s + i.price * i.qty, 0);
 
-  // ── build items list ──────────────────────────────────────────────────────
+  // ── build items list ───
 
   const getItems = (): PreOrderCartItem[] => {
     if (!menuData?.items) return [];
@@ -257,9 +265,7 @@ export default function MenuModal({ isOpen, onClose, cart, onCartChange }: MenuM
                 <div>
                   <p className="mm-cart-label">{isKhmer ? 'សេចក្តីសង្ខេបនៃការកុម្ម៉ង់មុន' : 'Pre-order Summary'}</p>
                   <p className="mm-cart-items">
-                    {Object.values(cart)
-                      .map((i) => `${isKhmer ? (i.name_kh || i.name) : i.name} ×${i.qty}`)
-                      .join(' · ')}
+                    {isKhmer ? 'កុម្ម៉ង់អាហារទុកមុន' : 'Pre-order'}
                   </p>
                 </div>
               </div>
@@ -268,7 +274,16 @@ export default function MenuModal({ isOpen, onClose, cart, onCartChange }: MenuM
                 <button
                   type="button"
                   className="mm-clear-btn"
-                  onClick={() => onCartChange({})}
+                  onClick={() => {
+                    const confirmClear = window.confirm(
+                      isKhmer 
+                        ? "តើអ្នកពិតជាចង់លុបការកុម្ម៉ង់មុនទាំងអស់មែនទេ?" 
+                        : "Are you sure you want to clear all pre-ordered items?"
+                    );
+                    if (confirmClear) {
+                      onCartChange({});
+                    }
+                  }}
                   aria-label="Clear pre-order"
                 >
                   <Trash2 className="w-4 h-4" />

@@ -13,7 +13,7 @@ export function ChefBadge({ className, children, ...props }: ChefBadgeProps) {
   return (
     <span
       className={cn(
-        "absolute top-6 right-6 bg-[#4b653c] text-white text-[10px] font-sans font-semibold tracking-wider px-3.5 py-1.5 rounded-full uppercase flex items-center gap-1 shadow-sm select-none z-10",
+        "inline-flex items-center gap-1 bg-[#6b9158] text-white text-[10px] font-sans font-semibold tracking-wider px-3 py-1 rounded-full uppercase shadow-sm select-none z-10 w-fit",
         className
       )}
       {...props}

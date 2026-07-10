@@ -66,17 +66,18 @@ export function DishCard({
     >
       <div className="relative w-full">
         <DishImageFrame src={image} alt={name} variant={activeVariant} />
-        {badge && (
-          <ChefBadge>
-            {typeof badge === "string" ? badge : undefined}
-          </ChefBadge>
-        )}
       </div>
 
       <div className="flex flex-col flex-grow p-6 md:p-8 pt-4 md:pt-6">
-        <span className="text-[#6b9158] font-sans text-[11px] font-bold uppercase tracking-[0.15em] mb-2 block">
-          {category}
-        </span>
+        {badge ? (
+          <ChefBadge className="mb-3">
+            {typeof badge === "string" ? badge : undefined}
+          </ChefBadge>
+        ) : (
+          <span className="text-[#6b9158] font-sans text-[11px] font-bold uppercase tracking-[0.15em] mb-2 block">
+            {category}
+          </span>
+        )}
 
         <h3 className="dish-card-title font-serif text-[32px] text-[#212d1b] font-semibold tracking-wide leading-tight mb-3">
           {name}

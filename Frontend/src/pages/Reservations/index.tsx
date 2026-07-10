@@ -36,6 +36,7 @@ import {
 } from '../Home/homeAssets';
 import MenuModal, { type PreOrderCart } from '@/components/MenuModal/MenuModal';
 import './index.css';
+import { Skeleton } from '@/components/ui/skeleton';
 
 // Pre-order menu items (static, not yet connected to backend)
 type PreOrderItem = {
@@ -448,6 +449,14 @@ export default function ReservationPage() {
   const preOrderTotal = Object.values(preOrderCart).reduce((s, i) => s + i.price * i.qty, 0);
 
   const handleQtyInBanner = (item: any, delta: number) => {
+    if (delta === -1 && preOrderCart[item.id]?.qty === 1) {
+      const confirmDelete = window.confirm(
+        isKhmer
+          ? `តើអ្នកចង់លុប ${item.name_kh || item.name} ចេញពីការកុម្ម៉ង់មុនមែនទេ?`
+          : `Are you sure you want to remove ${item.name} from your pre-order?`
+      );
+      if (!confirmDelete) return;
+    }
     setPreOrderCart((prev) => {
       const current = prev[item.id]?.qty ?? 0;
       const next = Math.max(0, current + delta);
@@ -465,9 +474,110 @@ export default function ReservationPage() {
 
   if (loading) {
     return (
-      <div className="pt-28 pb-20 text-center text-olive font-serif text-xl min-h-screen flex items-center justify-center">
-        {t('reservation.loading', undefined, 'Loading reservations...')}
-      </div>
+      <section className="reservation-form-section min-h-screen pt-28 pb-20 bg-white">
+        <div className="reservation-form-container flex flex-col lg:flex-row gap-10 w-full max-w-[1440px] px-6">
+          
+          {/* Left Form Main Area Skeleton */}
+          <div className="reservation-form-main flex-1 flex flex-col gap-10">
+            {/* Step 1: Choose Branch Skeleton */}
+            <div className="step-container">
+              <div className="flex gap-4 items-start mb-6">
+                <Skeleton className="h-8 w-8 rounded-full bg-muted flex-shrink-0" />
+                <div className="flex flex-col gap-2 w-full">
+                  <Skeleton className="h-6 w-48 rounded bg-muted animate-pulse" />
+                  <Skeleton className="h-4 w-full max-w-sm rounded bg-muted animate-pulse" />
+                </div>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <Skeleton className="w-full h-44 rounded-xl bg-muted animate-pulse" />
+                <Skeleton className="w-full h-44 rounded-xl bg-muted animate-pulse" />
+              </div>
+            </div>
+
+            <div className="h-px bg-gold/10 w-full" />
+
+            {/* Step 2: Contact Details Skeleton */}
+            <div className="step-container">
+              <div className="flex gap-4 items-start mb-6">
+                <Skeleton className="h-8 w-8 rounded-full bg-muted flex-shrink-0" />
+                <div className="flex flex-col gap-2 w-full">
+                  <Skeleton className="h-6 w-48 rounded bg-muted animate-pulse" />
+                  <Skeleton className="h-4 w-full max-w-sm rounded bg-muted animate-pulse" />
+                </div>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="flex flex-col gap-2">
+                  <Skeleton className="h-4 w-24 rounded bg-muted" />
+                  <Skeleton className="h-12 w-full rounded-lg bg-muted" />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <Skeleton className="h-4 w-24 rounded bg-muted" />
+                  <Skeleton className="h-12 w-full rounded-lg bg-muted" />
+                </div>
+              </div>
+            </div>
+
+            <div className="h-px bg-gold/10 w-full" />
+
+            {/* Step 3: Date & Time Skeleton */}
+            <div className="step-container">
+              <div className="flex gap-4 items-start mb-6">
+                <Skeleton className="h-8 w-8 rounded-full bg-muted flex-shrink-0" />
+                <div className="flex flex-col gap-2 w-full">
+                  <Skeleton className="h-6 w-48 rounded bg-muted animate-pulse" />
+                  <Skeleton className="h-4 w-full max-w-sm rounded bg-muted animate-pulse" />
+                </div>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {/* Calendar grid skeleton */}
+                <div className="border border-gold/10 p-4 rounded-xl flex flex-col gap-3">
+                  <div className="flex justify-between items-center mb-2">
+                    <Skeleton className="h-5 w-28 rounded bg-muted" />
+                    <div className="flex gap-2">
+                      <Skeleton className="h-7 w-7 rounded bg-muted" />
+                      <Skeleton className="h-7 w-7 rounded bg-muted" />
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-7 gap-2 text-center">
+                    {Array.from({ length: 7 }).map((_, idx) => (
+                      <Skeleton key={idx} className="h-4 w-6 mx-auto rounded bg-muted" />
+                    ))}
+                  </div>
+                  <div className="grid grid-cols-7 gap-2">
+                    {Array.from({ length: 35 }).map((_, idx) => (
+                      <Skeleton key={idx} className="h-8 w-8 mx-auto rounded-full bg-muted animate-pulse" />
+                    ))}
+                  </div>
+                </div>
+                {/* Time slot grid skeleton */}
+                <div className="flex flex-col gap-4">
+                  <Skeleton className="h-5 w-32 rounded bg-muted" />
+                  <div className="grid grid-cols-3 gap-3">
+                    {Array.from({ length: 9 }).map((_, idx) => (
+                      <Skeleton key={idx} className="h-10 rounded-lg bg-muted" />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Summary Sidebar Skeleton */}
+          <aside className="reservation-summary-card w-full lg:w-[380px] flex-shrink-0 flex flex-col gap-6 p-6 border border-gold/10 rounded-2xl bg-[#fafdf8]">
+            <Skeleton className="h-7 w-40 rounded bg-muted mb-4 animate-pulse" />
+            <div className="flex flex-col gap-4">
+              {Array.from({ length: 5 }).map((_, idx) => (
+                <div key={idx} className="flex justify-between py-2 border-b border-gold/5 last:border-0">
+                  <Skeleton className="h-4 w-20 rounded bg-muted" />
+                  <Skeleton className="h-4 w-28 rounded bg-muted" />
+                </div>
+              ))}
+            </div>
+            <Skeleton className="h-12 w-full rounded-lg bg-muted mt-6 animate-pulse" />
+          </aside>
+
+        </div>
+      </section>
     );
   }
 
@@ -1262,9 +1372,7 @@ export default function ReservationPage() {
                         <div>
                           <p className="preorder-cart-label">{isKhmer ? 'សេចក្តីសង្ខេបនៃការកុម្ម៉ង់មុន' : 'Pre-Order Summary'}</p>
                           <p className="preorder-cart-items-preview">
-                            {Object.values(preOrderCart)
-                              .map((i) => `${isKhmer ? (i.name_kh || i.name) : i.name} ×${i.qty}`)
-                              .join(' · ')}
+                            {isKhmer ? 'កុម្ម៉ង់អាហារទុកមុន' : 'Pre-order'}
                           </p>
                         </div>
                       </div>
@@ -1273,7 +1381,16 @@ export default function ReservationPage() {
                         <button
                           type="button"
                           className="preorder-clear-btn"
-                          onClick={() => setPreOrderCart({})}
+                          onClick={() => {
+                            const confirmClear = window.confirm(
+                              isKhmer 
+                                ? "តើអ្នកពិតជាចង់លុបការកុម្ម៉ង់មុនទាំងអស់មែនទេ?" 
+                                : "Are you sure you want to clear all pre-ordered items?"
+                            );
+                            if (confirmClear) {
+                              setPreOrderCart({});
+                            }
+                          }}
                           aria-label="Clear pre-order"
                         >
                           <Trash2 className="w-4 h-4" />
@@ -1288,7 +1405,6 @@ export default function ReservationPage() {
                             {isKhmer ? (item.name_kh || item.name) : item.name}
                           </span>
                           <div className="preorder-item-row-actions">
-                            <span className="preorder-item-row-price">${(item.price * item.qty).toFixed(2)}</span>
                             <div className="preorder-item-row-qty-ctrl">
                               <button
                                 type="button"
