@@ -32,10 +32,16 @@
   animation: ts-track-enter 0.36s ease both;
   -ms-overflow-style: none;
   scrollbar-width: none;
+  cursor: grab;
+  user-select: none;
 }
 
 .ts-track::-webkit-scrollbar {
   display: none;
+}
+
+.ts-track:active {
+  cursor: grabbing;
 }
 
 .ts-card {

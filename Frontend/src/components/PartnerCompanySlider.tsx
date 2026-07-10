@@ -3,6 +3,9 @@ import {
   useEffect,
   useRef,
   type CSSProperties,
+  type MouseEvent as ReactMouseEvent,
+  type PointerEvent as ReactPointerEvent,
+  type WheelEvent as ReactWheelEvent,
 } from 'react';
 import SectionHeader from './SectionHeader';
 import './PartnerCompanySlider.css';
@@ -97,6 +100,10 @@ export default function PartnerCompanySlider({
   const viewportRef = useRef<HTMLDivElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
   const isScrollResettingRef = useRef(false);
+  const isPointerDraggingRef = useRef(false);
+  const didPointerDragRef = useRef(false);
+  const dragStartXRef = useRef(0);
+  const dragStartScrollLeftRef = useRef(0);
   const loopGroupCount = canAnimate ? 3 : 1;
   const sliderStyle = {
     '--partner-slider-duration': `${Math.max(durationSeconds, 10)}s`,
@@ -141,6 +148,67 @@ export default function PartnerCompanySlider({
     }
   }, [finishScrollReset, getLoopWidth]);
 
+  const handleWheel = useCallback((event: ReactWheelEvent<HTMLDivElement>) => {
+    const viewport = viewportRef.current;
+    if (!viewport || !canAnimate) return;
+
+    const scrollAmount =
+      Math.abs(event.deltaX) > Math.abs(event.deltaY)
+        ? event.deltaX
+        : event.deltaY;
+
+    if (!scrollAmount) return;
+
+    event.preventDefault();
+    viewport.scrollLeft += scrollAmount;
+    handleScroll();
+  }, [canAnimate, handleScroll]);
+
+  const handlePointerDown = useCallback((event: ReactPointerEvent<HTMLDivElement>) => {
+    if (!canAnimate || event.pointerType === 'touch') return;
+
+    const viewport = viewportRef.current;
+    if (!viewport) return;
+
+    isPointerDraggingRef.current = true;
+    didPointerDragRef.current = false;
+    dragStartXRef.current = event.clientX;
+    dragStartScrollLeftRef.current = viewport.scrollLeft;
+    viewport.setPointerCapture(event.pointerId);
+  }, [canAnimate]);
+
+  const handlePointerMove = useCallback((event: ReactPointerEvent<HTMLDivElement>) => {
+    const viewport = viewportRef.current;
+    if (!viewport || !isPointerDraggingRef.current) return;
+
+    const dragDistance = event.clientX - dragStartXRef.current;
+    if (Math.abs(dragDistance) > 4) {
+      didPointerDragRef.current = true;
+    }
+
+    event.preventDefault();
+    viewport.scrollLeft = dragStartScrollLeftRef.current - dragDistance;
+    handleScroll();
+  }, [handleScroll]);
+
+  const stopPointerDrag = useCallback((event: ReactPointerEvent<HTMLDivElement>) => {
+    const viewport = viewportRef.current;
+    if (!viewport || !isPointerDraggingRef.current) return;
+
+    isPointerDraggingRef.current = false;
+    if (viewport.hasPointerCapture(event.pointerId)) {
+      viewport.releasePointerCapture(event.pointerId);
+    }
+  }, []);
+
+  const handleClickCapture = useCallback((event: ReactMouseEvent<HTMLDivElement>) => {
+    if (!didPointerDragRef.current) return;
+
+    event.preventDefault();
+    event.stopPropagation();
+    didPointerDragRef.current = false;
+  }, []);
+
   useEffect(() => {
     if (!canAnimate) return;
 
@@ -172,6 +240,13 @@ export default function PartnerCompanySlider({
         className="partner-slider-viewport"
         ref={viewportRef}
         onScroll={handleScroll}
+        onWheel={handleWheel}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={stopPointerDrag}
+        onPointerLeave={stopPointerDrag}
+        onPointerCancel={stopPointerDrag}
+        onClickCapture={handleClickCapture}
       >
         <div
           ref={trackRef}

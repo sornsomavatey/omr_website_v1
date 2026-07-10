@@ -1,4 +1,11 @@
-import { useRef, useState } from 'react';
+import {
+  useCallback,
+  useRef,
+  useState,
+  type MouseEvent as ReactMouseEvent,
+  type PointerEvent as ReactPointerEvent,
+  type WheelEvent as ReactWheelEvent,
+} from 'react';
 import { ChevronLeft, ChevronRight, Quote, Star } from 'lucide-react';
 import SectionHeader from './SectionHeader';
 import './TestimonialSection.css';
@@ -102,6 +109,10 @@ export default function TestimonialSection({
   isKhmer = false,
 }: TestimonialSectionProps) {
   const trackRef = useRef<HTMLDivElement>(null);
+  const isPointerDraggingRef = useRef(false);
+  const didPointerDragRef = useRef(false);
+  const dragStartXRef = useRef(0);
+  const dragStartScrollLeftRef = useRef(0);
 
   if (!testimonials || testimonials.length === 0) {
     return null;
@@ -121,6 +132,65 @@ export default function TestimonialSection({
     });
   };
 
+  const handleWheel = useCallback((event: ReactWheelEvent<HTMLDivElement>) => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    const scrollAmount =
+      Math.abs(event.deltaX) > Math.abs(event.deltaY)
+        ? event.deltaX
+        : event.deltaY;
+
+    if (!scrollAmount) return;
+
+    event.preventDefault();
+    track.scrollLeft += scrollAmount;
+  }, []);
+
+  const handlePointerDown = useCallback((event: ReactPointerEvent<HTMLDivElement>) => {
+    if (event.pointerType === 'touch') return;
+
+    const track = trackRef.current;
+    if (!track) return;
+
+    isPointerDraggingRef.current = true;
+    didPointerDragRef.current = false;
+    dragStartXRef.current = event.clientX;
+    dragStartScrollLeftRef.current = track.scrollLeft;
+    track.setPointerCapture(event.pointerId);
+  }, []);
+
+  const handlePointerMove = useCallback((event: ReactPointerEvent<HTMLDivElement>) => {
+    const track = trackRef.current;
+    if (!track || !isPointerDraggingRef.current) return;
+
+    const dragDistance = event.clientX - dragStartXRef.current;
+    if (Math.abs(dragDistance) > 4) {
+      didPointerDragRef.current = true;
+    }
+
+    event.preventDefault();
+    track.scrollLeft = dragStartScrollLeftRef.current - dragDistance;
+  }, []);
+
+  const stopPointerDrag = useCallback((event: ReactPointerEvent<HTMLDivElement>) => {
+    const track = trackRef.current;
+    if (!track || !isPointerDraggingRef.current) return;
+
+    isPointerDraggingRef.current = false;
+    if (track.hasPointerCapture(event.pointerId)) {
+      track.releasePointerCapture(event.pointerId);
+    }
+  }, []);
+
+  const handleClickCapture = useCallback((event: ReactMouseEvent<HTMLDivElement>) => {
+    if (!didPointerDragRef.current) return;
+
+    event.preventDefault();
+    event.stopPropagation();
+    didPointerDragRef.current = false;
+  }, []);
+
   return (
     <section className={`ts-section ${className}`}>
       <div className="ts-container">
@@ -131,7 +201,17 @@ export default function TestimonialSection({
         />
 
         <div className="ts-viewport">
-          <div ref={trackRef} className="ts-track">
+          <div
+            ref={trackRef}
+            className="ts-track"
+            onWheel={handleWheel}
+            onPointerDown={handlePointerDown}
+            onPointerMove={handlePointerMove}
+            onPointerUp={stopPointerDrag}
+            onPointerLeave={stopPointerDrag}
+            onPointerCancel={stopPointerDrag}
+            onClickCapture={handleClickCapture}
+          >
             {testimonials.map((testimonial, index) => (
               <TestimonialCard
                 key={`${testimonial.name}-${index}`}
