@@ -237,6 +237,11 @@
   border-color: #ffffff;
 }
 
+html[lang="km"] .menu-dish-card .dish-card-price,
+html[data-lang="kh"] .menu-dish-card .dish-card-price {
+  font-weight: 500 !important;
+}
+
 @media (max-width: 768px) {
   .menu-section .grid {
     row-gap: 32px;
