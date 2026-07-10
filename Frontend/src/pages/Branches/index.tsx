@@ -4,7 +4,7 @@ import { Phone, MapPin, Clock, Check, X } from 'lucide-react';
 import { getRestaurantsData } from '@/lib/api';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
-import LocationCard from '@/components/LocationCard';
+import LocationCard, { type BranchData } from '@/components/LocationCard';
 import SectionHeader from '@/components/SectionHeader';
 import { useTranslation } from '@/hooks/useTranslation';
 import './index.css';
@@ -171,10 +171,16 @@ export default function Branches() {
     };
   });
 
-  const handleScrollToMap = () => {
-    const mapSection = document.getElementById('see-us-on-map');
-    if (mapSection) {
-      mapSection.scrollIntoView({ behavior: 'smooth' });
+  const handleMapClick = (branch: BranchData) => {
+    if (branch.id === 'toulKork') {
+      navigate('/branches/toul-kork#visit-us');
+    } else if (branch.id === 'boeungKak') {
+      navigate('/branches/boeung-kak#visit-us');
+    } else {
+      const mapSection = document.getElementById('see-us-on-map');
+      if (mapSection) {
+        mapSection.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   };
 
@@ -355,7 +361,7 @@ export default function Branches() {
                     setActiveModal(b as LocationItem);
                   }
                 }}
-                onMapClick={handleScrollToMap}
+                onMapClick={handleMapClick}
                 imageMapper={imageMapper}
               />
             ))}
