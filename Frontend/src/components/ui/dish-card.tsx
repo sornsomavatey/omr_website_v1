@@ -97,12 +97,12 @@ export function DishCard({
                 <span className="dish-card-currency text-[#212d1b] font-sans text-[22px] font-normal leading-none">
                   USD
                 </span>
-                <span className="dish-card-price text-[#212d1b] font-serif text-[42px] font-semibold leading-none">
+                <span className="dish-card-price text-[#212d1b] font-serif text-[42px] font-medium leading-none">
                   {usdPriceMatch[1]}
                 </span>
               </>
             ) : (
-              <span className="dish-card-price text-[#212d1b] font-serif text-[42px] font-semibold leading-none">
+              <span className="dish-card-price text-[#212d1b] font-serif text-[42px] font-medium leading-none">
                 {localizedPrice}
               </span>
             )}
