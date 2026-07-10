@@ -51,6 +51,7 @@ export function DishCard({
   const localizedPriceSuffix = isKhmer
     ? (priceSuffix === "per person" ? "" : priceSuffix)
     : priceSuffix
+  const usdPriceMatch = !isKhmer ? localizedPrice.match(/^USD\s+(.+)$/) : null
   
   const shapes: DishFrameVariant[] = ["right-leaf", "dome", "left-leaf"]
   const activeVariant = variant || (typeof index === "number" ? shapes[index % 3] : "right-leaf")
@@ -79,7 +80,7 @@ export function DishCard({
           </span>
         )}
 
-        <h3 className="dish-card-title font-serif text-[32px] text-[#212d1b] font-semibold tracking-wide leading-tight mb-3">
+        <h3 className="dish-card-title font-serif text-[32px] text-[#212d1b] font-medium tracking-wide leading-tight mb-3">
           {name}
         </h3>
 
@@ -90,12 +91,23 @@ export function DishCard({
         )}
 
         <div className="dish-card-footer flex items-center justify-between pt-2 mt-auto">
-          <div className="flex items-baseline">
-            <span className="dish-card-price text-[#212d1b] font-serif text-[32px] font-bold leading-none">
-              {localizedPrice}
-            </span>
+          <div className="flex items-baseline gap-2">
+            {usdPriceMatch ? (
+              <>
+                <span className="dish-card-currency text-[#212d1b] font-sans text-[22px] font-normal leading-none">
+                  USD
+                </span>
+                <span className="dish-card-price text-[#212d1b] font-serif text-[42px] font-semibold leading-none">
+                  {usdPriceMatch[1]}
+                </span>
+              </>
+            ) : (
+              <span className="dish-card-price text-[#212d1b] font-serif text-[42px] font-semibold leading-none">
+                {localizedPrice}
+              </span>
+            )}
             {localizedPriceSuffix && (
-              <span className="text-xs text-[#646860]/80 font-sans font-light ml-1.5">
+              <span className="text-xs text-[#646860]/80 font-sans font-light">
                 {localizedPriceSuffix}
               </span>
             )}
