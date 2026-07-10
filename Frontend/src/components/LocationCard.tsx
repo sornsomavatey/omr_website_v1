@@ -19,7 +19,7 @@ export type BranchData = {
 type LocationCardProps = {
   branch: BranchData;
   onDetailClick?: (branch: BranchData) => void;
-  onMapClick?: () => void;
+  onMapClick?: (branch: BranchData) => void;
   imageMapper?: Record<string, string>;
 };
 
@@ -104,7 +104,7 @@ export default function LocationCard({
 
           {onMapClick ? (
             <Button
-              onClick={onMapClick}
+              onClick={() => onMapClick(branch)}
               variant="outline"
               className="btn-action-outline"
             >

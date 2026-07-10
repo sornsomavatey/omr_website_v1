@@ -15,12 +15,14 @@ export function render(url: string) {
 
   // Get clean path
   const path = url.split('?')[0];
-  // Default server rendering is English (standard for search engine bots)
+  // Default server rendering is English 
   const seo = getSEOMetadata(path, false);
 
   return { 
     html,
     title: seo.title,
-    description: seo.description
+    description: seo.description,
+    keywords: seo.keywords,
+    ogImage: seo.ogImage
   };
 }

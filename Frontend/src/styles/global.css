@@ -100,7 +100,7 @@ h6 {
 
 html[lang="km"] .page-hero-title,
 html[data-lang="kh"] .page-hero-title {
-  font-size: clamp(36px, 4.2vw, 52px) !important;
+  font-size: clamp(42px, 4.8vw, 62px) !important;
 }
 
 html[lang="km"] .page-hero-title--home,
@@ -345,6 +345,11 @@ html[lang="km"] h2 *,
 html[data-lang="kh"] h2,
 html[data-lang="kh"] h2 * {
   line-height: 1.7 !important;
+}
+
+html[lang="km"] body :is(h1, h2, h3, h4, h5, h6, .font-serif):not(.page-hero-title),
+html[data-lang="kh"] body :is(h1, h2, h3, h4, h5, h6, .font-serif):not(.page-hero-title) {
+  font-weight: 500 !important;
 }
 
 @media (max-width: 768px) {

@@ -26,6 +26,84 @@
     }
   },
   {
+    "name": "Arti Soejitno",
+    "date": "a month ago",
+    "stars": 5,
+    "text": "Beautiful architecture, modern and sleek. They served local culinary and surprisingly taste so good as for such beautiful building usually the taste has been adjusted to western, this one though spot on! From the ice coffee with condensed milk (you can ask to adjust the sweetness), to the breakfast menu Phnom Penh Noodles to the dessert and their Chinese cake are amazingly delicious! We came after company fun run, with big number of people but they serve us pretty fast and accurate! Not too long waiting time and toilet also clean. Well done Team One More! Highly recommended and will come back try other menu!",
+    "avatar": "@/assets/testimonial-avatar/arti-soejitno.webp",
+    "translations": {
+      "kh": {
+        "date": "១ ខែមុន",
+        "text": "ស្ថាបត្យកម្មស្រស់ស្អាត ទំនើប និងមានភាពប្រណិត។ ពួកគេបម្រើម្ហូបក្នុងស្រុកដែលមានរសជាតិឆ្ងាញ់គួរឱ្យភ្ញាក់ផ្អើល ហើយរក្សាបាននូវរសជាតិដើមយ៉ាងល្អ។ ចាប់ពីកាហ្វេទឹកដោះគោខាប់ មីភ្នំពេញ រហូតដល់បង្អែម និងនំចិន សុទ្ធតែឆ្ងាញ់ណាស់។ យើងមកជាក្រុមធំបន្ទាប់ពីកម្មវិធីរត់កម្សាន្តរបស់ក្រុមហ៊ុន ប៉ុន្តែពួកគេបម្រើបានលឿន និងត្រឹមត្រូវ ដោយមិនចាំយូរ។ បន្ទប់ទឹកក៏ស្អាតផងដែរ។ ធ្វើបានល្អណាស់ ក្រុមការងារ One More! សូមណែនាំយ៉ាងខ្លាំង ហើយខ្ញុំនឹងត្រឡប់មកសាកមុខម្ហូបផ្សេងទៀត។"
+      }
+    }
+  },
+  {
+    "name": "Christian Breitkreutz",
+    "date": "6 month ago",
+    "stars": 4,
+    "text": "Very sophisticated design. Very clean and sleek. Lots of business guests. Service is highly professional. It is also a good place to dive into Cambodian food. Quality is top. At least that was my impression. You can feel the regional diversity: some Vietnamese influence, some Thai influence and of course French. They also serve coffee. Which makes it a good business lunch place.",
+    "avatar": "@/assets/testimonial-avatar/christian-breitkreutz.webp",
+    "translations": {
+      "kh": {
+        "date": "៦ ខែមុន",
+        "text": "ការរចនាមានភាពទាន់សម័យ និងប្រណីតណាស់។ កន្លែងស្អាត និងរលោង មានភ្ញៀវអាជីវកម្មច្រើន។ សេវាកម្មមានវិជ្ជាជីវៈខ្ពស់។ ក៏ជាកន្លែងល្អសម្រាប់ស្គាល់ម្ហូបខ្មែរ។ គុណភាពល្អណាស់ យ៉ាងហោចណាស់នោះជាចំណាប់អារម្មណ៍របស់ខ្ញុំ។ អ្នកអាចមានអារម្មណ៍ដល់ភាពចម្រុះតាមតំបន់ ដូចជាឥទ្ធិពលវៀតណាម ថៃ និងបារាំង។ ពួកគេក៏មានកាហ្វេផងដែរ ដែលធ្វើឱ្យកន្លែងនេះសាកសមសម្រាប់អាហារថ្ងៃត្រង់បែបអាជីវកម្ម។"
+      }
+    }
+  },
+  {
+    "name": "Rachel Barker",
+    "date": "a year ago",
+    "stars": 4,
+    "text": "It is a chic restaurant and a great place to get together with family and friends. Simple minimalist constructions that showcase the bare building materials and structural elements over decorative design. It is spacious with some big long tables. They offered a variety of food options even for breakfast: western, Khmer, Thai and Chinese dishes. A group of us sampled all different dishes. We all like the food. The service was excellent and the prices were reasonable.",
+    "avatar": "@/assets/testimonial-avatar/rachel-barker.webp",
+    "translations": {
+      "kh": {
+        "date": "១ ឆ្នាំមុន",
+        "text": "វាជាភោជនីយដ្ឋានទាន់សម័យ និងជាកន្លែងល្អសម្រាប់ជួបជុំគ្រួសារ និងមិត្តភក្តិ។ សំណង់សាមញ្ញបែបមីនីមល បង្ហាញសម្ភារៈ និងរចនាសម្ព័ន្ធអគារដោយផ្ទាល់ ជំនួសឱ្យការតុបតែងច្រើន។ កន្លែងទូលាយ មានតុវែងធំៗខ្លះ។ ពួកគេមានជម្រើសម្ហូបច្រើន សូម្បីតែអាហារពេលព្រឹក ដូចជា ម្ហូបបែបបស្ចិមប្រទេស ខ្មែរ ថៃ និងចិន។ ក្រុមយើងបានសាកម្ហូបផ្សេងៗគ្នា ហើយយើងទាំងអស់គ្នាចូលចិត្តម្ហូប។ សេវាកម្មល្អឥតខ្ចោះ ហើយតម្លៃសមរម្យ។"
+      }
+    }
+  },
+  {
+    "name": "Thang Dang",
+    "date": "3 month ago",
+    "stars": 5,
+    "text": "The design is very impressive for open areas, but private rooms are not well arranged. Food is great, especially Khmer dishes.",
+    "avatar": "@/assets/testimonial-avatar/thang-dang.webp",
+    "translations": {
+      "kh": {
+        "date": "៣ ខែមុន",
+        "text": "ការរចនាគួរឱ្យចាប់អារម្មណ៍ណាស់សម្រាប់តំបន់បើកចំហ ប៉ុន្តែបន្ទប់ឯកជនមិនទាន់រៀបចំបានល្អប៉ុន្មានទេ។ ម្ហូបឆ្ងាញ់ណាស់ ជាពិសេសម្ហូបខ្មែរ។"
+      }
+    }
+  },
+  {
+    "name": "Monytep",
+    "date": "a year ago",
+    "stars": 5,
+    "text": "Tucked in a quiet corner of Boeng Kak, One More Restaurant is a no-frills spot with real charm. The open-air setting, sizzling Khmer dishes, and cold beer make it perfect for casual dinners. Favorites like beef lok lak and grilled squid come in hearty portions at fair prices. The staff are friendly and familiar - service is not polished, but it is warm and genuine. It is the kind of place that remembers you, and where the food always hits the spot. Simple, satisfying, and full of heart.",
+    "avatar": "@/assets/testimonial-avatar/mony-tep.webp",
+    "translations": {
+      "kh": {
+        "date": "១ ឆ្នាំមុន",
+        "text": "លាក់ខ្លួននៅជ្រុងស្ងប់ស្ងាត់មួយនៃបឹងកក់ One More Restaurant គឺជាកន្លែងសាមញ្ញ ប៉ុន្តែមានមន្តស្នេហ៍ពិតប្រាកដ។ បរិយាកាសបើកចំហ ម្ហូបខ្មែរក្តៅៗ និងស្រាបៀរត្រជាក់ៗ ធ្វើឱ្យវាសាកសមសម្រាប់អាហារពេលល្ងាចធម្មតា។ មុខម្ហូបពេញនិយមដូចជា ឡុកឡាក់សាច់គោ និងមឹកអាំង មានចំណែកធំៗក្នុងតម្លៃសមរម្យ។ បុគ្គលិករួសរាយរាក់ទាក់ និងស្និទ្ធស្នាល សេវាកម្មមិនមែនប្រណីតខ្លាំងទេ ប៉ុន្តែកក់ក្តៅ និងពិតប្រាកដ។ វាជាកន្លែងដែលចងចាំអ្នក ហើយម្ហូបតែងតែត្រូវចិត្ត។ សាមញ្ញ ឆ្អែតចិត្ត និងពោរពេញដោយភាពកក់ក្តៅ។"
+      }
+    }
+  },
+  {
+    "name": "Sodaroth Va",
+    "date": "11 month ago",
+    "stars": 5,
+    "text": "Best service and khmer food! The environment is great. Also available for workshop reservations.",
+    "avatar": "@/assets/testimonial-avatar/sodaroth-va.webp",
+    "translations": {
+      "kh": {
+        "date": "១១ ខែមុន",
+        "text": "សេវាកម្មល្អបំផុត និងម្ហូបខ្មែរឆ្ងាញ់! បរិយាកាសល្អណាស់។ ក៏មានសម្រាប់កក់ធ្វើសិក្ខាសាលាផងដែរ។"
+      }
+    }
+  },
+  {
     "name": "Pimmy K",
     "date": "a month ago",
     "stars": 5,
@@ -39,15 +117,15 @@
     }
   },
   {
-    "name": "Arti Soejitno",
-    "date": "a month ago",
+    "name": "Ada Cheang",
+    "date": "4 month ago",
     "stars": 5,
-    "text": "Beautiful architecture, modern and sleek. They served local culinary and surprisingly taste so good as for such beautiful building usually the taste has been adjusted to western, this one though spot on! From the ice coffee with condensed milk (you can ask to adjust the sweetness), to the breakfast menu Phnom Penh Noodles to the dessert and their Chinese cake are amazingly delicious! We came after company fun run, with big number of people but they serve us pretty fast and accurate! Not too long waiting time and toilet also clean. Well done Team One More! Highly recommended and will come back try other menu!",
-    "avatar": "@/assets/testimonial-avatar/arti-soejitno.webp",
+    "text": "One of my fav restaurants.",
+    "avatar": "@/assets/testimonial-avatar/ada-cheang.webp",
     "translations": {
       "kh": {
-        "date": "១ ខែមុន",
-        "text": "ស្ថាបត្យកម្មស្រស់ស្អាត ទំនើប និងមានភាពប្រណិត។ ពួកគេបម្រើម្ហូបក្នុងស្រុកដែលមានរសជាតិឆ្ងាញ់គួរឱ្យភ្ញាក់ផ្អើល ហើយរក្សាបាននូវរសជាតិដើមយ៉ាងល្អ។ ចាប់ពីកាហ្វេទឹកដោះគោខាប់ មីភ្នំពេញ រហូតដល់បង្អែម និងនំចិន សុទ្ធតែឆ្ងាញ់ណាស់។ យើងមកជាក្រុមធំបន្ទាប់ពីកម្មវិធីរត់កម្សាន្តរបស់ក្រុមហ៊ុន ប៉ុន្តែពួកគេបម្រើបានលឿន និងត្រឹមត្រូវ ដោយមិនចាំយូរ។ បន្ទប់ទឹកក៏ស្អាតផងដែរ។ ធ្វើបានល្អណាស់ ក្រុមការងារ One More! សូមណែនាំយ៉ាងខ្លាំង ហើយខ្ញុំនឹងត្រឡប់មកសាកមុខម្ហូបផ្សេងទៀត។"
+        "date": "៤ ខែមុន",
+        "text": "ភោជនីយដ្ឋានមួយក្នុងចំណោមភោជនីយដ្ឋានដែលខ្ញុំចូលចិត្តបំផុត។"
       }
     }
   }

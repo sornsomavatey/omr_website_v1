@@ -223,9 +223,16 @@ html[lang="km"] .site-footer * {
   }
 }
 
+@media (max-width: 767px) {
+  .site-footer-container {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+}
+
 @media (max-width: 640px) {
   .site-footer-container {
-    padding: 60px 24px 38px;
+    padding: 60px 16px 38px;
   }
 
   .site-footer-main {
@@ -265,8 +272,11 @@ html[lang="km"] .site-footer * {
 
   .site-footer-column {
     min-width: 0;
-    align-items: center;
-    text-align: center;
+    width: max-content;
+    max-width: 100%;
+    justify-self: center;
+    align-items: flex-start;
+    text-align: left;
   }
 
   .site-footer-heading {

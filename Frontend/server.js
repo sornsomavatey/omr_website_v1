@@ -35,7 +35,10 @@ if (!isProduction) {
 // Serve HTML
 app.use('*all', async (req, res) => {
   try {
-    const url = req.originalUrl.replace(base, '')
+    const url =
+      base !== '/' && req.originalUrl.startsWith(base)
+        ? req.originalUrl.slice(base.length - 1) || '/'
+        : req.originalUrl
 
     /** @type {string} */
     let template
@@ -69,6 +72,40 @@ app.use('*all', async (req, res) => {
         `<meta name="description" content="${rendered.description}" />`
       )
     }
+
+    // Dynamically inject server-rendered SEO Keywords
+    if (rendered.keywords) {
+      html = html.replace(
+        /<meta name="keywords" content=".*?"\s*\/?>/,
+        `<meta name="keywords" content="${rendered.keywords}" />`
+      )
+    }
+
+    // Dynamically inject server-rendered Open Graph & Twitter Title
+    if (rendered.title) {
+      html = html
+        .replace(/<meta property="og:title" content=".*?"\s*\/?>/, `<meta property="og:title" content="${rendered.title}" />`)
+        .replace(/<meta name="twitter:title" content=".*?"\s*\/?>/, `<meta name="twitter:title" content="${rendered.title}" />`)
+    }
+
+    // Dynamically inject server-rendered Open Graph & Twitter Description
+    if (rendered.description) {
+      html = html
+        .replace(/<meta property="og:description" content=".*?"\s*\/?>/, `<meta property="og:description" content="${rendered.description}" />`)
+        .replace(/<meta name="twitter:description" content=".*?"\s*\/?>/, `<meta name="twitter:description" content="${rendered.description}" />`)
+    }
+
+    // Dynamically inject server-rendered Open Graph & Twitter Image
+    if (rendered.ogImage) {
+      html = html
+        .replace(/<meta property="og:image" content=".*?"\s*\/?>/, `<meta property="og:image" content="${rendered.ogImage}" />`)
+        .replace(/<meta name="twitter:image" content=".*?"\s*\/?>/, `<meta name="twitter:image" content="${rendered.ogImage}" />`)
+    }
+
+    // Dynamically inject server-rendered URL
+    const domain = 'https://onemorerestaurant.com';
+    const fullUrl = `${domain}/${url.replace(/^\//, '')}`;
+    html = html.replace(/<meta property="og:url" content=".*?"\s*\/?>/, `<meta property="og:url" content="${fullUrl}" />`)
 
     res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
   } catch (e) {

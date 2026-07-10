@@ -98,15 +98,22 @@ export default function Menu() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const threshold = window.innerWidth >= 768 ? 480 : 400;
-      setIsStickyVisible(window.scrollY > threshold);
+      const heroSection = document.getElementById('menu-hero');
+      if (!heroSection) {
+        setIsStickyVisible(false);
+        return;
+      }
+
+      setIsStickyVisible(heroSection.getBoundingClientRect().bottom <= 0);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll);
     handleScroll();
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
     };
   }, []);
 
@@ -294,7 +301,7 @@ export default function Menu() {
   return (
     <div className="bg-white flex flex-col items-center w-full min-h-screen">
       {/* Hero Header Section */}
-      <section className="relative w-full h-[500px] md:h-[580px] flex flex-col items-center justify-center overflow-hidden">
+      <section id="menu-hero" className="relative w-full h-[500px] md:h-[580px] flex flex-col items-center justify-center overflow-hidden">
         <div className="absolute inset-0 w-full h-full pointer-events-none z-0">
           <img
             alt={t('menu.hero.backgroundAlt', undefined, 'Menu Header Background')}
@@ -305,7 +312,7 @@ export default function Menu() {
         </div>
 
         <div className="relative z-10 text-center text-white max-w-[1260px] px-6 pt-16 flex flex-col items-center">
-          <h1 className="page-hero-title font-serif text-5xl md:text-6xl lg:text-[70px] leading-tight mb-4 font-normal tracking-wide drop-shadow-md">
+          <h1 className="page-hero-title font-serif text-5xl md:text-6xl lg:text-[70px] leading-tight mb-4 tracking-wide drop-shadow-md">
             {t('menu.hero.title', undefined, hero.title)}
           </h1>
 

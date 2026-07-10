@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { getHomeData, getTestimonialsData } from '@/lib/api';
 import SignatureDishes from '@/components/SignatureDishes';
+import { Skeleton } from '@/components/ui/skeleton';
 import LocationCard from '@/components/LocationCard';
 import SharedTestimonialSection from '@/components/TestimonialSection';
 import PartnerCompanySlider, {
@@ -272,9 +273,11 @@ function SpacesSection({ spaces }: { spaces: DiningSpace[] }) {
 function LocationsSection({
   branches,
   onDetailClick,
+  onMapClick,
 }: {
   branches: any[];
   onDetailClick?: (branch: any) => void;
+  onMapClick?: (branch: any) => void;
 }) {
   const { t } = useTranslation();
 
@@ -311,6 +314,7 @@ function LocationsSection({
                 key={branch.id}
                 branch={translatedBranch}
                 onDetailClick={onDetailClick}
+                onMapClick={onMapClick}
               />
             );
           })}
@@ -433,8 +437,63 @@ export default function HomePage() {
 
   if (loading) {
     return (
-      <div className="pt-28 pb-20 text-center text-olive font-serif text-xl min-h-screen flex items-center justify-center">
-        {t('home.loading', undefined, 'Loading home...')}
+      <div className="bg-white flex flex-col items-center w-full min-h-screen">
+        {/* Hero Section Skeleton */}
+        <div className="relative w-full h-[600px] md:h-[700px] flex flex-col items-center justify-center overflow-hidden bg-[#1a2318] w-full">
+          <div className="relative z-10 flex flex-col items-center gap-6 w-full max-w-[800px] px-6 text-center">
+            <Skeleton className="h-4 w-32 bg-white/10 rounded-full" />
+            <Skeleton className="h-16 w-4/5 md:h-[90px] bg-white/10 rounded-xl" />
+            <Skeleton className="h-5 w-2/3 bg-white/10 rounded-lg mt-2" />
+            <Skeleton className="h-4 w-1/2 bg-white/10 rounded-lg" />
+            <Skeleton className="h-12 w-40 bg-white/15 rounded-lg mt-6 animate-pulse" />
+          </div>
+        </div>
+
+        {/* Signature Dishes Section Skeleton */}
+        <div className="w-full max-w-[1440px] px-6 md:px-[64px] py-20 flex flex-col items-center">
+          <Skeleton className="h-4 w-28 mb-3 rounded-full bg-muted" />
+          <Skeleton className="h-10 w-64 mb-14 rounded-xl bg-muted" />
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <div key={i} className="flex flex-col gap-4 border border-gold/10 p-5 rounded-2xl bg-[#fafdf8]/50 w-full">
+                <Skeleton className="w-full aspect-[4/3] rounded-xl bg-muted" />
+                <Skeleton className="h-4 w-20 rounded-full bg-muted" />
+                <Skeleton className="h-6 w-3/4 rounded-lg bg-muted" />
+                <div className="flex flex-col gap-2 mt-1">
+                  <Skeleton className="h-3 w-full rounded bg-muted" />
+                  <Skeleton className="h-3 w-5/6 rounded bg-muted" />
+                </div>
+                <div className="flex justify-between items-center mt-4">
+                  <Skeleton className="h-6 w-16 rounded bg-muted" />
+                  <Skeleton className="h-10 w-28 rounded-lg bg-muted" />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Dining Spaces Section Skeleton */}
+        <div className="w-full bg-[#f4f7f2] py-20 flex flex-col items-center">
+          <div className="w-full max-w-[1440px] px-6 md:px-[64px] flex flex-col items-center">
+            <Skeleton className="h-4 w-24 mb-3 rounded-full bg-muted" />
+            <Skeleton className="h-10 w-80 mb-14 rounded-xl bg-muted" />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 w-full">
+              <div className="flex flex-col gap-4 w-full">
+                <Skeleton className="w-full aspect-[16/10] rounded-2xl bg-muted" />
+                <Skeleton className="h-7 w-1/3 rounded-lg bg-muted" />
+                <Skeleton className="h-4 w-full rounded bg-muted" />
+                <Skeleton className="h-4 w-4/5 rounded bg-muted" />
+              </div>
+              <div className="flex flex-col gap-4 w-full">
+                <Skeleton className="w-full aspect-[16/10] rounded-2xl bg-muted" />
+                <Skeleton className="h-7 w-1/3 rounded-lg bg-muted" />
+                <Skeleton className="h-4 w-full rounded bg-muted" />
+                <Skeleton className="h-4 w-4/5 rounded bg-muted" />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
@@ -490,6 +549,15 @@ export default function HomePage() {
             navigate('/branches');
           }
         }}
+        onMapClick={(branch) => {
+          if (branch.id === 'toulKork') {
+            navigate('/branches/toul-kork#visit-us');
+          } else if (branch.id === 'boeungKak') {
+            navigate('/branches/boeung-kak#visit-us');
+          } else {
+            navigate('/branches#see-us-on-map');
+          }
+        }}
       />
       <GallerySection gallery={data.gallery} />
       <SharedTestimonialSection
@@ -505,7 +573,7 @@ export default function HomePage() {
         eyebrow={t('home.partners.eyebrow')}
         title={t('home.partners.title')}
         description={t('home.partners.description')}
-        durationSeconds={70}
+        durationSeconds={150}
       />
     </div>
   );
