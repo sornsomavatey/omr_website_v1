@@ -1,8 +1,13 @@
 import fs from 'node:fs/promises'
+import zlib from 'node:zlib'
 import express from 'express'
 
 // Constants
-const isProduction = process.env.NODE_ENV === 'production'
+const lifecycleEvent = process.env.npm_lifecycle_event
+const isProduction =
+  process.env.NODE_ENV === 'production' ||
+  lifecycleEvent === 'start' ||
+  lifecycleEvent === 'preview'
 const port = process.env.PORT || 3001
 const base = process.env.BASE || '/'
 
@@ -13,6 +18,28 @@ const templateHtml = isProduction
 
 // Create http server
 const app = express()
+
+function sendHtml(req, res, html) {
+  const headers = {
+    'Content-Type': 'text/html; charset=utf-8',
+    Vary: 'Accept-Encoding',
+  }
+  const acceptedEncoding = req.headers['accept-encoding'] || ''
+
+  if (acceptedEncoding.includes('br')) {
+    res.status(200).set({ ...headers, 'Content-Encoding': 'br' })
+    res.send(zlib.brotliCompressSync(Buffer.from(html)))
+    return
+  }
+
+  if (acceptedEncoding.includes('gzip')) {
+    res.status(200).set({ ...headers, 'Content-Encoding': 'gzip' })
+    res.send(zlib.gzipSync(Buffer.from(html)))
+    return
+  }
+
+  res.status(200).set(headers).send(html)
+}
 
 // Add Vite 
 /** @type {import('vite').ViteDevServer | undefined} */
@@ -26,10 +53,7 @@ if (!isProduction) {
   })
   app.use(vite.middlewares)
 } else {
-  const compression = (await import('compression')).default
-  const sirv = (await import('sirv')).default
-  app.use(compression())
-  app.use(base, sirv('./dist/client', { extensions: [] }))
+  app.use(base, express.static('./dist/client', { index: false }))
 }
 
 // Serve HTML
@@ -107,7 +131,7 @@ app.use('*all', async (req, res) => {
     const fullUrl = `${domain}/${url.replace(/^\//, '')}`;
     html = html.replace(/<meta property="og:url" content=".*?"\s*\/?>/, `<meta property="og:url" content="${fullUrl}" />`)
 
-    res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
+    sendHtml(req, res, html)
   } catch (e) {
     vite?.ssrFixStacktrace(e)
     console.log(e.stack)
