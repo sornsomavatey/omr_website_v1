@@ -111,8 +111,25 @@ export default function TestimonialSection({
   const trackRef = useRef<HTMLDivElement>(null);
   const isPointerDraggingRef = useRef(false);
   const didPointerDragRef = useRef(false);
+  const restoreSnapTimeoutRef = useRef<number | null>(null);
   const dragStartXRef = useRef(0);
   const dragStartScrollLeftRef = useRef(0);
+
+  const temporarilyDisableSnap = useCallback(() => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    track.classList.add('ts-track-free-scroll');
+
+    if (restoreSnapTimeoutRef.current) {
+      window.clearTimeout(restoreSnapTimeoutRef.current);
+    }
+
+    restoreSnapTimeoutRef.current = window.setTimeout(() => {
+      track.classList.remove('ts-track-free-scroll');
+      restoreSnapTimeoutRef.current = null;
+    }, 160);
+  }, []);
 
   const scrollTestimonials = (direction: 'left' | 'right') => {
     const track = trackRef.current;
@@ -141,17 +158,28 @@ export default function TestimonialSection({
 
     if (!scrollAmount) return;
 
+    const maxScrollLeft = track.scrollWidth - track.clientWidth;
+    const nextScrollLeft = Math.max(
+      0,
+      Math.min(maxScrollLeft, track.scrollLeft + scrollAmount),
+    );
+
+    if (nextScrollLeft === track.scrollLeft) return;
+
     event.preventDefault();
-    track.scrollLeft += scrollAmount;
-  }, []);
+    temporarilyDisableSnap();
+    track.scrollLeft = nextScrollLeft;
+  }, [temporarilyDisableSnap]);
 
   const handlePointerDown = useCallback((event: ReactPointerEvent<HTMLDivElement>) => {
     if (event.pointerType === 'touch') return;
 
     const track = trackRef.current;
     if (!track) return;
+    if ((event.target as HTMLElement).closest('button, a, input, textarea, select')) return;
 
     event.preventDefault();
+    temporarilyDisableSnap();
     isPointerDraggingRef.current = true;
     didPointerDragRef.current = false;
     dragStartXRef.current = event.clientX;
@@ -170,8 +198,9 @@ export default function TestimonialSection({
     }
 
     event.preventDefault();
+    temporarilyDisableSnap();
     track.scrollLeft = dragStartScrollLeftRef.current - dragDistance;
-  }, []);
+  }, [temporarilyDisableSnap]);
 
   const stopPointerDrag = useCallback((event: ReactPointerEvent<HTMLDivElement>) => {
     const track = trackRef.current;
