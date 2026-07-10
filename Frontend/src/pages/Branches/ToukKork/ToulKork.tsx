@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { 
   Phone, 
   MapPin, 
@@ -58,6 +58,7 @@ import locationImg from '@/assets/Location Tk.webp';
 
 export default function ToulKork() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { t, isKhmer } = useTranslation();
   
   // Testimonial state
@@ -75,6 +76,21 @@ export default function ToulKork() {
       })
       .catch((err) => console.error(err));
   }, [isKhmer]);
+
+  useEffect(() => {
+    if (location.hash !== '#visit-us') return;
+
+    const scrollToVisitUs = () => {
+      document.getElementById('visit-us')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+    const animationFrame = requestAnimationFrame(scrollToVisitUs);
+    const timeout = window.setTimeout(scrollToVisitUs, 300);
+
+    return () => {
+      cancelAnimationFrame(animationFrame);
+      window.clearTimeout(timeout);
+    };
+  }, [location.hash, testimonials.length]);
 
 
 
@@ -369,7 +385,7 @@ export default function ToulKork() {
       />
 
       {/* 8. VISIT US */}
-      <section className="tk-section tk-visit">
+      <section id="visit-us" className="tk-section tk-visit">
         <div className="tk-visit-container">
           {/* Left: Map image */}
           <div className="tk-visit-map">

@@ -273,9 +273,11 @@ function SpacesSection({ spaces }: { spaces: DiningSpace[] }) {
 function LocationsSection({
   branches,
   onDetailClick,
+  onMapClick,
 }: {
   branches: any[];
   onDetailClick?: (branch: any) => void;
+  onMapClick?: (branch: any) => void;
 }) {
   const { t } = useTranslation();
 
@@ -312,6 +314,7 @@ function LocationsSection({
                 key={branch.id}
                 branch={translatedBranch}
                 onDetailClick={onDetailClick}
+                onMapClick={onMapClick}
               />
             );
           })}
@@ -544,6 +547,15 @@ export default function HomePage() {
             navigate('/branches/boeung-kak');
           } else {
             navigate('/branches');
+          }
+        }}
+        onMapClick={(branch) => {
+          if (branch.id === 'toulKork') {
+            navigate('/branches/toul-kork#visit-us');
+          } else if (branch.id === 'boeungKak') {
+            navigate('/branches/boeung-kak#visit-us');
+          } else {
+            navigate('/branches#see-us-on-map');
           }
         }}
       />
