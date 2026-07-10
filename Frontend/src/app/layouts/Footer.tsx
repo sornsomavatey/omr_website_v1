@@ -35,7 +35,7 @@ const contactLinks = [
 ];
 
 const socialLinks = [
-  { name: 'Instagram', href: 'https://www.instagram.com/' },
+  { name: 'Instagram', href: 'https://www.instagram.com/onemore.restaurantkh/' },
   { name: 'Facebook', href: 'https://www.facebook.com/onemorerestaurant' },
   {
     name: 'TripAdvisor',
