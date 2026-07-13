@@ -25,9 +25,21 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:ital,wght@0,100..700;1,100..700&family=Moulpali&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+      body.app-preload #root {
+        opacity: 0;
+      }
+    </style>
+    <noscript>
+      <style>
+        body.app-preload #root {
+          opacity: 1;
+        }
+      </style>
+    </noscript>
     <!--app-head-->
   </head>
-  <body class="bg-[#faf9f5] text-[#1c2c1e] font-sans antialiased">
+  <body class="app-preload bg-[#faf9f5] text-[#1c2c1e] font-sans antialiased">
     <div id="root"><!--app-html--></div>
     <script type="module" src="/src/entry-client.tsx"></script>
   </body>
