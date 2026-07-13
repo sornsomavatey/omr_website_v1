@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import DishCard from '@/components/ui/dish-card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { getMenuData } from '@/lib/api';
@@ -35,6 +35,7 @@ import imgDish3 from '@/assets/home-v2/7ce88d9bf1af040daf36af037fc63627a61522c9.
 type MenuCategory = 'Breakfast' | 'Lunch' | 'Dinner' | 'Dessert' | 'Drinks';
 
 type MenuItem = {
+  id: string;
   name: string;
   category: string;
   desc: string;
@@ -62,6 +63,12 @@ const imageMapper: Record<string, string> = {
   '@/assets/home-v2/7ce88d9bf1af040daf36af037fc63627a61522c9.webp': imgDish3,
 };
 
+const MENU_LANGUAGE_TOGGLE_EVENT = 'omr:before-language-toggle';
+const MENU_SCROLL_ANCHOR_SELECTOR = '[data-menu-scroll-anchor="true"]';
+const MENU_SCROLL_TARGET_TOP = 180;
+
+const useIsomorphicLayoutEffect = typeof window === 'undefined' ? useEffect : useLayoutEffect;
+
 export default function Menu() {
   const { t, getObject, isKhmer } = useTranslation();
   const [menuDataState, setMenuDataState] = useState<any>(null);
@@ -72,6 +79,7 @@ export default function Menu() {
   const [isLotusVisible, setIsLotusVisible] = useState(false);
   const [revealedSections, setRevealedSections] = useState<Record<string, boolean>>({});
   const observerRef = useRef<IntersectionObserver | null>(null);
+  const pendingScrollRestoreRef = useRef<{ id: string; top: number } | null>(null);
 
   const categories: MenuCategory[] = ['Breakfast', 'Lunch', 'Dinner', 'Dessert', 'Drinks'];
 
@@ -158,6 +166,68 @@ export default function Menu() {
       observerRef.current?.disconnect();
     };
   }, [loading, error, menuDataState]);
+
+  useEffect(() => {
+    const captureCurrentMenuAnchor = () => {
+      const anchors = Array.from(
+        document.querySelectorAll<HTMLElement>(MENU_SCROLL_ANCHOR_SELECTOR)
+      );
+
+      const visibleAnchors = anchors
+        .map((element) => ({ element, rect: element.getBoundingClientRect() }))
+        .filter(({ rect }) => rect.bottom > MENU_SCROLL_TARGET_TOP && rect.top < window.innerHeight)
+        .sort(
+          (a, b) =>
+            Math.abs(a.rect.top - MENU_SCROLL_TARGET_TOP) -
+            Math.abs(b.rect.top - MENU_SCROLL_TARGET_TOP)
+        );
+
+      const anchor = visibleAnchors[0];
+      if (!anchor?.element.id) return;
+
+      pendingScrollRestoreRef.current = {
+        id: anchor.element.id,
+        top: anchor.rect.top,
+      };
+    };
+
+    window.addEventListener(MENU_LANGUAGE_TOGGLE_EVENT, captureCurrentMenuAnchor);
+
+    return () => {
+      window.removeEventListener(MENU_LANGUAGE_TOGGLE_EVENT, captureCurrentMenuAnchor);
+    };
+  }, []);
+
+  useIsomorphicLayoutEffect(() => {
+    if (!pendingScrollRestoreRef.current) return undefined;
+
+    const restoreScrollAnchor = () => {
+      const pendingAnchor = pendingScrollRestoreRef.current;
+      if (!pendingAnchor) return;
+
+      const anchor = document.getElementById(pendingAnchor.id);
+      if (!anchor) return;
+
+      const nextTop = anchor.getBoundingClientRect().top;
+      const delta = nextTop - pendingAnchor.top;
+      if (Math.abs(delta) > 1) {
+        window.scrollBy({ top: delta, left: 0, behavior: 'auto' });
+      }
+    };
+
+    restoreScrollAnchor();
+
+    const animationFrame = window.requestAnimationFrame(restoreScrollAnchor);
+    const timeout = window.setTimeout(() => {
+      restoreScrollAnchor();
+      pendingScrollRestoreRef.current = null;
+    }, 180);
+
+    return () => {
+      window.cancelAnimationFrame(animationFrame);
+      window.clearTimeout(timeout);
+    };
+  }, [isKhmer]);
 
   // Reveal sections and lotus background as they scroll into view
   useEffect(() => {
@@ -284,6 +354,7 @@ export default function Menu() {
 
     acc[category] = itemsList.map((item: any) => {
       return {
+        id: `${category.toLowerCase()}-${item.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`,
         name: isKhmer ? (item.name_kh || item.name) : item.name,
         category: isKhmer ? translatedCategoryNames[category] : category,
         desc: item.desc || '',
@@ -374,6 +445,7 @@ export default function Menu() {
             <div
               key={category}
               id={category.toLowerCase()}
+              data-menu-scroll-anchor="true"
               className={`menu-section section-animate w-full py-16 first:pt-4 last:pb-16 border-b border-[#dde0dc]/50 last:border-b-0${
                 revealedSections[category.toLowerCase()] ? ' section-visible' : ''
               }`}
@@ -386,7 +458,9 @@ export default function Menu() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-16 w-full text-left">
                 {menuItemsData[category].map((dish, index) => (
                   <DishCard
-                    key={`${dish.name}-${index}`}
+                    key={dish.id}
+                    id={`menu-dish-${dish.id}`}
+                    data-menu-scroll-anchor="true"
                     className="menu-dish-card"
                     index={index}
                     name={dish.name}
