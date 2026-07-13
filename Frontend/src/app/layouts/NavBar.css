@@ -647,8 +647,7 @@
 }
 
 .navbar-mobile-link:hover,
-.navbar-mobile-link:focus-visible,
-.navbar-mobile-link-active {
+.navbar-mobile-link:focus-visible {
   color: #fad795;
 
   transform: translateY(-1px);
@@ -837,8 +836,7 @@
   }
 
   .navbar-menu-desktop-compact .navbar-mobile-link:hover,
-  .navbar-menu-desktop-compact .navbar-mobile-link:focus-visible,
-  .navbar-menu-desktop-compact .navbar-mobile-link-active {
+  .navbar-menu-desktop-compact .navbar-mobile-link:focus-visible {
     color: #21301c;
     background: rgba(107, 145, 88, 0.1);
     transform: none;

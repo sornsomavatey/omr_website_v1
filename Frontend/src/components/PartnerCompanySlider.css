@@ -21,6 +21,9 @@
   overscroll-behavior-inline: contain;
   scrollbar-width: none;
   touch-action: pan-x;
+  -webkit-overflow-scrolling: touch;
+  cursor: grab;
+  user-select: none;
   -webkit-mask-image: linear-gradient(
     to right,
     transparent,
@@ -39,6 +42,10 @@
 
 .partner-slider-viewport::-webkit-scrollbar {
   display: none;
+}
+
+.partner-slider-viewport:active {
+  cursor: grabbing;
 }
 
 .partner-slider-track {

@@ -193,6 +193,7 @@ export default function Navbar() {
   }, [isMenuPage, mobileMenuOpen, scrolled, setMobileMenuOpen]);
 
   const toggleLanguage = () => {
+    window.dispatchEvent(new Event('omr:before-language-toggle'));
     setLanguage(language === 'EN' ? 'KH' : 'EN');
   };
 

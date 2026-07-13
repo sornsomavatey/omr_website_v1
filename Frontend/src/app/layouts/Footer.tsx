@@ -60,6 +60,8 @@ export default function Footer() {
                 src={whiteLogo}
                 alt={t('footer.logoAlt')}
                 className="site-footer-logo-image"
+                width={128}
+                height={197}
                 draggable={false}
               />
             </Link>

@@ -20,6 +20,7 @@ export interface DishCardProps extends React.HTMLAttributes<HTMLDivElement> {
   index?: number
   onActionClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void
   showAction?: boolean
+  showCategory?: boolean
 }
 
 const cardContainerRadius = {
@@ -44,6 +45,7 @@ export function DishCard({
   index,
   onActionClick,
   showAction = true,
+  showCategory = true,
   ...props
 }: DishCardProps) {
   const { isKhmer } = useTranslation()
@@ -75,11 +77,11 @@ export function DishCard({
           <ChefBadge className="mb-3">
             {typeof badge === "string" ? badge : undefined}
           </ChefBadge>
-        ) : (
+        ) : showCategory ? (
           <span className="text-[#6b9158] font-sans text-[11px] font-bold uppercase tracking-[0.15em] mb-2 block">
             {category}
           </span>
-        )}
+        ) : null}
 
         <h3 className="dish-card-title font-serif text-[32px] text-[#212d1b] font-medium tracking-wide leading-tight mb-3">
           {name}

@@ -124,22 +124,29 @@ function HeroSection({ hero }: { hero: any }) {
 
       <div className="relative z-10 text-center text-white max-w-[1260px] px-6 pt-32">
         <h1 className="page-hero-title page-hero-title--home font-serif text-5xl md:text-7xl lg:text-[80px] leading-tight mb-8 font-normal tracking-wide drop-shadow-lg">
-          {t('home.hero.titleLine1')}
+          {t('home.hero.titleLine1', undefined, 'Experience Authentic')}
           <br />
-          <span className="text-[#E7F6DF]">{t('home.hero.titleHighlight')}</span>
+          <span className="text-[#E7F6DF]">
+            {t('home.hero.titleHighlight', undefined, 'Khmer Cuisine')}
+          </span>
         </h1>
 
         <p className="text-white/80 text-lg md:text-xl font-sans font-light max-w-2xl mx-auto leading-relaxed mb-12">
-          {t('home.hero.description')}
+          {t(
+            'home.hero.description',
+            undefined,
+            'Traditional Cambodian flavors served in a modern dining experience.',
+          )}
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
           <Link to="/reservations" className="custom-btn-primary">
-            {t('home.hero.reserveButton')}
+            {t('home.hero.reserveButton', undefined, 'Reserve a Table')}
           </Link>
 
           <Link to="/menu" className="custom-btn-secondary">
-            {t('home.hero.menuButton')} <ArrowRight className="w-4 h-4" />
+            {t('home.hero.menuButton', undefined, 'Explore Menu')}{' '}
+            <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
       </div>
@@ -148,9 +155,9 @@ function HeroSection({ hero }: { hero: any }) {
         type="button"
         onClick={handleScrollDown}
         className="hero-scroll-button"
-        aria-label={t('home.hero.scrollAria')}
+        aria-label={t('home.hero.scrollAria', undefined, 'Scroll to featured cuisine section')}
       >
-        <span>{t('home.hero.scroll')}</span>
+        <span>{t('home.hero.scroll', undefined, 'SCROLL')}</span>
 
         <svg
           className="hero-scroll-icon"

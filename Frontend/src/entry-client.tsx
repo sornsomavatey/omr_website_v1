@@ -12,7 +12,3 @@ hydrateRoot(
     </BrowserRouter>
   </React.StrictMode>
 );
-
-requestAnimationFrame(() => {
-  document.getElementById('root')?.style.removeProperty('visibility');
-});

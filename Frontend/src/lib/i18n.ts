@@ -4,6 +4,7 @@ type Dictionary = Record<string, unknown>;
 type TranslationParams = Record<string, string | number>;
 
 const cache: Partial<Record<Language, Dictionary>> = {};
+const pendingLoads: Partial<Record<Language, Promise<Dictionary>>> = {};
 
 const languageFiles: Record<Language, string> = {
   EN: '/locales/en.json',
@@ -15,18 +16,29 @@ export async function loadDictionary(language: Language): Promise<Dictionary> {
     return cache[language]!;
   }
 
-  const cacheBuster = import.meta.env.DEV ? String(Date.now()) : '1.0.0';
-  const response = await fetch(`${languageFiles[language]}?v=${cacheBuster}`);
-
-  if (!response.ok) {
-    throw new Error(`Failed to load ${language} translation file`);
+  if (pendingLoads[language]) {
+    return pendingLoads[language]!;
   }
 
-  const dictionary = (await response.json()) as Dictionary;
+  const cacheBuster = import.meta.env.DEV ? String(Date.now()) : __APP_BUILD_VERSION__;
+  const load = fetch(`${languageFiles[language]}?v=${cacheBuster}`)
+    .then(async (response) => {
+      if (!response.ok) {
+        throw new Error(`Failed to load ${language} translation file`);
+      }
 
-  cache[language] = dictionary;
+      const dictionary = (await response.json()) as Dictionary;
+      cache[language] = dictionary;
 
-  return dictionary;
+      return dictionary;
+    })
+    .finally(() => {
+      delete pendingLoads[language];
+    });
+
+  pendingLoads[language] = load;
+
+  return load;
 }
 
 function getNestedValue(source: unknown, key: string): unknown {
