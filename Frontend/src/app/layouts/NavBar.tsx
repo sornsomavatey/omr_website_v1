@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import whiteLogo from '@/assets/omr_logo_white.webp';
@@ -80,6 +80,7 @@ export default function Navbar() {
 
   const [scrolled, setScrolled] = useState(false);
   const [showLanguageFlag, setShowLanguageFlag] = useState(false);
+  const mobileMenuRef = useRef<HTMLDivElement | null>(null);
 
   const isHomePage = location.pathname === '/';
   const isToulKorkPage =
@@ -180,15 +181,25 @@ export default function Navbar() {
       }
     };
 
+    const handlePointerDown = (event: PointerEvent) => {
+      const target = event.target;
+
+      if (target instanceof Node && !mobileMenuRef.current?.contains(target)) {
+        setMobileMenuOpen(false);
+      }
+    };
+
     if (!isDesktopCompactDropdown) {
       document.body.style.overflow = 'hidden';
     }
 
     document.addEventListener('keydown', handleEscape);
+    document.addEventListener('pointerdown', handlePointerDown, true);
 
     return () => {
       document.body.style.overflow = previousOverflow;
       document.removeEventListener('keydown', handleEscape);
+      document.removeEventListener('pointerdown', handlePointerDown, true);
     };
   }, [isMenuPage, mobileMenuOpen, scrolled, setMobileMenuOpen]);
 
@@ -263,7 +274,7 @@ export default function Navbar() {
             </button>
           </div>
 
-          <div className="navbar-mobile-wrapper">
+          <div className="navbar-mobile-wrapper" ref={mobileMenuRef}>
             <button
               type="button"
               className={`navbar-mobile-menu-button ${mobileMenuOpen ? 'navbar-mobile-menu-button-open' : ''
