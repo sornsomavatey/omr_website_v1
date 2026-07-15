@@ -141,9 +141,9 @@
       "next": "Next space",
       "items": {
         "family": {
-          "name": "Family Dining Hall",
-          "tag": "Family Friendly",
-          "description": "A welcoming dining space for relaxed meals, celebrations, and everyday gatherings."
+          "name": "Indoor Dining Space",
+          "tag": "Signature Ambience",
+          "description": "A beautifully designed indoor dining area featuring our signature wooden wave architecture, offering a comfortable and stylish setting for your meals."
         },
         "privateRoom": {
           "name": "Private Dining Room",
@@ -161,9 +161,9 @@
           "description": "A comfortable area where families can enjoy meals while children feel welcome and safe."
         },
         "event": {
-          "name": "Event Space",
-          "tag": "Celebrations",
-          "description": "A flexible space for group events, ceremonies, corporate meals, and private gatherings."
+          "name": "Outdoor Dining Space",
+          "tag": "Fresh Air",
+          "description": "A beautifully landscaped open-air garden terrace, ideal for al fresco dining and elegant outdoor dining."
         }
       }
     },

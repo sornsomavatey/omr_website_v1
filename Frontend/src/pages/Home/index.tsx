@@ -113,20 +113,16 @@ function HeroSection({ hero }: { hero: any }) {
       setCurrentIndex((prev) =>
         prev < heroSlides.length ? prev + 1 : prev,
       );
-    }, 4000);
+    }, 3000);
 
-    // Starting a fresh timeout after a dot click gives the user a full slide
-    // interval before autoplay continues.
+    
     return () => window.clearTimeout(timer);
   }, [currentIndex]);
 
   useEffect(() => {
     if (currentIndex !== heroSlides.length) return;
 
-    // The final track item is a copy of slide one. Once it arrives, jump to
-    // the real slide one without animation, then restore forward animation.
-    // A timer is used instead of transitionend because some browsers skip
-    // that event when reduced-motion is enabled or a background tab resumes.
+    
     const resetTimer = window.setTimeout(() => {
       setIsTransitionEnabled(false);
       setCurrentIndex(0);

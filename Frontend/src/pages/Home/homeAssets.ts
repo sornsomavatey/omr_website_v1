@@ -1,6 +1,10 @@
 import svgPaths from '@/assets/svgPaths';
 
 // Local assets
+import imgSpaceOutdoor from '@/assets/compressed_outdoor.webp';
+import imgSpaceKidCorner from '@/assets/compressed_kid corner.webp';
+import imgSpacePrivateDining from '@/assets/compressed_Private Dining room.webp';
+import imgSpaceBusiness from '@/assets/compressed_Business.webp';
 import imgHeroBg1 from '@/assets/home-v2/43310dd2158ca5c7f7d098abf280dc14124d42de.webp';
 import imgHeroBg2 from '@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.webp';
 
@@ -123,4 +127,8 @@ export const imageMap: Record<string, string> = {
   '@/assets/Food/Lunch and Dinner/stir-fried-bokchoy.webp': imgFoodStirFriedBokchoy,
   '@/assets/Food/Lunch and Dinner/fried-fermented-egg.webp': imgFoodFriedFermentedEgg,
   '@/assets/Food/Lunch and Dinner/pan-fried-fish-paste-enhanced.png': imgFoodPanFriedFishPaste,
+  '@/assets/compressed_Business.webp': imgSpaceBusiness,
+  '@/assets/compressed_Private Dining room.webp': imgSpacePrivateDining,
+  '@/assets/compressed_kid corner.webp': imgSpaceKidCorner,
+  '@/assets/compressed_outdoor.webp': imgSpaceOutdoor,
 };

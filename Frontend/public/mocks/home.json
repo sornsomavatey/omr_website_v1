@@ -1,7 +1,7 @@
 {
   "hero": {
     "title": "Experience Authentic Khmer Cuisine",
-    "subtitle": "Traditional Cambodian flavors served in a modern dining experience. Crafted with passion, fresh local organic produce, and heirloom recipes.",
+    "subtitle": "Traditional Cambodian flavors served in a modern dining experience.",
     "cta_reserve": "Reserve a Table",
     "cta_menu": "Explore Menu",
     "backgroundImage": "@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.webp"
@@ -118,25 +118,25 @@
       "name": "Private Room",
       "tag": "8–20 guests · AV ready",
       "desc": "An intimate enclosed dining room for 8–20, with dedicated staff, custom menus and AV capabilities.",
-      "img": "@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.webp"
+      "img": "@/assets/compressed_Private Dining room.webp"
     },
     {
       "name": "Business Meeting",
       "tag": "Full-day packages available",
       "desc": "Quiet, professional atmosphere with private tables, power outlets, screen connectivity and curated lunch sets.",
-      "img": "@/assets/home-v2/43310dd2158ca5c7f7d098abf280dc14124d42de.webp"
+      "img": "@/assets/compressed_Business.webp"
     },
     {
       "name": "Kid Zone",
       "tag": "Ages 2–12 · Supervised",
       "desc": "A dedicated play corner with gentle Khmer-inspired activities, kid-friendly menu and attentive family hosts.",
-      "img": "@/assets/home-v2/e8f4b56e423777f3f6c3df39c6ef78914b278e17.webp"
+      "img": "@/assets/compressed_kid corner.webp"
     },
     {
       "name": "Event & Gala",
       "tag": "Up to 150 guests",
       "desc": "Expansive layout options with custom decor, state-of-the-art sound systems, and dedicated banquet planners.",
-      "img": "@/assets/home-v2/31b0910d38c033be0ce5292cf4a1d68688308c6b.webp"
+      "img": "@/assets/compressed_outdoor.webp"
     }
   ],
   "branches": [
