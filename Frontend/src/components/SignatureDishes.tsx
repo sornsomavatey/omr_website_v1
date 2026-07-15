@@ -5,6 +5,19 @@ import { useTranslation } from '@/hooks/useTranslation';
 
 export default function SignatureDishes({ dishes }: { dishes: SignatureDish[] }) {
   const { t } = useTranslation();
+  const collageDishOrder = [
+    'kuyteavOneMore',
+    'hainanChickenRice',
+    'kuyteavMincedPork',
+    'lortchaEgg',
+    'porkBloodPorridge',
+    'fishAmokCoconut',
+    'sourSeafoodSoup',
+    'panFriedFishPaste',
+  ];
+  const collageDishes = collageDishOrder
+    .map((key) => dishes.find((dish) => dish.key === key))
+    .filter((dish): dish is SignatureDish => Boolean(dish));
 
   return (
     <section id="menu" className="featured-cuisine-section">
@@ -18,7 +31,7 @@ export default function SignatureDishes({ dishes }: { dishes: SignatureDish[] })
 
         <div className="featured-cuisine-collage">
           {Array.from({ length: 8 }).map((_, index) => {
-            const dish = dishes[index % dishes.length];
+            const dish = collageDishes[index % collageDishes.length];
             const translatedName = dish?.key
               ? t(`home.signature.items.${dish.key}.name`, undefined, dish.name)
               : dish?.name;

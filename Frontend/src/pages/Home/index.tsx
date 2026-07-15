@@ -45,6 +45,12 @@ import imgTkEdited from '@/assets/compressed_OMR TK.webp';
 
 import SectionHeader from '@/components/SectionHeader';
 
+const heroSlides = [
+  { src: imgBkEdited, alt: 'Boeung Kak Branch' },
+  { src: imgTkEdited, alt: 'Toul Kork Branch' },
+  { src: imgHeroBg1, alt: 'Family Dining Hall' },
+];
+
 const homepagePartners: PartnerCompany[] = [
   { id: 'amret', name: 'Amret Plc', logo: '/assets/partners/image45.webp' },
   { id: 'cisco', name: 'CISCO', logo: '/assets/partners/image2.webp' },
@@ -98,14 +104,45 @@ const homepagePartners: PartnerCompany[] = [
 function HeroSection({ hero }: { hero: any }) {
   const { t } = useTranslation();
   const [currentIndex, setCurrentIndex] = useState(0);
-  const images = [imgBkEdited, imgTkEdited, imgHeroBg1];
+  const [isTransitionEnabled, setIsTransitionEnabled] = useState(true);
+  const loopedSlides = [...heroSlides, heroSlides[0]];
+  const activeDotIndex = currentIndex % heroSlides.length;
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % images.length);
-    }, 6000);
-    return () => clearInterval(timer);
-  }, [currentIndex, images.length]);
+    const timer = window.setTimeout(() => {
+      setCurrentIndex((prev) =>
+        prev < heroSlides.length ? prev + 1 : prev,
+      );
+    }, 4000);
+
+    // Starting a fresh timeout after a dot click gives the user a full slide
+    // interval before autoplay continues.
+    return () => window.clearTimeout(timer);
+  }, [currentIndex]);
+
+  useEffect(() => {
+    if (currentIndex !== heroSlides.length) return;
+
+    // The final track item is a copy of slide one. Once it arrives, jump to
+    // the real slide one without animation, then restore forward animation.
+    // A timer is used instead of transitionend because some browsers skip
+    // that event when reduced-motion is enabled or a background tab resumes.
+    const resetTimer = window.setTimeout(() => {
+      setIsTransitionEnabled(false);
+      setCurrentIndex(0);
+
+      window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(() => setIsTransitionEnabled(true));
+      });
+    }, 1150);
+
+    return () => window.clearTimeout(resetTimer);
+  }, [currentIndex]);
+
+  const handleDotClick = (index: number) => {
+    setIsTransitionEnabled(true);
+    setCurrentIndex(index);
+  };
 
   const handleScrollDown = () => {
     const targetSection = document.getElementById('menu');
@@ -121,29 +158,24 @@ function HeroSection({ hero }: { hero: any }) {
   return (
     <section
       id="home-hero"
-      className="relative w-full min-h-screen flex items-center justify-center bg-black overflow-hidden"
+      className="home-hero relative w-full min-h-screen flex items-center justify-center bg-black overflow-hidden"
     >
-      <div className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-hidden">
+      <div className="home-hero-slider absolute inset-0 w-full h-full pointer-events-none z-0 overflow-hidden">
         <div
-          className="flex h-full flex-row"
+          className="home-hero-slider-track flex h-full flex-row"
           style={{
-            width: `${images.length * 100}vw`,
-            transform: `translateX(-${currentIndex * 100}vw)`,
-            transition: 'transform 1.4s cubic-bezier(0.16, 1, 0.3, 1)',
+            width: `${loopedSlides.length * 100}%`,
+            transform: `translate3d(-${currentIndex * (100 / loopedSlides.length)}%, 0, 0)`,
+            transition: isTransitionEnabled ? undefined : 'none',
           }}
         >
-          {images.map((img, idx) => (
+          {loopedSlides.map((slide, idx) => (
             <img
-              key={idx}
-              alt={
-                idx === 0
-                  ? "Boeung Kak Branch"
-                  : idx === 1
-                  ? "Toul Kork Branch"
-                  : "Family Dining Hall"
-              }
-              className="w-[100vw] h-full object-cover opacity-45 flex-shrink-0"
-              src={img}
+              key={`${slide.src}-${idx}`}
+              alt={slide.alt}
+              className="home-hero-slide h-full object-cover opacity-45 flex-shrink-0"
+              src={slide.src}
+              style={{ flexBasis: `${100 / loopedSlides.length}%` }}
             />
           ))}
         </div>
@@ -151,24 +183,7 @@ function HeroSection({ hero }: { hero: any }) {
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-black/60 pointer-events-none" />
       </div>
 
-      {/* Slider Indicators */}
-      <div className="absolute bottom-28 left-0 right-0 flex justify-center gap-3 z-20">
-        {images.map((_, idx) => (
-          <button
-            key={idx}
-            type="button"
-            onClick={() => setCurrentIndex(idx)}
-            className={`w-2.5 h-2.5 rounded-full transition-all duration-500 cursor-pointer ${
-              currentIndex === idx
-                ? 'bg-white w-7'
-                : 'bg-white/30 hover:bg-white/60'
-            }`}
-            aria-label={`Go to slide ${idx + 1}`}
-          />
-        ))}
-      </div>
-
-      <div className="relative z-10 text-center text-white max-w-[1260px] px-6 pt-32">
+      <div className="home-hero-content relative z-10 text-center text-white max-w-[1260px] px-6 pt-32">
         <h1 className="page-hero-title page-hero-title--home font-serif text-5xl md:text-7xl lg:text-[80px] leading-tight mb-8 font-normal tracking-wide drop-shadow-lg">
           {t('home.hero.titleLine1', undefined, 'Experience Authentic')}
           <br />
@@ -194,6 +209,19 @@ function HeroSection({ hero }: { hero: any }) {
             {t('home.hero.menuButton', undefined, 'Explore Menu')}{' '}
             <ArrowRight className="w-4 h-4" />
           </Link>
+        </div>
+
+        <div className="home-hero-dots" role="group" aria-label="Choose hero slide">
+          {heroSlides.map((_, idx) => (
+            <button
+              key={idx}
+              type="button"
+              onClick={() => handleDotClick(idx)}
+              className={activeDotIndex === idx ? 'is-active' : ''}
+              aria-label={`Go to slide ${idx + 1}`}
+              aria-current={activeDotIndex === idx ? 'true' : undefined}
+            />
+          ))}
         </div>
       </div>
 

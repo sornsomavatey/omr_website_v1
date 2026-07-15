@@ -15,6 +15,7 @@ import imgFoodSourSeafoodSoup from '@/assets/Food/Lunch and Dinner/ß₧ƒß₧�
 import imgFoodGrilledChickenSiemreap from '@/assets/Food/Lunch and Dinner/grilled-chicken-siemreap.webp';
 import imgFoodStirFriedBokchoy from '@/assets/Food/Lunch and Dinner/stir-fried-bokchoy.webp';
 import imgFoodFriedFermentedEgg from '@/assets/Food/Lunch and Dinner/fried-fermented-egg.webp';
+import imgFoodPanFriedFishPaste from '@/assets/Food/Lunch and Dinner/pan-fried-fish-paste-enhanced.png';
 
 import imgDish1 from '@/assets/home-v2/36191a3943135f3542a0fe8b80adee304f122115.webp';
 import imgDish2 from '@/assets/home-v2/35b5b5843bc3a879390cc05c8e6b33eae70c2a8a.webp';
@@ -121,4 +122,5 @@ export const imageMap: Record<string, string> = {
   '@/assets/Food/Lunch and Dinner/grilled-chicken-siemreap.webp': imgFoodGrilledChickenSiemreap,
   '@/assets/Food/Lunch and Dinner/stir-fried-bokchoy.webp': imgFoodStirFriedBokchoy,
   '@/assets/Food/Lunch and Dinner/fried-fermented-egg.webp': imgFoodFriedFermentedEgg,
+  '@/assets/Food/Lunch and Dinner/pan-fried-fish-paste-enhanced.png': imgFoodPanFriedFishPaste,
 };

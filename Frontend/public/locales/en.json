@@ -107,6 +107,12 @@
           "description": "Traditional hot and sour seafood soup loaded with prawns, mushrooms and fragrant herbs.",
           "badge": "Spicy"
         },
+        "panFriedFishPaste": {
+          "name": "Pan-fried Fish Paste with Fresh Vegetables",
+          "category": "LUNCH · SIGNATURE",
+          "description": "Golden pan-fried fish paste served with a colorful selection of crisp fresh vegetables.",
+          "badge": "Chef's Choice"
+        },
         "grilledChickenSiemReap": {
           "name": "Siem Reap Grilled Chicken",
           "category": "LUNCH · SPECIAL",
