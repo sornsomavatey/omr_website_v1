@@ -100,7 +100,7 @@ export default function ToulKork() {
       {/* 1. HERO BANNER */}
       <section id="toulkork-hero" className="tk-hero">
         <div className="tk-hero-bg">
-          <img src={imgBranchToulKork} alt={isKhmer ? "អគារភោជនីយដ្ឋានវ័នម័រ ទួលគោក" : "One More Restaurant Toul Kork Building"} className="tk-hero-image" />
+          <img src={imgBranchToulKork} alt={isKhmer ? "អគារភោជនីយដ្ឋានវ័នម៉រ ទួលគោក" : "One More Restaurant Toul Kork Building"} className="tk-hero-image" />
           <div className="tk-hero-overlay" />
         </div>
 
@@ -131,7 +131,7 @@ export default function ToulKork() {
 
         <div className="tk-hero-content">
           <h1 className="page-hero-title tk-hero-title">
-            {isKhmer ? <><span className="md:whitespace-nowrap">ភោជនីយដ្ឋាន វ័នម័រ</span><br />ទួលគោក</> : <><span className="md:whitespace-nowrap">One More Restaurant</span><br />Toul Kork</>}
+            {isKhmer ? <><span className="md:whitespace-nowrap">ភោជនីយដ្ឋាន វ័នម៉រ</span><br />ទួលគោក</> : <><span className="md:whitespace-nowrap">One More Restaurant</span><br />Toul Kork</>}
           </h1>
           <p className="tk-hero-desc">
             {t('branchDetails.hero.toulKork.desc')}
@@ -389,7 +389,7 @@ export default function ToulKork() {
         <div className="tk-visit-container">
           {/* Left: Map image */}
           <div className="tk-visit-map">
-            <img src={locationImg} alt={isKhmer ? "ផែនទីភោជនីយដ្ឋាន វ័នម័រ ទួលគោក" : "Map of One More Restaurant Toul Kork"} className="bk-map-img" />
+            <img src={locationImg} alt={isKhmer ? "ផែនទីភោជនីយដ្ឋាន វ័នម៉រ ទួលគោក" : "Map of One More Restaurant Toul Kork"} className="bk-map-img" />
           </div>
 
           {/* Right: Contact details */}

@@ -8,51 +8,93 @@
   },
   "signatureDishes": [
     {
-      "name": "Amok Trey",
-      "category": "SIGNATURE · MAIN COURSE",
-      "desc": "A timeless Cambodian treasure — tender river fish steamed within a banana leaf parcel, enveloped in a velvety coconut-lemongrass curry mousse, perfumed with galangal and kaffir lime.",
-      "img": "@/assets/home-v2/36191a3943135f3542a0fe8b80adee304f122115.webp",
+      "key": "kuyteavOneMore",
+      "name": "One More Special Kuyteav",
+      "category": "BREAKFAST · SOUP",
+      "desc": "Rich bone broth with rice noodles, sliced meats, meatballs, fresh herbs and crisp bean sprouts.",
+      "img": "@/assets/Food/Breakfast/special-kuyteav.webp",
+      "price": "$18",
+      "badge": "Chef's Choice ✦"
+    },
+    {
+      "key": "kuyteavMincedPork",
+      "name": "Minced Pork Kuyteav",
+      "category": "BREAKFAST · SOUP",
+      "desc": "Flavorful rice noodles in pork broth topped with perfectly seasoned minced pork and fresh chives.",
+      "img": "@/assets/Food/Breakfast/minced-pork-kuyteav.webp",
+      "price": "$14",
+      "badge": "Chef's Choice ✦"
+    },
+    {
+      "key": "hainanChickenRice",
+      "name": "Hainan Chicken Thigh Rice",
+      "category": "BREAKFAST · CLASSIC",
+      "desc": "Fragrant seasoned rice served with crispy golden-fried chicken thigh and homemade dipping sauce.",
+      "img": "@/assets/Food/Breakfast/chicken-thigh-rice.webp",
+      "price": "$16",
+      "badge": "Chef's Choice ✦"
+    },
+    {
+      "key": "porkBloodPorridge",
+      "name": "Pork Blood Porridge",
+      "category": "BREAKFAST · COMFORT",
+      "desc": "Hearty and comforting rice porridge simmered with pork blood, offal, ginger and green scallions.",
+      "img": "@/assets/Food/Breakfast/pork-blood-porridge.webp",
+      "price": "$15",
+      "badge": "Chef's Choice ✦"
+    },
+    {
+      "key": "lortchaEgg",
+      "name": "Lort Cha with Beef & Egg",
+      "category": "BREAKFAST · PAN-FRIED",
+      "desc": "Stir-fried pin-noodles with tender beef, chives and bean sprouts, topped with a fried egg.",
+      "img": "@/assets/Food/Breakfast/lortcha-egg.webp",
+      "price": "$16",
+      "badge": "Chef's Choice ✦"
+    },
+    {
+      "key": "fishAmokCoconut",
+      "name": "Fish Amok in Coconut",
+      "category": "LUNCH · SIGNATURE",
+      "desc": "Tender river fish fillets steamed in a rich, kaffir lime infused lemongrass curry mousse inside a fresh young coconut.",
+      "img": "@/assets/Food/Lunch and Dinner/fish-amok-coconut.webp",
       "price": "$24",
       "badge": "Chef's Choice ✦"
     },
     {
-      "name": "Amok Trey",
-      "category": "SIGNATURE · MAIN COURSE",
-      "desc": "A timeless Cambodian treasure — tender river fish steamed within a banana leaf parcel, enveloped in a velvety coconut-lemongrass curry mousse, perfumed with galangal and kaffir lime.",
-      "img": "@/assets/home-v2/35b5b5843bc3a879390cc05c8e6b33eae70c2a8a.webp",
-      "price": "$24",
+      "key": "sourSeafoodSoup",
+      "name": "Sour Seafood Soup",
+      "category": "LUNCH · SEAFOOD",
+      "desc": "Traditional hot and sour seafood soup loaded with prawns, mushrooms and fragrant herbs.",
+      "img": "@/assets/Food/Lunch and Dinner/ß₧ƒß₧ÿßƒÆß₧¢ß₧Åß₧╗ßƒåß₧Öß₧╗ßƒåß₧╢ß₧éßƒÆß₧Üß₧┐ß₧äß₧ƒß₧ÿß₧╗ß₧æßƒÆß₧Ü.webp",
+      "price": "$19",
       "badge": "Chef's Choice ✦"
     },
     {
-      "name": "Amok Trey",
-      "category": "SIGNATURE · MAIN COURSE",
-      "desc": "A timeless Cambodian treasure — tender river fish steamed within a banana leaf parcel, enveloped in a velvety coconut-lemongrass curry mousse, perfumed with galangal and kaffir lime.",
-      "img": "@/assets/home-v2/7ce88d9bf1af040daf36af037fc63627a61522c9.webp",
-      "price": "$24",
+      "key": "grilledChickenSiemReap",
+      "name": "Siem Reap Grilled Chicken",
+      "category": "LUNCH · SPECIAL",
+      "desc": "Whole local chicken marinated in traditional Cambodian herbs and slow-grilled to smoky perfection.",
+      "img": "@/assets/Food/Lunch and Dinner/grilled-chicken-siemreap.webp",
+      "price": "$22",
       "badge": "Chef's Choice ✦"
     },
     {
-      "name": "Amok Trey",
-      "category": "SIGNATURE · MAIN COURSE",
-      "desc": "A timeless Cambodian treasure — tender river fish steamed within a banana leaf parcel, enveloped in a velvety coconut-lemongrass curry mousse, perfumed with galangal and kaffir lime.",
-      "img": "@/assets/home-v2/36191a3943135f3542a0fe8b80adee304f122115.webp",
-      "price": "$24",
+      "key": "stirFriedBokchoy",
+      "name": "Stir-fried Bok Choy",
+      "category": "LUNCH · VEGETABLE",
+      "desc": "Crisp bok choy greens stir-fried in a roaring wok with garlic and savory oyster sauce.",
+      "img": "@/assets/Food/Lunch and Dinner/stir-fried-bokchoy.webp",
+      "price": "$12",
       "badge": "Chef's Choice ✦"
     },
     {
-      "name": "Amok Trey",
-      "category": "SIGNATURE · MAIN COURSE",
-      "desc": "A timeless Cambodian treasure — tender river fish steamed within a banana leaf parcel, enveloped in a velvety coconut-lemongrass curry mousse, perfumed with galangal and kaffir lime.",
-      "img": "@/assets/home-v2/35b5b5843bc3a879390cc05c8e6b33eae70c2a8a.webp",
-      "price": "$24",
-      "badge": "Chef's Choice ✦"
-    },
-    {
-      "name": "Amok Trey",
-      "category": "SIGNATURE · MAIN COURSE",
-      "desc": "A timeless Cambodian treasure — tender river fish steamed within a banana leaf parcel, enveloped in a velvety coconut-lemongrass curry mousse, perfumed with galangal and kaffir lime.",
-      "img": "@/assets/home-v2/7ce88d9bf1af040daf36af037fc63627a61522c9.webp",
-      "price": "$24",
+      "key": "friedFermentedEgg",
+      "name": "Fried Egg with Salted Fish",
+      "category": "LUNCH · COMFORT",
+      "desc": "Traditional Cambodian dish of eggs fried with aromatic salted fish (Trey Pror-ma) and pork.",
+      "img": "@/assets/Food/Lunch and Dinner/fried-fermented-egg.webp",
+      "price": "$15",
       "badge": "Chef's Choice ✦"
     }
   ],

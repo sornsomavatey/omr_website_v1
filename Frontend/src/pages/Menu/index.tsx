@@ -18,7 +18,7 @@ import imgBreakfast5 from '@/assets/Food/Breakfast/pork-bone-soup.webp';
 import imgBreakfast6 from '@/assets/Food/Breakfast/meatball-kuyteav.webp';
 
 // Lunch & Dinner assets
-import imgLunch1 from '@/assets/Food/Lunch and Dinner/fish-amok-coconut.webp';
+import imgLunch1 from '@/assets/Food/Lunch and Dinner/compressed_ហហ្មុក.webp';
 import imgLunch2 from '@/assets/Food/Lunch and Dinner/banana-blossom-chicken-salad.webp';
 import imgLunch3 from '@/assets/Food/Lunch and Dinner/stir-fried-cockles-tamarind.webp';
 import imgLunch4 from '@/assets/Food/Lunch and Dinner/britian-loklak.webp';

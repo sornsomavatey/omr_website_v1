@@ -40,6 +40,9 @@ import type {
 
 import './index.css';
 
+import imgBkEdited from '@/assets/compressed_OMR Bk edited.webp';
+import imgTkEdited from '@/assets/compressed_OMR TK.webp';
+
 import SectionHeader from '@/components/SectionHeader';
 
 const homepagePartners: PartnerCompany[] = [
@@ -94,6 +97,16 @@ const homepagePartners: PartnerCompany[] = [
 
 function HeroSection({ hero }: { hero: any }) {
   const { t } = useTranslation();
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const images = [imgBkEdited, imgTkEdited, imgHeroBg1];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % images.length);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, [currentIndex, images.length]);
+
   const handleScrollDown = () => {
     const targetSection = document.getElementById('menu');
 
@@ -105,21 +118,54 @@ function HeroSection({ hero }: { hero: any }) {
     });
   };
 
-  const bgImage = imageMap[hero.backgroundImage] || imgHeroBg2;
-
   return (
     <section
       id="home-hero"
       className="relative w-full min-h-screen flex items-center justify-center bg-black overflow-hidden"
     >
-      <div className="absolute inset-0 w-full h-full pointer-events-none z-0">
-        <img
-          alt=""
-          className="absolute inset-0 w-full h-full object-cover opacity-35 mix-blend-overlay"
-          src={bgImage}
-        />
+      <div className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-hidden">
+        <div
+          className="flex h-full flex-row"
+          style={{
+            width: `${images.length * 100}vw`,
+            transform: `translateX(-${currentIndex * 100}vw)`,
+            transition: 'transform 1.4s cubic-bezier(0.16, 1, 0.3, 1)',
+          }}
+        >
+          {images.map((img, idx) => (
+            <img
+              key={idx}
+              alt={
+                idx === 0
+                  ? "Boeung Kak Branch"
+                  : idx === 1
+                  ? "Toul Kork Branch"
+                  : "Family Dining Hall"
+              }
+              className="w-[100vw] h-full object-cover opacity-45 flex-shrink-0"
+              src={img}
+            />
+          ))}
+        </div>
 
-        <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/20 to-black/45" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-black/60 pointer-events-none" />
+      </div>
+
+      {/* Slider Indicators */}
+      <div className="absolute bottom-28 left-0 right-0 flex justify-center gap-3 z-20">
+        {images.map((_, idx) => (
+          <button
+            key={idx}
+            type="button"
+            onClick={() => setCurrentIndex(idx)}
+            className={`w-2.5 h-2.5 rounded-full transition-all duration-500 cursor-pointer ${
+              currentIndex === idx
+                ? 'bg-white w-7'
+                : 'bg-white/30 hover:bg-white/60'
+            }`}
+            aria-label={`Go to slide ${idx + 1}`}
+          />
+        ))}
       </div>
 
       <div className="relative z-10 text-center text-white max-w-[1260px] px-6 pt-32">

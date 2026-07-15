@@ -65,23 +65,65 @@
       "description": "Each dish tells a story of Cambodia's culinary heritage, crafted with heirloom recipes and seasonal ingredients.",
       "viewAll": "View All Menu",
       "items": {
-        "amok": {
-          "name": "Royal Fish Amok",
-          "category": "Traditional Khmer",
-          "description": "A fragrant steamed fish curry with coconut cream, kroeung paste, and banana leaf aroma.",
+        "kuyteavOneMore": {
+          "name": "One More Special Kuyteav",
+          "category": "BREAKFAST · SOUP",
+          "description": "Rich bone broth with rice noodles, sliced meats, meatballs, fresh herbs and crisp bean sprouts.",
           "badge": "Chef's Choice"
         },
-        "lokLak": {
-          "name": "Beef Lok Lak",
-          "category": "House Favorite",
-          "description": "Tender marinated beef served with fresh greens, rice, and a bright Kampot pepper lime sauce.",
+        "kuyteavMincedPork": {
+          "name": "Minced Pork Kuyteav",
+          "category": "BREAKFAST · SOUP",
+          "description": "Flavorful rice noodles in pork broth topped with perfectly seasoned minced pork and fresh chives.",
+          "badge": "Popular"
+        },
+        "hainanChickenRice": {
+          "name": "Hainan Chicken Thigh Rice",
+          "category": "BREAKFAST · CLASSIC",
+          "description": "Fragrant seasoned rice served with crispy golden-fried chicken thigh and homemade dipping sauce.",
           "badge": "Best Seller"
         },
-        "bbq": {
-          "name": "Khmer BBQ Platter",
-          "category": "Sharing Plate",
-          "description": "Grilled meats and seasonal vegetables served with traditional Cambodian dipping sauces.",
-          "badge": "Signature"
+        "porkBloodPorridge": {
+          "name": "Pork Blood Porridge",
+          "category": "BREAKFAST · COMFORT",
+          "description": "Hearty and comforting rice porridge simmered with pork blood, offal, ginger and green scallions.",
+          "badge": "Classic"
+        },
+        "lortchaEgg": {
+          "name": "Lort Cha with Beef & Egg",
+          "category": "BREAKFAST · PAN-FRIED",
+          "description": "Stir-fried pin-noodles with tender beef, chives and bean sprouts, topped with a fried egg.",
+          "badge": "Local Fav"
+        },
+        "fishAmokCoconut": {
+          "name": "Fish Amok in Coconut",
+          "category": "LUNCH · SIGNATURE",
+          "description": "Tender river fish fillets steamed in a rich, kaffir lime infused lemongrass curry mousse inside a fresh young coconut.",
+          "badge": "Must Try"
+        },
+        "sourSeafoodSoup": {
+          "name": "Sour Seafood Soup",
+          "category": "LUNCH · SEAFOOD",
+          "description": "Traditional hot and sour seafood soup loaded with prawns, mushrooms and fragrant herbs.",
+          "badge": "Spicy"
+        },
+        "grilledChickenSiemReap": {
+          "name": "Siem Reap Grilled Chicken",
+          "category": "LUNCH · SPECIAL",
+          "description": "Whole local chicken marinated in traditional Cambodian herbs and slow-grilled to smoky perfection.",
+          "badge": "New"
+        },
+        "stirFriedBokchoy": {
+          "name": "Stir-fried Bok Choy",
+          "category": "LUNCH · VEGETABLE",
+          "description": "Crisp bok choy greens stir-fried in a roaring wok with garlic and savory oyster sauce.",
+          "badge": "Healthy"
+        },
+        "friedFermentedEgg": {
+          "name": "Fried Egg with Salted Fish",
+          "category": "LUNCH · COMFORT",
+          "description": "Traditional Cambodian dish of eggs fried with aromatic salted fish (Trey Pror-ma) and pork.",
+          "badge": "Tradition"
         }
       }
     },
@@ -927,19 +969,19 @@
           "name": "VIP Room",
           "guestTag": "8–12 guests",
           "badgeTag": "Best for Private Dinners",
-          "features": ["Integrated AV system", "Personal butler service", "Garden views", "Personal butler service"]
+          "features": ["Air Conditioning (AC)", "Personal butler service", "Garden views", "Integrated AV system"]
         },
         "private": {
           "name": "Private Room",
           "guestTag": "8–12 guests",
           "badgeTag": "Best for Private Dinners",
-          "features": ["Integrated AV system", "Personal butler service", "Garden views", "Personal butler service"]
+          "features": ["Air Conditioning (AC)", "Personal butler service", "Garden views", "Integrated AV system"]
         },
         "main-hall": {
           "name": "Main Hall",
           "guestTag": "8–12 guests",
           "badgeTag": "Best for Private Dinners",
-          "features": ["Integrated AV system", "Personal butler service", "Garden views", "Personal butler service"]
+          "features": ["Air Conditioning (AC)", "Personal butler service", "Garden views", "Integrated AV system"]
         }
       }
     },

@@ -73,7 +73,7 @@ const spaces = [
     guestTag: '8–12 guests',
     badgeTag: 'Best for Private Dinners',
     img: imgSpace2,
-    features: ['Integrated AV system', 'Personal butler service', 'Garden views', 'Personal butler service'],
+    features: ['Air Conditioning (AC)', 'Personal butler service', 'Garden views', 'Integrated AV system'],
   },
   {
     id: 'private',
@@ -81,7 +81,7 @@ const spaces = [
     guestTag: '8–12 guests',
     badgeTag: 'Best for Private Dinners',
     img: imgSpace1,
-    features: ['Integrated AV system', 'Personal butler service', 'Garden views', 'Personal butler service'],
+    features: ['Air Conditioning (AC)', 'Personal butler service', 'Garden views', 'Integrated AV system'],
   },
   {
     id: 'main-hall',
@@ -89,7 +89,7 @@ const spaces = [
     guestTag: '8–12 guests',
     badgeTag: 'Best for Private Dinners',
     img: imgHero,
-    features: ['Integrated AV system', 'Personal butler service', 'Garden views', 'Personal butler service'],
+    features: ['Air Conditioning (AC)', 'Personal butler service', 'Garden views', 'Integrated AV system'],
   },
 ];
 
