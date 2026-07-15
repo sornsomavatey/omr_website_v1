@@ -333,14 +333,14 @@ export default function EventsPage() {
               <span className="events-contact-icon"><Clock size={16} /></span>
               <div>
                 <small>{t('eventsPage.hero.hotline', undefined, 'Event Hotline')}</small>
-                <strong>+855 23 888 999</strong>
+                <strong>{t('eventsPage.hero.hotlineValue', undefined, '023 888 222')}</strong>
               </div>
             </div>
             <div className="events-contact-row">
               <span className="events-contact-icon"><Mail size={16} /></span>
               <div>
                 <small>{t('eventsPage.hero.email', undefined, 'Email Inquiry')}</small>
-                <strong>events@onemorerestaurant.com</strong>
+                <strong>sales@onemorerestaurant.com</strong>
               </div>
             </div>
             <div className="events-contact-row">
