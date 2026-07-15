@@ -667,7 +667,7 @@
 
   object-fit: cover;
 
-  filter: brightness(1.06) saturate(1.14) contrast(1.04);
+  filter: brightness(1.03) saturate(1.08) contrast(1.02);
 
   transition:
     transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
@@ -754,7 +754,7 @@
   border-radius: 50%;
 
   object-fit: cover;
-  filter: brightness(1.05) saturate(1.12) contrast(1.04);
+  filter: brightness(1.03) saturate(1.08) contrast(1.02);
 }
 
 /* ==================================
