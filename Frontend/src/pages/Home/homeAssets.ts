@@ -1,8 +1,25 @@
 import svgPaths from '@/assets/svgPaths';
 
 // Local assets
+import imgSpaceOutdoor from '@/assets/compressed_outdoor.webp';
+import imgSpaceKidCorner from '@/assets/compressed_kid corner.webp';
+import imgSpacePrivateDining from '@/assets/compressed_Private Dining room.webp';
+import imgSpaceBusiness from '@/assets/compressed_Business.webp';
 import imgHeroBg1 from '@/assets/home-v2/43310dd2158ca5c7f7d098abf280dc14124d42de.webp';
 import imgHeroBg2 from '@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.webp';
+
+// Signature dishes assets
+import imgFoodSpecialKuyteav from '@/assets/Food/Breakfast/special-kuyteav.webp';
+import imgFoodMincedPorkKuyteav from '@/assets/Food/Breakfast/minced-pork-kuyteav.webp';
+import imgFoodChickenThighRice from '@/assets/Food/Breakfast/chicken-thigh-rice.webp';
+import imgFoodPorkBloodPorridge from '@/assets/Food/Breakfast/pork-blood-porridge.webp';
+import imgFoodLortchaEgg from '@/assets/Food/Breakfast/lortcha-egg.webp';
+import imgFoodFishAmokCoconut from '@/assets/Food/Lunch and Dinner/compressed_ហហ្មុក.webp';
+import imgFoodSourSeafoodSoup from '@/assets/Food/Lunch and Dinner/ß₧ƒß₧ÿßƒÆß₧¢ß₧Åß₧╗ßƒåß₧Öß₧╗ßƒåß₧╢ß₧éßƒÆß₧Üß₧┐ß₧äß₧ƒß₧ÿß₧╗ß₧æßƒÆß₧Ü.webp';
+import imgFoodGrilledChickenSiemreap from '@/assets/Food/Lunch and Dinner/grilled-chicken-siemreap.webp';
+import imgFoodStirFriedBokchoy from '@/assets/Food/Lunch and Dinner/stir-fried-bokchoy.webp';
+import imgFoodFriedFermentedEgg from '@/assets/Food/Lunch and Dinner/fried-fermented-egg.webp';
+import imgFoodPanFriedFishPaste from '@/assets/Food/Lunch and Dinner/pan-fried-fish-paste-enhanced.png';
 
 import imgDish1 from '@/assets/home-v2/36191a3943135f3542a0fe8b80adee304f122115.webp';
 import imgDish2 from '@/assets/home-v2/35b5b5843bc3a879390cc05c8e6b33eae70c2a8a.webp';
@@ -99,4 +116,19 @@ export const imageMap: Record<string, string> = {
   '@/assets/testimonial-avatar/ada-cheang.webp': imgAvatarAdaCheang,
   '@/assets/testimonial-avatar/sodaroth-va.webp': imgAvatarSodarothVa,
   '@/assets/testimonial-avatar/mony-tep.webp': imgAvatarMonyTep,
+  '@/assets/Food/Breakfast/special-kuyteav.webp': imgFoodSpecialKuyteav,
+  '@/assets/Food/Breakfast/minced-pork-kuyteav.webp': imgFoodMincedPorkKuyteav,
+  '@/assets/Food/Breakfast/chicken-thigh-rice.webp': imgFoodChickenThighRice,
+  '@/assets/Food/Breakfast/pork-blood-porridge.webp': imgFoodPorkBloodPorridge,
+  '@/assets/Food/Breakfast/lortcha-egg.webp': imgFoodLortchaEgg,
+  '@/assets/Food/Lunch and Dinner/fish-amok-coconut.webp': imgFoodFishAmokCoconut,
+  '@/assets/Food/Lunch and Dinner/ß₧ƒß₧ÿßƒÆß₧¢ß₧Åß₧╗ßƒåß₧Öß₧╗ßƒåß₧╢ß₧éßƒÆß₧Üß₧┐ß₧äß₧ƒß₧ÿß₧╗ß₧æßƒÆß₧Ü.webp': imgFoodSourSeafoodSoup,
+  '@/assets/Food/Lunch and Dinner/grilled-chicken-siemreap.webp': imgFoodGrilledChickenSiemreap,
+  '@/assets/Food/Lunch and Dinner/stir-fried-bokchoy.webp': imgFoodStirFriedBokchoy,
+  '@/assets/Food/Lunch and Dinner/fried-fermented-egg.webp': imgFoodFriedFermentedEgg,
+  '@/assets/Food/Lunch and Dinner/pan-fried-fish-paste-enhanced.png': imgFoodPanFriedFishPaste,
+  '@/assets/compressed_Business.webp': imgSpaceBusiness,
+  '@/assets/compressed_Private Dining room.webp': imgSpacePrivateDining,
+  '@/assets/compressed_kid corner.webp': imgSpaceKidCorner,
+  '@/assets/compressed_outdoor.webp': imgSpaceOutdoor,
 };

@@ -12,7 +12,7 @@ import { useTranslation } from '@/hooks/useTranslation';
 import imgHero     from '@/assets/home-v2/e900cacb721f9c81cd07b8415a03f20f42a39856.webp';
 import imgPkg1     from '@/assets/home-v2/80bc2f874a3b8b65fc3bd247f23046db8632d909.webp';
 import imgPkg2     from '@/assets/Event & Celebrations card-2.webp';
-import imgPkg3     from '@/assets/Event & Celebrations card 03.webp';
+import imgPkg3     from '@/assets/compressed_catering.jpg';
 import imgPkg4     from '@/assets/home-v2/9826b8c118c911c852174f3c0d0204245fd0da48.webp';
 import imgSpace1   from '@/assets/home-v2/480cb1d76af2706b9692b726ad26ec2bf396f8c8.webp';
 import imgSpace2   from '@/assets/home-v2/e8f4b56e423777f3f6c3df39c6ef78914b278e17.webp';
@@ -73,7 +73,7 @@ const spaces = [
     guestTag: '8–12 guests',
     badgeTag: 'Best for Private Dinners',
     img: imgSpace2,
-    features: ['Integrated AV system', 'Personal butler service', 'Garden views', 'Personal butler service'],
+    features: ['Air Conditioning (AC)', 'Personal butler service', 'Garden views', 'Integrated AV system'],
   },
   {
     id: 'private',
@@ -81,7 +81,7 @@ const spaces = [
     guestTag: '8–12 guests',
     badgeTag: 'Best for Private Dinners',
     img: imgSpace1,
-    features: ['Integrated AV system', 'Personal butler service', 'Garden views', 'Personal butler service'],
+    features: ['Air Conditioning (AC)', 'Personal butler service', 'Garden views', 'Integrated AV system'],
   },
   {
     id: 'main-hall',
@@ -89,7 +89,7 @@ const spaces = [
     guestTag: '8–12 guests',
     badgeTag: 'Best for Private Dinners',
     img: imgHero,
-    features: ['Integrated AV system', 'Personal butler service', 'Garden views', 'Personal butler service'],
+    features: ['Air Conditioning (AC)', 'Personal butler service', 'Garden views', 'Integrated AV system'],
   },
 ];
 

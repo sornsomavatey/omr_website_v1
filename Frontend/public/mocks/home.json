@@ -1,58 +1,109 @@
 {
   "hero": {
     "title": "Experience Authentic Khmer Cuisine",
-    "subtitle": "Traditional Cambodian flavors served in a modern dining experience. Crafted with passion, fresh local organic produce, and heirloom recipes.",
+    "subtitle": "Traditional Cambodian flavors served in a modern dining experience.",
     "cta_reserve": "Reserve a Table",
     "cta_menu": "Explore Menu",
     "backgroundImage": "@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.webp"
   },
   "signatureDishes": [
     {
-      "name": "Amok Trey",
-      "category": "SIGNATURE · MAIN COURSE",
-      "desc": "A timeless Cambodian treasure — tender river fish steamed within a banana leaf parcel, enveloped in a velvety coconut-lemongrass curry mousse, perfumed with galangal and kaffir lime.",
-      "img": "@/assets/home-v2/36191a3943135f3542a0fe8b80adee304f122115.webp",
+      "key": "kuyteavOneMore",
+      "name": "One More Special Kuyteav",
+      "category": "BREAKFAST · SOUP",
+      "desc": "Rich bone broth with rice noodles, sliced meats, meatballs, fresh herbs and crisp bean sprouts.",
+      "img": "@/assets/Food/Breakfast/special-kuyteav.webp",
+      "price": "$18",
+      "badge": "Chef's Choice ✦"
+    },
+    {
+      "key": "kuyteavMincedPork",
+      "name": "Minced Pork Kuyteav",
+      "category": "BREAKFAST · SOUP",
+      "desc": "Flavorful rice noodles in pork broth topped with perfectly seasoned minced pork and fresh chives.",
+      "img": "@/assets/Food/Breakfast/minced-pork-kuyteav.webp",
+      "price": "$14",
+      "badge": "Chef's Choice ✦"
+    },
+    {
+      "key": "hainanChickenRice",
+      "name": "Hainan Chicken Thigh Rice",
+      "category": "BREAKFAST · CLASSIC",
+      "desc": "Fragrant seasoned rice served with crispy golden-fried chicken thigh and homemade dipping sauce.",
+      "img": "@/assets/Food/Breakfast/chicken-thigh-rice.webp",
+      "price": "$16",
+      "badge": "Chef's Choice ✦"
+    },
+    {
+      "key": "porkBloodPorridge",
+      "name": "Pork Blood Porridge",
+      "category": "BREAKFAST · COMFORT",
+      "desc": "Hearty and comforting rice porridge simmered with pork blood, offal, ginger and green scallions.",
+      "img": "@/assets/Food/Breakfast/pork-blood-porridge.webp",
+      "price": "$15",
+      "badge": "Chef's Choice ✦"
+    },
+    {
+      "key": "lortchaEgg",
+      "name": "Lort Cha with Beef & Egg",
+      "category": "BREAKFAST · PAN-FRIED",
+      "desc": "Stir-fried pin-noodles with tender beef, chives and bean sprouts, topped with a fried egg.",
+      "img": "@/assets/Food/Breakfast/lortcha-egg.webp",
+      "price": "$16",
+      "badge": "Chef's Choice ✦"
+    },
+    {
+      "key": "fishAmokCoconut",
+      "name": "Fish Amok in Coconut",
+      "category": "LUNCH · SIGNATURE",
+      "desc": "Tender river fish fillets steamed in a rich, kaffir lime infused lemongrass curry mousse inside a fresh young coconut.",
+      "img": "@/assets/Food/Lunch and Dinner/fish-amok-coconut.webp",
       "price": "$24",
       "badge": "Chef's Choice ✦"
     },
     {
-      "name": "Amok Trey",
-      "category": "SIGNATURE · MAIN COURSE",
-      "desc": "A timeless Cambodian treasure — tender river fish steamed within a banana leaf parcel, enveloped in a velvety coconut-lemongrass curry mousse, perfumed with galangal and kaffir lime.",
-      "img": "@/assets/home-v2/35b5b5843bc3a879390cc05c8e6b33eae70c2a8a.webp",
-      "price": "$24",
+      "key": "sourSeafoodSoup",
+      "name": "Sour Seafood Soup",
+      "category": "LUNCH · SEAFOOD",
+      "desc": "Traditional hot and sour seafood soup loaded with prawns, mushrooms and fragrant herbs.",
+      "img": "@/assets/Food/Lunch and Dinner/ß₧ƒß₧ÿßƒÆß₧¢ß₧Åß₧╗ßƒåß₧Öß₧╗ßƒåß₧╢ß₧éßƒÆß₧Üß₧┐ß₧äß₧ƒß₧ÿß₧╗ß₧æßƒÆß₧Ü.webp",
+      "price": "$19",
       "badge": "Chef's Choice ✦"
     },
     {
-      "name": "Amok Trey",
-      "category": "SIGNATURE · MAIN COURSE",
-      "desc": "A timeless Cambodian treasure — tender river fish steamed within a banana leaf parcel, enveloped in a velvety coconut-lemongrass curry mousse, perfumed with galangal and kaffir lime.",
-      "img": "@/assets/home-v2/7ce88d9bf1af040daf36af037fc63627a61522c9.webp",
-      "price": "$24",
+      "key": "panFriedFishPaste",
+      "name": "Pan-fried Fish Paste with Fresh Vegetables",
+      "category": "LUNCH · SIGNATURE",
+      "desc": "Golden pan-fried fish paste served with a colorful selection of crisp fresh vegetables.",
+      "img": "@/assets/Food/Lunch and Dinner/pan-fried-fish-paste-enhanced.png",
+      "price": "$18",
       "badge": "Chef's Choice ✦"
     },
     {
-      "name": "Amok Trey",
-      "category": "SIGNATURE · MAIN COURSE",
-      "desc": "A timeless Cambodian treasure — tender river fish steamed within a banana leaf parcel, enveloped in a velvety coconut-lemongrass curry mousse, perfumed with galangal and kaffir lime.",
-      "img": "@/assets/home-v2/36191a3943135f3542a0fe8b80adee304f122115.webp",
-      "price": "$24",
+      "key": "grilledChickenSiemReap",
+      "name": "Siem Reap Grilled Chicken",
+      "category": "LUNCH · SPECIAL",
+      "desc": "Whole local chicken marinated in traditional Cambodian herbs and slow-grilled to smoky perfection.",
+      "img": "@/assets/Food/Lunch and Dinner/grilled-chicken-siemreap.webp",
+      "price": "$22",
       "badge": "Chef's Choice ✦"
     },
     {
-      "name": "Amok Trey",
-      "category": "SIGNATURE · MAIN COURSE",
-      "desc": "A timeless Cambodian treasure — tender river fish steamed within a banana leaf parcel, enveloped in a velvety coconut-lemongrass curry mousse, perfumed with galangal and kaffir lime.",
-      "img": "@/assets/home-v2/35b5b5843bc3a879390cc05c8e6b33eae70c2a8a.webp",
-      "price": "$24",
+      "key": "stirFriedBokchoy",
+      "name": "Stir-fried Bok Choy",
+      "category": "LUNCH · VEGETABLE",
+      "desc": "Crisp bok choy greens stir-fried in a roaring wok with garlic and savory oyster sauce.",
+      "img": "@/assets/Food/Lunch and Dinner/stir-fried-bokchoy.webp",
+      "price": "$12",
       "badge": "Chef's Choice ✦"
     },
     {
-      "name": "Amok Trey",
-      "category": "SIGNATURE · MAIN COURSE",
-      "desc": "A timeless Cambodian treasure — tender river fish steamed within a banana leaf parcel, enveloped in a velvety coconut-lemongrass curry mousse, perfumed with galangal and kaffir lime.",
-      "img": "@/assets/home-v2/7ce88d9bf1af040daf36af037fc63627a61522c9.webp",
-      "price": "$24",
+      "key": "friedFermentedEgg",
+      "name": "Fried Egg with Salted Fish",
+      "category": "LUNCH · COMFORT",
+      "desc": "Traditional Cambodian dish of eggs fried with aromatic salted fish (Trey Pror-ma) and pork.",
+      "img": "@/assets/Food/Lunch and Dinner/fried-fermented-egg.webp",
+      "price": "$15",
       "badge": "Chef's Choice ✦"
     }
   ],
@@ -67,25 +118,25 @@
       "name": "Private Room",
       "tag": "8–20 guests · AV ready",
       "desc": "An intimate enclosed dining room for 8–20, with dedicated staff, custom menus and AV capabilities.",
-      "img": "@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.webp"
+      "img": "@/assets/compressed_Private Dining room.webp"
     },
     {
       "name": "Business Meeting",
       "tag": "Full-day packages available",
       "desc": "Quiet, professional atmosphere with private tables, power outlets, screen connectivity and curated lunch sets.",
-      "img": "@/assets/home-v2/43310dd2158ca5c7f7d098abf280dc14124d42de.webp"
+      "img": "@/assets/compressed_Business.webp"
     },
     {
       "name": "Kid Zone",
       "tag": "Ages 2–12 · Supervised",
       "desc": "A dedicated play corner with gentle Khmer-inspired activities, kid-friendly menu and attentive family hosts.",
-      "img": "@/assets/home-v2/e8f4b56e423777f3f6c3df39c6ef78914b278e17.webp"
+      "img": "@/assets/compressed_kid corner.webp"
     },
     {
       "name": "Event & Gala",
       "tag": "Up to 150 guests",
       "desc": "Expansive layout options with custom decor, state-of-the-art sound systems, and dedicated banquet planners.",
-      "img": "@/assets/home-v2/31b0910d38c033be0ce5292cf4a1d68688308c6b.webp"
+      "img": "@/assets/compressed_outdoor.webp"
     }
   ],
   "branches": [

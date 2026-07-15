@@ -5,6 +5,19 @@ import { useTranslation } from '@/hooks/useTranslation';
 
 export default function SignatureDishes({ dishes }: { dishes: SignatureDish[] }) {
   const { t } = useTranslation();
+  const collageDishOrder = [
+    'kuyteavOneMore',
+    'hainanChickenRice',
+    'kuyteavMincedPork',
+    'lortchaEgg',
+    'porkBloodPorridge',
+    'fishAmokCoconut',
+    'sourSeafoodSoup',
+    'panFriedFishPaste',
+  ];
+  const collageDishes = collageDishOrder
+    .map((key) => dishes.find((dish) => dish.key === key))
+    .filter((dish): dish is SignatureDish => Boolean(dish));
 
   return (
     <section id="menu" className="featured-cuisine-section">
@@ -18,17 +31,20 @@ export default function SignatureDishes({ dishes }: { dishes: SignatureDish[] })
 
         <div className="featured-cuisine-collage">
           {Array.from({ length: 8 }).map((_, index) => {
-            const dish = dishes[index % dishes.length];
+            const dish = collageDishes[index % collageDishes.length];
+            const translatedName = dish?.key
+              ? t(`home.signature.items.${dish.key}.name`, undefined, dish.name)
+              : dish?.name;
 
             return (
               <div
-                key={`${dish.name}-${index}`}
+                key={`${dish?.name}-${index}`}
                 className={`cuisine-tile cuisine-tile-${index + 1}`}
               >
-                <img src={dish.img} alt={dish.name} />
+                <img src={dish?.img} alt={translatedName} />
                 <div className="cuisine-tile-overlay">
                   <div className="cuisine-tile-overlay-content">
-                    <h4>{dish.name}</h4>
+                    <h4>{translatedName}</h4>
                   </div>
                 </div>
               </div>
@@ -62,15 +78,22 @@ export default function SignatureDishes({ dishes }: { dishes: SignatureDish[] })
           </svg>
 
           <div className="cuisine-center-circle">
-            <img
-              src={dishes[0]?.img}
-              alt={dishes[0]?.name}
-            />
-            <div className="cuisine-circle-overlay">
-              <div className="cuisine-circle-overlay-content">
-                <h4>{dishes[0]?.name}</h4>
-              </div>
-            </div>
+            {(() => {
+              const centerDish = dishes.find((d) => d.key === 'grilledChickenSiemReap') || dishes[0];
+              const centerName = centerDish?.key
+                ? t(`home.signature.items.${centerDish.key}.name`, undefined, centerDish.name)
+                : centerDish?.name;
+              return (
+                <>
+                  <img src={centerDish?.img} alt={centerName} />
+                  <div className="cuisine-circle-overlay">
+                    <div className="cuisine-circle-overlay-content">
+                      <h4>{centerName}</h4>
+                    </div>
+                  </div>
+                </>
+              );
+            })()}
           </div>
         </div>
 

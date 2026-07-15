@@ -1,4 +1,5 @@
 export type SignatureDish = {
+  key?: string;
   name: string;
   category: string;
   desc: string;

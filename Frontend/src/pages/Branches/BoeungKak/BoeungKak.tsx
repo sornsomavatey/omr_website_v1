@@ -100,7 +100,7 @@ export default function BoeungKak() {
       {/* 1. HERO BANNER */}
       <section id="boeungkak-hero" className="bk-hero">
         <div className="bk-hero-bg">
-          <img src={imgBranchBoeungKak} alt={isKhmer ? "អគារភោជនីយដ្ឋានវ័នម័រ បឹងកក់" : "One More Restaurant Boeung Kak Building"} className="bk-hero-image" />
+          <img src={imgBranchBoeungKak} alt={isKhmer ? "អគារភោជនីយដ្ឋានវ័នម៉រ បឹងកក់" : "One More Restaurant Boeung Kak Building"} className="bk-hero-image" />
           <div className="bk-hero-overlay" />
         </div>
 
@@ -131,7 +131,7 @@ export default function BoeungKak() {
 
         <div className="bk-hero-content">
           <h1 className="page-hero-title bk-hero-title">
-            {isKhmer ? <><span className="md:whitespace-nowrap">ភោជនីយដ្ឋាន វ័នម័រ</span><br />បឹងកក់</> : <><span className="md:whitespace-nowrap">One More Restaurant</span><br />Boeung Kak</>}
+            {isKhmer ? <><span className="md:whitespace-nowrap">ភោជនីយដ្ឋាន វ័នម៉រ</span><br />បឹងកក់</> : <><span className="md:whitespace-nowrap">One More Restaurant</span><br />Boeung Kak</>}
           </h1>
           <p className="bk-hero-desc">
             {t('branchDetails.hero.boeungKak.desc')}
@@ -389,7 +389,7 @@ export default function BoeungKak() {
         <div className="bk-visit-container">
           {/* Left: Map image */}
           <div className="bk-visit-map">
-            <img src={locationImg} alt={isKhmer ? "ផែនទីភោជនីយដ្ឋាន វ័នម័រ បឹងកក់" : "Map of One More Restaurant Boeung Kak"} className="bk-map-img" />
+            <img src={locationImg} alt={isKhmer ? "ផែនទីភោជនីយដ្ឋាន វ័នម៉រ បឹងកក់" : "Map of One More Restaurant Boeung Kak"} className="bk-map-img" />
           </div>
 
           {/* Right: Contact details */}
