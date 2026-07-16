@@ -50,7 +50,7 @@ import imgGallery6 from '@/assets/home-v2/9826b8c118c911c852174f3c0d0204245fd0da
 
 // Dish assets
 import imgDish1 from '@/assets/home-v2/36191a3943135f3542a0fe8b80adee304f122115.webp';
-import imgDish2 from '@/assets/home-v2/35b5b5843bc3a879390cc05c8e6b33eae70c2a8a.webp';
+import imgDish2 from '@/assets/Food/Lunch and Dinner/compressed_ហហ្មុក.webp';
 import imgDish3 from '@/assets/home-v2/7ce88d9bf1af040daf36af037fc63627a61522c9.webp';
 
 // Map asset
@@ -285,41 +285,41 @@ export default function ToulKork() {
         
         <div className="tk-menu-grid">
           <DishCard
-            name={isKhmer ? "អាម៉ុកត្រីបែបបុរាណ" : "Traditional Fish Amok"}
+            name={isKhmer ? "មីឆា One More" : "Onemore Fried Noodle"}
             category={isKhmer ? "ការណែនាំ" : "Recommendation"}
             description={isKhmer 
-              ? "ម្ហូបខ្មែរបុរាណធ្វើពីត្រីចំហុយក្នុងទឹកគ្រឿងខ្ទិះដូងខាប់ រុំក្នុងស្លឹកចេក។"
-              : "A classic Khmer dish of fish steamed in a thick savory coconut curry custard wrapped in banana leaves."}
+              ? "សាច់មាន់អាំងពណ៌មាស បម្រើលើមីឆាជាមួយសណ្ដែកបណ្ដុះ គូឆាយ និងគ្រឿងផ្សំប្រចាំហាងដ៏ឈ្ងុយឆ្ងាញ់។"
+              : "Golden grilled chicken served over wok-fried noodles with crisp bean sprouts, chives, and savory house seasoning."}
             image={imgDish1}
-            price="USD 24"
-            priceSuffix={isKhmer ? "សុទ្ធ" : "/ Net"}
-            actionText={t('branchDetails.chefRecs.addToCart')}
+            price="USD 6.50"
+            priceSuffix=""
+            showAction={false}
             index={0}
           />
 
           <DishCard
-            name={isKhmer ? "អាម៉ុកត្រីស្លឹកញរ" : "Fish Amok with Noni Leaf"}
+            name={isKhmer ? "អាម៉ុកត្រីក្នុងដូងខ្ចី" : "Fish Amok in Young Coconut"}
             category={isKhmer ? "ការណែនាំ" : "Recommendation"}
             description={isKhmer
-              ? "អាម៉ុកត្រីខ្មែររសជាតិឈ្ងុយឆ្ងាញ់ ចម្អិនជាមួយគ្រឿងទេសប្រពៃណី ខ្ទិះដូង និងស្លឹកញរ។"
-              : "Savory Cambodian fish amok cooked in traditional spices, coconut cream, and noni leaf."}
+              ? "ត្រីទន់ចំហុយជាមួយខ្ទិះដូង គ្រឿងខ្មែរ និងស្លឹកក្រូចសើច បម្រើក្នុងផ្លែដូងខ្ចី។"
+              : "Tender fish steamed with coconut cream, Khmer kroeung, and kaffir lime, served in a fresh young coconut."}
             image={imgDish2}
-            price="USD 24"
-            priceSuffix={isKhmer ? "សុទ្ធ" : "/ Net"}
-            actionText={t('branchDetails.chefRecs.addToCart')}
+            price="USD 9.90"
+            priceSuffix=""
+            showAction={false}
             index={1}
           />
 
           <DishCard
-            name={isKhmer ? "ការីត្រីចំហុយខ្មែរ" : "Khmer Steamed Fish Curry"}
+            name={isKhmer ? "លៀសឆាម្រះព្រៅទឹកអំពិលទុំ" : "Stir-Fried Cockle, Hot Basil in Tamarind Sauce"}
             category={isKhmer ? "ការណែនាំ" : "Recommendation"}
             description={isKhmer
-              ? "ការីត្រីចំហុយតាមបែបខ្មែរ សម្បូរទៅដោយជីរក្នុងស្រុក ស្លឹកក្រូចសើច គ្រឿងគល់ស្លឹកគ្រៃ និងខ្ទិះដូង។"
-              : "Rich Khmer style steamed fish curry with local herbs, kaffir lime leaf, lemongrass paste, and coconut milk."}
+              ? "លៀសស្រស់ឆាជាមួយទឹកអំពិលទុំ ជី និងម្ទេសស្រាលៗ មានរសជាតិជូរផ្អែមឈ្ងុយឆ្ងាញ់។"
+              : "Fresh cockles stir-fried with tamarind sauce, aromatic herbs, and a gentle chili kick."}
             image={imgDish3}
-            price="USD 24"
-            priceSuffix={isKhmer ? "សុទ្ធ" : "/ Net"}
-            actionText={t('branchDetails.chefRecs.addToCart')}
+            price="USD 8.90"
+            priceSuffix=""
+            showAction={false}
             index={2}
           />
         </div>
