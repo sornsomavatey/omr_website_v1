@@ -21,7 +21,7 @@ const exploreLinks = [
   { name: 'Menu', path: '/menu' },
   { name: 'Branches', path: '/branches' },
   { name: 'Story', path: '/about' },
-  { name: 'Gift Cards', path: '/gift-cards' },
+  // { name: 'Gift Cards', path: '/gift-cards' },
 ];
 
 const legalLinks = [
@@ -31,7 +31,7 @@ const legalLinks = [
 
 const contactLinks = [
   { name: 'Booking Inquiry', path: '/reservations' },
-  { name: 'Press', path: '/press' },
+  // { name: 'Press', path: '/press' },
 ];
 
 const socialLinks = [
