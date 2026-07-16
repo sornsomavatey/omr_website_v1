@@ -196,29 +196,31 @@ function HeroSection({ hero }: { hero: any }) {
           )}
         </p>
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-          <Link to="/reservations" className="custom-btn-primary">
-            {t('home.hero.reserveButton', undefined, 'Reserve a Table')}
-          </Link>
+        <div className="home-hero-controls">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+            <Link to="/reservations" className="custom-btn-primary">
+              {t('home.hero.reserveButton', undefined, 'Reserve a Table')}
+            </Link>
 
-          <Link to="/menu" className="custom-btn-secondary">
-            {t('home.hero.menuButton', undefined, 'Explore Menu')}{' '}
-            <ArrowRight className="w-4 h-4" />
-          </Link>
+            <Link to="/menu" className="custom-btn-secondary">
+              {t('home.hero.menuButton', undefined, 'Explore Menu')}{' '}
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
         </div>
+      </div>
 
-        <div className="home-hero-dots" role="group" aria-label="Choose hero slide">
-          {heroSlides.map((_, idx) => (
-            <button
-              key={idx}
-              type="button"
-              onClick={() => handleDotClick(idx)}
-              className={activeDotIndex === idx ? 'is-active' : ''}
-              aria-label={`Go to slide ${idx + 1}`}
-              aria-current={activeDotIndex === idx ? 'true' : undefined}
-            />
-          ))}
-        </div>
+      <div className="home-hero-dots" role="group" aria-label="Choose hero slide">
+        {heroSlides.map((_, idx) => (
+          <button
+            key={idx}
+            type="button"
+            onClick={() => handleDotClick(idx)}
+            className={activeDotIndex === idx ? 'is-active' : ''}
+            aria-label={`Go to slide ${idx + 1}`}
+            aria-current={activeDotIndex === idx ? 'true' : undefined}
+          />
+        ))}
       </div>
 
       <button

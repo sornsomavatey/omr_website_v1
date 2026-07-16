@@ -1130,12 +1130,20 @@
   padding-left: clamp(1rem, 4vw, 2rem);
 }
 
+.home-hero-controls {
+  transform: translateY(clamp(2rem, 4vh, 2.5rem));
+}
+
 .home-hero-dots {
+  position: absolute;
+  bottom: 84px;
+  left: 50%;
+  z-index: 5;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 2px;
-  margin-top: clamp(1rem, 3vh, 2rem);
+  transform: translateX(-50%);
 }
 
 .home-hero-dots button {
@@ -1184,6 +1192,14 @@
     padding-top: 7rem;
     padding-bottom: max(5.75rem, calc(env(safe-area-inset-bottom) + 5rem));
   }
+
+  .home-hero-controls {
+    transform: translateY(1.5rem);
+  }
+
+  .home-hero-dots {
+    bottom: 76px;
+  }
 }
 
 @media (max-height: 720px) {
@@ -1200,8 +1216,8 @@
     margin-bottom: 1.25rem;
   }
 
-  .home-hero-dots {
-    margin-top: 0.5rem;
+  .home-hero-controls {
+    transform: translateY(1rem);
   }
 }
 

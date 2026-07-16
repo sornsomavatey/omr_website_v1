@@ -3,21 +3,24 @@ import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from '@/hooks/useTranslation';
 
 import imgHero from '@/assets/home-v2/43310dd2158ca5c7f7d098abf280dc14124d42de.webp';
-import imgDining from '@/assets/Event & Celebrations card 03.webp';
+import imgDining from '@/assets/gallery/main-hall-dining.png';
 import imgNoodles from '@/assets/Food/Breakfast/small-kuyteav-beef.webp';
 import imgWorkshop from '@/assets/home-v2/9826b8c118c911c852174f3c0d0204245fd0da48.webp';
-import imgChicken from '@/assets/home-v2/13a7aa4dee36d6ba805abc6f982eb04ec7df4c4c.webp';
-import imgAmok from '@/assets/home-v2/35b5b5843bc3a879390cc05c8e6b33eae70c2a8a.webp';
+import imgChicken from '@/assets/gallery/kitchen-ritauls.png';
+import imgAmok from '@/assets/gallery/artisanal-plating.png';
 import imgService from '@/assets/home-v2/80bc2f874a3b8b65fc3bd247f23046db8632d909.webp';
 import imgCatering from '@/assets/home-v2/07e47044152ad38cdbb1bda5ae392fb848e3a37a.webp';
 import imgRoom from '@/assets/home-v2/480cb1d76af2706b9692b726ad26ec2bf396f8c8.webp';
 import imgEvent from '@/assets/home-v2/e900cacb721f9c81cd07b8415a03f20f42a39856.webp';
-import imgChildren from '@/assets/home-v2/e8f4b56e423777f3f6c3df39c6ef78914b278e17.webp';
+import imgChildren from '@/assets/gallery/little-moment.png';
+import imgDessertCup from '@/assets/gallery/sweet-dessert-cup.png';
+import imgGrillPlatter from '@/assets/gallery/khmer-grill-platter.png';
+import imgCoffeeService from '@/assets/gallery/event-coffee-service.png';
 import imgExterior from '@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.webp';
 
 import './index.css';
 
-const filters = ['All', 'Wedding', 'Corporate', 'Birthday', 'Engagement', 'Conference', 'Private Party'] as const;
+const filters = ['All', 'Restaurant', 'Food', 'Experience', 'Events', 'People', 'Family', 'Design'] as const;
 type Filter = (typeof filters)[number];
 
 type GalleryItem = {
@@ -30,24 +33,27 @@ type GalleryItem = {
 };
 
 const galleryItems: GalleryItem[] = [
-  { src: imgDining, alt: 'Guests enjoying the main dining hall', title: 'Main Hall Dining', tag: 'Restaurant', category: 'Corporate', shape: 'portrait' },
-  { src: imgNoodles, alt: 'A bowl of Khmer beef noodles', title: 'Street Flavors', tag: 'Food', category: 'Private Party', shape: 'square' },
-  { src: imgWorkshop, alt: 'Traditional Khmer cooking workshop', title: 'Khmer Cooking Workshop', tag: 'Experience', category: 'Corporate', shape: 'portrait' },
-  { src: imgChicken, alt: 'Khmer chicken and fragrant rice', title: 'Kitchen Rituals', tag: 'Food', category: 'Wedding', shape: 'portrait' },
-  { src: imgAmok, alt: 'Traditional fish amok presentation', title: 'Artisanal Plating', tag: 'Food', category: 'Engagement', shape: 'square' },
-  { src: imgCatering, alt: 'Outdoor catered celebration', title: 'Private Gatherings', tag: 'Events', category: 'Engagement', shape: 'landscape' },
-  { src: imgService, alt: 'Warm service in the restaurant courtyard', title: 'Khmer Hospitality', tag: 'People', category: 'Birthday', shape: 'portrait' },
-  { src: imgRoom, alt: 'Private dining room set for guests', title: 'The Private Room', tag: 'Restaurant', category: 'Conference', shape: 'portrait' },
-  { src: imgEvent, alt: 'Floral event hall prepared for a celebration', title: 'A Day To Remember', tag: 'Events', category: 'Wedding', shape: 'landscape' },
-  { src: imgChildren, alt: 'Children enjoying a creative activity', title: 'Little Moments', tag: 'Family', category: 'Birthday', shape: 'square' },
-  { src: imgExterior, alt: 'One More Restaurant exterior', title: 'Canopy Entrance', tag: 'Restaurant', category: 'Private Party', shape: 'landscape' },
-  { src: imgHero, alt: 'Architectural restaurant dining room', title: 'Curves & Craft', tag: 'Design', category: 'Conference', shape: 'landscape' },
+  { src: imgDining, alt: 'Guests enjoying the main dining hall', title: 'Main Hall Dining', tag: 'Restaurant', category: 'Restaurant', shape: 'portrait' },
+  { src: imgNoodles, alt: 'A bowl of Khmer beef noodles', title: 'Street Flavors', tag: 'Food', category: 'Food', shape: 'square' },
+  { src: imgWorkshop, alt: 'Traditional Khmer cooking workshop', title: 'Khmer Cooking Workshop', tag: 'Experience', category: 'Experience', shape: 'portrait' },
+  { src: imgChicken, alt: 'Khmer chicken and fragrant rice', title: 'Kitchen Rituals', tag: 'Food', category: 'Food', shape: 'portrait' },
+  { src: imgGrillPlatter, alt: 'Guest presenting a generous Khmer grilled-food platter', title: 'Khmer Grill Platter', tag: 'Food', category: 'Food', shape: 'portrait' },
+  { src: imgAmok, alt: 'Traditional fish amok presentation', title: 'Artisanal Plating', tag: 'Food', category: 'Food', shape: 'square' },
+  { src: imgCatering, alt: 'Outdoor catered celebration', title: 'Private Gatherings', tag: 'Events', category: 'Events', shape: 'landscape' },
+  { src: imgCoffeeService, alt: 'One More Restaurant staff operating a coffee station at an event', title: 'Event Coffee Service', tag: 'Events', category: 'Events', shape: 'square' },
+  { src: imgService, alt: 'Warm service in the restaurant courtyard', title: 'Khmer Hospitality', tag: 'People', category: 'People', shape: 'portrait' },
+  { src: imgRoom, alt: 'Private dining room set for guests', title: 'The Private Room', tag: 'Restaurant', category: 'Restaurant', shape: 'portrait' },
+  { src: imgEvent, alt: 'Floral event hall prepared for a celebration', title: 'A Day To Remember', tag: 'Events', category: 'Events', shape: 'landscape' },
+  { src: imgChildren, alt: 'Children enjoying a creative activity', title: 'Little Moments', tag: 'Family', category: 'Family', shape: 'square' },
+  { src: imgDessertCup, alt: 'A sweet Khmer dessert served in a One More Restaurant cup', title: 'Sweet Refreshment', tag: 'Food', category: 'Food', shape: 'square' },
+  { src: imgExterior, alt: 'One More Restaurant exterior', title: 'Canopy Entrance', tag: 'Restaurant', category: 'Restaurant', shape: 'landscape' },
+  { src: imgHero, alt: 'Architectural restaurant dining room', title: 'Curves & Craft', tag: 'Design', category: 'Design', shape: 'landscape' },
 ];
 
 const galleryColumnBlueprint = [
-  ['Main Hall Dining', 'Kitchen Rituals', 'The Private Room'],
-  ['Street Flavors', 'Artisanal Plating', 'Khmer Hospitality', 'Private Gatherings', 'Little Moments'],
-  ['Khmer Cooking Workshop', 'A Day To Remember', 'Canopy Entrance', 'Curves & Craft'],
+  ['Main Hall Dining', 'Kitchen Rituals', 'Khmer Grill Platter', 'The Private Room'],
+  ['Street Flavors', 'Artisanal Plating', 'Sweet Refreshment', 'Khmer Hospitality', 'Private Gatherings', 'Little Moments'],
+  ['Khmer Cooking Workshop', 'A Day To Remember', 'Event Coffee Service', 'Canopy Entrance', 'Curves & Craft'],
 ];
 
 export default function GalleryPage() {
