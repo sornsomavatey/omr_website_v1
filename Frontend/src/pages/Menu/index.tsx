@@ -450,7 +450,7 @@ export default function Menu() {
                 revealedSections[category.toLowerCase()] ? ' section-visible' : ''
               }`}
             >
-              <h2 className="font-serif text-4xl md:text-5xl font-normal tracking-wide mb-16 text-[#212d1b]">
+              <h2 className="font-serif text-4xl md:text-5xl font-normal tracking-wide mb-10 md:mb-16 text-[#212d1b]">
                 {translatedCategoryNames[category]}
               </h2>
 

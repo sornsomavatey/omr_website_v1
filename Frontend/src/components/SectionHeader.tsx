@@ -17,6 +17,9 @@ export default function SectionHeader({
 }: SectionHeaderProps) {
   const isLeft = align === 'left';
 
+  // Bottom margin for the section header as a whole when no description is present
+  const bottomMarginClass = description ? '' : 'mb-8 md:mb-12';
+
   return (
     <div className={isLeft ? 'text-left' : 'text-center'}>
       {/* Eyebrow */}
@@ -32,7 +35,13 @@ export default function SectionHeader({
 
       {/* Title */}
       <h2
-        className={`font-serif text-4xl md:text-5xl font-normal tracking-wide mb-3 ${
+        className={`font-serif text-4xl md:text-5xl font-normal tracking-wide ${
+          description 
+            ? 'mb-4' 
+            : isLeft 
+              ? 'mb-3' 
+              : bottomMarginClass
+        } ${
           dark ? 'text-[#f6fdf2]' : 'text-[#212d1b]'
         }`}
       >
@@ -41,13 +50,19 @@ export default function SectionHeader({
 
       {/* Left-align decorative underline under title */}
       {isLeft && (
-        <span className="block w-12 h-[2px] bg-[#6b9158] mb-6" />
+        <span
+          className={`block w-12 h-[2px] bg-[#6b9158] ${
+            description ? 'mb-6' : bottomMarginClass
+          }`}
+        />
       )}
 
       {description && (
         <p
-          className={`text-base md:text-lg font-sans font-light mb-10 leading-relaxed ${
-            isLeft ? '' : 'max-w-2xl mx-auto mb-16'
+          className={`text-base md:text-lg font-sans font-light leading-relaxed ${
+            isLeft 
+              ? 'mb-8 md:mb-10' 
+              : 'max-w-2xl mx-auto mb-10 md:mb-16'
           } ${
             dark ? 'text-[#e7f6df]/80' : 'text-[#646860]'
           }`}

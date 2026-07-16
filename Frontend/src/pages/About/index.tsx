@@ -13,8 +13,11 @@ import { useTranslation } from '@/hooks/useTranslation';
 
 import heroImage from '@/assets/home-v2/43310dd2158ca5c7f7d098abf280dc14124d42de.webp';
 import toulKorkImage from '@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.webp';
+import omr2008Image from '@/assets/OMR 2008.png';
 import boeungKakImage from '@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.webp';
-import signatureDishImage from '@/assets/home-v2/36191a3943135f3542a0fe8b80adee304f122115.webp';
+import omrTkImage from '@/assets/compressed_OMR TK.webp';
+import omrBkImage from '@/assets/compressed_OMR Bk edited.webp';
+import presentImage from '@/assets/present.png';
 import privateRoomImage from '@/assets/home-v2/480cb1d76af2706b9692b726ad26ec2bf396f8c8.webp';
 import celebrationImage from '@/assets/home-v2/e900cacb721f9c81cd07b8415a03f20f42a39856.webp';
 import cateringImage from '@/assets/home-v2/07e47044152ad38cdbb1bda5ae392fb848e3a37a.webp';
@@ -23,17 +26,18 @@ import kidsImage from '@/assets/home-v2/e8f4b56e423777f3f6c3df39c6ef78914b278e17
 import hospitalityImage from '@/assets/Event & Celebrations card-2.webp';
 import finalCtaImage from '@/assets/home-v2/31b0910d38c033be0ce5292cf4a1d68688308c6b.webp';
 import headChefImage from '@/assets/about/hor-chanthan.png';
-import serviceTeamImage from '@/assets/about/service-team.png';
+import chefTkImage from '@/assets/Chef tk.png';
+import chefBkImage from '@/assets/chef bk.jpg';
 import chefTeamImage from '@/assets/about/chef-team.png';
 import operationsTeamImage from '@/assets/about/operations-team.png';
 import careersTeamImage from '@/assets/about/careers-team.png';
 import './index.css';
 
 const timeline = [
-  { year: '2008', image: toulKorkImage, title: 'Our Story Begins', text: 'One More Restaurant begins with a vision to preserve Khmer flavors.' },
-  { year: '2018', image: boeungKakImage, title: 'Expanding Roots', text: 'Our second home opens, bringing our signature hospitality to a vibrant neighborhood.' },
-  { year: '2023', image: privateRoomImage, title: 'A New Chapter', text: 'Private dining and celebrations grow into an important part of the One More experience.' },
-  { year: 'Today', image: signatureDishImage, title: 'Serving Phnom Penh', text: 'We continue serving families, businesses, and celebrations across Phnom Penh.' },
+  { year: '2008', image: omr2008Image, title: 'Our Story Begins', text: 'One More Restaurant begins with a vision to preserve Khmer flavors.' },
+  { year: '2018', image: omrTkImage, title: 'Expanding Roots', text: 'Our second home opens, bringing our signature hospitality to a vibrant neighborhood.' },
+  { year: '2023', image: omrBkImage, title: 'A New Chapter', text: 'Private dining and celebrations grow into an important part of the One More experience.' },
+  { year: 'Today', image: presentImage, title: 'Serving Phnom Penh', text: 'We continue serving families, businesses, and celebrations across Phnom Penh.' },
 ];
 
 const reasons = [
@@ -44,8 +48,8 @@ const reasons = [
 ];
 
 const people = [
-  { image: headChefImage, title: 'Hor Chanthan', role: 'Head Chef', text: 'A kitchen built on precision, respect for ingredients, and the joy of sharing heritage recipes.' },
-  { image: serviceTeamImage, title: 'Service Team', role: '', text: 'Warm, attentive, and genuinely invested in making every guest feel at home.' },
+  { image: chefTkImage, title: 'Hor Chanthan', role: 'Head Chef', text: 'A kitchen built on precision, respect for ingredients, and the joy of sharing heritage recipes.' },
+  { image: chefBkImage, title: 'Service Team', role: '', text: 'Warm, attentive, and genuinely invested in making every guest feel at home.' },
   { image: chefTeamImage, title: 'Our Chef Team', role: '', text: 'Khmer cuisine is an art form that tells the story of our land. Our mission is to elevate these ancient flavors while remaining fiercely loyal to the techniques passed down through generations.' },
   { image: operationsTeamImage, title: 'Operations Team', role: '', text: 'Behind every celebration is a team that cares for every detail, from planning to execution.' },
 ];
@@ -77,7 +81,7 @@ const khmerCopy: Record<string, string> = {
   'Mission': 'បេសកកម្ម',
   'To serve excellent Khmer food with thoughtful choices, warm service, and memorable experiences.': 'បម្រើម្ហូបខ្មែរដ៏ល្អឥតខ្ចោះ ជាមួយជម្រើសដ៏យកចិត្តទុកដាក់ សេវាកម្មកក់ក្តៅ និងបទពិសោធន៍ដែលគួរឱ្យចងចាំ។',
   "Guests' Choice": 'ជម្រើសរបស់ភ្ញៀវ',
-  'Why Guests Choose One More': 'ហេតុអ្វីភ្ញៀវជ្រើសរើស វ័ន ម័រ',
+  'Why Guests Choose One More': 'ហេតុអ្វីភ្ញៀវជ្រើសរើសវ័នម៉រ',
   'Authentic Khmer Cuisine': 'ម្ហូបខ្មែរដ៏ពិតប្រាកដ',
   'Traditional recipes prepared with care, quality ingredients, and contemporary refinement.': 'រូបមន្តប្រពៃណីរៀបចំដោយការយកចិត្តទុកដាក់ គ្រឿងផ្សំមានគុណភាព និងការច្នៃប្រឌិតបែបទំនើប។',
   'Spaces For Every Occasion': 'ទីកន្លែងសម្រាប់គ្រប់ឱកាស',
@@ -86,14 +90,14 @@ const khmerCopy: Record<string, string> = {
   'Experienced planning and thoughtful service for intimate or large celebrations.': 'ការរៀបចំប្រកបដោយបទពិសោធន៍ និងសេវាកម្មយកចិត្តទុកដាក់ សម្រាប់កម្មវិធីតូច ឬធំ។',
   'Hospitality Since 2008': 'បដិសណ្ឋារកិច្ចតាំងពីឆ្នាំ ២០០៨',
   'A dedicated team delivering warm and memorable Khmer dining experiences.': 'ក្រុមការងារដែលប្តេជ្ញាផ្តល់បទពិសោធន៍ម្ហូបខ្មែរដ៏កក់ក្តៅ និងគួរឱ្យចងចាំ។',
-  'Our Promise': 'ការសន្យារបស់យើង',
+  'Our Commitment': 'ការប្តេជ្ញាចិត្តរបស់យើង',
   "Preserving Cambodia's culinary traditions.": 'ថែរក្សាប្រពៃណីម្ហូបអាហាររបស់កម្ពុជា។',
   'Warm Hospitality': 'បដិសណ្ឋារកិច្ចដ៏កក់ក្តៅ',
   'Welcoming every guest with genuine care.': 'ស្វាគមន៍ភ្ញៀវគ្រប់រូបដោយការយកចិត្តទុកដាក់ពិតប្រាកដ។',
   'Memorable Experiences': 'បទពិសោធន៍ដែលគួរឱ្យចងចាំ',
   'Creating moments worth remembering.': 'បង្កើតពេលវេលាដ៏មានតម្លៃសម្រាប់ការចងចាំ។',
   'Our People': 'ក្រុមការងាររបស់យើង',
-  'The People Behind One More': 'មនុស្សនៅពីក្រោយ វ័ន ម័រ',
+  'The People Behind One More': 'មនុស្សនៅពីក្រោយ វ័នម៉រ',
   'Hor Chanthan': 'ហ័រ ចាន់ថាន់',
   'Head Chef': 'មេចុងភៅ',
   'A kitchen built on precision, respect for ingredients, and the joy of sharing heritage recipes.': 'ផ្ទះបាយមួយដែលផ្អែកលើភាពម៉ត់ចត់ ការគោរពចំពោះគ្រឿងផ្សំ និងសេចក្តីរីករាយក្នុងការចែករំលែករូបមន្តបេតិកភណ្ឌ។',
@@ -114,7 +118,7 @@ const khmerCopy: Record<string, string> = {
   'The People Behind It All': 'អ្នកនៅពីក្រោយភាពជោគជ័យ',
   'Caring for every detail, from planning and sourcing to daily service.': 'យកចិត្តទុកដាក់លើគ្រប់ព័ត៌មានលម្អិត ចាប់ពីការរៀបចំ និងការផ្គត់ផ្គង់ ដល់សេវាកម្មប្រចាំថ្ងៃ។',
   'Our Number': 'តួលេខរបស់យើង',
-  'One More In Numbers': 'វ័ន ម័រ ជាតួលេខ',
+  'One More In Numbers': 'វ័នម៉រ ជាតួលេខ',
   'Menu Items': 'មុខម្ហូប',
   'Rooms & Event Spaces': 'បន្ទប់ និងទីធ្លាកម្មវិធី',
   'Maximum Capacity': 'សមត្ថភាពទទួលអតិបរមា',
@@ -129,7 +133,7 @@ const khmerCopy: Record<string, string> = {
   'Moments That Matter': 'ពេលវេលាដែលមានអត្ថន័យ',
   'events hosted with care and excellence.': 'កម្មវិធីដែលបានរៀបចំដោយការយកចិត្តទុកដាក់ និងឧត្តមភាព។',
   'Careers': 'ការងារ',
-  'Grow With One More': 'រីកចម្រើនជាមួយ វ័ន ម័រ',
+  'Grow With One More': 'រីកចម្រើនជាមួយ វ័នម៉រ',
   'We are a team of storytellers, chefs, and hosts dedicated to preserving Khmer heritage through exceptional hospitality.': 'យើងជាក្រុមអ្នកនិទានរឿង ចុងភៅ និងអ្នកបដិសណ្ឋារកិច្ច ដែលប្តេជ្ញាថែរក្សាបេតិកភណ្ឌខ្មែរ តាមរយៈសេវាកម្មដ៏ល្អឥតខ្ចោះ។',
   'Career opportunities across culinary, service, and events.': 'ឱកាសការងារផ្នែកចុងភៅ សេវាកម្ម និងការរៀបចំកម្មវិធី។',
   'A supportive team environment built on respect and excellence.': 'បរិយាកាសក្រុមការងារគាំទ្រគ្នា ដែលកសាងឡើងលើការគោរព និងឧត្តមភាព។',
@@ -139,11 +143,11 @@ const khmerCopy: Record<string, string> = {
   'Whether you are joining us for a family dinner, business meeting, or special celebration, we look forward to welcoming you.': 'មិនថាអ្នកមកទទួលទានអាហារជាមួយគ្រួសារ ប្រជុំអាជីវកម្ម ឬប្រារព្ធកម្មវិធីពិសេស យើងរង់ចាំស្វាគមន៍អ្នកជានិច្ច។',
   'Plan Your Event': 'រៀបចំកម្មវិធីរបស់អ្នក',
   'Guests sharing a meal at One More Restaurant': 'ភ្ញៀវកំពុងទទួលទានអាហាររួមគ្នានៅភោជនីយដ្ឋាន វ័ន ម័រ',
-  'A celebration at One More': 'កម្មវិធីអបអរសាទរនៅ វ័ន ម័រ',
+  'A celebration at One More': 'កម្មវិធីអបអរសាទរនៅវ័នម៉រ',
   'Event catering': 'សេវាម្ហូបអាហារសម្រាប់កម្មវិធី',
   'A family activity': 'សកម្មភាពគ្រួសារ',
   'Khmer cooking experience': 'បទពិសោធន៍ធ្វើម្ហូបខ្មែរ',
-  'The One More Restaurant team': 'ក្រុមការងារភោជនីយដ្ឋាន វ័ន ម័រ',
+  'The One More Restaurant team': 'ក្រុមការងារភោជនីយដ្ឋាន វ័នម៉រ',
 };
 
 function SectionHeading({ eyebrow, title }: { eyebrow: string; title: string }) {
@@ -300,7 +304,7 @@ export default function About() {
       </section>
 
       <section className="about-promise">
-        <SectionHeading eyebrow={tr('Our Promise')} title={tr('Our Promise')} />
+        <SectionHeading eyebrow={tr('Our Commitment')} title={tr('Our Commitment')} />
         <div className="about-promise-grid">
           <article><span /><h3>{tr('Authentic Khmer Cuisine')}</h3><p>{tr("Preserving Cambodia's culinary traditions.")}</p></article>
           <article><span /><h3>{tr('Warm Hospitality')}</h3><p>{tr('Welcoming every guest with genuine care.')}</p></article>
