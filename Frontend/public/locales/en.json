@@ -1119,12 +1119,13 @@
     },
     "filters": {
       "All": "All",
-      "Wedding": "Wedding",
-      "Corporate": "Corporate",
-      "Birthday": "Birthday",
-      "Engagement": "Engagement",
-      "Conference": "Conference",
-      "Private Party": "Private Party"
+      "Restaurant": "Restaurant",
+      "Food": "Food",
+      "Experience": "Experience",
+      "Events": "Events",
+      "People": "People",
+      "Family": "Family",
+      "Design": "Design"
     },
     "empty": "More moments from this collection are coming soon.",
     "aria": {
