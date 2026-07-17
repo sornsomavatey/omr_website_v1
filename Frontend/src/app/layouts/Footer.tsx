@@ -14,6 +14,7 @@ const footerLinkKeys: Record<string, string> = {
   'Press': 'footer.links.press',
   'Instagram': 'footer.social.instagram',
   'Facebook': 'footer.social.facebook',
+  'TikTok': 'footer.social.tiktok',
   'TripAdvisor': 'footer.social.tripAdvisor',
 };
 
@@ -37,6 +38,7 @@ const contactLinks = [
 const socialLinks = [
   { name: 'Instagram', href: 'https://www.instagram.com/onemore.restaurantkh/' },
   { name: 'Facebook', href: 'https://www.facebook.com/onemorerestaurant' },
+  { name: 'TikTok', href: 'https://www.tiktok.com/@onemorerestaurant?_r=1&_t=ZS-9860CEmHg2v' },
   {
     name: 'TripAdvisor',
     href: 'https://www.tripadvisor.com/Restaurant_Review-g293940-d9773439-Reviews-One_More_Restaurant_Toul_Kork-Phnom_Penh.html',

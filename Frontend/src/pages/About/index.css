@@ -111,6 +111,7 @@
 .about-people-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px 26px; }
 .about-people-grid article { background: #fff; }
 .about-people-grid img { width: 100%; aspect-ratio: 1 / 1.04; display: block; object-fit: cover; object-position: center; }
+.about-people-grid img.about-people-image-bk-team { object-position: 18% center; }
 .about-people-grid article > div { min-height: 142px; padding: 22px 24px; }
 .about-people-grid h3 { margin-bottom: 5px; font-size: 20px; font-weight: 400; }
 .about-people-grid span { color: var(--about-green); font: 600 11px/1 var(--font-sans); }
@@ -122,7 +123,7 @@
 .about-number-grid span { display: block; margin-top: 12px; font: 600 10px/1.3 var(--font-sans); }
 
 .about-spirit { width: 100%; max-width: none; display: grid; grid-template-columns: 1.1fr .9fr; align-items: center; gap: 72px; padding: 82px max(48px, calc((100% - 1250px) / 2)); background: var(--about-soft); }
-.about-spirit > img { width: 100%; min-height: 480px; object-fit: cover; }
+.about-spirit > img { width: 100%; height: auto; min-height: 0; display: block; object-fit: contain; object-position: center; }
 .about-spirit h2 { margin-bottom: 25px; font-size: clamp(38px, 4.3vw, 55px); font-weight: 400; line-height: 1.08; }
 .about-spirit > div > p:not(.about-eyebrow) { color: #5d675a; font: 400 13px/1.7 var(--font-sans); }
 .about-spirit .about-button { margin-top: 12px; }
@@ -169,6 +170,21 @@ html[lang="km"] .about-page h2 {
   letter-spacing: 0;
 }
 
+html[data-lang="kh"] .about-spirit h2,
+html[lang="km"] .about-spirit h2 {
+  max-width: 720px;
+  margin-left: -3px;
+  line-height: 1.28 !important;
+  text-indent: 0;
+  text-wrap: normal;
+  word-spacing: 0;
+}
+
+.about-spirit-title-line {
+  display: block;
+  white-space: nowrap;
+}
+
 html[data-lang="kh"] .about-button,
 html[lang="km"] .about-button {
   line-height: 1.45;
@@ -192,7 +208,7 @@ html[lang="km"] .about-button {
 @media (max-width: 900px) {
   .about-timeline { grid-template-columns: repeat(2, 1fr); gap: 45px 24px; }
   .about-spirit { grid-template-columns: 1fr; gap: 45px; }
-  .about-spirit > img { min-height: 430px; }
+  .about-spirit > img { height: auto; min-height: 0; }
   .about-careers-grid { gap: 40px; }
 }
 
@@ -218,7 +234,7 @@ html[lang="km"] .about-button {
   .about-number-grid div:last-child { grid-column: 1 / 3; }
   .about-number-grid strong { font-size: 38px; }
   .about-spirit { width: 100%; padding: var(--mobile-section-space) 16px; gap: 32px; }
-  .about-spirit > img { min-height: 0; aspect-ratio: 1; }
+  .about-spirit > img { height: auto; min-height: 0; aspect-ratio: auto; }
   .about-spirit h2 { font-size: 38px; }
   .about-spirit .about-button { width: auto; }
   .about-moments-grid { height: auto; grid-template-columns: 1fr 1fr; grid-template-rows: auto; gap: 10px; }
