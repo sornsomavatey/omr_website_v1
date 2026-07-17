@@ -1129,10 +1129,7 @@
       "Restaurant": "Restaurant",
       "Food": "Food",
       "Experience": "Experience",
-      "Events": "Events",
-      "People": "People",
-      "Family": "Family",
-      "Design": "Design"
+      "Events": "Events"
     },
     "empty": "More moments from this collection are coming soon.",
     "aria": {
@@ -1154,12 +1151,20 @@
         "title": "Khmer Cooking Workshop",
         "tag": "Experience"
       },
+      "Event Refreshment Moment": {
+        "title": "Event Refreshment Moment",
+        "tag": "Experience"
+      },
+      "One More Service Moment": {
+        "title": "One More Service Moment",
+        "tag": "Experience"
+      },
       "Kitchen Rituals": {
         "title": "Kitchen Rituals",
         "tag": "Food"
       },
       "Khmer Grill Platter": {
-        "title": "Khmer Grill Platter",
+        "title": "Khmer Grill Plater",
         "tag": "Food"
       },
       "Artisanal Plating": {
@@ -1192,7 +1197,7 @@
       },
       "Khmer Cake Traditions": {
         "title": "Khmer Cake Traditions",
-        "tag": "People"
+        "tag": "Experience"
       },
       "Private Gatherings": {
         "title": "Private Gatherings",
@@ -1200,7 +1205,7 @@
       },
       "Khmer Hospitality": {
         "title": "Khmer Hospitality",
-        "tag": "People"
+        "tag": "Experience"
       },
       "The Private Room": {
         "title": "The Private Room",
@@ -1212,7 +1217,7 @@
       },
       "Little Moments": {
         "title": "Little Moments",
-        "tag": "Family"
+        "tag": "Experience"
       },
       "Sweet Refreshment": {
         "title": "Sweet Refreshment",
@@ -1224,7 +1229,7 @@
       },
       "Curves & Craft": {
         "title": "Curves & Craft",
-        "tag": "Design"
+        "tag": "Restaurant"
       }
     }
   }
