@@ -41,6 +41,7 @@
     "social": {
       "instagram": "Instagram",
       "facebook": "Facebook",
+      "tiktok": "TikTok",
       "tripAdvisor": "TripAdvisor"
     },
     "aria": {
@@ -94,6 +95,12 @@
           "category": "BREAKFAST · PAN-FRIED",
           "description": "Stir-fried pin-noodles with tender beef, chives and bean sprouts, topped with a fried egg.",
           "badge": "Local Fav"
+        },
+        "friedRicePineapple": {
+          "name": "Pineapple Fried Rice",
+          "category": "BREAKFAST Â· FRIED RICE",
+          "description": "Golden fried rice served in fresh pineapple with prawns, cashews, and aromatic Khmer seasoning.",
+          "badge": "Chef's Choice"
         },
         "fishAmokCoconut": {
           "name": "Fish Amok in Coconut",
@@ -1139,8 +1146,8 @@
         "title": "Main Hall Dining",
         "tag": "Restaurant"
       },
-      "Street Flavors": {
-        "title": "Street Flavors",
+      "Rich of Flavors": {
+        "title": "Rich of Flavors",
         "tag": "Food"
       },
       "Khmer Cooking Workshop": {
@@ -1151,9 +1158,41 @@
         "title": "Kitchen Rituals",
         "tag": "Food"
       },
+      "Khmer Grill Platter": {
+        "title": "Khmer Grill Platter",
+        "tag": "Food"
+      },
       "Artisanal Plating": {
         "title": "Artisanal Plating",
         "tag": "Food"
+      },
+      "Christmas Wine Display": {
+        "title": "Christmas Wine Display",
+        "tag": "Events"
+      },
+      "Wine Toast": {
+        "title": "Wine Toast",
+        "tag": "Events"
+      },
+      "Christmas Deer Display": {
+        "title": "Christmas Deer Display",
+        "tag": "Events"
+      },
+      "Miss Planet International Dining": {
+        "title": "Miss Planet International Dining",
+        "tag": "Events"
+      },
+      "Catering Service Team": {
+        "title": "Catering Service Team",
+        "tag": "Events"
+      },
+      "Event Coffee Service": {
+        "title": "Event Coffee Service",
+        "tag": "Events"
+      },
+      "Khmer Cake Traditions": {
+        "title": "Khmer Cake Traditions",
+        "tag": "People"
       },
       "Private Gatherings": {
         "title": "Private Gatherings",
@@ -1174,6 +1213,10 @@
       "Little Moments": {
         "title": "Little Moments",
         "tag": "Family"
+      },
+      "Sweet Refreshment": {
+        "title": "Sweet Refreshment",
+        "tag": "Food"
       },
       "Canopy Entrance": {
         "title": "Canopy Entrance",

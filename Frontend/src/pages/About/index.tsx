@@ -23,14 +23,13 @@ import celebrationImage from '@/assets/home-v2/e900cacb721f9c81cd07b8415a03f20f4
 import cateringImage from '@/assets/home-v2/07e47044152ad38cdbb1bda5ae392fb848e3a37a.webp';
 import communityImage from '@/assets/home-v2/9826b8c118c911c852174f3c0d0204245fd0da48.webp';
 import kidsImage from '@/assets/home-v2/e8f4b56e423777f3f6c3df39c6ef78914b278e17.webp';
-import hospitalityImage from '@/assets/Event & Celebrations card-2.webp';
+import hospitalityImage from '@/assets/omr-hospitality.webp';
 import finalCtaImage from '@/assets/home-v2/31b0910d38c033be0ce5292cf4a1d68688308c6b.webp';
-import headChefImage from '@/assets/about/hor-chanthan.png';
-import chefTkImage from '@/assets/Chef tk.png';
+import chefTkImage from '@/assets/Chef tk.webp';
 import chefBkImage from '@/assets/chef bk.jpg';
-import chefTeamImage from '@/assets/about/chef-team.png';
-import operationsTeamImage from '@/assets/about/operations-team.png';
-import careersTeamImage from '@/assets/about/careers-team.png';
+import chefAndStaffTkImage from '@/assets/about/chefandstaff-TK.jpg';
+import chefAndStaffBkImage from '@/assets/about/chefandstaff-BK.jpg';
+import careersTeamImage from '@/assets/about/careers-team.webp';
 import './index.css';
 
 const timeline = [
@@ -48,10 +47,10 @@ const reasons = [
 ];
 
 const people = [
-  { image: chefTkImage, title: 'Hor Chanthan', role: 'Head Chef', text: 'A kitchen built on precision, respect for ingredients, and the joy of sharing heritage recipes.' },
-  { image: chefBkImage, title: 'Service Team', role: '', text: 'Warm, attentive, and genuinely invested in making every guest feel at home.' },
-  { image: chefTeamImage, title: 'Our Chef Team', role: '', text: 'Khmer cuisine is an art form that tells the story of our land. Our mission is to elevate these ancient flavors while remaining fiercely loyal to the techniques passed down through generations.' },
-  { image: operationsTeamImage, title: 'Operations Team', role: '', text: 'Behind every celebration is a team that cares for every detail, from planning to execution.' },
+  { image: chefTkImage, title: 'Hor Chanthan', role: 'Head Chef', text: 'Head Chef at Tuol Kork Branch. A kitchen built on precision, respect for ingredients, and the joy of sharing heritage recipes.' },
+  { image: chefBkImage, title: 'Khlara', role: 'Head Chef', text: 'Head Chef at Boeung Kak Branch. Warm, attentive, and genuinely invested in making every guest feel at home.' },
+  { image: chefAndStaffTkImage, title: 'Toul Kork Team', role: '', text: 'The Toul Kork chef and service team bring heritage recipes, warm hospitality, and careful service to every guest experience.' },
+  { image: chefAndStaffBkImage, title: 'Boeung Kak Team', role: '', text: 'The Boeung Kak chef and service team work together to welcome every guest with care, warmth, and authentic Khmer hospitality.', imageClassName: 'about-people-image-bk-team' },
 ];
 
 const toKhmerDigits = (value: string) =>
@@ -99,11 +98,14 @@ const khmerCopy: Record<string, string> = {
   'Our People': 'ក្រុមការងាររបស់យើង',
   'The People Behind One More': 'មនុស្សនៅពីក្រោយ វ័នម៉រ',
   'Hor Chanthan': 'ហ័រ ចាន់ថាន់',
+  'Khlara': 'ខ្លា រ៉ា',
   'Head Chef': 'មេចុងភៅ',
+  'Head Chef at Tuol Kork Branch. A kitchen built on precision, respect for ingredients, and the joy of sharing heritage recipes.': 'មេចុងភៅនៅសាខាទួលគោក។ ផ្ទះបាយមួយដែលផ្អែកលើភាពម៉ត់ចត់ ការគោរពចំពោះគ្រឿងផ្សំ និងសេចក្តីរីករាយក្នុងការចែករំលែករូបមន្តបេតិកភណ្ឌ។',
+  'Head Chef at Boeung Kak Branch. Warm, attentive, and genuinely invested in making every guest feel at home.': 'មេចុងភៅនៅសាខាបឹងកក់។ កក់ក្តៅ យកចិត្តទុកដាក់ និងខិតខំធ្វើឱ្យភ្ញៀវគ្រប់រូបមានអារម្មណ៍ដូចនៅផ្ទះ។',
   'A kitchen built on precision, respect for ingredients, and the joy of sharing heritage recipes.': 'ផ្ទះបាយមួយដែលផ្អែកលើភាពម៉ត់ចត់ ការគោរពចំពោះគ្រឿងផ្សំ និងសេចក្តីរីករាយក្នុងការចែករំលែករូបមន្តបេតិកភណ្ឌ។',
   'Our Culinary Team': 'ក្រុមចុងភៅរបស់យើង',
-  'Our Chef Team': 'ក្រុមចុងភៅរបស់យើង',
-  'Khmer cuisine is an art form that tells the story of our land. Our mission is to elevate these ancient flavors while remaining fiercely loyal to the techniques passed down through generations.': 'ម្ហូបខ្មែរគឺជាសិល្បៈមួយដែលបង្ហាញពីរឿងរ៉ាវនៃទឹកដីរបស់យើង។ បេសកកម្មរបស់យើងគឺលើកកម្ពស់រសជាតិបុរាណទាំងនេះ ខណៈពេលរក្សាភាពស្មោះត្រង់ចំពោះបច្ចេកទេសដែលបានបន្តពីមួយជំនាន់ទៅមួយជំនាន់។',
+  'Toul Kork Team': 'ក្រុមសាខាទួលគោក',
+  'The Toul Kork chef and service team bring heritage recipes, warm hospitality, and careful service to every guest experience.': 'ក្រុមចុងភៅ និងក្រុមសេវាកម្មសាខាទួលគោក នាំមកនូវរូបមន្តបេតិកភណ្ឌ បដិសណ្ឋារកិច្ចកក់ក្តៅ និងសេវាកម្មយកចិត្តទុកដាក់ដល់បទពិសោធន៍ភ្ញៀវគ្រប់រូប។',
   'Guardians of Khmer Flavor': 'អ្នកថែរក្សារសជាតិខ្មែរ',
   'Precision, respect for ingredients, and the joy of sharing heritage recipes.': 'ភាពម៉ត់ចត់ ការគោរពគ្រឿងផ្សំ និងសេចក្តីរីករាយក្នុងការចែករំលែករូបមន្តបេតិកភណ្ឌ។',
   'Service Team': 'ក្រុមសេវាកម្ម',
@@ -113,8 +115,8 @@ const khmerCopy: Record<string, string> = {
   'Our Event Team': 'ក្រុមរៀបចំកម្មវិធីរបស់យើង',
   'Celebrations With Heart': 'ការប្រារព្ធពិធីដោយយកចិត្តទុកដាក់',
   'Creative, experienced, and ready to make every gathering feel personal.': 'ច្នៃប្រឌិត មានបទពិសោធន៍ និងត្រៀមធ្វើឱ្យគ្រប់ការជួបជុំមានភាពពិសេស។',
-  'Operations Team': 'ក្រុមប្រតិបត្តិការ',
-  'Behind every celebration is a team that cares for every detail, from planning to execution.': 'នៅពីក្រោយរាល់កម្មវិធីអបអរសាទរ មានក្រុមការងារដែលយកចិត្តទុកដាក់លើគ្រប់ព័ត៌មានលម្អិត ចាប់ពីការរៀបចំផែនការរហូតដល់ការអនុវត្ត។',
+  'Boeung Kak Team': 'ក្រុមសាខាបឹងកក់',
+  'The Boeung Kak chef and service team work together to welcome every guest with care, warmth, and authentic Khmer hospitality.': 'ក្រុមចុងភៅ និងក្រុមសេវាកម្មសាខាបឹងកក់ សហការគ្នាស្វាគមន៍ភ្ញៀវគ្រប់រូបដោយការយកចិត្តទុកដាក់ ភាពកក់ក្តៅ និងបដិសណ្ឋារកិច្ចខ្មែរពិតប្រាកដ។',
   'The People Behind It All': 'អ្នកនៅពីក្រោយភាពជោគជ័យ',
   'Caring for every detail, from planning and sourcing to daily service.': 'យកចិត្តទុកដាក់លើគ្រប់ព័ត៌មានលម្អិត ចាប់ពីការរៀបចំ និងការផ្គត់ផ្គង់ ដល់សេវាកម្មប្រចាំថ្ងៃ។',
   'Our Number': 'តួលេខរបស់យើង',
@@ -125,9 +127,9 @@ const khmerCopy: Record<string, string> = {
   'Branches': 'សាខា',
   'Team Members': 'សមាជិកក្រុមការងារ',
   'Khmer Culture': 'វប្បធម៌ខ្មែរ',
-  'The Spirit of Khmer Hospitality': 'ស្មារតីនៃបដិសណ្ឋារកិច្ចខ្មែរ',
-  'In Khmer culture, dining is more than a meal—it is a sincere ritual of togetherness. We believe hospitality begins with the warmth of the host.': 'ក្នុងវប្បធម៌ខ្មែរ ការទទួលទានអាហារមានន័យលើសពីអាហារមួយពេល—វាជាពិធីនៃការជួបជុំដោយស្មោះស្ម័គ្រ។ យើងជឿថាបដិសណ្ឋារកិច្ចចាប់ផ្តើមពីភាពកក់ក្តៅរបស់ម្ចាស់ផ្ទះ។',
-  'From fresh local ingredients to the careful presentation of every dish, we honor this tradition in every moment.': 'ចាប់ពីគ្រឿងផ្សំក្នុងស្រុកស្រស់ៗ ដល់ការរៀបចំមុខម្ហូបនីមួយៗដោយយកចិត្តទុកដាក់ យើងគោរពប្រពៃណីនេះគ្រប់ពេលវេលា។',
+  'The Spirit of Khmer Hospitality': 'ស្មារតីបដិសណ្ឋារកិច្ចខ្មែរ',
+  'For us, Khmer hospitality starts at the table: a warm welcome, food made with care, and time shared without hurry.': 'សម្រាប់យើង បដិសណ្ឋារកិច្ចខ្មែរចាប់ផ្តើមពីតុអាហារ៖ ការស្វាគមន៍យ៉ាងកក់ក្តៅ ម្ហូបដែលធ្វើដោយចិត្ត និងពេលវេលាដែលចែករំលែកដោយស្រួលៗ។',
+  'We choose fresh local ingredients, cook with respect for familiar flavors, and serve each guest as if they were part of our own home.': 'យើងជ្រើសរើសគ្រឿងផ្សំស្រស់ក្នុងស្រុក ចម្អិនដោយគោរពរសជាតិដែលស្គាល់ និងបម្រើភ្ញៀវគ្រប់រូបដូចជាសមាជិកក្នុងផ្ទះរបស់យើង។',
   'Learn More': 'ស្វែងយល់បន្ថែម',
   'Moments': 'ពេលវេលា',
   'Moments That Matter': 'ពេលវេលាដែលមានអត្ថន័យ',
@@ -317,7 +319,7 @@ export default function About() {
         <div className="about-people-grid">
           {people.map((person) => (
             <article key={person.title}>
-              <img src={person.image} alt={tr(person.title)} />
+              <img src={person.image} alt={tr(person.title)} className={person.imageClassName} />
               <div><h3>{tr(person.title)}</h3>{person.role && <span>{tr(person.role)}</span>}<p>{tr(person.text)}</p></div>
             </article>
           ))}
@@ -339,9 +341,16 @@ export default function About() {
         <img src={hospitalityImage} alt={tr('Guests sharing a meal at One More Restaurant')} />
         <div>
           <p className="about-eyebrow">{tr('Khmer Culture')}</p>
-          <h2>{tr('The Spirit of Khmer Hospitality')}</h2>
-          <p>{tr('In Khmer culture, dining is more than a meal—it is a sincere ritual of togetherness. We believe hospitality begins with the warmth of the host.')}</p>
-          <p>{tr('From fresh local ingredients to the careful presentation of every dish, we honor this tradition in every moment.')}</p>
+          <h2>
+            {isKhmer ? (
+              <>
+                <span className="about-spirit-title-line">ស្មារតីបដិសណ្ឋារ</span>
+                <span className="about-spirit-title-line">កិច្ចខ្មែរ</span>
+              </>
+            ) : tr('The Spirit of Khmer Hospitality')}
+          </h2>
+          <p>{tr('For us, Khmer hospitality starts at the table: a warm welcome, food made with care, and time shared without hurry.')}</p>
+          <p>{tr('We choose fresh local ingredients, cook with respect for familiar flavors, and serve each guest as if they were part of our own home.')}</p>
           <Link to="/menu" className="about-button about-button-primary">{tr('Learn More')}</Link>
         </div>
       </section>

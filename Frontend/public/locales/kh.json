@@ -41,6 +41,7 @@
     "social": {
       "instagram": "Instagram",
       "facebook": "Facebook",
+      "tiktok": "TikTok",
       "tripAdvisor": "TripAdvisor"
     },
     "aria": {
@@ -94,6 +95,12 @@
           "category": "អាហារពេលព្រឹក · ឆា",
           "description": "លតឆាជាមួយសាច់គោទន់ ប៉ាតេ ស្លឹកខ្ទឹម សណ្តែកបណ្តុះ និងពងទាចៀនពីលើ។",
           "badge": "ពេញនិយម"
+        },
+        "friedRicePineapple": {
+          "name": "បាយឆាម្នាស់",
+          "category": "អាហារពេលព្រឹក Â· បាយឆា",
+          "description": "បាយឆាពណ៌មាស បម្រើក្នុងផ្លែម្នាស់ស្រស់ ជាមួយបង្គា គ្រាប់ស្វាយចន្ទី និងគ្រឿងទេសខ្មែរ។",
+          "badge": "ជម្រើសពិសេស"
         },
         "fishAmokCoconut": {
           "name": "ហហ្មុកដូងខ្ចីសាច់ត្រី",
@@ -1138,8 +1145,8 @@
         "title": "ការទទួលទានអាហារនៅសាលធំ",
         "tag": "ភោជនីយដ្ឋាន"
       },
-      "Street Flavors": {
-        "title": "រសជាតិអាហារមានរសជាតិឆ្ងាញ់",
+      "Rich of Flavors": {
+        "title": "រសជាតិដ៏សម្បូរបែប",
         "tag": "ម្ហូបអាហារ"
       },
       "Khmer Cooking Workshop": {
@@ -1150,9 +1157,41 @@
         "title": "របៀបរបបក្នុងផ្ទះបាយ",
         "tag": "ម្ហូបអាហារ"
       },
+      "Khmer Grill Platter": {
+        "title": "ចានអាំងខ្មែរ",
+        "tag": "ម្ហូបអាហារ"
+      },
       "Artisanal Plating": {
         "title": "ការរៀបចំចានបែបសិល្បៈ",
         "tag": "ម្ហូបអាហារ"
+      },
+      "Christmas Wine Display": {
+        "title": "ការតាំងបង្ហាញស្រាបុណ្យណូអែល",
+        "tag": "កម្មវិធី"
+      },
+      "Wine Toast": {
+        "title": "ការជល់កែវស្រា",
+        "tag": "កម្មវិធី"
+      },
+      "Christmas Deer Display": {
+        "title": "ការតាំងបង្ហាញសត្វក្តាន់បុណ្យណូអែល",
+        "tag": "កម្មវិធី"
+      },
+      "Miss Planet International Dining": {
+        "title": "ការទទួលទានអាហាររបស់ Miss Planet International",
+        "tag": "កម្មវិធី"
+      },
+      "Catering Service Team": {
+        "title": "ក្រុមសេវាកម្មម្ហូបអាហារក្រៅទីតាំង",
+        "tag": "កម្មវិធី"
+      },
+      "Event Coffee Service": {
+        "title": "សេវាកាហ្វេសម្រាប់កម្មវិធី",
+        "tag": "កម្មវិធី"
+      },
+      "Khmer Cake Traditions": {
+        "title": "ប្រពៃណីនំផ្អែមខ្មែរ",
+        "tag": "មនុស្ស"
       },
       "Private Gatherings": {
         "title": "ការជួបជុំឯកជន",
@@ -1173,6 +1212,10 @@
       "Little Moments": {
         "title": "ខណៈពេលតូចៗដ៏មានន័យ",
         "tag": "គ្រួសារ"
+      },
+      "Sweet Refreshment": {
+        "title": "បង្អែមទឹកកកឈូស",
+        "tag": "ម្ហូបអាហារ"
       },
       "Canopy Entrance": {
         "title": "ច្រកចូលដំបូលស្លឹកឈើ",

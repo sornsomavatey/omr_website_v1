@@ -7,13 +7,13 @@ export default function SignatureDishes({ dishes }: { dishes: SignatureDish[] })
   const { t } = useTranslation();
   const collageDishOrder = [
     'kuyteavOneMore',
-    'hainanChickenRice',
-    'kuyteavMincedPork',
-    'lortchaEgg',
-    'porkBloodPorridge',
     'fishAmokCoconut',
-    'sourSeafoodSoup',
     'panFriedFishPaste',
+    'kuyteavMincedPork',
+    'sourSeafoodSoup',
+    'grilledChickenSiemReap',
+    'hainanChickenRice',
+    'porkBloodPorridge',
   ];
   const collageDishes = collageDishOrder
     .map((key) => dishes.find((dish) => dish.key === key))
@@ -79,7 +79,7 @@ export default function SignatureDishes({ dishes }: { dishes: SignatureDish[] })
 
           <div className="cuisine-center-circle">
             {(() => {
-              const centerDish = dishes.find((d) => d.key === 'grilledChickenSiemReap') || dishes[0];
+              const centerDish = dishes.find((d) => d.key === 'friedRicePineapple') || dishes[0];
               const centerName = centerDish?.key
                 ? t(`home.signature.items.${centerDish.key}.name`, undefined, centerDish.name)
                 : centerDish?.name;

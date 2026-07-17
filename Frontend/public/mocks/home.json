@@ -53,6 +53,15 @@
       "badge": "Chef's Choice ✦"
     },
     {
+      "key": "friedRicePineapple",
+      "name": "Pineapple Fried Rice",
+      "category": "BREAKFAST Â· FRIED RICE",
+      "desc": "Golden fried rice served in fresh pineapple with prawns, cashews, and aromatic Khmer seasoning.",
+      "img": "@/assets/Food/Breakfast/fried-rice-pineapple.webp",
+      "price": "$16",
+      "badge": "Chef's Choice âœ¦"
+    },
+    {
       "key": "fishAmokCoconut",
       "name": "Fish Amok in Coconut",
       "category": "LUNCH · SIGNATURE",
@@ -75,7 +84,7 @@
       "name": "Pan-fried Fish Paste with Fresh Vegetables",
       "category": "LUNCH · SIGNATURE",
       "desc": "Golden pan-fried fish paste served with a colorful selection of crisp fresh vegetables.",
-      "img": "@/assets/Food/Lunch and Dinner/pan-fried-fish-paste-enhanced.png",
+      "img": "@/assets/Food/Lunch and Dinner/pan-fried-fish-paste-enhanced.webp",
       "price": "$18",
       "badge": "Chef's Choice ✦"
     },

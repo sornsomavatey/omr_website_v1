@@ -14,12 +14,13 @@ import imgFoodMincedPorkKuyteav from '@/assets/Food/Breakfast/minced-pork-kuytea
 import imgFoodChickenThighRice from '@/assets/Food/Breakfast/chicken-thigh-rice.webp';
 import imgFoodPorkBloodPorridge from '@/assets/Food/Breakfast/pork-blood-porridge.webp';
 import imgFoodLortchaEgg from '@/assets/Food/Breakfast/lortcha-egg.webp';
+import imgFoodFriedRicePineapple from '@/assets/Food/Breakfast/fried-rice-pineapple.webp';
 import imgFoodFishAmokCoconut from '@/assets/Food/Lunch and Dinner/compressed_ហហ្មុក.webp';
 import imgFoodSourSeafoodSoup from '@/assets/Food/Lunch and Dinner/ß₧ƒß₧ÿßƒÆß₧¢ß₧Åß₧╗ßƒåß₧Öß₧╗ßƒåß₧╢ß₧éßƒÆß₧Üß₧┐ß₧äß₧ƒß₧ÿß₧╗ß₧æßƒÆß₧Ü.webp';
 import imgFoodGrilledChickenSiemreap from '@/assets/Food/Lunch and Dinner/grilled-chicken-siemreap.webp';
 import imgFoodStirFriedBokchoy from '@/assets/Food/Lunch and Dinner/stir-fried-bokchoy.webp';
 import imgFoodFriedFermentedEgg from '@/assets/Food/Lunch and Dinner/fried-fermented-egg.webp';
-import imgFoodPanFriedFishPaste from '@/assets/Food/Lunch and Dinner/pan-fried-fish-paste-enhanced.png';
+import imgFoodPanFriedFishPaste from '@/assets/Food/Lunch and Dinner/pan-fried-fish-paste-enhanced.webp';
 
 import imgDish1 from '@/assets/home-v2/36191a3943135f3542a0fe8b80adee304f122115.webp';
 import imgDish2 from '@/assets/home-v2/35b5b5843bc3a879390cc05c8e6b33eae70c2a8a.webp';
@@ -121,12 +122,13 @@ export const imageMap: Record<string, string> = {
   '@/assets/Food/Breakfast/chicken-thigh-rice.webp': imgFoodChickenThighRice,
   '@/assets/Food/Breakfast/pork-blood-porridge.webp': imgFoodPorkBloodPorridge,
   '@/assets/Food/Breakfast/lortcha-egg.webp': imgFoodLortchaEgg,
+  '@/assets/Food/Breakfast/fried-rice-pineapple.webp': imgFoodFriedRicePineapple,
   '@/assets/Food/Lunch and Dinner/fish-amok-coconut.webp': imgFoodFishAmokCoconut,
   '@/assets/Food/Lunch and Dinner/ß₧ƒß₧ÿßƒÆß₧¢ß₧Åß₧╗ßƒåß₧Öß₧╗ßƒåß₧╢ß₧éßƒÆß₧Üß₧┐ß₧äß₧ƒß₧ÿß₧╗ß₧æßƒÆß₧Ü.webp': imgFoodSourSeafoodSoup,
   '@/assets/Food/Lunch and Dinner/grilled-chicken-siemreap.webp': imgFoodGrilledChickenSiemreap,
   '@/assets/Food/Lunch and Dinner/stir-fried-bokchoy.webp': imgFoodStirFriedBokchoy,
   '@/assets/Food/Lunch and Dinner/fried-fermented-egg.webp': imgFoodFriedFermentedEgg,
-  '@/assets/Food/Lunch and Dinner/pan-fried-fish-paste-enhanced.png': imgFoodPanFriedFishPaste,
+  '@/assets/Food/Lunch and Dinner/pan-fried-fish-paste-enhanced.webp': imgFoodPanFriedFishPaste,
   '@/assets/compressed_Business.webp': imgSpaceBusiness,
   '@/assets/compressed_Private Dining room.webp': imgSpacePrivateDining,
   '@/assets/compressed_kid corner.webp': imgSpaceKidCorner,
