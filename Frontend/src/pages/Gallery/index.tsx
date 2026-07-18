@@ -14,6 +14,8 @@ import imgXmasDeer from '@/assets/gallery/xmas-deer.webp';
 import imgMissPlanetDining from '@/assets/gallery/miss-planet-dining.webp';
 import imgCateringServiceStaff from '@/assets/gallery/catering-service-staff.webp';
 import imgStaffNumansom from '@/assets/gallery/staff-with-numansom.webp';
+import imgVitalEvent from '@/assets/gallery/vital-event.webp';
+import imgOmrHospitality from '@/assets/gallery/omr-hospitality.webp';
 import imgService from '@/assets/home-v2/80bc2f874a3b8b65fc3bd247f23046db8632d909.webp';
 import imgCatering from '@/assets/home-v2/07e47044152ad38cdbb1bda5ae392fb848e3a37a.webp';
 import imgRoom from '@/assets/home-v2/480cb1d76af2706b9692b726ad26ec2bf396f8c8.webp';
@@ -26,7 +28,7 @@ import imgExterior from '@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c939946
 
 import './index.css';
 
-const filters = ['All', 'Restaurant', 'Food', 'Experience', 'Events', 'People', 'Family', 'Design'] as const;
+const filters = ['All', 'Restaurant', 'Food', 'Experience', 'Events'] as const;
 type Filter = (typeof filters)[number];
 
 type GalleryItem = {
@@ -42,6 +44,8 @@ const galleryItems: GalleryItem[] = [
   { src: imgDining, alt: 'Guests enjoying the main dining hall', title: 'Main Hall Dining', tag: 'Restaurant', category: 'Restaurant', shape: 'portrait' },
   { src: imgNoodles, alt: 'A bowl of Khmer beef noodles', title: 'Rich of Flavors', tag: 'Food', category: 'Food', shape: 'square' },
   { src: imgWorkshop, alt: 'Traditional Khmer cooking workshop', title: 'Khmer Cooking Workshop', tag: 'Experience', category: 'Experience', shape: 'portrait' },
+  { src: imgVitalEvent, alt: 'Guests enjoying refreshing drinks at a One More Restaurant event', title: 'Event Refreshment Moment', tag: 'Experience', category: 'Experience', shape: 'square' },
+  { src: imgOmrHospitality, alt: 'One More Restaurant staff serving a guest at the table', title: 'One More Service Moment', tag: 'Experience', category: 'Experience', shape: 'square' },
   { src: imgChicken, alt: 'Khmer chicken and fragrant rice', title: 'Kitchen Rituals', tag: 'Food', category: 'Food', shape: 'portrait' },
   { src: imgGrillPlatter, alt: 'Guest presenting a generous Khmer grilled-food platter', title: 'Khmer Grill Platter', tag: 'Food', category: 'Food', shape: 'portrait' },
   { src: imgArtisanalPlating, alt: 'Artfully plated Khmer dish', title: 'Artisanal Plating', tag: 'Food', category: 'Food', shape: 'square' },
@@ -50,23 +54,43 @@ const galleryItems: GalleryItem[] = [
   { src: imgXmasDeer, alt: 'Christmas deer display with festive lights', title: 'Christmas Deer Display', tag: 'Events', category: 'Events', shape: 'portrait' },
   { src: imgMissPlanetDining, alt: 'Miss Planet International guests dining at One More Restaurant', title: 'Miss Planet International Dining', tag: 'Events', category: 'Events', shape: 'landscape' },
   { src: imgCateringServiceStaff, alt: 'One More Restaurant catering service staff', title: 'Catering Service Team', tag: 'Events', category: 'Events', shape: 'square' },
-  { src: imgStaffNumansom, alt: 'One More Restaurant staff presenting traditional Khmer cakes', title: 'Khmer Cake Traditions', tag: 'People', category: 'People', shape: 'square' },
+  { src: imgStaffNumansom, alt: 'One More Restaurant staff presenting traditional Khmer cakes', title: 'Khmer Cake Traditions', tag: 'Experience', category: 'Experience', shape: 'square' },
   { src: imgCatering, alt: 'Outdoor catered celebration', title: 'Private Gatherings', tag: 'Events', category: 'Events', shape: 'landscape' },
   { src: imgCoffeeService, alt: 'One More Restaurant staff operating a coffee station at an event', title: 'Event Coffee Service', tag: 'Events', category: 'Events', shape: 'square' },
-  { src: imgService, alt: 'Warm service in the restaurant courtyard', title: 'Khmer Hospitality', tag: 'People', category: 'People', shape: 'portrait' },
+  { src: imgService, alt: 'Warm service in the restaurant courtyard', title: 'Khmer Hospitality', tag: 'Experience', category: 'Experience', shape: 'portrait' },
   { src: imgRoom, alt: 'Private dining room set for guests', title: 'The Private Room', tag: 'Restaurant', category: 'Restaurant', shape: 'portrait' },
   { src: imgEvent, alt: 'Floral event hall prepared for a celebration', title: 'A Day To Remember', tag: 'Events', category: 'Events', shape: 'landscape' },
-  { src: imgChildren, alt: 'Children enjoying a creative activity', title: 'Little Moments', tag: 'Family', category: 'Family', shape: 'square' },
+  { src: imgChildren, alt: 'Children enjoying a creative activity', title: 'Little Moments', tag: 'Experience', category: 'Experience', shape: 'square' },
   { src: imgDessertCup, alt: 'A sweet Khmer dessert served in a One More Restaurant cup', title: 'Sweet Refreshment', tag: 'Food', category: 'Food', shape: 'square' },
   { src: imgExterior, alt: 'One More Restaurant exterior', title: 'Canopy Entrance', tag: 'Restaurant', category: 'Restaurant', shape: 'landscape' },
-  { src: imgHero, alt: 'Architectural restaurant dining room', title: 'Curves & Craft', tag: 'Design', category: 'Design', shape: 'landscape' },
+  { src: imgHero, alt: 'Architectural restaurant dining room', title: 'Curves & Craft', tag: 'Restaurant', category: 'Restaurant', shape: 'landscape' },
 ];
 
 const galleryColumnBlueprint = [
-  ['Canopy Entrance', 'Miss Planet International Dining', 'Artisanal Plating', 'Khmer Cake Traditions', 'Kitchen Rituals', 'Wine Toast', 'Little Moments'],
-  ['Main Hall Dining', 'Curves & Craft', 'Christmas Wine Display', 'Rich of Flavors', 'Private Gatherings', 'Khmer Hospitality', 'Sweet Refreshment'],
-  ['Khmer Cooking Workshop', 'Christmas Deer Display', 'Khmer Grill Platter', 'Catering Service Team', 'The Private Room', 'Event Coffee Service', 'A Day To Remember'],
+  ['Canopy Entrance', 'Khmer Cooking Workshop', 'Miss Planet International Dining', 'Artisanal Plating', 'Khmer Cake Traditions', 'Kitchen Rituals', 'Wine Toast', 'Little Moments'],
+  ['Main Hall Dining', 'One More Service Moment', 'Curves & Craft', 'Christmas Wine Display', 'Rich of Flavors', 'Private Gatherings', 'Khmer Hospitality', 'Sweet Refreshment'],
+  ['Event Refreshment Moment', 'Christmas Deer Display', 'Khmer Grill Platter', 'Catering Service Team', 'The Private Room', 'Event Coffee Service', 'A Day To Remember'],
 ];
+
+const galleryShapeWeight: Record<GalleryItem['shape'], number> = {
+  landscape: 0.72,
+  square: 1,
+  portrait: 1.22,
+};
+
+function balanceGalleryColumns<T extends Pick<GalleryItem, 'shape'>>(items: T[]) {
+  const columnCount = Math.min(3, Math.max(1, items.length));
+  const columns = Array.from({ length: columnCount }, () => [] as T[]);
+  const columnHeights = Array.from({ length: columnCount }, () => 0);
+
+  items.forEach((item) => {
+    const shortestColumnIndex = columnHeights.indexOf(Math.min(...columnHeights));
+    columns[shortestColumnIndex].push(item);
+    columnHeights[shortestColumnIndex] += galleryShapeWeight[item.shape];
+  });
+
+  return columns;
+}
 
 export default function GalleryPage() {
   const { t } = useTranslation();
@@ -87,6 +111,10 @@ export default function GalleryPage() {
   );
 
   const visibleColumns = useMemo(() => {
+    if (activeFilter !== 'All') {
+      return balanceGalleryColumns(visibleItems);
+    }
+
     const visibleTitles = new Set(visibleItems.map((item) => item.title));
     return galleryColumnBlueprint
       .map((titles) => titles
@@ -99,7 +127,7 @@ export default function GalleryPage() {
         .filter((item): item is typeof translatedGalleryItems[number] => Boolean(item))
         .filter((item) => visibleTitles.has(item.title)))
       .filter((column) => column.length > 0);
-  }, [visibleItems, translatedGalleryItems]);
+  }, [activeFilter, visibleItems, translatedGalleryItems]);
 
   const closeLightbox = () => setSelectedIndex(null);
   const showPrevious = () => setSelectedIndex((index) => index === null ? null : (index - 1 + visibleItems.length) % visibleItems.length);

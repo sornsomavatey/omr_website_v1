@@ -28,7 +28,7 @@ import finalCtaImage from '@/assets/home-v2/31b0910d38c033be0ce5292cf4a1d6868830
 import chefTkImage from '@/assets/Chef tk.webp';
 import chefBkImage from '@/assets/chef bk.jpg';
 import chefAndStaffTkImage from '@/assets/about/chefandstaff-TK.jpg';
-import chefAndStaffBkImage from '@/assets/about/chefandstaff-BK.jpg';
+import chefAndStaffBkImage from '@/assets/about/chefandstaff-BK-new.webp';
 import careersTeamImage from '@/assets/about/careers-team.webp';
 import './index.css';
 
@@ -351,7 +351,6 @@ export default function About() {
           </h2>
           <p>{tr('For us, Khmer hospitality starts at the table: a warm welcome, food made with care, and time shared without hurry.')}</p>
           <p>{tr('We choose fresh local ingredients, cook with respect for familiar flavors, and serve each guest as if they were part of our own home.')}</p>
-          <Link to="/menu" className="about-button about-button-primary">{tr('Learn More')}</Link>
         </div>
       </section>
 
