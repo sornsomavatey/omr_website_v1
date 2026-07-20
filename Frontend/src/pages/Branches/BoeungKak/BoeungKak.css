@@ -426,7 +426,7 @@
 
 .bk-room-img-wrapper {
   position: relative;
-  height: 240px;
+  height: 280px;
   overflow: hidden;
 }
 
@@ -439,6 +439,39 @@
 
 .bk-room-card:hover .bk-room-img-wrapper img {
   transform: scale(1.05);
+}
+
+/* Dual-pane room image hover slide animation (Neang Tev & Orn Tit Tom) */
+.bk-room-img-wrapper img.bk-room-img-reveal-left {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 137% !important;
+  max-width: none !important;
+  height: 100%;
+  object-fit: cover;
+  transform: translateX(0);
+  transition: transform 0.75s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.bk-room-card:hover .bk-room-img-wrapper img.bk-room-img-reveal-left {
+  transform: translateX(27%);
+}
+
+.bk-room-img-wrapper img.bk-room-img-reveal-right {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 137% !important;
+  max-width: none !important;
+  height: 100%;
+  object-fit: cover;
+  transform: translateX(0);
+  transition: transform 0.75s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.bk-room-card:hover .bk-room-img-wrapper img.bk-room-img-reveal-right {
+  transform: translateX(-27%);
 }
 
 .bk-room-badge {
@@ -1106,7 +1139,7 @@
   .bk-hospitality-box { padding: 24px 20px; }
   .bk-box-item { min-width: 0; }
 
-  .bk-room-img-wrapper,
+  .bk-room-img-wrapper { height: 250px; }
   .bk-menu-img-wrapper { height: 220px; }
 
   .bk-room-body,

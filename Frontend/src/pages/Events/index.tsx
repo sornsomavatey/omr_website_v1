@@ -14,12 +14,12 @@ import imgPkg1     from '@/assets/Family_compressed.jpg';
 import imgPkg2     from '@/assets/engagement_compressed.jpg';
 import imgPkg3     from '@/assets/compressed_catering.jpg';
 import imgPkg4     from '@/assets/cooperate package_compressed.jpg';
-import imgSpace1   from '@/assets/home-v2/480cb1d76af2706b9692b726ad26ec2bf396f8c8.webp';
-import imgSpace2   from '@/assets/home-v2/e8f4b56e423777f3f6c3df39c6ef78914b278e17.webp';
-import imgGal1     from '@/assets/home-v2/07e47044152ad38cdbb1bda5ae392fb848e3a37a.webp';
-import imgGal2     from '@/assets/home-v2/35b5b5843bc3a879390cc05c8e6b33eae70c2a8a.webp';
-import imgGal3     from '@/assets/home-v2/13a7aa4dee36d6ba805abc6f982eb04ec7df4c4c.webp';
-import imgGal4     from '@/assets/home-v2/43310dd2158ca5c7f7d098abf280dc14124d42de.webp';
+import imgSpace1   from '@/assets/tk-room.png';
+import imgSpace2   from '@/assets/family dinner.jpg';
+import imgGal1     from '@/assets/gallery/private-gatherings-no-logo.png';
+import imgGal2     from '@/assets/gallery/artisanal-plating-no-logo.png';
+import imgGal3     from '@/assets/gallery/wine-toast.webp';
+import imgGal4     from '@/assets/gallery/event-coffee-service.webp';
 import imgGal5     from '@/assets/home-v2/9826b8c118c911c852174f3c0d0204245fd0da48.webp';
 import imgInquiry  from '@/assets/Weeding.webp';
 import imgFinalCta from '@/assets/Weeding.webp';
@@ -123,14 +123,12 @@ const services = [
   { icon: <Shield size={20} />, title: 'Full Coordination', desc: 'On-the-day coordination service ensuring everything runs seamlessly from arrival to farewell.', link: '/contact' },
 ];
 
-type GalleryFilter = 'All' | 'Wedding' | 'Corporate' | 'Birthday' | 'Private';
-const galleryFilters: GalleryFilter[] = ['All', 'Wedding', 'Corporate', 'Birthday', 'Private'];
-const galleryItems: { src: string; alt: string; caption: string; cat: Exclude<GalleryFilter, 'All'> }[] = [
-  { src: imgGal1, alt: 'Outdoor catering event', caption: 'Garden Gathering', cat: 'Private' },
-  { src: imgGal2, alt: 'Traditional Khmer dish', caption: 'Artisanal Plating', cat: 'Corporate' },
-  { src: imgGal3, alt: 'Elegant dining setup', caption: 'Bridal Dinner', cat: 'Wedding' },
-  { src: imgGal4, alt: 'Restaurant interior', caption: 'Venue Ambiance', cat: 'Corporate' },
-  { src: imgGal5, alt: 'Grand dining hall', caption: 'Grand Ballroom', cat: 'Wedding' },
+const galleryItems: { src: string; alt: string; caption: string }[] = [
+  { src: imgGal1, alt: 'Outdoor catering event', caption: 'Garden Gathering' },
+  { src: imgGal2, alt: 'Traditional Khmer dish', caption: 'Artisanal Plating' },
+  { src: imgGal3, alt: 'Guests raising wine glasses in celebration', caption: 'Bridal Toast' },
+  { src: imgGal4, alt: 'One More Restaurant staff operating a coffee station at an event', caption: 'Corporate Coffee Service' },
+  { src: imgGal5, alt: 'Grand dining hall', caption: 'Grand Ballroom' },
 ];
 
 const faqs = [
@@ -149,7 +147,6 @@ function Stars({ count }: { count: number }) {
 // ── Main ─────────────────────────────────────────────────────
 export default function EventsPage() {
   const { t, getObject, isKhmer } = useTranslation();
-  const [galleryFilter, setGalleryFilter] = useState<GalleryFilter>('All');
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [formSuccess, setFormSuccess] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
@@ -250,10 +247,6 @@ export default function EventsPage() {
   }, [isKhmer]);
 
   const faqsList = getObject<any[]>('eventsPage.faq.items', faqs);
-
-  const visibleGallery = galleryFilter === 'All'
-    ? translatedGalleryItems
-    : translatedGalleryItems.filter((g) => g.cat === galleryFilter);
 
   async function handleFormSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -427,21 +420,8 @@ export default function EventsPage() {
           <h2>{t('eventsPage.gallery.title', undefined, 'Moments We Are Proud Of')}</h2>
         </div>
 
-        <div className="events-gallery-filters">
-          {galleryFilters.map((f) => (
-            <button
-              key={f}
-              type="button"
-              className={galleryFilter === f ? 'active' : ''}
-              onClick={() => setGalleryFilter(f)}
-            >
-              {t(`eventsPage.gallery.filters.${f}`, undefined, f)}
-            </button>
-          ))}
-        </div>
-
-        <div className={`events-gallery-grid${visibleGallery.length === 1 ? ' events-gallery-grid-single' : ''}`}>
-          {visibleGallery.map((item) => (
+        <div className="events-gallery-grid">
+          {translatedGalleryItems.map((item) => (
             <figure key={item.src}>
               <img src={item.src} alt={item.alt} loading="lazy" />
               <figcaption>{item.caption}</figcaption>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import {
   Clock,
   FileText,
@@ -358,9 +358,30 @@ export default function ReservationPage() {
   const [homeData, setHomeData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const location = useLocation();
 
-  // Step 1: Branch
-  const [selectedBranch, setSelectedBranch] = useState('Toul Kork');
+  // Helper to parse branch query parameter
+  const getBranchFromQuery = (searchStr: string) => {
+    const params = new URLSearchParams(searchStr);
+    const branchParam = (params.get('branch') || params.get('location') || '').toLowerCase();
+    if (branchParam.includes('boeung') || branchParam.includes('bk') || branchParam.includes('បឹងកក់')) {
+      return 'Boeung Kak';
+    }
+    if (branchParam.includes('toul') || branchParam.includes('tk') || branchParam.includes('ទួលគោក')) {
+      return 'Toul Kork';
+    }
+    return null;
+  };
+
+  // Step 1: Branch (defaults to query param if present)
+  const [selectedBranch, setSelectedBranch] = useState(() => getBranchFromQuery(location.search) || 'Toul Kork');
+
+  useEffect(() => {
+    const paramBranch = getBranchFromQuery(location.search);
+    if (paramBranch) {
+      setSelectedBranch(paramBranch);
+    }
+  }, [location.search]);
 
   // Step 2: Contact Info
   const [fullName, setFullName] = useState('');

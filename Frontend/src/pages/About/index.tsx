@@ -22,14 +22,15 @@ import privateRoomImage from '@/assets/home-v2/480cb1d76af2706b9692b726ad26ec2bf
 import celebrationImage from '@/assets/home-v2/e900cacb721f9c81cd07b8415a03f20f42a39856.webp';
 import cateringImage from '@/assets/home-v2/07e47044152ad38cdbb1bda5ae392fb848e3a37a.webp';
 import communityImage from '@/assets/home-v2/9826b8c118c911c852174f3c0d0204245fd0da48.webp';
-import kidsImage from '@/assets/home-v2/e8f4b56e423777f3f6c3df39c6ef78914b278e17.webp';
-import hospitalityImage from '@/assets/omr-hospitality.webp';
+import artisanalPlatingImage from '@/assets/gallery/artisanal-plating-no-logo.png';
+import hospitalityImage from '@/assets/omr-hospitality-enhanced.png';
 import finalCtaImage from '@/assets/home-v2/31b0910d38c033be0ce5292cf4a1d68688308c6b.webp';
 import chefTkImage from '@/assets/Chef tk.webp';
 import chefBkImage from '@/assets/chef bk.jpg';
 import chefAndStaffTkImage from '@/assets/about/chefandstaff-TK.jpg';
-import chefAndStaffBkImage from '@/assets/about/chefandstaff-BK-new.webp';
+import chefAndStaffBkImage from '@/assets/about/chefandstaff-BK-enhanced.png';
 import careersTeamImage from '@/assets/about/careers-team.webp';
+import linkedinLogoImage from '@/assets/linkedin logo.webp';
 import './index.css';
 
 const timeline = [
@@ -140,6 +141,7 @@ const khmerCopy: Record<string, string> = {
   'Career opportunities across culinary, service, and events.': 'ឱកាសការងារផ្នែកចុងភៅ សេវាកម្ម និងការរៀបចំកម្មវិធី។',
   'A supportive team environment built on respect and excellence.': 'បរិយាកាសក្រុមការងារគាំទ្រគ្នា ដែលកសាងឡើងលើការគោរព និងឧត្តមភាព។',
   'View Careers': 'មើលឱកាសការងារ',
+  'Connect with us on:': 'ភ្ជាប់ទំនាក់ទំនងជាមួយយើងតាមរយៈ៖',
   'Send Your CV': 'ផ្ញើប្រវត្តិរូប',
   'Experience One More For Yourself': 'មកទទួលបទពិសោធន៍ វ័ន ម័រ ដោយខ្លួនអ្នក',
   'Whether you are joining us for a family dinner, business meeting, or special celebration, we look forward to welcoming you.': 'មិនថាអ្នកមកទទួលទានអាហារជាមួយគ្រួសារ ប្រជុំអាជីវកម្ម ឬប្រារព្ធកម្មវិធីពិសេស យើងរង់ចាំស្វាគមន៍អ្នកជានិច្ច។',
@@ -209,6 +211,25 @@ function CountUpNumber({ value, suffix = '', isKhmer }: { value: number; suffix?
   const text = `${displayValue}${suffix}`;
   return <strong ref={numberRef}>{isKhmer ? toKhmerDigits(text) : text}</strong>;
 }
+
+const LinkedinIcon = ({ size = 16 }: { size?: number }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="lucide lucide-linkedin"
+  >
+    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+    <rect width="4" height="12" x="2" y="9" />
+    <circle cx="4" cy="4" r="2" />
+  </svg>
+);
 
 export default function About() {
   const { isKhmer } = useTranslation();
@@ -359,7 +380,7 @@ export default function About() {
         <div className="about-moments-grid">
           <img className="about-moment-main" src={celebrationImage} alt={tr('A celebration at One More')} />
           <img src={cateringImage} alt={tr('Event catering')} />
-          <img src={kidsImage} alt={tr('A family activity')} />
+          <img src={artisanalPlatingImage} alt={tr('Artisanal plating at One More Restaurant')} />
           <img src={communityImage} alt={tr('Khmer cooking experience')} />
           <div><strong>{isKhmer ? `ជាង ${toKhmerDigits('1,000+')}` : 'Over 1,000+'}</strong><span>{tr('events hosted with care and excellence.')}</span></div>
         </div>
@@ -374,6 +395,18 @@ export default function About() {
               <li><Users size={17} /><span>{tr('Career opportunities across culinary, service, and events.')}</span></li>
               <li><KeyRound size={17} /><span>{tr('A supportive team environment built on respect and excellence.')}</span></li>
             </ul>
+            <div className="about-careers-connect">
+              <span>{tr('Connect with us on:')}</span>
+              <a
+                href="https://www.linkedin.com/company/one-more-restaurant/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="about-careers-linkedin-link"
+              >
+                <img src={linkedinLogoImage} alt="LinkedIn" className="about-linkedin-icon" />
+                <span>LinkedIn</span>
+              </a>
+            </div>
           </div>
           <img src={careersTeamImage} alt={tr('The One More Restaurant team')} />
         </div>
