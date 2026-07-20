@@ -38,14 +38,17 @@ import './ToulKork.css';
 // Asset imports matching homeAssets
 import imgBranchToulKork from '@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.webp'; // Toul Kork Building
 import imgHeritageMain from '@/assets/home-v2/43310dd2158ca5c7f7d098abf280dc14124d42de.webp'; // Curved wood interior (main left)
-import imgHeritageTopLeft from '@/assets/home-v2/480cb1d76af2706b9692b726ad26ec2bf396f8c8.webp'; // Dark wood table with garden window (top-left)
-import imgHeritageTopRight from '@/assets/home-v2/31b0910d38c033be0ce5292cf4a1d68688308c6b.webp'; // Blue bow-tie event hall (top-right)
-import imgHeritageBottom from '@/assets/home-v2/e900cacb721f9c81cd07b8415a03f20f42a39856.webp'; // Long table with waitress and pink flowers (bottom)
+import imgHeritageTopLeft from '@/assets/tk2.jpg'; // TK2 room image (top-left)
+import imgNeangTeav from '@/assets/neang teav.png'; // Neang Tev room
+import imgOrnTitTom from '@/assets/orn tit tom.png'; // Orn Tit Tom room
+import imgHeritageTopRight from '@/assets/moments.jpg'; // Outdoor deck with balloons (top-right)
+import imgHeritageBottom from '@/assets/tk yellow.jpg'; // Outdoor canopy with yellow lights (bottom)
+import imgVipTk from '@/assets/vip tk.png'; // VIP Room image
 import imgSpace2 from '@/assets/home-v2/31b0910d38c033be0ce5292cf4a1d68688308c6b.webp'; // Event hall (used in private rooms)
-import imgGallery1 from '@/assets/home-v2/480cb1d76af2706b9692b726ad26ec2bf396f8c8.webp'; // Dark wood table (used in private rooms)
+import imgGallery1 from '@/assets/neang teav.png'; // Neang Tev room
 import imgGallery2 from '@/assets/home-v2/07e47044152ad38cdbb1bda5ae392fb848e3a37a.webp'; // Round tables private dining
-import imgGallery3 from '@/assets/home-v2/13a7aa4dee36d6ba805abc6f982eb04ec7df4c4c.webp'; // Event hall with balloons
-import imgGallery4 from '@/assets/home-v2/80bc2f874a3b8b65fc3bd247f23046db8632d909.webp'; // People dining
+import imgGallery3 from '@/assets/moments.jpg'; // Event hall with balloons
+import imgFamilyPkg from '@/assets/Family_compressed.jpg'; // Family celebration image
 import imgGallery6 from '@/assets/home-v2/9826b8c118c911c852174f3c0d0204245fd0da48.webp'; // Corporate meeting
 
 // Dish assets
@@ -122,7 +125,7 @@ export default function ToulKork() {
               <BreadcrumbSeparator className="opacity-30" />
               <BreadcrumbItem>
                 <BreadcrumbPage className="text-[#f6fdf2] font-semibold">
-                  {t('branchesPage.comparison.toulKorkTitle', undefined, 'Toul Kork')}
+                  {t('branchesPage.ui.comparison.toulKorkTitle', undefined, isKhmer ? 'ទួលគោក' : 'Toul Kork')}
                 </BreadcrumbPage>
               </BreadcrumbItem>
             </BreadcrumbList>
@@ -159,16 +162,16 @@ export default function ToulKork() {
           <div className="tk-heritage-right">
             <div className="tk-heritage-right-top">
               <div className="tk-image-wrapper tk-sub-image-top-half">
-                <img src={imgHeritageTopLeft} alt="Dark wood table with garden view" />
+                <img src={imgHeritageTopLeft} alt="Toul Kork room" />
                 <div className="tk-image-mask" />
               </div>
               <div className="tk-image-wrapper tk-sub-image-top-half">
-                <img src={imgHeritageTopRight} alt="Blue bow-tie event hall" />
+                <img src={imgHeritageTopRight} alt="Outdoor balloon patio" />
                 <div className="tk-image-mask" />
               </div>
             </div>
             <div className="tk-image-wrapper tk-sub-image-bottom-full">
-              <img src={imgHeritageBottom} alt="Long table with waitress and pink flowers" />
+              <img src={imgHeritageBottom} alt="TK outdoor canopy dining area" />
               <div className="tk-image-mask" />
             </div>
           </div>
@@ -220,11 +223,11 @@ export default function ToulKork() {
           {/* Room 1 — Neang Tev */}
           <div className="tk-room-card">
             <div className="tk-room-img-wrapper">
-              <img src={imgHeritageTopLeft} alt="Neang Tev Private Room" />
+              <img src={imgNeangTeav} alt="Neang Tev Private Room" className="tk-room-img-reveal-left" />
               <div className="tk-room-badge">{t('branchDetails.rooms.guestBadge')}</div>
             </div>
             <div className="tk-room-body">
-              <h3 className="tk-room-name">{isKhmer ? "នាងទេវី" : "Neang Tev"}</h3>
+              <h3 className="tk-room-name">{isKhmer ? "នាងទាវ" : "Neang Tev"}</h3>
               <ul className="tk-room-highlights">
                 <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.av')}</li>
                 <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.butler')}</li>
@@ -239,11 +242,11 @@ export default function ToulKork() {
           {/* Room 2 — Orn Tit Tom */}
           <div className="tk-room-card">
             <div className="tk-room-img-wrapper">
-              <img src={imgHeritageBottom} alt="Orn Tit Tom Private Room" />
+              <img src={imgOrnTitTom} alt="Orn Tit Tom Private Room" className="tk-room-img-reveal-right" />
               <div className="tk-room-badge">{t('branchDetails.rooms.guestBadge')}</div>
             </div>
             <div className="tk-room-body">
-              <h3 className="tk-room-name">{isKhmer ? "អនទិត្យទុំ" : "Orn Tit Tom"}</h3>
+              <h3 className="tk-room-name">{isKhmer ? "អន្ទិតទុំ" : "Orn Tit Tom"}</h3>
               <ul className="tk-room-highlights">
                 <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.av')}</li>
                 <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.butler')}</li>
@@ -255,14 +258,14 @@ export default function ToulKork() {
             </div>
           </div>
 
-          {/* Room 3 — VVIP */}
+          {/* Room 3 — VIP Room */}
           <div className="tk-room-card">
             <div className="tk-room-img-wrapper">
-              <img src={imgHeritageTopRight} alt="VVIP Hall" />
+              <img src={imgVipTk} alt="VIP Room" />
               <div className="tk-room-badge">{t('branchDetails.rooms.guestBadge')}</div>
             </div>
             <div className="tk-room-body">
-              <h3 className="tk-room-name">{isKhmer ? "បន្ទប់ VVIP" : "VVIP"}</h3>
+              <h3 className="tk-room-name">{isKhmer ? "បន្ទប់ VIP" : "VIP Room"}</h3>
               <ul className="tk-room-highlights">
                 <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.av')}</li>
                 <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.butler')}</li>
@@ -341,7 +344,7 @@ export default function ToulKork() {
 
         <div className="tk-events-grid">
           <SharpImageCard
-            image={imgGallery3}
+            image={imgHeritageBottom}
             alt={t('branchDetails.events.items.birthday.title')}
             title={t('branchDetails.events.items.birthday.title')}
             description={t('branchDetails.events.items.birthday.desc')}
@@ -349,7 +352,7 @@ export default function ToulKork() {
             buttonHref="/reservations"
           />
           <SharpImageCard
-            image={imgHeritageBottom}
+            image={imgGallery3}
             alt={t('branchDetails.events.items.engagement.title')}
             title={t('branchDetails.events.items.engagement.title')}
             description={t('branchDetails.events.items.engagement.desc')}
@@ -357,7 +360,7 @@ export default function ToulKork() {
             buttonHref="/reservations"
           />
           <SharpImageCard
-            image={imgGallery4}
+            image={imgFamilyPkg}
             alt={t('branchDetails.events.items.family.title')}
             title={t('branchDetails.events.items.family.title')}
             description={t('branchDetails.events.items.family.desc')}

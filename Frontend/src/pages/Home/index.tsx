@@ -20,8 +20,6 @@ import {
 } from 'lucide-react';
 
 import {
-  imgHeroBg1,
-  imgHeroBg2,
   imgGallery1,
   imgGallery2,
   imgGallery3,
@@ -41,15 +39,9 @@ import type {
 import './index.css';
 
 import imgBkEdited from '@/assets/compressed_OMR Bk edited.webp';
-import imgTkEdited from '@/assets/compressed_OMR TK.webp';
+import heroVideo from '@/assets/video/omr vdo.MOV';
 
 import SectionHeader from '@/components/SectionHeader';
-
-const heroSlides = [
-  { src: imgBkEdited, alt: 'Boeung Kak Branch' },
-  { src: imgTkEdited, alt: 'Toul Kork Branch' },
-  { src: imgHeroBg1, alt: 'Family Dining Hall' },
-];
 
 const homepagePartners: PartnerCompany[] = [
   { id: 'amret', name: 'Amret Plc', logo: '/assets/partners/image45.webp' },
@@ -103,42 +95,6 @@ const homepagePartners: PartnerCompany[] = [
 
 function HeroSection({ hero }: { hero: any }) {
   const { t } = useTranslation();
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isTransitionEnabled, setIsTransitionEnabled] = useState(true);
-  const loopedSlides = [...heroSlides, heroSlides[0]];
-  const activeDotIndex = currentIndex % heroSlides.length;
-
-  useEffect(() => {
-    const timer = window.setTimeout(() => {
-      setCurrentIndex((prev) =>
-        prev < heroSlides.length ? prev + 1 : prev,
-      );
-    }, 3000);
-
-    
-    return () => window.clearTimeout(timer);
-  }, [currentIndex]);
-
-  useEffect(() => {
-    if (currentIndex !== heroSlides.length) return;
-
-    
-    const resetTimer = window.setTimeout(() => {
-      setIsTransitionEnabled(false);
-      setCurrentIndex(0);
-
-      window.requestAnimationFrame(() => {
-        window.requestAnimationFrame(() => setIsTransitionEnabled(true));
-      });
-    }, 1150);
-
-    return () => window.clearTimeout(resetTimer);
-  }, [currentIndex]);
-
-  const handleDotClick = (index: number) => {
-    setIsTransitionEnabled(true);
-    setCurrentIndex(index);
-  };
 
   const handleScrollDown = () => {
     const targetSection = document.getElementById('menu');
@@ -156,45 +112,29 @@ function HeroSection({ hero }: { hero: any }) {
       id="home-hero"
       className="home-hero relative w-full min-h-screen flex items-center justify-center bg-black overflow-hidden"
     >
-      <div className="home-hero-slider absolute inset-0 w-full h-full pointer-events-none z-0 overflow-hidden">
-        <div
-          className="home-hero-slider-track flex h-full flex-row"
-          style={{
-            width: `${loopedSlides.length * 100}%`,
-            transform: `translate3d(-${currentIndex * (100 / loopedSlides.length)}%, 0, 0)`,
-            transition: isTransitionEnabled ? undefined : 'none',
-          }}
-        >
-          {loopedSlides.map((slide, idx) => (
-            <img
-              key={`${slide.src}-${idx}`}
-              alt={slide.alt}
-              className="home-hero-slide h-full object-cover opacity-45 flex-shrink-0"
-              src={slide.src}
-              style={{ flexBasis: `${100 / loopedSlides.length}%` }}
-            />
-          ))}
-        </div>
-
+      <div className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-hidden">
+        <video
+          src={heroVideo}
+          poster={imgBkEdited}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full h-full object-cover opacity-45"
+        />
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-black/60 pointer-events-none" />
       </div>
 
-      <div className="home-hero-content relative z-10 text-center text-white max-w-[1260px] px-6 pt-32">
+      <div className="home-hero-content relative z-10 text-center text-white max-w-[1260px] px-6">
         <h1 className="page-hero-title page-hero-title--home font-serif text-5xl md:text-7xl lg:text-[80px] leading-tight mb-8 font-normal tracking-wide drop-shadow-lg">
-          {t('home.hero.titleLine1', undefined, 'Experience Authentic')}
+          <span className="hero-title-top">
+            {t('home.hero.titleLine1', undefined, 'Experience Authentic')}
+          </span>
           <br />
-          <span className="text-[#E7F6DF]">
+          <span className="text-white">
             {t('home.hero.titleHighlight', undefined, 'Khmer Cuisine')}
           </span>
         </h1>
-
-        <p className="text-white/80 text-lg md:text-xl font-sans font-light max-w-2xl mx-auto leading-relaxed mb-12">
-          {t(
-            'home.hero.description',
-            undefined,
-            'Traditional Cambodian flavors served in a modern dining experience.',
-          )}
-        </p>
 
         <div className="home-hero-controls">
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
@@ -208,19 +148,6 @@ function HeroSection({ hero }: { hero: any }) {
             </Link>
           </div>
         </div>
-      </div>
-
-      <div className="home-hero-dots" role="group" aria-label="Choose hero slide">
-        {heroSlides.map((_, idx) => (
-          <button
-            key={idx}
-            type="button"
-            onClick={() => handleDotClick(idx)}
-            className={activeDotIndex === idx ? 'is-active' : ''}
-            aria-label={`Go to slide ${idx + 1}`}
-            aria-current={activeDotIndex === idx ? 'true' : undefined}
-          />
-        ))}
       </div>
 
       <button

@@ -13,6 +13,7 @@ import './index.css';
 import locationImg from '@/assets/location.webp';
 import imgBranchToulKork from '@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.webp';
 import imgBranchBoeungKak from '@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.webp';
+import branchHeroImg from '@/assets/branch hero.png'; // Transparent background branch hero image
 
 type LocationItem = {
   id: string;
@@ -207,12 +208,12 @@ export default function Branches() {
             </Button>
           </div>
 
-          <div className="hero-map-side">
-            <div className="hero-map-frame">
+          <div className="hero-visual-side">
+            <div className="hero-hero-image-wrapper">
               <img
-                src={locationImg}
-                alt={t('branchesPage.ui.heroMapAlt', undefined, 'Map of branch locations')}
-                className="hero-map-image"
+                src={branchHeroImg}
+                alt={t('branchesPage.ui.heroImageAlt', undefined, 'One More Restaurant Branches')}
+                className="hero-branch-main-img"
               />
             </div>
           </div>

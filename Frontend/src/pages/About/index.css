@@ -270,3 +270,66 @@ html[lang="km"] .about-button {
     transition: none;
   }
 }
+
+.about-careers-connect {
+  margin-top: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.about-careers-connect > span {
+  font-size: 13px;
+  font-weight: 500;
+  color: #5d6c5b;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.about-careers-linkedin-link {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  background-color: #fafdf8;
+  border: 1px solid #d8ebd4;
+  color: #0a66c2;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+}
+
+.about-careers-linkedin-link svg,
+.about-careers-linkedin-link img,
+.about-linkedin-icon {
+  width: 22px !important;
+  height: 22px !important;
+  min-width: 22px !important;
+  min-height: 22px !important;
+  display: inline-block !important;
+  object-fit: contain !important;
+  flex-shrink: 0 !important;
+  transition: transform 0.25s ease;
+}
+
+.about-careers-linkedin-link:hover {
+  background-color: #0a66c2;
+  border-color: #0a66c2;
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(10, 102, 194, 0.2);
+}
+
+.about-careers-linkedin-link:hover svg,
+.about-careers-linkedin-link:hover img {
+  color: #fff;
+  transform: scale(1.05);
+}
+
+.about-careers-linkedin-link:active {
+  transform: translateY(0);
+}
