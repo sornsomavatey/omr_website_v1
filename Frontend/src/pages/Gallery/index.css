@@ -342,3 +342,38 @@
 @media (prefers-reduced-motion: reduce) {
   .gallery-page *, .gallery-lightbox { animation: none !important; transition: none !important; }
 }
+
+/* Khmer language typography for Gallery page */
+html[lang="km"] .gallery-hero p,
+html[data-lang="kh"] .gallery-hero p,
+html[lang="km"] .gallery-card-caption,
+html[lang="km"] .gallery-card-caption h2,
+html[lang="km"] .gallery-card-caption span,
+html[data-lang="kh"] .gallery-card-caption,
+html[data-lang="kh"] .gallery-card-caption h2,
+html[data-lang="kh"] .gallery-card-caption span,
+html[lang="km"] .gallery-lightbox figcaption,
+html[lang="km"] .gallery-lightbox figcaption strong,
+html[lang="km"] .gallery-lightbox figcaption span,
+html[data-lang="kh"] .gallery-lightbox figcaption,
+html[data-lang="kh"] .gallery-lightbox figcaption strong,
+html[data-lang="kh"] .gallery-lightbox figcaption span,
+html[lang="km"] .gallery-empty,
+html[data-lang="kh"] .gallery-empty {
+  font-family: "Kantumruy Pro", sans-serif !important;
+}
+
+html[lang="km"] .gallery-card-caption h2,
+html[data-lang="kh"] .gallery-card-caption h2 {
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  line-height: 1.4 !important;
+}
+
+html[lang="km"] .gallery-lightbox figcaption strong,
+html[data-lang="kh"] .gallery-lightbox figcaption strong {
+  font-size: 18px !important;
+  font-weight: 500 !important;
+  line-height: 1.4 !important;
+}
+

@@ -299,27 +299,21 @@ html[data-lang="kh"] select {
 }
 
 
-html[lang="km"] h1,
-html[lang="km"] h2,
-html[lang="km"] h3,
-html[lang="km"] h4,
-html[lang="km"] h5,
-html[lang="km"] h6,
-html[lang="km"] .font-serif,
-html[data-lang="kh"] h1,
-html[data-lang="kh"] h2,
-html[data-lang="kh"] h3,
-html[data-lang="kh"] h4,
-html[data-lang="kh"] h5,
-html[data-lang="kh"] h6,
-html[data-lang="kh"] .font-serif {
+/* Primary Khmer Font (Kantumruy Pro) for standard elements */
+html[lang="km"] body,
+html[lang="km"] button,
+html[lang="km"] input,
+html[lang="km"] textarea,
+html[lang="km"] select,
+html[data-lang="kh"] body,
+html[data-lang="kh"] button,
+html[data-lang="kh"] input,
+html[data-lang="kh"] textarea,
+html[data-lang="kh"] select {
   font-family: "Kantumruy Pro", sans-serif;
-  font-weight: 700;
-  line-height: 1.45 !important;
-  letter-spacing: 0;
 }
 
-/* ONLY big page headings and section headings (h1, h2) should use Moulpali */
+/* ONLY main page hero titles (h1) and SectionHeader section titles (h2) use Moul Pali OS font */
 html[lang="km"] h1,
 html[lang="km"] h1 *,
 html[lang="km"] h2,
@@ -328,8 +322,74 @@ html[data-lang="kh"] h1,
 html[data-lang="kh"] h1 *,
 html[data-lang="kh"] h2,
 html[data-lang="kh"] h2 * {
-  font-family: "Moulpali", "Khmer OS Muol Pali", "Khmer OS Muol", sans-serif !important;
-  font-weight: 400;
+  font-family: "Moulpali", "Khmer OS Muol Pali", "Khmer OS Muol", "Moul", serif !important;
+  font-weight: 400 !important;
+  line-height: 1.85 !important;
+}
+
+/* Balanced font size for SectionHeader h2 titles in Khmer */
+html[lang="km"] h2,
+html[lang="km"] h2 *,
+html[data-lang="kh"] h2,
+html[data-lang="kh"] h2 * {
+  font-size: clamp(1.5rem, 3.8vw, 2.5rem) !important;
+  line-height: 1.85 !important;
+}
+
+/* Explicitly reset Dish Card titles, Room names, Card titles, Gallery titles/descriptions, h3, h4, h5, h6 back to normal Kantumruy Pro font */
+html[lang="km"] h3,
+html[lang="km"] h3 *,
+html[lang="km"] h4,
+html[lang="km"] h4 *,
+html[lang="km"] h5,
+html[lang="km"] h5 *,
+html[lang="km"] h6,
+html[lang="km"] h6 *,
+html[lang="km"] .dish-card-title,
+html[lang="km"] .dish-card-title *,
+html[lang="km"] .tk-room-name,
+html[lang="km"] .bk-room-name,
+html[lang="km"] .card-title,
+html[lang="km"] .gallery-card-caption h2,
+html[lang="km"] .gallery-card-caption h2 *,
+html[lang="km"] .gallery-card-caption span,
+html[lang="km"] .gallery-lightbox figcaption strong,
+html[lang="km"] .gallery-lightbox figcaption span,
+html[data-lang="kh"] h3,
+html[data-lang="kh"] h3 *,
+html[data-lang="kh"] h4,
+html[data-lang="kh"] h4 *,
+html[data-lang="kh"] h5,
+html[data-lang="kh"] h5 *,
+html[data-lang="kh"] h6,
+html[data-lang="kh"] h6 *,
+html[data-lang="kh"] .dish-card-title,
+html[data-lang="kh"] .dish-card-title *,
+html[data-lang="kh"] .tk-room-name,
+html[data-lang="kh"] .bk-room-name,
+html[data-lang="kh"] .card-title,
+html[data-lang="kh"] .gallery-card-caption h2,
+html[data-lang="kh"] .gallery-card-caption h2 *,
+html[data-lang="kh"] .gallery-card-caption span,
+html[data-lang="kh"] .gallery-lightbox figcaption strong,
+html[data-lang="kh"] .gallery-lightbox figcaption span {
+  font-family: "Kantumruy Pro", sans-serif !important;
+  font-weight: 500 !important;
+  line-height: 1.4 !important;
+}
+
+html[lang="km"] .gallery-card-caption h2,
+html[lang="km"] .gallery-card-caption h2 *,
+html[data-lang="kh"] .gallery-card-caption h2,
+html[data-lang="kh"] .gallery-card-caption h2 * {
+  font-size: 14px !important;
+}
+
+/* Ensure hero title top line in Khmer also uses Moul Pali OS font */
+html[lang="km"] .hero-title-top,
+html[data-lang="kh"] .hero-title-top {
+  font-family: "Moulpali", "Khmer OS Muol Pali", "Khmer OS Muol", "Moul", serif !important;
+  font-weight: 400 !important;
 }
 
 /* Adjust line-height for h1 and h2 elements (and their children) to prevent overlapping in Khmer display fonts */

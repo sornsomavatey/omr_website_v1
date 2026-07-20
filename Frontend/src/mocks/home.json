@@ -139,7 +139,7 @@
       "name": "Kid Zone",
       "tag": "Ages 2–12 · Supervised",
       "desc": "A dedicated play corner with gentle Khmer-inspired activities, kid-friendly menu and attentive family hosts.",
-      "img": "@/assets/compressed_kid corner.webp"
+      "img": "@/assets/kid corner.png"
     },
     {
       "name": "Event & Gala",
@@ -169,7 +169,7 @@
   "gallery": [
     { "src": "@/assets/home-v2/480cb1d76af2706b9692b726ad26ec2bf396f8c8.webp", "alt": "Gallery 1" },
     { "src": "@/assets/home-v2/07e47044152ad38cdbb1bda5ae392fb848e3a37a.webp", "alt": "Gallery 2" },
-    { "src": "@/assets/home-v2/13a7aa4dee36d6ba805abc6f982eb04ec7df4c4c.webp", "alt": "Gallery 3" },
+    { "src": "@/assets/moments.jpg", "alt": "Gallery 3" },
     { "src": "@/assets/home-v2/80bc2f874a3b8b65fc3bd247f23046db8632d909.webp", "alt": "Gallery 4" },
     { "src": "@/assets/home-v2/e900cacb721f9c81cd07b8415a03f20f42a39856.webp", "alt": "Gallery 5" },
     { "src": "@/assets/home-v2/9826b8c118c911c852174f3c0d0204245fd0da48.webp", "alt": "Gallery 6" }

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from '@/hooks/useTranslation';
 
 type SectionHeaderProps = {
   eyebrow: string;
@@ -15,6 +16,7 @@ export default function SectionHeader({
   dark = false,
   align = 'center',
 }: SectionHeaderProps) {
+  const { isKhmer } = useTranslation();
   const isLeft = align === 'left';
 
   // Bottom margin for the section header as a whole when no description is present

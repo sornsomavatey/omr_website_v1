@@ -1125,13 +1125,14 @@
 
 .home-hero-content {
   width: 100%;
+  padding-top: max(8rem, calc(env(safe-area-inset-top) + 6.5rem));
   padding-right: clamp(1rem, 4vw, 2rem);
-  padding-bottom: max(6.5rem, calc(env(safe-area-inset-bottom) + 5.5rem));
+  padding-bottom: max(2.5rem, calc(env(safe-area-inset-bottom) + 2rem));
   padding-left: clamp(1rem, 4vw, 2rem);
 }
 
 .home-hero-controls {
-  transform: translateY(clamp(2rem, 4vh, 2.5rem));
+  margin-top: clamp(6rem, 13vh, 11rem);
 }
 
 .home-hero-dots {
@@ -1189,12 +1190,12 @@
 
 @media (max-width: 640px) {
   .home-hero-content {
-    padding-top: 7rem;
-    padding-bottom: max(5.75rem, calc(env(safe-area-inset-bottom) + 5rem));
+    padding-top: max(6.5rem, calc(env(safe-area-inset-top) + 5.5rem));
+    padding-bottom: max(2rem, calc(env(safe-area-inset-bottom) + 1.5rem));
   }
 
   .home-hero-controls {
-    transform: translateY(1.5rem);
+    margin-top: 4.5rem;
   }
 
   .home-hero-dots {
@@ -1204,8 +1205,8 @@
 
 @media (max-height: 720px) {
   .home-hero-content {
-    padding-top: 6.5rem;
-    padding-bottom: max(4.75rem, calc(env(safe-area-inset-bottom) + 4.25rem));
+    padding-top: max(5.5rem, calc(env(safe-area-inset-top) + 4.5rem));
+    padding-bottom: max(2rem, calc(env(safe-area-inset-bottom) + 1.5rem));
   }
 
   .home-hero-content h1 {
@@ -1217,7 +1218,7 @@
   }
 
   .home-hero-controls {
-    transform: translateY(1rem);
+    margin-top: 3rem;
   }
 }
 
@@ -1245,7 +1246,7 @@
 
   padding: 8px 12px;
 
-  color: rgba(255, 255, 255, 0.58);
+  color: #ffffff;
   background: transparent;
 
   border: 0;
