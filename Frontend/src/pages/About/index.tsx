@@ -49,7 +49,7 @@ const reasons = [
 
 const people = [
   { image: chefTkImage, title: 'Hor Chanthan', role: 'Head Chef', text: 'Head Chef at Tuol Kork Branch. A kitchen built on precision, respect for ingredients, and the joy of sharing heritage recipes.' },
-  { image: chefBkImage, title: 'Khlara', role: 'Head Chef', text: 'Head Chef at Boeung Kak Branch. Warm, attentive, and genuinely invested in making every guest feel at home.' },
+  { image: chefBkImage, title: 'Khnara', role: 'Head Chef', text: 'Head Chef at Boeung Kak Branch. Warm, attentive, and genuinely invested in making every guest feel at home.' },
   { image: chefAndStaffTkImage, title: 'Toul Kork Team', role: '', text: 'The Toul Kork chef and service team bring heritage recipes, warm hospitality, and careful service to every guest experience.' },
   { image: chefAndStaffBkImage, title: 'Boeung Kak Team', role: '', text: 'The Boeung Kak chef and service team work together to welcome every guest with care, warmth, and authentic Khmer hospitality.', imageClassName: 'about-people-image-bk-team' },
 ];
@@ -99,7 +99,7 @@ const khmerCopy: Record<string, string> = {
   'Our People': 'ក្រុមការងាររបស់យើង',
   'The People Behind One More': 'មនុស្សនៅពីក្រោយ វ័នម៉រ',
   'Hor Chanthan': 'ហ័រ ចាន់ថាន់',
-  'Khlara': 'ខ្លា រ៉ា',
+  'Khnara': 'ខ្នា រ៉ា',
   'Head Chef': 'មេចុងភៅ',
   'Head Chef at Tuol Kork Branch. A kitchen built on precision, respect for ingredients, and the joy of sharing heritage recipes.': 'មេចុងភៅនៅសាខាទួលគោក។ ផ្ទះបាយមួយដែលផ្អែកលើភាពម៉ត់ចត់ ការគោរពចំពោះគ្រឿងផ្សំ និងសេចក្តីរីករាយក្នុងការចែករំលែករូបមន្តបេតិកភណ្ឌ។',
   'Head Chef at Boeung Kak Branch. Warm, attentive, and genuinely invested in making every guest feel at home.': 'មេចុងភៅនៅសាខាបឹងកក់។ កក់ក្តៅ យកចិត្តទុកដាក់ និងខិតខំធ្វើឱ្យភ្ញៀវគ្រប់រូបមានអារម្មណ៍ដូចនៅផ្ទះ។',
