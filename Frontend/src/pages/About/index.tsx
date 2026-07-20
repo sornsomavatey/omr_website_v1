@@ -23,7 +23,7 @@ import celebrationImage from '@/assets/home-v2/e900cacb721f9c81cd07b8415a03f20f4
 import cateringImage from '@/assets/home-v2/07e47044152ad38cdbb1bda5ae392fb848e3a37a.webp';
 import communityImage from '@/assets/home-v2/9826b8c118c911c852174f3c0d0204245fd0da48.webp';
 import artisanalPlatingImage from '@/assets/gallery/artisanal-plating-no-logo.png';
-import hospitalityImage from '@/assets/omr-hospitality.webp';
+import hospitalityImage from '@/assets/omr-hospitality-enhanced.png';
 import finalCtaImage from '@/assets/home-v2/31b0910d38c033be0ce5292cf4a1d68688308c6b.webp';
 import chefTkImage from '@/assets/Chef tk.webp';
 import chefBkImage from '@/assets/chef bk.jpg';
