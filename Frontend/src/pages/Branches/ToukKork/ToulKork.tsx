@@ -38,7 +38,7 @@ import './ToulKork.css';
 // Asset imports matching homeAssets
 import imgBranchToulKork from '@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.webp'; // Toul Kork Building
 import imgHeritageMain from '@/assets/home-v2/43310dd2158ca5c7f7d098abf280dc14124d42de.webp'; // Curved wood interior (main left)
-import imgHeritageTopLeft from '@/assets/tk2.jpg'; // TK2 room image (top-left)
+import imgHeritageTopLeft from '@/assets/toul-kork-room-no-logo.webp'; // Nighttime Toul Kork room image (top-left)
 import imgNeangTeav from '@/assets/neang teav.png'; // Neang Tev room
 import imgOrnTitTom from '@/assets/orn tit tom.png'; // Orn Tit Tom room
 import imgHeritageTopRight from '@/assets/moments.jpg'; // Outdoor deck with balloons (top-right)

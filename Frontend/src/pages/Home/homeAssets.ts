@@ -32,7 +32,7 @@ import imgSpace2 from '@/assets/home-v2/31b0910d38c033be0ce5292cf4a1d68688308c6b
 import imgBranch1 from '@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.webp';
 
 // Gallery assets
-import imgGallery1 from '@/assets/tk-room.png';
+import imgGallery1 from '@/assets/private-room-no-logo.webp';
 import imgGallery2 from '@/assets/home-v2/07e47044152ad38cdbb1bda5ae392fb848e3a37a.webp';
 import imgGallery3 from '@/assets/moments.jpg';
 import imgGallery4 from '@/assets/home-v2/80bc2f874a3b8b65fc3bd247f23046db8632d909.webp';
@@ -99,6 +99,7 @@ export const imageMap: Record<string, string> = {
   '@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.webp': imgBranch1,
   '@/assets/home-v2/480cb1d76af2706b9692b726ad26ec2bf396f8c8.webp': imgGallery1,
   '@/assets/tk-room.png': imgGallery1,
+  '@/assets/private-room-no-logo.webp': imgGallery1,
   '@/assets/home-v2/07e47044152ad38cdbb1bda5ae392fb848e3a37a.webp': imgGallery2,
   '@/assets/moments.jpg': imgGallery3,
   '@/assets/home-v2/80bc2f874a3b8b65fc3bd247f23046db8632d909.webp': imgGallery4,
