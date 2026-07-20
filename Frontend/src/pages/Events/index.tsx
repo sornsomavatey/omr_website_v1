@@ -14,7 +14,7 @@ import imgPkg1     from '@/assets/Family_compressed.jpg';
 import imgPkg2     from '@/assets/engagement_compressed.jpg';
 import imgPkg3     from '@/assets/compressed_catering.jpg';
 import imgPkg4     from '@/assets/cooperate package_compressed.jpg';
-import imgSpace1   from '@/assets/tk-room.png';
+import imgSpace1   from '@/assets/private-room-no-logo.webp';
 import imgSpace2   from '@/assets/family dinner.jpg';
 import imgGal1     from '@/assets/gallery/private-gatherings-no-logo.webp';
 import imgGal2     from '@/assets/gallery/artisanal-plating-no-logo.webp';
