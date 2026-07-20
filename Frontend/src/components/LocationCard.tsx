@@ -120,9 +120,21 @@ export default function LocationCard({
             </Button>
           )}
 
-          <Button asChild className="btn-action-primary">
-            <Link to="/reservations">{t('home.locations.reserve', undefined, 'Reserve a Table')}</Link>
-          </Button>
+          {(() => {
+            const branchParam =
+              branch.id === 'boeungKak' ||
+              branch.id === 'boeung-kak' ||
+              (branch.name && (branch.name.toLowerCase().includes('boeung') || branch.name.includes('បឹងកក់')))
+                ? 'boeung-kak'
+                : 'toul-kork';
+            return (
+              <Button asChild className="btn-action-primary">
+                <Link to={`/reservations?branch=${branchParam}`}>
+                  {t('home.locations.reserve', undefined, 'Reserve a Table')}
+                </Link>
+              </Button>
+            );
+          })()}
         </div>
       </div>
     </div>

@@ -140,7 +140,7 @@ export default function ToulKork() {
             {t('branchDetails.hero.toulKork.desc')}
           </p>
           <Button asChild className="hero-cta-button">
-            <Link to="/reservations">{t('branchDetails.hero.cta')}</Link>
+            <Link to="/reservations?branch=toul-kork">{t('branchDetails.hero.cta')}</Link>
           </Button>
         </div>
       </section>
@@ -349,7 +349,7 @@ export default function ToulKork() {
             title={t('branchDetails.events.items.birthday.title')}
             description={t('branchDetails.events.items.birthday.desc')}
             buttonLabel={t('branchDetails.events.planCta')}
-            buttonHref="/reservations"
+            buttonHref="/reservations?branch=toul-kork"
           />
           <SharpImageCard
             image={imgGallery3}
@@ -357,7 +357,7 @@ export default function ToulKork() {
             title={t('branchDetails.events.items.engagement.title')}
             description={t('branchDetails.events.items.engagement.desc')}
             buttonLabel={t('branchDetails.events.planCta')}
-            buttonHref="/reservations"
+            buttonHref="/reservations?branch=toul-kork"
           />
           <SharpImageCard
             image={imgFamilyPkg}

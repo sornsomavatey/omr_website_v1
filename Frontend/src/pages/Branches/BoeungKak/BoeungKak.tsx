@@ -145,7 +145,7 @@ export default function BoeungKak() {
             {t('branchDetails.hero.boeungKak.desc')}
           </p>
           <Button asChild className="hero-cta-button">
-            <Link to="/reservations">{t('branchDetails.hero.cta')}</Link>
+            <Link to="/reservations?branch=boeung-kak">{t('branchDetails.hero.cta')}</Link>
           </Button>
         </div>
       </section>
@@ -354,7 +354,7 @@ export default function BoeungKak() {
             title={t('branchDetails.events.items.birthday.title')}
             description={t('branchDetails.events.items.birthday.desc')}
             buttonLabel={t('branchDetails.events.planCta')}
-            buttonHref="/reservations"
+            buttonHref="/reservations?branch=boeung-kak"
           />
           <SharpImageCard
             image={imgEngagementCompressed}
@@ -362,7 +362,7 @@ export default function BoeungKak() {
             title={t('branchDetails.events.items.engagement.title')}
             description={t('branchDetails.events.items.engagement.desc')}
             buttonLabel={t('branchDetails.events.planCta')}
-            buttonHref="/reservations"
+            buttonHref="/reservations?branch=boeung-kak"
           />
           <SharpImageCard
             image={imgFamilyPkg}
@@ -370,7 +370,7 @@ export default function BoeungKak() {
             title={t('branchDetails.events.items.family.title')}
             description={t('branchDetails.events.items.family.desc')}
             buttonLabel={t('branchDetails.events.planCta')}
-            buttonHref="/reservations"
+            buttonHref="/reservations?branch=boeung-kak"
           />
           <SharpImageCard
             image={imgHeritageTopLeft}
@@ -378,7 +378,7 @@ export default function BoeungKak() {
             title={t('branchDetails.events.items.corporate.title')}
             description={t('branchDetails.events.items.corporate.desc')}
             buttonLabel={t('branchDetails.events.planCta')}
-            buttonHref="/reservations"
+            buttonHref="/reservations?branch=boeung-kak"
           />
         </div>
       </section>
