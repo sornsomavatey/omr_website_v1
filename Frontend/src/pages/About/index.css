@@ -111,7 +111,7 @@
 .about-people-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px 26px; }
 .about-people-grid article { background: #fff; }
 .about-people-grid img { width: 100%; aspect-ratio: 1 / 1.04; display: block; object-fit: cover; object-position: center; }
-.about-people-grid img.about-people-image-bk-team { object-fit: contain; object-position: center; background: #eef3eb; }
+.about-people-grid img.about-people-image-bk-team { object-fit: cover; object-position: center 66%; }
 .about-people-grid article > div { min-height: 142px; padding: 22px 24px; }
 .about-people-grid h3 { margin-bottom: 5px; font-size: 20px; font-weight: 400; }
 .about-people-grid span { color: var(--about-green); font: 600 11px/1 var(--font-sans); }

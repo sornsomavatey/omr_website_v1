@@ -28,7 +28,7 @@ import finalCtaImage from '@/assets/home-v2/31b0910d38c033be0ce5292cf4a1d6868830
 import chefTkImage from '@/assets/Chef tk.webp';
 import chefBkImage from '@/assets/chef bk.jpg';
 import chefAndStaffTkImage from '@/assets/about/chefandstaff-TK.jpg';
-import chefAndStaffBkImage from '@/assets/about/chefandstaff-BK-new.webp';
+import chefAndStaffBkImage from '@/assets/about/chefandstaff-BK-enhanced.png';
 import careersTeamImage from '@/assets/about/careers-team.webp';
 import './index.css';
 
