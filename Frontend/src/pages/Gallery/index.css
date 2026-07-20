@@ -64,15 +64,19 @@
   padding: 34px 0 130px;
 }
 
+.gallery-filter-slot {
+  min-height: 75px;
+  margin-bottom: 34px;
+}
+
 .gallery-filter-bar {
-  position: sticky;
-  top: 82px;
+  position: relative;
   z-index: 40;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 12px;
-  margin: 0 auto 34px;
+  margin: 0 auto;
   padding: 16px 24px;
   background: rgba(255, 255, 255, 0.94);
   backdrop-filter: blur(16px);
@@ -80,6 +84,39 @@
   border-bottom: 1px solid rgba(33, 48, 28, 0.08);
   box-shadow: none;
   transition: all 0.3s ease;
+}
+
+.gallery-filter-bar-navigation {
+  position: fixed;
+  top: 82px;
+  right: 0;
+  left: 0;
+  width: 100%;
+}
+
+@media (min-width: 1024px) {
+  body.menu-page-nav-compact .gallery-filter-bar-navigation {
+    top: 0;
+    right: auto;
+    left: 50%;
+    z-index: 1001;
+    width: min(620px, calc(100% - 520px));
+    height: 76px;
+    align-items: center;
+    padding: 0;
+    gap: 10px;
+    background: transparent;
+    border-bottom: 0;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    transform: translateX(-50%);
+  }
+
+  body.menu-page-nav-compact .gallery-filter-bar-navigation button {
+    min-height: 36px;
+    padding: 8px 18px;
+    font-size: 12px;
+  }
 }
 
 .gallery-filter-bar button {
@@ -310,13 +347,19 @@
   .gallery-lightbox { grid-template-columns: 50px minmax(0, 1fr) 50px; gap: 10px; padding: 32px 16px; }
 }
 
+@media (max-width: 1023px) {
+  .gallery-filter-bar-navigation { top: 78px; }
+}
+
 @media (max-width: 640px) {
   .gallery-hero { min-height: 610px; padding: 125px 16px 70px; }
   .gallery-hero-content > span { margin-bottom: 12px; font-size: 10px; }
   .gallery-hero h1 { margin-bottom: 14px; font-size: 58px; }
   .gallery-hero p { font-size: 15px; line-height: 1.55; }
   .gallery-content { width: calc(100% - 32px); padding: 25px 0 var(--mobile-section-space); }
-  .gallery-filter-bar { top: 78px; flex-wrap: nowrap; justify-content: flex-start; margin-right: -16px; margin-left: -16px; padding: 12px 16px; overflow-x: auto; scrollbar-width: none; }
+  .gallery-filter-slot { min-height: 65px; margin-bottom: 25px; }
+  .gallery-filter-bar { flex-wrap: nowrap; justify-content: flex-start; margin-right: -16px; margin-left: -16px; padding: 12px 16px; overflow-x: auto; scrollbar-width: none; }
+  .gallery-filter-bar-navigation { right: 0; left: 0; width: 100%; margin: 0; }
   .gallery-filter-bar::-webkit-scrollbar { display: none; }
   .gallery-filter-bar button { flex: 0 0 auto; min-height: 40px; padding: 0 19px; }
   .gallery-masonry { grid-template-columns: 1fr; }
