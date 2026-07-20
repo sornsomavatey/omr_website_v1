@@ -22,7 +22,7 @@ import privateRoomImage from '@/assets/home-v2/480cb1d76af2706b9692b726ad26ec2bf
 import celebrationImage from '@/assets/home-v2/e900cacb721f9c81cd07b8415a03f20f42a39856.webp';
 import cateringImage from '@/assets/home-v2/07e47044152ad38cdbb1bda5ae392fb848e3a37a.webp';
 import communityImage from '@/assets/home-v2/9826b8c118c911c852174f3c0d0204245fd0da48.webp';
-import kidsImage from '@/assets/home-v2/e8f4b56e423777f3f6c3df39c6ef78914b278e17.webp';
+import artisanalPlatingImage from '@/assets/gallery/artisanal-plating-no-logo.png';
 import hospitalityImage from '@/assets/omr-hospitality.webp';
 import finalCtaImage from '@/assets/home-v2/31b0910d38c033be0ce5292cf4a1d68688308c6b.webp';
 import chefTkImage from '@/assets/Chef tk.webp';
@@ -359,7 +359,7 @@ export default function About() {
         <div className="about-moments-grid">
           <img className="about-moment-main" src={celebrationImage} alt={tr('A celebration at One More')} />
           <img src={cateringImage} alt={tr('Event catering')} />
-          <img src={kidsImage} alt={tr('A family activity')} />
+          <img src={artisanalPlatingImage} alt={tr('Artisanal plating at One More Restaurant')} />
           <img src={communityImage} alt={tr('Khmer cooking experience')} />
           <div><strong>{isKhmer ? `ជាង ${toKhmerDigits('1,000+')}` : 'Over 1,000+'}</strong><span>{tr('events hosted with care and excellence.')}</span></div>
         </div>
