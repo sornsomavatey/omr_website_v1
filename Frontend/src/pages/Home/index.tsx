@@ -44,6 +44,8 @@ import heroVideo from '@/assets/video/omr vdo.MOV';
 import SectionHeader from '@/components/SectionHeader';
 
 const homepagePartners: PartnerCompany[] = [
+  { id: 'one-fraternity', name: 'One Fraternity', logo: '/assets/partners/onefraternity.webp' },
+  { id: 'amt', name: 'AMT', logo: '/assets/partners/amt-transparent.webp' },
   { id: 'amret', name: 'Amret Plc', logo: '/assets/partners/image45.webp' },
   { id: 'cisco', name: 'CISCO', logo: '/assets/partners/image2.webp' },
   { id: 'clinton-health', name: 'CLINTON Health Access Initiative', logo: '/assets/partners/image4.webp' },

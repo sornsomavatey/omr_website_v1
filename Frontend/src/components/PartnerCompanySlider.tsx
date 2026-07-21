@@ -48,7 +48,7 @@ function PartnerCard({
     <>
       {partner.logo ? (
         <img
-          className="partner-slider-logo"
+          className={`partner-slider-logo ${partner.id === 'amt' ? 'partner-slider-logo-amt' : ''}`.trim()}
           src={partner.logo}
           alt={duplicate ? '' : partner.logoAlt || `${partner.name} logo`}
           loading="lazy"
