@@ -22,7 +22,7 @@ import imgGal3     from '@/assets/gallery/wine-toast.webp';
 import imgGal4     from '@/assets/gallery/event-coffee-service.webp';
 import imgGal5     from '@/assets/home-v2/9826b8c118c911c852174f3c0d0204245fd0da48.webp';
 import imgInquiry  from '@/assets/Weeding.webp';
-import imgFinalCta from '@/assets/Weeding.webp';
+import imgFinalCta from '@/assets/event bg.jpg';
 import imgMainHall from '@/assets/main hall.jpg';
 import { imageMap } from '@/pages/Home/homeAssets';
 
@@ -154,7 +154,7 @@ const faqs = [
   { q: 'What is your minimum guest count for private events?', a: 'Our private VIP suite accommodates 8–30 guests. The Grand Ballroom is ideal for 40–120 guests. For smaller intimate dinners, we can arrange semi-private sections starting from 6 guests.' },
   { q: 'Can I bring my own cake or decoration items?', a: 'Yes! You are welcome to bring your own cake and personal decorations. Our team will help set everything up at no additional charge. A small corkage fee may apply for external beverages.' },
   { q: 'What is the cancellation and deposit policy?', a: 'A 30% deposit secures your event date. Full cancellations made more than 14 days before the event receive a full deposit refund. Cancellations within 14 days forfeit the deposit.' },
-  { q: 'Do you offer menu tasting sessions before the event?', a: 'Absolutely. We offer complimentary tasting sessions for groups of 4+ on package bookings. Our executive chef will personally guide you through the selected menu options.' },
+
 ];
 
 // ── Sub-components ───────────────────────────────────────────

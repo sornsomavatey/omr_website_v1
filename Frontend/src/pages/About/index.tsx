@@ -132,14 +132,14 @@ const khmerCopy: Record<string, string> = {
   'Team Members': 'សមាជិកក្រុមការងារ',
   'Khmer Culture': 'វប្បធម៌ខ្មែរ',
   'The Spirit of Khmer Hospitality': 'ស្មារតីបដិសណ្ឋារកិច្ចខ្មែរ',
-  'At One More Restaurant, every meal begins with a genuine Cambodian smile. Nestled in a striking, modern architectural setting, we bring together time-honored Khmer recipes and authentic flavors crafted by our passionate service and culinary team.': 'នៅភោជនីយដ្ឋាន វ័នម៉រ រាល់អាហារទាំងអស់តែងតែចាប់ផ្តើមឡើងជាមួយនឹងស្នាមញញឹមដ៏ស្មោះស្ម័គ្ររបស់ខ្មែរ។ ស្ថិតនៅក្នុងបរិយាកាសដែលមានស្ថាបត្យកម្មទំនើប និងលេចធ្លោ យើងបាននាំមកជូននូវរូបមន្តខ្មែរដ៏មានប្រវត្តិយូរលង់ រួមជាមួយរសជាតិដើមដ៏ពិតប្រាកដ ដែលត្រូវបានរៀបចំឡើងដោយក្រុមចុងភៅដ៏ពោរពេញដោយក្តីស្រឡាញ់ និងក្រុមការងារផ្នែកសេវាកម្មដ៏ពោរពេញដោយកាគោរព និងយកចិត្តទុកដាក់។',
+  'For us, Khmer hospitality starts at the table: a warm welcome, food made with care, and time shared without hurry. We choose fresh local ingredients, cook with respect for familiar flavors, and serve each guest as if they were part of our own home.': 'សម្រាប់ពួកយើង ភាពរួសរាយរាក់ទាក់គឺចាប់ផ្តើមឡើងនៅតុអាហារ៖ ការស្វាគមន៍យ៉ាងកក់ក្តៅ ម្ហូបអាហារដែលចម្អិនដោយយកចិត្តទុកដាក់ និងពេលវេលាដែលបានចែករំលែកជាមួយគ្នាដោយមិនប្រញាប់ប្រញាល់។ យើងជ្រើសរើសគ្រឿងផ្សំស្រស់ៗក្នុងស្រុកមកចម្អិនដោយរក្សាឱ្យនៅមានរសជាតិដើមដែលធ្លាប់ស្គាល់ និងបម្រើជូនអតិថិជនគ្រប់រូបប្រៀបដូចជាសមាជិកនៅក្នុងផ្ទះរបស់យើងផ្ទាល់។',
   'Learn More': 'ស្វែងយល់បន្ថែម',
   'Moments': 'ពេលវេលា',
   'Moments That Matter': 'ពេលវេលាដែលមានអត្ថន័យ',
   'events hosted with care and excellence.': 'កម្មវិធីដែលបានរៀបចំដោយការយកចិត្តទុកដាក់ និងឧត្តមភាព។',
   'Careers': 'ការងារ',
   'Grow With One More': 'រីកចម្រើនជាមួយ វ័នម៉រ',
-  'We are a team of storytellers, chefs, and hosts dedicated to preserving Khmer heritage through exceptional hospitality.': 'យើងជាក្រុមអ្នកនិទានរឿង ចុងភៅ និងអ្នកបដិសណ្ឋារកិច្ច ដែលប្តេជ្ញាថែរក្សាបេតិកភណ្ឌខ្មែរ តាមរយៈសេវាកម្មដ៏ល្អឥតខ្ចោះ។',
+  'We are a team of storytellers, chefs, and hosts dedicated to preserving Khmer heritage through exceptional hospitality.': 'យើងគឺជាក្រុមការងារដែលស្រឡាញ់រឿងរ៉ាវ វប្បធម៌ និងរសជាតិម្ហូបខ្មែរ។ តាមរយៈជំនាញផ្នែកចម្អិនអាហារ និងបដិសណ្ឋារកិច្ច យើងប្តេជ្ញាបង្កើតបទពិសោធន៍ដ៏ពិសេស ដែលផ្សារភ្ជាប់ភ្ញៀវជាមួយអត្តសញ្ញាណ និងបេតិកភណ្ឌខ្មែរ រាល់ការទទួលទានអាហារ។',
   'Career opportunities across culinary, service, and events.': 'ឱកាសការងារផ្នែកចុងភៅ សេវាកម្ម និងការរៀបចំកម្មវិធី។',
   'A supportive team environment built on respect and excellence.': 'បរិយាកាសក្រុមការងារគាំទ្រគ្នា ដែលកសាងឡើងលើការគោរព និងឧត្តមភាព។',
   'View Careers': 'មើលឱកាសការងារ',
@@ -372,7 +372,7 @@ export default function About() {
               </>
             ) : tr('The Spirit of Khmer Hospitality')}
           </h2>
-          <p>{tr('At One More Restaurant, every meal begins with a genuine Cambodian smile. Nestled in a striking, modern architectural setting, we bring together time-honored Khmer recipes and authentic flavors crafted by our passionate service and culinary team.')}</p>
+          <p>{tr('For us, Khmer hospitality starts at the table: a warm welcome, food made with care, and time shared without hurry. We choose fresh local ingredients, cook with respect for familiar flavors, and serve each guest as if they were part of our own home.')}</p>
         </div>
       </section>
 
@@ -398,17 +398,35 @@ export default function About() {
             </ul>
             <div className="about-careers-connect">
               <span>{tr('Connect with us on:')}</span>
-              <a
-                href="https://www.linkedin.com/company/one-more-restaurant/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="about-careers-linkedin-link"
-              >
-                <span className="about-linkedin-icon-wrapper">
-                  <img src={linkedinLogoImage} alt="LinkedIn" className="about-linkedin-icon" />
-                </span>
-                <span>LinkedIn</span>
-              </a>
+              <div className="about-careers-connect-row">
+                <a
+                  href="https://www.linkedin.com/company/one-more-restaurant/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="about-careers-social-btn about-careers-linkedin-btn"
+                >
+                  <span className="about-social-icon-wrapper about-linkedin-icon-wrapper">
+                    <svg viewBox="0 0 24 24" fill="currentColor" className="about-social-icon about-linkedin-svg">
+                      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                    </svg>
+                  </span>
+                  <span>LinkedIn</span>
+                </a>
+
+                <a
+                  href="https://t.me/onemoregroupcareer"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="about-careers-social-btn about-careers-telegram-btn"
+                >
+                  <span className="about-social-icon-wrapper about-telegram-icon-wrapper">
+                    <svg viewBox="0 0 24 24" fill="currentColor" className="about-social-icon about-telegram-icon">
+                      <path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm5.568 8.16c-.18 1.897-.96 6.502-1.356 8.627-.168.9-.504 1.201-.816 1.23-.696.064-1.224-.46-1.896-.9-1.056-.692-1.656-1.123-2.676-1.796-1.188-.78-.42-1.209.252-1.908.18-.18 3.252-2.977 3.312-3.233.007-.033.014-.158-.06-.224-.075-.065-.185-.043-.265-.025-.113.025-1.92 1.22-5.418 3.582-.512.351-.976.526-1.392.516-.459-.01-1.343-.26-2.001-.475-.806-.263-1.446-.403-1.39-.861.029-.239.364-.484 1.003-.735 3.924-1.708 6.544-2.835 7.86-3.38 3.737-1.55 4.514-1.82 5.02-1.83.111 0 .36.026.52.158.135.11.173.26.191.436-.001.063.009.224-.009.375z" />
+                    </svg>
+                  </span>
+                  <span>Telegram</span>
+                </a>
+              </div>
             </div>
           </div>
           <img src={careersTeamImage} alt={tr('The One More Restaurant team')} />

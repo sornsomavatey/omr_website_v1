@@ -261,9 +261,8 @@ function FaqSection() {
                   )}
                 </button>
                 <div
-                  className={`faq-answer-wrapper ${
-                    isExpanded ? 'faq-answer-expanded' : ''
-                  }`}
+                  className={`faq-answer-wrapper ${isExpanded ? 'faq-answer-expanded' : ''
+                    }`}
                 >
                   <div className="faq-answer">
                     <p>{faq.a}</p>
@@ -497,7 +496,7 @@ export default function ReservationPage() {
     return (
       <section className="reservation-form-section min-h-screen pt-28 pb-20 bg-white">
         <div className="reservation-form-container flex flex-col lg:flex-row gap-10 w-full max-w-[1440px] px-6">
-          
+
           {/* Left Form Main Area Skeleton */}
           <div className="reservation-form-main flex-1 flex flex-col gap-10">
             {/* Step 1: Choose Branch Skeleton */}
@@ -756,9 +755,9 @@ export default function ReservationPage() {
   const getOrdinalSuffix = (day: number) => {
     if (day > 3 && day < 21) return 'th';
     switch (day % 10) {
-      case 1:  return 'st';
-      case 2:  return 'nd';
-      case 3:  return 'rd';
+      case 1: return 'st';
+      case 2: return 'nd';
+      case 3: return 'rd';
       default: return 'th';
     }
   };
@@ -770,7 +769,7 @@ export default function ReservationPage() {
     const monthName = months[date.getMonth()];
     const dayNum = date.getDate();
     const yearNum = date.getFullYear();
-    
+
     if (isKhmer) {
       return `${localizeNumber(dayNum)} ${monthName} ${localizeNumber(yearNum)}`;
     }
@@ -784,10 +783,10 @@ export default function ReservationPage() {
 
   const handleReservationSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!fullName.trim() || !phone.trim()) {
       alert(t('reservationPage.validation.contactRequired', undefined, "Please fill in your Contact Details (Name & Phone Number) to complete your reservation."));
-      
+
       const targetInput = !fullName.trim() ? "fullName" : "phoneNumber";
       const element = document.getElementById(targetInput);
       if (element) {
@@ -909,7 +908,7 @@ export default function ReservationPage() {
             <p className="text-center text-[#646860] mb-8 max-w-md mx-auto">
               {t('reservationPage.success.desc', undefined, 'Thank you for booking with One More Restaurant. A confirmation message has been sent to your phone number.')}
             </p>
-            
+
             <div className="success-details mb-8">
               <div className="success-detail-row">
                 <span>{t('reservationPage.success.detailLabels.branch', undefined, 'Branch')}</span>
@@ -972,638 +971,637 @@ export default function ReservationPage() {
       )}
 
       <section className="reservation-form-section" aria-label={t('reservationPage.form.aria', undefined, 'Reservation form')}>
-          <div className="reservation-form-container">
-            {/* Form Main Area */}
-            <form className="reservation-form-main" onSubmit={handleReservationSubmit}>
-              
-              {/* Step 1: Choose Branch */}
-              <div className="step-container">
-                <div className="reservation-step-heading mb-8">
-                  <span>{localizeNumber(1)}</span>
-                  <div>
-                    <h2>{stepBranchTitle}</h2>
-                    <p>{stepBranchDesc}</p>
-                  </div>
-                </div>
+        <div className="reservation-form-container">
+          {/* Form Main Area */}
+          <form className="reservation-form-main" onSubmit={handleReservationSubmit}>
 
-                <div className="branch-selection-grid">
-                  {/* Toul Kork Card */}
-                  <button
-                    type="button"
-                    onClick={() => setSelectedBranch('Toul Kork')}
-                    className={`branch-card-btn text-left ${selectedBranch === 'Toul Kork' ? 'branch-card-btn-active' : ''}`}
-                  >
-                    <div className="branch-card-image-wrapper">
-                      <img src={branchesList[0]?.img} alt={branchesList[0]?.name} />
-                    </div>
-                    <div className="branch-card-content">
-                      <div className="branch-card-header">
-                        <h3>{branchesList[0]?.name}</h3>
-                        {selectedBranch === 'Toul Kork' && (
-                          <span className="branch-check-badge">
-                            <Check className="w-3.5 h-3.5 text-white" />
-                          </span>
-                        )}
-                      </div>
-                      <div className="branch-card-tags">
-                        {branchesList[0]?.tags.map((tag: string) => (
-                          <span key={tag} className="branch-tag">{tag}</span>
-                        ))}
-                      </div>
-                    </div>
-                  </button>
-
-                  {/* Boeung Kak Card */}
-                  <button
-                    type="button"
-                    onClick={() => setSelectedBranch('Boeung Kak')}
-                    className={`branch-card-btn text-left ${selectedBranch === 'Boeung Kak' ? 'branch-card-btn-active' : ''}`}
-                  >
-                    <div className="branch-card-image-wrapper">
-                      <img src={branchesList[1]?.img} alt={branchesList[1]?.name} />
-                    </div>
-                    <div className="branch-card-content">
-                      <div className="branch-card-header">
-                        <h3>{branchesList[1]?.name}</h3>
-                        {selectedBranch === 'Boeung Kak' && (
-                          <span className="branch-check-badge">
-                            <Check className="w-3.5 h-3.5 text-white" />
-                          </span>
-                        )}
-                      </div>
-                      <div className="branch-card-tags">
-                        {branchesList[1]?.tags.map((tag: string) => (
-                          <span key={tag} className="branch-tag">{tag}</span>
-                        ))}
-                      </div>
-                    </div>
-                  </button>
+            {/* Step 1: Choose Branch */}
+            <div className="step-container">
+              <div className="reservation-step-heading mb-8">
+                <span>{localizeNumber(1)}</span>
+                <div>
+                  <h2>{stepBranchTitle}</h2>
+                  <p>{stepBranchDesc}</p>
                 </div>
               </div>
 
-              <div className="step-divider" />
-
-              {/* Step 2: Contact Details */}
-              <div className="step-container">
-                <div className="reservation-step-heading mb-8">
-                  <span>{localizeNumber(2)}</span>
-                  <div>
-                    <h2>{stepContactTitle}</h2>
-                    <p>{stepContactDesc}</p>
+              <div className="branch-selection-grid">
+                {/* Toul Kork Card */}
+                <button
+                  type="button"
+                  onClick={() => setSelectedBranch('Toul Kork')}
+                  className={`branch-card-btn text-left ${selectedBranch === 'Toul Kork' ? 'branch-card-btn-active' : ''}`}
+                >
+                  <div className="branch-card-image-wrapper">
+                    <img src={branchesList[0]?.img} alt={branchesList[0]?.name} />
                   </div>
-                </div>
-
-                <div className="contact-details-grid">
-                  <div className="form-group">
-                    <label htmlFor="fullName">
-                      {t('reservationPage.form.labels.fullName', undefined, 'Full Name')}
-                      <span className="required-star"> *</span>
-                    </label>
-                    <input
-                      type="text"
-                      id="fullName"
-                      placeholder={t('reservationPage.form.placeholders.fullName', undefined, 'Enter full name')}
-                      value={fullName}
-                      onChange={(e) => setFullName(e.target.value)}
-                      required
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <label htmlFor="phoneNumber">
-                      {t('reservationPage.form.labels.phoneNumber', undefined, 'Phone Number')}
-                      <span className="required-star"> *</span>
-                    </label>
-                    <input
-                      type="tel"
-                      id="phoneNumber"
-                      placeholder={t('reservationPage.form.placeholders.phoneNumber', undefined, 'Enter phone number')}
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
-                      required
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="step-divider" />
-
-              {/* Step 3: Guests */}
-              <div className="step-container">
-                <div className="reservation-step-heading mb-8">
-                  <span>{localizeNumber(3)}</span>
-                  <div>
-                    <h2>{stepGuestsTitle}</h2>
-                    <p>{stepGuestsDesc}</p>
-                  </div>
-                </div>
-
-                <div className="guests-counter-container">
-                  <div className="counter-row">
-                    <span className="counter-label">{t('reservationPage.form.labels.adults', undefined, 'Adults')}</span>
-                    <div className="counter-control">
-                      <button
-                        type="button"
-                        onClick={() => setAdults((prev) => Math.max(1, prev - 1))}
-                        disabled={adults <= 1}
-                        aria-label={t('reservationPage.form.ariaLabels.decreaseAdults', undefined, 'Decrease adults')}
-                      >
-                        <Minus className="w-4 h-4" />
-                      </button>
-                      <span className="counter-value">{localizeNumber(adults)}</span>
-                      <button
-                        type="button"
-                        onClick={() => setAdults((prev) => prev + 1)}
-                        aria-label={t('reservationPage.form.ariaLabels.increaseAdults', undefined, 'Increase adults')}
-                      >
-                        <Plus className="w-4 h-4" />
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="counter-row">
-                    <span className="counter-label">{t('reservationPage.form.labels.children', undefined, 'Children')}</span>
-                    <div className="counter-control">
-                      <button
-                        type="button"
-                        onClick={() => setChildrenCount((prev) => Math.max(0, prev - 1))}
-                        disabled={childrenCount <= 0}
-                        aria-label={t('reservationPage.form.ariaLabels.decreaseChildren', undefined, 'Decrease children')}
-                      >
-                        <Minus className="w-4 h-4" />
-                      </button>
-                      <span className="counter-value">{localizeNumber(childrenCount)}</span>
-                      <button
-                        type="button"
-                        onClick={() => setChildrenCount((prev) => prev + 1)}
-                        aria-label={t('reservationPage.form.ariaLabels.increaseChildren', undefined, 'Increase children')}
-                      >
-                        <Plus className="w-4 h-4" />
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="total-guests-pill-wrapper">
-                    <div className="total-guests-pill">
-                      <User className="w-4 h-4 text-[#6b9158]" />
-                      <span>{t('reservationPage.form.totalGuests', { count: localizeNumber(adults + childrenCount) })}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="step-divider" />
-
-              {/* Step 3 (repeated): Select Date & Time */}
-              <div className="step-container">
-                <div className="reservation-step-heading mb-8">
-                  <span>{localizeNumber(3)}</span>
-                  <div>
-                    <h2>{stepDateTimeTitle}</h2>
-                    <p>{stepDateTimeDesc}</p>
-                  </div>
-                </div>
-
-                <div className="date-time-picker-grid">
-                  {/* Left Column: Calendar */}
-                  <div className="custom-calendar-widget">
-                    <div className="calendar-header">
-                      <span className="calendar-month-year">
-                        {monthNames[currentMonth]} {localizeNumber(currentYear)}
-                      </span>
-                      <div className="calendar-nav">
-                        <button type="button" onClick={handlePrevMonth} aria-label={t('reservationPage.form.ariaLabels.previousMonth', undefined, 'Previous month')}>
-                          <ChevronLeft className="w-4 h-4" />
-                        </button>
-                        <button type="button" onClick={handleNextMonth} aria-label={t('reservationPage.form.ariaLabels.nextMonth', undefined, 'Next month')}>
-                          <ChevronRight className="w-4 h-4" />
-                        </button>
-                      </div>
-                    </div>
-
-                    <div className="calendar-grid">
-                      {daysOfWeek.map((day, index) => (
-                        <div key={`${day}-${index}`} className="calendar-day-header">
-                          {day}
-                        </div>
-                      ))}
-
-                      {getCalendarDays().map(({ day, isCurrentMonth, date }, idx) => {
-                        const isSelected =
-                          selectedDate.getDate() === day &&
-                          selectedDate.getMonth() === date.getMonth() &&
-                          selectedDate.getFullYear() === date.getFullYear();
-
-                        return (
-                          <button
-                            key={idx}
-                            type="button"
-                            onClick={() => setSelectedDate(date)}
-                            className={`calendar-cell ${!isCurrentMonth ? 'calendar-cell-other-month' : ''} ${
-                              isSelected ? 'calendar-cell-selected' : ''
-                            }`}
-                          >
-                            <span>{localizeNumber(day)}</span>
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-
-                  {/* Right Column: Time slots */}
-                  <div className="time-picker-widget">
-                    <div className="time-tabs">
-                      {(['Breakfast', 'Lunch', 'Dinner'] as const).map((cat) => (
-                        <button
-                          key={cat}
-                          type="button"
-                          onClick={() => {
-                            setTimeCategory(cat);
-                            setSelectedTime(timeSlots[cat][0]);
-                          }}
-                          className={`time-tab-btn ${timeCategory === cat ? 'time-tab-btn-active' : ''}`}
-                        >
-                          {translatedTimeCategory(cat)}
-                        </button>
-                      ))}
-                    </div>
-
-                    <div className="time-slots-grid">
-                      {timeSlots[timeCategory].map((slot) => {
-                        const isSelected = selectedTime === slot && !customTime;
-
-                        return (
-                          <button
-                            key={slot}
-                            type="button"
-                            onClick={() => {
-                              setSelectedTime(slot);
-                              setCustomTime('');
-                            }}
-                            className={`time-slot-btn ${isSelected ? 'time-slot-btn-selected' : ''}`}
-                          >
-                            {formatTimeDisplay(slot)}
-                          </button>
-                        );
-                      })}
-                    </div>
-
-                    <div ref={timeInputWrapperRef} className="custom-time-input-wrapper">
-                      <Clock
-                        className="custom-time-icon cursor-pointer"
-                        onClick={() => timeInputRef.current?.focus()}
-                      />
-                      <input
-                        ref={timeInputRef}
-                        type="text"
-                        placeholder={t('reservationPage.form.placeholders.time', undefined, 'Enter time...')}
-                        value={customTime}
-                        onChange={(e) => {
-                          setCustomTime(e.target.value);
-                          setSelectedTime('');
-                          setShowTimeDropdown(true);
-                        }}
-                        onFocus={() => setShowTimeDropdown(true)}
-                        onKeyDown={(e) => {
-                          if (e.key === 'Escape' || e.key === 'Enter') {
-                            setShowTimeDropdown(false);
-                          }
-                        }}
-                      />
-                      {showTimeDropdown && filteredTimeSuggestions.length > 0 && (
-                        <div className="time-dropdown-list">
-                          {filteredTimeSuggestions.map((time) => (
-                            <button
-                              key={time}
-                              type="button"
-                              className="time-dropdown-item"
-                              onClick={() => handleSelectSuggestion(time)}
-                            >
-                              {formatTimeDisplay(time)}
-                            </button>
-                          ))}
-                        </div>
+                  <div className="branch-card-content">
+                    <div className="branch-card-header">
+                      <h3>{branchesList[0]?.name}</h3>
+                      {selectedBranch === 'Toul Kork' && (
+                        <span className="branch-check-badge">
+                          <Check className="w-3.5 h-3.5 text-white" />
+                        </span>
                       )}
                     </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="step-divider" />
-
-              {/* Step 4: Occasion */}
-              <div className="step-container">
-                <div className="reservation-step-heading mb-8">
-                  <span>{localizeNumber(4)}</span>
-                  <div>
-                    <h2>{stepOccasionTitle}</h2>
-                    <p>{stepOccasionDesc}</p>
-                  </div>
-                </div>
-
-                <div className="occasion-grid">
-                  {occasions.map((occ) => {
-                    const OccIcon = occ.icon;
-                    const isSelected = selectedOccasion === occ.id;
-
-                    return (
-                      <button
-                        key={occ.name}
-                        type="button"
-                        onClick={() => setSelectedOccasion(occ.id)}
-                        className={`occasion-btn-card ${isSelected ? 'occasion-btn-card-active' : ''}`}
-                      >
-                        <OccIcon className="w-5 h-5 mb-2 shrink-0" />
-                        <span>{occ.name}</span>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-
-              <div className="step-divider" />
-
-              {/* Step 5: Seating Preference */}
-              <div className="step-container">
-                <div className="reservation-step-heading mb-8">
-                  <span>{localizeNumber(5)}</span>
-                  <div>
-                    <h2>{stepSeatingTitle}</h2>
-                    <p>{stepSeatingDesc}</p>
-                  </div>
-                </div>
-
-                <div className="seating-grid">
-                  {seatingPreferences.map((seating) => {
-                    const isSelected = selectedSeating === seating.id;
-
-                    return (
-                      <button
-                        key={seating.name}
-                        type="button"
-                        onClick={() => setSelectedSeating(seating.id)}
-                        className={`seating-btn-card text-left ${isSelected ? 'seating-btn-card-active' : ''}`}
-                      >
-                        <div className="seating-card-image-wrapper">
-                          <img src={seating.img} alt={seating.name} />
-                        </div>
-                        <div className="seating-card-label">
-                          <span>{seating.name}</span>
-                        </div>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-
-              <div className="step-divider" />
-
-              {/* Step 6: Pre-Order */}
-              <div className="step-container">
-                <div className="preorder-step-row">
-                  <div className="reservation-step-heading" style={{ marginBottom: 0 }}>
-                    <span>{localizeNumber(6)}</span>
-                    <div className="preorder-step-copy">
-                      <h2>{isKhmer ? 'កុម្ម៉ង់អាហារទុកមុន' : 'Pre-order'}</h2>
-                      <p>
-                        {isKhmer 
-                          ? 'ជម្រើសបន្ថែម — ជ្រើសរើសមុខម្ហូបជាមុន ដើម្បីឲ្យអាហាររួចរាល់នៅពេលលោកអ្នកមកដល់' 
-                          : "Optional — choose dishes ahead of time so they're ready when you arrive"}
-                      </p>
-                    </div>
-                  </div>
-                  <button
-                    type="button"
-                    className="preorder-browse-btn"
-                    onClick={() => setIsMenuModalOpen(true)}
-                  >
-                    {isKhmer ? 'មើលបញ្ជីមុខម្ហូប' : 'Browse Menu'}
-                  </button>
-                </div>
-
-                {/* Cart pill — shows selected items */}
-                {preOrderItemCount > 0 && (
-                  <div className="preorder-cart-banner mt-6">
-                    <div className="preorder-cart-header">
-                      <div className="preorder-cart-header-left">
-                        <div className="preorder-cart-icon-wrap">
-                          <ShoppingCart className="w-5 h-5" />
-                          <span className="preorder-cart-count">{preOrderItemCount}</span>
-                        </div>
-                        <div>
-                          <p className="preorder-cart-label">{isKhmer ? 'សេចក្តីសង្ខេបនៃការកុម្ម៉ង់មុន' : 'Pre-Order Summary'}</p>
-                          <p className="preorder-cart-items-preview">
-                            {isKhmer ? 'កុម្ម៉ង់អាហារទុកមុន' : 'Pre-order'}
-                          </p>
-                        </div>
-                      </div>
-                      <div className="preorder-cart-header-right">
-                        <span className="preorder-cart-header-total">${preOrderTotal.toFixed(2)}</span>
-                        <button
-                          type="button"
-                          className="preorder-clear-btn"
-                          onClick={() => {
-                            const confirmClear = window.confirm(
-                              isKhmer 
-                                ? "តើអ្នកពិតជាចង់លុបការកុម្ម៉ង់មុនទាំងអស់មែនទេ?" 
-                                : "Are you sure you want to clear all pre-ordered items?"
-                            );
-                            if (confirmClear) {
-                              setPreOrderCart({});
-                            }
-                          }}
-                          aria-label="Clear pre-order"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
-                      </div>
-                    </div>
-
-                    <div className="preorder-cart-items-list-container">
-                      {Object.values(preOrderCart).map((item) => (
-                        <div key={item.id} className="preorder-cart-item-row">
-                          <span className="preorder-item-row-name">
-                            {isKhmer ? (item.name_kh || item.name) : item.name}
-                          </span>
-                          <div className="preorder-item-row-actions">
-                            <div className="preorder-item-row-qty-ctrl">
-                              <button
-                                type="button"
-                                className="qty-btn"
-                                onClick={() => handleQtyInBanner(item, -1)}
-                                aria-label="Decrease quantity"
-                              >
-                                <Minus className="w-3 h-3" />
-                              </button>
-                              <span className="qty-val">{item.qty}</span>
-                              <button
-                                type="button"
-                                className="qty-btn"
-                                onClick={() => handleQtyInBanner(item, 1)}
-                                aria-label="Increase quantity"
-                              >
-                                <Plus className="w-3 h-3" />
-                              </button>
-                            </div>
-                          </div>
-                        </div>
+                    <div className="branch-card-tags">
+                      {branchesList[0]?.tags.map((tag: string) => (
+                        <span key={tag} className="branch-tag">{tag}</span>
                       ))}
                     </div>
                   </div>
-                )}
+                </button>
 
-                <div className="special-request-wrapper mt-8">
-                  <label htmlFor="specialRequest">{t('reservationPage.form.labels.specialRequest', undefined, 'Special Request')}</label>
-                  <textarea
-                    id="specialRequest"
-                    rows={4}
-                    placeholder={t('reservationPage.form.placeholders.specialRequest', undefined, 'Allergies, seating requests, etc.')}
-                    value={specialRequest}
-                    onChange={(e) => setSpecialRequest(e.target.value)}
+                {/* Boeung Kak Card */}
+                <button
+                  type="button"
+                  onClick={() => setSelectedBranch('Boeung Kak')}
+                  className={`branch-card-btn text-left ${selectedBranch === 'Boeung Kak' ? 'branch-card-btn-active' : ''}`}
+                >
+                  <div className="branch-card-image-wrapper">
+                    <img src={branchesList[1]?.img} alt={branchesList[1]?.name} />
+                  </div>
+                  <div className="branch-card-content">
+                    <div className="branch-card-header">
+                      <h3>{branchesList[1]?.name}</h3>
+                      {selectedBranch === 'Boeung Kak' && (
+                        <span className="branch-check-badge">
+                          <Check className="w-3.5 h-3.5 text-white" />
+                        </span>
+                      )}
+                    </div>
+                    <div className="branch-card-tags">
+                      {branchesList[1]?.tags.map((tag: string) => (
+                        <span key={tag} className="branch-tag">{tag}</span>
+                      ))}
+                    </div>
+                  </div>
+                </button>
+              </div>
+            </div>
+
+            <div className="step-divider" />
+
+            {/* Step 2: Contact Details */}
+            <div className="step-container">
+              <div className="reservation-step-heading mb-8">
+                <span>{localizeNumber(2)}</span>
+                <div>
+                  <h2>{stepContactTitle}</h2>
+                  <p>{stepContactDesc}</p>
+                </div>
+              </div>
+
+              <div className="contact-details-grid">
+                <div className="form-group">
+                  <label htmlFor="fullName">
+                    {t('reservationPage.form.labels.fullName', undefined, 'Full Name')}
+                    <span className="required-star"> *</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="fullName"
+                    placeholder={t('reservationPage.form.placeholders.fullName', undefined, 'Enter full name')}
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                    required
                   />
                 </div>
 
-                <div className="submit-area mt-8">
-                  <button type="submit" className="reserve-btn-primary w-full flex items-center justify-center gap-2" disabled={isSubmitting}>
-                    {isSubmitting ? (
-                      <>
-                        <Loader2 className="w-4 h-4 animate-spin" />
-                        <span>{isKhmer ? 'កំពុងដំណើរការ...' : 'Processing...'}</span>
-                      </>
-                    ) : (
-                      t('reservationPage.form.submit', undefined, 'Reserve a Table')
-                    )}
-                  </button>
-                  <p className="cancel-notice text-center mt-3">
-                    {t('reservationPage.form.cancellationNotice', undefined, 'Free cancellation up to 24 hours before your reservation.')}
-                  </p>
+                <div className="form-group">
+                  <label htmlFor="phoneNumber">
+                    {t('reservationPage.form.labels.phoneNumber', undefined, 'Phone Number')}
+                    <span className="required-star"> *</span>
+                  </label>
+                  <input
+                    type="tel"
+                    id="phoneNumber"
+                    placeholder={t('reservationPage.form.placeholders.phoneNumber', undefined, 'Enter phone number')}
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="step-divider" />
+
+            {/* Step 3: Guests */}
+            <div className="step-container">
+              <div className="reservation-step-heading mb-8">
+                <span>{localizeNumber(3)}</span>
+                <div>
+                  <h2>{stepGuestsTitle}</h2>
+                  <p>{stepGuestsDesc}</p>
                 </div>
               </div>
 
-            </form>
+              <div className="guests-counter-container">
+                <div className="counter-row">
+                  <span className="counter-label">{t('reservationPage.form.labels.adults', undefined, 'Adults')}</span>
+                  <div className="counter-control">
+                    <button
+                      type="button"
+                      onClick={() => setAdults((prev) => Math.max(1, prev - 1))}
+                      disabled={adults <= 1}
+                      aria-label={t('reservationPage.form.ariaLabels.decreaseAdults', undefined, 'Decrease adults')}
+                    >
+                      <Minus className="w-4 h-4" />
+                    </button>
+                    <span className="counter-value">{localizeNumber(adults)}</span>
+                    <button
+                      type="button"
+                      onClick={() => setAdults((prev) => prev + 1)}
+                      aria-label={t('reservationPage.form.ariaLabels.increaseAdults', undefined, 'Increase adults')}
+                    >
+                      <Plus className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
 
-            {/* Sticky Sidebar Booking Summary */}
-            <aside className="reservation-summary-card">
-              <h2>{t('reservationPage.summary.title', undefined, 'Booking Summary')}</h2>
+                <div className="counter-row">
+                  <span className="counter-label">{t('reservationPage.form.labels.children', undefined, 'Children')}</span>
+                  <div className="counter-control">
+                    <button
+                      type="button"
+                      onClick={() => setChildrenCount((prev) => Math.max(0, prev - 1))}
+                      disabled={childrenCount <= 0}
+                      aria-label={t('reservationPage.form.ariaLabels.decreaseChildren', undefined, 'Decrease children')}
+                    >
+                      <Minus className="w-4 h-4" />
+                    </button>
+                    <span className="counter-value">{localizeNumber(childrenCount)}</span>
+                    <button
+                      type="button"
+                      onClick={() => setChildrenCount((prev) => prev + 1)}
+                      aria-label={t('reservationPage.form.ariaLabels.increaseChildren', undefined, 'Increase children')}
+                    >
+                      <Plus className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
 
-              <div className="summary-content">
-                <div className="summary-list">
-                  <div className="summary-item summary-item-branch">
-                    <span>{t('reservationPage.summary.labels.branch', undefined, 'Branch')}</span>
-                    <strong>{selectedBranchDisplay}</strong>
+                <div className="total-guests-pill-wrapper">
+                  <div className="total-guests-pill">
+                    <User className="w-4 h-4 text-[#6b9158]" />
+                    <span>{t('reservationPage.form.totalGuests', { count: localizeNumber(adults + childrenCount) })}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="step-divider" />
+
+            {/* Step 3 (repeated): Select Date & Time */}
+            <div className="step-container">
+              <div className="reservation-step-heading mb-8">
+                <span>{localizeNumber(3)}</span>
+                <div>
+                  <h2>{stepDateTimeTitle}</h2>
+                  <p>{stepDateTimeDesc}</p>
+                </div>
+              </div>
+
+              <div className="date-time-picker-grid">
+                {/* Left Column: Calendar */}
+                <div className="custom-calendar-widget">
+                  <div className="calendar-header">
+                    <span className="calendar-month-year">
+                      {monthNames[currentMonth]} {localizeNumber(currentYear)}
+                    </span>
+                    <div className="calendar-nav">
+                      <button type="button" onClick={handlePrevMonth} aria-label={t('reservationPage.form.ariaLabels.previousMonth', undefined, 'Previous month')}>
+                        <ChevronLeft className="w-4 h-4" />
+                      </button>
+                      <button type="button" onClick={handleNextMonth} aria-label={t('reservationPage.form.ariaLabels.nextMonth', undefined, 'Next month')}>
+                        <ChevronRight className="w-4 h-4" />
+                      </button>
+                    </div>
                   </div>
 
-                  <div className="summary-item">
-                    <span>{t('reservationPage.summary.labels.name', undefined, 'Name')}</span>
-                    <strong>{fullName || t('reservationPage.summary.empty', undefined, '—')}</strong>
+                  <div className="calendar-grid">
+                    {daysOfWeek.map((day, index) => (
+                      <div key={`${day}-${index}`} className="calendar-day-header">
+                        {day}
+                      </div>
+                    ))}
+
+                    {getCalendarDays().map(({ day, isCurrentMonth, date }, idx) => {
+                      const isSelected =
+                        selectedDate.getDate() === day &&
+                        selectedDate.getMonth() === date.getMonth() &&
+                        selectedDate.getFullYear() === date.getFullYear();
+
+                      return (
+                        <button
+                          key={idx}
+                          type="button"
+                          onClick={() => setSelectedDate(date)}
+                          className={`calendar-cell ${!isCurrentMonth ? 'calendar-cell-other-month' : ''} ${isSelected ? 'calendar-cell-selected' : ''
+                            }`}
+                        >
+                          <span>{localizeNumber(day)}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Right Column: Time slots */}
+                <div className="time-picker-widget">
+                  <div className="time-tabs">
+                    {(['Breakfast', 'Lunch', 'Dinner'] as const).map((cat) => (
+                      <button
+                        key={cat}
+                        type="button"
+                        onClick={() => {
+                          setTimeCategory(cat);
+                          setSelectedTime(timeSlots[cat][0]);
+                        }}
+                        className={`time-tab-btn ${timeCategory === cat ? 'time-tab-btn-active' : ''}`}
+                      >
+                        {translatedTimeCategory(cat)}
+                      </button>
+                    ))}
                   </div>
 
-                  <div className="summary-item">
-                    <span>{t('reservationPage.summary.labels.contact', undefined, 'Contact')}</span>
-                    <strong>{phone || t('reservationPage.summary.empty', undefined, '—')}</strong>
+                  <div className="time-slots-grid">
+                    {timeSlots[timeCategory].map((slot) => {
+                      const isSelected = selectedTime === slot && !customTime;
+
+                      return (
+                        <button
+                          key={slot}
+                          type="button"
+                          onClick={() => {
+                            setSelectedTime(slot);
+                            setCustomTime('');
+                          }}
+                          className={`time-slot-btn ${isSelected ? 'time-slot-btn-selected' : ''}`}
+                        >
+                          {formatTimeDisplay(slot)}
+                        </button>
+                      );
+                    })}
                   </div>
 
-                  <div className="summary-item">
-                    <span>{t('reservationPage.summary.labels.guests', undefined, 'Guests')}</span>
-                    <strong>
-                      {t('reservationPage.form.totalGuests', { count: localizeNumber(adults + childrenCount) })}
-                      <span className="guest-breakdown">
-                        {t('reservationPage.summary.guestBreakdown', {
-                          adults: localizeNumber(adults),
-                          children: localizeNumber(childrenCount)
-                        })}
-                      </span>
-                    </strong>
+                  <div ref={timeInputWrapperRef} className="custom-time-input-wrapper">
+                    <Clock
+                      className="custom-time-icon cursor-pointer"
+                      onClick={() => timeInputRef.current?.focus()}
+                    />
+                    <input
+                      ref={timeInputRef}
+                      type="text"
+                      placeholder={t('reservationPage.form.placeholders.time', undefined, 'Enter time...')}
+                      value={customTime}
+                      onChange={(e) => {
+                        setCustomTime(e.target.value);
+                        setSelectedTime('');
+                        setShowTimeDropdown(true);
+                      }}
+                      onFocus={() => setShowTimeDropdown(true)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Escape' || e.key === 'Enter') {
+                          setShowTimeDropdown(false);
+                        }
+                      }}
+                    />
+                    {showTimeDropdown && filteredTimeSuggestions.length > 0 && (
+                      <div className="time-dropdown-list">
+                        {filteredTimeSuggestions.map((time) => (
+                          <button
+                            key={time}
+                            type="button"
+                            className="time-dropdown-item"
+                            onClick={() => handleSelectSuggestion(time)}
+                          >
+                            {formatTimeDisplay(time)}
+                          </button>
+                        ))}
+                      </div>
+                    )}
                   </div>
+                </div>
+              </div>
+            </div>
 
-                  <div className="summary-item">
-                    <span>{t('reservationPage.summary.labels.date', undefined, 'Date')}</span>
-                    <strong>
-                      {formatDateDisplay(selectedDate)}
-                      <span className="time-tag">
-                        {t('reservationPage.summary.timeTag', {
-                          time: formatTimeDisplay(customTime || selectedTime),
-                          category: translatedTimeCategory(timeCategory)
-                        })}
-                      </span>
-                    </strong>
+            <div className="step-divider" />
+
+            {/* Step 4: Occasion */}
+            <div className="step-container">
+              <div className="reservation-step-heading mb-8">
+                <span>{localizeNumber(4)}</span>
+                <div>
+                  <h2>{stepOccasionTitle}</h2>
+                  <p>{stepOccasionDesc}</p>
+                </div>
+              </div>
+
+              <div className="occasion-grid">
+                {occasions.map((occ) => {
+                  const OccIcon = occ.icon;
+                  const isSelected = selectedOccasion === occ.id;
+
+                  return (
+                    <button
+                      key={occ.name}
+                      type="button"
+                      onClick={() => setSelectedOccasion(occ.id)}
+                      className={`occasion-btn-card ${isSelected ? 'occasion-btn-card-active' : ''}`}
+                    >
+                      <OccIcon className="w-5 h-5 mb-2 shrink-0" />
+                      <span>{occ.name}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="step-divider" />
+
+            {/* Step 5: Seating Preference */}
+            <div className="step-container">
+              <div className="reservation-step-heading mb-8">
+                <span>{localizeNumber(5)}</span>
+                <div>
+                  <h2>{stepSeatingTitle}</h2>
+                  <p>{stepSeatingDesc}</p>
+                </div>
+              </div>
+
+              <div className="seating-grid">
+                {seatingPreferences.map((seating) => {
+                  const isSelected = selectedSeating === seating.id;
+
+                  return (
+                    <button
+                      key={seating.name}
+                      type="button"
+                      onClick={() => setSelectedSeating(seating.id)}
+                      className={`seating-btn-card text-left ${isSelected ? 'seating-btn-card-active' : ''}`}
+                    >
+                      <div className="seating-card-image-wrapper">
+                        <img src={seating.img} alt={seating.name} />
+                      </div>
+                      <div className="seating-card-label">
+                        <span>{seating.name}</span>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="step-divider" />
+
+            {/* Step 6: Pre-Order */}
+            <div className="step-container">
+              <div className="preorder-step-row">
+                <div className="reservation-step-heading" style={{ marginBottom: 0 }}>
+                  <span>{localizeNumber(6)}</span>
+                  <div className="preorder-step-copy">
+                    <h2>{isKhmer ? 'កុម្ម៉ង់អាហារទុកមុន' : 'Pre-order'}</h2>
+                    <p>
+                      {isKhmer
+                        ? 'ជម្រើសបន្ថែម — ជ្រើសរើសមុខម្ហូបជាមុន ដើម្បីឲ្យអាហាររួចរាល់នៅពេលលោកអ្នកមកដល់'
+                        : "Optional — choose dishes ahead of time so they're ready when you arrive"}
+                    </p>
                   </div>
+                </div>
+                <button
+                  type="button"
+                  className="preorder-browse-btn"
+                  onClick={() => setIsMenuModalOpen(true)}
+                >
+                  {isKhmer ? 'មើលបញ្ជីមុខម្ហូប' : 'Browse Menu'}
+                </button>
+              </div>
 
-                  <div className="summary-item">
-                    <span>{t('reservationPage.summary.labels.occasion', undefined, 'Occasion')}</span>
-                    <strong>{selectedOccasionDisplay}</strong>
-                  </div>
-
-                  <div className="summary-item">
-                    <span>{t('reservationPage.summary.labels.seating', undefined, 'Seating')}</span>
-                    <strong>{selectedSeatingDisplay}</strong>
-                  </div>
-
-                  {preOrderItemCount > 0 && (
-                    <div className="summary-item-preorder">
+              {/* Cart pill — shows selected items */}
+              {preOrderItemCount > 0 && (
+                <div className="preorder-cart-banner mt-6">
+                  <div className="preorder-cart-header">
+                    <div className="preorder-cart-header-left">
+                      <div className="preorder-cart-icon-wrap">
+                        <ShoppingCart className="w-5 h-5" />
+                        <span className="preorder-cart-count">{preOrderItemCount}</span>
+                      </div>
+                      <div>
+                        <p className="preorder-cart-label">{isKhmer ? 'សេចក្តីសង្ខេបនៃការកុម្ម៉ង់មុន' : 'Pre-Order Summary'}</p>
+                        <p className="preorder-cart-items-preview">
+                          {isKhmer ? 'កុម្ម៉ង់អាហារទុកមុន' : 'Pre-order'}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="preorder-cart-header-right">
+                      <span className="preorder-cart-header-total">${preOrderTotal.toFixed(2)}</span>
                       <button
                         type="button"
-                        className="summary-preorder-toggle"
-                        onClick={() => setIsPreOrderSummaryExpanded(!isPreOrderSummaryExpanded)}
-                        aria-expanded={isPreOrderSummaryExpanded}
+                        className="preorder-clear-btn"
+                        onClick={() => {
+                          const confirmClear = window.confirm(
+                            isKhmer
+                              ? "តើអ្នកពិតជាចង់លុបការកុម្ម៉ង់មុនទាំងអស់មែនទេ?"
+                              : "Are you sure you want to clear all pre-ordered items?"
+                          );
+                          if (confirmClear) {
+                            setPreOrderCart({});
+                          }
+                        }}
+                        aria-label="Clear pre-order"
                       >
-                        <span>{isKhmer ? 'មុខម្ហូបកុម្ម៉ង់មុន' : 'Pre-ordered Items'} ({preOrderItemCount})</span>
-                        {isPreOrderSummaryExpanded ? (
-                          <ChevronUp className="w-4 h-4 text-[#6b9158]" />
-                        ) : (
-                          <ChevronDown className="w-4 h-4 text-[#6b9158]" />
-                        )}
+                        <Trash2 className="w-4 h-4" />
                       </button>
-                      {isPreOrderSummaryExpanded && (
-                        <div className="summary-preorder-list">
-                          {Object.values(preOrderCart).map((i) => (
-                            <div key={i.id} className="summary-preorder-subitem">
-                              <span className="subitem-name">{isKhmer ? (i.name_kh || i.name) : i.name}</span>
-                              <span className="subitem-qty">×{i.qty}</span>
-                            </div>
-                          ))}
-                          <div className="summary-preorder-total">
-                            <span>{isKhmer ? 'សរុប' : 'Total Price'}:</span>
-                            <strong>${preOrderTotal.toFixed(2)}</strong>
+                    </div>
+                  </div>
+
+                  <div className="preorder-cart-items-list-container">
+                    {Object.values(preOrderCart).map((item) => (
+                      <div key={item.id} className="preorder-cart-item-row">
+                        <span className="preorder-item-row-name">
+                          {isKhmer ? (item.name_kh || item.name) : item.name}
+                        </span>
+                        <div className="preorder-item-row-actions">
+                          <div className="preorder-item-row-qty-ctrl">
+                            <button
+                              type="button"
+                              className="qty-btn"
+                              onClick={() => handleQtyInBanner(item, -1)}
+                              aria-label="Decrease quantity"
+                            >
+                              <Minus className="w-3 h-3" />
+                            </button>
+                            <span className="qty-val">{item.qty}</span>
+                            <button
+                              type="button"
+                              className="qty-btn"
+                              onClick={() => handleQtyInBanner(item, 1)}
+                              aria-label="Increase quantity"
+                            >
+                              <Plus className="w-3 h-3" />
+                            </button>
                           </div>
                         </div>
-                      )}
-                    </div>
-                  )}
+                      </div>
+                    ))}
+                  </div>
                 </div>
+              )}
 
-                <p className="arrival-notice">
-                  {t('reservationPage.summary.arrivalNotice', undefined, 'Please arrive 10 mins early. Reservations are held for 15 mins after the scheduled time.')}
-                </p>
-
-                <div className="summary-actions">
-                  <button
-                    type="button"
-                    onClick={handleReservationSubmit}
-                    className="reserve-btn-primary w-full flex items-center justify-center gap-2"
-                    disabled={isSubmitting}
-                  >
-                    {isSubmitting ? (
-                      <>
-                        <Loader2 className="w-4 h-4 animate-spin" />
-                        <span>{isKhmer ? 'កំពុងដំណើរការ...' : 'Processing...'}</span>
-                      </>
-                    ) : (
-                      t('reservationPage.summary.reserveButton', undefined, 'Reserve a Table')
-                    )}
-                  </button>
-
-                  <a
-                    href={t('reservationPage.summary.phoneHref', undefined, 'tel:+85523888222')}
-                    className="reserve-btn-secondary w-full text-center"
-                  >
-                    {t('reservationPage.summary.contactRestaurant', undefined, 'Contact Restaurant')}
-                  </a>
-                </div>
+              <div className="special-request-wrapper mt-8">
+                <label htmlFor="specialRequest">{t('reservationPage.form.labels.specialRequest', undefined, 'Special Request')}</label>
+                <textarea
+                  id="specialRequest"
+                  rows={4}
+                  placeholder={t('reservationPage.form.placeholders.specialRequest', undefined, 'Allergies, seating requests, etc.')}
+                  value={specialRequest}
+                  onChange={(e) => setSpecialRequest(e.target.value)}
+                />
               </div>
-            </aside>
-          </div>
-        </section>
+
+              <div className="submit-area mt-8">
+                <button type="submit" className="reserve-btn-primary w-full flex items-center justify-center gap-2" disabled={isSubmitting}>
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      <span>{isKhmer ? 'កំពុងដំណើរការ...' : 'Processing...'}</span>
+                    </>
+                  ) : (
+                    t('reservationPage.form.submit', undefined, 'Reserve a Table')
+                  )}
+                </button>
+                <p className="cancel-notice text-center mt-3">
+                  {t('reservationPage.form.cancellationNotice', undefined, 'Free cancellation up to 24 hours before your reservation.')}
+                </p>
+              </div>
+            </div>
+
+          </form>
+
+          {/* Sticky Sidebar Booking Summary */}
+          <aside className="reservation-summary-card">
+            <h2>{t('reservationPage.summary.title', undefined, 'Booking Summary')}</h2>
+
+            <div className="summary-content">
+              <div className="summary-list">
+                <div className="summary-item summary-item-branch">
+                  <span>{t('reservationPage.summary.labels.branch', undefined, 'Branch')}</span>
+                  <strong>{selectedBranchDisplay}</strong>
+                </div>
+
+                <div className="summary-item">
+                  <span>{t('reservationPage.summary.labels.name', undefined, 'Name')}</span>
+                  <strong>{fullName || t('reservationPage.summary.empty', undefined, '—')}</strong>
+                </div>
+
+                <div className="summary-item">
+                  <span>{t('reservationPage.summary.labels.contact', undefined, 'Contact')}</span>
+                  <strong>{phone || t('reservationPage.summary.empty', undefined, '—')}</strong>
+                </div>
+
+                <div className="summary-item">
+                  <span>{t('reservationPage.summary.labels.guests', undefined, 'Guests')}</span>
+                  <strong>
+                    {t('reservationPage.form.totalGuests', { count: localizeNumber(adults + childrenCount) })}
+                    <span className="guest-breakdown">
+                      {t('reservationPage.summary.guestBreakdown', {
+                        adults: localizeNumber(adults),
+                        children: localizeNumber(childrenCount)
+                      })}
+                    </span>
+                  </strong>
+                </div>
+
+                <div className="summary-item">
+                  <span>{t('reservationPage.summary.labels.date', undefined, 'Date')}</span>
+                  <strong>
+                    {formatDateDisplay(selectedDate)}
+                    <span className="time-tag">
+                      {t('reservationPage.summary.timeTag', {
+                        time: formatTimeDisplay(customTime || selectedTime),
+                        category: translatedTimeCategory(timeCategory)
+                      })}
+                    </span>
+                  </strong>
+                </div>
+
+                <div className="summary-item">
+                  <span>{t('reservationPage.summary.labels.occasion', undefined, 'Occasion')}</span>
+                  <strong>{selectedOccasionDisplay}</strong>
+                </div>
+
+                <div className="summary-item">
+                  <span>{t('reservationPage.summary.labels.seating', undefined, 'Seating')}</span>
+                  <strong>{selectedSeatingDisplay}</strong>
+                </div>
+
+                {preOrderItemCount > 0 && (
+                  <div className="summary-item-preorder">
+                    <button
+                      type="button"
+                      className="summary-preorder-toggle"
+                      onClick={() => setIsPreOrderSummaryExpanded(!isPreOrderSummaryExpanded)}
+                      aria-expanded={isPreOrderSummaryExpanded}
+                    >
+                      <span>{isKhmer ? 'មុខម្ហូបកុម្ម៉ង់មុន' : 'Pre-ordered Items'} ({preOrderItemCount})</span>
+                      {isPreOrderSummaryExpanded ? (
+                        <ChevronUp className="w-4 h-4 text-[#6b9158]" />
+                      ) : (
+                        <ChevronDown className="w-4 h-4 text-[#6b9158]" />
+                      )}
+                    </button>
+                    {isPreOrderSummaryExpanded && (
+                      <div className="summary-preorder-list">
+                        {Object.values(preOrderCart).map((i) => (
+                          <div key={i.id} className="summary-preorder-subitem">
+                            <span className="subitem-name">{isKhmer ? (i.name_kh || i.name) : i.name}</span>
+                            <span className="subitem-qty">×{i.qty}</span>
+                          </div>
+                        ))}
+                        <div className="summary-preorder-total">
+                          <span>{isKhmer ? 'សរុប' : 'Total Price'}:</span>
+                          <strong>${preOrderTotal.toFixed(2)}</strong>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              <p className="arrival-notice">
+                {t('reservationPage.summary.arrivalNotice', undefined, 'Please arrive 10 mins early. Reservations are held for 15 mins after the scheduled time.')}
+              </p>
+
+              <div className="summary-actions">
+                <button
+                  type="button"
+                  onClick={handleReservationSubmit}
+                  className="reserve-btn-primary w-full flex items-center justify-center gap-2"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      <span>{isKhmer ? 'កំពុងដំណើរការ...' : 'Processing...'}</span>
+                    </>
+                  ) : (
+                    t('reservationPage.summary.reserveButton', undefined, 'Reserve a Table')
+                  )}
+                </button>
+
+                <a
+                  href={t('reservationPage.summary.phoneHref', undefined, 'tel:+85523888222')}
+                  className="reserve-btn-secondary w-full text-center"
+                >
+                  {t('reservationPage.summary.contactRestaurant', undefined, 'Contact Restaurant')}
+                </a>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
 
       {/* FAQ Section */}
       <FaqSection />
