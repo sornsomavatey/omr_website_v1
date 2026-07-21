@@ -27,7 +27,6 @@ const exploreLinks = [
 
 const legalLinks = [
   { name: 'Terms', path: '/terms' },
-  { name: 'Privacy', path: '/privacy' },
 ];
 
 const contactLinks = [
@@ -86,7 +85,7 @@ export default function Footer() {
               </div>
             </div>
 
-            <div className="site-footer-column">
+            <div className="site-footer-column site-footer-column-legal">
               <h4 className="site-footer-heading">{t('footer.headings.legal')}</h4>
 
               <div className="site-footer-links">

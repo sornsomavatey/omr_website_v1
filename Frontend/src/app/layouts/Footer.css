@@ -162,6 +162,10 @@
   font-size: 13px;
 }
 
+.site-footer-column-legal .site-footer-link {
+  white-space: nowrap;
+}
+
 html[data-lang="kh"] .site-footer,
 html[data-lang="kh"] .site-footer *,
 html[lang="km"] .site-footer,
