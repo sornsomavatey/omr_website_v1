@@ -391,24 +391,6 @@ export default function Menu() {
             {t('menu.hero.subtitle', undefined, hero.subtitle)}
           </p>
 
-          {/* Hero Category Filter Tabs */}
-          <div className="menu-hero-tabs-container">
-            {categories.map((category) => {
-              const isActive = activeCategory === category;
-              return (
-                <button
-                  key={category}
-                  type="button"
-                  onClick={() => handleCategoryClick(category)}
-                  className={`hero-category-pill-btn ${
-                    isActive ? 'hero-category-pill-btn-active' : 'hero-category-pill-btn-inactive'
-                  }`}
-                >
-                  {translatedCategoryNames[category]}
-                </button>
-              );
-            })}
-          </div>
         </div>
       </section>
 
@@ -441,6 +423,24 @@ export default function Menu() {
         </div>
 
         <div className="max-w-[1440px] w-full px-6 md:px-[64px] text-center flex flex-col items-center relative z-10">
+          <div className="menu-content-tabs-container" role="group" aria-label="Menu categories">
+            {categories.map((category) => {
+              const isActive = activeCategory === category;
+              return (
+                <button
+                  key={category}
+                  type="button"
+                  onClick={() => handleCategoryClick(category)}
+                  className={`category-pill-btn ${
+                    isActive ? 'category-pill-btn-active' : 'category-pill-btn-inactive'
+                  }`}
+                >
+                  {translatedCategoryNames[category]}
+                </button>
+              );
+            })}
+          </div>
+
           {categories.map((category) => (
             <div
               key={category}
