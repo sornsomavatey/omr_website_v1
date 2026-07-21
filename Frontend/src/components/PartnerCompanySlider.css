@@ -99,6 +99,11 @@
   object-fit: contain;
 }
 
+.partner-slider-logo-amt {
+  height: 110px;
+  max-width: 220px;
+}
+
 .partner-slider-logo + .partner-slider-name {
   position: absolute;
   width: 1px;

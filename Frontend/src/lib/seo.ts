@@ -77,6 +77,12 @@ export const seoMetadataEN: Record<string, SEOMetadata> = {
     description: 'Get in touch with One More Restaurant. Find address details, phone numbers, opening hours, and location maps for our Phnom Penh branches.',
     keywords: 'one more restaurant phone number, restaurant address phnom penh, toul kork opening hours, boeung kak location map',
     ogImage: '/images/contact-share.jpg'
+  },
+  '/terms': {
+    title: 'Terms and Conditions | One More Restaurant',
+    description: 'Review the cancellation, payment, termination, deposit, and booking confirmation terms for One More Restaurant.',
+    keywords: 'one more restaurant booking terms, cancellation policy, event deposit, booking conditions',
+    ogImage: '/logo-share.jpg'
   }
 };
 
@@ -152,6 +158,12 @@ export const seoMetadataKH: Record<string, SEOMetadata> = {
     description: 'ទំនាក់ទំនងមកកាន់ភោជនីយដ្ឋាន វ័នម៉រ។ ស្វែងរកព័ត៌មានលម្អិតអំពីអាសយដ្ឋាន លេខទូរស័ព្ទ ម៉ោងបើកដំណើរការ និងទីតាំង។',
     keywords: 'លេខទូរស័ព្ទភោជនីយដ្ឋានវ័នម៉រ, អាសយដ្ឋានភោជនីយដ្ឋាន, ម៉ោងបើកដំណើរការ, ផែនទីទីតាំងវ័នម៉រ',
     ogImage: '/images/contact-share.jpg'
+  },
+  '/terms': {
+    title: 'គោលការណ៍និងលក្ខខណ្ឌ | ភោជនីយដ្ឋាន វ័នម៉រ',
+    description: 'សូមអានគោលការណ៍ស្តីពីការលុបចោល ការទូទាត់ ការបញ្ចប់កិច្ចសន្យា ប្រាក់កក់ និងការបញ្ជាក់ការកក់របស់ភោជនីយដ្ឋាន វ័នម៉រ។',
+    keywords: 'លក្ខខណ្ឌការកក់ វ័នម៉រ, គោលការណ៍លុបចោល, ប្រាក់កក់កម្មវិធី, ការបញ្ជាក់ការកក់',
+    ogImage: '/logo-share.jpg'
   }
 };
 

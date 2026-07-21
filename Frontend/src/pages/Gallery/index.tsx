@@ -184,7 +184,7 @@ export default function GalleryPage() {
       <section className="gallery-content" aria-label="Restaurant gallery">
         <div className="gallery-filter-slot">
           <div
-            className={`gallery-filter-bar ${isFilterNavigationVisible ? 'gallery-filter-bar-navigation' : ''}`}
+            className="gallery-filter-bar"
             role="group"
             aria-label="Filter gallery by event type"
           >
@@ -203,6 +203,29 @@ export default function GalleryPage() {
               </button>
             ))}
           </div>
+        </div>
+
+        <div
+          className={`gallery-filter-bar gallery-filter-bar-navigation ${
+            isFilterNavigationVisible ? 'gallery-filter-bar-visible' : 'gallery-filter-bar-hidden'
+          }`}
+          role="group"
+          aria-label="Filter gallery by event type"
+        >
+          {filters.map((filter) => (
+            <button
+              type="button"
+              key={filter}
+              className={activeFilter === filter ? 'active' : ''}
+              aria-pressed={activeFilter === filter}
+              onClick={() => {
+                setActiveFilter(filter);
+                setSelectedIndex(null);
+              }}
+            >
+              {t(`galleryPage.filters.${filter}`, undefined, filter)}
+            </button>
+          ))}
         </div>
 
         <div className={`gallery-masonry gallery-masonry-${visibleColumns.length}`}>

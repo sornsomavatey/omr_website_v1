@@ -12,6 +12,7 @@ import AboutPage from '@/pages/About';
 import ReservationPage from '@/pages/Reservations';
 import CareersPage from '@/pages/Careers';
 import ContactPage from '@/pages/Contact';
+import TermsPage from '@/pages/Terms';
 
 export default function AppRouter() {
   return (
@@ -58,6 +59,11 @@ export default function AppRouter() {
         <Route
           path="/contact"
           element={<ContactPage />}
+        />
+
+        <Route
+          path="/terms"
+          element={<TermsPage />}
         />
 
         <Route

@@ -44,6 +44,8 @@ import heroVideo from '@/assets/video/omr vdo.MOV';
 import SectionHeader from '@/components/SectionHeader';
 
 const homepagePartners: PartnerCompany[] = [
+  { id: 'one-fraternity', name: 'One Fraternity', logo: '/assets/partners/onefraternity.webp' },
+  { id: 'amt', name: 'AMT', logo: '/assets/partners/amt-transparent.webp' },
   { id: 'amret', name: 'Amret Plc', logo: '/assets/partners/image45.webp' },
   { id: 'cisco', name: 'CISCO', logo: '/assets/partners/image2.webp' },
   { id: 'clinton-health', name: 'CLINTON Health Access Initiative', logo: '/assets/partners/image4.webp' },
@@ -120,13 +122,13 @@ function HeroSection({ hero }: { hero: any }) {
           loop
           muted
           playsInline
-          className="w-full h-full object-cover opacity-45"
+          className="w-full h-full object-cover opacity-70"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-black/60 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/10 to-black/35 pointer-events-none" />
       </div>
 
       <div className="home-hero-content relative z-10 text-center text-white max-w-[1260px] px-6">
-        <h1 className="page-hero-title page-hero-title--home font-serif text-5xl md:text-7xl lg:text-[80px] leading-tight mb-8 font-normal tracking-wide drop-shadow-lg">
+        <h1 className="page-hero-title page-hero-title--home font-serif text-5xl md:text-7xl lg:text-[80px] leading-tight mb-8 font-normal tracking-wide drop-shadow-sm">
           <span className="hero-title-top">
             {t('home.hero.titleLine1', undefined, 'Experience Authentic')}
           </span>

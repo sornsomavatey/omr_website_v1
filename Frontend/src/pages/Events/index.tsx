@@ -12,7 +12,7 @@ import { useTranslation } from '@/hooks/useTranslation';
 import imgHero     from '@/assets/home-v2/e900cacb721f9c81cd07b8415a03f20f42a39856.webp';
 import imgPkg1     from '@/assets/Family_compressed.jpg';
 import imgPkg2     from '@/assets/engagement_compressed.jpg';
-import imgPkg3     from '@/assets/compressed_catering.jpg';
+import imgPkg3     from '@/assets/meeting-room-package.png';
 import imgPkg4     from '@/assets/cooperate package_compressed.jpg';
 import imgSpace1   from '@/assets/private-room-no-logo.webp';
 import imgSpace2   from '@/assets/family dinner.jpg';
@@ -22,7 +22,8 @@ import imgGal3     from '@/assets/gallery/wine-toast.webp';
 import imgGal4     from '@/assets/gallery/event-coffee-service.webp';
 import imgGal5     from '@/assets/home-v2/9826b8c118c911c852174f3c0d0204245fd0da48.webp';
 import imgInquiry  from '@/assets/Weeding.webp';
-import imgFinalCta from '@/assets/Weeding.webp';
+import imgFinalCta from '@/assets/event bg.jpg';
+import imgMainHall from '@/assets/main hall.jpg';
 import { imageMap } from '@/pages/Home/homeAssets';
 
 import './index.css';
@@ -32,37 +33,54 @@ const packages = [
     id: 'family',
     name: 'Family Celebration',
     guests: '8–12 guests',
-    price: 'USD 65',
-    unit: '/ person',
     img: imgPkg1,
-    features: ['Private VIP Room', 'Custom 6-Course Menu', 'Basic Table Decor', 'Dedicated Service Staff'],
+    features: [
+      'Private Room',
+      'Free basic table set up',
+      'Free room charge 2hr',
+      'More than 100+ A La Cart Selection',
+      'Waiter and Waitress to Serve Food and Drink'
+    ],
   },
   {
     id: 'engagement',
     name: 'Engagement Package',
     guests: '30 guests',
-    price: 'USD 65',
-    unit: '/ person',
     img: imgPkg2,
-    features: ['Full Ballroom Access', 'Gourmet Buffet or Family Style', 'Premium Floral Decor', 'Traditional Live Music', 'Garden views'],
+    features: [
+      'Free Event Hall Half Day',
+      'Free Table Set Up',
+      'Gourmet Buffet or Set Menu (8-10 item/set)',
+      'Free beverage per table (vital water 350ml 10bottle/table, coke 10cans/table)',
+      'Free flow of non-alcohol beverages for Buffet',
+      'Dedicated Servers to Serve Food and Drink'
+    ],
   },
   {
     id: 'catering',
-    name: 'Catering Services',
+    name: 'Meeting Room',
     guests: '30+ guests',
-    price: 'USD 65',
-    unit: '/ person',
     img: imgPkg3,
-    features: ['Private VIP Room', 'Custom 6-Course Menu', 'Basic Table Decor', 'Dedicated Service Staff'],
+    features: [
+      'Complimentary meeting room',
+      'LCD Projector + Screen + Pointer',
+      'PA system for rostrum and microphones',
+      'Flipchart and paper White board with markers Podium',
+      'Vital Premium Water 350ml (2bottles/half day, 4bottles/full day)'
+    ],
   },
   {
     id: 'corporate',
     name: 'Corporate Package',
     guests: '8–80 guests',
-    price: 'USD 65',
-    unit: '/ person',
     img: imgPkg4,
-    features: ['Private Hall Access', 'Audio-Visual Equipment', 'Premium Working Lunch', 'Morning & Afternoon Coffee Breaks'],
+    features: [
+      'Complimentary meeting room',
+      'LCD Projector + Screen + Pointer',
+      'PA system for rostrum and microphones',
+      'Flipchart and paper White board with markers Podium',
+      'Vital Premium Water 350ml (2bottles/half day, 4bottles/full day)'
+    ],
   },
 ];
 
@@ -88,7 +106,7 @@ const spaces = [
     name: 'Main Hall',
     guestTag: '8–12 guests',
     badgeTag: 'Best for Private Dinners',
-    img: imgHero,
+    img: imgMainHall,
     features: ['Air Conditioning (AC)', 'Personal butler service', 'Garden views', 'Integrated AV system'],
   },
 ];
@@ -136,7 +154,7 @@ const faqs = [
   { q: 'What is your minimum guest count for private events?', a: 'Our private VIP suite accommodates 8–30 guests. The Grand Ballroom is ideal for 40–120 guests. For smaller intimate dinners, we can arrange semi-private sections starting from 6 guests.' },
   { q: 'Can I bring my own cake or decoration items?', a: 'Yes! You are welcome to bring your own cake and personal decorations. Our team will help set everything up at no additional charge. A small corkage fee may apply for external beverages.' },
   { q: 'What is the cancellation and deposit policy?', a: 'A 30% deposit secures your event date. Full cancellations made more than 14 days before the event receive a full deposit refund. Cancellations within 14 days forfeit the deposit.' },
-  { q: 'Do you offer menu tasting sessions before the event?', a: 'Absolutely. We offer complimentary tasting sessions for groups of 4+ on package bookings. Our executive chef will personally guide you through the selected menu options.' },
+
 ];
 
 // ── Sub-components ───────────────────────────────────────────
@@ -156,8 +174,6 @@ export default function EventsPage() {
       id: 'family',
       name: t('eventsPage.packages.items.family.name', undefined, packages[0].name),
       guests: t('eventsPage.packages.items.family.guests', undefined, packages[0].guests),
-      price: 'USD 65',
-      unit: t('eventsPage.packages.unit', undefined, '/ person'),
       img: imgPkg1,
       features: getObject<string[]>('eventsPage.packages.items.family.features', packages[0].features),
     },
@@ -165,8 +181,6 @@ export default function EventsPage() {
       id: 'engagement',
       name: t('eventsPage.packages.items.engagement.name', undefined, packages[1].name),
       guests: t('eventsPage.packages.items.engagement.guests', undefined, packages[1].guests),
-      price: 'USD 65',
-      unit: t('eventsPage.packages.unit', undefined, '/ person'),
       img: imgPkg2,
       features: getObject<string[]>('eventsPage.packages.items.engagement.features', packages[1].features),
     },
@@ -174,8 +188,6 @@ export default function EventsPage() {
       id: 'catering',
       name: t('eventsPage.packages.items.catering.name', undefined, packages[2].name),
       guests: t('eventsPage.packages.items.catering.guests', undefined, packages[2].guests),
-      price: 'USD 65',
-      unit: t('eventsPage.packages.unit', undefined, '/ person'),
       img: imgPkg3,
       features: getObject<string[]>('eventsPage.packages.items.catering.features', packages[2].features),
     },
@@ -183,8 +195,6 @@ export default function EventsPage() {
       id: 'corporate',
       name: t('eventsPage.packages.items.corporate.name', undefined, packages[3].name),
       guests: t('eventsPage.packages.items.corporate.guests', undefined, packages[3].guests),
-      price: 'USD 65',
-      unit: t('eventsPage.packages.unit', undefined, '/ person'),
       img: imgPkg4,
       features: getObject<string[]>('eventsPage.packages.items.corporate.features', packages[3].features),
     },
@@ -212,7 +222,7 @@ export default function EventsPage() {
       name: t('eventsPage.spaces.items.main-hall.name', undefined, spaces[2].name),
       guestTag: t('eventsPage.spaces.items.main-hall.guestTag', undefined, spaces[2].guestTag),
       badgeTag: t('eventsPage.spaces.items.main-hall.badgeTag', undefined, spaces[2].badgeTag),
-      img: imgHero,
+      img: imgMainHall,
       features: getObject<string[]>('eventsPage.spaces.items.main-hall.features', spaces[2].features),
     },
   ];
@@ -363,8 +373,6 @@ export default function EventsPage() {
               title={pkg.name}
               guestLabel={pkg.guests}
               features={pkg.features}
-              price={pkg.price}
-              priceUnit={pkg.unit}
               bookHref="#inquiry"
             />
           ))}

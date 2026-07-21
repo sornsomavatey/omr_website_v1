@@ -1,0 +1,140 @@
+.terms-page {
+  min-height: 100vh;
+  color: #21351d;
+  background: #fff;
+}
+
+.terms-hero {
+  padding: 82px 24px 64px;
+  text-align: center;
+  background: #edf1e9;
+  border-bottom: 1px solid rgba(33, 53, 29, 0.1);
+}
+
+.terms-hero > p {
+  margin: 0 0 16px;
+  color: #6b9158;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.terms-hero h1 {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: clamp(42px, 6vw, 70px);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+}
+
+.terms-hero span {
+  display: block;
+  max-width: 650px;
+  margin: 20px auto 0;
+  color: #62705d;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.terms-content {
+  width: min(940px, calc(100% - 48px));
+  margin: 0 auto;
+  padding: 72px 0 112px;
+}
+
+.terms-section {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 28px;
+  padding: 38px 0;
+  border-bottom: 1px solid rgba(33, 53, 29, 0.14);
+}
+
+.terms-section:first-child {
+  padding-top: 0;
+}
+
+.terms-section-number {
+  color: #6b9158;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding-top: 0;
+  line-height: 1.25;
+}
+
+.terms-section h2 {
+  margin: 0 0 18px;
+  font-family: var(--font-serif);
+  font-size: clamp(22px, 2vw, 26px);
+  font-weight: 500;
+  line-height: 1.25;
+}
+
+.terms-section p {
+  margin: 0 0 12px;
+  color: #53604e;
+  font-size: 16px;
+  line-height: 1.9;
+}
+
+.terms-section p:last-child {
+  margin-bottom: 0;
+}
+
+html:not([data-lang="kh"]):not([lang="km"]) .terms-section h2 {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+html[data-lang="kh"] .terms-page,
+html[lang="km"] .terms-page {
+  font-family: var(--font-khmer);
+}
+
+html[data-lang="kh"] .terms-hero > p,
+html[lang="km"] .terms-hero > p {
+  font-family: "Kantumruy Pro", sans-serif !important;
+}
+
+html[data-lang="kh"] .terms-hero h1,
+html[data-lang="kh"] .terms-section h2,
+html[lang="km"] .terms-hero h1,
+html[lang="km"] .terms-section h2 {
+  font-family: var(--font-khmer);
+  line-height: 1.55;
+  letter-spacing: 0;
+}
+
+html[data-lang="kh"] .terms-section h2,
+html[lang="km"] .terms-section h2 {
+  margin-top: -4px;
+  margin-bottom: 10px;
+  font-family: "Kantumruy Pro", sans-serif !important;
+  font-size: clamp(22px, 2vw, 26px) !important;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+@media (max-width: 640px) {
+  .terms-hero {
+    padding: 60px 20px 48px;
+  }
+
+  .terms-content {
+    width: min(100% - 32px, 940px);
+    padding: 52px 0 80px;
+  }
+
+  .terms-section {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 30px 0;
+  }
+
+  .terms-section-number {
+    padding-top: 0;
+  }
+}

@@ -172,8 +172,9 @@
   font-size: 11px;
   font-weight: 500;
   padding: 0.25rem 0.875rem;
-  background-color: #f0ede6;
-  color: var(--color-olive, #3d523f);
+  background-color: #f4faf0;
+  color: #2e4a21;
+  border: 1px solid #dbeccf;
   border-radius: 9999px;
   white-space: nowrap;
 }

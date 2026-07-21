@@ -92,6 +92,7 @@ export default function Navbar() {
   const isGalleryPage = location.pathname === '/gallery';
   const isEventsPage = location.pathname === '/events';
   const isMenuPage = location.pathname === '/menu';
+  const isTermsPage = location.pathname === '/terms';
 
   const isReservationPage =
     location.pathname === '/reservations' ||
@@ -368,5 +369,5 @@ export default function Navbar() {
 
   return isReservationPage
     ? renderNavigation('v1')
-    : renderNavigation(scrolled ? 'v2' : 'v1');
+    : renderNavigation(scrolled || isTermsPage ? 'v2' : 'v1');
 }

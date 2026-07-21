@@ -97,24 +97,24 @@ export function DishCard({
           <div className="flex items-baseline gap-2">
             {usdPriceMatch ? (
               <>
-                <span className="dish-card-currency text-[#212d1b] font-sans text-[22px] font-normal leading-none">
+                <span className="dish-card-currency text-[#212d1b]/70 font-sans text-[22px] font-normal leading-none">
                   USD
                 </span>
-                <span className="dish-card-price text-[#212d1b] font-serif text-[42px] font-medium leading-none">
+                <span className="dish-card-price text-[#212d1b]/75 font-serif text-[42px] font-medium leading-none">
                   {usdPriceMatch[1]}
                 </span>
               </>
             ) : khmerPriceMatch ? (
               <>
-                <span className="dish-card-price text-[#212d1b] font-serif text-[42px] font-medium leading-none">
+                <span className="dish-card-price text-[#212d1b]/75 font-serif text-[42px] font-medium leading-none">
                   {khmerPriceMatch[1]}
                 </span>
-                <span className="dish-card-currency text-[#212d1b] font-sans text-[22px] font-normal leading-none">
+                <span className="dish-card-currency text-[#212d1b]/70 font-sans text-[22px] font-normal leading-none">
                   {khmerPriceMatch[2]}
                 </span>
               </>
             ) : (
-              <span className="dish-card-price text-[#212d1b] font-serif text-[42px] font-medium leading-none">
+              <span className="dish-card-price text-[#212d1b]/75 font-serif text-[42px] font-medium leading-none">
                 {localizedPrice}
               </span>
             )}

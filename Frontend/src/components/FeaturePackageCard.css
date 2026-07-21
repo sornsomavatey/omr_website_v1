@@ -98,8 +98,8 @@
 .fpc-footer {
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
-  gap: 20px;
+  align-items: center;
+  gap: 12px;
   margin-top: auto;
   padding-top: 28px;
 }
@@ -129,29 +129,51 @@
   color: #6d776a;
 }
 
-.fpc-book-btn {
-  min-height: 40px;
-  min-width: 120px;
-  padding: 0 24px;
+.fpc-detail-btn {
+  min-height: 42px;
+  flex: 1;
+  padding: 0 16px;
   border-radius: 999px;
   border: 1px solid #c8d4c2;
   background: #ffffff;
-  color: #212d1b;
+  color: #212d1b !important;
   font-family: var(--font-sans, 'Inter', sans-serif);
   font-size: 0.8125rem;
   font-weight: 600;
   letter-spacing: 0.02em;
   white-space: nowrap;
-  transition:
-    background-color 0.25s ease,
-    border-color 0.25s ease,
-    color 0.25s ease;
+  transition: all 0.25s ease;
+  justify-content: center;
+}
+
+.fpc-detail-btn:hover {
+  background: #f4faf0;
+  border-color: #6b9158;
+  color: #6b9158 !important;
+}
+
+.fpc-book-btn {
+  min-height: 42px;
+  flex: 1;
+  padding: 0 16px;
+  border-radius: 999px;
+  border: 1px solid #6b9158;
+  background: #6b9158 !important;
+  color: #ffffff !important;
+  font-family: var(--font-sans, 'Inter', sans-serif);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  transition: all 0.25s ease;
+  justify-content: center;
 }
 
 .fpc-book-btn:hover {
-  background: #6b9158;
-  border-color: #6b9158;
-  color: #ffffff;
+  background: #587b48 !important;
+  border-color: #587b48 !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(107, 145, 88, 0.25);
 }
 
 @media (max-width: 720px) {

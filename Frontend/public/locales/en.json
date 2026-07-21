@@ -31,7 +31,7 @@
       "branches": "Branches",
       "story": "Story",
       "giftCards": "Gift Cards",
-      "terms": "Terms",
+      "terms": "Terms and Conditions",
       "privacy": "Privacy",
       "sustainability": "Sustainability",
       "bookingInquiry": "Booking Inquiry",
@@ -408,7 +408,7 @@
   "branchesPage": {
     "header": {
       "title": "Every Location Has Its Own Story.",
-      "desc": "From the quiet Riverside Garden to the vibrant City Centre, each of our locations is a chapter in the story of traditional Cambodian flavors, served in spaces designed to feel like home."
+      "desc": "Every location offers a serene atmosphere and preserves Cambodian heritage, set within a welcoming space designed to feel like home."
     },
     "ui": {
       "reserveCta": "Reserve a Table",
@@ -826,8 +826,8 @@
     "philosophy": {
       "eyebrow": "Our Philosophy",
       "title": "The Art of Cambodian Hospitality",
-      "toulKorkDesc": "At One More Toul Kork, we believe dining is more than just a meal—it is a cultural immersion. Our space combines traditional Khmer craftsmanship with modern sophistication, creating an atmosphere that is both grand and intimate. Whether it is a quiet family dinner or a high-stakes executive meeting, our service is tailored to exceed expectations.",
-      "boeungKakDesc": "At One More Boeung Kak, we believe dining is more than just a meal—it is a cultural immersion. Our space combines traditional Khmer craftsmanship with modern sophistication, creating an atmosphere that is both grand and intimate. Whether it is a quiet family dinner or a high-stakes executive meeting, our service is tailored to exceed expectations.",
+      "toulKorkDesc": "One More Toul Kork was created to honor the rich culinary traditions of Cambodia while offering a modern, elevated dining atmosphere. From hand-selected local ingredients to meticulously crafted dishes, our chef and hospitality team take pride in serving genuine Khmer heritage on every plate. Step in, relax, and let us share our love for great food and authentic Cambodian hospitality with you.",
+      "boeungKakDesc": "One More Boeung Kak. Built upon our deep reverence for Cambodian culinary heritage, this new location expands our mission to showcase the depth, richness, and beauty of authentic Khmer cuisine within a sleek, modern contemporary atmosphere. From carefully sourced local ingredients to time-honored cooking techniques, every dish is prepared by our chef and culinary team with precision and heart.",
       "bestFor": "Best For",
       "family": "Family Dining",
       "business": "Business Meetings",
@@ -955,22 +955,47 @@
         "family": {
           "name": "Family Celebration",
           "guests": "8–12 guests",
-          "features": ["Private VIP Room", "Custom 6-Course Menu", "Basic Table Decor", "Dedicated Service Staff"]
+          "features": [
+            "Private Room",
+            "Free basic table set up",
+            "Free room charge 2hr",
+            "More than 100+ A La Cart Selection",
+            "Waiter and Waitress to Serve Food and Drink"
+          ]
         },
         "engagement": {
           "name": "Engagement Package",
           "guests": "30 guests",
-          "features": ["Full Ballroom Access", "Gourmet Buffet or Family Style", "Premium Floral Decor", "Traditional Live Music", "Garden views"]
+          "features": [
+            "Free Event Hall Half Day",
+            "Free Table Set Up",
+            "Gourmet Buffet or Set Menu (8-10 item/set)",
+            "Free beverage per table (vital water 350ml 10bottle/table, coke 10cans/table)",
+            "Free flow of non-alcohol beverages for Buffet",
+            "Dedicated Servers to Serve Food and Drink"
+          ]
         },
         "catering": {
-          "name": "Catering Services",
+          "name": "Meeting Room",
           "guests": "30+ guests",
-          "features": ["Private VIP Room", "Custom 6-Course Menu", "Basic Table Decor", "Dedicated Service Staff"]
+          "features": [
+            "Complimentary meeting room",
+            "LCD Projector + Screen + Pointer",
+            "PA system for rostrum and microphones",
+            "Flipchart and paper White board with markers Podium",
+            "Vital Premium Water 350ml (2bottles/half day, 4bottles/full day)"
+          ]
         },
         "corporate": {
           "name": "Corporate Package",
           "guests": "8–80 guests",
-          "features": ["Private Hall Access", "Audio-Visual Equipment", "Premium Working Lunch", "Morning & Afternoon Coffee Breaks"]
+          "features": [
+            "Complimentary meeting room",
+            "LCD Projector + Screen + Pointer",
+            "PA system for rostrum and microphones",
+            "Flipchart and paper White board with markers Podium",
+            "Vital Premium Water 350ml (2bottles/half day, 4bottles/full day)"
+          ]
         }
       }
     },
@@ -1103,10 +1128,6 @@
         {
           "q": "What is the cancellation and deposit policy?",
           "a": "A 30% deposit secures your event date. Full cancellations made more than 14 days before the event receive a full deposit refund. Cancellations within 14 days forfeit the deposit."
-        },
-        {
-          "q": "Do you offer menu tasting sessions before the event?",
-          "a": "Absolutely. We offer complimentary tasting sessions for groups of 4+ on package bookings. Our executive chef will personally guide you through the selected menu options."
         }
       ]
     },
