@@ -96,6 +96,23 @@ export default function GalleryPage() {
   const { t } = useTranslation();
   const [activeFilter, setActiveFilter] = useState<Filter>('All');
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [isFilterNavigationVisible, setIsFilterNavigationVisible] = useState(false);
+
+  useEffect(() => {
+    const updateFilterNavigation = () => {
+      const hero = document.getElementById('gallery-hero');
+      setIsFilterNavigationVisible(Boolean(hero && hero.getBoundingClientRect().bottom <= 0));
+    };
+
+    window.addEventListener('scroll', updateFilterNavigation, { passive: true });
+    window.addEventListener('resize', updateFilterNavigation);
+    updateFilterNavigation();
+
+    return () => {
+      window.removeEventListener('scroll', updateFilterNavigation);
+      window.removeEventListener('resize', updateFilterNavigation);
+    };
+  }, []);
 
   const translatedGalleryItems = useMemo(() => {
     return galleryItems.map(item => ({
@@ -165,21 +182,27 @@ export default function GalleryPage() {
       </section>
 
       <section className="gallery-content" aria-label="Restaurant gallery">
-        <div className="gallery-filter-bar" role="group" aria-label="Filter gallery by event type">
-          {filters.map((filter) => (
-            <button
-              type="button"
-              key={filter}
-              className={activeFilter === filter ? 'active' : ''}
-              aria-pressed={activeFilter === filter}
-              onClick={() => {
-                setActiveFilter(filter);
-                setSelectedIndex(null);
-              }}
-            >
-              {t(`galleryPage.filters.${filter}`, undefined, filter)}
-            </button>
-          ))}
+        <div className="gallery-filter-slot">
+          <div
+            className={`gallery-filter-bar ${isFilterNavigationVisible ? 'gallery-filter-bar-navigation' : ''}`}
+            role="group"
+            aria-label="Filter gallery by event type"
+          >
+            {filters.map((filter) => (
+              <button
+                type="button"
+                key={filter}
+                className={activeFilter === filter ? 'active' : ''}
+                aria-pressed={activeFilter === filter}
+                onClick={() => {
+                  setActiveFilter(filter);
+                  setSelectedIndex(null);
+                }}
+              >
+                {t(`galleryPage.filters.${filter}`, undefined, filter)}
+              </button>
+            ))}
+          </div>
         </div>
 
         <div className={`gallery-masonry gallery-masonry-${visibleColumns.length}`}>

@@ -154,13 +154,13 @@ export default function Navbar() {
   }, [isHomePage, isReservationPage, isGalleryPage, isEventsPage, isMenuPage, isToulKorkPage, isBoeungKakPage]);
 
   useEffect(() => {
-    const shouldCompactMenuNav = isMenuPage && scrolled;
+    const shouldCompactMenuNav = (isMenuPage || isGalleryPage) && scrolled;
     document.body.classList.toggle('menu-page-nav-compact', shouldCompactMenuNav);
 
     return () => {
       document.body.classList.remove('menu-page-nav-compact');
     };
-  }, [isMenuPage, scrolled]);
+  }, [isGalleryPage, isMenuPage, scrolled]);
 
   useEffect(() => {
     setMobileMenuOpen(false);
@@ -172,7 +172,7 @@ export default function Navbar() {
     }
 
     const isDesktopCompactDropdown =
-      isMenuPage && scrolled && window.innerWidth >= 1024;
+      (isMenuPage || isGalleryPage) && scrolled && window.innerWidth >= 1024;
     const previousOverflow = document.body.style.overflow;
 
     const handleEscape = (event: KeyboardEvent) => {
@@ -201,7 +201,7 @@ export default function Navbar() {
       document.removeEventListener('keydown', handleEscape);
       document.removeEventListener('pointerdown', handlePointerDown, true);
     };
-  }, [isMenuPage, mobileMenuOpen, scrolled, setMobileMenuOpen]);
+  }, [isGalleryPage, isMenuPage, mobileMenuOpen, scrolled, setMobileMenuOpen]);
 
   const toggleLanguage = () => {
     window.dispatchEvent(new Event('omr:before-language-toggle'));
@@ -217,7 +217,7 @@ export default function Navbar() {
 
     return (
       <nav
-        className={`navbar navbar-${version} ${isMenuPage && scrolled ? 'navbar-menu-desktop-compact' : ''} ${isReservationPage ? 'navbar-reservation-static' : ''
+        className={`navbar navbar-${version} ${(isMenuPage || isGalleryPage) && scrolled ? 'navbar-menu-desktop-compact' : ''} ${isReservationPage ? 'navbar-reservation-static' : ''
           }`}
       >
         <div className="navbar-inner">

@@ -59,7 +59,6 @@
     infinite;
 }
 
-.partner-slider-viewport:hover .partner-slider-track-animated,
 .partner-slider-viewport:active .partner-slider-track-animated,
 .partner-slider-viewport:focus-within .partner-slider-track-animated {
   animation-play-state: paused;
@@ -252,22 +251,5 @@
   .partner-slider-logo {
     height: 68px;
     max-width: 148px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .partner-slider-viewport {
-    overflow-x: auto;
-    -webkit-mask-image: none;
-    mask-image: none;
-    scrollbar-width: thin;
-  }
-
-  .partner-slider-track-animated {
-    animation: none;
-  }
-
-  .partner-slider-card {
-    transition: none;
   }
 }
