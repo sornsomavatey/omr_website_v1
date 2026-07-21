@@ -76,13 +76,11 @@ html[data-lang="kh"] #menu-hero .page-hero-title {
 .menu-sticky-tabs-container {
   position: fixed;
   top: 82px;
-  right: 0;
-  left: 0;
   z-index: 40;
   width: 100%;
-  background: rgba(255, 255, 255, 0.94);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
   border-bottom: 1px solid rgba(33, 48, 28, 0.08);
   box-shadow: none;
 }
@@ -108,16 +106,14 @@ html[data-lang="kh"] #menu-hero .page-hero-title {
 @media (min-width: 1024px) {
   body.menu-page-nav-compact .menu-sticky-tabs-container {
     top: 0;
-    right: auto;
-    left: 50%;
     z-index: 1001;
     width: min(620px, calc(100% - 520px));
-    margin: 0;
+    margin-right: auto;
+    margin-left: auto;
     background: transparent;
     border-bottom: 0;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
-    transform: translateX(-50%);
   }
 
   body.menu-page-nav-compact .menu-sticky-tabs-inner {
@@ -202,24 +198,50 @@ html[data-lang="kh"] #menu-hero .page-hero-title {
   }
 }
 
-/* Category tabs above the first menu section */
-.menu-content-tabs-container {
-  position: relative;
-  z-index: 10;
+/* Category filter bar under Hero (styled like Gallery page) */
+.menu-filter-slot {
   width: 100%;
-  margin: -52px 0 0;
-  padding: 16px 24px;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-  background: rgba(255, 255, 255, 0.94);
-  border-bottom: 1px solid rgba(33, 48, 28, 0.08);
+  padding: 34px 16px 10px;
+  background-color: #ffffff;
 }
 
-.menu-content-tabs-container + .menu-section {
-  padding-top: 28px !important;
+.menu-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}
+
+.menu-filter-btn {
+  min-height: 42px;
+  padding: 0 24px;
+  border: 1px solid rgba(107, 145, 88, 0.45);
+  border-radius: 999px;
+  color: #354330;
+  background: #ffffff;
+  font-family: var(--font-sans, "Inter", sans-serif);
+  font-size: 13.5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  white-space: nowrap;
+}
+
+.menu-filter-btn:hover {
+  border-color: #6b9158;
+  color: #6b9158;
+  transform: translateY(-1px);
+}
+
+.menu-filter-btn.active {
+  color: #ffffff;
+  border-color: #6b9158;
+  background: #6b9158;
+  box-shadow: 0 4px 14px rgba(107, 145, 88, 0.25);
 }
 
 html[lang="km"] .menu-dish-card .dish-card-price,
@@ -233,11 +255,8 @@ html[data-lang="kh"] .menu-dish-card .dish-card-price {
 
 .menu-dish-card .dish-card-price {
   font-size: 40px !important;
-  color: #3f4b3a;
-}
-
-.menu-dish-card .dish-card-currency {
-  color: #3f4b3a;
+  color: #455241 !important;
+  opacity: 1;
 }
 
 html[lang="km"] .menu-dish-card .dish-card-title,
@@ -249,11 +268,15 @@ html[data-lang="kh"] .menu-dish-card .dish-card-title {
 html[lang="km"] .menu-dish-card .dish-card-price,
 html[data-lang="kh"] .menu-dish-card .dish-card-price {
   font-size: 28px !important;
+  color: #455241 !important;
+  opacity: 1;
 }
 
 .menu-dish-card .dish-card-currency {
   font-size: 22px !important;
   font-weight: 400 !important;
+  color: #455241 !important;
+  opacity: 1;
 }
 
 html[lang="km"] .menu-dish-card .dish-card-currency,
@@ -318,18 +341,15 @@ html[data-lang="kh"] .menu-dish-card .dish-card-currency {
     white-space: nowrap;
   }
 
-  .menu-content-tabs-container {
-    flex-wrap: nowrap;
-    justify-content: flex-start;
+  .menu-hero-tabs-container {
+    margin-top: 28px;
     gap: 10px;
-    margin: -52px -24px 0;
-    padding: 14px 24px;
-    overflow-x: auto;
-    scrollbar-width: none;
+    padding: 0 16px;
   }
 
-  .menu-content-tabs-container::-webkit-scrollbar {
-    display: none;
+  .hero-category-pill-btn {
+    font-size: 12px;
+    padding: 8px 20px;
   }
 
   .menu-sticky-tabs-inner {
@@ -356,10 +376,13 @@ html[data-lang="kh"] .menu-dish-card .dish-card-currency {
     height: 310px;
   }
 
-  .menu-content-tabs-container {
+  .menu-hero-tabs-container {
     gap: 8px;
-    padding-right: 16px;
-    padding-left: 16px;
+    padding: 0 8px;
+  }
+
+  .hero-category-pill-btn {
+    padding: 8px 14px;
   }
 }
 

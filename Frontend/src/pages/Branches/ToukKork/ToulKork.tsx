@@ -10,7 +10,7 @@ import {
   ChevronLeft, 
   ChevronRight, 
   Star, 
-  ArrowRight,
+  Send,
   Info,
   Users,
   Briefcase,
@@ -385,6 +385,7 @@ export default function ToulKork() {
         description={t('branchDetails.testimonials.desc')}
         testimonials={testimonials}
         isKhmer={isKhmer}
+        className="tk-testimonials"
       />
 
       {/* 8. VISIT US */}
@@ -392,7 +393,7 @@ export default function ToulKork() {
         <div className="tk-visit-container">
           {/* Left: Map image */}
           <div className="tk-visit-map">
-            <img src={locationImg} alt={isKhmer ? "ផែនទីភោជនីយដ្ឋាន វ័នម៉រ ទួលគោក" : "Map of One More Restaurant Toul Kork"} className="bk-map-img" />
+            <img src={locationImg} alt={isKhmer ? "ផែនទីភោជនីយដ្ឋាន វ័នម៉រ ទួលគោក" : "Map of One More Restaurant Toul Kork"} className="tk-map-img" />
           </div>
 
           {/* Right: Contact details */}
@@ -416,7 +417,7 @@ export default function ToulKork() {
                 </div>
               </li>
               <li className="tk-detail-item">
-                <ArrowRight size={20} className="tk-detail-icon text-olive" />
+                <Send size={20} className="tk-detail-icon" />
                 <div>
                   <h4 className="tk-detail-label">{t('branchDetails.visit.labels.telegram')}</h4>
                   <p className="tk-detail-value">@OneMoreRestaurant</p>

@@ -372,7 +372,7 @@ export default function Menu() {
   return (
     <div className="bg-white flex flex-col items-center w-full min-h-screen">
       {/* Hero Header Section */}
-      <section id="menu-hero" className="relative w-full h-[500px] md:h-[580px] flex flex-col items-center justify-center overflow-hidden">
+      <section id="menu-hero" className="relative w-full h-[420px] md:h-[480px] flex flex-col items-center justify-center overflow-hidden">
         <div className="absolute inset-0 w-full h-full pointer-events-none z-0">
           <img
             alt={t('menu.hero.backgroundAlt', undefined, 'Menu Header Background')}
@@ -387,12 +387,30 @@ export default function Menu() {
             {t('menu.hero.title', undefined, hero.title)}
           </h1>
 
-          <p className="text-white/80 text-base md:text-lg font-sans font-light max-w-xl mx-auto leading-relaxed drop-shadow-sm mb-10">
+          <p className="text-white/80 text-base md:text-lg font-sans font-light max-w-xl mx-auto leading-relaxed drop-shadow-sm">
             {t('menu.hero.subtitle', undefined, hero.subtitle)}
           </p>
-
         </div>
       </section>
+
+      {/* Category Filter Bar Under Hero */}
+      <div className="menu-filter-slot">
+        <div className="menu-filter-bar">
+          {categories.map((category) => {
+            const isActive = activeCategory === category;
+            return (
+              <button
+                key={category}
+                type="button"
+                onClick={() => handleCategoryClick(category)}
+                className={`menu-filter-btn ${isActive ? 'active' : ''}`}
+              >
+                {translatedCategoryNames[category]}
+              </button>
+            );
+          })}
+        </div>
+      </div>
 
       {/* Sticky Category Filter Tabs */}
       <div className={`menu-sticky-tabs-container ${isStickyVisible ? 'menu-sticky-tabs-visible' : 'menu-sticky-tabs-hidden'}`}>
@@ -423,24 +441,6 @@ export default function Menu() {
         </div>
 
         <div className="max-w-[1440px] w-full px-6 md:px-[64px] text-center flex flex-col items-center relative z-10">
-          <div className="menu-content-tabs-container" role="group" aria-label="Menu categories">
-            {categories.map((category) => {
-              const isActive = activeCategory === category;
-              return (
-                <button
-                  key={category}
-                  type="button"
-                  onClick={() => handleCategoryClick(category)}
-                  className={`category-pill-btn ${
-                    isActive ? 'category-pill-btn-active' : 'category-pill-btn-inactive'
-                  }`}
-                >
-                  {translatedCategoryNames[category]}
-                </button>
-              );
-            })}
-          </div>
-
           {categories.map((category) => (
             <div
               key={category}

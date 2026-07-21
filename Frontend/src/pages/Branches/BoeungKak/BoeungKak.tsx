@@ -10,7 +10,7 @@ import {
   ChevronLeft, 
   ChevronRight, 
   Star, 
-  ArrowRight,
+  Send,
   Info,
   Users,
   Briefcase,
@@ -390,6 +390,7 @@ export default function BoeungKak() {
         description={t('branchDetails.testimonials.desc')}
         testimonials={testimonials}
         isKhmer={isKhmer}
+        className="bk-testimonials"
       />
 
       {/* 8. VISIT US */}
@@ -421,7 +422,7 @@ export default function BoeungKak() {
                 </div>
               </li>
               <li className="bk-detail-item">
-                <ArrowRight size={20} className="bk-detail-icon text-olive" />
+                <Send size={20} className="bk-detail-icon" />
                 <div>
                   <h4 className="bk-detail-label">{t('branchDetails.visit.labels.telegram')}</h4>
                   <p className="bk-detail-value">@OneMoreRestaurant</p>

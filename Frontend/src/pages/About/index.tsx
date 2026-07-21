@@ -48,7 +48,7 @@ const reasons = [
 ];
 
 const people = [
-  { image: chefTkImage, title: 'Leang Chanthorn', role: 'Head Chef', text: 'At One More, experience the legacy of Cambodian cuisine through Chef Leang Chanthorn\'s 15 years of experience, vision, and passion, which shape every dish on our menu. His commitment to preserving and elevating Cambodian cuisine ensures an unparalleled culinary journey for all who dine with us.' },
+  { image: chefTkImage, title: 'Hor Chanthorn', role: 'Head Chef', text: 'At One More, experience the legacy of Cambodian cuisine through Chef Hor Chanthorn\'s 15 years of experience, vision, and passion, which shape every dish on our menu. His commitment to preserving and elevating Cambodian cuisine ensures an unparalleled culinary journey for all who dine with us.' },
   { image: chefBkImage, title: 'Khna Ra', role: 'Sous Chef', text: 'At One More, experience the legacy of Cambodian cuisine through Chef Khna Ra\'s 10 years of experience. His commitment to preserving and elevating Cambodian cuisine ensures an unparalleled culinary journey for all who dine with us.' },
   { image: chefAndStaffTkImage, title: 'Toul Kork Team', role: '', text: 'The Toul Kork chef and service team bring heritage recipes, warm hospitality, and careful service to every guest experience.' },
   { image: chefAndStaffBkImage, title: 'Boeung Kak Team', role: '', text: 'The Boeung Kak chef and service team work together to welcome every guest with care, warmth, and authentic Khmer hospitality.', imageClassName: 'about-people-image-bk-team' },
@@ -58,8 +58,8 @@ const toKhmerDigits = (value: string) =>
   value.replace(/\d/g, (digit) => '០១២៣៤៥៦៧៨៩'[Number(digit)]);
 
 const khmerCopy: Record<string, string> = {
-  'Leang Chanthorn': 'លោក ហ៊ួរ ចាន់ថន',
-  'At One More, experience the legacy of Cambodian cuisine through Chef Leang Chanthorn\'s 15 years of experience, vision, and passion, which shape every dish on our menu. His commitment to preserving and elevating Cambodian cuisine ensures an unparalleled culinary journey for all who dine with us.': 'លោក ហ៊ួរ ចាន់ថន ជាប្រធានចុងភៅនៅភោជនីយដ្ឋាន វ័នម៉រ   លោកអ្នកនឹងបានទទួលយកបទពិសោធន៍នៃរសជាតិម្ហូបខ្មែរដ៏សម្បូរបែប ដែលកើតចេញពីបទពិសោធន៍ជាង ១៥ ឆ្នាំរបស់លោក Leang Chanthorn។ ចក្ខុវិស័យ និងចំណង់ចំណូលចិត្តដ៏មុតមាំរបស់លោក បានឆ្លុះបញ្ចាំងយ៉ាងច្បាស់នៅក្នុងគ្រប់មុខម្ហូបទាំងអស់របស់យើង។ ការប្តេជ្ញាចិត្តរបស់លោកក្នុងការអភិរក្ស និងលើកកម្ពស់ម្ហូបខ្មែរ ធានាបាននូវបទពិសោធន៍ទទួលទានអាហារដ៏ពិសេស និងមិនអាចរកបាននៅកន្លែងណាផ្សេងសម្រាប់អតិថិជនគ្រប់រូប។',
+  'Hor Chanthorn': 'ហ៊រ ចាន់ថន',
+  'At One More, experience the legacy of Cambodian cuisine through Chef Hor Chanthorn\'s 15 years of experience, vision, and passion, which shape every dish on our menu. His commitment to preserving and elevating Cambodian cuisine ensures an unparalleled culinary journey for all who dine with us.': 'លោក ហ៊រ ចាន់ថន ជាប្រធានចុងភៅនៅភោជនីយដ្ឋាន វ័នម៉រ   លោកអ្នកនឹងបានទទួលយកបទពិសោធន៍នៃរសជាតិម្ហូបខ្មែរដ៏សម្បូរបែប ដែលកើតចេញពីបទពិសោធន៍ជាង ១៥ ឆ្នាំរបស់លោក ហ៊រ ចាន់ថន។ ចក្ខុវិស័យ និងចំណង់ចំណូលចិត្តដ៏មុតមាំរបស់លោក បានឆ្លុះបញ្ចាំងយ៉ាងច្បាស់នៅក្នុងគ្រប់មុខម្ហូបទាំងអស់របស់យើង។ ការប្តេជ្ញាចិត្តរបស់លោកក្នុងការអភិរក្ស និងលើកកម្ពស់ម្ហូបខ្មែរ ធានាបាននូវបទពិសោធន៍ទទួលទានអាហារដ៏ពិសេស និងមិនអាចរកបាននៅកន្លែងណាផ្សេងសម្រាប់អតិថិជនគ្រប់រូប។',
   'Khna Ra': 'លោក ខ្នា រ៉ា',
   'Sous Chef': 'ជំនួយការចុងភៅធំ',
   'At One More, experience the legacy of Cambodian cuisine through Chef Khna Ra\'s 10 years of experience. His commitment to preserving and elevating Cambodian cuisine ensures an unparalleled culinary journey for all who dine with us.': 'លោក ខ្នា​ រ៉ា ជាជំនួយការចុងភៅធំ​នៅភោជនីយដ្ឋាន វ័នម៉រ ជាមួយបទពិសោធន៍ជាង១០ឆ្នាំជាចុងភៅ លោកអ្នកនឹងបានទទួលយកបទពិសោធន៍នៃមរតកម្ហូបខ្មែរ​ជាមួយការប្តេជ្ញាចិត្តរបស់លោកក្នុងការអភិរក្ស និងលើកកម្ពស់ម្ហូបខ្មែរ ធានាបាននូវបទពិសោធន៍ទទួលទានអាហារដ៏ពិសេស និងមិនអាចរកបាននៅកន្លែងផ្សេង សម្រាប់អតិថិជនទាំងអស់។',
@@ -103,10 +103,8 @@ const khmerCopy: Record<string, string> = {
   'Creating moments worth remembering.': 'បង្កើតពេលវេលាដ៏មានតម្លៃសម្រាប់ការចងចាំ។',
   'Our People': 'ក្រុមការងាររបស់យើង',
   'The People Behind One More': 'មនុស្សនៅពីក្រោយ វ័នម៉រ',
-  'Hor Chanthan': 'ហ័រ ចាន់ថាន់',
   'Khlara': 'ខ្លា រ៉ា',
   'Head Chef': 'មេចុងភៅ',
-  'Head Chef at Tuol Kork Branch. A kitchen built on precision, respect for ingredients, and the joy of sharing heritage recipes.': 'មេចុងភៅនៅសាខាទួលគោក។ ផ្ទះបាយមួយដែលផ្អែកលើភាពម៉ត់ចត់ ការគោរពចំពោះគ្រឿងផ្សំ និងសេចក្តីរីករាយក្នុងការចែករំលែករូបមន្តបេតិកភណ្ឌ។',
   'Head Chef at Boeung Kak Branch. Warm, attentive, and genuinely invested in making every guest feel at home.': 'មេចុងភៅនៅសាខាបឹងកក់។ កក់ក្តៅ យកចិត្តទុកដាក់ និងខិតខំធ្វើឱ្យភ្ញៀវគ្រប់រូបមានអារម្មណ៍ដូចនៅផ្ទះ។',
   'A kitchen built on precision, respect for ingredients, and the joy of sharing heritage recipes.': 'ផ្ទះបាយមួយដែលផ្អែកលើភាពម៉ត់ចត់ ការគោរពចំពោះគ្រឿងផ្សំ និងសេចក្តីរីករាយក្នុងការចែករំលែករូបមន្តបេតិកភណ្ឌ។',
   'Our Culinary Team': 'ក្រុមចុងភៅរបស់យើង',
@@ -134,8 +132,7 @@ const khmerCopy: Record<string, string> = {
   'Team Members': 'សមាជិកក្រុមការងារ',
   'Khmer Culture': 'វប្បធម៌ខ្មែរ',
   'The Spirit of Khmer Hospitality': 'ស្មារតីបដិសណ្ឋារកិច្ចខ្មែរ',
-  'For us, Khmer hospitality starts at the table: a warm welcome, food made with care, and time shared without hurry.': 'សម្រាប់យើង បដិសណ្ឋារកិច្ចខ្មែរចាប់ផ្តើមពីតុអាហារ៖ ការស្វាគមន៍យ៉ាងកក់ក្តៅ ម្ហូបដែលធ្វើដោយចិត្ត និងពេលវេលាដែលចែករំលែកដោយស្រួលៗ។',
-  'We choose fresh local ingredients, cook with respect for familiar flavors, and serve each guest as if they were part of our own home.': 'យើងជ្រើសរើសគ្រឿងផ្សំស្រស់ក្នុងស្រុក ចម្អិនដោយគោរពរសជាតិដែលស្គាល់ និងបម្រើភ្ញៀវគ្រប់រូបដូចជាសមាជិកក្នុងផ្ទះរបស់យើង។',
+  'At One More Restaurant, every meal begins with a genuine Cambodian smile. Nestled in a striking, modern architectural setting, we bring together time-honored Khmer recipes and authentic flavors crafted by our passionate service and culinary team.': 'នៅភោជនីយដ្ឋាន វ័នម៉រ រាល់អាហារទាំងអស់តែងតែចាប់ផ្តើមឡើងជាមួយនឹងស្នាមញញឹមដ៏ស្មោះស្ម័គ្ររបស់ខ្មែរ។ ស្ថិតនៅក្នុងបរិយាកាសដែលមានស្ថាបត្យកម្មទំនើប និងលេចធ្លោ យើងបាននាំមកជូននូវរូបមន្តខ្មែរដ៏មានប្រវត្តិយូរលង់ រួមជាមួយរសជាតិដើមដ៏ពិតប្រាកដ ដែលត្រូវបានរៀបចំឡើងដោយក្រុមចុងភៅដ៏ពោរពេញដោយក្តីស្រឡាញ់ និងក្រុមការងារផ្នែកសេវាកម្មដ៏ពោរពេញដោយកាគោរព និងយកចិត្តទុកដាក់។',
   'Learn More': 'ស្វែងយល់បន្ថែម',
   'Moments': 'ពេលវេលា',
   'Moments That Matter': 'ពេលវេលាដែលមានអត្ថន័យ',
@@ -375,8 +372,7 @@ export default function About() {
               </>
             ) : tr('The Spirit of Khmer Hospitality')}
           </h2>
-          <p>{tr('For us, Khmer hospitality starts at the table: a warm welcome, food made with care, and time shared without hurry.')}</p>
-          <p>{tr('We choose fresh local ingredients, cook with respect for familiar flavors, and serve each guest as if they were part of our own home.')}</p>
+          <p>{tr('At One More Restaurant, every meal begins with a genuine Cambodian smile. Nestled in a striking, modern architectural setting, we bring together time-honored Khmer recipes and authentic flavors crafted by our passionate service and culinary team.')}</p>
         </div>
       </section>
 
@@ -408,7 +404,9 @@ export default function About() {
                 rel="noopener noreferrer"
                 className="about-careers-linkedin-link"
               >
-                <img src={linkedinLogoImage} alt="LinkedIn" className="about-linkedin-icon" />
+                <span className="about-linkedin-icon-wrapper">
+                  <img src={linkedinLogoImage} alt="LinkedIn" className="about-linkedin-icon" />
+                </span>
                 <span>LinkedIn</span>
               </a>
             </div>
