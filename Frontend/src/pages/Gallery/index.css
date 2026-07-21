@@ -83,7 +83,6 @@
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid rgba(33, 48, 28, 0.08);
   box-shadow: none;
-  transition: all 0.3s ease;
 }
 
 .gallery-filter-bar-navigation {
@@ -92,6 +91,18 @@
   right: 0;
   left: 0;
   width: 100%;
+}
+
+.gallery-filter-bar-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.gallery-filter-bar-visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
 }
 
 @media (min-width: 1024px) {
