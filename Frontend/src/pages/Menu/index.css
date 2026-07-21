@@ -233,6 +233,11 @@ html[data-lang="kh"] .menu-dish-card .dish-card-price {
 
 .menu-dish-card .dish-card-price {
   font-size: 40px !important;
+  color: #3f4b3a;
+}
+
+.menu-dish-card .dish-card-currency {
+  color: #3f4b3a;
 }
 
 html[lang="km"] .menu-dish-card .dish-card-title,
