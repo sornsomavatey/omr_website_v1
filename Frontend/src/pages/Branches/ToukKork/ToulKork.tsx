@@ -54,7 +54,7 @@ import imgGallery6 from '@/assets/home-v2/9826b8c118c911c852174f3c0d0204245fd0da
 // Dish assets
 import imgDish1 from '@/assets/home-v2/36191a3943135f3542a0fe8b80adee304f122115.webp';
 import imgDish2 from '@/assets/Food/Lunch and Dinner/compressed_ហហ្មុក.webp';
-import imgDish3 from '@/assets/home-v2/7ce88d9bf1af040daf36af037fc63627a61522c9.webp';
+import imgDish3 from '@/assets/Food/Lunch and Dinner/grilled-chicken-siemreap.webp';
 
 // Map asset
 import locationImg from '@/assets/Location Tk.webp';
@@ -314,13 +314,13 @@ export default function ToulKork() {
           />
 
           <DishCard
-            name={isKhmer ? "លៀសឆាម្រះព្រៅទឹកអំពិលទុំ" : "Stir-Fried Cockle, Hot Basil in Tamarind Sauce"}
+            name={isKhmer ? "អាំងមាន់បែបសៀមរាប" : "Grilled Chicken with Siem Reap Style"}
             category={isKhmer ? "ការណែនាំ" : "Recommendation"}
             description={isKhmer
-              ? "លៀសស្រស់ឆាជាមួយទឹកអំពិលទុំ ជី និងម្ទេសស្រាលៗ មានរសជាតិជូរផ្អែមឈ្ងុយឆ្ងាញ់។"
-              : "Fresh cockles stir-fried with tamarind sauce, aromatic herbs, and a gentle chili kick."}
+              ? "មាន់ស្រែអាំងក្តៅៗដែលត្រូវបានប្រឡាក់គ្រឿងទេសខ្មែរបែបបុរាណ និងអាំងយ៉ាងឈ្ងុយឆ្ងាញ់។"
+              : "Whole local chicken marinated in traditional Cambodian herbs and slow-grilled to smoky perfection."}
             image={imgDish3}
-            price="USD 8.90"
+            price="USD 25.00"
             priceSuffix=""
             showAction={false}
             index={2}
