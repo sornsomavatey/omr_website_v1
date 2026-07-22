@@ -1,5 +1,5 @@
 import { ChevronLeft, ChevronRight, X, ZoomIn } from 'lucide-react';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from '@/hooks/useTranslation';
 
 import imgHero from '@/assets/home-v2/43310dd2158ca5c7f7d098abf280dc14124d42de.webp';
@@ -25,6 +25,7 @@ import imgDessertCup from '@/assets/gallery/sweet-dessert-cup.webp';
 import imgGrillPlatter from '@/assets/gallery/khmer-grill-chicken-no-logo.webp';
 import imgCoffeeService from '@/assets/gallery/event-coffee-service.webp';
 import imgExterior from '@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.webp';
+import imgSiemReapChicken from '@/assets/Food/Lunch and Dinner/grilled-chicken-siemreap.webp';
 
 import './index.css';
 
@@ -48,6 +49,7 @@ const galleryItems: GalleryItem[] = [
   { src: imgOmrHospitality, alt: 'One More Restaurant staff serving a guest at the table', title: 'One More Service Moment', tag: 'Experience', category: 'Experience', shape: 'square' },
   { src: imgChicken, alt: 'Khmer chicken and fragrant rice', title: 'Kitchen Rituals', tag: 'Food', category: 'Food', shape: 'portrait' },
   { src: imgGrillPlatter, alt: 'Guest presenting Khmer grilled chicken with fresh vegetables and dipping sauces', title: 'Khmer Grill Platter', tag: 'Food', category: 'Food', shape: 'portrait' },
+  { src: imgSiemReapChicken, alt: 'Siem Reap grilled chicken served with traditional accompaniments', title: 'Siem Reap Grilled Chicken', tag: 'Food', category: 'Food', shape: 'landscape' },
   { src: imgArtisanalPlating, alt: 'Artfully plated Khmer dish', title: 'Artisanal Plating', tag: 'Food', category: 'Food', shape: 'square' },
   { src: imgChristmasWine, alt: 'Christmas wine bottle display', title: 'Christmas Wine Display', tag: 'Events', category: 'Events', shape: 'square' },
   { src: imgWineToast, alt: 'Guests toasting with red wine glasses', title: 'Wine Toast', tag: 'Events', category: 'Events', shape: 'landscape' },
@@ -68,7 +70,7 @@ const galleryItems: GalleryItem[] = [
 
 const galleryColumnBlueprint = [
   ['Canopy Entrance', 'Khmer Cooking Workshop', 'Miss Planet International Dining', 'Artisanal Plating', 'Khmer Cake Traditions', 'Kitchen Rituals', 'Wine Toast', 'Little Moments'],
-  ['Main Hall Dining', 'One More Service Moment', 'Curves & Craft', 'Christmas Wine Display', 'Rich of Flavors', 'Private Gatherings', 'Khmer Hospitality', 'Sweet Refreshment'],
+  ['Main Hall Dining', 'One More Service Moment', 'Curves & Craft', 'Christmas Wine Display', 'Rich of Flavors', 'Siem Reap Grilled Chicken', 'Private Gatherings', 'Khmer Hospitality', 'Sweet Refreshment'],
   ['Event Refreshment Moment', 'Christmas Deer Display', 'Khmer Grill Platter', 'Catering Service Team', 'The Private Room', 'Event Coffee Service', 'A Day To Remember'],
 ];
 
@@ -97,6 +99,7 @@ export default function GalleryPage() {
   const [activeFilter, setActiveFilter] = useState<Filter>('All');
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [isFilterNavigationVisible, setIsFilterNavigationVisible] = useState(false);
+  const masonryRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const updateFilterNavigation = () => {
@@ -171,6 +174,75 @@ export default function GalleryPage() {
 
   const selectedItem = selectedIndex === null ? null : visibleItems[selectedIndex];
 
+  useEffect(() => {
+    const masonry = masonryRef.current;
+    if (!masonry) return;
+
+    const cards = Array.from(masonry.querySelectorAll<HTMLElement>('.gallery-card'));
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+      cards.forEach((card) => card.classList.add('gallery-card-visible'));
+      return;
+    }
+
+    masonry.classList.add('gallery-motion-ready');
+    cards.forEach((card, index) => {
+      card.getAnimations().forEach((animation) => animation.cancel());
+      delete card.dataset.galleryRevealed;
+      card.style.setProperty('--gallery-reveal-delay', `${(index % 4) * 55}ms`);
+    });
+
+    const revealCard = (card: HTMLElement) => {
+      if (card.dataset.galleryRevealed === 'true') return;
+      card.dataset.galleryRevealed = 'true';
+      const delay = Number.parseInt(card.style.getPropertyValue('--gallery-reveal-delay'), 10) || 0;
+
+      card.animate([
+        { opacity: 0.18, filter: 'blur(4px)', transform: 'translateY(42px) scale(.97)' },
+        { opacity: 1, filter: 'blur(0)', transform: 'translateY(0) scale(1)' },
+      ], {
+        duration: 820,
+        delay,
+        easing: 'cubic-bezier(.22, 1, .36, 1)',
+        fill: 'both',
+      });
+    };
+
+    const revealVisibleCards = () => {
+      const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+      cards.forEach((card) => {
+        const bounds = card.getBoundingClientRect();
+        if (bounds.top < viewportHeight && bounds.bottom > 0) {
+          revealCard(card);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        revealCard(entry.target as HTMLElement);
+        observer.unobserve(entry.target);
+      });
+    }, {
+      threshold: 0.01,
+      rootMargin: '0px 0px 4% 0px',
+    });
+
+    cards.forEach((card) => observer.observe(card));
+    const animationFrame = requestAnimationFrame(revealVisibleCards);
+    window.addEventListener('scroll', revealVisibleCards, { passive: true });
+    window.addEventListener('resize', revealVisibleCards);
+
+    return () => {
+      observer.disconnect();
+      cancelAnimationFrame(animationFrame);
+      window.removeEventListener('scroll', revealVisibleCards);
+      window.removeEventListener('resize', revealVisibleCards);
+    };
+  }, [activeFilter, visibleItems.length]);
+
   return (
     <main className="gallery-page">
       <section className="gallery-hero" style={{ backgroundImage: `url(${imgHero})` }} id="gallery-hero">
@@ -228,7 +300,7 @@ export default function GalleryPage() {
           ))}
         </div>
 
-        <div className={`gallery-masonry gallery-masonry-${visibleColumns.length}`}>
+        <div ref={masonryRef} className={`gallery-masonry gallery-masonry-${visibleColumns.length}`}>
           {visibleColumns.map((column, columnIndex) => (
             <div className="gallery-column" key={`gallery-column-${columnIndex}`}>
               {column.map((item) => {
@@ -239,7 +311,6 @@ export default function GalleryPage() {
                       <img src={item.src} alt={item.alt} loading={lightboxIndex > 5 ? 'lazy' : 'eager'} />
                       <span className="gallery-image-hover"><ZoomIn size={24} /><small>{t('galleryPage.aria.view', undefined, 'View image')}</small></span>
                     </button>
-                    <div className="gallery-card-caption"><h2>{item.title}</h2><span>{item.tag}</span></div>
                   </article>
                 );
               })}
@@ -256,7 +327,6 @@ export default function GalleryPage() {
           <button type="button" className="gallery-lightbox-arrow gallery-lightbox-previous" onClick={showPrevious} aria-label={t('galleryPage.aria.previous', undefined, 'Previous image')}><ChevronLeft size={30} /></button>
           <figure>
             <img src={selectedItem.src} alt={selectedItem.alt} />
-            <figcaption><strong>{selectedItem.title}</strong><span>{selectedItem.tag}</span></figcaption>
           </figure>
           <button type="button" className="gallery-lightbox-arrow gallery-lightbox-next" onClick={showNext} aria-label={t('galleryPage.aria.next', undefined, 'Next image')}><ChevronRight size={30} /></button>
         </div>

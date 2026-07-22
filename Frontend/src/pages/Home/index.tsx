@@ -45,6 +45,12 @@ import SectionHeader from '@/components/SectionHeader';
 
 const homepagePartners: PartnerCompany[] = [
   { id: 'one-fraternity', name: 'One Fraternity', logo: '/assets/partners/onefraternity.webp' },
+  { id: 'one-more-restaurant', name: 'One More Restaurant', logo: '/assets/partners/onemorerestaurant.png' },
+  { id: 'one-more-kitchen', name: 'One More Kitchen', logo: '/assets/partners/onemorekitchen.png' },
+  { id: 'mee-chiet', name: 'Mee Chiet', logo: '/assets/partners/meechiet.png' },
+  { id: 'one-more-manufacturing', name: 'One More Manufacturing', logo: '/assets/partners/onemorefacturing.png' },
+  { id: 'nmc-corporation', name: 'NMC Corporation', logo: '/assets/partners/nvc.png' },
+  { id: 'vital', name: 'Vital Premium Water', logo: '/assets/partners/vital.png' },
   { id: 'amt', name: 'AMT', logo: '/assets/partners/amt-transparent.webp' },
   { id: 'amret', name: 'Amret Plc', logo: '/assets/partners/image45.webp' },
   { id: 'cisco', name: 'CISCO', logo: '/assets/partners/image2.webp' },

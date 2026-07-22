@@ -5,11 +5,14 @@ import {
   Eye,
   KeyRound,
   PartyPopper,
+  Send,
+  Star,
   Target,
   UtensilsCrossed,
   Users,
 } from 'lucide-react';
 import { useTranslation } from '@/hooks/useTranslation';
+import { createFeedback } from '@/lib/api';
 
 import heroImage from '@/assets/home-v2/43310dd2158ca5c7f7d098abf280dc14124d42de.webp';
 import toulKorkImage from '@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.webp';
@@ -154,6 +157,29 @@ const khmerCopy: Record<string, string> = {
   'A family activity': 'សកម្មភាពគ្រួសារ',
   'Khmer cooking experience': 'បទពិសោធន៍ធ្វើម្ហូបខ្មែរ',
   'The One More Restaurant team': 'ក្រុមការងារភោជនីយដ្ឋាន វ័នម៉រ',
+  'Your Feedback': 'មតិកែលម្អរបស់អ្នក',
+  'Help Us Serve You Better': 'ជួយយើងឱ្យផ្តល់ជូនសេវាកម្មឲកាន់តែប្រសើរ',
+  'Your experience matters to us. Share your thoughts and help us make every visit to One More even better.': 'បទពិសោធន៍របស់អ្នកមានសារៈសំខាន់ចំពោះយើង។ សូមចែករំលែកមតិរបស់អ្នក ដើម្បីជួយយើងធ្វើឱ្យរាល់ការមកកាន់ វ័នម៉រ កាន់តែប្រសើរ។',
+  'We read every message and value your honest feedback.': 'យើងអានរាល់សារ និងឱ្យតម្លៃចំពោះមតិយោបល់ដ៏ស្មោះត្រង់របស់អ្នក។',
+  'Your Name': 'ឈ្មោះរបស់អ្នក',
+  'Enter your name': 'បញ្ចូលឈ្មោះរបស់អ្នក',
+  'Email Address': 'អាសយដ្ឋានអ៊ីមែល',
+  'Enter your email': 'បញ្ចូលអ៊ីមែលរបស់អ្នក',
+  'Which branch did you visit?': 'តើអ្នកបានទៅសាខាណាមួយ?',
+  'Select a branch': 'ជ្រើសរើសសាខា',
+  'Toul Kork': 'ទួលគោក',
+  'Boeung Kak': 'បឹងកក់',
+  'How was your experience?': 'តើបទពិសោធន៍របស់អ្នកយ៉ាងដូចម្តេច?',
+  'Rating out of 5 stars': 'ការវាយតម្លៃក្នុងចំណោមផ្កាយ ៥',
+  'star': 'ផ្កាយ',
+  'stars': 'ផ្កាយ',
+  'Tell us about your experience': 'ប្រាប់យើងអំពីបទពិសោធន៍របស់អ្នក',
+  'What did you enjoy, and what could we improve?': 'តើអ្នកពេញចិត្តអ្វីខ្លះ ហើយតើយើងអាចកែលម្អអ្វីខ្លះ?',
+  'Sending...': 'កំពុងផ្ញើ...',
+  'Submit Feedback': 'ផ្ញើមតិកែលម្អ',
+  'Thank you! Your feedback has been sent successfully.': 'សូមអរគុណ! មតិកែលម្អរបស់អ្នកត្រូវបានផ្ញើដោយជោគជ័យ។',
+  'We could not send your feedback. Please try again.': 'យើងមិនអាចផ្ញើមតិកែលម្អរបស់អ្នកបានទេ។ សូមព្យាយាមម្តងទៀត។',
+  'Please choose a star rating before submitting.': 'សូមជ្រើសរើសចំនួនផ្កាយ មុនពេលផ្ញើ។',
 };
 
 function SectionHeading({ eyebrow, title }: { eyebrow: string; title: string }) {
@@ -237,6 +263,37 @@ export default function About() {
   const { isKhmer } = useTranslation();
   const tr = (text: string) => isKhmer ? (khmerCopy[text] || text) : text;
   const pageRef = useRef<HTMLDivElement>(null);
+  const [rating, setRating] = useState(0);
+  const [hoveredRating, setHoveredRating] = useState(0);
+  const [feedbackStatus, setFeedbackStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+
+  const handleFeedbackSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const data = new FormData(form);
+
+    if (!rating) {
+      setFeedbackStatus('error');
+      return;
+    }
+
+    setFeedbackStatus('submitting');
+    try {
+      const branch = String(data.get('branch'));
+      await createFeedback({
+        name: String(data.get('name')).trim(),
+        email: String(data.get('email')).trim(),
+        subject: `Guest feedback - ${branch} - ${rating}/5`,
+        message: `Branch: ${branch}\nRating: ${rating}/5\n\n${String(data.get('message')).trim()}`,
+      });
+      form.reset();
+      setRating(0);
+      setHoveredRating(0);
+      setFeedbackStatus('success');
+    } catch {
+      setFeedbackStatus('error');
+    }
+  };
 
   useEffect(() => {
     const page = pageRef.current;
@@ -431,6 +488,76 @@ export default function About() {
           </div>
           <img src={careersTeamImage} alt={tr('The One More Restaurant team')} />
         </div>
+      </section>
+
+      <section className="about-feedback" aria-labelledby="about-feedback-title">
+        <div className="about-feedback-intro">
+          <p className="about-eyebrow">{tr('Your Feedback')}</p>
+          <h2 id="about-feedback-title">{tr('Help Us Serve You Better')}</h2>
+          <p>{tr('Your experience matters to us. Share your thoughts and help us make every visit to One More even better.')}</p>
+          <div className="about-feedback-note">
+            <Star size={18} aria-hidden="true" />
+            <span>{tr('We read every message and value your honest feedback.')}</span>
+          </div>
+        </div>
+
+        <form className="about-feedback-form" onSubmit={handleFeedbackSubmit}>
+          <div className="about-feedback-field-row">
+            <label>
+              <span>{tr('Your Name')}</span>
+              <input name="name" type="text" minLength={2} placeholder={tr('Enter your name')} required />
+            </label>
+            <label>
+              <span>{tr('Email Address')}</span>
+              <input name="email" type="email" placeholder={tr('Enter your email')} required />
+            </label>
+          </div>
+
+          <label>
+            <span>{tr('Which branch did you visit?')}</span>
+            <select name="branch" defaultValue="" required>
+              <option value="" disabled>{tr('Select a branch')}</option>
+              <option value="Toul Kork">{tr('Toul Kork')}</option>
+              <option value="Boeung Kak">{tr('Boeung Kak')}</option>
+            </select>
+          </label>
+
+          <fieldset className="about-feedback-rating">
+            <legend>{tr('How was your experience?')}</legend>
+            <div role="radiogroup" aria-label={tr('Rating out of 5 stars')}>
+              {[1, 2, 3, 4, 5].map((value) => (
+                <button
+                  key={value}
+                  type="button"
+                  role="radio"
+                  aria-checked={rating === value}
+                  aria-label={`${value} ${value === 1 ? tr('star') : tr('stars')}`}
+                  className={value <= (hoveredRating || rating) ? 'is-active' : ''}
+                  onClick={() => { setRating(value); setFeedbackStatus('idle'); }}
+                  onMouseEnter={() => setHoveredRating(value)}
+                  onMouseLeave={() => setHoveredRating(0)}
+                >
+                  <Star size={28} />
+                </button>
+              ))}
+            </div>
+          </fieldset>
+
+          <label>
+            <span>{tr('Tell us about your experience')}</span>
+            <textarea name="message" rows={5} minLength={5} placeholder={tr('What did you enjoy, and what could we improve?')} required />
+          </label>
+
+          <button className="about-feedback-submit" type="submit" disabled={feedbackStatus === 'submitting'}>
+            <Send size={17} aria-hidden="true" />
+            {feedbackStatus === 'submitting' ? tr('Sending...') : tr('Submit Feedback')}
+          </button>
+
+          <div className="about-feedback-status" aria-live="polite">
+            {feedbackStatus === 'success' && <p className="is-success">{tr('Thank you! Your feedback has been sent successfully.')}</p>}
+            {feedbackStatus === 'error' && <p className="is-error">{rating ? tr('We could not send your feedback. Please try again.') : tr('Please choose a star rating before submitting.')}</p>}
+          </div>
+        </form>
       </section>
 
       <section className="about-final-cta" style={{ backgroundImage: `url(${finalCtaImage})` }}>
