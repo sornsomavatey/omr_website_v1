@@ -16,11 +16,6 @@
       "value": "+855 23 888 222"
     },
     {
-      "type": "time",
-      "label": "Response Time",
-      "value": "Within 15 Minutes"
-    },
-    {
       "type": "policy",
       "label": "Reservation Policy",
       "value": "Free cancellation up to 24h"
