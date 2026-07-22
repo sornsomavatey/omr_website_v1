@@ -22,7 +22,7 @@ import imgRoom from '@/assets/home-v2/480cb1d76af2706b9692b726ad26ec2bf396f8c8.w
 import imgEvent from '@/assets/home-v2/e900cacb721f9c81cd07b8415a03f20f42a39856.webp';
 import imgChildren from '@/assets/gallery/little-moment-no-logo.webp';
 import imgDessertCup from '@/assets/gallery/sweet-dessert-cup.webp';
-import imgGrillPlatter from '@/assets/gallery/khmer-grill-platter.webp';
+import imgGrillPlatter from '@/assets/gallery/khmer-grill-chicken-no-logo.webp';
 import imgCoffeeService from '@/assets/gallery/event-coffee-service.webp';
 import imgExterior from '@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.webp';
 
@@ -47,7 +47,7 @@ const galleryItems: GalleryItem[] = [
   { src: imgVitalEvent, alt: 'Guests enjoying refreshing drinks at a One More Restaurant event', title: 'Event Refreshment Moment', tag: 'Experience', category: 'Experience', shape: 'square' },
   { src: imgOmrHospitality, alt: 'One More Restaurant staff serving a guest at the table', title: 'One More Service Moment', tag: 'Experience', category: 'Experience', shape: 'square' },
   { src: imgChicken, alt: 'Khmer chicken and fragrant rice', title: 'Kitchen Rituals', tag: 'Food', category: 'Food', shape: 'portrait' },
-  { src: imgGrillPlatter, alt: 'Guest presenting a generous Khmer grilled-food platter', title: 'Khmer Grill Platter', tag: 'Food', category: 'Food', shape: 'portrait' },
+  { src: imgGrillPlatter, alt: 'Guest presenting Khmer grilled chicken with fresh vegetables and dipping sauces', title: 'Khmer Grill Platter', tag: 'Food', category: 'Food', shape: 'portrait' },
   { src: imgArtisanalPlating, alt: 'Artfully plated Khmer dish', title: 'Artisanal Plating', tag: 'Food', category: 'Food', shape: 'square' },
   { src: imgChristmasWine, alt: 'Christmas wine bottle display', title: 'Christmas Wine Display', tag: 'Events', category: 'Events', shape: 'square' },
   { src: imgWineToast, alt: 'Guests toasting with red wine glasses', title: 'Wine Toast', tag: 'Events', category: 'Events', shape: 'landscape' },
