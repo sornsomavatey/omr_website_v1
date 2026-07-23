@@ -1317,11 +1317,11 @@ html[data-lang="kh"] .reservation-form-container ::placeholder {
 }
 
 .faq-answer-expanded {
-  max-height: 200px;
+  max-height: 300px;
 }
 
 .faq-answer {
-  padding: 0 28px 24px;
+  padding: 18px 28px 24px;
   background-color: #fafbfa;
 }
 
@@ -1484,7 +1484,7 @@ html[data-lang="kh"] .reservation-form-container ::placeholder {
   }
 
   .faq-answer {
-    padding: 0 20px 20px;
+    padding: 14px 20px 20px;
   }
 }
 

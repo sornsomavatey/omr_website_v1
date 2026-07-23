@@ -27,7 +27,7 @@ import cateringImage from '@/assets/home-v2/07e47044152ad38cdbb1bda5ae392fb848e3
 import communityImage from '@/assets/home-v2/9826b8c118c911c852174f3c0d0204245fd0da48.webp';
 import artisanalPlatingImage from '@/assets/gallery/artisanal-plating-no-logo.webp';
 import hospitalityImage from '@/assets/omr-hospitality-enhanced.webp';
-import finalCtaImage from '@/assets/home-v2/31b0910d38c033be0ce5292cf4a1d68688308c6b.webp';
+import finalCtaImage from '@/assets/about/abt.webp';
 import chefTkImage from '@/assets/Chef tk.webp';
 import chefBkImage from '@/assets/chef bk.webp';
 import chefAndStaffTkImage from '@/assets/about/chefandstaff-TK.webp';
@@ -77,7 +77,7 @@ const khmerCopy: Record<string, string> = {
   'One More Restaurant begins with a vision to preserve Khmer flavors.': 'ភោជនីយដ្ឋាន វ័ន ម័រ ចាប់ផ្តើមជាមួយចក្ខុវិស័យក្នុងការថែរក្សារសជាតិខ្មែរ។',
   'Expanding Roots': 'ពង្រីកមូលដ្ឋាន',
   'Our second home opens, bringing our signature hospitality to a vibrant neighborhood.': 'សាខាទីពីររបស់យើងបើកដំណើរការ ដោយនាំយកបដិសណ្ឋារកិច្ចដ៏ពិសេសរបស់យើងទៅកាន់សហគមន៍ដ៏រស់រវើក។',
-  'A New Chapter': 'ជំពូកថ្មី',
+  'A New Chapter': 'សាខាថ្មីបានដំណើការ',
   'Private dining and celebrations grow into an important part of the One More experience.': 'ការទទួលទានអាហារឯកជន និងការប្រារព្ធពិធី បានក្លាយជាផ្នែកសំខាន់នៃបទពិសោធន៍ វ័ន ម័រ។',
   'Today': 'បច្ចុប្បន្ន',
   'Serving Phnom Penh': 'បម្រើរាជធានីភ្នំពេញ',
@@ -148,8 +148,8 @@ const khmerCopy: Record<string, string> = {
   'View Careers': 'មើលឱកាសការងារ',
   'Connect with us on:': 'ភ្ជាប់ទំនាក់ទំនងជាមួយយើងតាមរយៈ៖',
   'Send Your CV': 'ផ្ញើប្រវត្តិរូប',
-  'Experience One More For Yourself': 'មកទទួលបទពិសោធន៍ វ័ន ម័រ ដោយខ្លួនអ្នក',
-  'Whether you are joining us for a family dinner, business meeting, or special celebration, we look forward to welcoming you.': 'មិនថាអ្នកមកទទួលទានអាហារជាមួយគ្រួសារ ប្រជុំអាជីវកម្ម ឬប្រារព្ធកម្មវិធីពិសេស យើងរង់ចាំស្វាគមន៍អ្នកជានិច្ច។',
+  'Follow us on social media': 'តាមដានយើងនៅលើបណ្តាញសង្គម',
+  'Stay connected with us': 'រក្សាការភ្ជាប់ទំនាក់ទំនងជាមួយយើង',
   'Plan Your Event': 'រៀបចំកម្មវិធីរបស់អ្នក',
   'Guests sharing a meal at One More Restaurant': 'ភ្ញៀវកំពុងទទួលទានអាហាររួមគ្នានៅភោជនីយដ្ឋាន វ័ន ម័រ',
   'A celebration at One More': 'កម្មវិធីអបអរសាទរនៅវ័នម៉រ',
@@ -457,7 +457,7 @@ export default function About() {
               <span>{tr('Connect with us on:')}</span>
               <div className="about-careers-connect-row">
                 <a
-                  href="https://www.linkedin.com/company/one-more-restaurant/"
+                  href="https://www.linkedin.com/company/one-more-limited-group/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="about-careers-social-btn about-careers-linkedin-btn"
@@ -562,11 +562,54 @@ export default function About() {
 
       <section className="about-final-cta" style={{ backgroundImage: `url(${finalCtaImage})` }}>
         <div>
-          <h2>{tr('Experience One More For Yourself')}</h2>
-          <p>{tr('Whether you are joining us for a family dinner, business meeting, or special celebration, we look forward to welcoming you.')}</p>
-          <div>
-            <Link to="/reservations" className="about-button about-button-primary">{tr('Reserve a Table')}</Link>
-            <Link to="/events" className="about-button about-button-outline">{tr('Plan Your Event')}</Link>
+          <h2>{tr('Follow us on social media')}</h2>
+          <div className="about-final-cta-socials">
+            <a
+              href="https://www.facebook.com/onemorerestaurant"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="about-button about-button-outline"
+            >
+              <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+              </svg>
+              <span>Facebook</span>
+            </a>
+            <a
+              href="https://www.instagram.com/onemore.restaurantkh/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="about-button about-button-outline"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="16" height="16">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+              </svg>
+              <span>Instagram</span>
+            </a>
+            <a
+              href="https://t.me/onemoregroupcareer"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="about-button about-button-outline"
+            >
+              <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+                <path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm5.568 8.16c-.18 1.897-.96 6.502-1.356 8.627-.168.9-.504 1.201-.816 1.23-.696.064-1.224-.46-1.896-.9-1.056-.692-1.656-1.123-2.676-1.796-1.188-.78-.42-1.209.252-1.908.18-.18 3.252-2.977 3.312-3.233.007-.033.014-.158-.06-.224-.075-.065-.185-.043-.265-.025-.113.025-1.92 1.22-5.418 3.582-.512.351-.976.526-1.392.516-.459-.01-1.343-.26-2.001-.475-.806-.263-1.446-.403-1.39-.861.029-.239.364-.484 1.003-.735 3.924-1.708 6.544-2.835 7.86-3.38 3.737-1.55 4.514-1.82 5.02-1.83.111 0 .36.026.52.158.135.11.173.26.191.436-.001.063.009.224-.009.375z" />
+              </svg>
+              <span>Telegram</span>
+            </a>
+            <a
+              href="https://www.linkedin.com/company/one-more-limited-group/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="about-button about-button-outline"
+            >
+              <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+              </svg>
+              <span>LinkedIn</span>
+            </a>
           </div>
         </div>
       </section>

@@ -740,7 +740,7 @@ export default function ReservationPage() {
     { id: 'indoor', name: 'Indoor', img: diningSpacesList[3]?.img || imgHeroBg1 },
     { id: 'outdoor', name: 'Outdoor', img: imgGallery1 },
     { id: 'privateRoom', name: 'Private Room', img: diningSpacesList[4]?.img || imgHeroBg2 },
-    { id: 'bigRoom', name: 'Big Room', img: imgGallery5 }
+    { id: 'vipRoom', name: 'VIP Room', img: imgGallery5 }
   ].map((seating) => {
     const transSeating = seatingList.find((s) => s.id === seating.id) || {};
     return {
@@ -832,7 +832,8 @@ export default function ReservationPage() {
         indoor: 'Indoor',
         outdoor: 'Outdoor',
         privateRoom: 'Private Room',
-        bigRoom: 'Big Room',
+        vipRoom: 'VIP Room',
+        bigRoom: 'VIP Room',
       } as Record<string, string>)[selectedSeating] || 'Standard',
       special_requests: specialRequest.trim() || null,
       preordered_items: Object.values(preOrderCart).map((i) => ({
