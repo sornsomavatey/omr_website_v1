@@ -16,14 +16,37 @@ import imgCateringServiceStaff from '@/assets/gallery/catering-service-staff-no-
 import imgStaffNumansom from '@/assets/gallery/staff-with-numansom-no-logo.webp';
 import imgVitalEvent from '@/assets/gallery/vital-event.webp';
 import imgOmrHospitality from '@/assets/gallery/omr-hospitality.webp';
-import imgService from '@/assets/gallery/khmer-hospitality-no-logo.webp';
+import imgService from '@/assets/gallery/service.jpg';
 import imgCatering from '@/assets/gallery/private-gatherings-no-logo.webp';
 import imgRoom from '@/assets/home-v2/480cb1d76af2706b9692b726ad26ec2bf396f8c8.webp';
 import imgEvent from '@/assets/home-v2/e900cacb721f9c81cd07b8415a03f20f42a39856.webp';
-import imgChildren from '@/assets/gallery/little-moment-no-logo.webp';
 import imgDessertCup from '@/assets/gallery/sweet-dessert-cup.webp';
 import imgGrillPlatter from '@/assets/gallery/khmer-grill-chicken-no-logo.webp';
 import imgCoffeeService from '@/assets/gallery/event-coffee-service.webp';
+import imgChefChoppingVegetables from '@/assets/gallery/chefchoppingvegetable.png';
+import imgKuyteav from '@/assets/gallery/kuyteav.jpg';
+import imgTkInterior from '@/assets/gallery/tkinterior.jpg';
+import imgTkExterior from '@/assets/gallery/tkexterior.jpg';
+import imgTkFishPond from '@/assets/gallery/tkfishpond.jpg';
+import imgTkOutdoorDining from '@/assets/gallery/tkoutdoordining.jpg';
+import imgFifteenYearAnniversary from '@/assets/gallery/15yearsanni.png';
+import imgBkGrandOpening from '@/assets/gallery/bkgrandopeningceremony.jpg';
+import imgChineseNewYearGift from '@/assets/gallery/chinesenewyeargift-clean.png';
+import imgPchumBen from '@/assets/gallery/pchumben-clean-enhanced.png';
+import imgButterflyCake from '@/assets/gallery/butterflycake.jpg';
+import imgCorporateCatering from '@/assets/gallery/catering.webp';
+import imgFoodPlating from '@/assets/gallery/foodplating.jpg';
+import imgKhmerCakePlating from '@/assets/gallery/khmercakeplating.png';
+import imgAnsom from '@/assets/gallery/ansom-clean.png';
+import imgRedTableDining from '@/assets/gallery/redtabledining-clean.png';
+import imgChefInKitchen from '@/assets/gallery/chefinthekitchen-clean.png';
+import imgChefPlating from '@/assets/gallery/chefplating-clean.png';
+import imgFoodBox from '@/assets/gallery/foodbox-clean.png';
+import imgFruitPlate from '@/assets/gallery/fruitplate-clean.png';
+import imgFourDishes from '@/assets/gallery/fourdishes-clean.png';
+import imgBlueBirthdayDecor from '@/assets/gallery/bluedecoBD-private.png';
+import imgWineSelection from '@/assets/gallery/wine-clean.png';
+import imgBkChineseNewYear from '@/assets/gallery/BKchinese.png';
 import imgExterior from '@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.webp';
 import imgSiemReapChicken from '@/assets/Food/Lunch and Dinner/grilled-chicken-siemreap.webp';
 
@@ -52,26 +75,49 @@ const galleryItems: GalleryItem[] = [
   { src: imgSiemReapChicken, alt: 'Siem Reap grilled chicken served with traditional accompaniments', title: 'Siem Reap Grilled Chicken', tag: 'Food', category: 'Food', shape: 'landscape' },
   { src: imgArtisanalPlating, alt: 'Artfully plated Khmer dish', title: 'Artisanal Plating', tag: 'Food', category: 'Food', shape: 'square' },
   { src: imgChristmasWine, alt: 'Christmas wine bottle display', title: 'Christmas Wine Display', tag: 'Events', category: 'Events', shape: 'square' },
-  { src: imgWineToast, alt: 'Guests toasting with red wine glasses', title: 'Wine Toast', tag: 'Events', category: 'Events', shape: 'landscape' },
+  { src: imgWineToast, alt: 'Guests toasting with red wine glasses', title: 'Wine Toast', tag: 'Experience', category: 'Experience', shape: 'landscape' },
   { src: imgXmasDeer, alt: 'Christmas deer display with festive lights', title: 'Christmas Deer Display', tag: 'Events', category: 'Events', shape: 'portrait' },
-  { src: imgMissPlanetDining, alt: 'Miss Planet International guests dining at One More Restaurant', title: 'Miss Planet International Dining', tag: 'Events', category: 'Events', shape: 'landscape' },
+  { src: imgMissPlanetDining, alt: 'Miss Planet International guests dining at One More Restaurant', title: 'Miss Planet International Dining', tag: 'Experience', category: 'Experience', shape: 'landscape' },
   { src: imgCateringServiceStaff, alt: 'One More Restaurant catering service staff', title: 'Catering Service Team', tag: 'Events', category: 'Events', shape: 'square' },
   { src: imgStaffNumansom, alt: 'One More Restaurant staff presenting traditional Khmer cakes', title: 'Khmer Cake Traditions', tag: 'Experience', category: 'Experience', shape: 'square' },
   { src: imgCatering, alt: 'Outdoor catered celebration', title: 'Private Gatherings', tag: 'Events', category: 'Events', shape: 'landscape' },
   { src: imgCoffeeService, alt: 'One More Restaurant staff operating a coffee station at an event', title: 'Event Coffee Service', tag: 'Events', category: 'Events', shape: 'square' },
+  { src: imgChefChoppingVegetables, alt: 'One More Restaurant chef preparing fresh vegetables in the kitchen', title: 'Freshly Prepared', tag: 'Food', category: 'Food', shape: 'landscape' },
+  { src: imgKuyteav, alt: 'One More Restaurant signature kuyteav with traditional accompaniments', title: 'Signature Kuyteav', tag: 'Food', category: 'Food', shape: 'landscape' },
+  { src: imgTkInterior, alt: 'Sculptural interior at One More Restaurant Toul Kork', title: 'Toul Kork Interior', tag: 'Restaurant', category: 'Restaurant', shape: 'landscape' },
+  { src: imgTkExterior, alt: 'Garden and water feature at One More Restaurant Toul Kork', title: 'Toul Kork Exterior', tag: 'Restaurant', category: 'Restaurant', shape: 'landscape' },
+  { src: imgTkFishPond, alt: 'Koi fish pond at One More Restaurant Toul Kork', title: 'Toul Kork Fish Pond', tag: 'Restaurant', category: 'Restaurant', shape: 'landscape' },
+  { src: imgTkOutdoorDining, alt: 'Outdoor dining area at One More Restaurant Toul Kork', title: 'Toul Kork Outdoor Dining', tag: 'Restaurant', category: 'Restaurant', shape: 'landscape' },
+  { src: imgFifteenYearAnniversary, alt: 'Traditional Khmer desserts celebrating One More Restaurant anniversary', title: '15th Anniversary', tag: 'Events', category: 'Events', shape: 'square' },
+  { src: imgBkGrandOpening, alt: 'Traditional Khmer ceremonial arrangements for the Boeung Kak grand opening', title: 'Boeung Kak Grand Opening', tag: 'Events', category: 'Events', shape: 'landscape' },
+  { src: imgChineseNewYearGift, alt: 'Chinese New Year orange gift basket presented by One More Restaurant staff', title: 'Chinese New Year Gift', tag: 'Events', category: 'Events', shape: 'portrait' },
+  { src: imgPchumBen, alt: 'Traditional Pchum Ben gift baskets decorated with lotus flowers', title: 'Pchum Ben Traditions', tag: 'Events', category: 'Events', shape: 'landscape' },
+  { src: imgButterflyCake, alt: 'Blue and white butterfly-shaped Khmer coconut cakes', title: 'Butterfly Coconut Cakes', tag: 'Food', category: 'Food', shape: 'portrait' },
+  { src: imgCorporateCatering, alt: 'Corporate catering buffet and reception tables prepared by One More Restaurant', title: 'Corporate Catering', tag: 'Events', category: 'Events', shape: 'landscape' },
+  { src: imgFoodPlating, alt: 'A table filled with plated Khmer dishes at One More Restaurant', title: 'Khmer Feast', tag: 'Food', category: 'Food', shape: 'landscape' },
+  { src: imgKhmerCakePlating, alt: 'Traditional Khmer cakes presented in woven palm-leaf baskets with lotus flowers', title: 'Khmer Cake Plating', tag: 'Food', category: 'Food', shape: 'landscape' },
+  { src: imgAnsom, alt: 'Traditional Khmer ansom cakes with savory and sweet fillings', title: 'Traditional Ansom', tag: 'Food', category: 'Food', shape: 'square' },
+  { src: imgRedTableDining, alt: 'Red table dining room set for guests at One More Restaurant', title: 'Red Table Dining', tag: 'Restaurant', category: 'Restaurant', shape: 'square' },
+  { src: imgChefInKitchen, alt: 'Chef organizing ingredients in the One More Restaurant kitchen', title: 'Chef in the Kitchen', tag: 'Food', category: 'Food', shape: 'square' },
+  { src: imgChefPlating, alt: 'Chefs carefully plating dishes in the restaurant kitchen', title: 'Chef Plating', tag: 'Food', category: 'Food', shape: 'square' },
+  { src: imgFoodBox, alt: 'Assorted restaurant meal boxes with Khmer dishes, fruit, and pastries', title: 'Khmer Meal Boxes', tag: 'Food', category: 'Food', shape: 'square' },
+  { src: imgFruitPlate, alt: 'Decorative fresh fruit platter with a carved apple centerpiece', title: 'Fresh Fruit Art', tag: 'Food', category: 'Food', shape: 'portrait' },
+  { src: imgFourDishes, alt: 'Four bowls of Khmer noodle dishes arranged on a wooden table', title: 'Four Khmer Favorites', tag: 'Food', category: 'Food', shape: 'portrait' },
+  { src: imgBlueBirthdayDecor, alt: 'Blue, white, and silver birthday decorations in a private dining room', title: 'Blue Birthday Celebration', tag: 'Events', category: 'Events', shape: 'portrait' },
+  { src: imgWineSelection, alt: 'Selection of red and white wine bottles with serving glasses', title: 'Wine Selection', tag: 'Experience', category: 'Experience', shape: 'square' },
+  { src: imgBkChineseNewYear, alt: 'Boeung Kak restaurant exterior decorated with red lanterns for Chinese New Year', title: 'Chinese New Year at Boeung Kak', tag: 'Restaurant', category: 'Restaurant', shape: 'portrait' },
   { src: imgService, alt: 'Warm service in the restaurant courtyard', title: 'Khmer Hospitality', tag: 'Experience', category: 'Experience', shape: 'portrait' },
   { src: imgRoom, alt: 'Private dining room set for guests', title: 'The Private Room', tag: 'Restaurant', category: 'Restaurant', shape: 'portrait' },
   { src: imgEvent, alt: 'Floral event hall prepared for a celebration', title: 'A Day To Remember', tag: 'Events', category: 'Events', shape: 'landscape' },
-  { src: imgChildren, alt: 'Children enjoying a creative activity', title: 'Little Moments', tag: 'Experience', category: 'Experience', shape: 'square' },
   { src: imgDessertCup, alt: 'A sweet Khmer dessert served in a One More Restaurant cup', title: 'Sweet Refreshment', tag: 'Food', category: 'Food', shape: 'square' },
   { src: imgExterior, alt: 'One More Restaurant exterior', title: 'Canopy Entrance', tag: 'Restaurant', category: 'Restaurant', shape: 'landscape' },
   { src: imgHero, alt: 'Architectural restaurant dining room', title: 'Curves & Craft', tag: 'Restaurant', category: 'Restaurant', shape: 'landscape' },
 ];
 
 const galleryColumnBlueprint = [
-  ['Canopy Entrance', 'Khmer Cooking Workshop', 'Miss Planet International Dining', 'Artisanal Plating', 'Khmer Cake Traditions', 'Kitchen Rituals', 'Wine Toast', 'Little Moments'],
-  ['Main Hall Dining', 'One More Service Moment', 'Curves & Craft', 'Christmas Wine Display', 'Rich of Flavors', 'Siem Reap Grilled Chicken', 'Private Gatherings', 'Khmer Hospitality', 'Sweet Refreshment'],
-  ['Event Refreshment Moment', 'Christmas Deer Display', 'Khmer Grill Platter', 'Catering Service Team', 'The Private Room', 'Event Coffee Service', 'A Day To Remember'],
+  ['Main Hall Dining', 'Signature Kuyteav', 'Khmer Meal Boxes', 'Wine Toast', 'Khmer Cooking Workshop', 'Toul Kork Exterior', 'Butterfly Coconut Cakes', 'Blue Birthday Celebration', 'Boeung Kak Grand Opening', 'One More Service Moment', 'Red Table Dining', 'The Private Room', 'Artisanal Plating', 'Corporate Catering', 'Christmas Deer Display'],
+  ['Canopy Entrance', 'Freshly Prepared', 'Chef in the Kitchen', 'Fresh Fruit Art', 'Wine Selection', '15th Anniversary', 'Event Refreshment Moment', 'Toul Kork Interior', 'Khmer Feast', 'Traditional Ansom', 'Chinese New Year Gift', 'Khmer Cake Traditions', 'Toul Kork Outdoor Dining', 'Khmer Grill Platter', 'A Day To Remember', 'Catering Service Team'],
+  ['Toul Kork Fish Pond', 'Rich of Flavors', 'Chef Plating', 'Four Khmer Favorites', 'Chinese New Year at Boeung Kak', 'Christmas Wine Display', 'Khmer Hospitality', 'Curves & Craft', 'Kitchen Rituals', 'Pchum Ben Traditions', 'Miss Planet International Dining', 'Khmer Cake Plating', 'Siem Reap Grilled Chicken', 'Private Gatherings', 'Sweet Refreshment', 'Event Coffee Service'],
 ];
 
 const galleryShapeWeight: Record<GalleryItem['shape'], number> = {
@@ -152,6 +198,24 @@ export default function GalleryPage() {
   const closeLightbox = () => setSelectedIndex(null);
   const showPrevious = () => setSelectedIndex((index) => index === null ? null : (index - 1 + visibleItems.length) % visibleItems.length);
   const showNext = () => setSelectedIndex((index) => index === null ? null : (index + 1) % visibleItems.length);
+  const handleFilterChange = (filter: Filter) => {
+    setActiveFilter(filter);
+    setSelectedIndex(null);
+
+    requestAnimationFrame(() => {
+      const masonry = masonryRef.current;
+      if (!masonry) return;
+
+      const stickyFilters = document.querySelector<HTMLElement>('.gallery-filter-bar-navigation');
+      const stickyBottom = stickyFilters?.getBoundingClientRect().bottom ?? 0;
+      const resultsTop = window.scrollY + masonry.getBoundingClientRect().top;
+
+      window.scrollTo({
+        top: Math.max(0, resultsTop - stickyBottom - 16),
+        behavior: 'auto',
+      });
+    });
+  };
 
   useEffect(() => {
     if (selectedIndex === null) return;
@@ -266,10 +330,7 @@ export default function GalleryPage() {
                 key={filter}
                 className={activeFilter === filter ? 'active' : ''}
                 aria-pressed={activeFilter === filter}
-                onClick={() => {
-                  setActiveFilter(filter);
-                  setSelectedIndex(null);
-                }}
+                onClick={() => handleFilterChange(filter)}
               >
                 {t(`galleryPage.filters.${filter}`, undefined, filter)}
               </button>
@@ -290,10 +351,7 @@ export default function GalleryPage() {
               key={filter}
               className={activeFilter === filter ? 'active' : ''}
               aria-pressed={activeFilter === filter}
-              onClick={() => {
-                setActiveFilter(filter);
-                setSelectedIndex(null);
-              }}
+              onClick={() => handleFilterChange(filter)}
             >
               {t(`galleryPage.filters.${filter}`, undefined, filter)}
             </button>

@@ -90,7 +90,6 @@ export default function Menu() {
     Dessert: t('menu.categories.dessert', undefined, 'Dessert'),
     Drinks: t('menu.categories.drinks', undefined, 'Drinks'),
   };
-
   useEffect(() => {
     getMenuData()
       .then((res) => {
@@ -465,7 +464,7 @@ export default function Menu() {
                     index={index}
                     name={dish.name}
                     category={dish.category}
-                    description={dish.desc}
+                    description=""
                     image={dish.img}
                     price={dish.price}
                     badge={dish.badge}
