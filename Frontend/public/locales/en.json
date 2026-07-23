@@ -614,7 +614,7 @@
     },
     "success": {
       "title": "Reservation Confirmed!",
-      "desc": "Thank you for booking with One More Restaurant. A confirmation message has been sent to your phone number.",
+      "desc": "Thank you for booking with One More Restaurant.",
       "makeAnother": "Make Another Booking",
       "valuedGuest": "Valued Guest",
       "notProvided": "Not provided",

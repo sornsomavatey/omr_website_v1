@@ -411,16 +411,17 @@
 }
 
 .bk-room-card {
-  background: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
   border-radius: 0;
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
   border: 1px solid rgba(0, 0, 0, 0.06);
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: box-shadow 0.3s ease;
 }
 
 .bk-room-card:hover {
-  transform: translateY(-6px);
   box-shadow: 0 12px 30px rgba(33, 45, 27, 0.08);
 }
 

@@ -23,11 +23,16 @@ import {
   ShoppingCart,
   Trash2,
   Loader2,
+  Download,
+  X,
 } from 'lucide-react';
 import { getReservationsData, getHomeData, createReservation } from '@/lib/api';
 import { useTranslation } from '@/hooks/useTranslation';
 import { toKhmerDigits } from '@/lib/price';
+import whiteLogo from '@/assets/omr_logo_white.webp';
+import imgMainHall from '@/assets/main hall.jpg';
 import {
+  imgSpaceOutdoor,
   imgHeroBg2,
   imgGallery1,
   imgGallery5,
@@ -391,11 +396,12 @@ export default function ReservationPage() {
   const [childrenCount, setChildrenCount] = useState(2);
 
   // Step 3 (repeated): Date & Time
-  const [currentYear, setCurrentYear] = useState(2026);
-  const [currentMonth, setCurrentMonth] = useState(5); // June (0-indexed, so 5)
-  const [selectedDate, setSelectedDate] = useState<Date>(new Date(2026, 5, 18));
+  const today = new Date();
+  const [currentYear, setCurrentYear] = useState(today.getFullYear());
+  const [currentMonth, setCurrentMonth] = useState(today.getMonth());
+  const [selectedDate, setSelectedDate] = useState<Date>(today);
   const [timeCategory, setTimeCategory] = useState<'Breakfast' | 'Lunch' | 'Dinner'>('Breakfast');
-  const [selectedTime, setSelectedTime] = useState('06:30 AM');
+  const [selectedTime, setSelectedTime] = useState('');
   const [customTime, setCustomTime] = useState('');
 
   // Automatically update active timeCategory tab when selectedTime or customTime changes
@@ -406,6 +412,10 @@ export default function ReservationPage() {
       setTimeCategory(detectedCategory);
     }
   }, [selectedTime, customTime, timeCategory]);
+
+  // Confirmation modal download prompt tracking state
+  const [hasDownloadedConfirmation, setHasDownloadedConfirmation] = useState(false);
+  const [showDownloadPrompt, setShowDownloadPrompt] = useState(false);
 
   // Time autocomplete dropdown state
   const [showTimeDropdown, setShowTimeDropdown] = useState(false);
@@ -737,9 +747,9 @@ export default function ReservationPage() {
 
   const seatingList = getObject<any[]>('reservationPage.seatingPreferences', []);
   const seatingPreferences = [
-    { id: 'indoor', name: 'Indoor', img: diningSpacesList[3]?.img || imgHeroBg1 },
-    { id: 'outdoor', name: 'Outdoor', img: imgGallery1 },
-    { id: 'privateRoom', name: 'Private Room', img: diningSpacesList[4]?.img || imgHeroBg2 },
+    { id: 'indoor', name: 'Indoor', img: imgMainHall },
+    { id: 'outdoor', name: 'Outdoor', img: imgSpaceOutdoor },
+    { id: 'privateRoom', name: 'Private Room', img: diningSpacesList[1]?.img || imgGallery1 },
     { id: 'vipRoom', name: 'VIP Room', img: imgGallery5 }
   ].map((seating) => {
     const transSeating = seatingList.find((s) => s.id === seating.id) || {};
@@ -784,11 +794,10 @@ export default function ReservationPage() {
   const handleReservationSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!fullName.trim() || !phone.trim()) {
-      alert(t('reservationPage.validation.contactRequired', undefined, "Please fill in your Contact Details (Name & Phone Number) to complete your reservation."));
-
-      const targetInput = !fullName.trim() ? "fullName" : "phoneNumber";
-      const element = document.getElementById(targetInput);
+    // 1. Full Name check
+    if (!fullName.trim()) {
+      alert(t('reservationPage.validation.nameRequired', undefined, "Please enter your Full Name."));
+      const element = document.getElementById("fullName");
       if (element) {
         element.scrollIntoView({ behavior: 'smooth', block: 'center' });
         element.focus();
@@ -806,6 +815,17 @@ export default function ReservationPage() {
       return;
     }
 
+    // 2. Phone Number check
+    if (!phone.trim()) {
+      alert(t('reservationPage.validation.phoneRequired', undefined, "Please enter your Phone Number."));
+      const element = document.getElementById("phoneNumber");
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        element.focus();
+      }
+      return;
+    }
+
     const phoneDigits = phone.replace(/\D/g, '');
     if (phoneDigits.length < 9 || phoneDigits.length > 12) {
       alert(t('reservationPage.validation.invalidPhone', undefined, "Please enter a valid Phone Number (typically 9 to 11 digits)."));
@@ -813,6 +833,16 @@ export default function ReservationPage() {
       if (element) {
         element.scrollIntoView({ behavior: 'smooth', block: 'center' });
         element.focus();
+      }
+      return;
+    }
+
+    // 3. Date & Time check
+    if (!selectedDate || (!selectedTime && !customTime.trim())) {
+      alert(t('reservationPage.validation.dateTimeRequired', undefined, "Please select a Date & Time for your reservation."));
+      const element = document.querySelector(".date-time-picker-grid");
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
       return;
     }
@@ -861,18 +891,250 @@ export default function ReservationPage() {
       });
   };
 
+  const handleDownloadConfirmation = () => {
+    setHasDownloadedConfirmation(true);
+    setShowDownloadPrompt(false);
+    const bookingRef = `OMR-${Math.floor(100000 + Math.random() * 900000)}`;
+    const formattedDate = formatDateDisplay(selectedDate);
+    const formattedTime = formatTimeDisplay(customTime || selectedTime);
+    const totalGuestsCount = adults + childrenCount;
+    const issueTimestamp = new Date().toLocaleString();
+
+    const printWindow = window.open('', '_blank');
+    if (!printWindow) {
+      alert("Please allow popups to download your PDF confirmation proof.");
+      return;
+    }
+
+    printWindow.document.write(`<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OMR_Reservation_${bookingRef}</title>
+    <style>
+      @page {
+        size: letter portrait;
+        margin: 15mm;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        color: #212d1b;
+        background-color: #ffffff;
+        margin: 0;
+        padding: 24px;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .receipt-card {
+        max-width: 600px;
+        margin: 0 auto;
+        border: 2px solid #6b9158;
+        border-radius: 20px;
+        padding: 36px;
+        background: #ffffff;
+        box-shadow: 0 8px 30px rgba(33, 45, 27, 0.06);
+      }
+      .brand-header {
+        text-align: center;
+        border-bottom: 2px solid #f0f4ef;
+        padding-bottom: 20px;
+        margin-bottom: 24px;
+      }
+      .brand-logo-emblem {
+        width: 64px;
+        height: 64px;
+        background-color: #111b0f;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 14px;
+        box-shadow: 0 4px 14px rgba(17, 27, 15, 0.15);
+      }
+      .brand-logo-emblem img {
+        width: 40px;
+        height: 40px;
+        object-fit: contain;
+      }
+      .brand-logo-title {
+        font-family: 'Playfair Display', Georgia, serif;
+        font-size: 28px;
+        font-weight: 600;
+        color: #111b0f;
+        margin: 0 0 6px;
+      }
+      .brand-subtitle {
+        color: #6b9158;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        margin: 0;
+      }
+      .ref-bar {
+        background-color: #f3f8f1;
+        border: 1px solid rgba(107, 145, 88, 0.2);
+        border-radius: 12px;
+        padding: 14px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+      }
+      .ref-bar span {
+        color: #646860;
+        font-size: 13px;
+      }
+      .ref-bar strong {
+        color: #212d1b;
+        font-size: 14px;
+        font-weight: 700;
+      }
+      .ref-code {
+        color: #6b9158 !important;
+        font-family: monospace;
+        font-size: 15px !important;
+      }
+      .details-grid {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 24px;
+      }
+      .details-grid tr {
+        border-bottom: 1px solid #f2f5f2;
+      }
+      .details-grid td {
+        padding: 12px 0;
+        font-size: 14px;
+      }
+      .details-grid td.label {
+        color: #737970;
+        font-weight: 500;
+        width: 40%;
+      }
+      .details-grid td.value {
+        color: #212d1b;
+        font-weight: 700;
+        text-align: right;
+      }
+      .policy-box {
+        background-color: #fafdf8;
+        border-left: 4px solid #6b9158;
+        border-radius: 6px;
+        padding: 16px;
+        font-size: 12px;
+        color: #555d52;
+        line-height: 1.6;
+        margin-bottom: 24px;
+      }
+      .policy-box strong {
+        color: #212d1b;
+        display: block;
+        margin-bottom: 6px;
+      }
+      .footer-section {
+        text-align: center;
+        border-top: 1px solid #f0f2f0;
+        padding-top: 20px;
+        font-size: 12px;
+        color: #737970;
+      }
+      .footer-section strong {
+        color: #6b9158;
+      }
+      @media print {
+        body {
+          padding: 0;
+        }
+        .receipt-card {
+          border: 1.5px solid #6b9158;
+          box-shadow: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="receipt-card">
+      <div class="brand-header">
+        <div class="brand-logo-emblem">
+          <img src="${window.location.origin}${whiteLogo}" alt="One More Restaurant Logo" />
+        </div>
+        <div class="brand-logo-title">One More Restaurant</div>
+        <div class="brand-subtitle">THANK YOU FOR CHOOSING US</div>
+      </div>
+
+      <div class="ref-bar">
+        <span>Booking Reference: <strong class="ref-code">#${bookingRef}</strong></span>
+        <span>Issued: <strong>${issueTimestamp}</strong></span>
+      </div>
+
+      <table class="details-grid">
+        <tr><td class="label">Guest Name</td><td class="value">${fullName.trim() || 'Valued Guest'}</td></tr>
+        <tr><td class="label">Phone Number</td><td class="value">${phone.trim() || 'Not Provided'}</td></tr>
+        <tr><td class="label">Branch Location</td><td class="value">${selectedBranchDisplay}</td></tr>
+        <tr><td class="label">Reservation Date & Time</td><td class="value">${formattedDate} at ${formattedTime}</td></tr>
+        <tr><td class="label">Party Size</td><td class="value">${totalGuestsCount} Guests (${adults} Adults, ${childrenCount} Kids)</td></tr>
+        <tr><td class="label">Seating Preference</td><td class="value">${selectedSeatingDisplay}</td></tr>
+        <tr><td class="label">Special Occasion</td><td class="value">${selectedOccasionDisplay}</td></tr>
+        ${specialRequest.trim() ? `<tr><td class="label">Special Request</td><td class="value">${specialRequest.trim()}</td></tr>` : ''}
+        ${preOrderItemCount > 0 ? `<tr><td class="label">Pre-order Total</td><td class="value">$${preOrderTotal.toFixed(2)}</td></tr>` : ''}
+      </table>
+
+      <div class="policy-box">
+        <strong>Important Reservation Policies:</strong>
+        • Please arrive 15 minutes before your scheduled reservation.<br/>
+        • Reservations are held for up to 15 minutes after scheduled time.<br/>
+        • Free cancellation up to 24 hours prior to reservation.
+      </div>
+
+      <div class="footer-section">
+        Thank you for dining with <strong>One More Restaurant</strong>.<br/>
+        Website: www.onemorerestaurant.com
+      </div>
+    </div>
+
+    <script>
+      window.onload = function() {
+        setTimeout(function() {
+          window.print();
+        }, 250);
+      };
+    </script>
+  </body>
+</html>`);
+    printWindow.document.close();
+  };
+
+  const handleCloseAttempt = () => {
+    if (hasDownloadedConfirmation) {
+      handleReset();
+    } else {
+      setShowDownloadPrompt(true);
+    }
+  };
+
   const handleReset = () => {
+    const now = new Date();
     setFullName('');
     setPhone('');
     setAdults(4);
     setChildrenCount(2);
-    setSelectedDate(new Date(2026, 5, 18));
-    setSelectedTime('06:30 AM');
+    setCurrentYear(now.getFullYear());
+    setCurrentMonth(now.getMonth());
+    setSelectedDate(now);
+    setSelectedTime('');
+    setCustomTime('');
     setSelectedOccasion('birthdayCelebration');
     setSelectedSeating('privateRoom');
     setSpecialRequest('');
     setPreOrderCart({});
     setIsSubmitted(false);
+    setHasDownloadedConfirmation(false);
+    setShowDownloadPrompt(false);
   };
 
   // Translate step headings
@@ -900,73 +1162,126 @@ export default function ReservationPage() {
 
       {isSubmitted && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
-          <div className="absolute inset-0" onClick={handleReset} />
+          <div className="absolute inset-0" onClick={handleCloseAttempt} />
           <div className="reservation-success-card relative z-10 animate-in fade-in zoom-in duration-300 max-h-[90vh] overflow-y-auto no-scrollbar w-full max-w-md shadow-2xl">
-            <div className="success-icon-wrapper">
-              <Check className="w-12 h-12 text-[#6b9158]" />
-            </div>
-            <h2 className="font-serif text-3xl text-[#212d1b] text-center mb-4">{t('reservationPage.success.title', undefined, 'Reservation Confirmed!')}</h2>
-            <p className="text-center text-[#646860] mb-8 max-w-md mx-auto">
-              {t('reservationPage.success.desc', undefined, 'Thank you for booking with One More Restaurant. A confirmation message has been sent to your phone number.')}
-            </p>
-
-            <div className="success-details mb-8">
-              <div className="success-detail-row">
-                <span>{t('reservationPage.success.detailLabels.branch', undefined, 'Branch')}</span>
-                <strong>{selectedBranchDisplay}</strong>
-              </div>
-              <div className="success-detail-row">
-                <span>{t('reservationPage.success.detailLabels.guestName', undefined, 'Guest Name')}</span>
-                <strong>{fullName || t('reservationPage.success.valuedGuest', undefined, 'Valued Guest')}</strong>
-              </div>
-              <div className="success-detail-row">
-                <span>{t('reservationPage.success.detailLabels.phone', undefined, 'Phone')}</span>
-                <strong>{phone || t('reservationPage.success.notProvided', undefined, 'Not provided')}</strong>
-              </div>
-              <div className="success-detail-row">
-                <span>{t('reservationPage.success.detailLabels.guests', undefined, 'Guests')}</span>
-                <strong>
-                  {t('reservationPage.success.guestsValue', {
-                    total: localizeNumber(adults + childrenCount),
-                    adults: localizeNumber(adults),
-                    children: localizeNumber(childrenCount)
-                  })}
-                </strong>
-              </div>
-              <div className="success-detail-row">
-                <span>{t('reservationPage.success.detailLabels.dateTime', undefined, 'Date & Time')}</span>
-                <strong>
-                  {t('reservationPage.success.dateTimeValue', {
-                    date: formatDateDisplay(selectedDate),
-                    time: formatTimeDisplay(customTime || selectedTime)
-                  })}
-                </strong>
-              </div>
-              <div className="success-detail-row">
-                <span>{t('reservationPage.success.detailLabels.seatingOccasion', undefined, 'Seating & Occasion')}</span>
-                <strong>
-                  {t('reservationPage.success.seatingOccasionValue', {
-                    seating: selectedSeatingDisplay,
-                    occasion: selectedOccasionDisplay
-                  })}
-                </strong>
-              </div>
-              {preOrderItemCount > 0 && (
-                <div className="success-detail-row">
-                  <span>{isKhmer ? 'តម្លៃសរុបកុម្ម៉ង់មុន' : 'Pre-order Total'}</span>
-                  <strong className="text-[#6b9158] font-bold">${preOrderTotal.toFixed(2)}</strong>
-                </div>
-              )}
-            </div>
-
-            <button type="button" onClick={handleReset} className="reserve-btn-primary w-full mb-4">
-              {t('reservationPage.success.makeAnother', undefined, 'Make Another Booking')}
+            <button
+              type="button"
+              onClick={handleCloseAttempt}
+              className="absolute top-5 left-5 p-2 rounded-full text-[#646860] hover:text-[#212d1b] hover:bg-[#f0f4ef] transition-colors cursor-pointer"
+              aria-label="Close confirmation"
+            >
+              <X className="w-5 h-5" />
             </button>
-            <div className="text-center pb-2">
-              <Link to="/" className="text-[#6b9158] hover:text-[#4d6a3f] font-sans text-sm font-medium underline underline-offset-4 transition-colors">
-                {isKhmer ? 'ត្រឡប់ទៅទំព័រដើម' : 'Back to Home'}
-              </Link>
-            </div>
+
+            {showDownloadPrompt ? (
+              <div className="flex flex-col items-center text-center py-4 px-2 animate-in fade-in zoom-in duration-200">
+                <div className="w-16 h-16 rounded-full bg-[#f3f8f1] border border-[#6b9158]/30 text-[#6b9158] flex items-center justify-center mb-5 shadow-sm">
+                  <Download className="w-8 h-8" />
+                </div>
+                <h3 className="font-serif text-2xl text-[#212d1b] mb-3 font-semibold">
+                  {isKhmer ? 'ទាញយកលិខិតបញ្ជាក់ការកក់?' : 'Download Confirmation Proof?'}
+                </h3>
+                <p className="text-sm text-[#646860] mb-8 max-w-xs leading-relaxed">
+                  {isKhmer
+                    ? 'សូមទាញយកលិខិតបញ្ជាក់របស់អ្នកមុនពេលបិទ'
+                    : 'Please download your confirmation before closing'}
+                </p>
+                <div className="w-full flex flex-col gap-3">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      handleDownloadConfirmation();
+                      handleReset();
+                    }}
+                    className="reserve-btn-primary w-full flex items-center justify-center gap-2 py-3.5"
+                  >
+                    <Download className="w-4 h-4" />
+                    <span>{isKhmer ? 'ទាញយក និងបិទ' : 'Download & Close'}</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleReset}
+                    className="w-full py-3 px-4 rounded-xl text-sm font-sans font-medium text-[#737970] hover:text-[#212d1b] hover:bg-[#f2f5f2] transition-colors"
+                  >
+                    {isKhmer ? 'បិទដោយមិនទាញយក' : 'Close Without Downloading'}
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <>
+                <div className="success-icon-wrapper">
+                  <Check className="w-12 h-12 text-[#6b9158]" />
+                </div>
+                <h2 className="font-serif text-3xl text-[#212d1b] text-center mb-4">{t('reservationPage.success.title', undefined, 'Reservation Confirmed!')}</h2>
+                <p className="text-center text-[#646860] mb-8 max-w-md mx-auto">
+                  {t('reservationPage.success.desc', undefined, 'Thank you for booking with One More Restaurant.')}
+                </p>
+
+                <div className="success-details mb-8">
+                  <div className="success-detail-row">
+                    <span>{t('reservationPage.success.detailLabels.branch', undefined, 'Branch')}</span>
+                    <strong>{selectedBranchDisplay}</strong>
+                  </div>
+                  <div className="success-detail-row">
+                    <span>{t('reservationPage.success.detailLabels.guestName', undefined, 'Guest Name')}</span>
+                    <strong>{fullName || t('reservationPage.success.valuedGuest', undefined, 'Valued Guest')}</strong>
+                  </div>
+                  <div className="success-detail-row">
+                    <span>{t('reservationPage.success.detailLabels.phone', undefined, 'Phone')}</span>
+                    <strong>{phone || t('reservationPage.success.notProvided', undefined, 'Not provided')}</strong>
+                  </div>
+                  <div className="success-detail-row">
+                    <span>{t('reservationPage.success.detailLabels.guests', undefined, 'Guests')}</span>
+                    <strong>
+                      {t('reservationPage.success.guestsValue', {
+                        total: localizeNumber(adults + childrenCount),
+                        adults: localizeNumber(adults),
+                        children: localizeNumber(childrenCount)
+                      }, `${adults + childrenCount} Guests (${adults} Adults, ${childrenCount} Kids)`)}
+                    </strong>
+                  </div>
+                  <div className="success-detail-row">
+                    <span>{t('reservationPage.success.detailLabels.dateTime', undefined, 'Date & Time')}</span>
+                    <strong>
+                      {t('reservationPage.success.dateTimeValue', {
+                        date: formatDateDisplay(selectedDate),
+                        time: formatTimeDisplay(customTime || selectedTime)
+                      }, `${formatDateDisplay(selectedDate)} at ${formatTimeDisplay(customTime || selectedTime)}`)}
+                    </strong>
+                  </div>
+                  <div className="success-detail-row">
+                    <span>{t('reservationPage.success.detailLabels.seatingOccasion', undefined, 'Seating & Occasion')}</span>
+                    <strong>
+                      {t('reservationPage.success.seatingOccasionValue', {
+                        seating: selectedSeatingDisplay,
+                        occasion: selectedOccasionDisplay
+                      }, `${selectedSeatingDisplay} · ${selectedOccasionDisplay}`)}
+                    </strong>
+                  </div>
+                  {preOrderItemCount > 0 && (
+                    <div className="success-detail-row">
+                      <span>{isKhmer ? 'តម្លៃសរុបកុម្ម៉ង់មុន' : 'Pre-order Total'}</span>
+                      <strong className="text-[#6b9158] font-bold">${preOrderTotal.toFixed(2)}</strong>
+                    </div>
+                  )}
+                </div>
+
+                <div className="w-full flex flex-col gap-3 mb-4">
+                  <button
+                    type="button"
+                    onClick={handleDownloadConfirmation}
+                    className="download-confirmation-btn"
+                  >
+                    <Download className="w-4 h-4 text-[#6b9158]" />
+                    <span>{isKhmer ? 'ទាញយកលិខិតបញ្ជាក់' : 'Download Confirmation'}</span>
+                  </button>
+
+                  <button type="button" onClick={handleCloseAttempt} className="reserve-btn-primary w-full">
+                    {t('reservationPage.success.makeAnother', undefined, 'Make Another Booking')}
+                  </button>
+                </div>
+              </>
+            )}
           </div>
         </div>
       )}
@@ -1159,7 +1474,10 @@ export default function ReservationPage() {
               <div className="reservation-step-heading mb-8">
                 <span>{localizeNumber(3)}</span>
                 <div>
-                  <h2>{stepDateTimeTitle}</h2>
+                  <h2>
+                    {stepDateTimeTitle}
+                    <span className="required-star"> *</span>
+                  </h2>
                   <p>{stepDateTimeDesc}</p>
                 </div>
               </div>
@@ -1218,7 +1536,6 @@ export default function ReservationPage() {
                         type="button"
                         onClick={() => {
                           setTimeCategory(cat);
-                          setSelectedTime(timeSlots[cat][0]);
                         }}
                         className={`time-tab-btn ${timeCategory === cat ? 'time-tab-btn-active' : ''}`}
                       >
@@ -1521,10 +1838,12 @@ export default function ReservationPage() {
                   <strong>
                     {formatDateDisplay(selectedDate)}
                     <span className="time-tag">
-                      {t('reservationPage.summary.timeTag', {
-                        time: formatTimeDisplay(customTime || selectedTime),
-                        category: translatedTimeCategory(timeCategory)
-                      })}
+                      {(customTime || selectedTime)
+                        ? t('reservationPage.summary.timeTag', {
+                            time: formatTimeDisplay(customTime || selectedTime),
+                            category: translatedTimeCategory(timeCategory)
+                          })
+                        : t('reservationPage.summary.empty', undefined, '—')}
                     </span>
                   </strong>
                 </div>

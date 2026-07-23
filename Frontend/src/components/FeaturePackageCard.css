@@ -8,13 +8,10 @@
   overflow: hidden;
   border: 1px solid rgba(0, 0, 0, 0.06);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
-  transition:
-    transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
-    box-shadow 0.3s ease;
+  transition: box-shadow 0.3s ease;
 }
 
 .fpc-card:hover {
-  transform: translateY(-6px);
   box-shadow: 0 12px 30px rgba(33, 45, 27, 0.08);
 }
 
@@ -30,11 +27,12 @@
   object-fit: cover;
   display: block;
   border-radius: 0;
-  transition: transform 0.6s ease;
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
+.fpc-image-wrap:hover .fpc-image,
 .fpc-card:hover .fpc-image {
-  transform: scale(1.05);
+  transform: scale(1.06);
 }
 
 .fpc-guest-badge {

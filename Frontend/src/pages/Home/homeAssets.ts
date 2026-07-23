@@ -58,6 +58,7 @@ import imgAvatarMonyTep from '@/assets/testimonial-avatar/mony-tep.webp';
 
 export {
   svgPaths,
+  imgSpaceOutdoor,
   imgHeroBg1,
   imgHeroBg2,
   imgDish1,
