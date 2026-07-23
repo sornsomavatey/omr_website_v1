@@ -901,9 +901,18 @@ html[data-lang="kh"] .reservation-form-container ::placeholder {
    Sidebar Booking Summary
 ========================= */
 
-.reservation-summary-card {
+.reservation-summary-sticky {
   position: sticky;
-  top: 100px;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 16px 0;
+  box-sizing: border-box;
+}
+
+.reservation-summary-card {
+  width: 100%;
   background-color: #ffffff;
   border: 1px solid rgba(107, 145, 88, 0.12);
   border-radius: 20px;
@@ -913,7 +922,7 @@ html[data-lang="kh"] .reservation-form-container ::placeholder {
 
 .reservation-summary-card h2 {
   margin: 0;
-  padding: 20px 24px;
+  padding: 17px 22px;
   color: #ffffff;
   background-color: #111b0f;
   font-family: var(--font-serif);
@@ -923,21 +932,21 @@ html[data-lang="kh"] .reservation-form-container ::placeholder {
 }
 
 .summary-content {
-  padding: 24px;
+  padding: 20px 22px;
 }
 
 .summary-list {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  margin-bottom: 24px;
+  gap: 12px;
+  margin-bottom: 18px;
 }
 
 .summary-item {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  padding-bottom: 12px;
+  padding-bottom: 10px;
   border-bottom: 1px solid #f3f5f3;
 }
 
@@ -1080,7 +1089,7 @@ html[data-lang="kh"] .reservation-form-container ::placeholder {
   font-size: 12px;
   line-height: 1.6;
   padding: 10px 14px;
-  margin: 0 0 24px;
+  margin: 0 0 18px;
   border-radius: 0 8px 8px 0;
 }
 
@@ -1357,11 +1366,18 @@ html[data-lang="kh"] .reservation-form-container ::placeholder {
     gap: 40px;
   }
 
-  .reservation-summary-card {
+  .reservation-summary-sticky {
     position: static;
     order: initial; /* Keep summary below the completed selections */
+    height: auto;
+    display: block;
+    padding: 0;
+  }
+
+  .reservation-summary-card {
     width: 100%;
     max-width: 100%;
+    overflow: hidden;
   }
 
   .submit-area {

@@ -1482,7 +1482,8 @@ export default function ReservationPage() {
           </form>
 
           {/* Sticky Sidebar Booking Summary */}
-          <aside className="reservation-summary-card">
+          <div className="reservation-summary-sticky">
+            <aside className="reservation-summary-card">
             <h2>{t('reservationPage.summary.title', undefined, 'Booking Summary')}</h2>
 
             <div className="summary-content">
@@ -1600,7 +1601,8 @@ export default function ReservationPage() {
                 </a>
               </div>
             </div>
-          </aside>
+            </aside>
+          </div>
         </div>
       </section>
 
