@@ -120,6 +120,15 @@ export const createReservation = async (reservationData: any) => {
   return response.data;
 };
 
+export const sendCustomerEmail = async (email: string, reservationId?: number, customMessage?: string) => {
+  const response = await backendApi.post('/reservations/send-customer-email', {
+    email,
+    reservation_id: reservationId,
+    custom_message: customMessage
+  });
+  return response.data;
+};
+
 export const createEventBooking = async (eventBookingData: any) => {
   const response = await backendApi.post('/event-bookings/', eventBookingData);
   return response.data;

@@ -25,8 +25,10 @@ import {
   Loader2,
   Download,
   X,
+  Send,
+  Mail,
 } from 'lucide-react';
-import { getReservationsData, getHomeData, createReservation } from '@/lib/api';
+import { getReservationsData, getHomeData, createReservation, sendCustomerEmail } from '@/lib/api';
 import { useTranslation } from '@/hooks/useTranslation';
 import { toKhmerDigits } from '@/lib/price';
 import whiteLogo from '@/assets/omr_logo_white.webp';
@@ -390,6 +392,7 @@ export default function ReservationPage() {
   // Step 2: Contact Info
   const [fullName, setFullName] = useState('');
   const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
 
   // Step 3: Guests
   const [adults, setAdults] = useState(4);
@@ -413,9 +416,11 @@ export default function ReservationPage() {
     }
   }, [selectedTime, customTime, timeCategory]);
 
-  // Confirmation modal download prompt tracking state
+  // Confirmation modal download & email prompt tracking state
   const [hasDownloadedConfirmation, setHasDownloadedConfirmation] = useState(false);
+  const [hasSentEmail, setHasSentEmail] = useState(false);
   const [showDownloadPrompt, setShowDownloadPrompt] = useState(false);
+  const [isDownloadingPdf, setIsDownloadingPdf] = useState(false);
 
   // Time autocomplete dropdown state
   const [showTimeDropdown, setShowTimeDropdown] = useState(false);
@@ -501,6 +506,39 @@ export default function ReservationPage() {
   // Booking submit status
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+
+  // Email Confirmation Modal State
+  const [showEmailModal, setShowEmailModal] = useState(false);
+  const [emailInput, setEmailInput] = useState('');
+  const [isSendingEmail, setIsSendingEmail] = useState(false);
+  const [createdReservationId, setCreatedReservationId] = useState<number | undefined>(undefined);
+
+  const handleSendToEmail = async (customEmail?: string) => {
+    const targetEmail = (customEmail !== undefined ? customEmail : (emailInput || email)).trim();
+
+    if (!targetEmail) {
+      alert(isKhmer ? 'សូមបញ្ចូលអាសយដ្ឋានអ៊ីមែលរបស់អ្នក' : 'Please enter your email address.');
+      return;
+    }
+
+    setIsSendingEmail(true);
+    try {
+      const customMsg = `🎉 One More Restaurant - Reservation Confirmation\n\nDear ${fullName.trim() || 'Valued Guest'},\nThank you for choosing One More Restaurant! Your table reservation is confirmed.\n\nDate: ${formatDateDisplay(selectedDate)}\nTime Slot: ${formatTimeDisplay(customTime || selectedTime)}\nGuest Count: ${adults + childrenCount} (${adults} Adults, ${childrenCount} Kids)\nBranch: ${selectedBranchDisplay}\nSeating Area: ${selectedSeatingDisplay}\nSpecial Requests: ${specialRequest.trim() || 'None'}\n\nWe look forward to welcoming you!\nwww.onemorerestaurant.com`;
+      await sendCustomerEmail(targetEmail, createdReservationId, customMsg);
+      setHasSentEmail(true);
+      alert(isKhmer 
+        ? `លិខិតបញ្ជាក់ការកក់ត្រូវ បានផ្ញើទៅកាន់ ${targetEmail} ដោយជោគជ័យ!` 
+        : `Reservation confirmation email sent successfully to ${targetEmail}!`);
+      setShowEmailModal(false);
+    } catch (err) {
+      console.error('Failed to send email to customer:', err);
+      alert(isKhmer 
+        ? 'មានបញ្ហាក្នុងការផ្ញើអ៊ីមែល។ សូមពិនិត្យមើលអាសយដ្ឋានអ៊ីមែលរបស់អ្នក។' 
+        : 'Could not send confirmation email. Please make sure backend server is running and email settings are configured.');
+    } finally {
+      setIsSendingEmail(false);
+    }
+  };
 
   if (loading) {
     return (
@@ -851,6 +889,7 @@ export default function ReservationPage() {
     // Prepare reservation payload 
     const payload = {
       customer_name: fullName.trim(),
+      customer_email: email.trim() || null,
       customer_phone: phone.trim(),
       branch_id: selectedBranch === 'Toul Kork' ? 1 : 2,
       reservation_date: selectedDate.toISOString().split('T')[0],
@@ -877,7 +916,10 @@ export default function ReservationPage() {
     setIsSubmitting(true);
 
     createReservation(payload)
-      .then(() => {
+      .then((res: any) => {
+        if (res && res.id) {
+          setCreatedReservationId(res.id);
+        }
         setIsSubmitted(true);
       })
       .catch((err) => {
@@ -891,226 +933,231 @@ export default function ReservationPage() {
       });
   };
 
-  const handleDownloadConfirmation = () => {
+  const handleDownloadConfirmation = async () => {
+    if (isDownloadingPdf) return;
+    setIsDownloadingPdf(true);
     setHasDownloadedConfirmation(true);
     setShowDownloadPrompt(false);
+
     const bookingRef = `OMR-${Math.floor(100000 + Math.random() * 900000)}`;
     const formattedDate = formatDateDisplay(selectedDate);
     const formattedTime = formatTimeDisplay(customTime || selectedTime);
     const totalGuestsCount = adults + childrenCount;
     const issueTimestamp = new Date().toLocaleString();
+    const filename = `OMR_Reservation_${bookingRef}.pdf`;
 
-    const printWindow = window.open('', '_blank');
-    if (!printWindow) {
-      alert("Please allow popups to download your PDF confirmation proof.");
-      return;
+    try {
+      const { jsPDF } = await import('jspdf');
+
+      const logoUrl = window.location.origin + '/assets/partners/onemorerestaurant.png';
+      const logoData = await new Promise<{ dataUrl: string; width: number; height: number } | null>((resolve) => {
+        const img = new Image();
+        img.crossOrigin = 'Anonymous';
+        img.onload = () => {
+          try {
+            const canvas = document.createElement('canvas');
+            canvas.width = img.width;
+            canvas.height = img.height;
+            const ctx = canvas.getContext('2d');
+            if (ctx) {
+              ctx.drawImage(img, 0, 0);
+              resolve({
+                dataUrl: canvas.toDataURL('image/png'),
+                width: img.width,
+                height: img.height,
+              });
+              return;
+            }
+          } catch {
+            // ignore
+          }
+          resolve(null);
+        };
+        img.onerror = () => resolve(null);
+        img.src = logoUrl;
+      });
+
+      const doc = new jsPDF({
+        orientation: 'portrait',
+        unit: 'mm',
+        format: [120, 215],
+      });
+
+      // Receipt Card Background
+      doc.setFillColor(255, 255, 255);
+      doc.rect(0, 0, 120, 215, 'F');
+
+      // Outer Border
+      doc.setDrawColor(107, 145, 88);
+      doc.setLineWidth(0.7);
+      doc.roundedRect(6, 6, 108, 203, 4, 4, 'S');
+
+      let currentTopY = 12;
+
+      if (logoData) {
+        const logoWidth = 26;
+        const logoHeight = (logoWidth * logoData.height) / logoData.width;
+        const logoX = (120 - logoWidth) / 2;
+        doc.addImage(logoData.dataUrl, 'PNG', logoX, currentTopY, logoWidth, logoHeight);
+        currentTopY += logoHeight + 4;
+      } else {
+        // Fallback Header
+        doc.setFillColor(17, 27, 15);
+        doc.circle(60, 22, 9, 'F');
+        doc.setTextColor(255, 255, 255);
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(14);
+        doc.text('O', 60, 26.5, { align: 'center' });
+
+        doc.setTextColor(17, 27, 15);
+        doc.setFont('times', 'bold');
+        doc.setFontSize(15);
+        doc.text('ONE MORE RESTAURANT', 60, 38, { align: 'center' });
+        currentTopY = 43.5;
+      }
+
+      // Subtitle
+      doc.setTextColor(107, 145, 88);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(8);
+      doc.text('THANK YOU FOR CHOOSING US', 60, currentTopY, { align: 'center' });
+
+      currentTopY += 3.5;
+
+      // Separator Line
+      doc.setDrawColor(240, 244, 239);
+      doc.setLineWidth(0.4);
+      doc.line(14, currentTopY, 106, currentTopY);
+
+      currentTopY += 4;
+
+      // Ref Bar
+      doc.setFillColor(243, 248, 241);
+      doc.setDrawColor(200, 220, 190);
+      doc.setLineWidth(0.3);
+      doc.roundedRect(14, currentTopY, 92, 11, 2, 2, 'FD');
+
+      doc.setTextColor(100, 104, 96);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(8);
+      doc.text('Booking Ref:', 18, currentTopY + 7);
+
+      doc.setTextColor(107, 145, 88);
+      doc.setFont('courier', 'bold');
+      doc.setFontSize(9.5);
+      doc.text(`#${bookingRef}`, 37, currentTopY + 7);
+
+      doc.setTextColor(100, 104, 96);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(7.5);
+      doc.text(`Issued: ${issueTimestamp}`, 102, currentTopY + 7, { align: 'right' });
+
+      currentTopY += 18;
+
+      // Rows Data
+      const rows = [
+        { label: 'Guest Name', value: fullName.trim() || 'Valued Guest' },
+        { label: 'Phone Number', value: phone.trim() || 'Not Provided' },
+        { label: 'Branch Location', value: selectedBranchDisplay },
+        { label: 'Date & Time', value: `${formattedDate} at ${formattedTime}` },
+        { label: 'Party Size', value: `${totalGuestsCount} Guests (${adults} Adults, ${childrenCount} Kids)` },
+        { label: 'Seating Preference', value: selectedSeatingDisplay },
+        { label: 'Special Occasion', value: selectedOccasionDisplay },
+      ];
+
+      if (specialRequest.trim()) {
+        rows.push({ label: 'Special Request', value: specialRequest.trim() });
+      }
+      if (preOrderItemCount > 0) {
+        rows.push({ label: 'Pre-order Total', value: `$${preOrderTotal.toFixed(2)}` });
+      }
+
+      let currentY = currentTopY;
+      rows.forEach((row) => {
+        doc.setTextColor(115, 121, 112);
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(8);
+        doc.text(row.label, 16, currentY);
+
+        doc.setTextColor(33, 45, 27);
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(8.5);
+
+        const valLines = doc.splitTextToSize(row.value, 50);
+        doc.text(valLines[0], 104, currentY, { align: 'right' });
+
+        doc.setDrawColor(240, 243, 239);
+        doc.setLineWidth(0.2);
+        doc.line(16, currentY + 3.5, 104, currentY + 3.5);
+
+        currentY += 8.5;
+      });
+
+      // Policies Box
+      currentY += 2;
+      doc.setFillColor(250, 253, 248);
+      doc.setDrawColor(220, 235, 215);
+      doc.setLineWidth(0.3);
+      doc.roundedRect(14, currentY, 92, 22, 2, 2, 'FD');
+
+      doc.setFillColor(107, 145, 88);
+      doc.rect(14, currentY, 1.5, 22, 'F');
+
+      doc.setTextColor(33, 45, 27);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(7.5);
+      doc.text('Important Reservation Policies:', 18, currentY + 5);
+
+      doc.setTextColor(85, 93, 82);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(7);
+      doc.text('• Please arrive 15 minutes before your scheduled time.', 18, currentY + 9.5);
+      doc.text('• Reservations are held for up to 15 minutes.', 18, currentY + 13.5);
+      doc.text('• Free cancellation up to 24 hours prior.', 18, currentY + 17.5);
+
+      // Footer
+      currentY += 26;
+      doc.setTextColor(115, 121, 112);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(7.5);
+      doc.text('Thank you for dining with One More Restaurant.', 60, currentY, { align: 'center' });
+      doc.text('www.onemorerestaurant.com', 60, currentY + 4, { align: 'center' });
+
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      let sharedSuccessfully = false;
+
+      if (isMobile && navigator.canShare) {
+        try {
+          const pdfBlob = doc.output('blob');
+          const pdfFile = new File([pdfBlob], filename, { type: 'application/pdf' });
+          if (navigator.canShare({ files: [pdfFile] })) {
+            await navigator.share({
+              files: [pdfFile],
+              title: 'Reservation Receipt',
+              text: `One More Restaurant Reservation Receipt #${bookingRef}`
+            });
+            sharedSuccessfully = true;
+          }
+        } catch (shareErr: any) {
+          if (shareErr.name === 'AbortError') {
+            sharedSuccessfully = true;
+          }
+        }
+      }
+
+      if (!sharedSuccessfully) {
+        doc.save(filename);
+      }
+    } catch (err) {
+      console.error('jsPDF generation error:', err);
+      window.print();
+    } finally {
+      setIsDownloadingPdf(false);
     }
-
-    printWindow.document.write(`<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>OMR_Reservation_${bookingRef}</title>
-    <style>
-      @page {
-        size: letter portrait;
-        margin: 15mm;
-      }
-      * {
-        box-sizing: border-box;
-      }
-      body {
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        color: #212d1b;
-        background-color: #ffffff;
-        margin: 0;
-        padding: 24px;
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
-      }
-      .receipt-card {
-        max-width: 600px;
-        margin: 0 auto;
-        border: 2px solid #6b9158;
-        border-radius: 20px;
-        padding: 36px;
-        background: #ffffff;
-        box-shadow: 0 8px 30px rgba(33, 45, 27, 0.06);
-      }
-      .brand-header {
-        text-align: center;
-        border-bottom: 2px solid #f0f4ef;
-        padding-bottom: 20px;
-        margin-bottom: 24px;
-      }
-      .brand-logo-emblem {
-        width: 64px;
-        height: 64px;
-        background-color: #111b0f;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 auto 14px;
-        box-shadow: 0 4px 14px rgba(17, 27, 15, 0.15);
-      }
-      .brand-logo-emblem img {
-        width: 40px;
-        height: 40px;
-        object-fit: contain;
-      }
-      .brand-logo-title {
-        font-family: 'Playfair Display', Georgia, serif;
-        font-size: 28px;
-        font-weight: 600;
-        color: #111b0f;
-        margin: 0 0 6px;
-      }
-      .brand-subtitle {
-        color: #6b9158;
-        font-size: 12px;
-        font-weight: 700;
-        letter-spacing: 0.15em;
-        text-transform: uppercase;
-        margin: 0;
-      }
-      .ref-bar {
-        background-color: #f3f8f1;
-        border: 1px solid rgba(107, 145, 88, 0.2);
-        border-radius: 12px;
-        padding: 14px 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 24px;
-      }
-      .ref-bar span {
-        color: #646860;
-        font-size: 13px;
-      }
-      .ref-bar strong {
-        color: #212d1b;
-        font-size: 14px;
-        font-weight: 700;
-      }
-      .ref-code {
-        color: #6b9158 !important;
-        font-family: monospace;
-        font-size: 15px !important;
-      }
-      .details-grid {
-        width: 100%;
-        border-collapse: collapse;
-        margin-bottom: 24px;
-      }
-      .details-grid tr {
-        border-bottom: 1px solid #f2f5f2;
-      }
-      .details-grid td {
-        padding: 12px 0;
-        font-size: 14px;
-      }
-      .details-grid td.label {
-        color: #737970;
-        font-weight: 500;
-        width: 40%;
-      }
-      .details-grid td.value {
-        color: #212d1b;
-        font-weight: 700;
-        text-align: right;
-      }
-      .policy-box {
-        background-color: #fafdf8;
-        border-left: 4px solid #6b9158;
-        border-radius: 6px;
-        padding: 16px;
-        font-size: 12px;
-        color: #555d52;
-        line-height: 1.6;
-        margin-bottom: 24px;
-      }
-      .policy-box strong {
-        color: #212d1b;
-        display: block;
-        margin-bottom: 6px;
-      }
-      .footer-section {
-        text-align: center;
-        border-top: 1px solid #f0f2f0;
-        padding-top: 20px;
-        font-size: 12px;
-        color: #737970;
-      }
-      .footer-section strong {
-        color: #6b9158;
-      }
-      @media print {
-        body {
-          padding: 0;
-        }
-        .receipt-card {
-          border: 1.5px solid #6b9158;
-          box-shadow: none;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <div class="receipt-card">
-      <div class="brand-header">
-        <div class="brand-logo-emblem">
-          <img src="${window.location.origin}${whiteLogo}" alt="One More Restaurant Logo" />
-        </div>
-        <div class="brand-logo-title">One More Restaurant</div>
-        <div class="brand-subtitle">THANK YOU FOR CHOOSING US</div>
-      </div>
-
-      <div class="ref-bar">
-        <span>Booking Reference: <strong class="ref-code">#${bookingRef}</strong></span>
-        <span>Issued: <strong>${issueTimestamp}</strong></span>
-      </div>
-
-      <table class="details-grid">
-        <tr><td class="label">Guest Name</td><td class="value">${fullName.trim() || 'Valued Guest'}</td></tr>
-        <tr><td class="label">Phone Number</td><td class="value">${phone.trim() || 'Not Provided'}</td></tr>
-        <tr><td class="label">Branch Location</td><td class="value">${selectedBranchDisplay}</td></tr>
-        <tr><td class="label">Reservation Date & Time</td><td class="value">${formattedDate} at ${formattedTime}</td></tr>
-        <tr><td class="label">Party Size</td><td class="value">${totalGuestsCount} Guests (${adults} Adults, ${childrenCount} Kids)</td></tr>
-        <tr><td class="label">Seating Preference</td><td class="value">${selectedSeatingDisplay}</td></tr>
-        <tr><td class="label">Special Occasion</td><td class="value">${selectedOccasionDisplay}</td></tr>
-        ${specialRequest.trim() ? `<tr><td class="label">Special Request</td><td class="value">${specialRequest.trim()}</td></tr>` : ''}
-        ${preOrderItemCount > 0 ? `<tr><td class="label">Pre-order Total</td><td class="value">$${preOrderTotal.toFixed(2)}</td></tr>` : ''}
-      </table>
-
-      <div class="policy-box">
-        <strong>Important Reservation Policies:</strong>
-        • Please arrive 15 minutes before your scheduled reservation.<br/>
-        • Reservations are held for up to 15 minutes after scheduled time.<br/>
-        • Free cancellation up to 24 hours prior to reservation.
-      </div>
-
-      <div class="footer-section">
-        Thank you for dining with <strong>One More Restaurant</strong>.<br/>
-        Website: www.onemorerestaurant.com
-      </div>
-    </div>
-
-    <script>
-      window.onload = function() {
-        setTimeout(function() {
-          window.print();
-        }, 250);
-      };
-    </script>
-  </body>
-</html>`);
-    printWindow.document.close();
   };
 
   const handleCloseAttempt = () => {
-    if (hasDownloadedConfirmation) {
+    if (hasDownloadedConfirmation || hasSentEmail) {
       handleReset();
     } else {
       setShowDownloadPrompt(true);
@@ -1134,6 +1181,7 @@ export default function ReservationPage() {
     setPreOrderCart({});
     setIsSubmitted(false);
     setHasDownloadedConfirmation(false);
+    setHasSentEmail(false);
     setShowDownloadPrompt(false);
   };
 
@@ -1189,17 +1237,28 @@ export default function ReservationPage() {
                 <div className="w-full flex flex-col gap-3">
                   <button
                     type="button"
-                    onClick={() => {
-                      handleDownloadConfirmation();
+                    disabled={isDownloadingPdf}
+                    onClick={async () => {
+                      await handleDownloadConfirmation();
                       handleReset();
                     }}
-                    className="reserve-btn-primary w-full flex items-center justify-center gap-2 py-3.5"
+                    className="reserve-btn-primary w-full flex items-center justify-center gap-2 py-3.5 disabled:opacity-60"
                   >
-                    <Download className="w-4 h-4" />
-                    <span>{isKhmer ? 'ទាញយក និងបិទ' : 'Download & Close'}</span>
+                    {isDownloadingPdf ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        <span>{isKhmer ? 'កំពុងបង្កើត PDF...' : 'Generating PDF...'}</span>
+                      </>
+                    ) : (
+                      <>
+                        <Download className="w-4 h-4" />
+                        <span>{isKhmer ? 'ទាញយក និងបិទ' : 'Download & Close'}</span>
+                      </>
+                    )}
                   </button>
                   <button
                     type="button"
+                    disabled={isDownloadingPdf}
                     onClick={handleReset}
                     className="w-full py-3 px-4 rounded-xl text-sm font-sans font-medium text-[#737970] hover:text-[#212d1b] hover:bg-[#f2f5f2] transition-colors"
                   >
@@ -1269,19 +1328,115 @@ export default function ReservationPage() {
                 <div className="w-full flex flex-col gap-3 mb-4">
                   <button
                     type="button"
-                    onClick={handleDownloadConfirmation}
-                    className="download-confirmation-btn"
+                    onClick={() => {
+                      setEmailInput(email);
+                      setShowEmailModal(true);
+                    }}
+                    className="w-full py-3.5 px-4 bg-[#6b9158] hover:bg-[#5a7d49] text-white font-bold rounded-xl transition-all shadow-md flex items-center justify-center gap-2 text-base cursor-pointer"
                   >
-                    <Download className="w-4 h-4 text-[#6b9158]" />
-                    <span>{isKhmer ? 'ទាញយកលិខិតបញ្ជាក់' : 'Download Confirmation'}</span>
+                    <Mail className="w-5 h-5 text-white" />
+                    <span>{isKhmer ? 'ផ្ញើទៅ អ៊ីមែល' : 'Send to Email'}</span>
                   </button>
 
-                  <button type="button" onClick={handleCloseAttempt} className="reserve-btn-primary w-full">
+                  <button
+                    type="button"
+                    disabled={isDownloadingPdf}
+                    onClick={handleDownloadConfirmation}
+                    className="download-confirmation-btn disabled:opacity-60"
+                  >
+                    {isDownloadingPdf ? (
+                      <>
+                        <Loader2 className="w-4 h-4 text-[#6b9158] animate-spin" />
+                        <span>{isKhmer ? 'កំពុងបង្កើត PDF...' : 'Generating PDF...'}</span>
+                      </>
+                    ) : (
+                      <>
+                        <Download className="w-4 h-4 text-[#6b9158]" />
+                        <span>{isKhmer ? 'ទាញយកលិខិតបញ្ជាក់' : 'Download Confirmation'}</span>
+                      </>
+                    )}
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={handleCloseAttempt}
+                    className="w-full py-2.5 text-sm text-[#646860] hover:text-[#212d1b] font-medium transition-colors text-center underline underline-offset-4 decoration-gray-300"
+                  >
                     {t('reservationPage.success.makeAnother', undefined, 'Make Another Booking')}
                   </button>
                 </div>
               </>
             )}
+          </div>
+        </div>
+      )}
+
+      {/* Email Confirmation Modal */}
+      {showEmailModal && (
+        <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fadeIn">
+          <div className="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl border border-gray-100 flex flex-col gap-5">
+            <div className="flex items-center justify-between border-b border-gray-100 pb-3">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-[#6b9158]/10 flex items-center justify-center text-[#6b9158]">
+                  <Mail className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-lg text-gray-900">
+                    {isKhmer ? 'ផ្ញើការកក់ទៅ អ៊ីមែល' : 'Send to Email'}
+                  </h3>
+                  <p className="text-xs text-gray-500">
+                    {isKhmer ? 'បញ្ជូនព័ត៌មានកក់ទុកទៅកាន់អ៊ីមែលរបស់អ្នក' : 'Send confirmation details to your email'}
+                  </p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowEmailModal(false)}
+                className="text-gray-400 hover:text-gray-600 p-1.5 rounded-lg transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <label className="text-xs font-semibold text-gray-700">
+                {isKhmer ? 'អាសយដ្ឋានអ៊ីមែល (Email Address)' : 'Email Address'}
+              </label>
+              <input
+                type="email"
+                value={emailInput}
+                onChange={(e) => setEmailInput(e.target.value)}
+                placeholder="e.g. customer@example.com"
+                className="w-full px-4 py-3 text-sm border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#6b9158] focus:border-transparent transition-all"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    handleSendToEmail();
+                  }
+                }}
+              />
+            </div>
+
+            <div className="flex flex-col gap-2.5 pt-2">
+              <button
+                type="button"
+                disabled={isSendingEmail}
+                onClick={() => handleSendToEmail()}
+                className="w-full py-3 bg-[#6b9158] hover:bg-[#5a7d49] text-white font-semibold rounded-xl transition-all shadow-md flex items-center justify-center gap-2 text-sm cursor-pointer disabled:opacity-60"
+              >
+                {isSendingEmail ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <span>{isKhmer ? 'កំពុងផ្ញើ...' : 'Sending Email...'}</span>
+                  </>
+                ) : (
+                  <>
+                    <Mail className="w-4 h-4" />
+                    <span>{isKhmer ? 'ផ្ញើអ៊ីមែលឥឡូវនេះ' : 'Send Email Now'}</span>
+                  </>
+                )}
+              </button>
+            </div>
           </div>
         </div>
       )}
@@ -1368,7 +1523,7 @@ export default function ReservationPage() {
                 </div>
               </div>
 
-              <div className="contact-details-grid">
+              <div className="contact-details-grid grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="form-group">
                   <label htmlFor="fullName">
                     {t('reservationPage.form.labels.fullName', undefined, 'Full Name')}
@@ -1396,6 +1551,19 @@ export default function ReservationPage() {
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="customerEmail">
+                    {t('reservationPage.form.labels.email', undefined, 'Email Address')}
+                  </label>
+                  <input
+                    type="email"
+                    id="customerEmail"
+                    placeholder={t('reservationPage.form.placeholders.email', undefined, 'e.g. customer@example.com')}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
               </div>

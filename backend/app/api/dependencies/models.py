@@ -52,6 +52,7 @@ class Reservation(Base):
     customer_name = Column(String(150), nullable=False)
     customer_email = Column(String(150), nullable=True)
     customer_phone = Column(String(100), nullable=False)
+    customer_telegram = Column(String(100), nullable=True)
     branch_id = Column(Integer, ForeignKey("branches.id"), nullable=False)
     reservation_date = Column(String(50), nullable=False)  # ISO Date String
     reservation_time = Column(String(50), nullable=False)  # Time Slot
