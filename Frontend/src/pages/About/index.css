@@ -143,10 +143,41 @@
 .about-careers-list svg { margin-top: 1px; color: var(--about-green); }
 .about-careers-grid img { width: 100%; min-height: 0; aspect-ratio: 1.28 / 1; display: block; object-fit: cover; box-shadow: 0 18px 45px rgba(31,55,29,.08); }
 
-.about-final-cta { min-height: 410px; display: grid; place-items: center; padding: 70px 24px; color: #fff; text-align: center; background-position: center; background-size: cover; box-shadow: inset 0 0 0 1000px rgba(12,22,10,.67); }
+.about-final-cta { min-height: 560px; display: grid; place-items: center; padding: 120px 24px; color: #fff; text-align: center; background-position: center 45%; background-size: cover; box-shadow: inset 0 0 0 1000px rgba(12,22,10,.67); }
 .about-final-cta > div { max-width: 760px; }
-.about-final-cta h2 { margin-bottom: 16px; color: #fff; font-size: clamp(42px, 5.5vw, 65px); font-weight: 400; line-height: 1.05; }
-.about-final-cta p { margin-bottom: 28px; color: rgba(255,255,255,.8); font: 400 14px/1.7 var(--font-sans); }
+.about-final-cta h2 { margin-bottom: 70px; color: #fff; font-size: clamp(42px, 5.5vw, 65px); font-weight: 400; line-height: 1.05; }
+.about-final-cta-socials { display: flex; justify-content: center; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 60px; }
+.about-final-cta-socials .about-button { gap: 8px; background: rgba(255,255,255,.12); backdrop-filter: blur(8px); border-color: rgba(255,255,255,.5); color: #fff; padding: 0 22px; }
+.about-final-cta-socials .about-button:hover { background: #fff; border-color: #fff; color: var(--about-dark); transform: translateY(-2px); }
+
+.about-feedback { display: grid; grid-template-columns: .85fr 1.15fr; gap: clamp(46px, 7vw, 100px); padding: 88px max(24px, calc((100% - 1080px) / 2)); background: var(--about-soft); }
+.about-feedback-intro { align-self: center; }
+.about-feedback-intro h2 { max-width: 430px; margin: 14px 0 20px; font-size: clamp(38px, 4vw, 52px); font-weight: 400; line-height: 1.08; letter-spacing: -.025em; }
+.about-feedback-intro > p:not(.about-eyebrow) { max-width: 470px; color: #5d675a; font: 400 14px/1.75 var(--font-sans); }
+.about-feedback-note { display: flex; align-items: center; gap: 11px; margin-top: 28px; color: var(--about-green); font: 600 12px/1.5 var(--font-sans); }
+.about-feedback-note svg { flex: 0 0 auto; fill: #d7aa3d; color: #d7aa3d; }
+.about-feedback-form { padding: 36px; background: #fff; border: 1px solid #e1ebdc; box-shadow: 0 18px 55px rgba(43,70,35,.08); font-family: var(--font-sans); }
+.about-feedback-form :is(label, span, legend, input, select, option, textarea, button, p) { font-family: inherit; }
+.about-feedback-form :is(input, textarea)::placeholder { font-family: inherit; }
+.about-feedback-form label, .about-feedback-rating { display: block; margin: 0 0 19px; padding: 0; border: 0; }
+.about-feedback-form label > span, .about-feedback-rating legend { display: block; margin-bottom: 8px; color: var(--about-dark); font: 600 11px/1.3 var(--font-sans); letter-spacing: .035em; }
+.about-feedback-field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.about-feedback-form input, .about-feedback-form select, .about-feedback-form textarea { width: 100%; min-height: 46px; padding: 11px 13px; border: 1px solid #cad9c4; border-radius: 3px; color: var(--about-dark); background: #fff; font: 400 13px/1.4 var(--font-sans); transition: border-color .2s ease, box-shadow .2s ease; }
+.about-feedback-form textarea { min-height: 116px; resize: vertical; }
+.about-feedback-form input:focus, .about-feedback-form select:focus, .about-feedback-form textarea:focus { outline: none; border-color: var(--about-green); box-shadow: 0 0 0 3px rgba(107,145,88,.15); }
+.about-feedback-rating > div { display: flex; gap: 5px; }
+.about-feedback-rating button { display: grid; place-items: center; padding: 1px; border: 0; color: #cbd3c8; background: transparent; cursor: pointer; transition: color .15s ease, transform .15s ease; }
+.about-feedback-rating button svg { fill: currentColor; }
+.about-feedback-rating button.is-active { color: #d7aa3d; }
+.about-feedback-rating button:focus-visible { outline: 2px solid var(--about-green); outline-offset: 2px; border-radius: 2px; }
+.about-feedback-rating button:hover { transform: translateY(-2px); }
+.about-feedback-submit { min-height: 48px; display: inline-flex; align-items: center; justify-content: center; gap: 9px; padding: 0 25px; border: 0; border-radius: 999px; color: #fff; background: var(--about-green); font: 600 12px/1 var(--font-sans); cursor: pointer; transition: background-color .2s ease, transform .2s ease, opacity .2s ease; }
+.about-feedback-submit:hover { background: #587b48; transform: translateY(-2px); }
+.about-feedback-submit:disabled { opacity: .65; cursor: wait; transform: none; }
+.about-feedback-status { min-height: 22px; margin-top: 12px; }
+.about-feedback-status p { margin: 0; font: 500 12px/1.5 var(--font-sans); }
+.about-feedback-status .is-success { color: #477d37; }
+.about-feedback-status .is-error { color: #a13d32; }
 
 html[data-lang="kh"] .about-hero h1,
 html[lang="km"] .about-hero h1 {
@@ -206,6 +237,7 @@ html[lang="km"] .about-button {
 }
 
 @media (max-width: 900px) {
+  .about-feedback { grid-template-columns: 1fr; gap: 38px; }
   .about-timeline { grid-template-columns: repeat(2, 1fr); gap: 45px 24px; }
   .about-spirit { grid-template-columns: 1fr; gap: 45px; }
   .about-spirit > img { height: auto; min-height: 0; }
@@ -213,6 +245,11 @@ html[lang="km"] .about-button {
 }
 
 @media (max-width: 640px) {
+  .about-feedback { padding: var(--mobile-section-space) 16px; }
+  .about-feedback-intro h2 { font-size: 36px; }
+  .about-feedback-form { padding: 25px 20px; }
+  .about-feedback-field-row { grid-template-columns: 1fr; gap: 0; }
+  .about-feedback-submit { width: 100%; }
   .about-hero { min-height: 610px; padding: 125px 16px 70px; }
   .about-hero h1 { font-size: 47px; }
   .about-hero-description { font-size: 14px; }
@@ -243,7 +280,7 @@ html[lang="km"] .about-button {
   .about-moments-grid div { min-height: 170px; padding: 20px; }
   .about-careers-grid { grid-template-columns: 1fr; gap: 35px; }
   .about-careers-grid img { min-height: 0; aspect-ratio: 4 / 3; }
-  .about-final-cta { min-height: 520px; padding: var(--mobile-section-space) 16px; }
+  .about-final-cta { min-height: 480px; padding: 80px 16px; }
   .about-final-cta h2 { font-size: 43px; }
 
   html[data-lang="kh"] .about-hero h1,

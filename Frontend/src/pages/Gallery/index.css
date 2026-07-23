@@ -184,6 +184,12 @@
   display: block;
 }
 
+.gallery-motion-ready .gallery-card {
+  opacity: 1;
+  filter: none;
+  transform: none;
+}
+
 .gallery-image-button {
   position: relative;
   width: 100%;
@@ -244,7 +250,7 @@
 .gallery-card-caption {
   display: flex;
   align-items: baseline;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 18px;
   padding-top: 13px;
 }
@@ -305,7 +311,7 @@
 
 .gallery-lightbox figcaption {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 25px;
   padding-top: 16px;
 }

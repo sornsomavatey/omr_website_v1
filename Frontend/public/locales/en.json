@@ -543,11 +543,6 @@
         "value": "+855 23 888 222"
       },
       {
-        "type": "time",
-        "label": "Response Time",
-        "value": "Within 15 Minutes"
-      },
-      {
         "type": "policy",
         "label": "Reservation Policy",
         "value": "Free cancellation up to 24h"
@@ -619,7 +614,7 @@
     },
     "success": {
       "title": "Reservation Confirmed!",
-      "desc": "Thank you for booking with One More Restaurant. A confirmation message has been sent to your phone number.",
+      "desc": "Thank you for booking with One More Restaurant.",
       "makeAnother": "Make Another Booking",
       "valuedGuest": "Valued Guest",
       "notProvided": "Not provided",
@@ -775,8 +770,8 @@
         "img": "@/assets/home-v2/31b0910d38c033be0ce5292cf4a1d68688308c6b.webp"
       },
       {
-        "id": "bigRoom",
-        "name": "Big Room",
+        "id": "vipRoom",
+        "name": "VIP Room",
         "img": "imgGallery5"
       }
     ],

@@ -125,4 +125,16 @@ export const createEventBooking = async (eventBookingData: any) => {
   return response.data;
 };
 
+export type FeedbackRequest = {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+};
+
+export const createFeedback = async (feedbackData: FeedbackRequest) => {
+  const response = await backendApi.post('/contact/', feedbackData);
+  return response.data;
+};
+
 export default api;
