@@ -58,6 +58,11 @@ export default function FeaturePackageCard({
           alt={alt}
           className={`fpc-image transition-opacity duration-500 relative z-10 ${!isLoaded ? 'opacity-0' : 'opacity-100'}`}
           onLoad={() => setIsLoaded(true)}
+          ref={(img) => {
+            if (img && img.complete) {
+              setIsLoaded(true);
+            }
+          }}
         />
         <span className="fpc-guest-badge z-20">{guestLabel}</span>
       </div>

@@ -170,6 +170,11 @@ function GalleryItemCard({
           alt={item.alt}
           loading={lightboxIndex > 5 ? 'lazy' : 'eager'}
           onLoad={() => setIsLoaded(true)}
+          ref={(img) => {
+            if (img && img.complete) {
+              setIsLoaded(true);
+            }
+          }}
           className={`transition-opacity duration-500 relative z-10 ${!isLoaded ? 'opacity-0' : 'opacity-100'}`}
         />
         <span className="gallery-image-hover z-20">

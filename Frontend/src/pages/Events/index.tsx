@@ -950,15 +950,6 @@ Our event coordinator will contact you within 24 hours.`;
         </div>
       </section>
 
-      {/* TESTIMONIALS */}
-      <TestimonialSection
-        eyebrow={t('home.testimonials.eyebrow', undefined, 'Testimonials')}
-        title={t('home.testimonials.title', undefined, 'What Our Guests Say')}
-        description={t('home.testimonials.description', undefined, 'Experiences shared by our valued customers.')}
-        testimonials={testimonialsList}
-        isKhmer={isKhmer}
-      />
-
       {/* ── INQUIRY ─────────────────────────── */}
       <section id="inquiry">
         <div className="events-inquiry-section">
@@ -1079,6 +1070,15 @@ Our event coordinator will contact you within 24 hours.`;
           </div>
         </div>
       </section>
+
+      {/* TESTIMONIALS */}
+      <TestimonialSection
+        eyebrow={t('home.testimonials.eyebrow', undefined, 'Testimonials')}
+        title={t('home.testimonials.title', undefined, 'What Our Guests Say')}
+        description={t('home.testimonials.description', undefined, 'Experiences shared by our valued customers.')}
+        testimonials={testimonialsList}
+        isKhmer={isKhmer}
+      />
 
       {/* ── FAQ ─────────────────────────────── */}
       <section className="faq-section events-faq-section" aria-labelledby="events-faq-section-title">

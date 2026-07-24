@@ -3,9 +3,5 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 @import "@fontsource-variable/geist";
-@import "@fontsource/noto-sans-sc/chinese-simplified-400.css";
-@import "@fontsource/noto-sans-sc/chinese-simplified-700.css";
-@import "@fontsource/noto-sans-kr/korean-400.css";
-@import "@fontsource/noto-sans-kr/korean-700.css";
 @import "./theme.css";
 @import "./global.css";

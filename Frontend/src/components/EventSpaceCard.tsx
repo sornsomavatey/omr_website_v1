@@ -40,6 +40,11 @@ export const EventSpaceCard: React.FC<EventSpaceCardProps> = ({
           alt={name}
           className={`event-space-image transition-opacity duration-500 relative z-10 ${!isLoaded ? 'opacity-0' : 'opacity-100'}`}
           onLoad={() => setIsLoaded(true)}
+          ref={(img) => {
+            if (img && img.complete) {
+              setIsLoaded(true);
+            }
+          }}
         />
       </div>
 
