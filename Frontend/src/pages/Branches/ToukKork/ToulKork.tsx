@@ -343,7 +343,7 @@ export default function ToulKork() {
             title={t('branchDetails.events.items.birthday.title')}
             description={t('branchDetails.events.items.birthday.desc')}
             buttonLabel={t('branchDetails.events.planCta')}
-            buttonHref="/reservations?branch=toul-kork"
+            buttonHref="/events#inquiry"
           />
           <SharpImageCard
             image={imgGallery3}
@@ -351,7 +351,7 @@ export default function ToulKork() {
             title={t('branchDetails.events.items.engagement.title')}
             description={t('branchDetails.events.items.engagement.desc')}
             buttonLabel={t('branchDetails.events.planCta')}
-            buttonHref="/reservations?branch=toul-kork"
+            buttonHref="/events#inquiry"
           />
           <SharpImageCard
             image={imgFamilyPkg}
@@ -359,7 +359,7 @@ export default function ToulKork() {
             title={t('branchDetails.events.items.family.title')}
             description={t('branchDetails.events.items.family.desc')}
             buttonLabel={t('branchDetails.events.planCta')}
-            buttonHref="/reservations"
+            buttonHref="/events#inquiry"
           />
           <SharpImageCard
             image={imgGallery2}
@@ -367,7 +367,7 @@ export default function ToulKork() {
             title={t('branchDetails.events.items.corporate.title')}
             description={t('branchDetails.events.items.corporate.desc')}
             buttonLabel={t('branchDetails.events.planCta')}
-            buttonHref="/reservations"
+            buttonHref="/events#inquiry"
           />
         </div>
       </section>

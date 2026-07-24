@@ -1307,11 +1307,16 @@
         "labels": {
           "name": "Full Name *",
           "phone": "Phone Number *",
+          "branch": "Select Branch *",
           "company": "Company Name",
           "email": "Email Address (Optional)",
           "eventType": "Event Type",
-          "guests": "Guests",
+          "guests": "Guests *",
           "requirements": "Special Requirements"
+        },
+        "branches": {
+          "bk": "Boeung Kak",
+          "tk": "Toul Kork"
         },
         "placeholders": {
           "name": "Enter full name",

@@ -126,10 +126,10 @@ class EventBookingResponse(EventBookingCreate):
 
 # ----------------- CONTACT SCHEMAS -----------------
 class ContactRequestCreate(BaseModel):
-    name: str = Field(..., min_length=2)
-    email: str
+    name: Optional[str] = 'Anonymous'
+    email: Optional[str] = 'N/A'
     subject: str = Field(..., min_length=3)
-    message: str = Field(..., min_length=5)
+    message: Optional[str] = 'No written message provided.'
 
 class ContactRequestResponse(ContactRequestCreate):
     id: int

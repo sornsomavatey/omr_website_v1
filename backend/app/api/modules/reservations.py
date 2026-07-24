@@ -4,7 +4,7 @@ from typing import List
 from ..dependencies.db import get_db
 from ..dependencies.models import Reservation, Branch
 from ..dependencies.schemas import ReservationCreate, ReservationResponse, CustomerTelegramRequest, CustomerEmailRequest
-from ..utils.telegram import send_telegram_alert
+from ..utils.telegram import send_telegram_alert, send_reservation_telegram_alert
 from ..utils.email import send_email_alert
 from ..utils.customer_telegram import send_customer_telegram_notification, format_customer_telegram_message
 
@@ -98,7 +98,7 @@ def create_reservation(res: ReservationCreate, db: Session = Depends(get_db)):
         f"• Special Requests: {db_res.special_requests or 'None'}"
         f"{preorder_telegram}"
     )
-    send_telegram_alert(alert_message)
+    send_reservation_telegram_alert(alert_message)
 
     # Format and send Email Alert
     email_subject = f"Booking table #OMR-{db_res.id}"

@@ -1,3 +1,4 @@
+from typing import Optional
 from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
@@ -9,6 +10,8 @@ class Settings(BaseSettings):
     CUSTOM_ANALYTICS_ENABLED: bool = True
     TELEGRAM_BOT_TOKEN: str = ''
     TELEGRAM_CHAT_ID: str = ''
+    TELEGRAM_RESERVATION_THREAD_ID: Optional[int] = 2
+    TELEGRAM_FEEDBACK_THREAD_ID: Optional[int] = 4
     FASTAPI_HOST: str = '0.0.0.0'
     FASTAPI_PORT: int = 8000
     EXPRESS_PORT: int = 3002

@@ -64,7 +64,6 @@ const PRE_ORDER_ITEMS: PreOrderItem[] = [
     price: 7,
     desc: 'Traditional kuy teav with pork broth, rice noodles, fresh herbs & bean sprouts.',
     img: '/src/assets/Food/Breakfast/khmer-noodle-soup.webp',
-    badge: 'Popular',
   },
   {
     id: 'po-2',
@@ -89,7 +88,6 @@ const PRE_ORDER_ITEMS: PreOrderItem[] = [
     price: 12,
     desc: 'Creamy Khmer fish curry steamed in banana leaves with coconut & lemongrass.',
     img: '/src/assets/Food/Lunch and Dinner/fish-amok-coconut.webp',
-    badge: 'Chef\u2019s Pick',
   },
   {
     id: 'po-5',
@@ -98,7 +96,6 @@ const PRE_ORDER_ITEMS: PreOrderItem[] = [
     price: 28,
     desc: 'Whole lobster simmered in fragrant Khmer red curry with vegetables.',
     img: '/src/assets/Food/Lunch and Dinner/curry-lobster.webp',
-    badge: 'Premium',
   },
   {
     id: 'po-6',
@@ -123,7 +120,6 @@ const PRE_ORDER_ITEMS: PreOrderItem[] = [
     price: 9,
     desc: 'A curated platter of five traditional Khmer sweet treats, beautifully presented.',
     img: '/src/assets/Food/Dessert/five-signature-dessert.webp',
-    badge: 'Signature',
   },
 ];
 

@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Check } from 'lucide-react';
 import { useTranslation } from '@/hooks/useTranslation';
+import { Skeleton } from '@/components/ui/skeleton';
 import './EventSpaceCard.css';
 
 export interface EventSpaceCardProps {
@@ -26,11 +27,20 @@ export const EventSpaceCard: React.FC<EventSpaceCardProps> = ({
   className = '',
 }) => {
   const { isKhmer } = useTranslation();
+  const [isLoaded, setIsLoaded] = useState(false);
 
   return (
     <div className={`event-space-card-component events-space-card ${className}`}>
-      <div className="event-space-image-container">
-        <img src={image} alt={name} className="event-space-image" />
+      <div className="event-space-image-container relative bg-[#f2f5f0]">
+        {!isLoaded && (
+          <Skeleton className="absolute inset-0 w-full h-full rounded-none bg-muted z-0" />
+        )}
+        <img
+          src={image}
+          alt={name}
+          className={`event-space-image transition-opacity duration-500 relative z-10 ${!isLoaded ? 'opacity-0' : 'opacity-100'}`}
+          onLoad={() => setIsLoaded(true)}
+        />
       </div>
 
       <div className="event-space-content-container">

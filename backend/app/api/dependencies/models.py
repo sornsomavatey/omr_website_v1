@@ -86,9 +86,9 @@ class ContactRequest(Base):
     __tablename__ = "contact_requests"
 
     id = Column(Integer, primary_key=True, index=True)
-    name = Column(String(150), nullable=False)
-    email = Column(String(150), nullable=False)
+    name = Column(String(150), nullable=True, default="Anonymous")
+    email = Column(String(150), nullable=True, default="N/A")
     subject = Column(String(200), nullable=False)
-    message = Column(Text, nullable=False)
+    message = Column(Text, nullable=True, default="No written message provided.")
     status = Column(String(50), default="Unread")  # Unread, Read, Responded
     created_at = Column(DateTime, default=datetime.datetime.utcnow)

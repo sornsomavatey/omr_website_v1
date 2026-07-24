@@ -202,10 +202,12 @@ export default function Branches() {
             <p className="hero-desc">
               {t('branchesPage.header.desc', undefined, header.desc)}
             </p>
-            
-            <Button asChild className="hero-cta-button">
-              <Link to="/reservations">{t('branchesPage.ui.reserveCta', undefined, 'Reserve a Table')}</Link>
-            </Button>
+
+            <div className="hero-cta-container desktop-cta">
+              <Button asChild className="hero-cta-button">
+                <Link to="/reservations">{t('branchesPage.ui.reserveCta', undefined, 'Reserve a Table')}</Link>
+              </Button>
+            </div>
           </div>
 
           <div className="hero-visual-side">
@@ -215,6 +217,12 @@ export default function Branches() {
                 alt={t('branchesPage.ui.heroImageAlt', undefined, 'One More Restaurant Branches')}
                 className="hero-branch-main-img"
               />
+            </div>
+
+            <div className="hero-cta-container mobile-cta">
+              <Button asChild className="hero-cta-button">
+                <Link to="/reservations">{t('branchesPage.ui.reserveCta', undefined, 'Reserve a Table')}</Link>
+              </Button>
             </div>
           </div>
         </div>

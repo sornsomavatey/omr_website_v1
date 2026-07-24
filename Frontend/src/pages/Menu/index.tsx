@@ -463,7 +463,13 @@ export default function Menu() {
 
               {/* Grid */}
               <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-3 md:gap-x-8 lg:gap-x-12 gap-y-16 w-full text-left">
-                {menuItemsData[category].map((dish, index) => (
+                {[...menuItemsData[category]]
+                  .sort((a, b) => {
+                    const aOut = Boolean(a.badge && (a.badge.toLowerCase().includes('out of stock') || a.badge.toLowerCase().includes('sold out')));
+                    const bOut = Boolean(b.badge && (b.badge.toLowerCase().includes('out of stock') || b.badge.toLowerCase().includes('sold out')));
+                    return aOut === bOut ? 0 : aOut ? 1 : -1;
+                  })
+                  .map((dish, index) => (
                   <DishCard
                     key={dish.id}
                     id={`menu-dish-${dish.id}`}

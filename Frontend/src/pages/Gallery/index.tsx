@@ -1,6 +1,7 @@
 import { ChevronLeft, ChevronRight, X, ZoomIn } from 'lucide-react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from '@/hooks/useTranslation';
+import { Skeleton } from '@/components/ui/skeleton';
 
 import imgHero from '@/assets/home-v2/43310dd2158ca5c7f7d098abf280dc14124d42de.webp';
 import imgDining from '@/assets/gallery/main-hall-dining.webp';
@@ -138,6 +139,46 @@ function balanceGalleryColumns<T extends Pick<GalleryItem, 'shape'>>(items: T[],
   });
 
   return columns;
+}
+
+function GalleryItemCard({
+  item,
+  lightboxIndex,
+  onSelect,
+  t,
+}: {
+  item: GalleryItem;
+  lightboxIndex: number;
+  onSelect: () => void;
+  t: any;
+}) {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  return (
+    <article className="gallery-card">
+      <button
+        type="button"
+        className={`gallery-image-button gallery-image-${item.shape} relative bg-[#1b2b1a] overflow-hidden`}
+        onClick={onSelect}
+        aria-label={`Open ${item.title}`}
+      >
+        {!isLoaded && (
+          <Skeleton className="absolute inset-0 w-full h-full rounded-none bg-white/10 z-0 animate-pulse" />
+        )}
+        <img
+          src={item.src}
+          alt={item.alt}
+          loading={lightboxIndex > 5 ? 'lazy' : 'eager'}
+          onLoad={() => setIsLoaded(true)}
+          className={`transition-opacity duration-500 relative z-10 ${!isLoaded ? 'opacity-0' : 'opacity-100'}`}
+        />
+        <span className="gallery-image-hover z-20">
+          <ZoomIn size={24} />
+          <small>{t('galleryPage.aria.view', undefined, 'View image')}</small>
+        </span>
+      </button>
+    </article>
+  );
 }
 
 export default function GalleryPage() {
@@ -378,12 +419,13 @@ export default function GalleryPage() {
               {column.map((item) => {
                 const lightboxIndex = visibleItems.indexOf(item);
                 return (
-                  <article className="gallery-card" key={`${item.title}-${item.src}`}>
-                    <button type="button" className={`gallery-image-button gallery-image-${item.shape}`} onClick={() => setSelectedIndex(lightboxIndex)} aria-label={`Open ${item.title}`}>
-                      <img src={item.src} alt={item.alt} loading={lightboxIndex > 5 ? 'lazy' : 'eager'} />
-                      <span className="gallery-image-hover"><ZoomIn size={24} /><small>{t('galleryPage.aria.view', undefined, 'View image')}</small></span>
-                    </button>
-                  </article>
+                  <GalleryItemCard
+                    key={`${item.title}-${item.src}`}
+                    item={item}
+                    lightboxIndex={lightboxIndex}
+                    onSelect={() => setSelectedIndex(lightboxIndex)}
+                    t={t}
+                  />
                 );
               })}
             </div>

@@ -1,12 +1,33 @@
 import { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Check, ChevronDown, ChevronLeft, ChevronRight, ChevronUp, Clock, FileText, Mail, Shield, Users } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
+import {
+  Building2,
+  Check,
+  CheckCircle2,
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  ChevronUp,
+  Clock,
+  Download,
+  FileText,
+  Loader2,
+  Mail,
+  MessageSquare,
+  Phone,
+  Send,
+  Shield,
+  Sparkles,
+  User,
+  Users,
+  X
+} from 'lucide-react';
 
 import FeaturePackageCard from '@/components/FeaturePackageCard';
 import SectionHeader from '@/components/SectionHeader';
 import EventSpaceCard from '@/components/EventSpaceCard';
 import TestimonialSection from '@/components/TestimonialSection';
-import { createEventBooking, getTestimonialsData } from '@/lib/api';
+import { createEventBooking, getTestimonialsData, sendCustomerEmail } from '@/lib/api';
 import { useTranslation } from '@/hooks/useTranslation';
 
 import imgHero     from '@/assets/home-v2/e900cacb721f9c81cd07b8415a03f20f42a39856.webp';
@@ -162,12 +183,197 @@ function Stars({ count }: { count: number }) {
   return <div className="events-stars">{'★'.repeat(count)}</div>;
 }
 
+function CustomBranchSelect({
+  disabled,
+  t,
+  defaultBranch
+}: {
+  disabled?: boolean;
+  t: any;
+  defaultBranch?: string;
+}) {
+  const [selected, setSelected] = useState(defaultBranch || 'Boeung Kak');
+  const [hasUserSelected, setHasUserSelected] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const branches = [
+    { value: 'Boeung Kak', label: t('eventsPage.inquiry.form.branches.bk', undefined, 'Boeung Kak') },
+    { value: 'Toul Kork', label: t('eventsPage.inquiry.form.branches.tk', undefined, 'Toul Kork') },
+  ];
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const currentOption = branches.find(opt => opt.value === selected) || branches[0];
+
+  return (
+    <div className="custom-event-select-container" ref={dropdownRef}>
+      <input type="hidden" name="branch" value={selected} />
+      <button
+        type="button"
+        disabled={disabled}
+        onClick={() => !disabled && setIsOpen(!isOpen)}
+        className={`custom-event-select-trigger ${isOpen ? 'custom-event-select-trigger-open' : ''}`}
+        aria-haspopup="listbox"
+        aria-expanded={isOpen}
+      >
+        <span className={`custom-event-select-label ${!hasUserSelected ? 'custom-event-select-label-placeholder' : ''}`}>
+          {currentOption.label}
+        </span>
+        <ChevronDown size={18} className={`custom-event-select-icon ${isOpen ? 'rotate-180' : ''}`} />
+      </button>
+
+      {isOpen && (
+        <div className="custom-event-select-dropdown" role="listbox">
+          {branches.map((b) => {
+            const isSelected = b.value === selected;
+            return (
+              <div
+                key={b.value}
+                role="option"
+                aria-selected={isSelected}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setSelected(b.value);
+                  setHasUserSelected(true);
+                  setIsOpen(false);
+                }}
+                className={`custom-event-select-option ${isSelected ? 'custom-event-select-option-active' : ''}`}
+              >
+                <span>{b.label}</span>
+                {isSelected && <Check size={16} className="custom-event-select-check" />}
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function CustomEventSelect({
+  disabled,
+  t
+}: {
+  disabled?: boolean;
+  t: any;
+}) {
+  const [selected, setSelected] = useState('');
+  const [hasUserSelected, setHasUserSelected] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const eventTypes = [
+    { value: 'Wedding', label: t('eventsPage.inquiry.form.eventTypes.Wedding', undefined, 'Wedding') },
+    { value: 'Birthday', label: t('eventsPage.inquiry.form.eventTypes.Birthday', undefined, 'Birthday') },
+    { value: 'Corporate Event', label: t('eventsPage.inquiry.form.eventTypes.Corporate Event', undefined, 'Corporate Event') },
+    { value: 'Engagement', label: t('eventsPage.inquiry.form.eventTypes.Engagement', undefined, 'Engagement') },
+    { value: 'Private Dining', label: t('eventsPage.inquiry.form.eventTypes.Private Dining', undefined, 'Private Dining') },
+    { value: 'Other', label: t('eventsPage.inquiry.form.eventTypes.Other', undefined, 'Other') },
+  ];
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const currentOption = eventTypes.find(opt => opt.value === selected);
+
+  return (
+    <div className="custom-event-select-container" ref={dropdownRef}>
+      <input type="hidden" name="event_type" value={selected || 'Wedding'} />
+      <button
+        type="button"
+        disabled={disabled}
+        onClick={() => !disabled && setIsOpen(!isOpen)}
+        className={`custom-event-select-trigger ${isOpen ? 'custom-event-select-trigger-open' : ''}`}
+        aria-haspopup="listbox"
+        aria-expanded={isOpen}
+      >
+        <span className={`custom-event-select-label ${!hasUserSelected ? 'custom-event-select-label-placeholder' : ''}`}>
+          {currentOption ? currentOption.label : t('eventsPage.inquiry.form.selectEventType', undefined, 'Wedding')}
+        </span>
+        <ChevronDown size={18} className={`custom-event-select-icon ${isOpen ? 'rotate-180' : ''}`} />
+      </button>
+
+      {isOpen && (
+        <div className="custom-event-select-dropdown" role="listbox">
+          {eventTypes.map((type) => {
+            const isSelected = type.value === selected;
+            return (
+              <div
+                key={type.value}
+                role="option"
+                aria-selected={isSelected}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setSelected(type.value);
+                  setHasUserSelected(true);
+                  setIsOpen(false);
+                }}
+                className={`custom-event-select-option ${isSelected ? 'custom-event-select-option-active' : ''}`}
+              >
+                <span>{type.label}</span>
+                {isSelected && <Check size={16} className="custom-event-select-check" />}
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ── Main ─────────────────────────────────────────────────────
 export default function EventsPage() {
   const { t, getObject, isKhmer } = useTranslation();
+  const location = useLocation();
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [formSuccess, setFormSuccess] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [submittedData, setSubmittedData] = useState<{
+    name: string;
+    phone: string;
+    branch: string;
+    email: string;
+    company?: string;
+    event_type: string;
+    guest_count: number;
+    special_requirements?: string;
+    date: string;
+  } | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
+
+  const queryBranch = new URLSearchParams(location.search).get('branch') ||
+                      (location.hash.includes('boeung-kak') ? 'Boeung Kak' : location.hash.includes('toul-kork') ? 'Toul Kork' : '');
+  const initialBranch = queryBranch?.toLowerCase().includes('toul') ? 'Toul Kork' : 'Boeung Kak';
+
+  useEffect(() => {
+    if (location.hash === '#inquiry') {
+      setTimeout(() => {
+        const element = document.getElementById('inquiry');
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    }
+  }, [location]);
 
   const packagesList = [
     {
@@ -258,27 +464,304 @@ export default function EventsPage() {
 
   const faqsList = getObject<any[]>('eventsPage.faq.items', faqs);
 
+  const [bookingRef, setBookingRef] = useState('');
+  const [isDownloadingPdf, setIsDownloadingPdf] = useState(false);
+  const [hasDownloadedConfirmation, setHasDownloadedConfirmation] = useState(false);
+  const [showEmailModal, setShowEmailModal] = useState(false);
+  const [emailInput, setEmailInput] = useState('');
+  const [isSendingEmail, setIsSendingEmail] = useState(false);
+  const [hasSentEmail, setHasSentEmail] = useState(false);
+
+  const handleDownloadConfirmation = async () => {
+    if (!submittedData || isDownloadingPdf) return;
+    setIsDownloadingPdf(true);
+
+    const refCode = bookingRef || 'EVT-00000';
+    const filename = `OMR_Event_Inquiry_${refCode}.pdf`;
+    const issueTimestamp = new Date().toLocaleString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+
+    try {
+      const { jsPDF } = await import('jspdf');
+
+      const logoUrl = window.location.origin + '/assets/partners/onemorerestaurant.png';
+      const logoData = await new Promise<{ dataUrl: string; width: number; height: number } | null>((resolve) => {
+        const img = new Image();
+        img.crossOrigin = 'Anonymous';
+        img.onload = () => {
+          try {
+            const canvas = document.createElement('canvas');
+            canvas.width = img.width;
+            canvas.height = img.height;
+            const ctx = canvas.getContext('2d');
+            if (ctx) {
+              ctx.drawImage(img, 0, 0);
+              resolve({
+                dataUrl: canvas.toDataURL('image/png'),
+                width: img.width,
+                height: img.height,
+              });
+              return;
+            }
+          } catch {}
+          resolve(null);
+        };
+        img.onerror = () => resolve(null);
+        img.src = logoUrl;
+      });
+
+      const doc = new jsPDF({
+        orientation: 'portrait',
+        unit: 'mm',
+        format: [120, 215],
+      });
+
+      // Receipt Card Background
+      doc.setFillColor(255, 255, 255);
+      doc.rect(0, 0, 120, 215, 'F');
+
+      // Outer Border
+      doc.setDrawColor(107, 145, 88);
+      doc.setLineWidth(0.7);
+      doc.roundedRect(6, 6, 108, 203, 4, 4, 'S');
+
+      let currentTopY = 12;
+
+      if (logoData) {
+        const logoWidth = 26;
+        const logoHeight = (logoWidth * logoData.height) / logoData.width;
+        const logoX = (120 - logoWidth) / 2;
+        doc.addImage(logoData.dataUrl, 'PNG', logoX, currentTopY, logoWidth, logoHeight);
+        currentTopY += logoHeight + 4;
+      } else {
+        doc.setFillColor(17, 27, 15);
+        doc.circle(60, 22, 9, 'F');
+        doc.setTextColor(255, 255, 255);
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(14);
+        doc.text('O', 60, 26.5, { align: 'center' });
+
+        doc.setTextColor(17, 27, 15);
+        doc.setFont('times', 'bold');
+        doc.setFontSize(15);
+        doc.text('ONE MORE RESTAURANT', 60, 38, { align: 'center' });
+        currentTopY = 43.5;
+      }
+
+      // Title
+      doc.setTextColor(33, 45, 27);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(13);
+      doc.text('EVENT INQUIRY', 60, currentTopY, { align: 'center' });
+
+      doc.setTextColor(107, 145, 88);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(7.5);
+      doc.text('Thank you for choosing One More Restaurant', 60, currentTopY + 4.5, { align: 'center' });
+
+      currentTopY += 9;
+
+      // Separator Line
+      doc.setDrawColor(240, 244, 239);
+      doc.setLineWidth(0.4);
+      doc.line(14, currentTopY, 106, currentTopY);
+
+      currentTopY += 4;
+
+      // Ref Bar
+      doc.setFillColor(243, 248, 241);
+      doc.setDrawColor(200, 220, 190);
+      doc.setLineWidth(0.3);
+      doc.roundedRect(14, currentTopY, 92, 11, 2, 2, 'FD');
+
+      doc.setTextColor(100, 104, 96);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(8);
+      doc.text('Inquiry Ref:', 18, currentTopY + 7);
+
+      doc.setTextColor(107, 145, 88);
+      doc.setFont('courier', 'bold');
+      doc.setFontSize(9.5);
+      doc.text(`#${refCode}`, 37, currentTopY + 7);
+
+      doc.setTextColor(100, 104, 96);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(7.5);
+      doc.text(`Issued: ${issueTimestamp}`, 102, currentTopY + 7, { align: 'right' });
+
+      currentTopY += 18;
+
+      // Rows Data
+      const branchDisplay = submittedData.branch === 'Toul Kork' ? 'One More Restaurant Toul Kork' : 'One More Restaurant Boeung Kak';
+      const rows = [
+        { label: 'Guest Name', value: submittedData.name.trim() || 'Valued Guest' },
+        { label: 'Phone Number', value: submittedData.phone.trim() || 'Not Provided' },
+        { label: 'Branch Location', value: branchDisplay },
+        { label: 'Event Type', value: submittedData.event_type },
+        { label: 'Expected Guests', value: `${submittedData.guest_count} Guests` },
+      ];
+
+      if (submittedData.email.trim()) {
+        rows.push({ label: 'Email Address', value: submittedData.email.trim() });
+      }
+      if (submittedData.company?.trim()) {
+        rows.push({ label: 'Company Name', value: submittedData.company.trim() });
+      }
+      if (submittedData.special_requirements?.trim()) {
+        rows.push({ label: 'Special Request', value: submittedData.special_requirements.trim() });
+      }
+
+      let currentY = currentTopY;
+      rows.forEach((row) => {
+        doc.setTextColor(115, 121, 112);
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(8);
+        doc.text(row.label, 16, currentY);
+
+        doc.setTextColor(33, 45, 27);
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(8.5);
+
+        const valLines = doc.splitTextToSize(row.value, 50);
+        doc.text(valLines[0], 104, currentY, { align: 'right' });
+
+        doc.setDrawColor(240, 243, 239);
+        doc.setLineWidth(0.2);
+        doc.line(16, currentY + 3.5, 104, currentY + 3.5);
+
+        currentY += 8.5;
+      });
+
+      // Policies Box
+      currentY += 2;
+      doc.setFillColor(250, 253, 248);
+      doc.setDrawColor(220, 235, 215);
+      doc.setLineWidth(0.3);
+      doc.roundedRect(14, currentY, 92, 22, 2, 2, 'FD');
+
+      doc.setFillColor(107, 145, 88);
+      doc.rect(14, currentY, 1.5, 22, 'F');
+
+      doc.setTextColor(33, 45, 27);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(7.5);
+      doc.text('Important Event Information:', 18, currentY + 5);
+
+      doc.setTextColor(85, 93, 82);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(7);
+      doc.text('• Our event manager will contact you within 24 hours.', 18, currentY + 9.5);
+      doc.text('• Custom menus and hall decor available upon request.', 18, currentY + 13.5);
+      doc.text('• Hotlines: 023 888 222 / 012 888 222', 18, currentY + 17.5);
+
+      // Footer
+      currentY += 26;
+      doc.setTextColor(115, 121, 112);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(7.5);
+      doc.text('Thank you for choosing One More Restaurant.', 60, currentY, { align: 'center' });
+      doc.text('www.onemorerestaurant.com', 60, currentY + 4, { align: 'center' });
+
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      let sharedSuccessfully = false;
+
+      if (isMobile && navigator.canShare) {
+        try {
+          const pdfBlob = doc.output('blob');
+          const pdfFile = new File([pdfBlob], filename, { type: 'application/pdf' });
+          if (navigator.canShare({ files: [pdfFile] })) {
+            await navigator.share({
+              files: [pdfFile],
+              title: 'Event Inquiry Receipt',
+              text: `One More Restaurant Event Inquiry #${refCode}`
+            });
+            sharedSuccessfully = true;
+          }
+        } catch (shareErr: any) {
+          if (shareErr.name === 'AbortError') {
+            sharedSuccessfully = true;
+          }
+        }
+      }
+
+      if (!sharedSuccessfully) {
+        doc.save(filename);
+      }
+      setHasDownloadedConfirmation(true);
+    } catch (err) {
+      console.error('jsPDF generation error:', err);
+      window.print();
+    } finally {
+      setIsDownloadingPdf(false);
+    }
+  };
+
+  const handleSendToEmail = async (overrideEmail?: string) => {
+    const targetEmail = (overrideEmail || emailInput || '').trim();
+    if (!targetEmail || !submittedData) {
+      alert(isKhmer ? 'សូមបញ្ចូលអាសយដ្ឋានអ៊ីមែលត្រឹមត្រូវ' : 'Please enter a valid email address.');
+      return;
+    }
+
+    setIsSendingEmail(true);
+    try {
+      const refCode = bookingRef || 'EVT-00000';
+      const branchDisplay = submittedData.branch === 'Toul Kork' ? 'One More Restaurant Toul Kork' : 'One More Restaurant Boeung Kak';
+
+      const customMessage = `Event Inquiry Confirmation #${refCode}
+Dear ${submittedData.name},
+
+Thank you for submitting your event inquiry with One More Restaurant. Below are your details:
+• Branch: ${branchDisplay}
+• Event Type: ${submittedData.event_type}
+• Expected Guests: ${submittedData.guest_count}
+• Phone Number: ${submittedData.phone}
+${submittedData.company ? `• Company: ${submittedData.company}\n` : ''}${submittedData.special_requirements ? `• Special Requirements: ${submittedData.special_requirements}\n` : ''}
+Our event coordinator will contact you within 24 hours.`;
+
+      await sendCustomerEmail(targetEmail, undefined, customMessage);
+
+      setHasSentEmail(true);
+      setShowEmailModal(false);
+      alert(isKhmer ? 'អ៊ីមែលបញ្ជាក់ត្រូវបានផ្ញើដោយជោគជ័យ!' : 'Confirmation email sent successfully!');
+    } catch (err) {
+      console.error('Failed to send email:', err);
+      alert(isKhmer ? 'បរាជ័យក្នុងការផ្ញើអ៊ីមែល។ សូមព្យាយាមម្តងទៀត។' : 'Failed to send email. Please try again.');
+    } finally {
+      setIsSendingEmail(false);
+    }
+  };
+
   async function handleFormSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!formRef.current) return;
+    if (!formRef.current || isSubmitting) return;
 
     const formData = new FormData(formRef.current);
-    const name = formData.get('name') as string;
-    const phone = formData.get('phone') as string;
-    const company = formData.get('company') as string;
-    const emailInput = formData.get('email') as string;
+    const name = (formData.get('name') as string || '').trim();
+    const phone = (formData.get('phone') as string || '').trim();
+    const branch = (formData.get('branch') as string || 'Boeung Kak').trim();
+    const company = (formData.get('company') as string || '').trim();
+    const emailInput = (formData.get('email') as string || '').trim();
     const event_type = formData.get('event_type') as string;
     const guest_count = Number(formData.get('guest_count') || 1);
-    const special_requirements = formData.get('special_requirements') as string;
+    const special_requirements = (formData.get('special_requirements') as string || '').trim();
 
     // Construct valid payload
     const email = emailInput || 'noemail@onemore.com';
     const event_date = new Date().toISOString().split('T')[0]; // Current date
 
     const package_details = [
+      `Branch: ${branch}`,
       company ? `Company Name: ${company}` : '',
       special_requirements ? `Requirements: ${special_requirements}` : ''
     ].filter(Boolean).join('\n') || 'None';
+
+    setIsSubmitting(true);
 
     try {
       await createEventBooking({
@@ -290,12 +773,35 @@ export default function EventsPage() {
         event_date,
         package_details
       });
+
+      const ref = `EVT-${Math.floor(10000 + Math.random() * 90000)}`;
+      setBookingRef(ref);
+
+      setSubmittedData({
+        name,
+        phone,
+        branch,
+        email: emailInput,
+        company,
+        event_type,
+        guest_count,
+        special_requirements,
+        date: event_date,
+      });
+
+      setEmailInput(emailInput);
+      setHasDownloadedConfirmation(false);
+      setHasSentEmail(false);
+
       setFormSuccess(true);
       formRef.current.reset();
+      setShowModal(true);
       setTimeout(() => setFormSuccess(false), 5000);
     } catch (err) {
-      console.error(err);
-      alert('Failed to submit inquiry. Please try again.');
+      console.error('Failed to submit inquiry:', err);
+      alert(isKhmer ? 'បរាជ័យក្នុងការផ្ញើព័ត៌មានសាកសួរ។ សូមព្យាយាមម្តងទៀត។' : 'Failed to submit inquiry. Please try again.');
+    } finally {
+      setIsSubmitting(false);
     }
   }
 
@@ -483,6 +989,7 @@ export default function EventsPage() {
                       autoComplete="name"
                       placeholder={t('eventsPage.inquiry.form.placeholders.name', undefined, 'Enter full name')}
                       required
+                      disabled={isSubmitting}
                     />
                   </label>
                   <label>
@@ -494,7 +1001,12 @@ export default function EventsPage() {
                       autoComplete="tel"
                       placeholder={t('eventsPage.inquiry.form.placeholders.phone', undefined, 'Enter phone number')}
                       required
+                      disabled={isSubmitting}
                     />
+                  </label>
+                  <label>
+                    {t('eventsPage.inquiry.form.labels.branch', undefined, 'Select Branch *')}
+                    <CustomBranchSelect disabled={isSubmitting} t={t} defaultBranch={initialBranch} />
                   </label>
                   <label>
                     {t('eventsPage.inquiry.form.labels.company', undefined, 'Company Name')}
@@ -503,6 +1015,7 @@ export default function EventsPage() {
                       type="text"
                       autoComplete="organization"
                       placeholder={t('eventsPage.inquiry.form.placeholders.company', undefined, 'Company Name')}
+                      disabled={isSubmitting}
                     />
                   </label>
                   <label>
@@ -513,24 +1026,15 @@ export default function EventsPage() {
                       inputMode="email"
                       autoComplete="email"
                       placeholder={t('eventsPage.inquiry.form.placeholders.email', undefined, 'Enter email address')}
+                      disabled={isSubmitting}
                     />
                   </label>
                   <label>
                     {t('eventsPage.inquiry.form.labels.eventType', undefined, 'Event Type')}
-                    <div className="events-select-wrapper">
-                      <select name="event_type" defaultValue="Wedding">
-                        <option value="Wedding">{t('eventsPage.inquiry.form.eventTypes.Wedding', undefined, 'Wedding')}</option>
-                        <option value="Birthday">{t('eventsPage.inquiry.form.eventTypes.Birthday', undefined, 'Birthday')}</option>
-                        <option value="Corporate Event">{t('eventsPage.inquiry.form.eventTypes.Corporate Event', undefined, 'Corporate Event')}</option>
-                        <option value="Engagement">{t('eventsPage.inquiry.form.eventTypes.Engagement', undefined, 'Engagement')}</option>
-                        <option value="Private Dining">{t('eventsPage.inquiry.form.eventTypes.Private Dining', undefined, 'Private Dining')}</option>
-                        <option value="Other">{t('eventsPage.inquiry.form.eventTypes.Other', undefined, 'Other')}</option>
-                      </select>
-                      <ChevronDown size={18} className="events-select-icon" />
-                    </div>
+                    <CustomEventSelect disabled={isSubmitting} t={t} />
                   </label>
                   <label>
-                    {t('eventsPage.inquiry.form.labels.guests', undefined, 'Guests')}
+                    {t('eventsPage.inquiry.form.labels.guests', undefined, 'Guests *')}
                     <input
                       name="guest_count"
                       type="number"
@@ -538,6 +1042,7 @@ export default function EventsPage() {
                       min={1}
                       placeholder={t('eventsPage.inquiry.form.placeholders.guests', undefined, 'e.g. 150')}
                       required
+                      disabled={isSubmitting}
                     />
                   </label>
                   <label className="events-form-wide">
@@ -546,11 +1051,23 @@ export default function EventsPage() {
                       name="special_requirements"
                       rows={4}
                       placeholder={t('eventsPage.inquiry.form.placeholders.requirements', undefined, 'Tell us more about your event...')}
+                      disabled={isSubmitting}
                     />
                   </label>
                 </div>
-                <button type="submit" className="events-inquiry-submit">
-                  {t('eventsPage.inquiry.form.submit', undefined, 'Submit Inquiry')}
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className={`events-inquiry-submit ${isSubmitting ? 'events-inquiry-submit-loading' : ''}`}
+                >
+                  {isSubmitting ? (
+                    <span className="events-submit-spinner-text">
+                      <Loader2 className="events-spinner-icon" size={18} />
+                      {isKhmer ? 'កំពុងផ្ញើព័ត៌មាន...' : 'Submitting Inquiry...'}
+                    </span>
+                  ) : (
+                    t('eventsPage.inquiry.form.submit', undefined, 'Submit Inquiry')
+                  )}
                 </button>
                 {formSuccess && (
                   <p className="events-form-success">
@@ -625,6 +1142,194 @@ export default function EventsPage() {
           </div>
         </div>
       </section>
+
+      {/* ── CONFIRMATION MODAL ────────────────── */}
+      {showModal && (
+        <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fadeIn" onClick={() => setShowModal(false)}>
+          <div className="bg-white rounded-3xl p-8 md:p-10 max-w-lg w-full shadow-2xl relative flex flex-col items-center animate-scaleUp" onClick={(e) => e.stopPropagation()}>
+            <button
+              type="button"
+              onClick={() => setShowModal(false)}
+              className="absolute top-5 left-5 text-[#737970] hover:text-[#212d1b] p-2 rounded-full hover:bg-gray-100 transition-colors cursor-pointer"
+              aria-label="Close modal"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="success-icon-wrapper">
+              <Check className="w-10 h-10 text-[#6b9158]" />
+            </div>
+
+            <h2 className="font-serif text-3xl text-[#212d1b] text-center mb-2">
+              {t('eventsPage.inquiry.modal.title', undefined, isKhmer ? 'ការសាកសួរត្រូវបានបញ្ជាក់!' : 'Inquiry Confirmed!')}
+            </h2>
+
+            <p className="text-center text-[#646860] mb-8 max-w-md mx-auto">
+              {t('eventsPage.inquiry.modal.subtitle', undefined, isKhmer
+                ? 'សូមអរគុណសម្រាប់ការទាក់ទងមកកាន់ភោជនីយដ្ឋាន វ៉ាន់ ម៉័រ។'
+                : 'Thank you for booking with One More Restaurant.')}
+            </p>
+
+            {submittedData && (
+              <div className="success-details mb-8">
+                <div className="success-detail-row">
+                  <span>{isKhmer ? 'ឈ្មោះភ្ញៀវ' : 'Guest Name'}</span>
+                  <strong>{submittedData.name}</strong>
+                </div>
+                <div className="success-detail-row">
+                  <span>{isKhmer ? 'លេខទូរស័ព្ទ' : 'Phone'}</span>
+                  <strong>{submittedData.phone}</strong>
+                </div>
+                <div className="success-detail-row">
+                  <span>{isKhmer ? 'សាខា' : 'Branch'}</span>
+                  <strong>
+                    {submittedData.branch === 'Toul Kork'
+                      ? t('eventsPage.inquiry.form.branches.tk', undefined, 'One More Restaurant Toul Kork')
+                      : t('eventsPage.inquiry.form.branches.bk', undefined, 'One More Restaurant Boeung Kak')}
+                  </strong>
+                </div>
+                {submittedData.email && (
+                  <div className="success-detail-row">
+                    <span>{isKhmer ? 'អ៊ីមែល' : 'Email'}</span>
+                    <strong>{submittedData.email}</strong>
+                  </div>
+                )}
+                {submittedData.company && (
+                  <div className="success-detail-row">
+                    <span>{isKhmer ? 'ក្រុមហ៊ុន' : 'Company'}</span>
+                    <strong>{submittedData.company}</strong>
+                  </div>
+                )}
+                <div className="success-detail-row">
+                  <span>{isKhmer ? 'ប្រភេទកម្មវិធី' : 'Event Type'}</span>
+                  <strong>{submittedData.event_type}</strong>
+                </div>
+                <div className="success-detail-row">
+                  <span>{isKhmer ? 'ចំនួនភ្ញៀវ' : 'Guests'}</span>
+                  <strong>{submittedData.guest_count} {isKhmer ? 'នាក់' : 'Guests'}</strong>
+                </div>
+                {submittedData.special_requirements && (
+                  <div className="success-detail-row">
+                    <span>{isKhmer ? 'តម្រូវការផ្សេងៗ' : 'Special Requirements'}</span>
+                    <strong>{submittedData.special_requirements}</strong>
+                  </div>
+                )}
+              </div>
+            )}
+
+            <div className="w-full flex flex-col gap-3">
+              <button
+                type="button"
+                onClick={() => {
+                  setEmailInput(submittedData?.email || '');
+                  setShowEmailModal(true);
+                }}
+                className="w-full py-3.5 px-4 bg-[#6b9158] hover:bg-[#5a7d49] text-white font-bold rounded-xl transition-all shadow-md flex items-center justify-center gap-2 text-base cursor-pointer"
+              >
+                <Mail className="w-5 h-5 text-white" />
+                <span>{isKhmer ? 'ផ្ញើទៅ អ៊ីមែល' : 'Send to Email'}</span>
+              </button>
+
+              <button
+                type="button"
+                disabled={isDownloadingPdf}
+                onClick={handleDownloadConfirmation}
+                className="w-full py-3 px-4 border border-[#6b9158] hover:bg-[#f2f6f0] text-[#6b9158] font-bold rounded-xl transition-all flex items-center justify-center gap-2 text-sm cursor-pointer disabled:opacity-60"
+              >
+                {isDownloadingPdf ? (
+                  <>
+                    <Loader2 className="w-4 h-4 text-[#6b9158] animate-spin" />
+                    <span>{isKhmer ? 'កំពុងបង្កើត PDF...' : 'Generating PDF...'}</span>
+                  </>
+                ) : (
+                  <>
+                    <Download className="w-4 h-4 text-[#6b9158]" />
+                    <span>{isKhmer ? 'ទាញយកលិខិតបញ្ជាក់ (PDF)' : 'Download Confirmation (PDF)'}</span>
+                  </>
+                )}
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setShowModal(false)}
+                className="w-full py-2.5 text-sm text-[#646860] hover:text-[#212d1b] font-medium transition-colors text-center underline underline-offset-4 decoration-gray-300 cursor-pointer"
+              >
+                {isKhmer ? 'បិទ' : 'Done'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── EMAIL MODAL ───────────────────────── */}
+      {showEmailModal && (
+        <div className="fixed inset-0 z-[10001] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fadeIn">
+          <div className="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl border border-gray-100 flex flex-col gap-5">
+            <div className="flex items-center justify-between border-b border-gray-100 pb-3">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-[#6b9158]/10 flex items-center justify-center text-[#6b9158]">
+                  <Mail className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-lg text-gray-900">
+                    {isKhmer ? 'ផ្ញើទៅ អ៊ីមែល' : 'Send to Email'}
+                  </h3>
+                  <p className="text-xs text-gray-500">
+                    {isKhmer ? 'បញ្ជូនព័ត៌មានសាកសួរទៅកាន់អ៊ីមែលរបស់អ្នក' : 'Send inquiry details to your email'}
+                  </p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowEmailModal(false)}
+                className="text-gray-400 hover:text-gray-600 p-1.5 rounded-lg transition-colors cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <label className="text-xs font-semibold text-gray-700">
+                {isKhmer ? 'អាសយដ្ឋានអ៊ីមែល (Email Address)' : 'Email Address'}
+              </label>
+              <input
+                type="email"
+                value={emailInput}
+                onChange={(e) => setEmailInput(e.target.value)}
+                placeholder="e.g. customer@example.com"
+                className="w-full px-4 py-3 text-sm border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#6b9158] focus:border-transparent transition-all"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    handleSendToEmail();
+                  }
+                }}
+              />
+            </div>
+
+            <div className="flex flex-col gap-2.5 pt-2">
+              <button
+                type="button"
+                disabled={isSendingEmail}
+                onClick={() => handleSendToEmail()}
+                className="w-full py-3 bg-[#6b9158] hover:bg-[#5a7d49] text-white font-semibold rounded-xl transition-all shadow-md flex items-center justify-center gap-2 text-sm cursor-pointer disabled:opacity-60"
+              >
+                {isSendingEmail ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <span>{isKhmer ? 'កំពុងផ្ញើ...' : 'Sending Email...'}</span>
+                  </>
+                ) : (
+                  <>
+                    <Mail className="w-4 h-4" />
+                    <span>{isKhmer ? 'ផ្ញើអ៊ីមែលឥឡូវនេះ' : 'Send Email Now'}</span>
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
     </main>
   );
