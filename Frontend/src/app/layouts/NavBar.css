@@ -28,11 +28,11 @@
 
 .navbar-v2 {
   color: #6b9158;
-  background: rgba(255, 255, 255, 0.96);
+  background: rgba(255, 255, 255, 0.98);
 
   border-bottom: 1px solid rgba(33, 48, 28, 0.1);
 
-  box-shadow: none;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
 
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
@@ -184,6 +184,22 @@
 .navbar-desktop-link-active {
   opacity: 1;
   outline: none;
+}
+
+.navbar-v1 .navbar-desktop-link {
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.navbar-v2 .navbar-desktop-link {
+  color: #21301c;
+  font-weight: 500;
+}
+
+.navbar-v2 .navbar-desktop-link:hover,
+.navbar-v2 .navbar-desktop-link:focus-visible,
+.navbar-v2 .navbar-desktop-link-active {
+  color: #6b9158;
 }
 
 .navbar-desktop-link:hover::after,

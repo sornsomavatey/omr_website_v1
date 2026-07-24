@@ -348,7 +348,7 @@ export default function BoeungKak() {
             title={t('branchDetails.events.items.birthday.title')}
             description={t('branchDetails.events.items.birthday.desc')}
             buttonLabel={t('branchDetails.events.planCta')}
-            buttonHref="/reservations?branch=boeung-kak"
+            buttonHref="/events#inquiry"
           />
           <SharpImageCard
             image={imgEngagementCompressed}
@@ -356,7 +356,7 @@ export default function BoeungKak() {
             title={t('branchDetails.events.items.engagement.title')}
             description={t('branchDetails.events.items.engagement.desc')}
             buttonLabel={t('branchDetails.events.planCta')}
-            buttonHref="/reservations?branch=boeung-kak"
+            buttonHref="/events#inquiry"
           />
           <SharpImageCard
             image={imgFamilyPkg}
@@ -364,7 +364,7 @@ export default function BoeungKak() {
             title={t('branchDetails.events.items.family.title')}
             description={t('branchDetails.events.items.family.desc')}
             buttonLabel={t('branchDetails.events.planCta')}
-            buttonHref="/reservations?branch=boeung-kak"
+            buttonHref="/events#inquiry"
           />
           <SharpImageCard
             image={imgHeritageTopLeft}
@@ -372,7 +372,7 @@ export default function BoeungKak() {
             title={t('branchDetails.events.items.corporate.title')}
             description={t('branchDetails.events.items.corporate.desc')}
             buttonLabel={t('branchDetails.events.planCta')}
-            buttonHref="/reservations?branch=boeung-kak"
+            buttonHref="/events#inquiry"
           />
         </div>
       </section>

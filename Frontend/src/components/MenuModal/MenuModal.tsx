@@ -19,6 +19,7 @@ export type PreOrderCartItem = {
   desc?: string;
   desc_kh?: string;
   badge?: string;
+  isOutOfStock?: boolean;
 };
 
 export type PreOrderCart = Record<string, PreOrderCartItem>;
@@ -54,22 +55,25 @@ function DishRow({
   onAdd,
   onRemove,
 }: {
-  item: { id: string; name: string; name_kh?: string; desc?: string; desc_kh?: string; img: string; price: number; badge?: string; category: string };
+  item: { id: string; name: string; name_kh?: string; desc?: string; desc_kh?: string; img: string; price: number; badge?: string; category: string; isOutOfStock?: boolean };
   qty: number;
   onAdd: () => void;
   onRemove: () => void;
 }) {
   const { t } = useTranslation();
   const badgeKey = item.badge?.toLowerCase() ?? '';
-  const badgeClass = BADGE_COLORS[badgeKey] ?? 'mm-badge--popular';
   const displayName = item.name;
   const displayDesc = item.desc;
 
+  const isOutOfStock = Boolean(
+    item.isOutOfStock || badgeKey.includes('out of stock') || badgeKey.includes('sold out')
+  );
+
   return (
-    <div className={`mm-dish-row ${qty > 0 ? 'mm-dish-row--selected' : ''}`}>
+    <div className={`mm-dish-row ${qty > 0 ? 'mm-dish-row--selected' : ''} ${isOutOfStock ? 'mm-dish-row--out-of-stock opacity-70' : ''}`}>
       <div className="mm-dish-img-wrap">
         <img src={item.img} alt={displayName} className="mm-dish-img" loading="lazy" />
-        {item.badge && <span className={`mm-badge ${badgeClass}`}>{item.badge}</span>}
+        {isOutOfStock && <span className="mm-badge mm-badge--out-of-stock bg-red-600 text-white font-bold">{t('menu.modal.outOfStock', undefined, 'Out of Stock')}</span>}
         {qty > 0 && <div className="mm-dish-qty-bubble">{qty}</div>}
       </div>
 
@@ -81,7 +85,16 @@ function DishRow({
       </div>
 
       <div className="mm-dish-ctrl">
-        {qty === 0 ? (
+        {isOutOfStock ? (
+          <button
+            type="button"
+            className="mm-add-btn mm-add-btn--disabled cursor-not-allowed opacity-50 bg-gray-300 text-gray-500 border-gray-300 hover:bg-gray-300"
+            disabled
+            aria-label={`${displayName} is Out of Stock`}
+          >
+            {t('menu.modal.outOfStock', undefined, 'Out of Stock')}
+          </button>
+        ) : qty === 0 ? (
           <button type="button" className="mm-add-btn" onClick={onAdd} aria-label={`Add ${displayName}`}>
             <Plus className="w-4 h-4" />
             {t('menu.modal.add')}
@@ -171,21 +184,31 @@ export default function MenuModal({ isOpen, onClose, cart, onCartChange }: MenuM
   const getItems = (): PreOrderCartItem[] => {
     if (!menuData?.items) return [];
     const raw = menuData.items[activeCategory] ?? [];
-    return raw.map((d: any, itemIndex: number) => {
+    const items = raw.map((d: any, itemIndex: number) => {
       const localized = translatedMenuItems[activeCategory.toLowerCase()]?.[itemIndex];
+      const isOut = Boolean(
+        d.is_out_of_stock === '1' ||
+        d.is_out_of_stock === 1 ||
+        d.is_out_of_stock === true ||
+        (d.menu_out_of_stock && d.menu_out_of_stock.length > 0) ||
+        (d.badge && (d.badge.toLowerCase().includes('out of stock') || d.badge.toLowerCase().includes('sold out')))
+      );
       return {
-      id: String(d.id),
-      name: isKhmer ? (d.name_kh || localized?.name || d.name) : (localized?.name || d.name),
-      name_kh: d.name_kh,
-      price: parsePrice(d.price),
-      qty: 0,
-      img: d.img,
-      category: translatedCategoryNames[activeCategory],
-      desc: language === 'EN' ? (d.desc ?? '') : (localized?.desc || d.desc_kh || d.desc || ''),
-      desc_kh: d.desc_kh ?? '',
-      badge: localized?.badge || d.badge,
+        id: String(d.id),
+        name: isKhmer ? (d.name_kh || localized?.name || d.name) : (localized?.name || d.name),
+        name_kh: d.name_kh,
+        price: parsePrice(d.price),
+        qty: 0,
+        img: d.img,
+        category: translatedCategoryNames[activeCategory],
+        desc: language === 'EN' ? (d.desc ?? '') : (localized?.desc || d.desc_kh || d.desc || ''),
+        desc_kh: d.desc_kh ?? '',
+        badge: isOut ? 'Out of Stock' : undefined,
+        isOutOfStock: isOut,
       };
     });
+
+    return items.sort((a: PreOrderCartItem, b: PreOrderCartItem) => (a.isOutOfStock === b.isOutOfStock ? 0 : a.isOutOfStock ? 1 : -1));
   };
 
   if (!isOpen) return null;

@@ -1,10 +1,11 @@
+from typing import Optional
 import urllib.request
 import urllib.parse
 import json
 from ..core.config import settings
 
-def send_telegram_alert(message: str) -> bool:
-    """Send a message to a Telegram chat using the bot API."""
+def send_telegram_alert(message: str, message_thread_id: Optional[int] = None) -> bool:
+    """Send a message to a Telegram chat or specific topic thread using the bot API."""
     token = settings.TELEGRAM_BOT_TOKEN
     chat_id = settings.TELEGRAM_CHAT_ID
 
@@ -18,6 +19,9 @@ def send_telegram_alert(message: str) -> bool:
         "parse_mode": "HTML"
     }
 
+    if message_thread_id is not None:
+        payload["message_thread_id"] = message_thread_id
+
     try:
         data = json.dumps(payload).encode("utf-8")
         req = urllib.request.Request(
@@ -28,6 +32,17 @@ def send_telegram_alert(message: str) -> bool:
         with urllib.request.urlopen(req, timeout=5) as response:
             return response.status == 200
     except Exception as e:
-        # Print error or log in standard error
         print(f"Failed to send Telegram alert: {e}")
         return False
+
+
+def send_reservation_telegram_alert(message: str) -> bool:
+    """Send a reservation alert to the designated Telegram reservation topic."""
+    thread_id = getattr(settings, 'TELEGRAM_RESERVATION_THREAD_ID', None)
+    return send_telegram_alert(message, message_thread_id=thread_id)
+
+
+def send_feedback_telegram_alert(message: str) -> bool:
+    """Send a feedback alert to the designated Telegram feedback topic."""
+    thread_id = getattr(settings, 'TELEGRAM_FEEDBACK_THREAD_ID', None)
+    return send_telegram_alert(message, message_thread_id=thread_id)

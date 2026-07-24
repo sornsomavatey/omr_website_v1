@@ -199,25 +199,20 @@ export default function Navbar() {
     }
 
     const handleScroll = () => {
-      if (isHomePage || isToulKorkPage || isBoeungKakPage || isGalleryPage || isEventsPage || isMenuPage) {
-        const heroSection =
-          document.getElementById('home-hero') ||
-          document.getElementById('toulkork-hero') ||
-          document.getElementById('boeungkak-hero') ||
-          document.getElementById('gallery-hero') ||
-          document.getElementById('events-hero') ||
-          document.getElementById('menu-hero');
+      const isDesktop = window.innerWidth >= 1024;
 
-        if (!heroSection) {
-          setScrolled(false);
+      if (isDesktop && (isMenuPage || isGalleryPage)) {
+        const heroSection =
+          document.getElementById('menu-hero') ||
+          document.getElementById('gallery-hero');
+
+        if (heroSection) {
+          setScrolled(heroSection.getBoundingClientRect().bottom <= 0);
           return;
         }
-
-        setScrolled(heroSection.getBoundingClientRect().bottom <= 0);
-        return;
       }
 
-      setScrolled(window.scrollY > 50);
+      setScrolled(window.scrollY > 25);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -229,7 +224,7 @@ export default function Navbar() {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleScroll);
     };
-  }, [isHomePage, isReservationPage, isGalleryPage, isEventsPage, isMenuPage, isToulKorkPage, isBoeungKakPage]);
+  }, [isGalleryPage, isMenuPage, isReservationPage]);
 
   useEffect(() => {
     const shouldCompactMenuNav = (isMenuPage || isGalleryPage) && scrolled;

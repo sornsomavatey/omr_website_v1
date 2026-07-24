@@ -4,6 +4,8 @@ import { Phone, MapPin, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useTranslation } from '@/hooks/useTranslation';
 
+import { Skeleton } from '@/components/ui/skeleton';
+
 export type BranchData = {
   id: string;
   name: string;
@@ -30,19 +32,24 @@ export default function LocationCard({
   imageMapper,
 }: LocationCardProps) {
   const { t } = useTranslation();
+  const [isLoaded, setIsLoaded] = React.useState(false);
   const resolvedImage = imageMapper && imageMapper[branch.image] ? imageMapper[branch.image] : branch.image;
 
   return (
     <div className="branch-card">
       {/* Top Image */}
-      <div className="card-image-wrapper">
+      <div className="card-image-wrapper relative bg-[#f2f5f0]">
+        {!isLoaded && (
+          <Skeleton className="absolute inset-0 w-full h-full rounded-none bg-muted z-0" />
+        )}
         <img
           src={resolvedImage}
           alt={branch.name}
-          className="card-image"
+          className={`card-image transition-opacity duration-500 relative z-10 ${!isLoaded ? 'opacity-0' : 'opacity-100'}`}
           loading="lazy"
+          onLoad={() => setIsLoaded(true)}
         />
-        <div className="card-image-mask" />
+        <div className="card-image-mask z-20" />
       </div>
 
       {/* Content */}

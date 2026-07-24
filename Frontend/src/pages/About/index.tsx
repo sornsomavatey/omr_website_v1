@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   BellRing,
+  Check,
+  ChevronDown,
   Eye,
   KeyRound,
   PartyPopper,
@@ -182,6 +184,76 @@ const khmerCopy: Record<string, string> = {
   'Please choose a star rating before submitting.': 'សូមជ្រើសរើសចំនួនផ្កាយ មុនពេលផ្ញើ។',
 };
 
+function CustomFeedbackBranchSelect({
+  tr,
+}: {
+  tr: (key: string) => string;
+}) {
+  const [selected, setSelected] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const branches = [
+    { value: 'Toul Kork', label: tr('Toul Kork') },
+    { value: 'Boeung Kak', label: tr('Boeung Kak') },
+  ];
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const currentOption = branches.find(opt => opt.value === selected);
+
+  return (
+    <div className="custom-event-select-container" ref={dropdownRef}>
+      <input type="hidden" name="branch" value={selected} required />
+      <button
+        type="button"
+        onClick={() => setIsOpen(!isOpen)}
+        className={`custom-event-select-trigger ${isOpen ? 'custom-event-select-trigger-open' : ''}`}
+        aria-haspopup="listbox"
+        aria-expanded={isOpen}
+      >
+        <span className={`custom-event-select-label ${!selected ? 'text-gray-400 font-normal' : ''}`}>
+          {currentOption ? currentOption.label : tr('Select a branch')}
+        </span>
+        <ChevronDown size={18} className={`custom-event-select-icon ${isOpen ? 'rotate-180' : ''}`} />
+      </button>
+
+      {isOpen && (
+        <div className="custom-event-select-dropdown" role="listbox">
+          {branches.map((b) => {
+            const isSelected = b.value === selected;
+            return (
+              <div
+                key={b.value}
+                role="option"
+                aria-selected={isSelected}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setSelected(b.value);
+                  setIsOpen(false);
+                }}
+                className={`custom-event-select-option ${isSelected ? 'custom-event-select-option-active' : ''}`}
+              >
+                <span>{b.label}</span>
+                {isSelected && <Check size={16} className="custom-event-select-check" />}
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
+
 function SectionHeading({ eyebrow, title }: { eyebrow: string; title: string }) {
   return (
     <div className="about-section-heading">
@@ -285,11 +357,14 @@ export default function About() {
     setFeedbackStatus('submitting');
     try {
       const branch = String(data.get('branch'));
+      const rawName = String(data.get('name') || '').trim();
+      const rawMessage = String(data.get('message') || '').trim();
+      const messageText = rawMessage ? `\n\n${rawMessage}` : '';
       await createFeedback({
-        name: String(data.get('name')).trim(),
-        email: String(data.get('email')).trim(),
+        name: rawName || 'Anonymous',
+        email: 'N/A',
         subject: `Guest feedback - ${branch} - ${rating}/5`,
-        message: `Branch: ${branch}\nRating: ${rating}/5\n\n${String(data.get('message')).trim()}`,
+        message: `Branch: ${branch}\nRating: ${rating}/5${messageText}`,
       });
       form.reset();
       setRating(0);
@@ -507,24 +582,14 @@ export default function About() {
         </div>
 
         <form className="about-feedback-form" onSubmit={handleFeedbackSubmit}>
-          <div className="about-feedback-field-row">
-            <label>
-              <span>{tr('Your Name')}</span>
-              <input name="name" type="text" minLength={2} placeholder={tr('Enter your name')} required />
-            </label>
-            <label>
-              <span>{tr('Email Address')}</span>
-              <input name="email" type="email" placeholder={tr('Enter your email')} required />
-            </label>
-          </div>
+          <label>
+            <span>{tr('Your Name (Optional)')}</span>
+            <input name="name" type="text" placeholder={tr('Enter your name (optional)')} />
+          </label>
 
           <label>
             <span>{tr('Which branch did you visit?')}</span>
-            <select name="branch" defaultValue="" required>
-              <option value="" disabled>{tr('Select a branch')}</option>
-              <option value="Toul Kork">{tr('Toul Kork')}</option>
-              <option value="Boeung Kak">{tr('Boeung Kak')}</option>
-            </select>
+            <CustomFeedbackBranchSelect tr={tr} />
           </label>
 
           <fieldset className="about-feedback-rating">
@@ -549,8 +614,8 @@ export default function About() {
           </fieldset>
 
           <label>
-            <span>{tr('Tell us about your experience')}</span>
-            <textarea name="message" rows={5} minLength={5} placeholder={tr('What did you enjoy, and what could we improve?')} required />
+            <span>{tr('Tell us about your experience (Optional)')}</span>
+            <textarea name="message" rows={5} placeholder={tr('What did you enjoy, and what could we improve? (optional)')} />
           </label>
 
           <button className="about-feedback-submit" type="submit" disabled={feedbackStatus === 'submitting'}>

@@ -441,7 +441,7 @@ export default function Menu() {
       </div>
 
       {/* Menu Grid Sections */}
-      <section className="w-full py-16 bg-white flex flex-col items-center relative overflow-hidden">
+      <section className="w-full pt-0 pb-16 md:py-16 bg-white flex flex-col items-center relative overflow-hidden">
         {/* Lotus Background Pattern */}
         <div className={`lotus-bg-wrapper ${isLotusVisible ? 'lotus-bg-visible' : ''}`}>
           <div className="lotus-bg-pattern" style={{ backgroundImage: `url("${imgLotusHalf}")` }} />
@@ -453,7 +453,7 @@ export default function Menu() {
               key={category}
               id={category.toLowerCase()}
               data-menu-scroll-anchor="true"
-              className={`menu-section section-animate w-full py-16 first:pt-4 last:pb-16 border-b border-[#dde0dc]/50 last:border-b-0${
+              className={`menu-section section-animate w-full py-16 first:pt-0 md:first:pt-4 last:pb-16 border-b border-[#dde0dc]/50 last:border-b-0${
                 revealedSections[category.toLowerCase()] ? ' section-visible' : ''
               }`}
             >
@@ -462,8 +462,14 @@ export default function Menu() {
               </h2>
 
               {/* Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-16 w-full text-left">
-                {menuItemsData[category].map((dish, index) => (
+              <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-3 md:gap-x-8 lg:gap-x-12 gap-y-16 w-full text-left">
+                {[...menuItemsData[category]]
+                  .sort((a, b) => {
+                    const aOut = Boolean(a.badge && (a.badge.toLowerCase().includes('out of stock') || a.badge.toLowerCase().includes('sold out')));
+                    const bOut = Boolean(b.badge && (b.badge.toLowerCase().includes('out of stock') || b.badge.toLowerCase().includes('sold out')));
+                    return aOut === bOut ? 0 : aOut ? 1 : -1;
+                  })
+                  .map((dish, index) => (
                   <DishCard
                     key={dish.id}
                     id={`menu-dish-${dish.id}`}
@@ -478,6 +484,7 @@ export default function Menu() {
                     badge={dish.badge}
                     showAction={false}
                     showCategory={false}
+                    liftOnHover={false}
                     priceSuffix=""
                   />
                 ))}

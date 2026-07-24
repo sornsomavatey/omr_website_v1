@@ -4,7 +4,7 @@ from typing import List
 from ..dependencies.db import get_db
 from ..dependencies.models import EventBooking
 from ..dependencies.schemas import EventBookingCreate, EventBookingResponse
-from ..utils.telegram import send_telegram_alert
+from ..utils.telegram import send_telegram_alert, send_reservation_telegram_alert
 from ..utils.email import send_email_alert
 
 router = APIRouter()
@@ -27,7 +27,7 @@ def create_event_booking(event: EventBookingCreate, db: Session = Depends(get_db
 
     # Format and send Telegram Alert
     alert_message = (
-        f"📋 <b>Booking events</b>\n\n"
+        f"🎉 <b>Event Booking Request</b>\n\n"
         f"• Customer: {db_event.name}\n"
         f"• Phone: {db_event.phone}\n"
         f"• Email: {db_event.email}\n"
@@ -36,7 +36,7 @@ def create_event_booking(event: EventBookingCreate, db: Session = Depends(get_db
         f"• Date: {db_event.event_date}\n"
         f"• Details / Requirements:\n{db_event.package_details or 'None'}"
     )
-    send_telegram_alert(alert_message)
+    send_reservation_telegram_alert(alert_message)
 
     # Format and send Email Alert
     email_subject = "Booking events"

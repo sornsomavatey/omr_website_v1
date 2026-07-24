@@ -106,9 +106,28 @@ export const getReservationsData = async () => {
   return response.data;
 };
 
+const getRelativeReviewAgeInMonths = (date: unknown) => {
+  if (typeof date !== 'string') return Number.POSITIVE_INFINITY;
+
+  const normalizedDate = date.trim().toLowerCase();
+  const amountMatch = normalizedDate.match(/\d+/);
+  const amount = amountMatch ? Number(amountMatch[0]) : 1;
+
+  if (normalizedDate.includes('day') || normalizedDate.includes('week')) return 0;
+  if (normalizedDate.includes('month')) return amount;
+  if (normalizedDate.includes('year')) return amount * 12;
+
+  return Number.POSITIVE_INFINITY;
+};
+
 export const getTestimonialsData = async () => {
   const response = await api.get('/mocks/testimonials.json');
-  return response.data;
+  if (!Array.isArray(response.data)) return response.data;
+
+  return [...response.data].sort(
+    (first, second) =>
+      getRelativeReviewAgeInMonths(first?.date) - getRelativeReviewAgeInMonths(second?.date),
+  );
 };
 
 export const backendApi = axios.create({

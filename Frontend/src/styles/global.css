@@ -89,6 +89,38 @@ h6 {
   font-family: var(--font-serif);
 }
 
+html[data-lang="zh"] {
+  --font-sans: "Noto Sans SC", sans-serif;
+  --font-serif: "Noto Sans SC", sans-serif;
+  --font-heading: "Noto Sans SC", sans-serif;
+}
+
+html[data-lang="ko"] {
+  --font-sans: "Noto Sans KR", sans-serif;
+  --font-serif: "Noto Sans KR", sans-serif;
+  --font-heading: "Noto Sans KR", sans-serif;
+}
+
+html[data-lang="zh"] body,
+html[data-lang="zh"] body :is(h1, h2, h3, h4, h5, h6, p, a, span, button, input, textarea, select, label, legend, small, strong, em, li, td, th) {
+  font-family: "Noto Sans SC", sans-serif !important;
+}
+
+html[data-lang="ko"] body,
+html[data-lang="ko"] body :is(h1, h2, h3, h4, h5, h6, p, a, span, button, input, textarea, select, label, legend, small, strong, em, li, td, th) {
+  font-family: "Noto Sans KR", sans-serif !important;
+}
+
+html[data-lang="zh"] .dish-card-price,
+html[data-lang="ko"] .dish-card-price {
+  font-family: "Playfair Display", serif !important;
+}
+
+html[data-lang="zh"] .dish-card-currency,
+html[data-lang="ko"] .dish-card-currency {
+  font-family: "Inter", sans-serif !important;
+}
+
 /* One responsive type scale for every page-level hero heading. */
 .page-hero-title {
   font-size: clamp(48px, 6vw, 76px) !important;
@@ -437,7 +469,6 @@ html[data-lang="kh"] body :is(h1, h2, h3, h4, h5, h6, .font-serif):not(.page-her
     .reserve-btn-secondary,
     .btn-action-primary,
     .btn-action-outline,
-    .fpc-book-btn,
     .sic-button,
     .bk-btn-menu-full,
     .bk-btn-directions,

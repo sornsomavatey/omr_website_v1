@@ -123,7 +123,6 @@ function HeroSection({ hero }: { hero: any }) {
       <div className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-hidden">
         <video
           src={heroVideo}
-          poster={imgBkEdited}
           autoPlay
           loop
           muted

@@ -1,6 +1,7 @@
 import { ChevronLeft, ChevronRight, X, ZoomIn } from 'lucide-react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from '@/hooks/useTranslation';
+import { Skeleton } from '@/components/ui/skeleton';
 
 import imgHero from '@/assets/home-v2/43310dd2158ca5c7f7d098abf280dc14124d42de.webp';
 import imgDining from '@/assets/gallery/main-hall-dining.webp';
@@ -126,8 +127,8 @@ const galleryShapeWeight: Record<GalleryItem['shape'], number> = {
   portrait: 1.22,
 };
 
-function balanceGalleryColumns<T extends Pick<GalleryItem, 'shape'>>(items: T[]) {
-  const columnCount = Math.min(3, Math.max(1, items.length));
+function balanceGalleryColumns<T extends Pick<GalleryItem, 'shape'>>(items: T[], maximumColumns = 3) {
+  const columnCount = Math.min(maximumColumns, Math.max(1, items.length));
   const columns = Array.from({ length: columnCount }, () => [] as T[]);
   const columnHeights = Array.from({ length: columnCount }, () => 0);
 
@@ -140,12 +141,67 @@ function balanceGalleryColumns<T extends Pick<GalleryItem, 'shape'>>(items: T[])
   return columns;
 }
 
+function GalleryItemCard({
+  item,
+  lightboxIndex,
+  onSelect,
+  t,
+}: {
+  item: GalleryItem;
+  lightboxIndex: number;
+  onSelect: () => void;
+  t: any;
+}) {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  return (
+    <article className="gallery-card">
+      <button
+        type="button"
+        className={`gallery-image-button gallery-image-${item.shape} relative bg-[#1b2b1a] overflow-hidden`}
+        onClick={onSelect}
+        aria-label={`Open ${item.title}`}
+      >
+        {!isLoaded && (
+          <Skeleton className="absolute inset-0 w-full h-full rounded-none bg-white/10 z-0 animate-pulse" />
+        )}
+        <img
+          src={item.src}
+          alt={item.alt}
+          loading={lightboxIndex > 5 ? 'lazy' : 'eager'}
+          onLoad={() => setIsLoaded(true)}
+          ref={(img) => {
+            if (img && img.complete) {
+              setIsLoaded(true);
+            }
+          }}
+          className={`transition-opacity duration-500 relative z-10 ${!isLoaded ? 'opacity-0' : 'opacity-100'}`}
+        />
+        <span className="gallery-image-hover z-20">
+          <ZoomIn size={24} />
+          <small>{t('galleryPage.aria.view', undefined, 'View image')}</small>
+        </span>
+      </button>
+    </article>
+  );
+}
+
 export default function GalleryPage() {
   const { t } = useTranslation();
   const [activeFilter, setActiveFilter] = useState<Filter>('All');
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [isFilterNavigationVisible, setIsFilterNavigationVisible] = useState(false);
+  const [galleryColumnCount, setGalleryColumnCount] = useState(3);
   const masonryRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const mobileColumns = window.matchMedia('(max-width: 900px)');
+    const updateColumnCount = () => setGalleryColumnCount(mobileColumns.matches ? 2 : 3);
+
+    updateColumnCount();
+    mobileColumns.addEventListener('change', updateColumnCount);
+    return () => mobileColumns.removeEventListener('change', updateColumnCount);
+  }, []);
 
   useEffect(() => {
     const updateFilterNavigation = () => {
@@ -177,6 +233,10 @@ export default function GalleryPage() {
   );
 
   const visibleColumns = useMemo(() => {
+    if (galleryColumnCount === 2) {
+      return balanceGalleryColumns(visibleItems, 2);
+    }
+
     if (activeFilter !== 'All') {
       return balanceGalleryColumns(visibleItems);
     }
@@ -193,7 +253,7 @@ export default function GalleryPage() {
         .filter((item): item is typeof translatedGalleryItems[number] => Boolean(item))
         .filter((item) => visibleTitles.has(item.title)))
       .filter((column) => column.length > 0);
-  }, [activeFilter, visibleItems, translatedGalleryItems]);
+  }, [activeFilter, visibleItems, translatedGalleryItems, galleryColumnCount]);
 
   const closeLightbox = () => setSelectedIndex(null);
   const showPrevious = () => setSelectedIndex((index) => index === null ? null : (index - 1 + visibleItems.length) % visibleItems.length);
@@ -364,12 +424,13 @@ export default function GalleryPage() {
               {column.map((item) => {
                 const lightboxIndex = visibleItems.indexOf(item);
                 return (
-                  <article className="gallery-card" key={`${item.title}-${item.src}`}>
-                    <button type="button" className={`gallery-image-button gallery-image-${item.shape}`} onClick={() => setSelectedIndex(lightboxIndex)} aria-label={`Open ${item.title}`}>
-                      <img src={item.src} alt={item.alt} loading={lightboxIndex > 5 ? 'lazy' : 'eager'} />
-                      <span className="gallery-image-hover"><ZoomIn size={24} /><small>{t('galleryPage.aria.view', undefined, 'View image')}</small></span>
-                    </button>
-                  </article>
+                  <GalleryItemCard
+                    key={`${item.title}-${item.src}`}
+                    item={item}
+                    lightboxIndex={lightboxIndex}
+                    onSelect={() => setSelectedIndex(lightboxIndex)}
+                    t={t}
+                  />
                 );
               })}
             </div>
