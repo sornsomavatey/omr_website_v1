@@ -55,11 +55,12 @@ function NavbarLogo({ mobile = false }: { mobile?: boolean }) {
   );
 }
 
-const languageOptions: Array<{ code: Language; label: string; flag: string }> = [
-  { code: 'EN', label: 'English', flag: '/flags/united-kingdom.svg' },
-  { code: 'KH', label: 'ខ្មែរ', flag: '/flags/cambodia.svg' },
-  { code: 'ZH', label: '中文', flag: '/flags/china.svg' },
-  { code: 'KO', label: '한국어', flag: '/flags/south-korea.svg' },
+// Toggle `enabled` to show or hide a language without removing its JSON file.
+const languageOptions: Array<{ code: Language; label: string; flag: string; enabled: boolean }> = [
+  { code: 'EN', label: 'English', flag: '/flags/united-kingdom.svg', enabled: true },
+  { code: 'KH', label: 'ខ្មែរ', flag: '/flags/cambodia.svg', enabled: true },
+  { code: 'ZH', label: '中文', flag: '/flags/china.svg', enabled: true },
+  { code: 'KO', label: '한국어', flag: '/flags/south-korea.svg', enabled: true },
 ];
 
 function LanguageMenu({ mobile = false }: { mobile?: boolean }) {
@@ -67,7 +68,16 @@ function LanguageMenu({ mobile = false }: { mobile?: boolean }) {
   const setLanguage = useAppStore((state) => state.setLanguage);
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement | null>(null);
-  const selectedLanguage = languageOptions.find((option) => option.code === language) || languageOptions[0];
+  const enabledLanguageOptions = languageOptions.filter((option) => option.enabled);
+  const selectedLanguage = enabledLanguageOptions.find((option) => option.code === language)
+    || enabledLanguageOptions[0];
+  const usesDropdown = enabledLanguageOptions.length > 2;
+
+  useEffect(() => {
+    if (selectedLanguage && selectedLanguage.code !== language) {
+      setLanguage(selectedLanguage.code);
+    }
+  }, [language, selectedLanguage, setLanguage]);
 
   useEffect(() => {
     if (!open) return;
@@ -95,6 +105,18 @@ function LanguageMenu({ mobile = false }: { mobile?: boolean }) {
     setOpen(false);
   };
 
+  const handleLanguageButtonClick = () => {
+    if (enabledLanguageOptions.length === 2) {
+      const nextLanguage = enabledLanguageOptions.find((option) => option.code !== language);
+      if (nextLanguage) chooseLanguage(nextLanguage.code);
+      return;
+    }
+
+    if (usesDropdown) setOpen((current) => !current);
+  };
+
+  if (!selectedLanguage) return null;
+
   return (
     <div
       className={`navbar-language-menu ${mobile ? 'navbar-language-menu-mobile' : ''}`}
@@ -103,10 +125,11 @@ function LanguageMenu({ mobile = false }: { mobile?: boolean }) {
       <button
         type="button"
         className={mobile ? 'navbar-mobile-language-button' : 'navbar-language-button'}
-        aria-label="Choose language"
-        aria-haspopup="menu"
-        aria-expanded={open}
-        onClick={() => setOpen((current) => !current)}
+        aria-label={usesDropdown ? 'Choose language' : 'Switch language'}
+        aria-haspopup={usesDropdown ? 'menu' : undefined}
+        aria-expanded={usesDropdown ? open : undefined}
+        disabled={enabledLanguageOptions.length < 2}
+        onClick={handleLanguageButtonClick}
       >
         <img
           className={`navbar-language-current-flag ${
@@ -118,9 +141,9 @@ function LanguageMenu({ mobile = false }: { mobile?: boolean }) {
         />
       </button>
 
-      {open && (
+      {usesDropdown && open && (
         <div className="navbar-language-dropdown" role="menu" aria-label="Languages">
-          {languageOptions.map((option) => (
+          {enabledLanguageOptions.map((option) => (
             <button
               type="button"
               role="menuitemradio"
