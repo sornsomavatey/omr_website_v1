@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr, Field
+from pydantic import BaseModel, Field
 from typing import Optional, List
 import datetime
 
@@ -71,8 +71,9 @@ class PreorderedItem(BaseModel):
 
 class ReservationCreate(BaseModel):
     customer_name: str = Field(..., min_length=2)
-    customer_email: Optional[EmailStr] = None
+    customer_email: Optional[str] = None
     customer_phone: str = Field(..., min_length=8)
+    customer_telegram: Optional[str] = None
     branch_id: int
     reservation_date: str
     reservation_time: str
@@ -82,6 +83,16 @@ class ReservationCreate(BaseModel):
     area: str
     special_requests: Optional[str] = None
     preordered_items: Optional[List[PreorderedItem]] = None
+
+class CustomerTelegramRequest(BaseModel):
+    target: str = Field(..., description="Customer Telegram chat_id or username (e.g. @username or phone/chat_id)")
+    reservation_id: Optional[int] = None
+    custom_message: Optional[str] = None
+
+class CustomerEmailRequest(BaseModel):
+    email: str = Field(..., description="Customer email address")
+    reservation_id: Optional[int] = None
+    custom_message: Optional[str] = None
 
 class ReservationResponse(ReservationCreate):
     id: int
@@ -96,7 +107,7 @@ class ReservationResponse(ReservationCreate):
 # ----------------- EVENT BOOKING SCHEMAS -----------------
 class EventBookingCreate(BaseModel):
     name: str = Field(..., min_length=2)
-    email: EmailStr
+    email: str
     phone: str = Field(..., min_length=8)
     event_type: str
     guest_count: int = Field(..., gt=0)
@@ -116,7 +127,7 @@ class EventBookingResponse(EventBookingCreate):
 # ----------------- CONTACT SCHEMAS -----------------
 class ContactRequestCreate(BaseModel):
     name: str = Field(..., min_length=2)
-    email: EmailStr
+    email: str
     subject: str = Field(..., min_length=3)
     message: str = Field(..., min_length=5)
 

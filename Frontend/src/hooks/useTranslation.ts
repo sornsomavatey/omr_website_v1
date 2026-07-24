@@ -37,7 +37,14 @@ export function useTranslation() {
         }
       });
 
-    document.documentElement.lang = language === 'KH' ? 'km' : 'en';
+    const htmlLanguages = {
+      EN: 'en',
+      KH: 'km',
+      ZH: 'zh-CN',
+      KO: 'ko',
+    } as const;
+
+    document.documentElement.lang = htmlLanguages[language];
     document.documentElement.dataset.lang = language.toLowerCase();
 
     return () => {

@@ -293,11 +293,9 @@ export default function BoeungKak() {
         
         <div className="bk-menu-grid">
           <DishCard
-            name={isKhmer ? "មីឆា One More" : "Onemore Fried Noodle"}
-            category={isKhmer ? "ការណែនាំ" : "Recommendation"}
-            description={isKhmer 
-              ? "សាច់មាន់អាំងពណ៌មាស បម្រើលើមីឆាជាមួយសណ្ដែកបណ្ដុះ គូឆាយ និងគ្រឿងផ្សំប្រចាំហាងដ៏ឈ្ងុយឆ្ងាញ់។"
-              : "Golden grilled chicken served over wok-fried noodles with crisp bean sprouts, chives, and savory house seasoning."}
+            name={t('branchDetails.chefRecs.items.friedNoodle.name')}
+            category={t('branchDetails.chefRecs.recommendation')}
+            description={t('branchDetails.chefRecs.items.friedNoodle.desc')}
             image={imgDish1}
             price="USD 6.50"
             priceSuffix=""
@@ -306,11 +304,9 @@ export default function BoeungKak() {
           />
 
           <DishCard
-            name={isKhmer ? "អាម៉ុកត្រីក្នុងដូងខ្ចី" : "Fish Amok in Young Coconut"}
-            category={isKhmer ? "ការណែនាំ" : "Recommendation"}
-            description={isKhmer
-              ? "ត្រីទន់ចំហុយជាមួយខ្ទិះដូង គ្រឿងខ្មែរ និងស្លឹកក្រូចសើច បម្រើក្នុងផ្លែដូងខ្ចី។"
-              : "Tender fish steamed with coconut cream, Khmer kroeung, and kaffir lime, served in a fresh young coconut."}
+            name={t('branchDetails.chefRecs.items.fishAmok.name')}
+            category={t('branchDetails.chefRecs.recommendation')}
+            description={t('branchDetails.chefRecs.items.fishAmok.desc')}
             image={imgDish2}
             price="USD 9.90"
             priceSuffix=""
@@ -319,11 +315,9 @@ export default function BoeungKak() {
           />
 
           <DishCard
-            name={isKhmer ? "អាំងមាន់បែបសៀមរាប" : "Grilled Chicken with Siem Reap Style"}
-            category={isKhmer ? "ការណែនាំ" : "Recommendation"}
-            description={isKhmer
-              ? "មាន់ស្រែអាំងក្តៅៗដែលត្រូវបានប្រឡាក់គ្រឿងទេសខ្មែរបែបបុរាណ និងអាំងយ៉ាងឈ្ងុយឆ្ងាញ់។"
-              : "Whole local chicken marinated in traditional Cambodian herbs and slow-grilled to smoky perfection."}
+            name={t('branchDetails.chefRecs.items.grilledChicken.name')}
+            category={t('branchDetails.chefRecs.recommendation')}
+            description={t('branchDetails.chefRecs.items.grilledChicken.desc')}
             image={imgDish3}
             price="USD 25.00"
             priceSuffix=""

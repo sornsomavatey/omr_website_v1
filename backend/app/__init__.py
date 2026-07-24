@@ -36,6 +36,19 @@ def on_startup():
     logging.info("Initializing Database and Tables...")
     Base.metadata.create_all(bind=engine)
 
+    # Ensure missing columns in SQLite are automatically added if database pre-exists
+    try:
+        from sqlalchemy import inspect, text
+        inspector = inspect(engine)
+        if "reservations" in inspector.get_table_names():
+            columns = [c["name"] for c in inspector.get_columns("reservations")]
+            if "customer_telegram" not in columns:
+                with engine.connect() as conn:
+                    conn.execute(text("ALTER TABLE reservations ADD COLUMN customer_telegram VARCHAR(100)"))
+                    conn.commit()
+    except Exception as ex:
+        logging.warning(f"Database column migration check notice: {ex}")
+
     # Seed default branches if they don't exist
     from .api.dependencies.db import SessionLocal
     from .api.dependencies.models import Branch

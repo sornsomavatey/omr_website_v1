@@ -53,18 +53,17 @@ function DishRow({
   qty,
   onAdd,
   onRemove,
-  isKhmer,
 }: {
   item: { id: string; name: string; name_kh?: string; desc?: string; desc_kh?: string; img: string; price: number; badge?: string; category: string };
   qty: number;
   onAdd: () => void;
   onRemove: () => void;
-  isKhmer: boolean;
 }) {
+  const { t } = useTranslation();
   const badgeKey = item.badge?.toLowerCase() ?? '';
   const badgeClass = BADGE_COLORS[badgeKey] ?? 'mm-badge--popular';
-  const displayName = isKhmer ? (item.name_kh || item.name) : item.name;
-  const displayDesc = isKhmer ? (item.desc_kh || item.desc) : item.desc;
+  const displayName = item.name;
+  const displayDesc = item.desc;
 
   return (
     <div className={`mm-dish-row ${qty > 0 ? 'mm-dish-row--selected' : ''}`}>
@@ -85,15 +84,15 @@ function DishRow({
         {qty === 0 ? (
           <button type="button" className="mm-add-btn" onClick={onAdd} aria-label={`Add ${displayName}`}>
             <Plus className="w-4 h-4" />
-            {isKhmer ? 'បន្ថែម' : 'Add'}
+            {t('menu.modal.add')}
           </button>
         ) : (
           <div className="mm-qty-ctrl">
-            <button type="button" onClick={onRemove} aria-label="Remove one">
+            <button type="button" onClick={onRemove} aria-label={t('menu.modal.removeOne')}>
               <Minus className="w-3.5 h-3.5" />
             </button>
             <span>{qty}</span>
-            <button type="button" onClick={onAdd} aria-label="Add one more">
+            <button type="button" onClick={onAdd} aria-label={t('menu.modal.addOne')}>
               <Plus className="w-3.5 h-3.5" />
             </button>
           </div>
@@ -105,7 +104,7 @@ function DishRow({
 
 //main modal
 export default function MenuModal({ isOpen, onClose, cart, onCartChange }: MenuModalProps) {
-  const { t, isKhmer } = useTranslation();
+  const { t, getObject, isKhmer, language } = useTranslation();
   const [menuData, setMenuData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState<MenuCategory>('Breakfast');
@@ -117,6 +116,7 @@ export default function MenuModal({ isOpen, onClose, cart, onCartChange }: MenuM
     Dessert: t('menu.categories.dessert', undefined, 'Dessert'),
     Drinks: t('menu.categories.drinks', undefined, 'Drinks'),
   };
+  const translatedMenuItems = getObject<Record<string, Array<Partial<PreOrderCartItem>>>>('menu.items', {});
 
   // Lock body scroll when open
   useEffect(() => {
@@ -148,9 +148,7 @@ export default function MenuModal({ isOpen, onClose, cart, onCartChange }: MenuM
     const current = cart[item.id]?.qty ?? 0;
     if (delta === -1 && current === 1) {
       const confirmDelete = window.confirm(
-        isKhmer
-          ? `តើអ្នកចង់លុប ${item.name_kh || item.name} ចេញពីការកុម្ម៉ង់មុនមែនទេ?`
-          : `Are you sure you want to remove ${item.name} from your pre-order?`
+        t('menu.modal.removeConfirm', { name: item.name })
       );
       if (!confirmDelete) return;
     }
@@ -163,7 +161,7 @@ export default function MenuModal({ isOpen, onClose, cart, onCartChange }: MenuM
       }
       return { ...prev, [item.id]: { ...item, qty: next } };
     });
-  }, [onCartChange, cart, isKhmer]);
+  }, [onCartChange, cart, t]);
 
   const totalItems = Object.values(cart).reduce((s, i) => s + i.qty, 0);
   const totalPrice = Object.values(cart).reduce((s, i) => s + i.price * i.qty, 0);
@@ -173,33 +171,36 @@ export default function MenuModal({ isOpen, onClose, cart, onCartChange }: MenuM
   const getItems = (): PreOrderCartItem[] => {
     if (!menuData?.items) return [];
     const raw = menuData.items[activeCategory] ?? [];
-    return raw.map((d: any) => ({
+    return raw.map((d: any, itemIndex: number) => {
+      const localized = translatedMenuItems[activeCategory.toLowerCase()]?.[itemIndex];
+      return {
       id: String(d.id),
-      name: d.name,
+      name: isKhmer ? (d.name_kh || localized?.name || d.name) : (localized?.name || d.name),
       name_kh: d.name_kh,
       price: parsePrice(d.price),
       qty: 0,
       img: d.img,
       category: translatedCategoryNames[activeCategory],
-      desc: d.desc ?? '',
+      desc: language === 'EN' ? (d.desc ?? '') : (localized?.desc || d.desc_kh || d.desc || ''),
       desc_kh: d.desc_kh ?? '',
-      badge: d.badge,
-    }));
+      badge: localized?.badge || d.badge,
+      };
+    });
   };
 
   if (!isOpen) return null;
 
   return (
     <div className="mm-backdrop" onClick={(e) => e.target === e.currentTarget && onClose()}>
-      <div className="mm-panel" role="dialog" aria-modal="true" aria-label={isKhmer ? 'ជ្រើសរើសមុខម្ហូប' : 'Browse Menu'}>
+      <div className="mm-panel" role="dialog" aria-modal="true" aria-label={t('menu.modal.title')}>
 
         {/* ── Header ── */}
         <div className="mm-header">
           <div>
-            <h2 className="mm-header-title">{isKhmer ? 'ជ្រើសរើសមុខម្ហូប' : 'Browse Menu'}</h2>
-            <p className="mm-header-sub">{isKhmer ? 'បន្ថែមមុខម្ហូបទៅក្នុងការកុម្ម៉ង់មុនរបស់អ្នក' : 'Add dishes to your pre-order'}</p>
+            <h2 className="mm-header-title">{t('menu.modal.title')}</h2>
+            <p className="mm-header-sub">{t('menu.modal.subtitle')}</p>
           </div>
-          <button type="button" className="mm-close-btn" onClick={onClose} aria-label="Close menu">
+          <button type="button" className="mm-close-btn" onClick={onClose} aria-label={t('menu.modal.close')}>
             <X className="w-5 h-5" />
           </button>
         </div>
@@ -236,7 +237,7 @@ export default function MenuModal({ isOpen, onClose, cart, onCartChange }: MenuM
           ) : (
             <div className="mm-dish-list">
               {getItems().length === 0 ? (
-                <p className="mm-empty">{isKhmer ? 'មិនទាន់មានមុខម្ហូបក្នុងប្រភេទនេះនៅឡើយទេ។' : 'No items available in this category yet.'}</p>
+                <p className="mm-empty">{t('menu.modal.empty')}</p>
               ) : (
                 getItems().map((item) => (
                   <DishRow
@@ -245,7 +246,6 @@ export default function MenuModal({ isOpen, onClose, cart, onCartChange }: MenuM
                     qty={cart[item.id]?.qty ?? 0}
                     onAdd={() => handleQty(item, 1)}
                     onRemove={() => handleQty(item, -1)}
-                    isKhmer={isKhmer}
                   />
                 ))
               )}
@@ -263,9 +263,9 @@ export default function MenuModal({ isOpen, onClose, cart, onCartChange }: MenuM
                   <span className="mm-cart-badge">{totalItems}</span>
                 </div>
                 <div>
-                  <p className="mm-cart-label">{isKhmer ? 'សេចក្តីសង្ខេបនៃការកុម្ម៉ង់មុន' : 'Pre-order Summary'}</p>
+                  <p className="mm-cart-label">{t('menu.modal.summary')}</p>
                   <p className="mm-cart-items">
-                    {isKhmer ? 'កុម្ម៉ង់អាហារទុកមុន' : 'Pre-order'}
+                    {t('menu.modal.preOrder')}
                   </p>
                 </div>
               </div>
@@ -276,20 +276,18 @@ export default function MenuModal({ isOpen, onClose, cart, onCartChange }: MenuM
                   className="mm-clear-btn"
                   onClick={() => {
                     const confirmClear = window.confirm(
-                      isKhmer 
-                        ? "តើអ្នកពិតជាចង់លុបការកុម្ម៉ង់មុនទាំងអស់មែនទេ?" 
-                        : "Are you sure you want to clear all pre-ordered items?"
+                      t('menu.modal.clearConfirm')
                     );
                     if (confirmClear) {
                       onCartChange({});
                     }
                   }}
-                  aria-label="Clear pre-order"
+                  aria-label={t('menu.modal.clear')}
                 >
                   <Trash2 className="w-4 h-4" />
                 </button>
                 <button type="button" className="mm-confirm-btn" onClick={onClose}>
-                  {isKhmer ? 'យល់ព្រម' : 'Confirm'}
+                  {t('menu.modal.confirm')}
                 </button>
               </div>
             </>

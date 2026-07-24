@@ -1,0 +1,1627 @@
+{
+  "language": {
+    "switchToKhmer": "切换到高棉语",
+    "switchToEnglish": "切换到英语"
+  },
+  "nav": {
+    "home": "首页",
+    "menu": "菜单",
+    "events": "活动",
+    "branches": "分店",
+    "gallery": "图库",
+    "about": "关于我们",
+    "reservation": "预订",
+    "aria": {
+      "home": "返回首页",
+      "openMenu": "打开导航菜单",
+      "closeMenu": "关闭导航菜单"
+    }
+  },
+  "footer": {
+    "logoAlt": "One More Restaurant",
+    "brandText": "通过致力于传承和创新，重新定义高棉美食的界限。",
+    "copyright": "© 2024One More Restaurant。版权所有。",
+    "headings": {
+      "explore": "探索",
+      "legal": "法律信息",
+      "contact": "联系我们"
+    },
+    "links": {
+      "menu": "菜单",
+      "branches": "分店",
+      "story": "品牌故事",
+      "giftCards": "礼品卡",
+      "terms": "条款和条件",
+      "privacy": "隐私政策",
+      "sustainability": "可持续发展",
+      "bookingInquiry": "预订咨询",
+      "press": "媒体",
+      "careers": "招聘"
+    },
+    "social": {
+      "instagram": "Instagram",
+      "facebook": "Facebook",
+      "tiktok": "抖音",
+      "tripAdvisor": "到到网"
+    },
+    "aria": {
+      "home": "One More Restaurant家",
+      "navigation": "页脚导航",
+      "socialLinks": "社交链接"
+    }
+  },
+  "home": {
+    "hero": {
+      "titleLine1": "体验真实",
+      "titleHighlight": "高棉美食",
+      "description": "现代餐饮体验中提供传统的柬埔寨风味。",
+      "reserveButton": "预订餐桌",
+      "menuButton": "探索菜单",
+      "scroll": "滚动",
+      "scrollAria": "滚动至特色美食部分"
+    },
+    "signature": {
+      "eyebrow": "我们的招牌菜",
+      "title": "特色高棉美食",
+      "description": "每道菜都讲述了柬埔寨烹饪传统的故事，采用传家宝食谱和时令食材精心制作。",
+      "viewAll": "查看所有菜单",
+      "items": {
+        "kuyteavOneMore": {
+          "name": "One More特别库伊特耶夫",
+          "category": "早餐·汤",
+          "description": "浓郁的骨汤，配以米粉、肉片、肉丸、新鲜香草和脆豆芽。",
+          "badge": "厨师精选"
+        },
+        "kuyteavMincedPork": {
+          "name": "猪肉末",
+          "category": "早餐·汤",
+          "description": "美味的猪肉汤米粉，上面撒上调味完美的猪肉末和新鲜韭菜。",
+          "badge": "受欢迎的"
+        },
+        "hainanChickenRice": {
+          "name": "海南鸡腿饭",
+          "category": "早餐·经典",
+          "description": "香喷喷的米饭搭配金黄酥脆的炸鸡腿和自制的蘸酱。",
+          "badge": "畅销书"
+        },
+        "porkBloodPorridge": {
+          "name": "猪血粥",
+          "category": "早餐·舒适",
+          "description": "用猪血、内脏、生姜和青葱熬制而成的丰盛而舒适的米粥。",
+          "badge": "经典的"
+        },
+        "lortchaEgg": {
+          "name": "Lort Cha 牛肉鸡蛋",
+          "category": "早餐·煎",
+          "description": "用嫩牛肉、韭菜和豆芽炒面条，上面放一个煎蛋。",
+          "badge": "本地最爱"
+        },
+        "friedRicePineapple": {
+          "name": "菠萝炒饭",
+          "category": "早餐·炒饭",
+          "description": "金色炒饭搭配新鲜菠萝、大虾、腰果和芳香的高棉调味料。",
+          "badge": "厨师精选"
+        },
+        "fishAmokCoconut": {
+          "name": "椰子阿莫克鱼",
+          "category": "午餐·签名",
+          "description": "鲜嫩的河鱼片在新鲜的椰子中加入浓郁的卡菲尔酸橙柠檬草咖喱慕斯蒸制而成。",
+          "badge": "必须尝试"
+        },
+        "sourSeafoodSoup": {
+          "name": "海鲜酸汤",
+          "category": "午餐·海鲜",
+          "description": "传统的酸辣海鲜汤，里面有虾、蘑菇和香草。",
+          "badge": "辛辣的"
+        },
+        "panFriedFishPaste": {
+          "name": "鲜菜煎鱼酱",
+          "category": "午餐·签名",
+          "description": "金黄的煎鱼酱搭配色彩缤纷的新鲜蔬菜。",
+          "badge": "厨师精选"
+        },
+        "grilledChickenSiemReap": {
+          "name": "暹粒烤鸡",
+          "category": "午餐·特价",
+          "description": "整只当地鸡肉用柬埔寨传统香草腌制，然后慢火烤至烟熏完美。",
+          "badge": "新的"
+        },
+        "stirFriedBokchoy": {
+          "name": "炒白菜",
+          "category": "午餐·蔬菜",
+          "description": "脆皮白菜在咆哮的炒锅中与大蒜和咸味蚝油一起炒。",
+          "badge": "健康"
+        },
+        "friedFermentedEgg": {
+          "name": "咸鱼煎蛋",
+          "category": "午餐·舒适",
+          "description": "柬埔寨传统菜肴，用芳香咸鱼 (Trey Pror-ma) 和猪肉煎鸡蛋。",
+          "badge": "传统"
+        }
+      }
+    },
+    "spaces": {
+      "eyebrow": "用餐空间",
+      "title": "专为各种场合而设计",
+      "description": "从家庭聚餐到私人庆祝活动，我们的空间将柬埔寨的温馨与精致的舒适融为一体。",
+      "previous": "上一个空间",
+      "next": "下一个空间",
+      "items": {
+        "family": {
+          "name": "室内用餐空间",
+          "tag": "标志性氛围",
+          "description": "设计精美的室内用餐区采用我们标志性的木质波浪结构，为您的用餐提供舒适时尚的环境。"
+        },
+        "privateRoom": {
+          "name": "私人餐厅",
+          "tag": "私人体验",
+          "description": "适合生日、商务晚宴和值得私密的特殊时刻的私密房间。"
+        },
+        "business": {
+          "name": "商务用餐区",
+          "tag": "专业设置",
+          "description": "为客户会议、团队聚餐和正式用餐提供平静而优雅的环境。"
+        },
+        "kidZone": {
+          "name": "儿童专区",
+          "tag": "对于家庭",
+          "description": "一个舒适的区域，家庭可以享用餐点，而孩子们则感到受欢迎和安全。"
+        },
+        "event": {
+          "name": "户外用餐空间",
+          "tag": "新鲜空气",
+          "description": "风景优美的露天花园露台，非常适合户外用餐和优雅的户外用餐。"
+        }
+      }
+    },
+    "locations": {
+      "eyebrow": "我们的分行",
+      "title": "访问One More Restaurant",
+      "description": "选择最适合您用餐场合的分店。",
+      "detail": "查看详情",
+      "map": "查看地图",
+      "reserve": "预订",
+      "tags": {
+        "familyFriendly": "适合家庭入住",
+        "businessMeeting": "商务会议",
+        "privateRoom": "私人房间",
+        "eventSpace": "活动空间",
+        "largeGroups": "大型团体",
+        "corporate": "公司的"
+      },
+      "items": {
+        "toulKork": {
+          "name": "One More堆谷区",
+          "address": "堆谷区, 金边, 柬埔寨",
+          "hours": "每天开放 · 上午 06:00 - 晚上 10:00"
+        },
+        "boeungKak": {
+          "name": "One More万谷",
+          "address": "Boeung Kak, 金边, 柬埔寨",
+          "hours": "每天开放 · 上午 06:00 - 晚上 10:00"
+        }
+      }
+    },
+    "gallery": {
+      "eyebrow": "画廊",
+      "title": "时刻在One More",
+      "description": "了解我们的食物、空间和热情好客。",
+      "viewFull": "查看完整图库",
+      "images": {
+        "one": "餐厅位于One More Restaurant",
+        "two": "高棉菜",
+        "three": "餐厅内部细节",
+        "four": "共享用餐体验",
+        "five": "招牌菜介绍",
+        "six": "优雅的餐厅空间"
+      }
+    },
+    "testimonials": {
+      "eyebrow": "感言",
+      "title": "我们的客人怎么说",
+      "description": "我们尊贵的客户分享的经验。",
+      "previous": "以前的感言",
+      "next": "下一个感言",
+      "items": {
+        "sophea": {
+          "date": "2024 年 3 月访问过",
+          "text": "食物很有柬埔寨特色，但又带有现代气息。服务热情、周到、专业。"
+        },
+        "david": {
+          "date": "2024 年 4 月访问过",
+          "text": "与客户共进晚餐的美丽场所。包间安静、优雅，菜品也很棒。"
+        },
+        "piseth": {
+          "date": "2024 年 5 月访问过",
+          "text": "金边家庭用餐的最佳地点之一。很棒的氛围、美味的食物和友好的员工。"
+        },
+        "emma": {
+          "date": "2024 年 6 月访问过",
+          "text": "餐厅在传统与舒适之间取得了完美的平衡。我喜欢高棉风味和平静的内饰。"
+        }
+      }
+    },
+    "partners": {
+      "eyebrow": "我们的企业客户",
+      "title": "与我们合作的公司",
+      "description": "值得信赖的关系有助于我们为每位客人创造更好的体验。"
+    }
+  },
+  "menu": {
+    "loading": "正在加载菜单...",
+    "errors": {
+      "load": "无法加载菜单数据。",
+      "noData": "无可用菜单数据。"
+    },
+    "modal": {
+      "title": "浏览菜单",
+      "subtitle": "将菜品添加到您的预点单",
+      "add": "添加",
+      "empty": "此类别暂时没有可选菜品。",
+      "summary": "预点单摘要",
+      "preOrder": "预点单",
+      "confirm": "确认",
+      "close": "关闭菜单",
+      "clear": "清空预点单",
+      "removeOne": "移除一份",
+      "addOne": "再添加一份",
+      "removeConfirm": "确定要从预点单中移除{name}吗？",
+      "clearConfirm": "确定要清空所有预点菜品吗？"
+    },
+    "hero": {
+      "title": "我们的菜单",
+      "subtitle": "传统的柬埔寨风味与现代的温暖和精致的摆盘相结合。",
+      "backgroundAlt": "菜单标题背景"
+    },
+    "categories": {
+      "breakfast": "早餐",
+      "lunch": "午餐",
+      "dinner": "晚餐",
+      "dessert": "甜点",
+      "drinks": "饮料"
+    },
+    "items": {
+      "breakfast": [
+        {
+          "name": "库伊特夫 金边",
+          "category": "早餐·汤",
+          "desc": "经典的柬埔寨早餐面条汤，以耐嚼的米粉和浓郁的猪肉汤为特色，上面撒上猪肉片、肉丸和新鲜香草。",
+          "badge": "主厨精选 ✦"
+        },
+        {
+          "name": "豆芽炒面",
+          "category": "早餐·煎",
+          "desc": "炒黄面条，撒上脆豆芽、大蒜、青葱和咸味酱油调味料，配上自制甜辣椒酱。",
+          "badge": "主厨精选 ✦"
+        },
+        {
+          "name": "炒牛肉",
+          "category": "早餐·炒锅",
+          "desc": "将嫩牛肉片、西兰花、鸡蛋和焦糖甜酱油在热锅中炒熟。",
+          "badge": "主厨精选 ✦"
+        },
+        {
+          "name": "海鲜炒面",
+          "category": "早餐·海鲜",
+          "desc": "新鲜河虾、鱿鱼和时令蔬菜的美味组合，与小麦面条和美味的牡蛎蒜酱一起炒。",
+          "badge": "主厨精选 ✦"
+        },
+        {
+          "name": "猪骨酥汤",
+          "category": "早餐·丰盛汤",
+          "desc": "令人心旷神怡的米粉汤，配上慢火慢炖的肉质排骨、烤蒜油、葱和脆豆芽。",
+          "badge": "主厨精选 ✦"
+        },
+        {
+          "name": "肉丸库伊特耶夫",
+          "category": "早餐·舒适",
+          "desc": "美味的高棉面条汤，在清甜的骨汤中加入自制的牛肉丸、新鲜香草、酸橙和辣椒酱。",
+          "badge": "主厨精选 ✦"
+        }
+      ],
+      "lunch": [
+        {
+          "name": "椰子阿莫克鱼",
+          "category": "午餐·签名",
+          "desc": "嫩蛇头鱼片涂上浓郁的柠檬草 Kroeung 咖喱酱和椰子奶油，在新鲜的椰子中轻轻蒸熟。",
+          "badge": "主厨精选 ✦"
+        },
+        {
+          "name": "香蕉花鸡肉沙拉",
+          "category": "午餐·清淡新鲜",
+          "desc": "切碎的鸡胸肉撒上脆香蕉花、红甜椒、芬芳的高棉香草和浓郁的酸橙辣椒酱。"
+        },
+        {
+          "name": "罗望子炒蛤",
+          "category": "午餐·咸味",
+          "desc": "将新鲜的当地鸟蛤炒入甜、酸、微辣的罗望子酱中，并饰以芳香的圣罗勒。",
+          "badge": "主厨精选 ✦"
+        },
+        {
+          "name": "乐乐牛肉",
+          "category": "午餐·经典",
+          "desc": "炒腌牛肉块，放在新鲜生菜、西红柿和洋葱上，佐以传统的贡布辣椒酸橙蘸酱。"
+        }
+      ],
+      "dinner": [
+        {
+          "name": "烧焦辣椒龙虾",
+          "category": "晚餐·奢华海鲜",
+          "desc": "新鲜的当地龙虾与大蒜、辣椒、甜洋葱和丰富的牡蛎罗望子一起炒，佐以贡布胡椒酸橙酱。",
+          "badge": "主厨精选 ✦"
+        },
+        {
+          "name": "Samlor Korko 与鲶鱼",
+          "category": "晚餐·传统",
+          "desc": "营养丰富的传统高棉绿色炖菜，配有鲶鱼片、烤米、青木瓜、南瓜、茄子和混合有机绿叶蔬菜。"
+        },
+        {
+          "name": "传统鱼阿莫克",
+          "category": "晚餐·经典",
+          "desc": "柬埔寨永恒的瑰宝——用香蕉叶包裹蒸熟的嫩河鱼，包裹在柔软的椰子柠檬草咖喱慕斯中。",
+          "badge": "主厨精选 ✦"
+        }
+      ],
+      "dessert": [
+        {
+          "name": "五道招牌甜品拼盘",
+          "category": "甜品·拼盘",
+          "desc": "精美的拼盘包含精选的经典柬埔寨甜点，包括南瓜蛋奶冻、糯米和椰子果冻。",
+          "badge": "主厨精选 ✦"
+        },
+        {
+          "name": "Nom Krok（椰子煎饼）",
+          "category": "甜点·传统",
+          "desc": "香脆、香甜、奶油冻状的椰子米煎饼采用传统铸铁模具制成，搭配甜椰子酱趁热享用。"
+        }
+      ],
+      "drinks": [
+        {
+          "name": "柠檬草冰茶",
+          "category": "饮料·输液",
+          "desc": "冰镇自酿红茶，加入新鲜柠檬草茎、柠檬叶和有机蜂蜜。",
+          "badge": "主厨精选 ✦"
+        },
+        {
+          "name": "葡萄酒",
+          "category": "饮料·酒",
+          "desc": "探索我们精心挑选的精选葡萄酒，以搭配柬埔寨美食的丰富风味。"
+        }
+      ]
+    },
+    "liveItems": {
+      "1138": "组合牛肉丸河粉",
+      "889": "One More刨冰",
+      "1050": "碎 Kembug 鱼配新鲜蔬菜",
+      "875": "盐烤虾虎鱼",
+      "1091": "炭烤酿肉末青蛙",
+      "1139": "特色河粉",
+      "1051": "One More蒸鸡",
+      "874": "糖醋烤海螯虾",
+      "871": "糖醋烤虾",
+      "837": "盐辣酱烤巨型鱿鱼",
+      "863": "盐辣酱烤蜜蜂",
+      "676": "腐竹蒸排骨",
+      "673": "传统鱼阿莫克",
+      "828": "烤澳大利亚牛肉配鱼酱和蔬菜",
+      "671": "海鲜红酸汤",
+      "670": "海螯虾红酸汤",
+      "653": "牵牛花牛肉酸汤",
+      "659": "虾虎鱼蔬菜酸汤",
+      "596": "炒玉米",
+      "583": "虾酱炒鱿鱼",
+      "587": "青椒炒鱿鱼",
+      "579": "九层塔炒田鸡",
+      "581": "九层塔炒肉碎",
+      "586": "酸橙炒虾",
+      "567": "鸟蛤配水含羞草沙拉",
+      "574": "腰果炒鸡",
+      "563": "熏鱼配印楝花沙拉",
+      "577": "姜炒鸡",
+      "550": "蜂蜜烤鸡",
+      "570": "英式牛肉乐乐",
+      "548": "烤牛肉配鱼酱和蔬菜",
+      "544": "罗望子酱海鲜炒面",
+      "549": "切菜板上的烤牛肉",
+      "542": "罗望子酱鸡肉炒面",
+      "568": "木瓜沙拉配新鲜蔬菜和咸蟹",
+      "539": "麻油海鲜炒面",
+      "541": "罗望子酱牛肉炒面",
+      "522": "蒜蓉炸鲈鱼",
+      "528": "炸肉碎鱿鱼",
+      "514": "新鲜虾春卷配辣椒酱",
+      "485": "热美式咖啡",
+      "482": "巧克力冰",
+      "523": "高棉脆皮春卷配辣椒酱和蔬菜",
+      "512": "Kouy Teav Kat​鲜肉面",
+      "513": "韭菜饼配辣椒酱",
+      "168": "鳄梨黄瓜冰沙",
+      "166": "西瓜奶昔",
+      "491": "新鲜百香果汁",
+      "493": "冷鲜大豆",
+      "161": "椰子奶昔",
+      "486": "热卡布奇诺",
+      "167": "鳄梨蜂蜜冰沙",
+      "164": "鳄梨奶昔",
+      "163": "苹果奶昔",
+      "162": "什锦水果奶昔",
+      "165": "激情摇动",
+      "160": "热鲜大豆",
+      "155": "鲜橙汁",
+      "152": "热巧克力",
+      "159": "新鲜菠萝汁",
+      "157": "新鲜苹果汁",
+      "158": "新鲜甜菜根和果汁",
+      "153": "热拿铁",
+      "156": "新鲜椰子汁",
+      "154": "新鲜胡萝卜汁",
+      "151": "冰柠檬茶热",
+      "150": "欧尼摩尔热咖啡",
+      "149": "巧克力冰沙",
+      "148": "美式冰",
+      "147": "鲜奶冰茶",
+      "146": "冰柠檬茶冰",
+      "145": "咖啡加鲜奶冰",
+      "144": "咖啡加炼乳冰",
+      "140": "椰壳蒸虾",
+      "141": "辣椒酱烤海螯虾",
+      "142": "盐辣椒烤鸡",
+      "143": "卡布奇诺冰",
+      "139": "椰壳蒸阿莫克鱼",
+      "138": "东北热肉丝",
+      "136": "肉碎紫菜豆腐汤",
+      "137": "热碎牛肉配脆皮烧饭",
+      "134": "牛肉配Thneong叶酸汤",
+      "135": "泡菜酸汤包鱼",
+      "133": "青木瓜酸汤河蟹",
+      "132": "笋包鱼汤",
+      "131": "笋熏鱼亲Haeu汤",
+      "130": "巴比伦蜗牛Pro-Haeu汤",
+      "128": "Chhlang 鱼 KorKo 汤",
+      "129": "猫鱼KorKo汤",
+      "127": "生酸鱼酱配猪大肠、蔬菜",
+      "126": "生鱼苦瓜沙拉",
+      "125": "炸脆皮鸡翅",
+      "123": "炸鱼饼",
+      "124": "炸虾球",
+      "122": "炸虾虎鱼配芒果沙拉",
+      "121": "酸橙叶炸虾虎鱼",
+      "116": "蒸白米饭-成人",
+      "119": "特色菜​​ 鲜河小虾碎配青罗望子沙拉",
+      "120": "炸排骨",
+      "117": "蒸糙米 - 成人",
+      "115": "鱼碎和鱼酱配蔬菜",
+      "118": "碎虾酱配新鲜蔬菜",
+      "114": "椰汁烤鸡",
+      "113": "香蕉花烤鸡",
+      "110": "鸡肉香蕉花沙拉",
+      "111": "海鲜粉丝沙律",
+      "112": "熏鱼配猪梅沙拉",
+      "107": "罗望子酱炒蚶、热罗勒",
+      "109": "炖猪耳朵配蔬菜沙拉",
+      "108": "咸蟹配新鲜香草沙拉",
+      "99": "咖喱汁炒海螯虾",
+      "101": "脆皮五花肉炒羽衣甘蓝",
+      "102": "蚝油牵牛花",
+      "104": "咸菜炒大肠",
+      "106": "森林蚁炒牛腱",
+      "103": "蚝油炒时菜",
+      "105": "蚝油小白菜",
+      "96": "酸橙汁蒸鲈鱼",
+      "98": "酸橙汁蒸鱿鱼",
+      "100": "咖喱汁炒虾",
+      "95": "酸橙蒸石斑鱼",
+      "93": "煎腌凯斯鱼配芒果沙拉",
+      "97": "酱油蒸鲈鱼",
+      "89": "酱油海鲜炒面",
+      "92": "咸豆姜煎柯斯鱼",
+      "94": "咸鱼肉碎煎蛋",
+      "90": "酱油牛肉炒面",
+      "91": "香煎糖醋鱼",
+      "81": "椰浆米饭",
+      "87": "酸鱼酱蔬菜",
+      "79": "椰子华夫饼",
+      "80": "香兰华夫饼",
+      "86": "棕榈糖汁焖虾虎鱼",
+      "88": "棕榈糖红烧肉",
+      "78": "数字机器人",
+      "77": "努姆·科姆",
+      "71": "椰奶甜棕榈籽",
+      "72": "椰浆黄豆粽",
+      "74": "椰奶时令熟芒果糯米饭",
+      "73": "椰奶榴莲奶黄糯米",
+      "75": "椰奶甜米线",
+      "76": "南瓜蛋奶冻",
+      "67": "椰奶甜陶酸",
+      "68": "椰子奶油中的甜“Banh Duk”",
+      "69": "椰奶甜科尔科斯",
+      "65": "椰奶香蕉西米粥",
+      "70": "椰奶甜红豆",
+      "58": "烤肉饭",
+      "62": "牛肉丸黄汤面",
+      "61": "One More炖牛肉面切汤",
+      "59": "炸鸡大腿配海南饭",
+      "60": "海南鸡腿饭",
+      "66": "胶带黑糯米",
+      "64": "时令棕榈籽配椰奶",
+      "63": "牛肉酱蛋炒面",
+      "55": "菠萝炒饭",
+      "53": "扬州炒饭",
+      "56": "炸排骨饭",
+      "54": "英式牛肉乐乐炒饭",
+      "57": "炸鸡大腿配米饭",
+      "51": "海鲜炒饭",
+      "47": "三竹粥",
+      "45": "鱼粥​​",
+      "46": "五色椰浆粽",
+      "52": "牛肉热罗勒炒饭",
+      "50": "虾酱炒饭",
+      "48": "One More虾末猪肉煎饼​",
+      "49": "Banh Sung 新鲜肉面",
+      "41": "One More猪血粥",
+      "44": "鱼小面汤",
+      "40": "蒸鲈鱼粥",
+      "36": "牛腱汤面",
+      "43": "鱼扁米线汤",
+      "42": "红烧淡水鱼粥",
+      "39": "法棍炖牛肉",
+      "38": "高棉碎河鱼汤面",
+      "37": "高棉咖喱鸡汤面",
+      "32": "牛肉炒面",
+      "29": "海鲜炒面",
+      "34": "鱼丸汤面",
+      "35": "肉碎汤面",
+      "26": "拿铁冰",
+      "31": "万摩炒面",
+      "33": "猪骨汤面",
+      "28": "海鲜汤面",
+      "19": "暹粒风格烤鸡",
+      "18": "粉丝蒸石蟹",
+      "24": "案板上粘着烤鱼酱",
+      "17": "三日鱼可可汤",
+      "9": "茶葵",
+      "10": "One More特色汤面",
+      "16": "One More特制法棍面包",
+      "11": "牛肉牛肉丸汤面",
+      "8": "南乒"
+    }
+  },
+  "branches": {
+    "loading": "加载位置...",
+    "errors": {
+      "load": "无法加载位置。",
+      "noData": "无可用数据。"
+    }
+  },
+  "reservation": {
+    "loading": "正在加载预订...",
+    "errors": {
+      "load": "无法加载预订数据。",
+      "noData": "没有可用的预订数据。"
+    }
+  },
+  "branchesPage": {
+    "header": {
+      "title": "每个地点都有自己的故事。",
+      "desc": "每个地点都营造出宁静的氛围，保留了柬埔寨传统，营造出宾至如归的温馨空间。"
+    },
+    "ui": {
+      "reserveCta": "预订餐桌",
+      "heroMapAlt": "分店地点地图",
+      "comparison": {
+        "eyebrow": "有什么不同",
+        "title": "比较我们的地点",
+        "featureLabel": "特征",
+        "featureDesc": "比较场地亮点",
+        "toulKorkTitle": "堆谷区",
+        "boeungKakTitle": "万谷",
+        "venueTag": "场地",
+        "toulKorkAlt": "堆谷区场地",
+        "boeungKakAlt": "万谷会场"
+      },
+      "findUs": {
+        "eyebrow": "我们的地点",
+        "title": "在这里找到我们",
+        "description": "两个截然不同的用餐目的地，一个令人难忘的美食故事。"
+      },
+      "map": {
+        "eyebrow": "查看地图",
+        "title": "在地图上看到我们",
+        "description": "两个截然不同的用餐目的地，一个令人难忘的美食故事。",
+        "imageAlt": "地点地图查看完整"
+      },
+      "modal": {
+        "closeAria": "关闭详情",
+        "venueDetails": "场地详情",
+        "highlightsTitle": "主要场馆亮点",
+        "reserveCta": "预订餐桌"
+      }
+    },
+    "comparison": {
+      "features": [
+        {
+          "name": "家庭用餐",
+          "toulKork": true,
+          "boeungKak": true
+        },
+        {
+          "name": "私人房间",
+          "toulKork": true,
+          "boeungKak": true
+        },
+        {
+          "name": "商务会议",
+          "toulKork": true,
+          "boeungKak": true
+        },
+        {
+          "name": "活动空间",
+          "toulKork": true,
+          "boeungKak": true
+        },
+        {
+          "name": "停車處",
+          "toulKork": true,
+          "boeungKak": true
+        },
+        {
+          "name": "容量",
+          "toulKork": "200+ 客人",
+          "boeungKak": "300+ 客人"
+        }
+      ]
+    },
+    "locations": [
+      {
+      "id": "toulKork",
+        "name": "One More Restaurant堆谷区",
+        "address": "37街315号, 金边 120407",
+        "phone": "023 888 222",
+        "hours": "每日：上午 06:00 - 晚上 10:00",
+        "image": "@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.webp",
+        "tags": [
+          "适合家庭入住",
+          "商务会议",
+          "私人房间"
+        ],
+        "description": "我们位于堆谷区的招牌分店提供美丽的花园用餐体验和优雅的私人房间。其布局专为家庭聚会、专业商务会议和庆典而设计。",
+        "highlights": [
+          "最多可容纳 200 多名客人",
+          "6 间配备全套视听设备的私人 VIP 室",
+          "专门的儿童游乐区，为家庭带来舒适感",
+          "免费安全代客泊车",
+          "风景优美的室外花园区"
+        ]
+      },
+      {
+      "id": "boeungKak",
+        "name": "One More Restaurant万谷",
+        "address": "G2 街 R11, 金边 120210",
+        "phone": "021 888 222",
+        "hours": "每日：上午 06:00 - 晚上 10:00",
+        "image": "@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.webp",
+        "tags": [
+          "活动空间",
+          "大型团体",
+          "公司的"
+        ],
+        "description": "我们的 Boeung Kak 分店展示了引人注目的现代建筑设计和广阔的布局。是举办大型企业活动、宴会和难忘用餐体验的理想场所。",
+        "highlights": [
+          "最多可容纳 300 多名客人",
+          "配有舞台和音响系统的大型活动空间",
+          "现代别致的建筑和摄影景点",
+          "大容量停车位",
+          "特别宴会和团体餐饮菜单"
+        ]
+      }
+    ]
+  },
+  "reservationPage": {
+    "hero": {
+      "eyebrow": "美国东部时间。 2008 · 金边",
+      "title": "预订餐桌",
+      "desc": "体验高棉烹饪传统的顶峰。在永恒奢华的环境中重新发现被遗忘的风味之旅。",
+      "backgroundImage": "@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.webp",
+      "backgroundAlt": "One More Restaurant饭厅"
+    },
+    "guestInformationTitle": "宾客信息",
+    "guestInformationAria": "宾客信息",
+    "guestInformation": [
+      {
+        "type": "小时",
+        "label": "开放时间",
+        "value": "上午 06:00 - 晚上 10:00"
+      },
+      {
+        "type": "电话",
+        "label": "联系电话",
+        "value": "+855 23 888 222"
+      },
+      {
+        "type": "政策",
+        "label": "预订政策",
+        "value": "24 小时内免费取消"
+      }
+    ],
+    "steps": {
+      "branch": {
+        "title": "选择分行",
+        "desc": "选择您在金边的首选位置"
+      },
+      "contact": {
+        "title": "联系方式",
+        "desc": "输入您的信息，以便我们就您的预订与您联系"
+      },
+      "guests": {
+        "title": "嘉宾",
+        "desc": "告诉我们有多少人会加入您"
+      },
+      "dateTime": {
+        "title": "选择日期和时间",
+        "desc": "选择您想与我们一起用餐的时间"
+      },
+      "occasion": {
+        "title": "特殊场合",
+        "desc": "如果您正在庆祝特殊活动，请告诉我们"
+      },
+      "seating": {
+        "title": "座位偏好",
+        "desc": "选择您想要的座位"
+      },
+      "preOrder": {
+        "title": "预订菜品",
+        "desc": "提前选择您喜欢的菜肴",
+        "button": "预订菜单",
+        "note": "预订可以帮助我们为您准备完美的食物，并在您入座后立即为您提供热食。您可以在新选项卡中查看我们的菜单。"
+      }
+    },
+    "form": {
+      "aria": "预订表格",
+      "labels": {
+        "fullName": "姓名",
+        "phoneNumber": "电话号码",
+        "adults": "成年人",
+        "children": "孩子们",
+        "specialRequest": "特别要求"
+      },
+      "placeholders": {
+        "fullName": "输入全名",
+        "phoneNumber": "输入电话号码",
+        "time": "输入时间...",
+        "specialRequest": "过敏、座位要求等。"
+      },
+      "ariaLabels": {
+        "decreaseAdults": "减少成人",
+        "increaseAdults": "增加成人",
+        "decreaseChildren": "减少儿童",
+        "increaseChildren": "增加孩子",
+        "previousMonth": "上个月",
+        "nextMonth": "下个月"
+      },
+      "totalGuests": "全部的{count}嘉宾",
+      "submit": "预订餐桌",
+      "processing": "处理中...",
+      "cancellationNotice": "预订前 24 小时可免费取消。"
+    },
+    "validation": {
+      "contactRequired": "请填写您的联系方式（姓名和电话号码）以完成预订。",
+      "invalidName": "请输入有效的全名（至少 2 个字符）。",
+      "invalidPhone": "请输入有效的电话号码（通常为 9 至 11 位数字）。"
+    },
+    "success": {
+      "title": "预订已确认！",
+      "desc": "感谢您通过以下方式预订One More Restaurant。确认消息已发送至您的电话号码。",
+      "makeAnother": "再次预订",
+      "backHome": "返回首页",
+      "preOrderTotal": "预订总额",
+      "valuedGuest": "尊贵的客人",
+      "notProvided": "未提供",
+      "detailLabels": {
+        "branch": "分支",
+        "guestName": "宾客姓名",
+        "phone": "电话",
+        "guests": "嘉宾",
+        "dateTime": "日期和时间",
+        "seatingOccasion": "座位及场合"
+      },
+      "guestsValue": "{total}嘉宾（{adults}成年人，{children}孩子们）",
+      "dateTimeValue": "{date}在{time}",
+      "seatingOccasionValue": "{seating}·{occasion}"
+    },
+    "summary": {
+      "title": "预订摘要",
+      "labels": {
+        "branch": "分支",
+        "name": "姓名",
+        "contact": "接触",
+        "guests": "嘉宾",
+        "date": "日期",
+        "occasion": "场合",
+        "seating": "座位"
+      },
+      "empty": "—",
+      "guestBreakdown": "（{adults}成年人，{children}孩子们）",
+      "timeTag": "（{time}{category}）",
+      "arrivalNotice": "请提前10分钟到达。预订会在预定时间后保留 15 分钟。",
+      "reserveButton": "预订餐桌",
+      "contactRestaurant": "联系餐厅",
+      "totalPrice": "总价",
+      "phoneHref": "电话：+85523888222"
+    },
+    "calendar": {
+      "months": [
+        "一月",
+        "二月",
+        "行进",
+        "四月",
+        "可能",
+        "六月",
+        "七月",
+        "八月",
+        "九月",
+        "十月",
+        "十一月",
+        "十二月"
+      ],
+      "shortMonths": [
+        "扬",
+        "二月",
+        "三月",
+        "四月",
+        "可能",
+        "君",
+        "七月",
+        "八月",
+        "九月",
+        "十月",
+        "十一月",
+        "十二月"
+      ],
+      "daysOfWeek": [
+        "S",
+        "中号",
+        "时间",
+        "瓦",
+        "时间",
+        "F",
+        "S"
+      ]
+    },
+    "timeCategories": {
+      "Breakfast": "早餐",
+      "Lunch": "午餐",
+      "Dinner": "晚餐"
+    },
+    "branches": [
+      {
+        "id": "堆谷区",
+        "name": "One More Restaurant堆谷区",
+        "address": "37街315号, 金边 120407",
+        "phone": "023 888 222",
+        "hours": "每日：上午 06:00 - 晚上 10:00",
+        "img": "@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.webp",
+        "tags": [
+          "适合家庭入住",
+          "商务会议",
+          "私人房间"
+        ]
+      },
+      {
+        "id": "万谷",
+        "name": "One More Restaurant万谷",
+        "address": "G2 街 R11, 金边 120210",
+        "phone": "021 888 222",
+        "hours": "每日：上午 06:00 - 晚上 10:00",
+        "img": "@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.webp",
+        "tags": [
+          "活动空间",
+          "大型团体",
+          "公司的"
+        ]
+      }
+    ],
+    "occasions": [
+      {
+        "id": "家庭用餐",
+        "name": "家庭用餐",
+        "icon": "家庭用餐"
+      },
+      {
+        "id": "商务会议",
+        "name": "商务会议",
+        "icon": "商务会议"
+      },
+      {
+        "id": "生日庆典",
+        "name": "生日庆典",
+        "icon": "生日庆典"
+      },
+      {
+        "id": "企业活动",
+        "name": "企业活动",
+        "icon": "企业活动"
+      },
+      {
+        "id": "约会之夜",
+        "name": "约会之夜",
+        "icon": "约会之夜"
+      },
+      {
+        "id": "其他",
+        "name": "其他",
+        "icon": "其他"
+      }
+    ],
+    "seatingPreferences": [
+      {
+        "id": "室内的",
+        "name": "室内的",
+        "img": "@/assets/home-v2/e8f4b56e423777f3f6c3df39c6ef78914b278e17.webp"
+      },
+      {
+        "id": "户外的",
+        "name": "户外的",
+        "img": "img画廊1"
+      },
+      {
+        "id": "私人房间",
+        "name": "私人房间",
+        "img": "@/assets/home-v2/31b0910d38c033be0ce5292cf4a1d68688308c6b.webp"
+      },
+      {
+        "id": "贵宾室",
+        "name": "贵宾室",
+        "img": "img画廊5"
+      }
+    ],
+    "faq": {
+      "eyebrow": "协助",
+      "title": "常见问题解答",
+      "items": [
+        {
+          "q": "着装要求是什么？",
+          "a": "我们推荐商务休闲装。传统高棉服装在特殊场合也很受欢迎。"
+        },
+        {
+          "q": "你们提供素食选择吗？",
+          "a": "是的，我们有各种素食，需要提前预订，并且必须在特殊要求中提及。"
+        },
+        {
+          "q": "分行有停车场吗？",
+          "a": "是的，我们的堆谷区和万谷分店均设有宽敞、安全的停车场，并提供免费代客泊车服务。"
+        },
+        {
+          "q": "我可以自带酒吗？",
+          "a": "是的，您可以自带酒。每瓶需支付 20 美元的开瓶费。"
+        },
+        {
+          "q": "允许携带宠物吗？",
+          "a": "为了确保为所有客人提供舒适的用餐环境，宠物仅允许进入我们的室外花园区。"
+        }
+      ]
+    }
+  },
+  "branchDetails": {
+    "hero": {
+      "toulKork": {
+        "title": "One More Restaurant堆谷区",
+        "desc": "专为家庭聚会和商务会议而设计的高级餐饮目的地，供应最精致的柬埔寨传统美食。"
+      },
+      "boeungKak": {
+        "title": "One More Restaurant万谷",
+        "desc": "专为家庭聚会和商务会议而设计的高级餐饮目的地，供应最精致的柬埔寨传统美食。"
+      },
+      "cta": "预订餐桌"
+    },
+    "space": {
+      "eyebrow": "我们的空间",
+      "title": "建筑遗产与优雅"
+    },
+    "philosophy": {
+      "eyebrow": "我们的理念",
+      "title": "柬埔寨待客之道的艺术",
+      "toulKorkDesc": "One MoreToul Kork 的创建是为了纪念柬埔寨丰富的烹饪传统，同时提供现代、高雅的用餐氛围。从手工挑选的当地食材到精心制作的菜肴，我们的厨师和接待团队为每道菜提供真正的高棉传统而感到自豪。走进来，放松一下，让我们与您分享我们对美食和正宗柬埔寨待客之道的热爱。",
+      "boeungKakDesc": "One More博恩·卡克.建立在我们对柬埔寨烹饪传统的深深敬意之上，这个新地点扩展了我们的使命，即在时尚、现代的当代氛围中展示正宗高棉美食的深度、丰富性和美丽。从精心采购的当地食材到历史悠久的烹饪技术，每道菜都由我们的厨师和烹饪团队精心烹制。",
+      "bestFor": "最适合",
+      "family": "家庭用餐",
+      "business": "商务会议",
+      "corporate": "公司午餐",
+      "special": "特殊场合"
+    },
+    "rooms": {
+      "eyebrow": "排他性",
+      "title": "私人包间",
+      "guestBadge": "8-12位客人",
+      "highlights": {
+        "av": "集成视音频系统",
+        "butler": "私人管家服务",
+        "views": "花园景观"
+      },
+      "reserveCta": "预订私人房间"
+    },
+    "chefRecs": {
+      "eyebrow": "我们的菜单",
+      "title": "厨师推荐",
+      "addToCart": "添加到购物车",
+      "viewFullMenu": "查看完整菜单",
+      "recommendation": "推荐",
+      "items": {
+        "friedNoodle": {
+          "name": "One More 炒面",
+          "desc": "金黄烤鸡配锅炒面、爽脆豆芽、韭菜和本店秘制调味料。"
+        },
+        "fishAmok": {
+          "name": "嫩椰子阿莫克鱼",
+          "desc": "嫩鱼配椰浆、柬式香料和卡菲尔青柠蒸制，盛放在新鲜嫩椰子中。"
+        },
+        "grilledChicken": {
+          "name": "暹粒风味烤鸡",
+          "desc": "整只本地鸡以传统柬埔寨香草腌制，并慢烤至香气浓郁。"
+        }
+      }
+    },
+    "events": {
+      "eyebrow": "与我们一起主持",
+      "title": "活动与庆典",
+      "planCta": "规划您的活动",
+      "items": {
+        "birthday": {
+          "title": "生日庆祝活动",
+          "desc": "通过我们定制的派对策划创造持久的回忆。"
+        },
+        "engagement": {
+          "title": "订婚晚宴",
+          "desc": "为您的重大公告提供亲密而浪漫的环境。"
+        },
+        "family": {
+          "title": "家庭聚会",
+          "desc": "足够宽敞，可供全家人分享传统食谱。"
+        },
+        "corporate": {
+          "title": "企业活动",
+          "desc": "会议和发布会的完美专业背景。"
+        }
+      }
+    },
+    "testimonials": {
+      "eyebrow": "评论",
+      "title": "我们的客人怎么说",
+      "desc": "我们尊贵的客户分享的经验",
+      "items": {
+        "toulKork": [
+          {
+            "name": "索万·达拉",
+            "date": "2 周前",
+            "text": "堆谷区绝对的瑰宝。传统的建筑令人惊叹，私人包间非常适合商务晚宴。服务是一流的。"
+          },
+          {
+            "name": "维切阿博克",
+            "date": "1个月前",
+            "text": "体验正宗高棉美食的最佳场所。美丽的花园环境和 Amok Trey 非常出色。强烈推荐！"
+          },
+          {
+            "name": "陈蒂·谢",
+            "date": "1个月前",
+            "text": "举办企业活动的绝佳场所。我们在他们的 VIP 室举办了一场研讨会，视听设置和餐饮超出了我们的预期。"
+          }
+        ],
+        "boeungKak": [
+          {
+            "name": "索万·达拉",
+            "date": "2 周前",
+            "text": "Boeung Kak 的绝对瑰宝。传统的建筑令人惊叹，私人包间非常适合商务晚宴。服务是一流的。"
+          },
+          {
+            "name": "维切阿博克",
+            "date": "1个月前",
+            "text": "体验正宗高棉美食的最佳场所。美丽的花园环境和 Amok Trey 非常出色。强烈推荐！"
+          },
+          {
+            "name": "陈蒂·谢",
+            "date": "1个月前",
+            "text": "举办企业活动的绝佳场所。我们在他们的 VIP 室举办了一场研讨会，视听设置和餐饮超出了我们的预期。"
+          }
+        ]
+      }
+    },
+    "visit": {
+      "title": "访问我们",
+      "labels": {
+        "address": "地址",
+        "phone": "电话",
+        "telegram": "电报",
+        "hours": "开放时间",
+        "parking": "停車處"
+      },
+      "values": {
+        "toulKorkAddress": "37街315号, 金边 120407",
+        "boeungKakAddress": "G2 街 R11, 金边 120210",
+        "hours": "每日：上午 11:00 – 晚上 10:00",
+        "parking": "提供免费安全停车场"
+      },
+      "directions": "获取路线",
+      "call": "立即致电"
+    }
+  },
+  "eventsPage": {
+    "hero": {
+      "eyebrow": "One More Restaurant",
+      "title": "庆祝每一个\n特别时刻",
+      "desc": "从亲密的聚会到盛大的庆祝活动，One More Restaurant提供美丽的空间、独特的美食和难忘的体验。",
+      "planCta": "规划您的活动",
+      "contactCta": "联系活动团队",
+      "contactInfo": "活动联系信息",
+      "hotline": "活动热线",
+      "hotlineValue": "023 888 222",
+      "email": "电邮查询",
+      "policyLabel": "预订政策",
+      "policyValue": "24 小时内免费取消"
+    },
+    "packages": {
+      "eyebrow": "活动套餐",
+      "title": "选择完美的套餐",
+      "items": {
+        "family": {
+          "name": "家庭庆典",
+          "guests": "8–12 位宾客",
+          "features": [
+            "私人房间",
+            "免费基本餐桌布置",
+            "免房费2小时",
+            "超过 100 种点菜选择",
+            "服务员提供食物和饮料"
+          ]
+        },
+        "engagement": {
+          "name": "订婚套餐",
+          "guests": "30位客人",
+          "features": [
+            "免费活动厅半天",
+            "免费摆桌",
+            "美食自助餐或套餐（8-10 道菜/套餐）",
+            "每桌免费饮料（活力水350ml 10瓶/桌，可乐10罐/桌）",
+            "自助餐无限畅饮非酒精饮料",
+            "提供食物和饮料的专用服务器"
+          ]
+        },
+        "catering": {
+          "name": "会议室",
+          "guests": "30+ 客人",
+          "features": [
+            "免费会议室",
+            "液晶投影仪+屏幕+指针",
+            "主席台和麦克风扩音系统",
+            "活动挂图和纸张 带记号笔的白板 讲台",
+            "Vital 优质水 350ml（2 瓶/半天，4 瓶/全天）"
+          ]
+        },
+        "corporate": {
+          "name": "企业套餐",
+          "guests": "8–80 位宾客",
+          "features": [
+            "免费会议室",
+            "液晶投影仪+屏幕+指针",
+            "主席台和麦克风扩音系统",
+            "活动挂图和纸张 带记号笔的白板 讲台",
+            "Vital 优质水 350ml（2 瓶/半天，4 瓶/全天）"
+          ]
+        }
+      }
+    },
+    "spaces": {
+      "eyebrow": "活动空间",
+      "title": "适合各种场合的美丽空间",
+      "items": {
+        "vip": {
+          "name": "贵宾室",
+          "guestTag": "8–12 位宾客",
+          "badgeTag": "最适合私人晚餐",
+          "features": [
+            "空调（交流）",
+            "私人管家服务",
+            "花园景观",
+            "集成视音频系统"
+          ]
+        },
+        "private": {
+          "name": "私人房间",
+          "guestTag": "8–12 位宾客",
+          "badgeTag": "最适合私人晚餐",
+          "features": [
+            "空调（交流）",
+            "私人管家服务",
+            "花园景观",
+            "集成视音频系统"
+          ]
+        },
+        "main-hall": {
+          "name": "正殿",
+          "guestTag": "8–12 位宾客",
+          "badgeTag": "最适合私人晚餐",
+          "features": [
+            "空调（交流）",
+            "私人管家服务",
+            "花园景观",
+            "集成视音频系统"
+          ]
+        }
+      }
+    },
+    "services": {
+      "eyebrow": "服务",
+      "title": "为每个细节提供精心策划的服务",
+      "items": {
+        "planning": {
+          "title": "活动策划",
+          "desc": "我们的专业活动协调员从概念到庆祝活动都会与您合作，精心处理每一个细节。"
+        },
+        "decor": {
+          "title": "花卉和装饰",
+          "desc": "令人惊叹的插花和主题装饰，将任何空间变成您梦想的场所。"
+        },
+        "music": {
+          "title": "现场娱乐表演",
+          "desc": "传统的高棉音乐、当代乐队和文化表演营造出真正令人难忘的氛围。"
+        },
+        "photo": {
+          "title": "摄影",
+          "desc": "专业摄影和摄像套餐，捕捉您大喜之日的每一个珍贵时刻。"
+        },
+        "catering": {
+          "title": "定制餐饮",
+          "desc": "由我们的行政主厨精心制作的定制菜单，从传统的高棉盛宴到国际美食。"
+        },
+        "coordination": {
+          "title": "全面协调",
+          "desc": "当天的协调服务确保从抵达到告别的一切顺利进行。"
+        }
+      },
+      "learnMore": "了解更多→"
+    },
+    "gallery": {
+      "eyebrow": "画廊",
+      "title": "我们感到自豪的时刻",
+      "filters": {
+        "All": "全部",
+        "Wedding": "婚礼",
+        "Corporate": "公司的",
+        "Birthday": "生日",
+        "Private": "私人的"
+      },
+      "captions": {
+        "Garden Gathering": "花园聚会",
+        "Artisanal Plating": "手工电镀",
+        "Bridal Dinner": "新娘晚宴",
+        "Venue Ambiance": "场地氛围",
+        "Grand Ballroom": "大宴会厅"
+      },
+      "viewFull": "查看完整图库"
+    },
+    "inquiry": {
+      "visual": {
+        "title": "让我们一起创造一些令人惊奇的事情",
+        "desc": "无论是一个小小的里程碑还是一生的承诺，我们都会以高棉的温暖和现代的奢华将您的愿景变为现实。"
+      },
+      "form": {
+        "title": "查询表格",
+        "labels": {
+          "name": "全名 *",
+          "phone": "电话号码 *",
+          "company": "公司名称",
+          "email": "电子邮件地址（可选）",
+          "eventType": "事件类型",
+          "guests": "嘉宾",
+          "requirements": "特殊要求"
+        },
+        "placeholders": {
+          "name": "输入全名",
+          "phone": "输入电话号码",
+          "company": "公司名称",
+          "email": "输入电子邮件地址",
+          "guests": "例如150",
+          "requirements": "告诉我们更多有关您的活动的信息..."
+        },
+        "eventTypes": {
+          "Wedding": "婚礼",
+          "Birthday": "生日",
+          "Corporate Event": "企业活动",
+          "Engagement": "订婚",
+          "Private Dining": "私人用餐",
+          "Other": "其他"
+        },
+        "submit": "提交询盘",
+        "success": "✓ 谢谢！我们的团队将在 24 小时内联系您。"
+      }
+    },
+    "faq": {
+      "eyebrow": "常问问题",
+      "title": "常见问题解答",
+      "items": [
+        {
+          "q": "我应该提前多久预订活动？",
+          "a": "我们建议小型活动至少提前 4-6 周预订，大型婚礼或公司活动至少提前 3-6 个月预订。这可确保您首选的日期和空间可用。"
+        },
+        {
+          "q": "私人活动的最低宾客人数是多少？",
+          "a": "我们的私人 VIP 套房可容纳 8 至 30 名客人。大宴会厅适合容纳 40 至 120 名宾客。对于小型私密晚餐，我们可以安排 6 位客人起的半私人用餐区。"
+        },
+        {
+          "q": "我可以携带自己的蛋糕或装饰品吗？",
+          "a": "是的！欢迎您携带自己的蛋糕和个人装饰品。我们的团队将帮助您设置一切，无需额外付费。外带饮料可能需支付少量开瓶费。"
+        },
+        {
+          "q": "取消和押金政策是什么？",
+          "a": "30% 的押金可确保您的活动日期。在活动前 14 天以上取消预订，我们将全额退还押金。 14 天内取消预订将没收押金。"
+        }
+      ]
+    },
+    "finalCta": {
+      "eyebrow": "ONE MORE RESTAURANT",
+      "title": "准备好策划您的活动了吗？",
+      "desc": "立即联系我们的团队，让我们将您的愿景变为现实。",
+      "bookNow": "立即预订",
+      "getInTouch": "联系我们"
+    }
+  },
+  "galleryPage": {
+    "hero": {
+      "eyebrow": "One More Restaurant",
+      "title": "画廊",
+      "desc": "体验正宗高棉热情好客的风味、工艺和氛围的视觉之旅。"
+    },
+    "filters": {
+      "All": "全部",
+      "Restaurant": "餐厅",
+      "Food": "食物",
+      "Experience": "经验",
+      "Events": "活动"
+    },
+    "empty": "该系列的更多精彩瞬间即将推出。",
+    "aria": {
+      "close": "关闭图像",
+      "previous": "上一张图片",
+      "next": "下一张图片",
+      "view": "查看图片"
+    },
+    "items": {
+      "Main Hall Dining": {
+        "title": "主厅用餐",
+        "tag": "餐厅"
+      },
+      "Rich of Flavors": {
+        "title": "口味丰富",
+        "tag": "食物"
+      },
+      "Khmer Cooking Workshop": {
+        "title": "高棉烹饪工作坊",
+        "tag": "经验"
+      },
+      "Event Refreshment Moment": {
+        "title": "活动茶点时刻",
+        "tag": "经验"
+      },
+      "One More Service Moment": {
+        "title": "One More服务时刻",
+        "tag": "经验"
+      },
+      "Kitchen Rituals": {
+        "title": "厨房仪式",
+        "tag": "食物"
+      },
+      "Khmer Grill Platter": {
+        "title": "高棉烧烤盘",
+        "tag": "食物"
+      },
+      "Artisanal Plating": {
+        "title": "手工电镀",
+        "tag": "食物"
+      },
+      "Christmas Wine Display": {
+        "title": "圣诞酒展示",
+        "tag": "活动"
+      },
+      "Wine Toast": {
+        "title": "酒吐司",
+        "tag": "活动"
+      },
+      "Christmas Deer Display": {
+        "title": "圣诞鹿展示",
+        "tag": "活动"
+      },
+      "Miss Planet International Dining": {
+        "title": "星球小姐国际餐饮",
+        "tag": "活动"
+      },
+      "Catering Service Team": {
+        "title": "餐饮服务团队",
+        "tag": "活动"
+      },
+      "Event Coffee Service": {
+        "title": "活动咖啡服务",
+        "tag": "活动"
+      },
+      "Khmer Cake Traditions": {
+        "title": "高棉蛋糕传统",
+        "tag": "经验"
+      },
+      "Private Gatherings": {
+        "title": "私人聚会",
+        "tag": "活动"
+      },
+      "Khmer Hospitality": {
+        "title": "高棉热情好客",
+        "tag": "经验"
+      },
+      "The Private Room": {
+        "title": "私人房间",
+        "tag": "餐厅"
+      },
+      "A Day To Remember": {
+        "title": "值得纪念的一天",
+        "tag": "活动"
+      },
+      "Little Moments": {
+        "title": "小时刻",
+        "tag": "经验"
+      },
+      "Sweet Refreshment": {
+        "title": "甜蜜茶点",
+        "tag": "食物"
+      },
+      "Canopy Entrance": {
+        "title": "天篷入口",
+        "tag": "餐厅"
+      },
+      "Curves & Craft": {
+        "title": "曲线与工艺",
+        "tag": "餐厅"
+      }
+    }
+  },
+  "aboutInline": {
+    "Hor Chanthorn": "何陈通",
+    "Khna Ra": "赫纳拉",
+    "Our Story Since 2008": "自 2008 年以来我们的故事",
+    "More Than a Restaurant": "不仅仅是一家餐厅",
+    "Sous Chef": "副主厨",
+    "Explore Our Story": "探索我们的故事",
+    "Our Story": "我们的故事",
+    "Reserve a Table": "预订餐桌",
+    "At One More, experience the legacy of Cambodian cuisine through Chef Hor Chanthorn's 15 years of experience, vision, and passion, which shape every dish on our menu. His commitment to preserving and elevating Cambodian cuisine ensures an unparalleled culinary journey for all who dine with us.": "在One More，通过厨师 Hor Chanthorn 15 年的经验、远见和热情体验柬埔寨美食的传统，正是这些经验、远见和热情塑造了我们菜单上的每道菜。他致力于保存和提升柬埔寨美食，确保为所有与我们一起用餐的人提供无与伦比的美食之旅。",
+    "At One More, experience the legacy of Cambodian cuisine through Chef Khna Ra's 10 years of experience. His commitment to preserving and elevating Cambodian cuisine ensures an unparalleled culinary journey for all who dine with us.": "在One More，通过厨师 Khna Ra 10 年的经验体验柬埔寨美食的传承。他致力于保存和提升柬埔寨美食，确保为所有与我们一起用餐的人提供无与伦比的美食之旅。",
+    "Our Journey": "我们的旅程",
+    "Since 2008, One More Restaurant has brought people together through authentic Khmer cuisine, warm hospitality, and memorable celebrations.": "自2008年以来，One More Restaurant通过正宗的高棉美食、热情好客和难忘的庆祝活动将人们聚集在一起。",
+    "Our Story Begins": "我们的故事开始了",
+    "Expanding Roots": "扩展根源",
+    "One More Restaurant begins with a vision to preserve Khmer flavors.": "One More Restaurant始于保留高棉风味的愿景。",
+    "Our second home opens, bringing our signature hospitality to a vibrant neighborhood.": "我们的第二个家开业，将我们标志性的热情好客带到了充满活力的社区。",
+    "A New Chapter": "新篇章",
+    "Today": "今天",
+    "Vision and Mission": "愿景与使命",
+    "We continue serving families, businesses, and celebrations across Phnom Penh.": "我们继续为金边各地的家庭、企业和庆祝活动提供服务。",
+    "Serving Phnom Penh": "服务金边",
+    "To become a leading Khmer restaurant brand while preserving the cuisine and hospitality of Cambodia.": "成为领先的高棉餐厅品牌，同时保留柬埔寨的美食和热情好客。",
+    "Vision": "想象",
+    "Our Guiding Principles": "我们的指导原则",
+    "Mission": "使命",
+    "Private dining and celebrations grow into an important part of the One More experience.": "私人用餐和庆祝活动已成为家庭生活的重要组成部分One More经验。",
+    "To serve excellent Khmer food with thoughtful choices, warm service, and memorable experiences.": "提供优质的高棉美食、周到的选择、热情的服务和难忘的体验。",
+    "Why Guests Choose One More": "客人为何选择One More",
+    "Guests' Choice": "宾客选择",
+    "Authentic Khmer Cuisine": "正宗的高棉美食",
+    "Spaces For Every Occasion": "适合各种场合的空间",
+    "Traditional recipes prepared with care, quality ingredients, and contemporary refinement.": "传统食谱经过精心准备，采用优质原料和现代精致工艺。",
+    "Trusted Event Destination": "值得信赖的活动目的地",
+    "Welcoming dining rooms, private rooms, and flexible event spaces.": "温馨的餐厅、私人房间和灵活的活动空间。",
+    "Experienced planning and thoughtful service for intimate or large celebrations.": "为私人或大型庆祝活动提供经验丰富的策划和周到的服务。",
+    "A dedicated team delivering warm and memorable Khmer dining experiences.": "一支敬业的团队为您提供温馨难忘的高棉用餐体验。",
+    "Hospitality Since 2008": "自 2008 年起接待",
+    "Warm Hospitality": "热情好客",
+    "Our Commitment": "我们的承诺",
+    "Preserving Cambodia's culinary traditions.": "保护柬埔寨的烹饪传统。",
+    "Memorable Experiences": "难忘的经历",
+    "Welcoming every guest with genuine care.": "以真诚的关怀迎接每一位客人。",
+    "Creating moments worth remembering.": "创造值得记住的时刻。",
+    "Our People": "我们的员工",
+    "The People Behind One More": "背后的人One More",
+    "Head Chef": "主厨",
+    "A kitchen built on precision, respect for ingredients, and the joy of sharing heritage recipes.": "厨房建立在精确、尊重食材以及分享传统食谱的乐趣之上。",
+    "Khlara": "克拉拉",
+    "Head Chef at Boeung Kak Branch. Warm, attentive, and genuinely invested in making every guest feel at home.": "Boeung Kak 分店的主厨。热情、细心、真诚，让每一位客人都有宾至如归的感觉。",
+    "Our Culinary Team": "我们的烹饪团队",
+    "Toul Kork Team": "堆谷区团队",
+    "The Toul Kork chef and service team bring heritage recipes, warm hospitality, and careful service to every guest experience.": "堆谷区的厨师和服务团队为每一位客人带来传统食谱、热情好客和细心服务。",
+    "Precision, respect for ingredients, and the joy of sharing heritage recipes.": "精确、尊重成分以及分享传统食谱的乐趣。",
+    "Warm, attentive, and genuinely invested in making every guest feel at home.": "热情、细心、真诚，让每一位客人都有宾至如归的感觉。",
+    "Guardians of Khmer Flavor": "高棉风味的守护者",
+    "Genuine Khmer Hospitality": "真正的高棉热情好客",
+    "Service Team": "服务团队",
+    "Warm, attentive, and invested in making every guest feel at home.": "热情、细心、投入，让每一位客人都有宾至如归的感觉。",
+    "Our Event Team": "我们的活动团队",
+    "Our Number": "我们的号码",
+    "One More In Numbers": "One More从数字来看",
+    "The People Behind It All": "这一切背后的人",
+    "Menu Items": "菜单项",
+    "Rooms & Event Spaces": "房间和活动空间",
+    "Maximum Capacity": "最大容量",
+    "Branches": "分支机构",
+    "Team Members": "团队成员",
+    "Khmer Culture": "高棉文化",
+    "The Spirit of Khmer Hospitality": "高棉热情好客的精神",
+    "For us, Khmer hospitality starts at the table: a warm welcome, food made with care, and time shared without hurry. We choose fresh local ingredients, cook with respect for familiar flavors, and serve each guest as if they were part of our own home.": "对我们来说，高棉人的热情好客从餐桌开始：热烈的欢迎、精心烹制的食物以及从容不迫的共享时光。我们选择新鲜的当地食材，尊重熟悉的口味进行烹饪，并为每位客人提供宾至如归的服务。",
+    "The Boeung Kak chef and service team work together to welcome every guest with care, warmth, and authentic Khmer hospitality.": "Boeung Kak 厨师和服务团队齐心协力，以关怀、热情和正宗的高棉待客之道迎接每一位客人。",
+    "Creative, experienced, and ready to make every gathering feel personal.": "创意十足、经验丰富，随时准备让每次聚会都充满个性化。",
+    "Learn More": "了解更多",
+    "Boeung Kak Team": "万谷队",
+    "Caring for every detail, from planning and sourcing to daily service.": "关注从规划、采购到日常服务的每一个细节。",
+    "Celebrations With Heart": "用心庆祝",
+    "Moments": "精彩瞬间",
+    "Grow With One More": "一起成长One More",
+    "We are a team of storytellers, chefs, and hosts dedicated to preserving Khmer heritage through exceptional hospitality.": "我们是一支由讲故事者、厨师和主持人组成的团队，致力于通过卓越的热情好客来保护高棉传统。",
+    "Careers": "职业机会",
+    "Career opportunities across culinary, service, and events.": "烹饪、服务和活动领域的职业机会。",
+    "A supportive team environment built on respect and excellence.": "建立在尊重和卓越之上的支持性团队环境。",
+    "events hosted with care and excellence.": "精心举办的活动，品质卓越。",
+    "Moments That Matter": "重要时刻",
+    "View Careers": "查看职业机会",
+    "Send Your CV": "发送您的简历",
+    "A celebration at One More": "庆祝活动于One More",
+    "Connect with us on:": "通过以下方式与我们联系：",
+    "Event catering": "活动餐饮",
+    "Plan Your Event": "规划您的活动",
+    "A family activity": "家庭活动",
+    "Guests sharing a meal at One More Restaurant": "共享餐点的客人One More Restaurant",
+    "Stay connected with us": "与我们保持联系",
+    "Follow us on social media": "在社交媒体上关注我们",
+    "Khmer cooking experience": "高棉烹饪体验",
+    "Help Us Serve You Better": "帮助我们更好地为您服务",
+    "We read every message and value your honest feedback.": "我们阅读每条消息并重视您的诚实反馈。",
+    "Your Name": "你的名字",
+    "The One More Restaurant team": "这One More Restaurant团队",
+    "Email Address": "电子邮件",
+    "Enter your email": "输入您的电子邮件",
+    "Your experience matters to us. Share your thoughts and help us make every visit to One More even better.": "您的经验对我们很重要。分享您的想法并帮助我们每次访问One More甚至更好。",
+    "Which branch did you visit?": "您去了哪个分行？",
+    "Toul Kork": "堆谷区",
+    "Select a branch": "选择分行",
+    "Boeung Kak": "万谷",
+    "How was your experience?": "您的体验如何？",
+    "star": "星星",
+    "Rating out of 5 stars": "评分满分 5 星",
+    "Tell us about your experience": "告诉我们您的经历",
+    "stars": "星星",
+    "Sending...": "正在发送...",
+    "Thank you! Your feedback has been sent successfully.": "谢谢你！您的反馈已成功发送。",
+    "Submit Feedback": "提交反馈",
+    "We could not send your feedback. Please try again.": "我们无法发送您的反馈。请再试一次。",
+    "What did you enjoy, and what could we improve?": "您喜欢什么？我们可以改进什么？",
+    "Please choose a star rating before submitting.": "请在提交前选择星级。",
+    "Enter your name": "输入你的名字",
+    "Your Feedback": "您的反馈"
+  },
+  "termsInline": {
+    "eyebrow": "重要预订信息",
+    "title": "条款和条件",
+    "intro": "请在确认预订之前查看以下条款。",
+    "sections": [
+      {
+        "title": "取消和缺席",
+        "paragraphs": [
+          "如果在预订日期前七至三 (7 至 3) 天取消预订，将收取菜单价格的百分之三十 (30%)。如果在预订日期前 3 天以内取消，将收取菜单价格的百分之一 (100%)。如果“未出现”，将收取菜单价格的百分之一 (100%) 费用。"
+        ]
+      },
+      {
+        "title": "付款和终止政策",
+        "paragraphs": [
+          "需在餐后付款。One More Restaurant收到付款后才会从 POS 系统发出收据。任何一方必须提前 7 天以书面形式通知另一方才能终止合同。"
+        ]
+      },
+      {
+        "title": "确认您的预订",
+        "paragraphs": [
+          "一旦我们收到您签署的合同和适用的押金，我们将同时确认您的预订。餐饮过程中发生的任何破损或丢失均按市场价格收费。客户应在活动日期前至少 15 天填写并签署确认书。您需要在签署确认书后或至少在活动日期前 15 天支付初始押金 30%。"
+        ]
+      }
+    ]
+  }
+}
