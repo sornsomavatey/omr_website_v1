@@ -279,22 +279,50 @@ html[data-lang="kh"] .menu-dish-card .dish-card-price {
   opacity: 1;
 }
 
+.menu-dish-card:hover {
+  transform: none !important;
+}
+
 html[lang="km"] .menu-dish-card .dish-card-currency,
 html[data-lang="kh"] .menu-dish-card .dish-card-currency {
   font-size: 18px !important;
 }
 
 @media (max-width: 768px) {
+  .menu-section:first-child {
+    margin-top: -32px;
+  }
+
   .menu-section .grid {
-    row-gap: 32px;
+    row-gap: 24px;
   }
 
   .menu-dish-card > div:first-child > div {
-    height: 330px;
+    height: clamp(170px, 40vw, 280px);
+  }
+
+  .menu-section .grid > .menu-dish-card:nth-child(4n + 1),
+  .menu-section .grid > .menu-dish-card:nth-child(4n + 4) {
+    border-radius: 0 24px 24px 24px !important;
+  }
+
+  .menu-section .grid > .menu-dish-card:nth-child(4n + 1) > div:first-child > div,
+  .menu-section .grid > .menu-dish-card:nth-child(4n + 4) > div:first-child > div {
+    border-radius: 0 72px 0 72px !important;
+  }
+
+  .menu-section .grid > .menu-dish-card:nth-child(4n + 2),
+  .menu-section .grid > .menu-dish-card:nth-child(4n + 3) {
+    border-radius: 24px 0 24px 24px !important;
+  }
+
+  .menu-section .grid > .menu-dish-card:nth-child(4n + 2) > div:first-child > div,
+  .menu-section .grid > .menu-dish-card:nth-child(4n + 3) > div:first-child > div {
+    border-radius: 72px 0 72px 0 !important;
   }
 
   .menu-dish-card > div:last-child {
-    padding: 14px 18px 18px;
+    padding: 9px 10px 12px;
   }
 
   .menu-dish-card > div:last-child > span {
@@ -304,35 +332,35 @@ html[data-lang="kh"] .menu-dish-card .dish-card-currency {
 
   .menu-dish-card .dish-card-title,
   .menu-dish-card .dish-card-price {
-    font-size: 22px !important;
+    font-size: 15px !important;
   }
 
   .menu-dish-card .dish-card-currency {
-    font-size: 14px !important;
+    font-size: 9px !important;
   }
 
   html[lang="km"] .menu-dish-card .dish-card-title,
   html[data-lang="kh"] .menu-dish-card .dish-card-title {
-    font-size: 22px !important;
+    font-size: 15px !important;
   }
 
   html[lang="km"] .menu-dish-card .dish-card-price,
   html[data-lang="kh"] .menu-dish-card .dish-card-price {
-    font-size: 20px !important;
+    font-size: 14px !important;
   }
 
   html[lang="km"] .menu-dish-card .dish-card-currency,
   html[data-lang="kh"] .menu-dish-card .dish-card-currency {
-    font-size: 12px !important;
+    font-size: 9px !important;
   }
 
   .menu-dish-card .dish-card-title {
-    line-height: 1.3;
-    margin-bottom: 8px;
+    line-height: 1.2;
+    margin-bottom: 5px;
   }
 
   .menu-dish-card .dish-card-footer {
-    gap: 12px;
+    gap: 4px;
     padding-top: 0;
   }
 
@@ -369,11 +397,11 @@ html[data-lang="kh"] .menu-dish-card .dish-card-currency {
 
 @media (max-width: 480px) {
   .menu-section .grid {
-    row-gap: 28px;
+    row-gap: 20px;
   }
 
   .menu-dish-card > div:first-child > div {
-    height: 310px;
+    height: clamp(150px, 42vw, 190px);
   }
 
   .menu-hero-tabs-container {

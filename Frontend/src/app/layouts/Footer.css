@@ -229,14 +229,14 @@ html[lang="km"] .site-footer * {
 
 @media (max-width: 767px) {
   .site-footer-container {
-    padding-right: 16px;
-    padding-left: 16px;
+    padding-right: 24px;
+    padding-left: 24px;
   }
 }
 
 @media (max-width: 640px) {
   .site-footer-container {
-    padding: 60px 16px 38px;
+    padding: 60px 24px 38px;
   }
 
   .site-footer-main {
@@ -269,18 +269,26 @@ html[lang="km"] .site-footer * {
   }
 
   .site-footer-nav {
-    grid-template-columns: minmax(0, 1fr) minmax(0, .75fr) minmax(0, 1.15fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 12px;
     width: 100%;
   }
 
   .site-footer-column {
     min-width: 0;
-    width: max-content;
+    width: 100%;
     max-width: 100%;
-    justify-self: center;
+    justify-self: start;
     align-items: flex-start;
     text-align: left;
+  }
+
+  .site-footer-column-legal .site-footer-link {
+    white-space: normal;
+  }
+
+  .site-footer-column:last-child {
+    padding-left: 4px;
   }
 
   .site-footer-heading {

@@ -126,8 +126,8 @@ const galleryShapeWeight: Record<GalleryItem['shape'], number> = {
   portrait: 1.22,
 };
 
-function balanceGalleryColumns<T extends Pick<GalleryItem, 'shape'>>(items: T[]) {
-  const columnCount = Math.min(3, Math.max(1, items.length));
+function balanceGalleryColumns<T extends Pick<GalleryItem, 'shape'>>(items: T[], maximumColumns = 3) {
+  const columnCount = Math.min(maximumColumns, Math.max(1, items.length));
   const columns = Array.from({ length: columnCount }, () => [] as T[]);
   const columnHeights = Array.from({ length: columnCount }, () => 0);
 
@@ -145,7 +145,17 @@ export default function GalleryPage() {
   const [activeFilter, setActiveFilter] = useState<Filter>('All');
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [isFilterNavigationVisible, setIsFilterNavigationVisible] = useState(false);
+  const [galleryColumnCount, setGalleryColumnCount] = useState(3);
   const masonryRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const mobileColumns = window.matchMedia('(max-width: 900px)');
+    const updateColumnCount = () => setGalleryColumnCount(mobileColumns.matches ? 2 : 3);
+
+    updateColumnCount();
+    mobileColumns.addEventListener('change', updateColumnCount);
+    return () => mobileColumns.removeEventListener('change', updateColumnCount);
+  }, []);
 
   useEffect(() => {
     const updateFilterNavigation = () => {
@@ -177,6 +187,10 @@ export default function GalleryPage() {
   );
 
   const visibleColumns = useMemo(() => {
+    if (galleryColumnCount === 2) {
+      return balanceGalleryColumns(visibleItems, 2);
+    }
+
     if (activeFilter !== 'All') {
       return balanceGalleryColumns(visibleItems);
     }
@@ -193,7 +207,7 @@ export default function GalleryPage() {
         .filter((item): item is typeof translatedGalleryItems[number] => Boolean(item))
         .filter((item) => visibleTitles.has(item.title)))
       .filter((column) => column.length > 0);
-  }, [activeFilter, visibleItems, translatedGalleryItems]);
+  }, [activeFilter, visibleItems, translatedGalleryItems, galleryColumnCount]);
 
   const closeLightbox = () => setSelectedIndex(null);
   const showPrevious = () => setSelectedIndex((index) => index === null ? null : (index - 1 + visibleItems.length) % visibleItems.length);

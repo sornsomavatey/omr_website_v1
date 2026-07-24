@@ -21,6 +21,7 @@ export interface DishCardProps extends React.HTMLAttributes<HTMLDivElement> {
   onActionClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void
   showAction?: boolean
   showCategory?: boolean
+  liftOnHover?: boolean
 }
 
 const cardContainerRadius = {
@@ -46,6 +47,7 @@ export function DishCard({
   onActionClick,
   showAction = true,
   showCategory = true,
+  liftOnHover = true,
   ...props
 }: DishCardProps) {
   const { isKhmer } = useTranslation()
@@ -62,7 +64,8 @@ export function DishCard({
   return (
     <div
       className={cn(
-        "group/dish-card group flex flex-col text-left bg-white transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 relative overflow-hidden",
+        "group/dish-card group flex flex-col text-left bg-white transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] relative overflow-hidden",
+        liftOnHover && "hover:-translate-y-1",
         cardContainerRadius[activeVariant],
         className
       )}

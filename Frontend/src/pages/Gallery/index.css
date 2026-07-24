@@ -379,11 +379,11 @@
   .gallery-filter-bar-navigation { right: 0; left: 0; width: 100%; margin: 0; }
   .gallery-filter-bar::-webkit-scrollbar { display: none; }
   .gallery-filter-bar button { flex: 0 0 auto; min-height: 40px; padding: 0 19px; }
-  .gallery-masonry { grid-template-columns: 1fr; }
-  .gallery-card { margin-bottom: 20px; }
-  .gallery-image-landscape { height: clamp(170px, 52vw, 205px); aspect-ratio: auto; }
-  .gallery-image-square { height: clamp(200px, 62vw, 240px); aspect-ratio: auto; }
-  .gallery-image-portrait { height: clamp(235px, 72vw, 280px); aspect-ratio: auto; }
+  .gallery-masonry { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .gallery-card { margin-bottom: 12px; }
+  .gallery-image-landscape { height: auto; aspect-ratio: 1.42 / 1; }
+  .gallery-image-square { height: auto; aspect-ratio: 1 / 1; }
+  .gallery-image-portrait { height: auto; aspect-ratio: .82 / 1; }
   .gallery-lightbox { display: flex; align-items: center; justify-content: center; padding: 70px 16px; }
   .gallery-lightbox-arrow { position: absolute; bottom: 18px; }
   .gallery-lightbox-previous { left: calc(50% - 58px); }
