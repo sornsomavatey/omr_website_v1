@@ -44,18 +44,28 @@ const khmerSections = [
 ];
 
 export default function TermsPage() {
-  const { isKhmer } = useTranslation();
-  const sections = isKhmer ? khmerSections : englishSections;
+  const { getObject, isKhmer, language } = useTranslation();
+  const translatedTerms = getObject('termsInline', {
+    eyebrow: 'Important Booking Information',
+    title: 'Terms and Conditions',
+    intro: 'Please review the following terms before confirming your booking.',
+    sections: englishSections,
+  });
+  const sections = isKhmer
+    ? khmerSections
+    : language === 'EN'
+      ? englishSections
+      : translatedTerms.sections;
 
   return (
     <div className="terms-page">
       <header className="terms-hero">
-        <p>{isKhmer ? 'ព័ត៌មានសំខាន់អំពីការកក់' : 'Important Booking Information'}</p>
-        <h1 className="page-hero-title">{isKhmer ? 'គោលការណ៍និងលក្ខខណ្ឌ' : 'Terms and Conditions'}</h1>
+        <p>{isKhmer ? 'ព័ត៌មានសំខាន់អំពីការកក់' : translatedTerms.eyebrow}</p>
+        <h1 className="page-hero-title">{isKhmer ? 'គោលការណ៍និងលក្ខខណ្ឌ' : translatedTerms.title}</h1>
         <span>
           {isKhmer
             ? 'សូមអានលក្ខខណ្ឌខាងក្រោមមុនពេលបញ្ជាក់ការកក់របស់លោកអ្នក។'
-            : 'Please review the following terms before confirming your booking.'}
+            : translatedTerms.intro}
         </span>
       </header>
 

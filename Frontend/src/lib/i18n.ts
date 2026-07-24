@@ -9,7 +9,36 @@ const pendingLoads: Partial<Record<Language, Promise<Dictionary>>> = {};
 const languageFiles: Record<Language, string> = {
   EN: '/locales/en.json',
   KH: '/locales/kh.json',
+  ZH: '/locales/zh.json',
+  KO: '/locales/ko.json',
 };
+
+function mergeDictionaries(base: Dictionary, localized: Dictionary): Dictionary {
+  const merged: Dictionary = { ...base };
+
+  Object.entries(localized).forEach(([key, value]) => {
+    const baseValue = merged[key];
+
+    if (
+      value &&
+      typeof value === 'object' &&
+      !Array.isArray(value) &&
+      baseValue &&
+      typeof baseValue === 'object' &&
+      !Array.isArray(baseValue)
+    ) {
+      merged[key] = mergeDictionaries(
+        baseValue as Dictionary,
+        value as Dictionary
+      );
+      return;
+    }
+
+    merged[key] = value;
+  });
+
+  return merged;
+}
 
 export async function loadDictionary(language: Language): Promise<Dictionary> {
   if (cache[language]) {
@@ -27,7 +56,10 @@ export async function loadDictionary(language: Language): Promise<Dictionary> {
         throw new Error(`Failed to load ${language} translation file`);
       }
 
-      const dictionary = (await response.json()) as Dictionary;
+      const localizedDictionary = (await response.json()) as Dictionary;
+      const dictionary = language === 'EN'
+        ? localizedDictionary
+        : mergeDictionaries(await loadDictionary('EN'), localizedDictionary);
       cache[language] = dictionary;
 
       return dictionary;

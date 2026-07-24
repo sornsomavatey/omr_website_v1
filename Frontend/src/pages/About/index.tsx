@@ -260,8 +260,13 @@ const LinkedinIcon = ({ size = 16 }: { size?: number }) => (
 );
 
 export default function About() {
-  const { isKhmer } = useTranslation();
-  const tr = (text: string) => isKhmer ? (khmerCopy[text] || text) : text;
+  const { getObject, isKhmer, language } = useTranslation();
+  const translatedCopy = getObject<Record<string, string>>('aboutInline', {});
+  const tr = (text: string) => {
+    if (isKhmer) return khmerCopy[text] || text;
+    if (language === 'EN') return text;
+    return translatedCopy[text] || text;
+  };
   const pageRef = useRef<HTMLDivElement>(null);
   const [rating, setRating] = useState(0);
   const [hoveredRating, setHoveredRating] = useState(0);

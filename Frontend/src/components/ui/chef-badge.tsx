@@ -1,15 +1,11 @@
 import * as React from "react"
 import { cn } from "@/lib/utils"
-import { useTranslation } from "@/hooks/useTranslation"
 
 export interface ChefBadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
   children?: React.ReactNode
 }
 
 export function ChefBadge({ className, children, ...props }: ChefBadgeProps) {
-  const { isKhmer } = useTranslation();
-  const text = isKhmer ? "ជម្រើសមេចុងភៅ ✦" : "Chef's Choice ✦";
-
   return (
     <span
       className={cn(
@@ -18,7 +14,7 @@ export function ChefBadge({ className, children, ...props }: ChefBadgeProps) {
       )}
       {...props}
     >
-      {text}
+      {children || "Chef's Choice ✦"}
     </span>
   )
 }

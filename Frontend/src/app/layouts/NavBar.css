@@ -261,8 +261,6 @@
 
   padding: 0;
 
-  overflow: hidden;
-
   border: 1px solid rgba(255, 255, 255, 0.28);
   border-radius: 999px;
 
@@ -295,6 +293,91 @@
 .navbar-v2 .navbar-language-button:hover,
 .navbar-v2 .navbar-language-button:focus-visible {
   background: rgba(33, 48, 28, 0.12);
+}
+
+.navbar-language-current-flag {
+  display: block;
+  width: calc(100% - 4px);
+  height: calc(100% - 4px);
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 0 1px rgba(33, 48, 28, 0.14);
+}
+
+.navbar-language-current-flag-china {
+  object-fit: contain;
+  object-position: center;
+  background: #de2910;
+}
+
+.navbar-language-current-flag-korea {
+  object-fit: contain;
+  object-position: center;
+  background: #ffffff;
+}
+
+.navbar-language-menu {
+  position: relative;
+  display: inline-flex;
+}
+
+.navbar-language-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  z-index: 120;
+  width: 190px;
+  padding: 7px;
+  overflow: hidden;
+  border: 1px solid rgba(33, 48, 28, 0.12);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 18px 45px rgba(16, 28, 12, 0.2);
+  backdrop-filter: blur(14px);
+}
+
+.navbar-language-option {
+  width: 100%;
+  min-height: 42px;
+  display: grid;
+  grid-template-columns: 38px 1fr 18px;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: 9px;
+  color: #21301c;
+  background: transparent;
+  font: inherit;
+  font-size: 14px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.navbar-language-option:hover,
+.navbar-language-option:focus-visible,
+.navbar-language-option-active {
+  background: rgba(107, 145, 88, 0.12);
+  outline: none;
+}
+
+.navbar-language-option-flag {
+  width: 28px;
+  height: 20px;
+  border-radius: 3px;
+  object-fit: cover;
+  box-shadow: 0 0 0 1px rgba(33, 48, 28, 0.12);
+}
+
+.navbar-language-option-check {
+  width: 16px;
+  height: 16px;
+  color: #6b9158;
+  opacity: 0;
+}
+
+.navbar-language-option-active .navbar-language-option-check {
+  opacity: 1;
 }
 
 .navbar-language-flag {
@@ -527,8 +610,6 @@
 
   padding: 0;
 
-  overflow: hidden;
-
   border: 1px solid rgba(255, 255, 255, 0.22);
   border-radius: 999px;
 
@@ -728,6 +809,11 @@
     width: min(100%, 220px);
     min-width: 0;
   }
+}
+
+.navbar-language-menu-mobile .navbar-language-dropdown {
+  top: calc(100% + 12px);
+  right: 0;
 }
 
 @media (min-width: 1024px) {

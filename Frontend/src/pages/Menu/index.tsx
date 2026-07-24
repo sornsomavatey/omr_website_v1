@@ -70,7 +70,7 @@ const MENU_SCROLL_TARGET_TOP = 180;
 const useIsomorphicLayoutEffect = typeof window === 'undefined' ? useEffect : useLayoutEffect;
 
 export default function Menu() {
-  const { t, getObject, isKhmer } = useTranslation();
+  const { t, getObject, isKhmer, language } = useTranslation();
   const [menuDataState, setMenuDataState] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -90,6 +90,8 @@ export default function Menu() {
     Dessert: t('menu.categories.dessert', undefined, 'Dessert'),
     Drinks: t('menu.categories.drinks', undefined, 'Drinks'),
   };
+  const translatedMenuItems = getObject<Record<string, Array<Partial<MenuItem>>>>('menu.items', {});
+  const translatedLiveItems = getObject<Record<string, string>>('menu.liveItems', {});
   useEffect(() => {
     getMenuData()
       .then((res) => {
@@ -351,13 +353,19 @@ export default function Menu() {
     const category = cat as MenuCategory;
     const itemsList = (menuDataState.items as any)[category];
 
-    acc[category] = itemsList.map((item: any) => {
+    acc[category] = itemsList.map((item: any, itemIndex: number) => {
+      const localizedItem = translatedMenuItems[category.toLowerCase()]?.[itemIndex];
+      const localizedLiveName = item.id != null ? translatedLiveItems[String(item.id)] : undefined;
       return {
         id: `${category.toLowerCase()}-${item.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`,
-        name: isKhmer ? (item.name_kh || item.name) : item.name,
-        category: isKhmer ? translatedCategoryNames[category] : category,
-        desc: item.desc || '',
-        badge: item.badge,
+        name: isKhmer
+          ? (localizedLiveName || item.name_kh || item.name)
+          : (localizedLiveName || localizedItem?.name || item.name),
+        category: localizedItem?.category || translatedCategoryNames[category],
+        desc: language === 'EN'
+          ? (item.desc || '')
+          : (localizedItem?.desc || item.desc || ''),
+        badge: localizedItem?.badge || item.badge,
         img: item.img,
         price: item.price,
       };

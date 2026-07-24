@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
+import { Check } from 'lucide-react';
 import whiteLogo from '@/assets/omr_logo_white.webp';
 import { useAppStore } from '../store';
+import type { Language } from '../store';
 import { useTranslation } from '@/hooks/useTranslation';
 import './NavBar.css';
 
@@ -53,17 +55,88 @@ function NavbarLogo({ mobile = false }: { mobile?: boolean }) {
   );
 }
 
-function LanguageFlag({ language, show }: { language: string; show: boolean }) {
-  const flagSrc = language === 'EN'
-    ? '/flags/cambodia.svg'
-    : '/flags/united-kingdom.svg';
+const languageOptions: Array<{ code: Language; label: string; flag: string }> = [
+  { code: 'EN', label: 'English', flag: '/flags/united-kingdom.svg' },
+  { code: 'KH', label: 'ខ្មែរ', flag: '/flags/cambodia.svg' },
+  { code: 'ZH', label: '中文', flag: '/flags/china.svg' },
+  { code: 'KO', label: '한국어', flag: '/flags/south-korea.svg' },
+];
 
-  if (!show) {
-    return <span className="navbar-language-flag navbar-language-flag-hidden" aria-hidden="true" />;
-  }
+function LanguageMenu({ mobile = false }: { mobile?: boolean }) {
+  const language = useAppStore((state) => state.language);
+  const setLanguage = useAppStore((state) => state.setLanguage);
+  const [open, setOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement | null>(null);
+  const selectedLanguage = languageOptions.find((option) => option.code === language) || languageOptions[0];
+
+  useEffect(() => {
+    if (!open) return;
+
+    const handlePointerDown = (event: PointerEvent) => {
+      if (event.target instanceof Node && !menuRef.current?.contains(event.target)) {
+        setOpen(false);
+      }
+    };
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setOpen(false);
+    };
+
+    document.addEventListener('pointerdown', handlePointerDown);
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('pointerdown', handlePointerDown);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [open]);
+
+  const chooseLanguage = (nextLanguage: Language) => {
+    window.dispatchEvent(new Event('omr:before-language-toggle'));
+    setLanguage(nextLanguage);
+    setOpen(false);
+  };
 
   return (
-    <img className="navbar-language-flag" src={flagSrc} alt="" />
+    <div
+      className={`navbar-language-menu ${mobile ? 'navbar-language-menu-mobile' : ''}`}
+      ref={menuRef}
+    >
+      <button
+        type="button"
+        className={mobile ? 'navbar-mobile-language-button' : 'navbar-language-button'}
+        aria-label="Choose language"
+        aria-haspopup="menu"
+        aria-expanded={open}
+        onClick={() => setOpen((current) => !current)}
+      >
+        <img
+          className={`navbar-language-current-flag ${
+            language === 'ZH' ? 'navbar-language-current-flag-china' : ''
+          } ${language === 'KO' ? 'navbar-language-current-flag-korea' : ''}`}
+          src={selectedLanguage.flag}
+          alt=""
+          aria-hidden="true"
+        />
+      </button>
+
+      {open && (
+        <div className="navbar-language-dropdown" role="menu" aria-label="Languages">
+          {languageOptions.map((option) => (
+            <button
+              type="button"
+              role="menuitemradio"
+              aria-checked={language === option.code}
+              className={`navbar-language-option ${language === option.code ? 'navbar-language-option-active' : ''}`}
+              key={option.code}
+              onClick={() => chooseLanguage(option.code)}
+            >
+              <img className="navbar-language-option-flag" src={option.flag} alt="" aria-hidden="true" />
+              <span>{option.label}</span>
+              <Check className="navbar-language-option-check" aria-hidden="true" />
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -73,13 +146,11 @@ export default function Navbar() {
 
   const {
     language,
-    setLanguage,
     mobileMenuOpen,
     setMobileMenuOpen,
   } = useAppStore();
 
   const [scrolled, setScrolled] = useState(false);
-  const [showLanguageFlag, setShowLanguageFlag] = useState(false);
   const mobileMenuRef = useRef<HTMLDivElement | null>(null);
 
   const isHomePage = location.pathname === '/';
@@ -97,23 +168,6 @@ export default function Navbar() {
   const isReservationPage =
     location.pathname === '/reservations' ||
     location.pathname === '/reservation';
-
-  useEffect(() => {
-    if (document.readyState === 'complete') {
-      setShowLanguageFlag(true);
-      return undefined;
-    }
-
-    const handleLoad = () => {
-      setShowLanguageFlag(true);
-    };
-
-    window.addEventListener('load', handleLoad, { once: true });
-
-    return () => {
-      window.removeEventListener('load', handleLoad);
-    };
-  }, []);
 
   useEffect(() => {
     if (isReservationPage) {
@@ -204,11 +258,6 @@ export default function Navbar() {
     };
   }, [isGalleryPage, isMenuPage, mobileMenuOpen, scrolled, setMobileMenuOpen]);
 
-  const toggleLanguage = () => {
-    window.dispatchEvent(new Event('omr:before-language-toggle'));
-    setLanguage(language === 'EN' ? 'KH' : 'EN');
-  };
-
   const closeMobileMenu = () => {
     setMobileMenuOpen(false);
   };
@@ -260,19 +309,7 @@ export default function Navbar() {
               </Link>
             )}
 
-            <button
-              type="button"
-              onClick={toggleLanguage}
-              className="navbar-language-button"
-              aria-label="Change language"
-              title={
-                language === 'EN'
-                  ? t('language.switchToKhmer')
-                  : t('language.switchToEnglish')
-              }
-            >
-              <LanguageFlag language={language} show={showLanguageFlag} />
-            </button>
+            <LanguageMenu />
           </div>
 
           <div className="navbar-mobile-wrapper" ref={mobileMenuRef}>
@@ -309,19 +346,7 @@ export default function Navbar() {
                 </Link>
 
                 <div className="navbar-mobile-header-actions">
-                  <button
-                    type="button"
-                    onClick={toggleLanguage}
-                    className="navbar-mobile-language-button"
-                    aria-label="Change language"
-                    title={
-                      language === 'EN'
-                        ? t('language.switchToKhmer')
-                        : t('language.switchToEnglish')
-                      }
-                    >
-                      <LanguageFlag language={language} show={showLanguageFlag} />
-                    </button>
+                  <LanguageMenu mobile />
 
                   <button
                     type="button"

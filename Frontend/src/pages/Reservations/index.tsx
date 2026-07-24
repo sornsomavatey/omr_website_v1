@@ -359,7 +359,7 @@ const getMealCategoryFromTime = (
 };
 
 export default function ReservationPage() {
-  const { t, getObject, isKhmer } = useTranslation();
+  const { t, getObject, isKhmer, language } = useTranslation();
   const [resData, setResData] = useState<any>(null);
   const [homeData, setHomeData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -661,6 +661,7 @@ export default function ReservationPage() {
   const branchesList: Branch[] = homeData.branches.map((branch: any, index: number) => ({
     ...branch,
     ...(translatedBranches[index] || {}),
+    id: branch.id,
     img: imageMap[branch.img] || branch.img,
   }));
 
@@ -772,8 +773,8 @@ export default function ReservationPage() {
     { id: 'corporateEvent', name: 'Corporate Event', icon: Building },
     { id: 'dateNight', name: 'Date Night', icon: Heart },
     { id: 'other', name: 'Other', icon: MoreHorizontal }
-  ].map((occ) => {
-    const transOcc = occasionsList.find((o) => o.id === occ.id) || {};
+  ].map((occ, index) => {
+    const transOcc = occasionsList[index] || {};
     return {
       ...occ,
       name: transOcc.name || occ.name,
@@ -789,8 +790,8 @@ export default function ReservationPage() {
     { id: 'outdoor', name: 'Outdoor', img: imgSpaceOutdoor },
     { id: 'privateRoom', name: 'Private Room', img: diningSpacesList[1]?.img || imgGallery1 },
     { id: 'vipRoom', name: 'VIP Room', img: imgGallery5 }
-  ].map((seating) => {
-    const transSeating = seatingList.find((s) => s.id === seating.id) || {};
+  ].map((seating, index) => {
+    const transSeating = seatingList[index] || {};
     return {
       ...seating,
       name: transSeating.name || seating.name,
@@ -820,6 +821,12 @@ export default function ReservationPage() {
 
     if (isKhmer) {
       return `${localizeNumber(dayNum)} ${monthName} ${localizeNumber(yearNum)}`;
+    }
+    if (language === 'ZH') {
+      return `${yearNum}年${monthName}${dayNum}日`;
+    }
+    if (language === 'KO') {
+      return `${yearNum}년 ${monthName} ${dayNum}일`;
     }
 
     return `${monthName} ${dayNum}${getOrdinalSuffix(dayNum)} ${yearNum}`;
@@ -1848,12 +1855,8 @@ export default function ReservationPage() {
                 <div className="reservation-step-heading" style={{ marginBottom: 0 }}>
                   <span>{localizeNumber(6)}</span>
                   <div className="preorder-step-copy">
-                    <h2>{isKhmer ? 'កុម្ម៉ង់អាហារទុកមុន' : 'Pre-order'}</h2>
-                    <p>
-                      {isKhmer
-                        ? 'ជម្រើសបន្ថែម — ជ្រើសរើសមុខម្ហូបជាមុន ដើម្បីឲ្យអាហាររួចរាល់នៅពេលលោកអ្នកមកដល់'
-                        : "Optional — choose dishes ahead of time so they're ready when you arrive"}
-                    </p>
+                    <h2>{t('reservationPage.steps.preOrder.title', undefined, 'Pre-order Dishes')}</h2>
+                    <p>{t('reservationPage.steps.preOrder.desc', undefined, 'Choose your favorite dishes in advance')}</p>
                   </div>
                 </div>
                 <button
@@ -1861,7 +1864,7 @@ export default function ReservationPage() {
                   className="preorder-browse-btn"
                   onClick={() => setIsMenuModalOpen(true)}
                 >
-                  {isKhmer ? 'មើលបញ្ជីមុខម្ហូប' : 'Browse Menu'}
+                  {t('reservationPage.steps.preOrder.button', undefined, 'Pre-order Menu')}
                 </button>
               </div>
 
@@ -1875,9 +1878,9 @@ export default function ReservationPage() {
                         <span className="preorder-cart-count">{preOrderItemCount}</span>
                       </div>
                       <div>
-                        <p className="preorder-cart-label">{isKhmer ? 'សេចក្តីសង្ខេបនៃការកុម្ម៉ង់មុន' : 'Pre-Order Summary'}</p>
+                        <p className="preorder-cart-label">{t('menu.modal.summary', undefined, 'Pre-order Summary')}</p>
                         <p className="preorder-cart-items-preview">
-                          {isKhmer ? 'កុម្ម៉ង់អាហារទុកមុន' : 'Pre-order'}
+                          {t('menu.modal.preOrder', undefined, 'Pre-order')}
                         </p>
                       </div>
                     </div>
@@ -1888,9 +1891,7 @@ export default function ReservationPage() {
                         className="preorder-clear-btn"
                         onClick={() => {
                           const confirmClear = window.confirm(
-                            isKhmer
-                              ? "តើអ្នកពិតជាចង់លុបការកុម្ម៉ង់មុនទាំងអស់មែនទេ?"
-                              : "Are you sure you want to clear all pre-ordered items?"
+                            t('menu.modal.clearConfirm', undefined, 'Are you sure you want to clear all pre-ordered items?')
                           );
                           if (confirmClear) {
                             setPreOrderCart({});
@@ -1952,7 +1953,7 @@ export default function ReservationPage() {
                   {isSubmitting ? (
                     <>
                       <Loader2 className="w-4 h-4 animate-spin" />
-                      <span>{isKhmer ? 'កំពុងដំណើរការ...' : 'Processing...'}</span>
+                      <span>{t('reservationPage.form.processing', undefined, 'Processing...')}</span>
                     </>
                   ) : (
                     t('reservationPage.form.submit', undefined, 'Reserve a Table')
@@ -2034,7 +2035,7 @@ export default function ReservationPage() {
                       onClick={() => setIsPreOrderSummaryExpanded(!isPreOrderSummaryExpanded)}
                       aria-expanded={isPreOrderSummaryExpanded}
                     >
-                      <span>{isKhmer ? 'មុខម្ហូបកុម្ម៉ង់មុន' : 'Pre-ordered Items'} ({preOrderItemCount})</span>
+                      <span>{t('menu.modal.preOrder', undefined, 'Pre-order')} ({preOrderItemCount})</span>
                       {isPreOrderSummaryExpanded ? (
                         <ChevronUp className="w-4 h-4 text-[#6b9158]" />
                       ) : (
@@ -2050,7 +2051,7 @@ export default function ReservationPage() {
                           </div>
                         ))}
                         <div className="summary-preorder-total">
-                          <span>{isKhmer ? 'សរុប' : 'Total Price'}:</span>
+                          <span>{t('reservationPage.summary.totalPrice', undefined, 'Total Price')}:</span>
                           <strong>${preOrderTotal.toFixed(2)}</strong>
                         </div>
                       </div>
@@ -2073,7 +2074,7 @@ export default function ReservationPage() {
                   {isSubmitting ? (
                     <>
                       <Loader2 className="w-4 h-4 animate-spin" />
-                      <span>{isKhmer ? 'កំពុងដំណើរការ...' : 'Processing...'}</span>
+                      <span>{t('reservationPage.form.processing', undefined, 'Processing...')}</span>
                     </>
                   ) : (
                     t('reservationPage.summary.reserveButton', undefined, 'Reserve a Table')
