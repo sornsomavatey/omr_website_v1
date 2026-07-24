@@ -369,7 +369,7 @@
 }
 
 @media (max-width: 640px) {
-  .gallery-hero { min-height: 610px; padding: 125px 16px 70px; }
+  .gallery-hero { min-height: 500px; padding: 105px 16px 50px; }
   .gallery-hero-content > span { margin-bottom: 12px; font-size: 10px; }
   .gallery-hero h1 { margin-bottom: 14px; font-size: 58px; }
   .gallery-hero p { font-size: 15px; line-height: 1.55; }

@@ -10,6 +10,30 @@ const isProduction =
   lifecycleEvent === 'preview'
 const port = process.env.PORT || 3001
 const base = process.env.BASE || '/'
+const legacyRedirects = new Map([
+  ['/restaurants', '/branches'],
+  ['/restaurants/toul-kork', '/branches/toul-kork'],
+  ['/restaurants/boeung-kak', '/branches/boeung-kak'],
+])
+const renderedRoutes = new Set([
+  '/',
+  '/menu',
+  '/branches',
+  '/branches/toul-kork',
+  '/branches/boeung-kak',
+  '/gallery',
+  '/events',
+  '/about',
+  '/careers',
+  '/contact',
+  '/terms',
+  '/reservation',
+  '/reservations',
+])
+
+function addBase(path) {
+  return base === '/' ? path : `${base.replace(/\/$/, '')}${path}`
+}
 
 // Cached production assets
 const templateHtml = isProduction
@@ -63,6 +87,22 @@ app.use('*all', async (req, res) => {
       base !== '/' && req.originalUrl.startsWith(base)
         ? req.originalUrl.slice(base.length - 1) || '/'
         : req.originalUrl
+    const parsedUrl = new URL(url, 'http://localhost')
+    const pathname =
+      parsedUrl.pathname.length > 1
+        ? parsedUrl.pathname.replace(/\/+$/, '')
+        : parsedUrl.pathname
+    const legacyDestination = legacyRedirects.get(pathname)
+
+    if (legacyDestination) {
+      res.redirect(301, `${addBase(legacyDestination)}${parsedUrl.search}`)
+      return
+    }
+
+    if (!renderedRoutes.has(pathname)) {
+      res.redirect(302, addBase('/'))
+      return
+    }
 
     /** @type {string} */
     let template
