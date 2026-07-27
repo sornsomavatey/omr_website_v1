@@ -115,6 +115,30 @@ const galleryItems: GalleryItem[] = [
   { src: imgHero, alt: 'Architectural restaurant dining room', title: 'Curves & Craft', tag: 'Restaurant', category: 'Restaurant', shape: 'landscape' },
 ];
 
+const foodGalleryOrder = [
+  imgFoodPlating,
+  imgNoodles,
+  imgButterflyCake,
+  imgChefPlating,
+  imgSiemReapChicken,
+  imgFruitPlate,
+  imgArtisanalPlating,
+  imgFourDishes,
+  imgChefChoppingVegetables,
+  imgDessertCup,
+  imgGrillPlatter,
+  imgFoodBox,
+  imgKuyteav,
+  imgAnsom,
+  imgChicken,
+  imgKhmerCakePlating,
+  imgChefInKitchen,
+] as const;
+
+const foodGalleryRank = new Map<string, number>(
+  foodGalleryOrder.map((src, index) => [src, index]),
+);
+
 const galleryColumnBlueprint = [
   ['Main Hall Dining', 'Signature Kuyteav', 'Khmer Meal Boxes', 'Wine Toast', 'Khmer Cooking Workshop', 'Toul Kork Exterior', 'Butterfly Coconut Cakes', 'Blue Birthday Celebration', 'Boeung Kak Grand Opening', 'One More Service Moment', 'Red Table Dining', 'The Private Room', 'Artisanal Plating', 'Corporate Catering', 'Christmas Deer Display'],
   ['Canopy Entrance', 'Freshly Prepared', 'Chef in the Kitchen', 'Fresh Fruit Art', 'Wine Selection', '15th Anniversary', 'Event Refreshment Moment', 'Toul Kork Interior', 'Khmer Feast', 'Traditional Ansom', 'Chinese New Year Gift', 'Khmer Cake Traditions', 'Toul Kork Outdoor Dining', 'Khmer Grill Platter', 'A Day To Remember', 'Catering Service Team'],
@@ -227,10 +251,23 @@ export default function GalleryPage() {
     }));
   }, [t]);
 
-  const visibleItems = useMemo(
-    () => activeFilter === 'All' ? translatedGalleryItems : translatedGalleryItems.filter((item) => item.category === activeFilter),
-    [activeFilter, translatedGalleryItems],
-  );
+  const visibleItems = useMemo(() => {
+    if (activeFilter === 'All') {
+      return translatedGalleryItems;
+    }
+
+    const filteredItems = translatedGalleryItems.filter((item) => item.category === activeFilter);
+
+    if (activeFilter === 'Food') {
+      return [...filteredItems].sort(
+        (first, second) =>
+          (foodGalleryRank.get(first.src) ?? Number.MAX_SAFE_INTEGER)
+          - (foodGalleryRank.get(second.src) ?? Number.MAX_SAFE_INTEGER),
+      );
+    }
+
+    return filteredItems;
+  }, [activeFilter, translatedGalleryItems]);
 
   const visibleColumns = useMemo(() => {
     if (galleryColumnCount === 2) {

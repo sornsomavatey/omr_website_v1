@@ -52,6 +52,12 @@ const reasons = [
   { icon: BellRing, title: 'Hospitality Since 2008', text: 'A dedicated team delivering warm and memorable Khmer dining experiences.' },
 ];
 
+const commitments = [
+  { title: 'Authentic Khmer Cuisine', text: "Preserving Cambodia's culinary traditions." },
+  { title: 'Warm Hospitality', text: 'Welcoming every guest with genuine care.' },
+  { title: 'Memorable Experiences', text: 'Creating moments worth remembering.' },
+];
+
 const people = [
   { image: chefTkImage, title: 'Hor Chanthorn', role: 'Head Chef', text: 'At One More, experience the legacy of Cambodian cuisine through Chef Hor Chanthorn\'s 15 years of experience, vision, and passion, which shape every dish on our menu. His commitment to preserving and elevating Cambodian cuisine ensures an unparalleled culinary journey for all who dine with us.' },
   { image: chefBkImage, title: 'Khna Ra', role: 'Sous Chef', text: 'At One More, experience the legacy of Cambodian cuisine through Chef Khna Ra\'s 10 years of experience. His commitment to preserving and elevating Cambodian cuisine ensures an unparalleled culinary journey for all who dine with us.' },
@@ -342,6 +348,7 @@ export default function About() {
   const pageRef = useRef<HTMLDivElement>(null);
   const [rating, setRating] = useState(0);
   const [hoveredRating, setHoveredRating] = useState(0);
+  const [activeCommitment, setActiveCommitment] = useState<number | null>(null);
   const [feedbackStatus, setFeedbackStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
 
   const handleFeedbackSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -457,7 +464,7 @@ export default function About() {
         <SectionHeading eyebrow={tr("Guests' Choice")} title={tr('Why Guests Choose One More')} />
         <div className="about-reasons-grid">
           {reasons.map(({ icon: Icon, title, text }) => (
-            <article key={title}>
+            <article key={title} tabIndex={0}>
               <span><Icon size={21} /></span>
               <div><h3>{tr(title)}</h3><p>{tr(text)}</p></div>
             </article>
@@ -467,10 +474,24 @@ export default function About() {
 
       <section className="about-promise">
         <SectionHeading eyebrow={tr('Our Commitment')} title={tr('Our Commitment')} />
-        <div className="about-promise-grid">
-          <article><span /><h3>{tr('Authentic Khmer Cuisine')}</h3><p>{tr("Preserving Cambodia's culinary traditions.")}</p></article>
-          <article><span /><h3>{tr('Warm Hospitality')}</h3><p>{tr('Welcoming every guest with genuine care.')}</p></article>
-          <article><span /><h3>{tr('Memorable Experiences')}</h3><p>{tr('Creating moments worth remembering.')}</p></article>
+        <div className="about-promise-grid" onMouseLeave={() => setActiveCommitment(null)}>
+          {commitments.map((commitment, index) => (
+            <button
+              type="button"
+              className={`about-promise-card${activeCommitment === index ? ' is-active' : ''}`}
+              key={commitment.title}
+              aria-pressed={activeCommitment === index}
+              onClick={() => setActiveCommitment(activeCommitment === index ? null : index)}
+              onFocus={() => setActiveCommitment(index)}
+              onBlur={() => setActiveCommitment(null)}
+              onMouseEnter={() => setActiveCommitment(index)}
+            >
+              <span aria-hidden="true" />
+              <small aria-hidden="true">0{index + 1}</small>
+              <h3>{tr(commitment.title)}</h3>
+              <p>{tr(commitment.text)}</p>
+            </button>
+          ))}
         </div>
       </section>
 
