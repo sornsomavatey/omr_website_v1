@@ -30,7 +30,7 @@ import TestimonialSection from '@/components/TestimonialSection';
 import { createEventBooking, getTestimonialsData, sendCustomerEmail } from '@/lib/api';
 import { useTranslation } from '@/hooks/useTranslation';
 
-import imgHero     from '@/assets/engagegreenv2-clean-v2.webp';
+import imgHero     from '@/assets/silverbddining-clean-v3.webp';
 import imgPkg1     from '@/assets/roundtablebk.webp';
 import imgPkg2     from '@/assets/redengage-clean.webp';
 import imgPkg3     from '@/assets/corporateroomwhite.webp';
@@ -42,7 +42,7 @@ import imgGal2     from '@/assets/gallery/artisanal-plating-no-logo.webp';
 import imgGal3     from '@/assets/gallery/wine-toast.webp';
 import imgGal4     from '@/assets/gallery/event-coffee-service.webp';
 import imgGal5     from '@/assets/home-v2/9826b8c118c911c852174f3c0d0204245fd0da48.webp';
-import imgInquiry  from '@/assets/Weeding.webp';
+import imgInquiry  from '@/assets/silverbirthday-clean.webp';
 import imgFinalCta from '@/assets/event bg.webp';
 import imgMainHall from '@/assets/main hall.webp';
 import { imageMap } from '@/pages/Home/homeAssets';

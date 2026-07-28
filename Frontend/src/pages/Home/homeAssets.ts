@@ -103,6 +103,7 @@ export const imageMap: Record<string, string> = {
   '@/assets/private-room-no-logo.webp': imgGallery1,
   '@/assets/home-v2/07e47044152ad38cdbb1bda5ae392fb848e3a37a.webp': imgGallery2,
   '@/assets/moments.webp': imgGallery3,
+  '@/assets/moments.jpg': imgGallery3,
   '@/assets/home-v2/80bc2f874a3b8b65fc3bd247f23046db8632d909.webp': imgGallery4,
   '@/assets/home-v2/e900cacb721f9c81cd07b8415a03f20f42a39856.webp': imgGallery5,
   '@/assets/home-v2/9826b8c118c911c852174f3c0d0204245fd0da48.webp': imgGallery6,
@@ -135,5 +136,6 @@ export const imageMap: Record<string, string> = {
   '@/assets/compressed_Business.webp': imgSpaceBusiness,
   '@/assets/compressed_Private Dining room.webp': imgSpacePrivateDining,
   '@/assets/kid corner.webp': imgSpaceKidCorner,
+  '@/assets/kid corner.png': imgSpaceKidCorner,
   '@/assets/compressed_outdoor.webp': imgSpaceOutdoor,
 };
