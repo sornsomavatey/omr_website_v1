@@ -2,8 +2,8 @@ import svgPaths from '@/assets/svgPaths';
 
 // Local assets
 import imgSpaceOutdoor from '@/assets/compressed_outdoor.webp';
-import imgSpaceKidCorner from '@/assets/kid corner.png';
-import imgSpacePrivateDining from '@/assets/compressed_Private Dining room.webp';
+import imgSpaceKidCorner from '@/assets/kid corner.webp';
+import imgSpacePrivateDining from '@/assets/compressed_Private Dining room-no-logo.webp';
 import imgSpaceBusiness from '@/assets/compressed_Business.webp';
 import imgHeroBg1 from '@/assets/home-v2/43310dd2158ca5c7f7d098abf280dc14124d42de.webp';
 import imgHeroBg2 from '@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.webp';
@@ -34,7 +34,7 @@ import imgBranch1 from '@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c9399468
 // Gallery assets
 import imgGallery1 from '@/assets/private-room-no-logo.webp';
 import imgGallery2 from '@/assets/home-v2/07e47044152ad38cdbb1bda5ae392fb848e3a37a.webp';
-import imgGallery3 from '@/assets/moments.jpg';
+import imgGallery3 from '@/assets/moments.webp';
 import imgGallery4 from '@/assets/home-v2/80bc2f874a3b8b65fc3bd247f23046db8632d909.webp';
 import imgGallery5 from '@/assets/home-v2/e900cacb721f9c81cd07b8415a03f20f42a39856.webp';
 import imgGallery6 from '@/assets/home-v2/9826b8c118c911c852174f3c0d0204245fd0da48.webp';
@@ -102,6 +102,7 @@ export const imageMap: Record<string, string> = {
   '@/assets/tk-room.png': imgGallery1,
   '@/assets/private-room-no-logo.webp': imgGallery1,
   '@/assets/home-v2/07e47044152ad38cdbb1bda5ae392fb848e3a37a.webp': imgGallery2,
+  '@/assets/moments.webp': imgGallery3,
   '@/assets/moments.jpg': imgGallery3,
   '@/assets/home-v2/80bc2f874a3b8b65fc3bd247f23046db8632d909.webp': imgGallery4,
   '@/assets/home-v2/e900cacb721f9c81cd07b8415a03f20f42a39856.webp': imgGallery5,
@@ -134,6 +135,7 @@ export const imageMap: Record<string, string> = {
   '@/assets/Food/Lunch and Dinner/pan-fried-fish-paste-enhanced.webp': imgFoodPanFriedFishPaste,
   '@/assets/compressed_Business.webp': imgSpaceBusiness,
   '@/assets/compressed_Private Dining room.webp': imgSpacePrivateDining,
+  '@/assets/kid corner.webp': imgSpaceKidCorner,
   '@/assets/kid corner.png': imgSpaceKidCorner,
   '@/assets/compressed_outdoor.webp': imgSpaceOutdoor,
 };

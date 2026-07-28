@@ -12,13 +12,14 @@ export interface FeaturePackageCardProps {
   image: string;
   alt: string;
   title: string;
-  guestLabel: string;
+  guestLabel?: string;
   features: string[];
   priceLabel?: string;
   price?: string;
   priceUnit?: string;
   detailLabel?: string;
   detailHref?: string;
+  showDetails?: boolean;
   bookLabel?: string;
   bookHref?: string;
   className?: string;
@@ -35,6 +36,7 @@ export default function FeaturePackageCard({
   priceUnit = '/ person',
   detailLabel = 'View Details',
   detailHref = '#inquiry',
+  showDetails = true,
   bookLabel = 'Book Now',
   bookHref = '#inquiry',
   className = '',
@@ -64,7 +66,7 @@ export default function FeaturePackageCard({
             }
           }}
         />
-        <span className="fpc-guest-badge z-20">{guestLabel}</span>
+        {guestLabel && <span className="fpc-guest-badge z-20">{guestLabel}</span>}
       </div>
 
       <div className="fpc-body">
@@ -79,7 +81,7 @@ export default function FeaturePackageCard({
           ))}
         </ul>
 
-        <div className="fpc-footer">
+        <div className={`fpc-footer ${!showDetails && !price ? 'fpc-footer-book-only' : ''}`.trim()}>
           {price ? (
             <div className="fpc-price">
               <small>{localizedPriceLabel}</small>
@@ -88,11 +90,11 @@ export default function FeaturePackageCard({
                 <em>{localizedPriceUnit}</em>
               </strong>
             </div>
-          ) : (
+          ) : showDetails ? (
             <Button asChild variant="outline" className="fpc-detail-btn">
               <a href={detailHref}>{localizedDetailLabel}</a>
             </Button>
-          )}
+          ) : null}
 
           <Button asChild className="fpc-book-btn">
             <a href={bookHref}>{localizedBookLabel}</a>

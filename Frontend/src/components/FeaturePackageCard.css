@@ -103,6 +103,14 @@
   width: 100%;
 }
 
+.fpc-footer-book-only .fpc-book-btn {
+  flex: 0 1 calc(50% - 6px);
+}
+
+.fpc-footer-book-only {
+  justify-content: center;
+}
+
 .fpc-price small {
   display: block;
   margin-bottom: 4px;
@@ -220,5 +228,9 @@
     height: 48px !important;
     font-size: 0.9375rem !important;
     border-radius: 9999px !important;
+  }
+
+  .fpc-footer-book-only .fpc-book-btn {
+    flex-basis: auto;
   }
 }

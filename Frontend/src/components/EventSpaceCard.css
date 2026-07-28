@@ -55,6 +55,10 @@
   width: 100% !important;
 }
 
+.event-space-header-badges-single {
+  justify-content: flex-end !important;
+}
+
 .event-space-badge-outline,
 .events-space-tag-outline {
   padding: 5px 14px !important;

@@ -7,7 +7,7 @@ import './EventSpaceCard.css';
 export interface EventSpaceCardProps {
   id: string;
   name: string;
-  guestTag: string;
+  guestTag?: string;
   badgeTag: string;
   image: string;
   features: string[];
@@ -49,8 +49,8 @@ export const EventSpaceCard: React.FC<EventSpaceCardProps> = ({
       </div>
 
       <div className="event-space-content-container">
-        <div className="event-space-header-badges">
-          <span className="event-space-badge-outline">{guestTag}</span>
+        <div className={`event-space-header-badges ${!guestTag ? 'event-space-header-badges-single' : ''}`.trim()}>
+          {guestTag && <span className="event-space-badge-outline">{guestTag}</span>}
           <span className="event-space-badge-solid">{badgeTag}</span>
         </div>
 

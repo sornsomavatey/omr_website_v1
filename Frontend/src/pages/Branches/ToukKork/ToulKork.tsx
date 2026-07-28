@@ -39,15 +39,15 @@ import './ToulKork.css';
 import imgBranchToulKork from '@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.webp'; // Toul Kork Building
 import imgHeritageMain from '@/assets/home-v2/43310dd2158ca5c7f7d098abf280dc14124d42de.webp'; // Curved wood interior (main left)
 import imgHeritageTopLeft from '@/assets/toul-kork-room-no-logo.webp'; // Nighttime Toul Kork room image (top-left)
-import imgNeangTeav from '@/assets/neang teav.png'; // Neang Tev room
-import imgOrnTitTom from '@/assets/orn tit tom.png'; // Orn Tit Tom room
-import imgHeritageTopRight from '@/assets/moments.jpg'; // Outdoor deck with balloons (top-right)
+import imgNeangTeav from '@/assets/neang teav.webp'; // Neang Tev room
+import imgOrnTitTom from '@/assets/orn tit tom.webp'; // Orn Tit Tom room
+import imgHeritageTopRight from '@/assets/moments.webp'; // Outdoor deck with balloons (top-right)
 import imgHeritageBottom from '@/assets/tk yellow.jpg'; // Outdoor canopy with yellow lights (bottom)
-import imgVipTk from '@/assets/vip tk.png'; // VIP Room image
+import imgVipTk from '@/assets/vip tk.webp'; // VIP Room image
 import imgSpace2 from '@/assets/home-v2/31b0910d38c033be0ce5292cf4a1d68688308c6b.webp'; // Event hall (used in private rooms)
-import imgGallery1 from '@/assets/neang teav.png'; // Neang Tev room
+import imgGallery1 from '@/assets/neang teav.webp'; // Neang Tev room
 import imgGallery2 from '@/assets/home-v2/07e47044152ad38cdbb1bda5ae392fb848e3a37a.webp'; // Round tables private dining
-import imgGallery3 from '@/assets/moments.jpg'; // Event hall with balloons
+import imgGallery3 from '@/assets/moments.webp'; // Event hall with balloons
 import imgFamilyPkg from '@/assets/Family_compressed.jpg'; // Family celebration image
 import imgGallery6 from '@/assets/home-v2/9826b8c118c911c852174f3c0d0204245fd0da48.webp'; // Corporate meeting
 

@@ -30,21 +30,21 @@ import TestimonialSection from '@/components/TestimonialSection';
 import { createEventBooking, getTestimonialsData, sendCustomerEmail } from '@/lib/api';
 import { useTranslation } from '@/hooks/useTranslation';
 
-import imgHero     from '@/assets/home-v2/e900cacb721f9c81cd07b8415a03f20f42a39856.webp';
-import imgPkg1     from '@/assets/Family_compressed.jpg';
-import imgPkg2     from '@/assets/engagement_compressed.jpg';
-import imgPkg3     from '@/assets/meeting-room-package.png';
-import imgPkg4     from '@/assets/cooperate package_compressed.jpg';
+import imgHero     from '@/assets/silverbddining-clean-v3.webp';
+import imgPkg1     from '@/assets/roundtablebk.webp';
+import imgPkg2     from '@/assets/redengage-clean.webp';
+import imgPkg3     from '@/assets/corporateroomwhite.webp';
+import imgPkg4     from '@/assets/cooporatepacakage.webp';
 import imgSpace1   from '@/assets/private-room-no-logo.webp';
-import imgSpace2   from '@/assets/family dinner.jpg';
+import imgSpace2   from '@/assets/bkfamilyroom.webp';
 import imgGal1     from '@/assets/gallery/private-gatherings-no-logo.webp';
 import imgGal2     from '@/assets/gallery/artisanal-plating-no-logo.webp';
 import imgGal3     from '@/assets/gallery/wine-toast.webp';
 import imgGal4     from '@/assets/gallery/event-coffee-service.webp';
 import imgGal5     from '@/assets/home-v2/9826b8c118c911c852174f3c0d0204245fd0da48.webp';
-import imgInquiry  from '@/assets/Weeding.webp';
-import imgFinalCta from '@/assets/event bg.jpg';
-import imgMainHall from '@/assets/main hall.jpg';
+import imgInquiry  from '@/assets/silverbirthday-clean.webp';
+import imgFinalCta from '@/assets/event bg.webp';
+import imgMainHall from '@/assets/main hall.webp';
 import { imageMap } from '@/pages/Home/homeAssets';
 
 import './index.css';
@@ -860,6 +860,15 @@ Our event coordinator will contact you within 24 hours.`;
               </div>
             </div>
           </div>
+
+          <div className="events-hero-actions events-hero-actions-mobile">
+            <a href="#inquiry" className="events-button events-button-primary">
+              {t('eventsPage.hero.planCta', undefined, 'Plan Your Event')}
+            </a>
+            <a href="#inquiry" className="events-button events-button-outline">
+              {t('eventsPage.hero.contactCta', undefined, 'Contact Event Team')}
+            </a>
+          </div>
         </div>
       </section>
 
@@ -877,9 +886,10 @@ Our event coordinator will contact you within 24 hours.`;
               image={pkg.img}
               alt={pkg.name}
               title={pkg.name}
-              guestLabel={pkg.guests}
               features={pkg.features}
+              showDetails={false}
               bookHref="#inquiry"
+              className={pkg.id === 'family' ? 'fpc-card-family' : ''}
             />
           ))}
         </div>
@@ -898,7 +908,6 @@ Our event coordinator will contact you within 24 hours.`;
               key={space.id}
               id={space.id}
               name={space.name}
-              guestTag={space.guestTag}
               badgeTag={space.badgeTag}
               image={space.img}
               features={space.features}

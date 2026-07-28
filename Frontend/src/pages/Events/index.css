@@ -44,8 +44,11 @@
   min-height: 650px;
   display: flex;
   align-items: center;
+  background-color: #1b1712;
   background-size: cover;
-  background-position: center;
+  /* Keep the banquet table as the hero's focal point at every viewport width. */
+  background-position: 47% center;
+  background-repeat: no-repeat;
   isolation: isolate
 }
 
@@ -54,8 +57,8 @@
   inset: 0;
   z-index: -1;
   background:
-    linear-gradient(90deg, rgba(8, 12, 8, 0.88) 0%, rgba(12, 18, 11, 0.45) 52%, rgba(10, 14, 10, 0.72) 100%),
-    linear-gradient(180deg, rgba(6, 10, 6, 0.35) 0%, transparent 45%, rgba(6, 10, 6, 0.55) 100%);
+    linear-gradient(90deg, rgba(5, 8, 5, 0.72) 0%, rgba(7, 10, 7, 0.36) 52%, rgba(6, 9, 6, 0.58) 100%),
+    linear-gradient(180deg, rgba(3, 6, 3, 0.25) 0%, rgba(3, 6, 3, 0.08) 45%, rgba(3, 6, 3, 0.42) 100%);
 }
 
 .events-hero-inner {
@@ -100,6 +103,10 @@
   display: flex;
   gap: 16px;
   margin-top: 34px
+}
+
+.events-hero-actions-mobile {
+  display: none;
 }
 
 .events-button {
@@ -150,6 +157,16 @@
   background: rgba(22, 28, 22, 0.72);
   box-shadow: 0 20px 48px rgba(0, 0, 0, 0.28);
   backdrop-filter: blur(16px);
+}
+
+.events-packages-section .fpc-card-family .fpc-image {
+  object-position: center 68%;
+  transform: scale(1.03);
+  transform-origin: center 68%;
+}
+
+.events-packages-section .fpc-card-family:hover .fpc-image {
+  transform: scale(1.06);
 }
 
 .events-contact-card h2 {
@@ -1140,36 +1157,108 @@
   }
 
   .events-hero-inner {
-    width: min(100% - 32px, 1160px);
-    padding: 126px 0 64px
+    width: min(100% - 20px, 1160px);
+    padding: 108px 0 40px;
+    grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr);
+    align-items: center;
+    gap: 8px;
+  }
+
+  .events-hero-copy {
+    display: contents;
   }
 
   .events-hero-copy h1 {
-    font-size: 45px
+    grid-column: 1 / -1;
+    grid-row: 1;
+    margin-bottom: 12px;
+    font-size: clamp(23px, 7.5vw, 31px);
+    text-align: left;
   }
 
   .events-hero-copy p {
-    font-size: 14px
+    grid-column: 1;
+    grid-row: 2;
+    align-self: start;
+    font-size: 10px;
+    line-height: 1.45;
   }
 
   .events-hero-actions {
-    flex-direction: column
+    grid-column: 1;
+    grid-row: 3;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 14px;
   }
 
-  .events-hero-actions .events-button {
-    width: 100%
+  .events-hero-copy .events-hero-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .events-hero-actions-mobile {
+    display: none;
+  }
+
+  .events-hero-copy .events-hero-actions .events-button {
+    flex: 0 0 auto;
+    align-self: flex-start;
+    width: 100% !important;
+    min-width: 0;
+    max-width: 100%;
+    min-height: 29px;
+    padding: 0 4px;
+    font-size: 6px;
+    letter-spacing: 0;
+    white-space: nowrap;
   }
 
   .events-contact-card {
-    padding: 25px 22px;
+    grid-column: 2;
+    grid-row: 2 / span 2;
+    align-self: start;
+    padding: 9px 7px;
     width: 100%;
+    margin-top: 0;
+    margin-right: 0;
+    margin-left: auto;
+    order: initial;
     box-sizing: border-box;
   }
 
-  .events-contact-row strong {
-    word-break: break-all;
-    overflow-wrap: break-word;
-    font-size: 15px;
+  .events-contact-card h2 {
+    margin-bottom: 7px;
+    font-size: 11px;
+  }
+
+  .events-page .events-contact-card .events-contact-row {
+    grid-template-columns: 19px minmax(0, 1fr);
+    gap: 5px;
+    margin-top: 5px;
+  }
+
+  .events-page .events-contact-card .events-contact-icon {
+    width: 19px;
+    height: 19px;
+  }
+
+  .events-page .events-contact-card .events-contact-icon svg {
+    width: 10px;
+    height: 10px;
+  }
+
+  .events-page .events-contact-card .events-contact-row small {
+    margin-bottom: 1px;
+    font-size: 7px;
+    letter-spacing: .04em;
+  }
+
+  .events-page .events-contact-card .events-contact-row strong {
+    white-space: nowrap;
+    word-break: normal;
+    overflow-wrap: normal;
+    font-size: 7px;
   }
 
   .events-section { padding: var(--mobile-section-space) 0 }
