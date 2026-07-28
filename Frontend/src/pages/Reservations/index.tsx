@@ -32,7 +32,7 @@ import { getReservationsData, getHomeData, createReservation, sendCustomerEmail 
 import { useTranslation } from '@/hooks/useTranslation';
 import { toKhmerDigits } from '@/lib/price';
 import whiteLogo from '@/assets/omr_logo_white.webp';
-import imgMainHall from '@/assets/main hall.jpg';
+import imgMainHall from '@/assets/main hall.webp';
 import {
   imgSpaceOutdoor,
   imgHeroBg2,

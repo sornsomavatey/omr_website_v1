@@ -3,7 +3,8 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from '@/hooks/useTranslation';
 import { Skeleton } from '@/components/ui/skeleton';
 
-import imgHero from '@/assets/home-v2/43310dd2158ca5c7f7d098abf280dc14124d42de.webp';
+import imgHero from '@/assets/gallery/galleryhero.webp';
+import imgArchitecturalDining from '@/assets/home-v2/43310dd2158ca5c7f7d098abf280dc14124d42de.webp';
 import imgDining from '@/assets/gallery/main-hall-dining.webp';
 import imgNoodles from '@/assets/gallery/small-kuyteav-beef-no-logo.webp';
 import imgWorkshop from '@/assets/home-v2/9826b8c118c911c852174f3c0d0204245fd0da48.webp';
@@ -17,39 +18,53 @@ import imgCateringServiceStaff from '@/assets/gallery/catering-service-staff-no-
 import imgStaffNumansom from '@/assets/gallery/staff-with-numansom-no-logo.webp';
 import imgVitalEvent from '@/assets/gallery/vital-event.webp';
 import imgOmrHospitality from '@/assets/gallery/omr-hospitality.webp';
-import imgService from '@/assets/gallery/service.jpg';
+import imgService from '@/assets/gallery/service.webp';
 import imgCatering from '@/assets/gallery/private-gatherings-no-logo.webp';
 import imgRoom from '@/assets/home-v2/480cb1d76af2706b9692b726ad26ec2bf396f8c8.webp';
 import imgEvent from '@/assets/home-v2/e900cacb721f9c81cd07b8415a03f20f42a39856.webp';
 import imgDessertCup from '@/assets/gallery/sweet-dessert-cup.webp';
 import imgGrillPlatter from '@/assets/gallery/khmer-grill-chicken-no-logo.webp';
 import imgCoffeeService from '@/assets/gallery/event-coffee-service.webp';
-import imgChefChoppingVegetables from '@/assets/gallery/chefchoppingvegetable.png';
-import imgKuyteav from '@/assets/gallery/kuyteav.jpg';
-import imgTkInterior from '@/assets/gallery/tkinterior.jpg';
-import imgTkExterior from '@/assets/gallery/tkexterior.jpg';
+import imgChefChoppingVegetables from '@/assets/gallery/chefchoppingvegetable.webp';
+import imgKuyteav from '@/assets/gallery/kuyteav.webp';
+import imgTkInterior from '@/assets/gallery/tkinterior.webp';
+import imgTkExterior from '@/assets/gallery/tkexterior.webp';
 import imgTkFishPond from '@/assets/gallery/tkfishpond.jpg';
-import imgTkOutdoorDining from '@/assets/gallery/tkoutdoordining.jpg';
-import imgFifteenYearAnniversary from '@/assets/gallery/15yearsanni.png';
-import imgBkGrandOpening from '@/assets/gallery/bkgrandopeningceremony.jpg';
-import imgChineseNewYearGift from '@/assets/gallery/chinesenewyeargift-clean.png';
-import imgPchumBen from '@/assets/gallery/pchumben-clean-enhanced.png';
-import imgButterflyCake from '@/assets/gallery/butterflycake.jpg';
+import imgTkOutdoorDining from '@/assets/gallery/tkoutdoordining.webp';
+import imgFifteenYearAnniversary from '@/assets/gallery/15yearsanni.webp';
+import imgBkGrandOpening from '@/assets/gallery/bkgrandopeningceremony.webp';
+import imgChineseNewYearGift from '@/assets/gallery/chinesenewyeargift-clean.webp';
+import imgPchumBen from '@/assets/gallery/pchumben-clean-enhanced.webp';
+import imgButterflyCake from '@/assets/gallery/butterflycake.webp';
 import imgCorporateCatering from '@/assets/gallery/catering.webp';
-import imgFoodPlating from '@/assets/gallery/foodplating.jpg';
-import imgKhmerCakePlating from '@/assets/gallery/khmercakeplating.png';
-import imgAnsom from '@/assets/gallery/ansom-clean.png';
-import imgRedTableDining from '@/assets/gallery/redtabledining-clean.png';
-import imgChefInKitchen from '@/assets/gallery/chefinthekitchen-clean.png';
-import imgChefPlating from '@/assets/gallery/chefplating-clean.png';
-import imgFoodBox from '@/assets/gallery/foodbox-clean.png';
-import imgFruitPlate from '@/assets/gallery/fruitplate-clean.png';
-import imgFourDishes from '@/assets/gallery/fourdishes-clean.png';
-import imgBlueBirthdayDecor from '@/assets/gallery/bluedecoBD-private.png';
-import imgWineSelection from '@/assets/gallery/wine-clean.png';
-import imgBkChineseNewYear from '@/assets/gallery/BKchinese.png';
+import imgFoodPlating from '@/assets/gallery/foodplating.webp';
+import imgKhmerCakePlating from '@/assets/gallery/khmercakeplating.webp';
+import imgAnsom from '@/assets/gallery/ansom-clean.webp';
+import imgRedTableDining from '@/assets/gallery/redtabledining-clean.webp';
+import imgChefInKitchen from '@/assets/gallery/chefinthekitchen-clean.webp';
+import imgChefPlating from '@/assets/gallery/chefplating-clean.webp';
+import imgFoodBox from '@/assets/gallery/foodbox-clean.webp';
+import imgFruitPlate from '@/assets/gallery/fruitplate-clean.webp';
+import imgFourDishes from '@/assets/gallery/fourdishes-clean.webp';
+import imgBlueBirthdayDecor from '@/assets/gallery/bluedecoBD-clean.webp';
+import imgWineSelection from '@/assets/gallery/wine-clean.webp';
+import imgBkChineseNewYear from '@/assets/gallery/BKchinese.webp';
+import imgBkDiningRoom from '@/assets/gallery/Bkdiningroom.webp';
+import imgBkFrontYard from '@/assets/gallery/bkfrontyard.webp';
+import imgBkChanchaiya from '@/assets/gallery/Bkchanchaiya.webp';
+import imgBkRoom from '@/assets/gallery/bkroom.webp';
+import imgBkOutsideRoom from '@/assets/gallery/bkoutsideroom.webp';
+import imgTkRoomService from '@/assets/gallery/tkroomservice.webp';
+import imgGalaDinner from '@/assets/gallery/galadinner.webp';
+import imgRedBirthday from '@/assets/gallery/redbirthday-name-removed.webp';
 import imgExterior from '@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.webp';
 import imgSiemReapChicken from '@/assets/Food/Lunch and Dinner/grilled-chicken-siemreap.webp';
+import imgEventHero from '@/assets/engagegreenv2-clean-v2.webp';
+import imgFamilyCelebration from '@/assets/roundtablebk.webp';
+import imgEngagementPackage from '@/assets/engagegreen-names-blurred.webp';
+import imgMeetingRoom from '@/assets/corporateroomwhite.webp';
+import imgCorporatePackage from '@/assets/cooporatepacakage.webp';
+import imgVipRoom from '@/assets/bkfamilyroom.webp';
 
 import './index.css';
 
@@ -66,6 +81,12 @@ type GalleryItem = {
 };
 
 const galleryItems: GalleryItem[] = [
+  { src: imgBkDiningRoom, alt: 'Private round-table dining room at One More Restaurant Boeung Kak', title: 'Boeung Kak Private Dining', tag: 'Restaurant', category: 'Restaurant', shape: 'landscape' },
+  { src: imgBkFrontYard, alt: 'Curved open-air dining terrace at One More Restaurant Boeung Kak', title: 'Boeung Kak Garden Terrace', tag: 'Restaurant', category: 'Restaurant', shape: 'landscape' },
+  { src: imgBkRoom, alt: 'Private dining room with garden views at One More Restaurant Boeung Kak', title: 'Boeung Kak Garden Room', tag: 'Restaurant', category: 'Restaurant', shape: 'landscape' },
+  { src: imgBkChanchaiya, alt: 'Chanchaiya room entrance at One More Restaurant Boeung Kak', title: 'Chanchaiya Room', tag: 'Restaurant', category: 'Restaurant', shape: 'portrait' },
+  { src: imgBkOutsideRoom, alt: 'Warmly lit private dining room corridor at One More Restaurant Boeung Kak', title: 'Boeung Kak Private Room Corridor', tag: 'Restaurant', category: 'Restaurant', shape: 'landscape' },
+  { src: imgTkRoomService, alt: 'One More Restaurant Toul Kork hosts welcoming guests at a private dining room', title: 'Toul Kork Guest Welcome', tag: 'Restaurant', category: 'Restaurant', shape: 'landscape' },
   { src: imgDining, alt: 'Guests enjoying the main dining hall', title: 'Main Hall Dining', tag: 'Restaurant', category: 'Restaurant', shape: 'portrait' },
   { src: imgNoodles, alt: 'A bowl of Khmer beef noodles', title: 'Rich of Flavors', tag: 'Food', category: 'Food', shape: 'square' },
   { src: imgWorkshop, alt: 'Traditional Khmer cooking workshop', title: 'Khmer Cooking Workshop', tag: 'Experience', category: 'Experience', shape: 'portrait' },
@@ -110,28 +131,36 @@ const galleryItems: GalleryItem[] = [
   { src: imgService, alt: 'Warm service in the restaurant courtyard', title: 'Khmer Hospitality', tag: 'Experience', category: 'Experience', shape: 'portrait' },
   { src: imgRoom, alt: 'Private dining room set for guests', title: 'The Private Room', tag: 'Restaurant', category: 'Restaurant', shape: 'portrait' },
   { src: imgEvent, alt: 'Floral event hall prepared for a celebration', title: 'A Day To Remember', tag: 'Events', category: 'Events', shape: 'landscape' },
+  { src: imgEventHero, alt: 'Celebration hall prepared for a special event', title: 'Celebrate Every Special Moment', tag: 'Events', category: 'Events', shape: 'landscape' },
+  { src: imgFamilyCelebration, alt: 'Private round-table room prepared for a family celebration', title: 'Family Celebration Room', tag: 'Events', category: 'Events', shape: 'landscape' },
+  { src: imgEngagementPackage, alt: 'Green engagement celebration table setting', title: 'Engagement Celebration', tag: 'Events', category: 'Events', shape: 'landscape' },
+  { src: imgMeetingRoom, alt: 'Bright private meeting room with a long conference table', title: 'Meeting Room Package', tag: 'Events', category: 'Events', shape: 'landscape' },
+  { src: imgCorporatePackage, alt: 'Corporate event hall arranged with presentation seating', title: 'Corporate Event Package', tag: 'Events', category: 'Events', shape: 'landscape' },
+  { src: imgVipRoom, alt: 'Private VIP dining room prepared for an event', title: 'VIP Private Event Room', tag: 'Events', category: 'Events', shape: 'landscape' },
+  { src: imgGalaDinner, alt: 'Elegant gala dinner arranged for guests at One More Restaurant', title: 'Gala Dinner', tag: 'Events', category: 'Events', shape: 'landscape' },
+  { src: imgRedBirthday, alt: 'Red and white birthday celebration in a private dining room', title: 'Red Birthday Celebration', tag: 'Events', category: 'Events', shape: 'landscape' },
   { src: imgDessertCup, alt: 'A sweet Khmer dessert served in a One More Restaurant cup', title: 'Sweet Refreshment', tag: 'Food', category: 'Food', shape: 'square' },
   { src: imgExterior, alt: 'One More Restaurant exterior', title: 'Canopy Entrance', tag: 'Restaurant', category: 'Restaurant', shape: 'landscape' },
-  { src: imgHero, alt: 'Architectural restaurant dining room', title: 'Curves & Craft', tag: 'Restaurant', category: 'Restaurant', shape: 'landscape' },
+  { src: imgArchitecturalDining, alt: 'Architectural restaurant dining room', title: 'Curves & Craft', tag: 'Restaurant', category: 'Restaurant', shape: 'landscape' },
 ];
 
 const foodGalleryOrder = [
-  imgFoodPlating,
-  imgNoodles,
-  imgButterflyCake,
   imgChefPlating,
-  imgSiemReapChicken,
-  imgFruitPlate,
-  imgArtisanalPlating,
-  imgFourDishes,
-  imgChefChoppingVegetables,
-  imgDessertCup,
-  imgGrillPlatter,
-  imgFoodBox,
+  imgFoodPlating,
   imgKuyteav,
+  imgFruitPlate,
+  imgSiemReapChicken,
+  imgButterflyCake,
+  imgNoodles,
+  imgArtisanalPlating,
+  imgChefChoppingVegetables,
+  imgFourDishes,
+  imgGrillPlatter,
+  imgDessertCup,
+  imgKhmerCakePlating,
+  imgFoodBox,
   imgAnsom,
   imgChicken,
-  imgKhmerCakePlating,
   imgChefInKitchen,
 ] as const;
 
@@ -139,11 +168,70 @@ const foodGalleryRank = new Map<string, number>(
   foodGalleryOrder.map((src, index) => [src, index]),
 );
 
-const galleryColumnBlueprint = [
-  ['Main Hall Dining', 'Signature Kuyteav', 'Khmer Meal Boxes', 'Wine Toast', 'Khmer Cooking Workshop', 'Toul Kork Exterior', 'Butterfly Coconut Cakes', 'Blue Birthday Celebration', 'Boeung Kak Grand Opening', 'One More Service Moment', 'Red Table Dining', 'The Private Room', 'Artisanal Plating', 'Corporate Catering', 'Christmas Deer Display'],
-  ['Canopy Entrance', 'Freshly Prepared', 'Chef in the Kitchen', 'Fresh Fruit Art', 'Wine Selection', '15th Anniversary', 'Event Refreshment Moment', 'Toul Kork Interior', 'Khmer Feast', 'Traditional Ansom', 'Chinese New Year Gift', 'Khmer Cake Traditions', 'Toul Kork Outdoor Dining', 'Khmer Grill Platter', 'A Day To Remember', 'Catering Service Team'],
-  ['Toul Kork Fish Pond', 'Rich of Flavors', 'Chef Plating', 'Four Khmer Favorites', 'Chinese New Year at Boeung Kak', 'Christmas Wine Display', 'Khmer Hospitality', 'Curves & Craft', 'Kitchen Rituals', 'Pchum Ben Traditions', 'Miss Planet International Dining', 'Khmer Cake Plating', 'Siem Reap Grilled Chicken', 'Private Gatherings', 'Sweet Refreshment', 'Event Coffee Service'],
-];
+const restaurantGalleryOrder = [
+  imgTkInterior,
+  imgBkFrontYard,
+  imgExterior,
+  imgBkDiningRoom,
+  imgTkFishPond,
+  imgBkRoom,
+  imgDining,
+  imgTkOutdoorDining,
+  imgBkChanchaiya,
+  imgArchitecturalDining,
+  imgRedTableDining,
+  imgTkExterior,
+  imgBkOutsideRoom,
+  imgBkChineseNewYear,
+  imgRoom,
+  imgTkRoomService,
+] as const;
+
+const restaurantGalleryRank = new Map<string, number>(
+  restaurantGalleryOrder.map((src, index) => [src, index]),
+);
+
+const experienceGalleryOrder = [
+  imgWorkshop,
+  imgMissPlanetDining,
+  imgWineToast,
+  imgOmrHospitality,
+  imgStaffNumansom,
+  imgVitalEvent,
+  imgService,
+  imgWineSelection,
+] as const;
+
+const experienceGalleryRank = new Map<string, number>(
+  experienceGalleryOrder.map((src, index) => [src, index]),
+);
+
+const eventsGalleryOrder = [
+  imgEventHero,
+  imgEngagementPackage,
+  imgGalaDinner,
+  imgRedBirthday,
+  imgFamilyCelebration,
+  imgCorporatePackage,
+  imgMeetingRoom,
+  imgVipRoom,
+  imgEvent,
+  imgBkGrandOpening,
+  imgCatering,
+  imgBlueBirthdayDecor,
+  imgCorporateCatering,
+  imgFifteenYearAnniversary,
+  imgCoffeeService,
+  imgChineseNewYearGift,
+  imgCateringServiceStaff,
+  imgPchumBen,
+  imgChristmasWine,
+  imgXmasDeer,
+] as const;
+
+const eventsGalleryRank = new Map<string, number>(
+  eventsGalleryOrder.map((src, index) => [src, index]),
+);
 
 const galleryShapeWeight: Record<GalleryItem['shape'], number> = {
   landscape: 0.72,
@@ -163,6 +251,21 @@ function balanceGalleryColumns<T extends Pick<GalleryItem, 'shape'>>(items: T[],
   });
 
   return columns;
+}
+
+function shuffleGalleryItems<T>(items: T[], shuffleVersion: number) {
+  if (shuffleVersion === 0) return items;
+
+  const shuffled = [...items];
+  let seed = shuffleVersion * 2654435761;
+
+  for (let index = shuffled.length - 1; index > 0; index -= 1) {
+    seed = (seed * 1664525 + 1013904223) >>> 0;
+    const swapIndex = seed % (index + 1);
+    [shuffled[index], shuffled[swapIndex]] = [shuffled[swapIndex], shuffled[index]];
+  }
+
+  return shuffled;
 }
 
 function GalleryItemCard({
@@ -216,7 +319,17 @@ export default function GalleryPage() {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [isFilterNavigationVisible, setIsFilterNavigationVisible] = useState(false);
   const [galleryColumnCount, setGalleryColumnCount] = useState(3);
+  const [shuffleVersion, setShuffleVersion] = useState(0);
   const masonryRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const shuffleInterval = window.setInterval(() => {
+      setShuffleVersion((version) => version + 1);
+      setSelectedIndex(null);
+    }, 5 * 60 * 1000);
+
+    return () => window.clearInterval(shuffleInterval);
+  }, []);
 
   useEffect(() => {
     const mobileColumns = window.matchMedia('(max-width: 900px)');
@@ -253,44 +366,49 @@ export default function GalleryPage() {
 
   const visibleItems = useMemo(() => {
     if (activeFilter === 'All') {
-      return translatedGalleryItems;
+      return shuffleGalleryItems(translatedGalleryItems, shuffleVersion);
     }
 
     const filteredItems = translatedGalleryItems.filter((item) => item.category === activeFilter);
 
     if (activeFilter === 'Food') {
-      return [...filteredItems].sort(
+      return shuffleGalleryItems([...filteredItems].sort(
         (first, second) =>
           (foodGalleryRank.get(first.src) ?? Number.MAX_SAFE_INTEGER)
           - (foodGalleryRank.get(second.src) ?? Number.MAX_SAFE_INTEGER),
-      );
+      ), shuffleVersion);
     }
 
-    return filteredItems;
-  }, [activeFilter, translatedGalleryItems]);
+    if (activeFilter === 'Restaurant') {
+      return shuffleGalleryItems([...filteredItems].sort(
+        (first, second) =>
+          (restaurantGalleryRank.get(first.src) ?? Number.MAX_SAFE_INTEGER)
+          - (restaurantGalleryRank.get(second.src) ?? Number.MAX_SAFE_INTEGER),
+      ), shuffleVersion);
+    }
+
+    if (activeFilter === 'Experience') {
+      return shuffleGalleryItems([...filteredItems].sort(
+        (first, second) =>
+          (experienceGalleryRank.get(first.src) ?? Number.MAX_SAFE_INTEGER)
+          - (experienceGalleryRank.get(second.src) ?? Number.MAX_SAFE_INTEGER),
+      ), shuffleVersion);
+    }
+
+    if (activeFilter === 'Events') {
+      return shuffleGalleryItems([...filteredItems].sort(
+        (first, second) =>
+          (eventsGalleryRank.get(first.src) ?? Number.MAX_SAFE_INTEGER)
+          - (eventsGalleryRank.get(second.src) ?? Number.MAX_SAFE_INTEGER),
+      ), shuffleVersion);
+    }
+
+    return shuffleGalleryItems(filteredItems, shuffleVersion);
+  }, [activeFilter, translatedGalleryItems, shuffleVersion]);
 
   const visibleColumns = useMemo(() => {
-    if (galleryColumnCount === 2) {
-      return balanceGalleryColumns(visibleItems, 2);
-    }
-
-    if (activeFilter !== 'All') {
-      return balanceGalleryColumns(visibleItems);
-    }
-
-    const visibleTitles = new Set(visibleItems.map((item) => item.title));
-    return galleryColumnBlueprint
-      .map((titles) => titles
-        .map((title) => {
-          const originalItem = galleryItems.find((item) => item.title === title);
-          if (!originalItem) return undefined;
-          const originalIndex = galleryItems.indexOf(originalItem);
-          return translatedGalleryItems[originalIndex];
-        })
-        .filter((item): item is typeof translatedGalleryItems[number] => Boolean(item))
-        .filter((item) => visibleTitles.has(item.title)))
-      .filter((column) => column.length > 0);
-  }, [activeFilter, visibleItems, translatedGalleryItems, galleryColumnCount]);
+    return balanceGalleryColumns(visibleItems, galleryColumnCount);
+  }, [visibleItems, galleryColumnCount]);
 
   const closeLightbox = () => setSelectedIndex(null);
   const showPrevious = () => setSelectedIndex((index) => index === null ? null : (index - 1 + visibleItems.length) % visibleItems.length);

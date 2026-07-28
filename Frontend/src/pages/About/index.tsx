@@ -16,7 +16,7 @@ import {
 import { useTranslation } from '@/hooks/useTranslation';
 import { createFeedback } from '@/lib/api';
 
-import heroImage from '@/assets/about/herosection.jpg';
+import heroImage from '@/assets/about/bothoutlet-original.webp';
 import toulKorkImage from '@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.webp';
 import omr2008Image from '@/assets/OMR 2008.webp';
 import boeungKakImage from '@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.webp';

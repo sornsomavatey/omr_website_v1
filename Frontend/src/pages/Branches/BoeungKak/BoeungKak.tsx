@@ -37,22 +37,22 @@ import './BoeungKak.css';
 
 // Asset imports matching homeAssets
 import imgBranchBoeungKak from '@/assets/Bk.webp'; // Boeung Kak Building
-import imgHeritageMain from '@/assets/Bk space1.jpg'; // Boeung Kak interior main
+import imgHeritageMain from '@/assets/Bk space1.webp'; // Boeung Kak interior main
 import imgHeritageTopLeft from '@/assets/bk space2.jpg'; // Boeung Kak space top left
-import imgHeritageTopRight from '@/assets/bk space3.jpg'; // Boeung Kak space top right
-import imgHeritageBottom from '@/assets/bk space4.jpg'; // Boeung Kak space bottom full
-import imgNeangTeav from '@/assets/neang teav.png'; // Neang Tev room
-import imgOrnTitTom from '@/assets/orn tit tom.png'; // Orn Tit Tom room
-import imgNekJei from '@/assets/nek jei.png'; // Nek Jei room
-import imgNekSok from '@/assets/nek sok .png'; // Nek Sok room
-import imgVipBk from '@/assets/bk vip.png'; // Boeung Kak VIP Room image
-import imgBirthdayBk from '@/assets/birthday bk.jpg'; // Boeung Kak Birthday celebration image
+import imgHeritageTopRight from '@/assets/bk space3.webp'; // Boeung Kak space top right
+import imgHeritageBottom from '@/assets/bk space4.webp'; // Boeung Kak space bottom full
+import imgNeangTeav from '@/assets/neang teav.webp'; // Neang Tev room
+import imgOrnTitTom from '@/assets/orn tit tom.webp'; // Orn Tit Tom room
+import imgNekJei from '@/assets/nek jei.webp'; // Nek Jei room
+import imgNekSok from '@/assets/nek sok .webp'; // Nek Sok room
+import imgVipBk from '@/assets/bk vip.webp'; // Boeung Kak VIP Room image
+import imgBirthdayBk from '@/assets/birthday bk.webp'; // Boeung Kak Birthday celebration image
 import imgEngagementCompressed from '@/assets/engagement_compressed.jpg'; // Engagement celebration image
 import imgFamilyPkg from '@/assets/Family_compressed.jpg'; // Family celebration image
 import imgSpace2 from '@/assets/home-v2/31b0910d38c033be0ce5292cf4a1d68688308c6b.webp'; // Event hall (used in private rooms)
-import imgGallery1 from '@/assets/neang teav.png'; // Neang Tev room
+import imgGallery1 from '@/assets/neang teav.webp'; // Neang Tev room
 import imgGallery2 from '@/assets/home-v2/07e47044152ad38cdbb1bda5ae392fb848e3a37a.webp'; // Round tables private dining
-import imgGallery3 from '@/assets/moments.jpg'; // Event hall with balloons
+import imgGallery3 from '@/assets/moments.webp'; // Event hall with balloons
 import imgGallery4 from '@/assets/home-v2/80bc2f874a3b8b65fc3bd247f23046db8632d909.webp'; // People dining
 import imgGallery6 from '@/assets/home-v2/9826b8c118c911c852174f3c0d0204245fd0da48.webp'; // Corporate meeting
 
