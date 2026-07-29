@@ -183,9 +183,15 @@ export default function Navbar() {
   const isBoeungKakPage =
     location.pathname === '/branches/boeung-kak' ||
     location.pathname === '/restaurants/boeung-kak';
+  const isBranchesPage =
+    location.pathname === '/branches' ||
+    location.pathname === '/restaurants';
+  const isBranchHeroPage =
+    isBranchesPage || isToulKorkPage || isBoeungKakPage;
   const isGalleryPage = location.pathname === '/gallery';
   const isEventsPage = location.pathname === '/events';
   const isMenuPage = location.pathname === '/menu';
+  const isAboutPage = location.pathname === '/about';
   const isTermsPage = location.pathname === '/terms';
 
   const isReservationPage =
@@ -198,16 +204,34 @@ export default function Navbar() {
       return;
     }
 
+    let heroObserver: IntersectionObserver | null = null;
+    let animationFrame = 0;
+
+    const getTrackedHero = () => {
+      if (isAboutPage) return document.getElementById('about-hero');
+      if (isBranchesPage) return document.getElementById('branches-hero');
+      if (isToulKorkPage) return document.getElementById('toulkork-hero');
+      if (isBoeungKakPage) return document.getElementById('boeungkak-hero');
+      if (isEventsPage) return document.getElementById('events-hero');
+      if (isMenuPage) return document.getElementById('menu-hero');
+      if (isGalleryPage) return document.getElementById('gallery-hero');
+      return null;
+    };
+
     const handleScroll = () => {
       const isDesktop = window.innerWidth >= 1024;
+      const usesHeroThreshold =
+        isAboutPage ||
+        isBranchHeroPage ||
+        isEventsPage ||
+        (isDesktop && (isMenuPage || isGalleryPage));
 
-      if (isDesktop && (isMenuPage || isGalleryPage)) {
-        const heroSection =
-          document.getElementById('menu-hero') ||
-          document.getElementById('gallery-hero');
+      if (usesHeroThreshold) {
+        const heroSection = getTrackedHero();
 
         if (heroSection) {
-          setScrolled(heroSection.getBoundingClientRect().bottom <= 0);
+          const navbarHeight = 76;
+          setScrolled(heroSection.getBoundingClientRect().bottom <= navbarHeight);
           return;
         }
       }
@@ -215,16 +239,62 @@ export default function Navbar() {
       setScrolled(window.scrollY > 25);
     };
 
+    const observeHero = () => {
+      const isDesktop = window.innerWidth >= 1024;
+      const usesHeroThreshold =
+        isAboutPage ||
+        isBranchHeroPage ||
+        isEventsPage ||
+        (isDesktop && (isMenuPage || isGalleryPage));
+
+      if (!window.IntersectionObserver || !usesHeroThreshold) return;
+
+      const heroSection = getTrackedHero();
+
+      if (!heroSection) return;
+
+      heroObserver = new IntersectionObserver(
+        ([entry]) => {
+          setScrolled(
+            !entry.isIntersecting && entry.boundingClientRect.bottom <= 76,
+          );
+        },
+        {
+          rootMargin: '-76px 0px 0px',
+          threshold: 0,
+        },
+      );
+      heroObserver.observe(heroSection);
+    };
+
     window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', handleScroll);
+    window.addEventListener('pageshow', handleScroll);
 
     handleScroll();
+    animationFrame = window.requestAnimationFrame(() => {
+      handleScroll();
+      observeHero();
+    });
 
     return () => {
+      window.cancelAnimationFrame(animationFrame);
+      heroObserver?.disconnect();
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleScroll);
+      window.removeEventListener('pageshow', handleScroll);
     };
-  }, [isGalleryPage, isMenuPage, isReservationPage]);
+  }, [
+    isAboutPage,
+    isBoeungKakPage,
+    isBranchHeroPage,
+    isBranchesPage,
+    isEventsPage,
+    isGalleryPage,
+    isMenuPage,
+    isReservationPage,
+    isToulKorkPage,
+  ]);
 
   useEffect(() => {
     const shouldCompactMenuNav = (isMenuPage || isGalleryPage) && scrolled;

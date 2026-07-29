@@ -418,7 +418,7 @@ export default function About() {
 
   return (
     <div className="about-page" ref={pageRef}>
-      <section className="about-hero" style={{ backgroundImage: `url(${heroImage})` }}>
+      <section id="about-hero" className="about-hero" style={{ backgroundImage: `url(${heroImage})` }}>
         <div className="about-hero-overlay" />
         <div className="about-hero-content">
           <h1 className="page-hero-title">{tr('More Than a Restaurant')}</h1>
