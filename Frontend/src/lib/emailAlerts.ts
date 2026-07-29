@@ -1,7 +1,4 @@
-/**
- * Direct Frontend Email Alert Integration (Resend, EmailJS & Web3Forms)
- * Formats email alerts with the exact One More Restaurant table layout.
- */
+
 
 const RESEND_API_KEY = import.meta.env.VITE_RESEND_API_KEY || '';
 const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID || '';
@@ -150,29 +147,29 @@ export async function sendFrontendCustomerEmail(data: {
     `Area: ${area}\n` +
     `Special Requests: ${specialRequests}${preorderText}`;
 
-  // Option A: Direct Resend API Dispatch
-  if (RESEND_API_KEY && rawEmail) {
-    try {
-      const response = await fetch('https://api.resend.com/emails', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${RESEND_API_KEY}`,
-        },
-        body: JSON.stringify({
-          from: 'One More Restaurant <onboarding@resend.dev>',
-          to: [rawEmail],
-          subject: `Booking table ${bookingRef} - Reservation Confirmation`,
-          html: emailHtml,
-        }),
-      });
-      const result = await response.json();
-      console.log('Resend Direct Customer Email Result:', result);
-      if (response.ok) return true;
-    } catch (err) {
-      console.error('Resend direct email failed:', err);
-    }
-  }
+  // // Option A: Direct Resend API Dispatch
+  // if (RESEND_API_KEY && rawEmail) {
+  //   try {
+  //     const response = await fetch('https://api.resend.com/emails', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         'Authorization': `Bearer ${RESEND_API_KEY}`,
+  //       },
+  //       body: JSON.stringify({
+  //         from: 'One More Restaurant <onboarding@resend.dev>',
+  //         to: [rawEmail],
+  //         subject: `Booking table ${bookingRef} - Reservation Confirmation`,
+  //         html: emailHtml,
+  //       }),
+  //     });
+  //     const result = await response.json();
+  //     console.log('Resend Direct Customer Email Result:', result);
+  //     if (response.ok) return true;
+  //   } catch (err) {
+  //     console.error('Resend direct email failed:', err);
+  //   }
+  // }
 
   // Option B: Web3Forms API Dispatch
   if (WEB3FORMS_ACCESS_KEY) {
