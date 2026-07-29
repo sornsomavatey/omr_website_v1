@@ -4,6 +4,7 @@ from typing import List
 from ..dependencies.db import get_db
 from ..dependencies.models import ContactRequest
 from ..dependencies.schemas import ContactRequestCreate, ContactRequestResponse
+from ..dependencies.security import require_admin
 
 from ..utils.telegram import send_feedback_telegram_alert
 
@@ -84,7 +85,10 @@ def create_contact_request(req: ContactRequestCreate, db: Session = Depends(get_
     return db_req
 
 @router.get("/", response_model=List[ContactRequestResponse])
-def get_contact_requests(db: Session = Depends(get_db)):
+def get_contact_requests(
+    db: Session = Depends(get_db),
+    _admin: None = Depends(require_admin),
+):
     """Retrieve all contact requests (Admin view)."""
     requests = db.query(ContactRequest).order_by(ContactRequest.created_at.desc()).all()
     return requests
