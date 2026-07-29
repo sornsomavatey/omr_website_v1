@@ -48,6 +48,7 @@ import imgSpace2 from '@/assets/home-v2/31b0910d38c033be0ce5292cf4a1d68688308c6b
 import imgGallery1 from '@/assets/neang teav.webp'; // Neang Tev room
 import imgGallery2 from '@/assets/home-v2/07e47044152ad38cdbb1bda5ae392fb848e3a37a.webp'; // Round tables private dining
 import imgGallery3 from '@/assets/moments.webp'; // Event hall with balloons
+import imgEngagement from '@/assets/redengage-clean.webp'; // Red Engagement event image
 import imgFamilyPkg from '@/assets/Family_compressed.jpg'; // Family celebration image
 import imgGallery6 from '@/assets/home-v2/9826b8c118c911c852174f3c0d0204245fd0da48.webp'; // Corporate meeting
 
@@ -224,12 +225,10 @@ export default function ToulKork() {
           <div className="tk-room-card">
             <div className="tk-room-img-wrapper">
               <img src={imgNeangTeav} alt="Neang Tev Private Room" className="tk-room-img-reveal-left" />
-              <div className="tk-room-badge">{t('branchDetails.rooms.guestBadge')}</div>
             </div>
             <div className="tk-room-body">
               <h3 className="tk-room-name">{isKhmer ? "នាងទាវ" : "Neang Tev"}</h3>
               <ul className="tk-room-highlights">
-                <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.av')}</li>
                 <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.butler')}</li>
                 <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.views')}</li>
               </ul>
@@ -243,12 +242,10 @@ export default function ToulKork() {
           <div className="tk-room-card">
             <div className="tk-room-img-wrapper">
               <img src={imgOrnTitTom} alt="Orn Tit Tom Private Room" className="tk-room-img-reveal-right" />
-              <div className="tk-room-badge">{t('branchDetails.rooms.guestBadge')}</div>
             </div>
             <div className="tk-room-body">
               <h3 className="tk-room-name">{isKhmer ? "អន្ទិតទុំ" : "Orn Tit Tom"}</h3>
               <ul className="tk-room-highlights">
-                <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.av')}</li>
                 <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.butler')}</li>
                 <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.views')}</li>
               </ul>
@@ -262,12 +259,10 @@ export default function ToulKork() {
           <div className="tk-room-card">
             <div className="tk-room-img-wrapper">
               <img src={imgVipTk} alt="VIP Room" />
-              <div className="tk-room-badge">{t('branchDetails.rooms.guestBadge')}</div>
             </div>
             <div className="tk-room-body">
               <h3 className="tk-room-name">{isKhmer ? "បន្ទប់ VIP" : "VIP Room"}</h3>
               <ul className="tk-room-highlights">
-                <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.av')}</li>
                 <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.butler')}</li>
                 <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.views')}</li>
               </ul>
@@ -346,7 +341,7 @@ export default function ToulKork() {
             buttonHref="/events#inquiry"
           />
           <SharpImageCard
-            image={imgGallery3}
+            image={imgEngagement}
             alt={t('branchDetails.events.items.engagement.title')}
             title={t('branchDetails.events.items.engagement.title')}
             description={t('branchDetails.events.items.engagement.desc')}

@@ -55,38 +55,13 @@ def send_customer_telegram_notification(
     bot_token: Optional[str] = None
 ) -> bool:
     """
-    Send a confirmation message directly to a customer's Telegram chat ID or username using Telegram Bot API.
+    [COMMENTED OUT IN BACKEND]
+    Customer notifications are handled directly on the Frontend.
     """
-    token = bot_token or getattr(settings, 'TELEGRAM_BOT_TOKEN', None)
-    if not token or not target_chat_id:
-        return False
-
-    raw_target = str(target_chat_id).strip()
-    if not raw_target:
-        return False
-
-    clean_target: Any = raw_target
-    if raw_target.replace('-', '').isdigit():
-        clean_target = int(raw_target)
-    elif not raw_target.startswith('@') and not raw_target.startswith('+'):
-        clean_target = f"@{raw_target}"
-
-    url = f"https://api.telegram.org/bot{token}/sendMessage"
-    payload = {
-        "chat_id": clean_target,
-        "text": message,
-        "parse_mode": "HTML"
-    }
-
-    try:
-        data = json.dumps(payload).encode("utf-8")
-        req = urllib.request.Request(
-            url,
-            data=data,
-            headers={"Content-Type": "application/json"}
-        )
-        with urllib.request.urlopen(req, timeout=5) as response:
-            return response.status == 200
-    except Exception as e:
-        print(f"Failed to send customer Telegram notification to {clean_target}: {e}")
-        return False
+    # token = bot_token or getattr(settings, 'TELEGRAM_BOT_TOKEN', None)
+    # url = f"https://api.telegram.org/bot{token}/sendMessage"
+    # payload = { "chat_id": target_chat_id, "text": message, "parse_mode": "HTML" }
+    # data = json.dumps(payload).encode("utf-8")
+    # req = urllib.request.Request(url, data=data, headers={"Content-Type": "application/json"})
+    # with urllib.request.urlopen(req, timeout=5) as response: return response.status == 200
+    return True

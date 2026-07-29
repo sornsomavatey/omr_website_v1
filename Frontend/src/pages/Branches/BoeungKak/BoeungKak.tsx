@@ -230,12 +230,10 @@ export default function BoeungKak() {
           <div className="bk-room-card">
             <div className="bk-room-img-wrapper">
               <img src={imgNekSok} alt="Nek Sok Private Room" className="bk-room-img-reveal-left" />
-              <div className="bk-room-badge">{t('branchDetails.rooms.guestBadge')}</div>
             </div>
             <div className="bk-room-body">
               <h3 className="bk-room-name">{isKhmer ? "អ្នកសុខ" : "Nek Sok"}</h3>
               <ul className="bk-room-highlights">
-                <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.av')}</li>
                 <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.butler')}</li>
                 <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.views')}</li>
               </ul>
@@ -249,12 +247,10 @@ export default function BoeungKak() {
           <div className="bk-room-card">
             <div className="bk-room-img-wrapper">
               <img src={imgNekMean} alt="Nek Mean Private Room" className="bk-room-img-reveal-right" />
-              <div className="bk-room-badge">{t('branchDetails.rooms.guestBadge')}</div>
             </div>
             <div className="bk-room-body">
               <h3 className="bk-room-name">{isKhmer ? "អ្នកមាន" : "Nek Mean"}</h3>
               <ul className="bk-room-highlights">
-                <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.av')}</li>
                 <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.butler')}</li>
                 <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.views')}</li>
               </ul>
@@ -268,12 +264,10 @@ export default function BoeungKak() {
           <div className="bk-room-card">
             <div className="bk-room-img-wrapper">
               <img src={imgVipBk} alt="VIP Room" />
-              <div className="bk-room-badge">{t('branchDetails.rooms.guestBadge')}</div>
             </div>
             <div className="bk-room-body">
               <h3 className="bk-room-name">{isKhmer ? "បន្ទប់ VIP" : "VIP Room"}</h3>
               <ul className="bk-room-highlights">
-                <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.av')}</li>
                 <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.butler')}</li>
                 <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.views')}</li>
               </ul>

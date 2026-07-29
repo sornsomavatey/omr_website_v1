@@ -503,38 +503,7 @@ export default function ReservationPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  // Email Confirmation Modal State
-  const [showEmailModal, setShowEmailModal] = useState(false);
-  const [emailInput, setEmailInput] = useState('');
-  const [isSendingEmail, setIsSendingEmail] = useState(false);
   const [createdReservationId, setCreatedReservationId] = useState<number | undefined>(undefined);
-
-  const handleSendToEmail = async (customEmail?: string) => {
-    const targetEmail = (customEmail !== undefined ? customEmail : (emailInput || email)).trim();
-
-    if (!targetEmail) {
-      alert(isKhmer ? 'សូមបញ្ចូលអាសយដ្ឋានអ៊ីមែលរបស់អ្នក' : 'Please enter your email address.');
-      return;
-    }
-
-    setIsSendingEmail(true);
-    try {
-      const customMsg = `🎉 One More Restaurant - Reservation Confirmation\n\nDear ${fullName.trim() || 'Valued Guest'},\nThank you for choosing One More Restaurant! Your table reservation is confirmed.\n\nDate: ${formatDateDisplay(selectedDate)}\nTime Slot: ${formatTimeDisplay(customTime || selectedTime)}\nGuest Count: ${adults + childrenCount} (${adults} Adults, ${childrenCount} Kids)\nBranch: ${selectedBranchDisplay}\nSeating Area: ${selectedSeatingDisplay}\nSpecial Requests: ${specialRequest.trim() || 'None'}\n\nWe look forward to welcoming you!\nwww.onemorerestaurant.com`;
-      await sendCustomerEmail(targetEmail, createdReservationId, customMsg);
-      setHasSentEmail(true);
-      alert(isKhmer 
-        ? `លិខិតបញ្ជាក់ការកក់ត្រូវ បានផ្ញើទៅកាន់ ${targetEmail} ដោយជោគជ័យ!` 
-        : `Reservation confirmation email sent successfully to ${targetEmail}!`);
-      setShowEmailModal(false);
-    } catch (err) {
-      console.error('Failed to send email to customer:', err);
-      alert(isKhmer 
-        ? 'មានបញ្ហាក្នុងការផ្ញើអ៊ីមែល។ សូមពិនិត្យមើលអាសយដ្ឋានអ៊ីមែលរបស់អ្នក។' 
-        : 'Could not send confirmation email. Please make sure backend server is running and email settings are configured.');
-    } finally {
-      setIsSendingEmail(false);
-    }
-  };
 
   if (loading) {
     return (
@@ -889,6 +858,31 @@ export default function ReservationPage() {
     }
     if (isSubmitting) return;
 
+    // Rate limit check: Allow up to 2 submissions within 60 seconds before triggering cooldown
+    const COOLDOWN_MS = 60 * 1000;
+    const MAX_FREE_SUBMISSIONS = 2;
+    let recentSubmissions: number[] = [];
+    const now = Date.now();
+
+    try {
+      const stored = localStorage.getItem('omr_reservation_timestamps');
+      if (stored) {
+        const parsed: number[] = JSON.parse(stored);
+        recentSubmissions = parsed.filter(t => now - t < COOLDOWN_MS);
+      }
+    } catch (e) {
+      recentSubmissions = [];
+    }
+
+    if (recentSubmissions.length >= MAX_FREE_SUBMISSIONS) {
+      const oldestInWindow = recentSubmissions[0];
+      const secondsRemaining = Math.ceil((COOLDOWN_MS - (now - oldestInWindow)) / 1000);
+      alert(isKhmer 
+        ? `អ្នកបានផ្ញើការកក់ចំនួន ២ ដងរួចហើយ។ សូមរង់ចាំ ${secondsRemaining} វិនាទីទៀត មុនពេលផ្ញើការកក់តុថ្មី។` 
+        : `You have submitted 2 reservations. Please wait ${secondsRemaining} seconds before submitting another table reservation.`);
+      return;
+    }
+
     // Prepare reservation payload 
     const payload = {
       customer_name: fullName.trim(),
@@ -920,6 +914,18 @@ export default function ReservationPage() {
 
     createReservation(payload)
       .then((res: any) => {
+        try {
+          const stored = localStorage.getItem('omr_reservation_timestamps');
+          const COOLDOWN_MS = 60 * 1000;
+          const now = Date.now();
+          const parsed: number[] = stored ? JSON.parse(stored) : [];
+          const valid = parsed.filter(t => now - t < COOLDOWN_MS);
+          valid.push(now);
+          localStorage.setItem('omr_reservation_timestamps', JSON.stringify(valid));
+        } catch (e) {
+          localStorage.setItem('omr_reservation_timestamps', JSON.stringify([Date.now()]));
+        }
+
         if (res && res.id) {
           setCreatedReservationId(res.id);
         }
@@ -1331,31 +1337,19 @@ export default function ReservationPage() {
                 <div className="w-full flex flex-col gap-3 mb-4">
                   <button
                     type="button"
-                    onClick={() => {
-                      setEmailInput(email);
-                      setShowEmailModal(true);
-                    }}
-                    className="w-full py-3.5 px-4 bg-[#6b9158] hover:bg-[#5a7d49] text-white font-bold rounded-xl transition-all shadow-md flex items-center justify-center gap-2 text-base cursor-pointer"
-                  >
-                    <Mail className="w-5 h-5 text-white" />
-                    <span>{isKhmer ? 'ផ្ញើទៅ អ៊ីមែល' : 'Send to Email'}</span>
-                  </button>
-
-                  <button
-                    type="button"
                     disabled={isDownloadingPdf}
                     onClick={handleDownloadConfirmation}
-                    className="download-confirmation-btn disabled:opacity-60"
+                    className="w-full py-3.5 px-4 bg-[#6b9158] hover:bg-[#5a7d49] text-white font-bold rounded-xl transition-all shadow-md flex items-center justify-center gap-2 text-base cursor-pointer disabled:opacity-60"
                   >
                     {isDownloadingPdf ? (
                       <>
-                        <Loader2 className="w-4 h-4 text-[#6b9158] animate-spin" />
+                        <Loader2 className="w-5 h-5 text-white animate-spin" />
                         <span>{isKhmer ? 'កំពុងបង្កើត PDF...' : 'Generating PDF...'}</span>
                       </>
                     ) : (
                       <>
-                        <Download className="w-4 h-4 text-[#6b9158]" />
-                        <span>{isKhmer ? 'ទាញយកលិខិតបញ្ជាក់' : 'Download Confirmation'}</span>
+                        <Download className="w-5 h-5 text-white" />
+                        <span>{isKhmer ? 'ទាញយកលិខិតបញ្ជាក់' : 'Download Confirmation (PDF)'}</span>
                       </>
                     )}
                   </button>
@@ -1370,76 +1364,6 @@ export default function ReservationPage() {
                 </div>
               </>
             )}
-          </div>
-        </div>
-      )}
-
-      {/* Email Confirmation Modal */}
-      {showEmailModal && (
-        <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fadeIn">
-          <div className="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl border border-gray-100 flex flex-col gap-5">
-            <div className="flex items-center justify-between border-b border-gray-100 pb-3">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-[#6b9158]/10 flex items-center justify-center text-[#6b9158]">
-                  <Mail className="w-5 h-5" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-lg text-gray-900">
-                    {isKhmer ? 'ផ្ញើការកក់ទៅ អ៊ីមែល' : 'Send to Email'}
-                  </h3>
-                  <p className="text-xs text-gray-500">
-                    {isKhmer ? 'បញ្ជូនព័ត៌មានកក់ទុកទៅកាន់អ៊ីមែលរបស់អ្នក' : 'Send confirmation details to your email'}
-                  </p>
-                </div>
-              </div>
-              <button
-                type="button"
-                onClick={() => setShowEmailModal(false)}
-                className="text-gray-400 hover:text-gray-600 p-1.5 rounded-lg transition-colors"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            <div className="flex flex-col gap-2">
-              <label className="text-xs font-semibold text-gray-700">
-                {isKhmer ? 'អាសយដ្ឋានអ៊ីមែល (Email Address)' : 'Email Address'}
-              </label>
-              <input
-                type="email"
-                value={emailInput}
-                onChange={(e) => setEmailInput(e.target.value)}
-                placeholder="e.g. customer@example.com"
-                className="w-full px-4 py-3 text-sm border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#6b9158] focus:border-transparent transition-all"
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
-                    e.preventDefault();
-                    handleSendToEmail();
-                  }
-                }}
-              />
-            </div>
-
-            <div className="flex flex-col gap-2.5 pt-2">
-              <button
-                type="button"
-                disabled={isSendingEmail}
-                onClick={() => handleSendToEmail()}
-                className="w-full py-3 bg-[#6b9158] hover:bg-[#5a7d49] text-white font-semibold rounded-xl transition-all shadow-md flex items-center justify-center gap-2 text-sm cursor-pointer disabled:opacity-60"
-              >
-                {isSendingEmail ? (
-                  <>
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                    <span>{isKhmer ? 'កំពុងផ្ញើ...' : 'Sending Email...'}</span>
-                  </>
-                ) : (
-                  <>
-                    <Mail className="w-4 h-4" />
-                    <span>{isKhmer ? 'ផ្ញើអ៊ីមែលឥឡូវនេះ' : 'Send Email Now'}</span>
-                  </>
-                )}
-              </button>
-            </div>
           </div>
         </div>
       )}
