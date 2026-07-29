@@ -4,7 +4,8 @@
   "description": "One More Restaurant Frontend",
   "type": "module",
   "scripts": {
-    "dev": "node server",
+    "dev": "vite",
+    "server": "node server",
     "start": "node server",
     "build": "tsc && npm run build:client && npm run build:server",
     "build:client": "vite build --outDir dist/client",
