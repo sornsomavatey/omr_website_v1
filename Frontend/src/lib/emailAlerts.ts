@@ -243,7 +243,7 @@ export async function sendFrontendEventEmail(eventData: any): Promise<boolean> {
     `Phone: ${customerPhone}\n` +
     `Email: ${customerEmail}\n` +
     `Event Type: ${eventType}\n` +
-    `Guest Count: ${guestCount} persons\n` +
+    `Guest Count: ${guestCount}\n` +
     `Event Date: ${eventDate}\n` +
     `Details / Requirements: ${details}`;
 

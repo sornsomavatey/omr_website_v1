@@ -523,14 +523,14 @@ export default function ReservationPage() {
       const customMsg = `🎉 One More Restaurant - Reservation Confirmation\n\nDear ${fullName.trim() || 'Valued Guest'},\nThank you for choosing One More Restaurant! Your table reservation is confirmed.\n\nDate: ${formatDateDisplay(selectedDate)}\nTime Slot: ${formatTimeDisplay(customTime || selectedTime)}\nGuest Count: ${adults + childrenCount} (${adults} Adults, ${childrenCount} Kids)\nBranch: ${selectedBranchDisplay}\nSeating Area: ${selectedSeatingDisplay}\nSpecial Requests: ${specialRequest.trim() || 'None'}\n\nWe look forward to welcoming you!\nwww.onemorerestaurant.com`;
       await sendCustomerEmail(targetEmail, createdReservationId, customMsg);
       setHasSentEmail(true);
-      alert(isKhmer 
-        ? `លិខិតបញ្ជាក់ការកក់ត្រូវ បានផ្ញើទៅកាន់ ${targetEmail} ដោយជោគជ័យ!` 
+      alert(isKhmer
+        ? `លិខិតបញ្ជាក់ការកក់ត្រូវ បានផ្ញើទៅកាន់ ${targetEmail} ដោយជោគជ័យ!`
         : `Reservation confirmation email sent successfully to ${targetEmail}!`);
       setShowEmailModal(false);
     } catch (err) {
       console.error('Failed to send email to customer:', err);
-      alert(isKhmer 
-        ? 'មានបញ្ហាក្នុងការផ្ញើអ៊ីមែល។ សូមពិនិត្យមើលអាសយដ្ឋានអ៊ីមែលរបស់អ្នក។' 
+      alert(isKhmer
+        ? 'មានបញ្ហាក្នុងការផ្ញើអ៊ីមែល។ សូមពិនិត្យមើលអាសយដ្ឋានអ៊ីមែលរបស់អ្នក។'
         : 'Could not send confirmation email. Please make sure backend server is running and email settings are configured.');
     } finally {
       setIsSendingEmail(false);
@@ -1883,125 +1883,125 @@ export default function ReservationPage() {
           {/* Sticky Sidebar Booking Summary */}
           <div className="reservation-summary-sticky">
             <aside className="reservation-summary-card">
-            <h2>{t('reservationPage.summary.title', undefined, 'Booking Summary')}</h2>
+              <h2>{t('reservationPage.summary.title', undefined, 'Booking Summary')}</h2>
 
-            <div className="summary-content">
-              <div className="summary-list">
-                <div className="summary-item summary-item-branch">
-                  <span>{t('reservationPage.summary.labels.branch', undefined, 'Branch')}</span>
-                  <strong>{selectedBranchDisplay}</strong>
-                </div>
+              <div className="summary-content">
+                <div className="summary-list">
+                  <div className="summary-item summary-item-branch">
+                    <span>{t('reservationPage.summary.labels.branch', undefined, 'Branch')}</span>
+                    <strong>{selectedBranchDisplay}</strong>
+                  </div>
 
-                <div className="summary-item">
-                  <span>{t('reservationPage.summary.labels.name', undefined, 'Name')}</span>
-                  <strong>{fullName || t('reservationPage.summary.empty', undefined, '—')}</strong>
-                </div>
+                  <div className="summary-item">
+                    <span>{t('reservationPage.summary.labels.name', undefined, 'Name')}</span>
+                    <strong>{fullName || t('reservationPage.summary.empty', undefined, '—')}</strong>
+                  </div>
 
-                <div className="summary-item">
-                  <span>{t('reservationPage.summary.labels.contact', undefined, 'Contact')}</span>
-                  <strong>{phone || t('reservationPage.summary.empty', undefined, '—')}</strong>
-                </div>
+                  <div className="summary-item">
+                    <span>{t('reservationPage.summary.labels.contact', undefined, 'Contact')}</span>
+                    <strong>{phone || t('reservationPage.summary.empty', undefined, '—')}</strong>
+                  </div>
 
-                <div className="summary-item">
-                  <span>{t('reservationPage.summary.labels.guests', undefined, 'Guests')}</span>
-                  <strong>
-                    {t('reservationPage.form.totalGuests', { count: localizeNumber(adults + childrenCount) })}
-                    <span className="guest-breakdown">
-                      {t('reservationPage.summary.guestBreakdown', {
-                        adults: localizeNumber(adults),
-                        children: localizeNumber(childrenCount)
-                      })}
-                    </span>
-                  </strong>
-                </div>
+                  <div className="summary-item">
+                    <span>{t('reservationPage.summary.labels.guests', undefined, 'Guests')}</span>
+                    <strong>
+                      {t('reservationPage.form.totalGuests', { count: localizeNumber(adults + childrenCount) })}
+                      <span className="guest-breakdown">
+                        {t('reservationPage.summary.guestBreakdown', {
+                          adults: localizeNumber(adults),
+                          children: localizeNumber(childrenCount)
+                        })}
+                      </span>
+                    </strong>
+                  </div>
 
-                <div className="summary-item">
-                  <span>{t('reservationPage.summary.labels.date', undefined, 'Date')}</span>
-                  <strong>
-                    {formatDateDisplay(selectedDate)}
-                    <span className="time-tag">
-                      {(customTime || selectedTime)
-                        ? t('reservationPage.summary.timeTag', {
+                  <div className="summary-item">
+                    <span>{t('reservationPage.summary.labels.date', undefined, 'Date')}</span>
+                    <strong>
+                      {formatDateDisplay(selectedDate)}
+                      <span className="time-tag">
+                        {(customTime || selectedTime)
+                          ? t('reservationPage.summary.timeTag', {
                             time: formatTimeDisplay(customTime || selectedTime),
                             category: translatedTimeCategory(timeCategory)
                           })
-                        : t('reservationPage.summary.empty', undefined, '—')}
-                    </span>
-                  </strong>
-                </div>
-
-                <div className="summary-item">
-                  <span>{t('reservationPage.summary.labels.occasion', undefined, 'Occasion')}</span>
-                  <strong>{selectedOccasionDisplay}</strong>
-                </div>
-
-                <div className="summary-item">
-                  <span>{t('reservationPage.summary.labels.seating', undefined, 'Seating')}</span>
-                  <strong>{selectedSeatingDisplay}</strong>
-                </div>
-
-                {preOrderItemCount > 0 && (
-                  <div className="summary-item-preorder">
-                    <button
-                      type="button"
-                      className="summary-preorder-toggle"
-                      onClick={() => setIsPreOrderSummaryExpanded(!isPreOrderSummaryExpanded)}
-                      aria-expanded={isPreOrderSummaryExpanded}
-                    >
-                      <span>{t('menu.modal.preOrder', undefined, 'Pre-order')} ({preOrderItemCount})</span>
-                      {isPreOrderSummaryExpanded ? (
-                        <ChevronUp className="w-4 h-4 text-[#6b9158]" />
-                      ) : (
-                        <ChevronDown className="w-4 h-4 text-[#6b9158]" />
-                      )}
-                    </button>
-                    {isPreOrderSummaryExpanded && (
-                      <div className="summary-preorder-list">
-                        {Object.values(preOrderCart).map((i) => (
-                          <div key={i.id} className="summary-preorder-subitem">
-                            <span className="subitem-name">{isKhmer ? (i.name_kh || i.name) : i.name}</span>
-                            <span className="subitem-qty">×{i.qty}</span>
-                          </div>
-                        ))}
-                        <div className="summary-preorder-total">
-                          <span>{t('reservationPage.summary.totalPrice', undefined, 'Total Price')}:</span>
-                          <strong>${preOrderTotal.toFixed(2)}</strong>
-                        </div>
-                      </div>
-                    )}
+                          : t('reservationPage.summary.empty', undefined, '—')}
+                      </span>
+                    </strong>
                   </div>
-                )}
-              </div>
 
-              <p className="arrival-notice">
-                {t('reservationPage.summary.arrivalNotice', undefined, 'Please arrive 10 mins early. Reservations are held for 15 mins after the scheduled time.')}
-              </p>
+                  <div className="summary-item">
+                    <span>{t('reservationPage.summary.labels.occasion', undefined, 'Occasion')}</span>
+                    <strong>{selectedOccasionDisplay}</strong>
+                  </div>
 
-              <div className="summary-actions">
-                <button
-                  type="button"
-                  onClick={handleReservationSubmit}
-                  className="reserve-btn-primary w-full flex items-center justify-center gap-2"
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? (
-                    <>
-                      <Loader2 className="w-4 h-4 animate-spin" />
-                      <span>{t('reservationPage.form.processing', undefined, 'Processing...')}</span>
-                    </>
-                  ) : (
-                    t('reservationPage.summary.reserveButton', undefined, 'Reserve a Table')
+                  <div className="summary-item">
+                    <span>{t('reservationPage.summary.labels.seating', undefined, 'Seating')}</span>
+                    <strong>{selectedSeatingDisplay}</strong>
+                  </div>
+
+                  {preOrderItemCount > 0 && (
+                    <div className="summary-item-preorder">
+                      <button
+                        type="button"
+                        className="summary-preorder-toggle"
+                        onClick={() => setIsPreOrderSummaryExpanded(!isPreOrderSummaryExpanded)}
+                        aria-expanded={isPreOrderSummaryExpanded}
+                      >
+                        <span>{t('menu.modal.preOrder', undefined, 'Pre-order')} ({preOrderItemCount})</span>
+                        {isPreOrderSummaryExpanded ? (
+                          <ChevronUp className="w-4 h-4 text-[#6b9158]" />
+                        ) : (
+                          <ChevronDown className="w-4 h-4 text-[#6b9158]" />
+                        )}
+                      </button>
+                      {isPreOrderSummaryExpanded && (
+                        <div className="summary-preorder-list">
+                          {Object.values(preOrderCart).map((i) => (
+                            <div key={i.id} className="summary-preorder-subitem">
+                              <span className="subitem-name">{isKhmer ? (i.name_kh || i.name) : i.name}</span>
+                              <span className="subitem-qty">×{i.qty}</span>
+                            </div>
+                          ))}
+                          <div className="summary-preorder-total">
+                            <span>{t('reservationPage.summary.totalPrice', undefined, 'Total Price')}:</span>
+                            <strong>${preOrderTotal.toFixed(2)}</strong>
+                          </div>
+                        </div>
+                      )}
+                    </div>
                   )}
-                </button>
+                </div>
 
-                <a
-                  href={t('reservationPage.summary.phoneHref', undefined, 'tel:+85523888222')}
-                  className="reserve-btn-secondary w-full text-center"
-                >
-                  {t('reservationPage.summary.contactRestaurant', undefined, 'Contact Restaurant')}
-                </a>
+                <p className="arrival-notice">
+                  {t('reservationPage.summary.arrivalNotice', undefined, 'Please arrive 10 mins early. Reservations are held for 15 mins after the scheduled time.')}
+                </p>
+
+                <div className="summary-actions">
+                  <button
+                    type="button"
+                    onClick={handleReservationSubmit}
+                    className="reserve-btn-primary w-full flex items-center justify-center gap-2"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        <span>{t('reservationPage.form.processing', undefined, 'Processing...')}</span>
+                      </>
+                    ) : (
+                      t('reservationPage.summary.reserveButton', undefined, 'Reserve a Table')
+                    )}
+                  </button>
+
+                  <a
+                    href={t('reservationPage.summary.phoneHref', undefined, 'tel:+85523888222')}
+                    className="reserve-btn-secondary w-full text-center"
+                  >
+                    {t('reservationPage.summary.contactRestaurant', undefined, 'Contact Restaurant')}
+                  </a>
+                </div>
               </div>
-            </div>
             </aside>
           </div>
         </div>

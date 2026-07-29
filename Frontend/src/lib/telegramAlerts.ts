@@ -53,7 +53,7 @@ export async function sendFrontendReservationAlert(reservation: any): Promise<bo
   const emailText = email ? `\n• <b>Email:</b> ${email}` : '';
   const areaText = reservation.area ? `\n• <b>Seating Area:</b> ${reservation.area}` : '';
 
-  let guestDetail = `${reservation.guest_count || (Number(reservation.adults || 0) + Number(reservation.kids || 0))} persons`;
+  let guestDetail = `${reservation.guest_count || (Number(reservation.adults || 0) + Number(reservation.kids || 0))}`;
   if (reservation.adults !== undefined || reservation.kids !== undefined) {
     guestDetail += ` (${reservation.adults || 0} Adults, ${reservation.kids || 0} Kids)`;
   }
@@ -97,7 +97,7 @@ export async function sendFrontendEventAlert(event: any): Promise<boolean> {
     `• <b>Phone:</b> ${phone}\n` +
     `• <b>Email:</b> ${email}\n` +
     `• <b>Event Type:</b> ${event.event_type}\n` +
-    `• <b>Guest Count:</b> ${event.guest_count} persons\n` +
+    `• <b>Guest Count:</b> ${event.guest_count}\n` +
     `• <b>Event Date:</b> ${event.event_date}${details}`;
 
   return sendTelegramMessage(message, RESERVATION_THREAD_ID);
