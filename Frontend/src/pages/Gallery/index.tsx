@@ -42,7 +42,7 @@ import imgKhmerCakePlating from '@/assets/gallery/khmercakeplating.webp';
 import imgAnsom from '@/assets/gallery/ansom-clean.webp';
 import imgRedTableDining from '@/assets/gallery/redtabledining-clean.webp';
 import imgChefInKitchen from '@/assets/gallery/chefinthekitchen-clean.webp';
-import imgChefPlating from '@/assets/gallery/chefplating-clean.webp';
+import imgTkChef from '@/assets/gallery/tkchef-clean.png';
 import imgFoodBox from '@/assets/gallery/foodbox-clean.webp';
 import imgFruitPlate from '@/assets/gallery/fruitplate-clean.webp';
 import imgFourDishes from '@/assets/gallery/fourdishes-clean.webp';
@@ -58,7 +58,7 @@ import imgTkRoomService from '@/assets/gallery/tkroomservice.webp';
 import imgGalaDinner from '@/assets/gallery/galadinner.webp';
 import imgRedBirthday from '@/assets/gallery/redbirthday-name-removed.webp';
 import imgExterior from '@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.webp';
-import imgSiemReapChicken from '@/assets/Food/Lunch and Dinner/grilled-chicken-siemreap.webp';
+import imgSiemReapChicken from '@/assets/gallery/grilled-chicken-salt-chilli.webp';
 import imgEventHero from '@/assets/engagegreenv2-clean-v2.webp';
 import imgFamilyCelebration from '@/assets/roundtablebk.webp';
 import imgEngagementPackage from '@/assets/engagegreen-names-blurred.webp';
@@ -121,7 +121,7 @@ const galleryItems: GalleryItem[] = [
   { src: imgAnsom, alt: 'Traditional Khmer ansom cakes with savory and sweet fillings', title: 'Traditional Ansom', tag: 'Food', category: 'Food', shape: 'square' },
   { src: imgRedTableDining, alt: 'Red table dining room set for guests at One More Restaurant', title: 'Red Table Dining', tag: 'Restaurant', category: 'Restaurant', shape: 'square' },
   { src: imgChefInKitchen, alt: 'Chef organizing ingredients in the One More Restaurant kitchen', title: 'Chef in the Kitchen', tag: 'Food', category: 'Food', shape: 'square' },
-  { src: imgChefPlating, alt: 'Chefs carefully plating dishes in the restaurant kitchen', title: 'Chef Plating', tag: 'Food', category: 'Food', shape: 'square' },
+  { src: imgTkChef, alt: 'One More Restaurant chef carefully plating a dish in the kitchen', title: 'Chef Plating', tag: 'Food', category: 'Food', shape: 'square' },
   { src: imgFoodBox, alt: 'Assorted restaurant meal boxes with Khmer dishes, fruit, and pastries', title: 'Khmer Meal Boxes', tag: 'Food', category: 'Food', shape: 'square' },
   { src: imgFruitPlate, alt: 'Decorative fresh fruit platter with a carved apple centerpiece', title: 'Fresh Fruit Art', tag: 'Food', category: 'Food', shape: 'portrait' },
   { src: imgFourDishes, alt: 'Four bowls of Khmer noodle dishes arranged on a wooden table', title: 'Four Khmer Favorites', tag: 'Food', category: 'Food', shape: 'portrait' },
@@ -145,7 +145,7 @@ const galleryItems: GalleryItem[] = [
 ];
 
 const foodGalleryOrder = [
-  imgChefPlating,
+  imgTkChef,
   imgFoodPlating,
   imgKuyteav,
   imgFruitPlate,

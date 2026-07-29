@@ -31,6 +31,13 @@ export function DishImageFrame({
   ...props
 }: DishImageFrameProps) {
   const [isLoaded, setIsLoaded] = React.useState(false)
+  const imageRef = React.useRef<HTMLImageElement>(null)
+
+  React.useLayoutEffect(() => {
+    const image = imageRef.current
+
+    setIsLoaded(Boolean(image?.complete && image.naturalWidth > 0))
+  }, [src])
 
   return (
     <div
@@ -45,6 +52,7 @@ export function DishImageFrame({
         <Skeleton className="absolute inset-0 w-full h-full rounded-none bg-muted z-0" />
       )}
       <img
+        ref={imageRef}
         src={src}
         alt={alt}
         onLoad={() => setIsLoaded(true)}
