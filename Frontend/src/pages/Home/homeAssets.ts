@@ -1,10 +1,10 @@
 import svgPaths from '@/assets/svgPaths';
 
 // Local assets
-import imgSpaceOutdoor from '@/assets/compressed_outdoor.webp';
-import imgSpaceKidCorner from '@/assets/kid corner.webp';
-import imgSpacePrivateDining from '@/assets/compressed_Private Dining room-no-logo.webp';
-import imgSpaceBusiness from '@/assets/compressed_Business.webp';
+import imgSpaceOutdoor from '@/assets/home/outdoor-dining.webp';
+import imgSpaceKidCorner from '@/assets/home/kids-corner.webp';
+import imgSpacePrivateDining from '@/assets/home/private-dining-room-no-logo.webp';
+import imgSpaceBusiness from '@/assets/home/business-dining.webp';
 import imgHeroBg1 from '@/assets/home-v2/curved-wood-interior.webp';
 import imgHeroBg2 from '@/assets/home-v2/boeung-kak-exterior.webp';
 
@@ -32,9 +32,9 @@ import imgSpace2 from '@/assets/home-v2/event-hall.webp';
 import imgBranch1 from '@/assets/home-v2/toul-kork-exterior.webp';
 
 // Gallery assets
-import imgGallery1 from '@/assets/private-room-no-logo.webp';
+import imgGallery1 from '@/assets/events/private-room-no-logo.webp';
 import imgGallery2 from '@/assets/home-v2/round-table-private-dining.webp';
-import imgGallery3 from '@/assets/moments.webp';
+import imgGallery3 from '@/assets/branches/shared/special-moments.webp';
 import imgGallery4 from '@/assets/home-v2/guests-dining.webp';
 import imgGallery5 from '@/assets/home-v2/event-celebration.webp';
 import imgGallery6 from '@/assets/home-v2/corporate-meeting.webp';
@@ -100,9 +100,9 @@ export const imageMap: Record<string, string> = {
   '@/assets/home-v2/toul-kork-exterior.webp': imgBranch1,
   '@/assets/home-v2/private-dining-room.webp': imgGallery1,
   '@/assets/tk-room.png': imgGallery1,
-  '@/assets/private-room-no-logo.webp': imgGallery1,
+  '@/assets/events/private-room-no-logo.webp': imgGallery1,
   '@/assets/home-v2/round-table-private-dining.webp': imgGallery2,
-  '@/assets/moments.webp': imgGallery3,
+  '@/assets/branches/shared/special-moments.webp': imgGallery3,
   '@/assets/moments.jpg': imgGallery3,
   '@/assets/home-v2/guests-dining.webp': imgGallery4,
   '@/assets/home-v2/event-celebration.webp': imgGallery5,
@@ -133,9 +133,9 @@ export const imageMap: Record<string, string> = {
   '@/assets/Food/Lunch and Dinner/lunch-and-dinner-stir-fried-bokchoy-048.webp': imgFoodStirFriedBokchoy,
   '@/assets/Food/Lunch and Dinner/lunch-and-dinner-fried-fermented-egg-006.webp': imgFoodFriedFermentedEgg,
   '@/assets/Food/Lunch and Dinner/lunch-and-dinner-pan-fried-fish-paste-enhanced-008.webp': imgFoodPanFriedFishPaste,
-  '@/assets/compressed_Business.webp': imgSpaceBusiness,
-  '@/assets/compressed_Private Dining room.webp': imgSpacePrivateDining,
-  '@/assets/kid corner.webp': imgSpaceKidCorner,
+  '@/assets/home/business-dining.webp': imgSpaceBusiness,
+  '@/assets/home/private-dining-room.webp': imgSpacePrivateDining,
+  '@/assets/home/kids-corner.webp': imgSpaceKidCorner,
   '@/assets/kid corner.png': imgSpaceKidCorner,
-  '@/assets/compressed_outdoor.webp': imgSpaceOutdoor,
+  '@/assets/home/outdoor-dining.webp': imgSpaceOutdoor,
 };

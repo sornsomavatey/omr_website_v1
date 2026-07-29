@@ -17,7 +17,7 @@ import imgMissPlanetDining from '@/assets/gallery/miss-planet-dining.webp';
 import imgCateringServiceStaff from '@/assets/gallery/catering-service-staff-no-logo.webp';
 import imgStaffNumansom from '@/assets/gallery/staff-with-numansom-no-logo.webp';
 import imgVitalEvent from '@/assets/gallery/vital-event.webp';
-import imgOmrHospitality from '@/assets/gallery/omr-hospitality.webp';
+import imgOmrHospitality from '@/assets/gallery/khmer-hospitality.webp';
 import imgService from '@/assets/gallery/service.webp';
 import imgCatering from '@/assets/gallery/private-gatherings-no-logo.webp';
 import imgRoom from '@/assets/home-v2/private-dining-room.webp';
@@ -59,12 +59,12 @@ import imgGalaDinner from '@/assets/gallery/galadinner.webp';
 import imgRedBirthday from '@/assets/gallery/redbirthday-name-removed.webp';
 import imgExterior from '@/assets/home-v2/toul-kork-exterior.webp';
 import imgSiemReapChicken from '@/assets/gallery/grilled-chicken-salt-chilli.webp';
-import imgEventHero from '@/assets/engagegreenv2-clean-v2.webp';
-import imgFamilyCelebration from '@/assets/roundtablebk.webp';
-import imgEngagementPackage from '@/assets/engagegreen-names-blurred.webp';
-import imgMeetingRoom from '@/assets/corporateroomwhite.webp';
-import imgCorporatePackage from '@/assets/cooporatepacakage.webp';
-import imgVipRoom from '@/assets/bkfamilyroom.webp';
+import imgEventHero from '@/assets/gallery/green-engagement-clean.webp';
+import imgFamilyCelebration from '@/assets/events/round-table-boeung-kak.webp';
+import imgEngagementPackage from '@/assets/gallery/green-engagement-names-blurred.webp';
+import imgMeetingRoom from '@/assets/events/corporate-room.webp';
+import imgCorporatePackage from '@/assets/events/corporate-package.webp';
+import imgVipRoom from '@/assets/events/family-event-room.webp';
 
 import './index.css';
 

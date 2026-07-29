@@ -29,22 +29,23 @@ import EventSpaceCard from '@/components/EventSpaceCard';
 import TestimonialSection from '@/components/TestimonialSection';
 import { createEventBooking, getTestimonialsData, sendCustomerEmail } from '@/lib/api';
 import { useTranslation } from '@/hooks/useTranslation';
+import { partnerLogos } from '@/assets/partners';
 
-import imgHero     from '@/assets/silverbddining-no-hbd.webp';
-import imgPkg1     from '@/assets/roundtablebk.webp';
-import imgPkg2     from '@/assets/redengage-clean.webp';
-import imgPkg3     from '@/assets/corporateroomwhite.webp';
-import imgPkg4     from '@/assets/cooporatepacakage.webp';
-import imgSpace1   from '@/assets/private-room-no-logo.webp';
-import imgSpace2   from '@/assets/bkfamilyroom.webp';
+import imgHero     from '@/assets/events/silver-birthday-dining-no-hbd.webp';
+import imgPkg1     from '@/assets/events/round-table-boeung-kak.webp';
+import imgPkg2     from '@/assets/events/red-engagement-clean.webp';
+import imgPkg3     from '@/assets/events/corporate-room.webp';
+import imgPkg4     from '@/assets/events/corporate-package.webp';
+import imgSpace1   from '@/assets/events/private-room-no-logo.webp';
+import imgSpace2   from '@/assets/events/family-event-room.webp';
 import imgGal1     from '@/assets/gallery/private-gatherings-no-logo.webp';
 import imgGal2     from '@/assets/gallery/artisanal-plating-no-logo.webp';
 import imgGal3     from '@/assets/gallery/wine-toast.webp';
 import imgGal4     from '@/assets/gallery/event-coffee-service.webp';
 import imgGal5     from '@/assets/home-v2/corporate-meeting.webp';
-import imgInquiry  from '@/assets/silverbirthday-clean.webp';
-import imgFinalCta from '@/assets/event bg.webp';
-import imgMainHall from '@/assets/main hall.webp';
+import imgInquiry  from '@/assets/events/silver-birthday-clean.webp';
+import imgFinalCta from '@/assets/events/event-hero-background.webp';
+import imgMainHall from '@/assets/events/main-hall.webp';
 import { imageMap } from '@/pages/Home/homeAssets';
 
 import './index.css';
@@ -489,7 +490,7 @@ export default function EventsPage() {
     try {
       const { jsPDF } = await import('jspdf');
 
-      const logoUrl = window.location.origin + '/assets/partners/onemorerestaurant.png';
+      const logoUrl = partnerLogos['one-more-restaurant'];
       const logoData = await new Promise<{ dataUrl: string; width: number; height: number } | null>((resolve) => {
         const img = new Image();
         img.crossOrigin = 'Anonymous';

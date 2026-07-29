@@ -4,7 +4,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { getMenuData } from '@/lib/api';
 import { useTranslation } from '@/hooks/useTranslation';
 import './index.css';
-import imgLotusHalf from '@/assets/Half lotus.webp';
+import imgLotusHalf from '@/assets/menu/half-lotus-pattern.webp';
 
 // Background assets
 import imgHeroBg from '@/assets/home-v2/boeung-kak-exterior.webp';

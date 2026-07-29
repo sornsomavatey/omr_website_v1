@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { Check } from 'lucide-react';
-import whiteLogo from '@/assets/omr_logo_white.webp';
+import whiteLogo from '@/assets/branding/one-more-logo-white.webp';
 import { useAppStore } from '../store';
 import type { Language } from '../store';
 import { useTranslation } from '@/hooks/useTranslation';

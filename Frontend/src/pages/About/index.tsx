@@ -18,24 +18,24 @@ import { createFeedback } from '@/lib/api';
 
 import heroImage from '@/assets/about/both-outlets-side-by-side.webp';
 import toulKorkImage from '@/assets/home-v2/toul-kork-exterior.webp';
-import omr2008Image from '@/assets/OMR 2008.webp';
+import omr2008Image from '@/assets/about/restaurant-history-2008.webp';
 import boeungKakImage from '@/assets/home-v2/boeung-kak-exterior.webp';
-import omrTkImage from '@/assets/compressed_OMR TK.webp';
-import omrBkImage from '@/assets/compressed_OMR Bk edited.webp';
-import presentImage from '@/assets/present.webp';
+import omrTkImage from '@/assets/about/toul-kork-outlet.webp';
+import omrBkImage from '@/assets/about/boeung-kak-outlet.webp';
+import presentImage from '@/assets/about/restaurant-present.webp';
 import privateRoomImage from '@/assets/home-v2/private-dining-room.webp';
 import celebrationImage from '@/assets/gallery/15yearsanni.webp';
 import cateringImage from '@/assets/home-v2/round-table-private-dining.webp';
 import communityImage from '@/assets/home-v2/corporate-meeting.webp';
 import artisanalPlatingImage from '@/assets/gallery/artisanal-plating-no-logo.webp';
-import hospitalityImage from '@/assets/omr-hospitality-enhanced.webp';
+import hospitalityImage from '@/assets/about/khmer-hospitality.webp';
 import finalCtaImage from '@/assets/about/abt.webp';
-import chefTkImage from '@/assets/Chef tk.webp';
-import chefBkImage from '@/assets/chef bk.webp';
+import chefTkImage from '@/assets/about/toul-kork-chef.webp';
+import chefBkImage from '@/assets/about/boeung-kak-chef.webp';
 import chefAndStaffTkImage from '@/assets/about/chefandstaff-TK.webp';
 import chefAndStaffBkImage from '@/assets/about/chefandstaff-BK-enhanced.webp';
 import careersTeamImage from '@/assets/about/careers-team.webp';
-import linkedinLogoImage from '@/assets/linkedin logo.webp';
+import linkedinLogoImage from '@/assets/branding/linkedin-logo.webp';
 import './index.css';
 
 const timeline = [

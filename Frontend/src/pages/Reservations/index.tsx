@@ -30,9 +30,10 @@ import {
 } from 'lucide-react';
 import { getReservationsData, getHomeData, createReservation, sendCustomerEmail } from '@/lib/api';
 import { useTranslation } from '@/hooks/useTranslation';
+import { partnerLogos } from '@/assets/partners';
 import { toKhmerDigits } from '@/lib/price';
-import whiteLogo from '@/assets/omr_logo_white.webp';
-import imgMainHall from '@/assets/main hall.webp';
+import whiteLogo from '@/assets/branding/one-more-logo-white.webp';
+import imgMainHall from '@/assets/events/main-hall.webp';
 import {
   imgSpaceOutdoor,
   imgHeroBg2,
@@ -952,7 +953,7 @@ export default function ReservationPage() {
     try {
       const { jsPDF } = await import('jspdf');
 
-      const logoUrl = window.location.origin + '/assets/partners/onemorerestaurant.png';
+      const logoUrl = partnerLogos['one-more-restaurant'];
       const logoData = await new Promise<{ dataUrl: string; width: number; height: number } | null>((resolve) => {
         const img = new Image();
         img.crossOrigin = 'Anonymous';

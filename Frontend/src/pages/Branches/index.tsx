@@ -10,10 +10,10 @@ import { useTranslation } from '@/hooks/useTranslation';
 import './index.css';
 
 // Asset imports
-import locationImg from '@/assets/location.webp';
+import locationImg from '@/assets/branches/location-section.webp';
 import imgBranchToulKork from '@/assets/home-v2/toul-kork-exterior.webp';
 import imgBranchBoeungKak from '@/assets/home-v2/boeung-kak-exterior.webp';
-import branchHeroImg from '@/assets/branch hero.webp'; // Transparent background branch hero image
+import branchHeroImg from '@/assets/branches/branch-hero.webp'; // Transparent background branch hero image
 
 type LocationItem = {
   id: string;

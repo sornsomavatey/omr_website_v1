@@ -127,25 +127,25 @@
       "name": "Private Room",
       "tag": "8–20 guests · AV ready",
       "desc": "An intimate enclosed dining room for 8–20, with dedicated staff, custom menus and AV capabilities.",
-      "img": "@/assets/compressed_Private Dining room.webp"
+      "img": "@/assets/home/private-dining-room.webp"
     },
     {
       "name": "Business Meeting",
       "tag": "Full-day packages available",
       "desc": "Quiet, professional atmosphere with private tables, power outlets, screen connectivity and curated lunch sets.",
-      "img": "@/assets/compressed_Business.webp"
+      "img": "@/assets/home/business-dining.webp"
     },
     {
       "name": "Kid Zone",
       "tag": "Ages 2–12 · Supervised",
       "desc": "A dedicated play corner with gentle Khmer-inspired activities, kid-friendly menu and attentive family hosts.",
-      "img": "@/assets/kid corner.webp"
+      "img": "@/assets/home/kids-corner.webp"
     },
     {
       "name": "Event & Gala",
       "tag": "Up to 150 guests",
       "desc": "Expansive layout options with custom decor, state-of-the-art sound systems, and dedicated banquet planners.",
-      "img": "@/assets/compressed_outdoor.webp"
+      "img": "@/assets/home/outdoor-dining.webp"
     }
   ],
   "branches": [
@@ -169,7 +169,7 @@
   "gallery": [
     { "src": "@/assets/home-v2/private-dining-room.webp", "alt": "Gallery 1" },
     { "src": "@/assets/home-v2/round-table-private-dining.webp", "alt": "Gallery 2" },
-    { "src": "@/assets/moments.webp", "alt": "Gallery 3" },
+    { "src": "@/assets/branches/shared/special-moments.webp", "alt": "Gallery 3" },
     { "src": "@/assets/home-v2/guests-dining.webp", "alt": "Gallery 4" },
     { "src": "@/assets/home-v2/event-celebration.webp", "alt": "Gallery 5" },
     { "src": "@/assets/home-v2/corporate-meeting.webp", "alt": "Gallery 6" }
