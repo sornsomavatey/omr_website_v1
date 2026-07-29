@@ -1,0 +1,177 @@
+{
+  "hero": {
+    "title": "Experience Authentic Khmer Cuisine",
+    "subtitle": "Traditional Cambodian flavors served in a modern dining experience.",
+    "cta_reserve": "Reserve a Table",
+    "cta_menu": "Explore Menu",
+    "backgroundImage": "@/assets/home-v2/boeung-kak-exterior.webp"
+  },
+  "signatureDishes": [
+    {
+      "key": "kuyteavOneMore",
+      "name": "One More Special Kuyteav",
+      "category": "BREAKFAST · SOUP",
+      "desc": "Rich bone broth with rice noodles, sliced meats, meatballs, fresh herbs and crisp bean sprouts.",
+      "img": "@/assets/Food/Breakfast/breakfast-special-kuyteav-013.webp",
+      "price": "$18",
+      "badge": "Chef's Choice ✦"
+    },
+    {
+      "key": "kuyteavMincedPork",
+      "name": "Minced Pork Kuyteav",
+      "category": "BREAKFAST · SOUP",
+      "desc": "Flavorful rice noodles in pork broth topped with perfectly seasoned minced pork and fresh chives.",
+      "img": "@/assets/Food/Breakfast/breakfast-minced-pork-kuyteav-009.webp",
+      "price": "$14",
+      "badge": "Chef's Choice ✦"
+    },
+    {
+      "key": "hainanChickenRice",
+      "name": "Hainan Chicken Thigh Rice",
+      "category": "BREAKFAST · CLASSIC",
+      "desc": "Fragrant seasoned rice served with crispy golden-fried chicken thigh and homemade dipping sauce.",
+      "img": "@/assets/Food/Breakfast/breakfast-chicken-thigh-rice-004.webp",
+      "price": "$16",
+      "badge": "Chef's Choice ✦"
+    },
+    {
+      "key": "porkBloodPorridge",
+      "name": "Pork Blood Porridge",
+      "category": "BREAKFAST · COMFORT",
+      "desc": "Hearty and comforting rice porridge simmered with pork blood, offal, ginger and green scallions.",
+      "img": "@/assets/Food/Breakfast/breakfast-pork-blood-porridge-010.webp",
+      "price": "$15",
+      "badge": "Chef's Choice ✦"
+    },
+    {
+      "key": "lortchaEgg",
+      "name": "Lort Cha with Beef & Egg",
+      "category": "BREAKFAST · PAN-FRIED",
+      "desc": "Stir-fried pin-noodles with tender beef, chives and bean sprouts, topped with a fried egg.",
+      "img": "@/assets/Food/Breakfast/breakfast-lortcha-egg-007.webp",
+      "price": "$16",
+      "badge": "Chef's Choice ✦"
+    },
+    {
+      "key": "friedRicePineapple",
+      "name": "Pineapple Fried Rice",
+      "category": "BREAKFAST Â· FRIED RICE",
+      "desc": "Golden fried rice served in fresh pineapple with prawns, cashews, and aromatic Khmer seasoning.",
+      "img": "@/assets/Food/Breakfast/breakfast-fried-rice-pineapple-005.webp",
+      "price": "$16",
+      "badge": "Chef's Choice âœ¦"
+    },
+    {
+      "key": "fishAmokCoconut",
+      "name": "Fish Amok in Coconut",
+      "category": "LUNCH · SIGNATURE",
+      "desc": "Tender river fish fillets steamed in a rich, kaffir lime infused lemongrass curry mousse inside a fresh young coconut.",
+      "img": "@/assets/Food/Lunch and Dinner/lunch-and-dinner-fish-amok-coconut-005.webp",
+      "price": "$24",
+      "badge": "Chef's Choice ✦"
+    },
+    {
+      "key": "sourSeafoodSoup",
+      "name": "Sour Seafood Soup",
+      "category": "LUNCH · SEAFOOD",
+      "desc": "Traditional hot and sour seafood soup loaded with prawns, mushrooms and fragrant herbs.",
+      "img": "@/assets/Food/Lunch and Dinner/lunch-and-dinner-yaaoaeuayu-016.webp",
+      "price": "$19",
+      "badge": "Chef's Choice ✦"
+    },
+    {
+      "key": "panFriedFishPaste",
+      "name": "Pan-fried Fish Paste with Fresh Vegetables",
+      "category": "LUNCH · SIGNATURE",
+      "desc": "Golden pan-fried fish paste served with a colorful selection of crisp fresh vegetables.",
+      "img": "@/assets/Food/Lunch and Dinner/lunch-and-dinner-pan-fried-fish-paste-enhanced-008.webp",
+      "price": "$18",
+      "badge": "Chef's Choice ✦"
+    },
+    {
+      "key": "grilledChickenSiemReap",
+      "name": "Siem Reap Grilled Chicken",
+      "category": "LUNCH · SPECIAL",
+      "desc": "Whole local chicken marinated in traditional Cambodian herbs and slow-grilled to smoky perfection.",
+      "img": "@/assets/Food/Lunch and Dinner/lunch-and-dinner-grilled-chicken-siemreap-007.webp",
+      "price": "$22",
+      "badge": "Chef's Choice ✦"
+    },
+    {
+      "key": "stirFriedBokchoy",
+      "name": "Stir-fried Bok Choy",
+      "category": "LUNCH · VEGETABLE",
+      "desc": "Crisp bok choy greens stir-fried in a roaring wok with garlic and savory oyster sauce.",
+      "img": "@/assets/Food/Lunch and Dinner/lunch-and-dinner-stir-fried-bokchoy-048.webp",
+      "price": "$12",
+      "badge": "Chef's Choice ✦"
+    },
+    {
+      "key": "friedFermentedEgg",
+      "name": "Fried Egg with Salted Fish",
+      "category": "LUNCH · COMFORT",
+      "desc": "Traditional Cambodian dish of eggs fried with aromatic salted fish (Trey Pror-ma) and pork.",
+      "img": "@/assets/Food/Lunch and Dinner/lunch-and-dinner-fried-fermented-egg-006.webp",
+      "price": "$15",
+      "badge": "Chef's Choice ✦"
+    }
+  ],
+  "diningSpaces": [
+    {
+      "name": "Family Dining",
+      "tag": "Up to 10 guests",
+      "desc": "Spacious tables for 4-10, high chairs available, playful sharing platters designed for togetherness.",
+      "img": "@/assets/home-v2/curved-wood-interior.webp"
+    },
+    {
+      "name": "Private Room",
+      "tag": "8–20 guests · AV ready",
+      "desc": "An intimate enclosed dining room for 8–20, with dedicated staff, custom menus and AV capabilities.",
+      "img": "@/assets/home/private-dining-room.webp"
+    },
+    {
+      "name": "Business Meeting",
+      "tag": "Full-day packages available",
+      "desc": "Quiet, professional atmosphere with private tables, power outlets, screen connectivity and curated lunch sets.",
+      "img": "@/assets/home/business-dining.webp"
+    },
+    {
+      "name": "Kid Zone",
+      "tag": "Ages 2–12 · Supervised",
+      "desc": "A dedicated play corner with gentle Khmer-inspired activities, kid-friendly menu and attentive family hosts.",
+      "img": "@/assets/home/kids-corner.webp"
+    },
+    {
+      "name": "Event & Gala",
+      "tag": "Up to 150 guests",
+      "desc": "Expansive layout options with custom decor, state-of-the-art sound systems, and dedicated banquet planners.",
+      "img": "@/assets/home/outdoor-dining.webp"
+    }
+  ],
+  "branches": [
+    {
+      "name": "One More Restaurant Toul Kork",
+      "address": "37 St 315, Phnom Penh 120407",
+      "phone": "023 888 222",
+      "hours": "Daily: 06:00 AM – 10:00 PM",
+      "img": "@/assets/home-v2/toul-kork-exterior.webp",
+      "tags": ["Family Friendly", "Business Meeting", "Private Room"]
+    },
+    {
+      "name": "One More Restaurant Boeung Kak",
+      "address": "63 Street R11, Phnom Penh 120210",
+      "phone": "023 888 222",
+      "hours": "Daily: 06:00 AM – 10:00 PM",
+      "img": "@/assets/home-v2/boeung-kak-exterior.webp",
+      "tags": ["Event Space", "Large Groups", "Corporate"]
+    }
+  ],
+  "gallery": [
+    { "src": "@/assets/home-v2/private-dining-room.webp", "alt": "Gallery 1" },
+    { "src": "@/assets/home-v2/round-table-private-dining.webp", "alt": "Gallery 2" },
+    { "src": "@/assets/branches/shared/special-moments.webp", "alt": "Gallery 3" },
+    { "src": "@/assets/home-v2/guests-dining.webp", "alt": "Gallery 4" },
+    { "src": "@/assets/home-v2/event-celebration.webp", "alt": "Gallery 5" },
+    { "src": "@/assets/home-v2/corporate-meeting.webp", "alt": "Gallery 6" }
+  ]
+}

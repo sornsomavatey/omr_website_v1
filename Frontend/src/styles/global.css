@@ -1,0 +1,545 @@
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --font-serif: "Playfair Display", serif;
+  --font-sans: "Inter", sans-serif;
+
+  --color-gold: #b39a62;
+  --color-gold-hover: #9c8451;
+  --color-dark-green: #18271a;
+  --color-olive: #3d523f;
+  --color-cream: #faf9f5;
+  --color-light-olive: #e2ebd5;
+  --color-beige: #f0ede6;
+
+  --animate-fade-in: fade-in 0.6s ease-out;
+  --animate-slide-up: slide-up 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-scale-up: scale-up 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes scale-up {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Custom base adjustments */
+html {
+  scroll-behavior: smooth;
+  overflow-x: clip;
+}
+
+body {
+  background-color: var(--color-cream);
+  color: var(--color-dark-green);
+  font-family: 'Playfair Display', serif;
+  min-width: 320px;
+  overflow-x: clip;
+}
+
+img,
+svg,
+video,
+canvas,
+iframe {
+  max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-serif);
+}
+
+html[data-lang="zh"] {
+  --font-sans: "Noto Sans SC", sans-serif;
+  --font-serif: "Noto Sans SC", sans-serif;
+  --font-heading: "Noto Sans SC", sans-serif;
+}
+
+html[data-lang="ko"] {
+  --font-sans: "Noto Sans KR", sans-serif;
+  --font-serif: "Noto Sans KR", sans-serif;
+  --font-heading: "Noto Sans KR", sans-serif;
+}
+
+html[data-lang="zh"] body,
+html[data-lang="zh"] body :is(h1, h2, h3, h4, h5, h6, p, a, span, button, input, textarea, select, label, legend, small, strong, em, li, td, th) {
+  font-family: "Noto Sans SC", sans-serif !important;
+}
+
+html[data-lang="ko"] body,
+html[data-lang="ko"] body :is(h1, h2, h3, h4, h5, h6, p, a, span, button, input, textarea, select, label, legend, small, strong, em, li, td, th) {
+  font-family: "Noto Sans KR", sans-serif !important;
+}
+
+html[data-lang="zh"] .dish-card-price,
+html[data-lang="ko"] .dish-card-price {
+  font-family: "Playfair Display", serif !important;
+}
+
+html[data-lang="zh"] .dish-card-currency,
+html[data-lang="ko"] .dish-card-currency {
+  font-family: "Inter", sans-serif !important;
+}
+
+/* One responsive type scale for every page-level hero heading. */
+.page-hero-title {
+  font-size: clamp(48px, 6vw, 76px) !important;
+}
+
+.page-hero-title--home {
+  font-size: clamp(52px, 6.4vw, 84px) !important;
+}
+
+html[lang="km"] .page-hero-title,
+html[data-lang="kh"] .page-hero-title {
+  font-size: clamp(42px, 4.8vw, 62px) !important;
+}
+
+html[lang="km"] .page-hero-title--home,
+html[data-lang="kh"] .page-hero-title--home {
+  font-size: clamp(42px, 5.2vw, 60px) !important;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-cream);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-gold);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gold-hover);
+}
+
+@theme inline {
+  --font-heading: 'Playfair Display', serif;
+  --font-sans: "Inter", sans-serif;
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
+  --radius: 0.625rem;
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  html {
+    font-family: 'Playfair Display', serif;
+  }
+}
+
+.scroll-to-top-btn {
+  background-color: #6b9158 !important;
+  --tw-ring-color: rgba(107, 145, 88, 0.2) !important;
+}
+
+.scroll-to-top-btn:hover {
+  background-color: #5b7d4a !important;
+}
+
+@media (max-width: 640px) {
+  input,
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+
+  .scroll-to-top-btn {
+    right: max(16px, env(safe-area-inset-right)) !important;
+    bottom: max(16px, env(safe-area-inset-bottom)) !important;
+  }
+}
+
+/* =========================
+   Khmer Font Override
+========================= */
+
+html[lang="km"],
+html[data-lang="kh"] {
+  --font-sans: "Kantumruy Pro", sans-serif;
+  --font-serif: "Kantumruy Pro", sans-serif;
+  --font-heading: "Kantumruy Pro", sans-serif;
+}
+
+html[lang="km"] body,
+html[lang="km"] button,
+html[lang="km"] input,
+html[lang="km"] textarea,
+html[lang="km"] select,
+html[data-lang="kh"] body,
+html[data-lang="kh"] button,
+html[data-lang="kh"] input,
+html[data-lang="kh"] textarea,
+html[data-lang="kh"] select {
+  font-family: "Kantumruy Pro", sans-serif;
+}
+
+
+/* Primary Khmer Font (Kantumruy Pro) for standard elements */
+html[lang="km"] body,
+html[lang="km"] button,
+html[lang="km"] input,
+html[lang="km"] textarea,
+html[lang="km"] select,
+html[data-lang="kh"] body,
+html[data-lang="kh"] button,
+html[data-lang="kh"] input,
+html[data-lang="kh"] textarea,
+html[data-lang="kh"] select {
+  font-family: "Kantumruy Pro", sans-serif;
+}
+
+/* ONLY main page hero titles (h1) and SectionHeader section titles (h2) use Moul Pali OS font */
+html[lang="km"] h1,
+html[lang="km"] h1 *,
+html[lang="km"] h2,
+html[lang="km"] h2 *,
+html[data-lang="kh"] h1,
+html[data-lang="kh"] h1 *,
+html[data-lang="kh"] h2,
+html[data-lang="kh"] h2 * {
+  font-family: "Moulpali", "Khmer OS Muol Pali", "Khmer OS Muol", "Moul", serif !important;
+  font-weight: 400 !important;
+  line-height: 1.85 !important;
+}
+
+/* Balanced font size for SectionHeader h2 titles in Khmer */
+html[lang="km"] h2,
+html[lang="km"] h2 *,
+html[data-lang="kh"] h2,
+html[data-lang="kh"] h2 * {
+  font-size: clamp(1.5rem, 3.8vw, 2.5rem) !important;
+  line-height: 1.85 !important;
+}
+
+/* Explicitly reset Dish Card titles, Room names, Card titles, Gallery titles/descriptions, h3, h4, h5, h6 back to normal Kantumruy Pro font */
+html[lang="km"] h3,
+html[lang="km"] h3 *,
+html[lang="km"] h4,
+html[lang="km"] h4 *,
+html[lang="km"] h5,
+html[lang="km"] h5 *,
+html[lang="km"] h6,
+html[lang="km"] h6 *,
+html[lang="km"] .dish-card-title,
+html[lang="km"] .dish-card-title *,
+html[lang="km"] .tk-room-name,
+html[lang="km"] .bk-room-name,
+html[lang="km"] .card-title,
+html[lang="km"] .gallery-card-caption h2,
+html[lang="km"] .gallery-card-caption h2 *,
+html[lang="km"] .gallery-card-caption span,
+html[lang="km"] .gallery-lightbox figcaption strong,
+html[lang="km"] .gallery-lightbox figcaption span,
+html[data-lang="kh"] h3,
+html[data-lang="kh"] h3 *,
+html[data-lang="kh"] h4,
+html[data-lang="kh"] h4 *,
+html[data-lang="kh"] h5,
+html[data-lang="kh"] h5 *,
+html[data-lang="kh"] h6,
+html[data-lang="kh"] h6 *,
+html[data-lang="kh"] .dish-card-title,
+html[data-lang="kh"] .dish-card-title *,
+html[data-lang="kh"] .tk-room-name,
+html[data-lang="kh"] .bk-room-name,
+html[data-lang="kh"] .card-title,
+html[data-lang="kh"] .gallery-card-caption h2,
+html[data-lang="kh"] .gallery-card-caption h2 *,
+html[data-lang="kh"] .gallery-card-caption span,
+html[data-lang="kh"] .gallery-lightbox figcaption strong,
+html[data-lang="kh"] .gallery-lightbox figcaption span {
+  font-family: "Kantumruy Pro", sans-serif !important;
+  font-weight: 500 !important;
+  line-height: 1.4 !important;
+}
+
+html[lang="km"] .gallery-card-caption h2,
+html[lang="km"] .gallery-card-caption h2 *,
+html[data-lang="kh"] .gallery-card-caption h2,
+html[data-lang="kh"] .gallery-card-caption h2 * {
+  font-size: 14px !important;
+}
+
+/* Ensure hero title top line in Khmer also uses Moul Pali OS font */
+html[lang="km"] .hero-title-top,
+html[data-lang="kh"] .hero-title-top {
+  font-family: "Moulpali", "Khmer OS Muol Pali", "Khmer OS Muol", "Moul", serif !important;
+  font-weight: 400 !important;
+}
+
+/* Adjust line-height for h1 and h2 elements (and their children) to prevent overlapping in Khmer display fonts */
+html[lang="km"] h1,
+html[lang="km"] h1 *,
+html[data-lang="kh"] h1,
+html[data-lang="kh"] h1 * {
+  line-height: 1.85 !important;
+}
+
+html[lang="km"] h2,
+html[lang="km"] h2 *,
+html[data-lang="kh"] h2,
+html[data-lang="kh"] h2 * {
+  line-height: 1.7 !important;
+}
+
+html[lang="km"] body :is(h1, h2, h3, h4, h5, h6, .font-serif):not(.page-hero-title),
+html[data-lang="kh"] body :is(h1, h2, h3, h4, h5, h6, .font-serif):not(.page-hero-title) {
+  font-weight: 500 !important;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --mobile-section-space: 52px;
+  }
+
+  /* Only normalize vertical spacing between Tailwind-based page sections. */
+  main [class~="py-24"],
+  main [class~="py-16"] {
+    padding-block: var(--mobile-section-space) !important;
+  }
+
+  /* Keep page CTAs compact on mobile; navigation and icon controls are excluded. */
+  main :is(
+    .about-button,
+    .custom-btn-primary,
+    .custom-btn-secondary,
+    .custom-btn-outline-green,
+    .events-button,
+    .events-inquiry-submit,
+    .hero-cta-button,
+    .modal-reserve-button,
+    .reserve-btn-primary,
+    .reserve-btn-secondary,
+    .btn-action-primary,
+    .btn-action-outline,
+    .sic-button,
+    .bk-btn-menu-full,
+    .bk-btn-directions,
+    .bk-btn-close,
+    .tk-btn-menu-full,
+    .tk-btn-directions,
+    .tk-btn-close
+  ),
+  main form button[type="submit"] {
+    width: min(100%, 220px) !important;
+    max-width: 220px;
+    margin-inline: auto;
+  }
+}
+
+/* Use Kantumruy for Khmer UI copy that component styles otherwise leave in
+   Inter/Playfair. The Moulpali h1/h2 system above is deliberately excluded. */
+html[lang="km"] body *:not(h1, h1 *, h2, h2 *),
+html[data-lang="kh"] body *:not(h1, h1 *, h2, h2 *) {
+  font-family: "Kantumruy Pro", sans-serif !important;
+}
+
+html[lang="km"] p,
+html[lang="km"] li,
+html[lang="km"] label,
+html[data-lang="kh"] p,
+html[data-lang="kh"] li,
+html[data-lang="kh"] label {
+  line-height: 1.55;
+}
+
+html[lang="km"] span,
+html[lang="km"] a,
+html[lang="km"] button,
+html[data-lang="kh"] span,
+html[data-lang="kh"] a,
+html[data-lang="kh"] button {
+  line-height: 1.25;
+}
+
+/* =========================
+   Khmer Navbar Font 
+========================= */
+
+html[lang="km"] .navbar,
+html[lang="km"] .navbar *,
+html[lang="km"] .navbar-desktop-link,
+html[lang="km"] .navbar-mobile-link,
+html[lang="km"] .navbar-reservation-button,
+html[lang="km"] .navbar-language-button,
+html[lang="km"] .navbar-mobile-language-button,
+html[lang="km"] .navbar-mobile-menu-button,
+html[lang="km"] .navbar-mobile-close-button,
+html[data-lang="kh"] .navbar,
+html[data-lang="kh"] .navbar *,
+html[data-lang="kh"] .navbar-desktop-link,
+html[data-lang="kh"] .navbar-mobile-link,
+html[data-lang="kh"] .navbar-reservation-button,
+html[data-lang="kh"] .navbar-language-button,
+html[data-lang="kh"] .navbar-mobile-language-button,
+html[data-lang="kh"] .navbar-mobile-menu-button,
+html[data-lang="kh"] .navbar-mobile-close-button {
+  font-family: "Kantumruy Pro", sans-serif !important;
+  letter-spacing: 0;
+}
+
+html[lang="km"] .navbar-desktop-link,
+html[lang="km"] .navbar-mobile-link,
+html[lang="km"] .navbar-reservation-button,
+html[data-lang="kh"] .navbar-desktop-link,
+html[data-lang="kh"] .navbar-mobile-link,
+html[data-lang="kh"] .navbar-reservation-button {
+  line-height: 1.25;
+}

@@ -1,0 +1,30 @@
+{
+  "hero": {
+    "eyebrow": "EST. 2008 · PHNOM PENH",
+    "title": "Reserve Your Table",
+    "desc": "Immerse yourself in the ultimate Cambodian dining experience, where legendary heritage recipes are proudly brought to life in an atmosphere of refined elegance."
+  },
+  "guestInformation": [
+    {
+      "type": "hours",
+      "label": "Opening Hours",
+      "value": "06:00 AM - 10:00 PM"
+    },
+    {
+      "type": "phone",
+      "label": "Contact Number",
+      "value": "+855 23 888 222"
+    },
+    {
+      "type": "policy",
+      "label": "Reservation Policy",
+      "value": "Free cancellation up to 24h"
+    }
+  ],
+  "steps": {
+    "branch": {
+      "title": "Choose Branch",
+      "desc": "Select your preferred location in Phnom Penh"
+    }
+  }
+}

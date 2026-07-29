@@ -1,0 +1,23 @@
+{
+  "header": {
+    "title": "Join Our Team",
+    "desc": "We are always looking for passionate individuals who share our love for Khmer culinary traditions and premium service."
+  },
+  "jobs": [
+    {
+      "title": "Sous Chef",
+      "type": "Full-time",
+      "desc": "Assist in kitchen operations, crafting authentic Khmer cuisine under the Head Chef."
+    },
+    {
+      "title": "Server / Hospitality Specialist",
+      "type": "Full-time / Part-time",
+      "desc": "Provide warm, professional hospitality in an upscale dining environment."
+    },
+    {
+      "title": "Host / Hostess",
+      "type": "Full-time",
+      "desc": "Welcome guests, manage seating charts, and coordinate reservation flows."
+    }
+  ]
+}
