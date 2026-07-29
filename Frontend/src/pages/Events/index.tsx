@@ -30,7 +30,7 @@ import TestimonialSection from '@/components/TestimonialSection';
 import { createEventBooking, getTestimonialsData, sendCustomerEmail } from '@/lib/api';
 import { useTranslation } from '@/hooks/useTranslation';
 
-import imgHero     from '@/assets/silverbddining-clean-v3.webp';
+import imgHero     from '@/assets/silverbddining-no-hbd.webp';
 import imgPkg1     from '@/assets/roundtablebk.webp';
 import imgPkg2     from '@/assets/redengage-clean.webp';
 import imgPkg3     from '@/assets/corporateroomwhite.webp';

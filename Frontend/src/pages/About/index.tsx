@@ -16,7 +16,7 @@ import {
 import { useTranslation } from '@/hooks/useTranslation';
 import { createFeedback } from '@/lib/api';
 
-import heroImage from '@/assets/about/bothoutlet-original.webp';
+import heroImage from '@/assets/about/both-outlets-side-by-side.webp';
 import toulKorkImage from '@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.webp';
 import omr2008Image from '@/assets/OMR 2008.webp';
 import boeungKakImage from '@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.webp';
@@ -24,7 +24,7 @@ import omrTkImage from '@/assets/compressed_OMR TK.webp';
 import omrBkImage from '@/assets/compressed_OMR Bk edited.webp';
 import presentImage from '@/assets/present.webp';
 import privateRoomImage from '@/assets/home-v2/480cb1d76af2706b9692b726ad26ec2bf396f8c8.webp';
-import celebrationImage from '@/assets/home-v2/e900cacb721f9c81cd07b8415a03f20f42a39856.webp';
+import celebrationImage from '@/assets/gallery/15yearsanni.webp';
 import cateringImage from '@/assets/home-v2/07e47044152ad38cdbb1bda5ae392fb848e3a37a.webp';
 import communityImage from '@/assets/home-v2/9826b8c118c911c852174f3c0d0204245fd0da48.webp';
 import artisanalPlatingImage from '@/assets/gallery/artisanal-plating-no-logo.webp';
