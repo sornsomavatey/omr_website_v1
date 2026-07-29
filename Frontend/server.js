@@ -1,6 +1,8 @@
 import fs from 'node:fs/promises'
 import zlib from 'node:zlib'
 import express from 'express'
+import helmet from 'helmet'
+import { rateLimit } from 'express-rate-limit'
 
 // Constants
 const lifecycleEvent = process.env.npm_lifecycle_event
@@ -10,6 +12,7 @@ const isProduction =
   lifecycleEvent === 'preview'
 const port = process.env.PORT || 3001
 const base = process.env.BASE || '/'
+const trustProxy = process.env.TRUST_PROXY === 'true'
 const legacyRedirects = new Map([
   ['/restaurants', '/branches'],
   ['/restaurants/toul-kork', '/branches/toul-kork'],
@@ -42,6 +45,48 @@ const templateHtml = isProduction
 
 // Create http server
 const app = express()
+
+if (trustProxy) {
+  // Enable only when requests always arrive through a trusted reverse proxy.
+  app.set('trust proxy', 1)
+}
+
+app.disable('x-powered-by')
+app.use(
+  helmet({
+    contentSecurityPolicy: isProduction
+      ? {
+          directives: {
+            defaultSrc: ["'self'"],
+            baseUri: ["'self'"],
+            connectSrc: ["'self'", 'https:'],
+            fontSrc: ["'self'", 'https://fonts.gstatic.com', 'data:'],
+            formAction: ["'self'"],
+            frameAncestors: ["'none'"],
+            imgSrc: ["'self'", 'data:', 'blob:', 'https:'],
+            objectSrc: ["'none'"],
+            scriptSrc: ["'self'"],
+            styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
+            upgradeInsecureRequests: [],
+          },
+        }
+      : false,
+    crossOriginEmbedderPolicy: false,
+    hsts: isProduction
+      ? { maxAge: 31536000, includeSubDomains: true }
+      : false,
+    referrerPolicy: { policy: 'strict-origin-when-cross-origin' },
+  })
+)
+
+const pageLimiter = rateLimit({
+  windowMs: Number(process.env.RATE_LIMIT_WINDOW_MS || 60_000),
+  limit: Number(process.env.RATE_LIMIT_REQUESTS || 120),
+  standardHeaders: 'draft-8',
+  legacyHeaders: false,
+  message: 'Too many requests. Please try again later.',
+})
+app.use(pageLimiter)
 
 function sendHtml(req, res, html) {
   const headers = {
@@ -174,12 +219,14 @@ app.use('*all', async (req, res) => {
     sendHtml(req, res, html)
   } catch (e) {
     vite?.ssrFixStacktrace(e)
-    console.log(e.stack)
-    res.status(500).end(e.stack)
+    console.error(e)
+    res.status(500).end(
+      isProduction ? 'Internal Server Error' : e.stack
+    )
   }
 })
 
 // Start http server
-app.listen(port, () => {
+export const server = app.listen(port, () => {
   console.log(`Server started at http://localhost:${port}`)
 })

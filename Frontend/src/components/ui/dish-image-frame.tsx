@@ -31,6 +31,13 @@ export function DishImageFrame({
   ...props
 }: DishImageFrameProps) {
   const [isLoaded, setIsLoaded] = React.useState(false)
+  const imageRef = React.useRef<HTMLImageElement>(null)
+
+  React.useLayoutEffect(() => {
+    const image = imageRef.current
+
+    setIsLoaded(Boolean(image?.complete && image.naturalWidth > 0))
+  }, [src])
 
   return (
     <div
@@ -45,9 +52,11 @@ export function DishImageFrame({
         <Skeleton className="absolute inset-0 w-full h-full rounded-none bg-muted z-0" />
       )}
       <img
+        ref={imageRef}
         src={src}
         alt={alt}
         onLoad={() => setIsLoaded(true)}
+        onError={() => setIsLoaded(true)}
         className={cn(
           "w-full h-full object-cover transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/dish-card:scale-105 group-hover:scale-105 relative z-10",
           !isLoaded ? "opacity-0" : "opacity-100",

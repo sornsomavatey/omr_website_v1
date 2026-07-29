@@ -720,7 +720,7 @@
     "hero": {
       "eyebrow": "EST. 2008 · PHNOM PENH",
       "title": "Reserve Your Table",
-      "desc": "Experience the pinnacle of Khmer culinary heritage. A journey of forgotten flavors rediscovered in a setting of timeless luxury.",
+      "desc": "Immerse yourself in the ultimate Cambodian dining experience, where legendary heritage recipes are proudly brought to life in an atmosphere of refined elegance.",
       "backgroundImage": "@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.webp",
       "backgroundAlt": "One More Restaurant dining room"
     },
@@ -1034,7 +1034,7 @@
       "guestBadge": "8-12 guests",
       "highlights": {
         "av": "Integrated AV system",
-        "butler": "Personal butler service",
+        "butler": "Personal Service",
         "views": "Garden views"
       },
       "reserveCta": "Reserve Private Room"
