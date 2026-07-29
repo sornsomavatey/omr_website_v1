@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import type { CSSProperties } from 'react';
 import { Link } from 'react-router-dom';
 import {
   BellRing,
@@ -17,6 +18,7 @@ import { useTranslation } from '@/hooks/useTranslation';
 import { createFeedback } from '@/lib/api';
 
 import heroImage from '@/assets/about/both-outlets-side-by-side.webp';
+import mobileHeroImage from '@/assets/about/about-hero-mobile.png';
 import toulKorkImage from '@/assets/home-v2/toul-kork-exterior.webp';
 import omr2008Image from '@/assets/about/restaurant-history-2008.webp';
 import boeungKakImage from '@/assets/home-v2/boeung-kak-exterior.webp';
@@ -418,7 +420,14 @@ export default function About() {
 
   return (
     <div className="about-page" ref={pageRef}>
-      <section id="about-hero" className="about-hero" style={{ backgroundImage: `url(${heroImage})` }}>
+      <section
+        id="about-hero"
+        className="about-hero"
+        style={{
+          backgroundImage: `url(${heroImage})`,
+          '--about-mobile-hero-image': `url(${mobileHeroImage})`,
+        } as CSSProperties}
+      >
         <div className="about-hero-overlay" />
         <div className="about-hero-content">
           <h1 className="page-hero-title">{tr('More Than a Restaurant')}</h1>
