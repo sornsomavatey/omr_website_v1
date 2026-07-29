@@ -39,7 +39,7 @@ import type {
 import './index.css';
 
 import imgBkEdited from '@/assets/compressed_OMR Bk edited.webp';
-import heroVideo from '@/assets/video/omr vdo.MOV';
+import heroVideo from '@/assets/video/hero vid.mov';
 
 import SectionHeader from '@/components/SectionHeader';
 
@@ -126,9 +126,9 @@ function HeroSection({ hero }: { hero: any }) {
           loop
           muted
           playsInline
-          className="w-full h-full object-cover opacity-70"
+          className="w-full h-full object-cover opacity-95"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/10 to-black/35 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-transparent to-black/35 pointer-events-none" />
       </div>
 
       <div className="home-hero-content relative z-10 text-center text-white max-w-[1260px] px-6">

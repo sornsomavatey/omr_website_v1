@@ -18,7 +18,8 @@ class Settings(BaseSettings):
 
     # SMTP/Email Alert Settings
     SMTP_HOST: str = ''
-    SMTP_PORT: int = 587
+    SMTP_PORT: int = 58
+    7
     SMTP_TLS: bool = True
     SMTP_SSL: bool = False
     SMTP_USER: str = ''

@@ -53,8 +53,8 @@ import imgGallery6 from '@/assets/home-v2/9826b8c118c911c852174f3c0d0204245fd0da
 
 // Dish assets
 import imgDish1 from '@/assets/home-v2/36191a3943135f3542a0fe8b80adee304f122115.webp';
-import imgDish2 from '@/assets/Food/Lunch and Dinner/compressed_ហហ្មុក.webp';
-import imgDish3 from '@/assets/Food/Lunch and Dinner/grilled-chicken-siemreap.webp';
+import imgDish2 from '@/assets/food/Lunch and Dinner/fish-amok-coconut.webp';
+import imgDish3 from '@/assets/food/Lunch and Dinner/grilled-chicken-siemreap.webp';
 
 // Map asset
 import locationImg from '@/assets/Location Tk.webp';

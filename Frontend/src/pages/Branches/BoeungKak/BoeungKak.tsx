@@ -38,17 +38,18 @@ import './BoeungKak.css';
 // Asset imports matching homeAssets
 import imgBranchBoeungKak from '@/assets/Bk.webp'; // Boeung Kak Building
 import imgHeritageMain from '@/assets/Bk space1.webp'; // Boeung Kak interior main
-import imgHeritageTopLeft from '@/assets/bk space2.jpg'; // Boeung Kak space top left
-import imgHeritageTopRight from '@/assets/bk space3.webp'; // Boeung Kak space top right
-import imgHeritageBottom from '@/assets/bk space4.webp'; // Boeung Kak space bottom full
+import imgHeritageTopLeft from '@/assets/gallery/BKchinese.webp'; // Boeung Kak building exterior with red lanterns
+import imgHeritageTopRight from '@/assets/gallery/Bkchanchaiya.webp'; // Boeung Kak Chan Chhaya wall
+import imgHeritageBottom from '@/assets/bk parking.webp'; // Boeung Kak parking area
 import imgNeangTeav from '@/assets/neang teav.webp'; // Neang Tev room
 import imgOrnTitTom from '@/assets/orn tit tom.webp'; // Orn Tit Tom room
-import imgNekJei from '@/assets/nek jei.webp'; // Nek Jei room
-import imgNekSok from '@/assets/nek sok .webp'; // Nek Sok room
+import imgNekSok from '@/assets/nek sok.webp'; // Nek Sok room
+import imgNekMean from '@/assets/nek mean.webp'; // Nek Mean room
 import imgVipBk from '@/assets/bk vip.webp'; // Boeung Kak VIP Room image
 import imgBirthdayBk from '@/assets/birthday bk.webp'; // Boeung Kak Birthday celebration image
 import imgEngagementCompressed from '@/assets/engagement_compressed.jpg'; // Engagement celebration image
 import imgFamilyPkg from '@/assets/Family_compressed.jpg'; // Family celebration image
+import imgCorporateBk from '@/assets/bk cooperate.webp'; // Boeung Kak Corporate celebration image
 import imgSpace2 from '@/assets/home-v2/31b0910d38c033be0ce5292cf4a1d68688308c6b.webp'; // Event hall (used in private rooms)
 import imgGallery1 from '@/assets/neang teav.webp'; // Neang Tev room
 import imgGallery2 from '@/assets/home-v2/07e47044152ad38cdbb1bda5ae392fb848e3a37a.webp'; // Round tables private dining
@@ -58,8 +59,8 @@ import imgGallery6 from '@/assets/home-v2/9826b8c118c911c852174f3c0d0204245fd0da
 
 // Dish assets
 import imgDish1 from '@/assets/home-v2/36191a3943135f3542a0fe8b80adee304f122115.webp';
-import imgDish2 from '@/assets/Food/Lunch and Dinner/compressed_ហហ្មុក.webp';
-import imgDish3 from '@/assets/Food/Lunch and Dinner/grilled-chicken-siemreap.webp';
+import imgDish2 from '@/assets/food/Lunch and Dinner/fish-amok-coconut.webp';
+import imgDish3 from '@/assets/food/Lunch and Dinner/grilled-chicken-siemreap.webp';
 
 // Map asset
 import locationImg from '@/assets/Location Bk.webp';
@@ -225,14 +226,14 @@ export default function BoeungKak() {
         />
         
         <div className="bk-rooms-grid">
-          {/* Room 1 — Nek Jei */}
+          {/* Room 1 — Nek Sok */}
           <div className="bk-room-card">
             <div className="bk-room-img-wrapper">
-              <img src={imgNekJei} alt="Nek Jei Private Room" className="bk-room-img-reveal-left" />
+              <img src={imgNekSok} alt="Nek Sok Private Room" className="bk-room-img-reveal-left" />
               <div className="bk-room-badge">{t('branchDetails.rooms.guestBadge')}</div>
             </div>
             <div className="bk-room-body">
-              <h3 className="bk-room-name">{isKhmer ? "អ្នកជ័យ" : "Nek Jei"}</h3>
+              <h3 className="bk-room-name">{isKhmer ? "អ្នកសុខ" : "Nek Sok"}</h3>
               <ul className="bk-room-highlights">
                 <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.av')}</li>
                 <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.butler')}</li>
@@ -244,14 +245,14 @@ export default function BoeungKak() {
             </div>
           </div>
 
-          {/* Room 2 — Nek Sok */}
+          {/* Room 2 — Nek Mean */}
           <div className="bk-room-card">
             <div className="bk-room-img-wrapper">
-              <img src={imgNekSok} alt="Nek Sok Private Room" className="bk-room-img-reveal-right" />
+              <img src={imgNekMean} alt="Nek Mean Private Room" className="bk-room-img-reveal-right" />
               <div className="bk-room-badge">{t('branchDetails.rooms.guestBadge')}</div>
             </div>
             <div className="bk-room-body">
-              <h3 className="bk-room-name">{isKhmer ? "អ្នកសុខ" : "Nek Sok"}</h3>
+              <h3 className="bk-room-name">{isKhmer ? "អ្នកមាន" : "Nek Mean"}</h3>
               <ul className="bk-room-highlights">
                 <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.av')}</li>
                 <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.butler')}</li>
@@ -367,7 +368,7 @@ export default function BoeungKak() {
             buttonHref="/events#inquiry"
           />
           <SharpImageCard
-            image={imgHeritageTopLeft}
+            image={imgCorporateBk}
             alt={t('branchDetails.events.items.corporate.title')}
             title={t('branchDetails.events.items.corporate.title')}
             description={t('branchDetails.events.items.corporate.desc')}
