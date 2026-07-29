@@ -4,6 +4,7 @@ import logging
 from .api.core.config import settings
 from .api.middleware.cors import setup_cors
 from .api.middleware.logging import setup_logging
+from .api.middleware.rate_limit import setup_rate_limit
 
 # Routers
 from .api.modules.users import router as users_router
@@ -21,6 +22,7 @@ app = FastAPI(title=settings.APP_NAME, version=settings.APP_VERSION)
 
 setup_logging(app)
 setup_cors(app)
+setup_rate_limit(app)
 
 # Register routers
 app.include_router(users_router, prefix=f"{settings.API_PREFIX}/users", tags=["users"])

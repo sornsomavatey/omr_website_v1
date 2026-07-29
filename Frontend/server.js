@@ -43,6 +43,58 @@ const templateHtml = isProduction
 // Create http server
 const app = express()
 
+// Rate Limiting & Security Headers Middleware to block request loops
+const ipRequestCounts = new Map()
+const RATE_LIMIT_WINDOW_MS = 60 * 1000 // 1 minute window
+const RATE_LIMIT_MAX_REQUESTS = 100 // max 100 requests per minute per IP
+
+// Periodically clean up stale rate-limiting records to avoid memory leaks
+setInterval(() => {
+  const now = Date.now()
+  for (const [ip, record] of ipRequestCounts.entries()) {
+    if (now - record.startTime > RATE_LIMIT_WINDOW_MS) {
+      ipRequestCounts.delete(ip)
+    }
+  }
+}, RATE_LIMIT_WINDOW_MS)
+
+app.use((req, res, next) => {
+  // 1. Security Headers
+  res.setHeader('X-Content-Type-Options', 'nosniff')
+  res.setHeader('X-Frame-Options', 'SAMEORIGIN')
+  res.setHeader('X-XSS-Protection', '1; mode=block')
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin')
+
+  // 2. Rate Limiting (Block request loop abuse)
+  const clientIp = (req.headers['x-forwarded-for']?.split(',')[0] || req.socket?.remoteAddress || '127.0.0.1').trim()
+  const now = Date.now()
+
+  let record = ipRequestCounts.get(clientIp)
+  if (!record || (now - record.startTime > RATE_LIMIT_WINDOW_MS)) {
+    record = { count: 1, startTime: now }
+    ipRequestCounts.set(clientIp, record)
+  } else {
+    record.count += 1
+  }
+
+  if (record.count > RATE_LIMIT_MAX_REQUESTS) {
+    const retryAfterSeconds = Math.ceil((RATE_LIMIT_WINDOW_MS - (now - record.startTime)) / 1000)
+    res.setHeader('Retry-After', retryAfterSeconds)
+    return res.status(429).send(`
+      <!DOCTYPE html>
+      <html lang="en">
+      <head><title>429 Too Many Requests</title></head>
+      <body style="font-family: system-ui, sans-serif; text-align: center; padding: 50px;">
+        <h2>429 - Rate Limit Exceeded</h2>
+        <p>Too many requests detected. Please wait ${retryAfterSeconds} seconds before trying again.</p>
+      </body>
+      </html>
+    `)
+  }
+
+  next()
+})
+
 function sendHtml(req, res, html) {
   const headers = {
     'Content-Type': 'text/html; charset=utf-8',
