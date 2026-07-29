@@ -85,8 +85,19 @@ const pageLimiter = rateLimit({
   standardHeaders: 'draft-8',
   legacyHeaders: false,
   message: 'Too many requests. Please try again later.',
+  skip: (req) => {
+    const hostname = req.hostname.toLowerCase()
+    if (hostname === 'localhost' || hostname === '127.0.0.1') {
+      return true
+    }
+
+    // Missing or uncached asset requests can reach this middleware after the
+    // static handler. They should never consume the HTML page quota.
+    return /\.(?:avif|css|gif|ico|jpe?g|js|json|map|mov|mp4|png|svg|webm|webp|woff2?)$/i.test(
+      req.path
+    )
+  },
 })
-app.use(pageLimiter)
 
 function sendHtml(req, res, html) {
   const headers = {
@@ -124,6 +135,10 @@ if (!isProduction) {
 } else {
   app.use(base, express.static('./dist/client', { index: false }))
 }
+
+// Static assets are handled above and do not consume the page-request quota.
+// This prevents image-heavy gallery/menu pages from rate-limiting themselves.
+app.use(pageLimiter)
 
 // Serve HTML
 app.use('*all', async (req, res) => {

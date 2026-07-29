@@ -4,6 +4,7 @@ from typing import List
 from ..dependencies.db import get_db
 from ..dependencies.models import Branch
 from ..dependencies.schemas import BranchCreate, BranchResponse
+from ..dependencies.security import require_admin
 
 router = APIRouter()
 
@@ -14,7 +15,11 @@ def get_branches(db: Session = Depends(get_db)):
     return branches
 
 @router.post("/", response_model=BranchResponse, status_code=201)
-def create_branch(branch: BranchCreate, db: Session = Depends(get_db)):
+def create_branch(
+    branch: BranchCreate,
+    db: Session = Depends(get_db),
+    _admin: None = Depends(require_admin),
+):
     """Create a new restaurant branch (Admin)."""
     db_branch = Branch(
         name=branch.name,

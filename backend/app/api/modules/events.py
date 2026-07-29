@@ -6,6 +6,7 @@ from ..dependencies.models import EventBooking
 from ..dependencies.schemas import EventBookingCreate, EventBookingResponse
 from ..utils.telegram import send_telegram_alert, send_reservation_telegram_alert
 from ..utils.email import send_email_alert
+from ..dependencies.security import require_admin
 
 router = APIRouter()
 
@@ -90,7 +91,10 @@ def create_event_booking(event: EventBookingCreate, db: Session = Depends(get_db
     return db_event
 
 @router.get("/", response_model=List[EventBookingResponse])
-def get_event_bookings(db: Session = Depends(get_db)):
+def get_event_bookings(
+    db: Session = Depends(get_db),
+    _admin: None = Depends(require_admin),
+):
     """Retrieve all event bookings (Admin/Coordinator view)."""
     bookings = db.query(EventBooking).order_by(EventBooking.created_at.desc()).all()
     return bookings

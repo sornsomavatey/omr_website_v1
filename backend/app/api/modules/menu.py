@@ -4,6 +4,7 @@ from typing import List, Optional
 from ..dependencies.db import get_db
 from ..dependencies.models import MenuItem, MenuCategory
 from ..dependencies.schemas import MenuItemCreate, MenuItemResponse, MenuCategoryCreate, MenuCategoryResponse
+from ..dependencies.security import require_admin
 
 router = APIRouter()
 
@@ -53,7 +54,11 @@ def get_categories(db: Session = Depends(get_db)):
     return categories
 
 @router.post("/", response_model=MenuItemResponse, status_code=201)
-def create_menu_item(item: MenuItemCreate, db: Session = Depends(get_db)):
+def create_menu_item(
+    item: MenuItemCreate,
+    db: Session = Depends(get_db),
+    _admin: None = Depends(require_admin),
+):
     """Create a new menu item (Admin)."""
     # Check if category exists
     category = db.query(MenuCategory).filter(MenuCategory.id == item.category_id).first()
@@ -81,7 +86,11 @@ def create_menu_item(item: MenuItemCreate, db: Session = Depends(get_db)):
     return db_item
 
 @router.post("/category", response_model=MenuCategoryResponse, status_code=201)
-def create_category(category: MenuCategoryCreate, db: Session = Depends(get_db)):
+def create_category(
+    category: MenuCategoryCreate,
+    db: Session = Depends(get_db),
+    _admin: None = Depends(require_admin),
+):
     """Create a new menu category (Admin)."""
     # Check if exists
     db_cat = db.query(MenuCategory).filter(MenuCategory.slug == category.slug).first()

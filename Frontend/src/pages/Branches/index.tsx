@@ -10,10 +10,10 @@ import { useTranslation } from '@/hooks/useTranslation';
 import './index.css';
 
 // Asset imports
-import locationImg from '@/assets/location.webp';
-import imgBranchToulKork from '@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.webp';
-import imgBranchBoeungKak from '@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.webp';
-import branchHeroImg from '@/assets/branch hero.webp'; // Transparent background branch hero image
+import locationImg from '@/assets/branches/location-section.webp';
+import imgBranchToulKork from '@/assets/home-v2/toul-kork-exterior.webp';
+import imgBranchBoeungKak from '@/assets/home-v2/boeung-kak-exterior.webp';
+import branchHeroImg from '@/assets/branches/branch-hero.webp'; // Transparent background branch hero image
 
 type LocationItem = {
   id: string;
@@ -46,8 +46,8 @@ type RestaurantsData = {
 
 // Map JSON image paths to imported local assets
 const imageMapper: Record<string, string> = {
-  '@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.webp': imgBranchToulKork,
-  '@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.webp': imgBranchBoeungKak,
+  '@/assets/home-v2/toul-kork-exterior.webp': imgBranchToulKork,
+  '@/assets/home-v2/boeung-kak-exterior.webp': imgBranchBoeungKak,
 };
 
 export default function Branches() {
@@ -87,7 +87,7 @@ export default function Branches() {
     return (
       <div className="branches-container min-h-screen pt-24 pb-20 bg-white">
         {/* 1. HERO SECTION SKELETON */}
-        <section className="branches-hero">
+        <section id="branches-hero" className="branches-hero">
           <div className="branches-hero-inner flex flex-col lg:flex-row gap-10 items-center justify-between w-full">
             <div className="hero-text-side flex-1 flex flex-col gap-5">
               <Skeleton className="h-12 w-4/5 rounded-xl bg-muted" />
@@ -189,7 +189,7 @@ export default function Branches() {
     <div className="branches-container">
       
       {/* 1. HERO SECTION */}
-      <section className="branches-hero">
+      <section id="branches-hero" className="branches-hero">
         <div className="branches-hero-glow-1" />
         <div className="branches-hero-glow-2" />
 
