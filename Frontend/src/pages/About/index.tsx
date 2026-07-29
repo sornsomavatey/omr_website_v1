@@ -558,7 +558,7 @@ export default function About() {
               <span>{tr('Connect with us on:')}</span>
               <div className="about-careers-connect-row">
                 <a
-                  href="https://www.linkedin.com/company/one-more-limited-group/"
+                  href="https://www.linkedin.com/company/one-more-restaurant/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="about-careers-social-btn about-careers-linkedin-btn"
@@ -572,7 +572,7 @@ export default function About() {
                 </a>
 
                 <a
-                  href="https://t.me/onemoregroupcareer"
+                  href="https://t.me/onemorerestaurant"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="about-careers-social-btn about-careers-telegram-btn"
@@ -680,7 +680,7 @@ export default function About() {
               <span>Instagram</span>
             </a>
             <a
-              href="https://t.me/onemoregroupcareer"
+              href="https://t.me/onemorerestaurant"
               target="_blank"
               rel="noopener noreferrer"
               className="about-button about-button-outline"
@@ -691,7 +691,7 @@ export default function About() {
               <span>Telegram</span>
             </a>
             <a
-              href="https://www.linkedin.com/company/one-more-limited-group/"
+              href="https://www.linkedin.com/company/one-more-restaurant/"
               target="_blank"
               rel="noopener noreferrer"
               className="about-button about-button-outline"
