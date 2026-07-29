@@ -678,7 +678,7 @@
         "address": "37 St 315, 프놈펜 120407",
         "phone": "023 888 222",
         "hours": "매일: 오전 06:00 - 오후 10:00",
-        "image": "@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.webp",
+        "image": "@/assets/home-v2/toul-kork-exterior.webp",
         "tags": [
           "가족 친화적",
           "비즈니스 미팅",
@@ -699,7 +699,7 @@
         "address": "G2 스트리트 R11, 프놈펜 120210",
         "phone": "021 888 222",
         "hours": "매일: 오전 06:00 - 오후 10:00",
-        "image": "@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.webp",
+        "image": "@/assets/home-v2/boeung-kak-exterior.webp",
         "tags": [
           "이벤트 공간",
           "대규모 그룹",
@@ -721,7 +721,7 @@
       "eyebrow": "EST. 2008 · 프놈펜",
       "title": "테이블 예약",
       "desc": "전통의 명성을 이어온 레시피가 세련되고 우아한 분위기 속에서 자랑스럽게 되살아나는 최고의 캄보디아 다이닝 경험에 빠져보세요.",
-      "backgroundImage": "@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.webp",
+      "backgroundImage": "@/assets/home-v2/boeung-kak-exterior.webp",
       "backgroundAlt": "One More Restaurant식당"
     },
     "guestInformationTitle": "손님 정보",
@@ -899,7 +899,7 @@
         "address": "37 St 315, 프놈펜 120407",
         "phone": "023 888 222",
         "hours": "매일: 오전 06:00 - 오후 10:00",
-        "img": "@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.webp",
+        "img": "@/assets/home-v2/toul-kork-exterior.webp",
         "tags": [
           "가족 친화적",
           "비즈니스 미팅",
@@ -912,7 +912,7 @@
         "address": "G2 스트리트 R11, 프놈펜 120210",
         "phone": "021 888 222",
         "hours": "매일: 오전 06:00 - 오후 10:00",
-        "img": "@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.webp",
+        "img": "@/assets/home-v2/boeung-kak-exterior.webp",
         "tags": [
           "이벤트 공간",
           "대규모 그룹",
@@ -956,7 +956,7 @@
       {
         "id": "실내",
         "name": "실내",
-        "img": "@/assets/home-v2/e8f4b56e423777f3f6c3df39c6ef78914b278e17.webp"
+        "img": "@/assets/home-v2/private-event-space.webp"
       },
       {
         "id": "집 밖의",
@@ -966,7 +966,7 @@
       {
         "id": "개인실",
         "name": "프라이빗 룸",
-        "img": "@/assets/home-v2/31b0910d38c033be0ce5292cf4a1d68688308c6b.webp"
+        "img": "@/assets/home-v2/event-hall.webp"
       },
       {
         "id": "VIP룸",

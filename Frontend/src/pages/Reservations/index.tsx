@@ -63,7 +63,7 @@ const PRE_ORDER_ITEMS: PreOrderItem[] = [
     category: 'Breakfast',
     price: 7,
     desc: 'Traditional kuy teav with pork broth, rice noodles, fresh herbs & bean sprouts.',
-    img: '/src/assets/Food/Breakfast/khmer-noodle-soup.webp',
+    img: '/src/assets/Food/Breakfast/breakfast-khmer-noodle-soup-006.webp',
   },
   {
     id: 'po-2',
@@ -71,7 +71,7 @@ const PRE_ORDER_ITEMS: PreOrderItem[] = [
     category: 'Breakfast',
     price: 8,
     desc: 'Wok-tossed rice noodles with tender beef slices, egg & spring onions.',
-    img: '/src/assets/Food/Breakfast/beef-fried-noodle.webp',
+    img: '/src/assets/Food/Breakfast/breakfast-beef-fried-noodle-002.webp',
   },
   {
     id: 'po-3',
@@ -79,7 +79,7 @@ const PRE_ORDER_ITEMS: PreOrderItem[] = [
     category: 'Breakfast',
     price: 10,
     desc: 'Fresh seafood medley stir-fried with flat rice noodles in savory sauce.',
-    img: '/src/assets/Food/Breakfast/seafood-fried-noodle.webp',
+    img: '/src/assets/Food/Breakfast/breakfast-seafood-fried-noodle-012.webp',
   },
   {
     id: 'po-4',
@@ -87,7 +87,7 @@ const PRE_ORDER_ITEMS: PreOrderItem[] = [
     category: 'Lunch & Dinner',
     price: 12,
     desc: 'Creamy Khmer fish curry steamed in banana leaves with coconut & lemongrass.',
-    img: '/src/assets/Food/Lunch and Dinner/fish-amok-coconut.webp',
+    img: '/src/assets/Food/Lunch and Dinner/lunch-and-dinner-fish-amok-coconut-005.webp',
   },
   {
     id: 'po-5',
@@ -95,7 +95,7 @@ const PRE_ORDER_ITEMS: PreOrderItem[] = [
     category: 'Lunch & Dinner',
     price: 28,
     desc: 'Whole lobster simmered in fragrant Khmer red curry with vegetables.',
-    img: '/src/assets/Food/Lunch and Dinner/curry-lobster.webp',
+    img: '/src/assets/Food/Lunch and Dinner/lunch-and-dinner-curry-lobster-004.webp',
   },
   {
     id: 'po-6',
@@ -103,7 +103,7 @@ const PRE_ORDER_ITEMS: PreOrderItem[] = [
     category: 'Lunch & Dinner',
     price: 14,
     desc: 'Classic Cambodian stir-fried beef with lime-pepper dipping sauce & fried egg.',
-    img: '/src/assets/Food/Lunch and Dinner/britian-loklak.webp',
+    img: '/src/assets/Food/Lunch and Dinner/lunch-and-dinner-britian-loklak-002.webp',
   },
   {
     id: 'po-7',
@@ -111,7 +111,7 @@ const PRE_ORDER_ITEMS: PreOrderItem[] = [
     category: 'Lunch & Dinner',
     price: 11,
     desc: 'Traditional Khmer sour soup with catfish, green papaya & roasted rice.',
-    img: '/src/assets/Food/Lunch and Dinner/samlor-korko-catfish.webp',
+    img: '/src/assets/Food/Lunch and Dinner/lunch-and-dinner-samlor-korko-catfish-009.webp',
   },
   {
     id: 'po-8',
@@ -119,7 +119,7 @@ const PRE_ORDER_ITEMS: PreOrderItem[] = [
     category: 'Dessert',
     price: 9,
     desc: 'A curated platter of five traditional Khmer sweet treats, beautifully presented.',
-    img: '/src/assets/Food/Dessert/five-signature-dessert.webp',
+    img: '/src/assets/Food/Dessert/dessert-five-signature-dessert-001.webp',
   },
 ];
 

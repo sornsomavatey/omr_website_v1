@@ -11,8 +11,8 @@ import './index.css';
 
 // Asset imports
 import locationImg from '@/assets/location.webp';
-import imgBranchToulKork from '@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.webp';
-import imgBranchBoeungKak from '@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.webp';
+import imgBranchToulKork from '@/assets/home-v2/toul-kork-exterior.webp';
+import imgBranchBoeungKak from '@/assets/home-v2/boeung-kak-exterior.webp';
 import branchHeroImg from '@/assets/branch hero.webp'; // Transparent background branch hero image
 
 type LocationItem = {
@@ -46,8 +46,8 @@ type RestaurantsData = {
 
 // Map JSON image paths to imported local assets
 const imageMapper: Record<string, string> = {
-  '@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.webp': imgBranchToulKork,
-  '@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.webp': imgBranchBoeungKak,
+  '@/assets/home-v2/toul-kork-exterior.webp': imgBranchToulKork,
+  '@/assets/home-v2/boeung-kak-exterior.webp': imgBranchBoeungKak,
 };
 
 export default function Branches() {

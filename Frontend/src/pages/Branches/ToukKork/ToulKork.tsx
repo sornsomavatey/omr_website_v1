@@ -36,26 +36,26 @@ import { imageMap } from '@/pages/Home/homeAssets';
 import './ToulKork.css';
 
 // Asset imports matching homeAssets
-import imgBranchToulKork from '@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.webp'; // Toul Kork Building
-import imgHeritageMain from '@/assets/home-v2/43310dd2158ca5c7f7d098abf280dc14124d42de.webp'; // Curved wood interior (main left)
+import imgBranchToulKork from '@/assets/home-v2/toul-kork-exterior.webp'; // Toul Kork Building
+import imgHeritageMain from '@/assets/home-v2/curved-wood-interior.webp'; // Curved wood interior (main left)
 import imgHeritageTopLeft from '@/assets/toul-kork-room-no-logo.webp'; // Nighttime Toul Kork room image (top-left)
 import imgNeangTeav from '@/assets/neang teav.webp'; // Neang Tev room
 import imgOrnTitTom from '@/assets/orn tit tom.webp'; // Orn Tit Tom room
 import imgHeritageTopRight from '@/assets/moments.webp'; // Outdoor deck with balloons (top-right)
 import imgHeritageBottom from '@/assets/tk yellow.jpg'; // Outdoor canopy with yellow lights (bottom)
 import imgVipTk from '@/assets/vip tk.webp'; // VIP Room image
-import imgSpace2 from '@/assets/home-v2/31b0910d38c033be0ce5292cf4a1d68688308c6b.webp'; // Event hall (used in private rooms)
+import imgSpace2 from '@/assets/home-v2/event-hall.webp'; // Event hall (used in private rooms)
 import imgGallery1 from '@/assets/neang teav.webp'; // Neang Tev room
-import imgGallery2 from '@/assets/home-v2/07e47044152ad38cdbb1bda5ae392fb848e3a37a.webp'; // Round tables private dining
+import imgGallery2 from '@/assets/home-v2/round-table-private-dining.webp'; // Round tables private dining
 import imgGallery3 from '@/assets/moments.webp'; // Event hall with balloons
 import imgEngagement from '@/assets/redengage-clean.webp'; // Red Engagement event image
 import imgFamilyPkg from '@/assets/Family_compressed.jpg'; // Family celebration image
-import imgGallery6 from '@/assets/home-v2/9826b8c118c911c852174f3c0d0204245fd0da48.webp'; // Corporate meeting
+import imgGallery6 from '@/assets/home-v2/corporate-meeting.webp'; // Corporate meeting
 
 // Dish assets
-import imgDish1 from '@/assets/home-v2/36191a3943135f3542a0fe8b80adee304f122115.webp';
-import imgDish2 from '@/assets/food/Lunch and Dinner/fish-amok-coconut.webp';
-import imgDish3 from '@/assets/food/Lunch and Dinner/grilled-chicken-siemreap.webp';
+import imgDish1 from '@/assets/home-v2/signature-dish-one.webp';
+import imgDish2 from '@/assets/Food/Lunch and Dinner/lunch-and-dinner-fish-amok-coconut-005.webp';
+import imgDish3 from '@/assets/Food/Lunch and Dinner/lunch-and-dinner-grilled-chicken-siemreap-007.webp';
 
 // Map asset
 import locationImg from '@/assets/Location Tk.webp';

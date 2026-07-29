@@ -41,7 +41,7 @@ import imgGal1     from '@/assets/gallery/private-gatherings-no-logo.webp';
 import imgGal2     from '@/assets/gallery/artisanal-plating-no-logo.webp';
 import imgGal3     from '@/assets/gallery/wine-toast.webp';
 import imgGal4     from '@/assets/gallery/event-coffee-service.webp';
-import imgGal5     from '@/assets/home-v2/9826b8c118c911c852174f3c0d0204245fd0da48.webp';
+import imgGal5     from '@/assets/home-v2/corporate-meeting.webp';
 import imgInquiry  from '@/assets/silverbirthday-clean.webp';
 import imgFinalCta from '@/assets/event bg.webp';
 import imgMainHall from '@/assets/main hall.webp';

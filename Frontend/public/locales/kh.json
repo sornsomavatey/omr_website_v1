@@ -711,7 +711,7 @@
         "address": "ផ្ទះលេខ 37 ផ្លូវ 315 ភ្នំពេញ 120407",
         "phone": "023 888 222",
         "hours": "បើករៀងរាល់ថ្ងៃ: ០៦:០០ ព្រឹក - ១០:០០ យប់",
-        "image": "@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.webp",
+        "image": "@/assets/home-v2/toul-kork-exterior.webp",
         "tags": [
           "សម្រាប់គ្រួសារ",
           "ជំនួបពាណិជ្ជកម្ម",
@@ -732,7 +732,7 @@
         "address": "G2 ផ្លូវ R11 ភ្នំពេញ 120210",
         "phone": "021 888 222",
         "hours": "បើករៀងរាល់ថ្ងៃ: ០៦:០០ ព្រឹក - ១០:០០ យប់",
-        "image": "@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.webp",
+        "image": "@/assets/home-v2/boeung-kak-exterior.webp",
         "tags": [
           "សម្រាប់កម្មវិធី ផ្សេងៗ",
           "សម្រាប់ការជួបជុំ",
@@ -754,7 +754,7 @@
       "eyebrow": "បង្កើតឆ្នាំ ២០០៨ · ភ្នំពេញ",
       "title": "កក់តុរបស់អ្នក",
       "desc": "សូមរីករាយជាមួយបទពិសោធន៍នៃការទទួលទានអាហារខ្មែរដ៏ល្អឯក ដែលក្នុងនោះរូបមន្តអាហារប្រពៃណីដ៏ល្បីល្បាញត្រូវបានលើកយកមកបង្ហាញឡើងវិញយ៉ាងគួរឱ្យមោទនភាព ក្នុងបរិយាកាសដ៏ប្រណិត និងថ្លៃថ្នូរ។",
-      "backgroundImage": "@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.webp",
+      "backgroundImage": "@/assets/home-v2/boeung-kak-exterior.webp",
       "backgroundAlt": "បន្ទប់ទទួលទានអាហារនៅភោជនីយដ្ឋាន វ័នម៉រ"
     },
     "guestInformationTitle": "ព័ត៌មានសម្រាប់ភ្ញៀវ",
@@ -932,7 +932,7 @@
         "address": "ផ្ទះលេខ 37 ផ្លូវ 315 ភ្នំពេញ 120407",
         "phone": "023 888 222",
         "hours": "បើករៀងរាល់ថ្ងៃ: ០៦:០០ ព្រឹក - ១០:០០ យប់",
-        "img": "@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.webp",
+        "img": "@/assets/home-v2/toul-kork-exterior.webp",
         "tags": [
           "សម្រាប់គ្រួសារ",
           "ជំនួបពាណិជ្ជកម្ម",
@@ -945,7 +945,7 @@
         "address": "G2 ផ្លូវ R11 ភ្នំពេញ 120210",
         "phone": "021 888 222",
         "hours": "បើករៀងរាល់ថ្ងៃ: ០៦:០០ ព្រឹក - ១០:០០ យប់",
-        "img": "@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.webp",
+        "img": "@/assets/home-v2/boeung-kak-exterior.webp",
         "tags": [
           "សម្រាប់កម្មវិធី ផ្សេងៗ",
           "សម្រាប់ការជួបជុំ",
@@ -989,7 +989,7 @@
       {
         "id": "indoor",
         "name": "ក្នុងអាគារ",
-        "img": "@/assets/home-v2/e8f4b56e423777f3f6c3df39c6ef78914b278e17.webp"
+        "img": "@/assets/home-v2/private-event-space.webp"
       },
       {
         "id": "outdoor",
@@ -999,7 +999,7 @@
       {
         "id": "privateRoom",
         "name": "បន្ទប់ឯកជន",
-        "img": "@/assets/home-v2/31b0910d38c033be0ce5292cf4a1d68688308c6b.webp"
+        "img": "@/assets/home-v2/event-hall.webp"
       },
       {
         "id": "vipRoom",

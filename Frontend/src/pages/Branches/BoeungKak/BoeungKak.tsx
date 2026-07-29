@@ -50,17 +50,17 @@ import imgBirthdayBk from '@/assets/birthday bk.webp'; // Boeung Kak Birthday ce
 import imgEngagementCompressed from '@/assets/engagement_compressed.jpg'; // Engagement celebration image
 import imgFamilyPkg from '@/assets/Family_compressed.jpg'; // Family celebration image
 import imgCorporateBk from '@/assets/bk cooperate.webp'; // Boeung Kak Corporate celebration image
-import imgSpace2 from '@/assets/home-v2/31b0910d38c033be0ce5292cf4a1d68688308c6b.webp'; // Event hall (used in private rooms)
+import imgSpace2 from '@/assets/home-v2/event-hall.webp'; // Event hall (used in private rooms)
 import imgGallery1 from '@/assets/neang teav.webp'; // Neang Tev room
-import imgGallery2 from '@/assets/home-v2/07e47044152ad38cdbb1bda5ae392fb848e3a37a.webp'; // Round tables private dining
+import imgGallery2 from '@/assets/home-v2/round-table-private-dining.webp'; // Round tables private dining
 import imgGallery3 from '@/assets/moments.webp'; // Event hall with balloons
-import imgGallery4 from '@/assets/home-v2/80bc2f874a3b8b65fc3bd247f23046db8632d909.webp'; // People dining
-import imgGallery6 from '@/assets/home-v2/9826b8c118c911c852174f3c0d0204245fd0da48.webp'; // Corporate meeting
+import imgGallery4 from '@/assets/home-v2/guests-dining.webp'; // People dining
+import imgGallery6 from '@/assets/home-v2/corporate-meeting.webp'; // Corporate meeting
 
 // Dish assets
-import imgDish1 from '@/assets/home-v2/36191a3943135f3542a0fe8b80adee304f122115.webp';
-import imgDish2 from '@/assets/food/Lunch and Dinner/fish-amok-coconut.webp';
-import imgDish3 from '@/assets/food/Lunch and Dinner/grilled-chicken-siemreap.webp';
+import imgDish1 from '@/assets/home-v2/signature-dish-one.webp';
+import imgDish2 from '@/assets/Food/Lunch and Dinner/lunch-and-dinner-fish-amok-coconut-005.webp';
+import imgDish3 from '@/assets/Food/Lunch and Dinner/lunch-and-dinner-grilled-chicken-siemreap-007.webp';
 
 // Map asset
 import locationImg from '@/assets/Location Bk.webp';
