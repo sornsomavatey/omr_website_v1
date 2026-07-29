@@ -56,6 +56,7 @@ export function DishImageFrame({
         src={src}
         alt={alt}
         onLoad={() => setIsLoaded(true)}
+        onError={() => setIsLoaded(true)}
         className={cn(
           "w-full h-full object-cover transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/dish-card:scale-105 group-hover:scale-105 relative z-10",
           !isLoaded ? "opacity-0" : "opacity-100",
