@@ -29,22 +29,23 @@ import EventSpaceCard from '@/components/EventSpaceCard';
 import TestimonialSection from '@/components/TestimonialSection';
 import { createEventBooking, getTestimonialsData, sendCustomerEmail } from '@/lib/api';
 import { useTranslation } from '@/hooks/useTranslation';
+import { partnerLogos } from '@/assets/partners';
 
-import imgHero     from '@/assets/silverbddining-no-hbd.webp';
-import imgPkg1     from '@/assets/roundtablebk.webp';
-import imgPkg2     from '@/assets/redengage-clean.webp';
-import imgPkg3     from '@/assets/corporateroomwhite.webp';
-import imgPkg4     from '@/assets/cooporatepacakage.webp';
-import imgSpace1   from '@/assets/private-room-no-logo.webp';
-import imgSpace2   from '@/assets/bkfamilyroom.webp';
+import imgHero     from '@/assets/events/silver-birthday-dining-no-hbd.webp';
+import imgPkg1     from '@/assets/events/round-table-boeung-kak.webp';
+import imgPkg2     from '@/assets/events/red-engagement-clean.webp';
+import imgPkg3     from '@/assets/events/corporate-room.webp';
+import imgPkg4     from '@/assets/events/corporate-package.webp';
+import imgSpace1   from '@/assets/events/private-room-no-logo.webp';
+import imgSpace2   from '@/assets/events/family-event-room.webp';
 import imgGal1     from '@/assets/gallery/private-gatherings-no-logo.webp';
 import imgGal2     from '@/assets/gallery/artisanal-plating-no-logo.webp';
 import imgGal3     from '@/assets/gallery/wine-toast.webp';
 import imgGal4     from '@/assets/gallery/event-coffee-service.webp';
-import imgGal5     from '@/assets/home-v2/9826b8c118c911c852174f3c0d0204245fd0da48.webp';
-import imgInquiry  from '@/assets/silverbirthday-clean.webp';
-import imgFinalCta from '@/assets/event bg.webp';
-import imgMainHall from '@/assets/main hall.webp';
+import imgGal5     from '@/assets/home-v2/corporate-meeting.webp';
+import imgInquiry  from '@/assets/events/silver-birthday-clean.webp';
+import imgFinalCta from '@/assets/events/event-hero-background.webp';
+import imgMainHall from '@/assets/events/main-hall.webp';
 import { imageMap } from '@/pages/Home/homeAssets';
 
 import './index.css';
@@ -467,6 +468,10 @@ export default function EventsPage() {
   const [bookingRef, setBookingRef] = useState('');
   const [isDownloadingPdf, setIsDownloadingPdf] = useState(false);
   const [hasDownloadedConfirmation, setHasDownloadedConfirmation] = useState(false);
+  const [showEmailModal, setShowEmailModal] = useState(false);
+  const [emailInput, setEmailInput] = useState('');
+  const [isSendingEmail, setIsSendingEmail] = useState(false);
+  const [hasSentEmail, setHasSentEmail] = useState(false);
 
   const handleDownloadConfirmation = async () => {
     if (!submittedData || isDownloadingPdf) return;
@@ -485,7 +490,7 @@ export default function EventsPage() {
     try {
       const { jsPDF } = await import('jspdf');
 
-      const logoUrl = window.location.origin + '/assets/partners/onemorerestaurant.png';
+      const logoUrl = partnerLogos['one-more-restaurant'];
       const logoData = await new Promise<{ dataUrl: string; width: number; height: number } | null>((resolve) => {
         const img = new Image();
         img.crossOrigin = 'Anonymous';
@@ -697,34 +702,45 @@ export default function EventsPage() {
     }
   };
 
+  const handleSendToEmail = async (overrideEmail?: string) => {
+    const targetEmail = (overrideEmail || emailInput || '').trim();
+    if (!targetEmail || !submittedData) {
+      alert(isKhmer ? 'សូមបញ្ចូលអាសយដ្ឋានអ៊ីមែលត្រឹមត្រូវ' : 'Please enter a valid email address.');
+      return;
+    }
+
+    setIsSendingEmail(true);
+    try {
+      const refCode = bookingRef || 'EVT-00000';
+      const branchDisplay = submittedData.branch === 'Toul Kork' ? 'One More Restaurant Toul Kork' : 'One More Restaurant Boeung Kak';
+
+      const customMessage = `Event Inquiry Confirmation #${refCode}
+Dear ${submittedData.name},
+
+Thank you for submitting your event inquiry with One More Restaurant. Below are your details:
+• Branch: ${branchDisplay}
+• Event Type: ${submittedData.event_type}
+• Expected Guests: ${submittedData.guest_count}
+• Phone Number: ${submittedData.phone}
+${submittedData.company ? `• Company: ${submittedData.company}\n` : ''}${submittedData.special_requirements ? `• Special Requirements: ${submittedData.special_requirements}\n` : ''}
+Our event coordinator will contact you within 24 hours.`;
+
+      await sendCustomerEmail(targetEmail, undefined, customMessage);
+
+      setHasSentEmail(true);
+      setShowEmailModal(false);
+      alert(isKhmer ? 'អ៊ីមែលបញ្ជាក់ត្រូវបានផ្ញើដោយជោគជ័យ!' : 'Confirmation email sent successfully!');
+    } catch (err) {
+      console.error('Failed to send email:', err);
+      alert(isKhmer ? 'បរាជ័យក្នុងការផ្ញើអ៊ីមែល។ សូមព្យាយាមម្តងទៀត។' : 'Failed to send email. Please try again.');
+    } finally {
+      setIsSendingEmail(false);
+    }
+  };
+
   async function handleFormSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!formRef.current || isSubmitting) return;
-
-    // Rate limit check: Allow up to 2 submissions within 60 seconds before triggering cooldown
-    const COOLDOWN_MS = 60 * 1000;
-    const MAX_FREE_SUBMISSIONS = 2;
-    let recentSubmissions: number[] = [];
-    const now = Date.now();
-
-    try {
-      const stored = localStorage.getItem('omr_event_timestamps');
-      if (stored) {
-        const parsed: number[] = JSON.parse(stored);
-        recentSubmissions = parsed.filter(t => now - t < COOLDOWN_MS);
-      }
-    } catch (e) {
-      recentSubmissions = [];
-    }
-
-    if (recentSubmissions.length >= MAX_FREE_SUBMISSIONS) {
-      const oldestInWindow = recentSubmissions[0];
-      const secondsRemaining = Math.ceil((COOLDOWN_MS - (now - oldestInWindow)) / 1000);
-      alert(isKhmer 
-        ? `អ្នកបានផ្ញើការសាកសួរចំនួន ២ ដងរួចហើយ។ សូមរង់ចាំ ${secondsRemaining} វិនាទីទៀត មុនពេលផ្ញើការសាកសួរកម្មវិធីថ្មី។` 
-        : `You have submitted 2 event inquiries. Please wait ${secondsRemaining} seconds before submitting another event inquiry.`);
-      return;
-    }
 
     const formData = new FormData(formRef.current);
     const name = (formData.get('name') as string || '').trim();
@@ -759,16 +775,6 @@ export default function EventsPage() {
         package_details
       });
 
-      try {
-        const stored = localStorage.getItem('omr_event_timestamps');
-        const parsed: number[] = stored ? JSON.parse(stored) : [];
-        const valid = parsed.filter(t => now - t < COOLDOWN_MS);
-        valid.push(now);
-        localStorage.setItem('omr_event_timestamps', JSON.stringify(valid));
-      } catch (e) {
-        localStorage.setItem('omr_event_timestamps', JSON.stringify([now]));
-      }
-
       const ref = `EVT-${Math.floor(10000 + Math.random() * 90000)}`;
       setBookingRef(ref);
 
@@ -784,7 +790,9 @@ export default function EventsPage() {
         date: event_date,
       });
 
+      setEmailInput(emailInput);
       setHasDownloadedConfirmation(false);
+      setHasSentEmail(false);
 
       setFormSuccess(true);
       formRef.current.reset();
@@ -1222,18 +1230,30 @@ export default function EventsPage() {
             <div className="w-full flex flex-col gap-3">
               <button
                 type="button"
+                onClick={() => {
+                  setEmailInput(submittedData?.email || '');
+                  setShowEmailModal(true);
+                }}
+                className="w-full py-3.5 px-4 bg-[#6b9158] hover:bg-[#5a7d49] text-white font-bold rounded-xl transition-all shadow-md flex items-center justify-center gap-2 text-base cursor-pointer"
+              >
+                <Mail className="w-5 h-5 text-white" />
+                <span>{isKhmer ? 'ផ្ញើទៅ អ៊ីមែល' : 'Send to Email'}</span>
+              </button>
+
+              <button
+                type="button"
                 disabled={isDownloadingPdf}
                 onClick={handleDownloadConfirmation}
-                className="w-full py-3.5 px-4 bg-[#6b9158] hover:bg-[#5a7d49] text-white font-bold rounded-xl transition-all shadow-md flex items-center justify-center gap-2 text-base cursor-pointer disabled:opacity-60"
+                className="w-full py-3 px-4 border border-[#6b9158] hover:bg-[#f2f6f0] text-[#6b9158] font-bold rounded-xl transition-all flex items-center justify-center gap-2 text-sm cursor-pointer disabled:opacity-60"
               >
                 {isDownloadingPdf ? (
                   <>
-                    <Loader2 className="w-5 h-5 text-white animate-spin" />
+                    <Loader2 className="w-4 h-4 text-[#6b9158] animate-spin" />
                     <span>{isKhmer ? 'កំពុងបង្កើត PDF...' : 'Generating PDF...'}</span>
                   </>
                 ) : (
                   <>
-                    <Download className="w-5 h-5 text-white" />
+                    <Download className="w-4 h-4 text-[#6b9158]" />
                     <span>{isKhmer ? 'ទាញយកលិខិតបញ្ជាក់ (PDF)' : 'Download Confirmation (PDF)'}</span>
                   </>
                 )}
@@ -1245,6 +1265,76 @@ export default function EventsPage() {
                 className="w-full py-2.5 text-sm text-[#646860] hover:text-[#212d1b] font-medium transition-colors text-center underline underline-offset-4 decoration-gray-300 cursor-pointer"
               >
                 {isKhmer ? 'បិទ' : 'Done'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── EMAIL MODAL ───────────────────────── */}
+      {showEmailModal && (
+        <div className="fixed inset-0 z-[10001] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fadeIn">
+          <div className="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl border border-gray-100 flex flex-col gap-5">
+            <div className="flex items-center justify-between border-b border-gray-100 pb-3">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-[#6b9158]/10 flex items-center justify-center text-[#6b9158]">
+                  <Mail className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-lg text-gray-900">
+                    {isKhmer ? 'ផ្ញើទៅ អ៊ីមែល' : 'Send to Email'}
+                  </h3>
+                  <p className="text-xs text-gray-500">
+                    {isKhmer ? 'បញ្ជូនព័ត៌មានសាកសួរទៅកាន់អ៊ីមែលរបស់អ្នក' : 'Send inquiry details to your email'}
+                  </p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowEmailModal(false)}
+                className="text-gray-400 hover:text-gray-600 p-1.5 rounded-lg transition-colors cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <label className="text-xs font-semibold text-gray-700">
+                {isKhmer ? 'អាសយដ្ឋានអ៊ីមែល (Email Address)' : 'Email Address'}
+              </label>
+              <input
+                type="email"
+                value={emailInput}
+                onChange={(e) => setEmailInput(e.target.value)}
+                placeholder="e.g. customer@example.com"
+                className="w-full px-4 py-3 text-sm border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#6b9158] focus:border-transparent transition-all"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    handleSendToEmail();
+                  }
+                }}
+              />
+            </div>
+
+            <div className="flex flex-col gap-2.5 pt-2">
+              <button
+                type="button"
+                disabled={isSendingEmail}
+                onClick={() => handleSendToEmail()}
+                className="w-full py-3 bg-[#6b9158] hover:bg-[#5a7d49] text-white font-semibold rounded-xl transition-all shadow-md flex items-center justify-center gap-2 text-sm cursor-pointer disabled:opacity-60"
+              >
+                {isSendingEmail ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <span>{isKhmer ? 'កំពុងផ្ញើ...' : 'Sending Email...'}</span>
+                  </>
+                ) : (
+                  <>
+                    <Mail className="w-4 h-4" />
+                    <span>{isKhmer ? 'ផ្ញើអ៊ីមែលឥឡូវនេះ' : 'Send Email Now'}</span>
+                  </>
+                )}
               </button>
             </div>
           </div>

@@ -5,10 +5,15 @@ import Footer from './Footer';
 import ScrollToTop from '../../components/ScrollToTop';
 import { useTranslation } from '@/hooks/useTranslation';
 import { getSEOMetadata } from '@/lib/seo';
+import { useAppStore } from '../store';
 
 export default function MainLayouts() {
   const location = useLocation();
   const { isKhmer } = useTranslation();
+
+  useEffect(() => {
+    void useAppStore.persist.rehydrate();
+  }, []);
 
   // Dynamic SEO handler 
   useEffect(() => {

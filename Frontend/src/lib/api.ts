@@ -68,7 +68,7 @@ export const getMenuData = async () => {
     hero: {
       title: "Our Menu",
       subtitle: "Traditional Cambodian flavors served with modern warmth and refined presentation.",
-      backgroundImage: "@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.webp"
+      backgroundImage: "@/assets/home-v2/boeung-kak-exterior.webp"
     },
     categories: ["Breakfast", "Lunch", "Dinner", "Dessert", "Drinks"],
     items
@@ -130,79 +130,27 @@ export const getTestimonialsData = async () => {
   );
 };
 
-import {
-  sendFrontendReservationAlert,
-  sendFrontendEventAlert,
-  sendFrontendFeedbackAlert,
-} from './telegramAlerts';
-
 export const backendApi = axios.create({
   baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8000/api',
 });
 
 export const createReservation = async (reservationData: any) => {
-  // Send direct Telegram alert from Frontend
-  await sendFrontendReservationAlert(reservationData);
-
-  // Send direct Email alert from Frontend
-  const customerEmail = reservationData.customer_email || reservationData.email;
-  sendFrontendCustomerEmail({ email: customerEmail, reservationData }).catch(err => 
-    console.warn('Frontend email dispatch notice:', err)
-  );
-
-  try {
-    const response = await backendApi.post('/reservations/', reservationData);
-    return response.data;
-  } catch (err) {
-    console.warn('Backend server offline. Reservation alert delivered directly via Frontend Telegram Bot API.', err);
-    return { status: 'success', id: Date.now(), ...reservationData };
-  }
+  const response = await backendApi.post('/reservations/', reservationData);
+  return response.data;
 };
 
-import {
-  sendFrontendCustomerEmail,
-  sendFrontendEventEmail,
-  sendFrontendFeedbackEmail,
-} from './emailAlerts';
-
-export const sendCustomerEmail = async (
-  email: string,
-  reservationId?: number,
-  customMessage?: string,
-  reservationData?: any
-) => {
-  // Send direct frontend email alert if configured
-  await sendFrontendCustomerEmail({ email, reservationId, message: customMessage, reservationData });
-
-  try {
-    const response = await backendApi.post('/reservations/send-customer-email', {
-      email,
-      reservation_id: reservationId,
-      custom_message: customMessage
-    });
-    return response.data;
-  } catch (err) {
-    console.warn('Backend server offline. Customer email alert processed via Frontend.', err);
-    return { status: 'success', message: 'Notification processed' };
-  }
+export const sendCustomerEmail = async (email: string, reservationId?: number, customMessage?: string) => {
+  const response = await backendApi.post('/reservations/send-customer-email', {
+    email,
+    reservation_id: reservationId,
+    custom_message: customMessage
+  });
+  return response.data;
 };
 
 export const createEventBooking = async (eventBookingData: any) => {
-  // Send direct Telegram alert from Frontend
-  await sendFrontendEventAlert(eventBookingData);
-
-  // Send direct Email alert from Frontend
-  sendFrontendEventEmail(eventBookingData).catch(err => 
-    console.warn('Frontend event email dispatch notice:', err)
-  );
-
-  try {
-    const response = await backendApi.post('/event-bookings/', eventBookingData);
-    return response.data;
-  } catch (err) {
-    console.warn('Backend server offline. Event booking alert delivered directly via Frontend Telegram Bot API.', err);
-    return { status: 'success', id: Date.now(), ...eventBookingData };
-  }
+  const response = await backendApi.post('/event-bookings/', eventBookingData);
+  return response.data;
 };
 
 export type FeedbackRequest = {
@@ -213,21 +161,8 @@ export type FeedbackRequest = {
 };
 
 export const createFeedback = async (feedbackData: FeedbackRequest) => {
-  // Send direct Telegram alert from Frontend
-  await sendFrontendFeedbackAlert(feedbackData);
-
-  // Send direct Email alert from Frontend
-  sendFrontendFeedbackEmail(feedbackData).catch(err => 
-    console.warn('Frontend feedback email dispatch notice:', err)
-  );
-
-  try {
-    const response = await backendApi.post('/contact/', feedbackData);
-    return response.data;
-  } catch (err) {
-    console.warn('Backend server offline. Feedback alert delivered directly via Frontend Telegram Bot API.', err);
-    return { status: 'success', id: Date.now(), ...feedbackData };
-  }
+  const response = await backendApi.post('/contact/', feedbackData);
+  return response.data;
 };
 
 export default api;

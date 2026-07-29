@@ -678,7 +678,7 @@
         "address": "37街315号, 金边 120407",
         "phone": "023 888 222",
         "hours": "每日：上午 06:00 - 晚上 10:00",
-        "image": "@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.webp",
+        "image": "@/assets/home-v2/toul-kork-exterior.webp",
         "tags": [
           "适合家庭入住",
           "商务会议",
@@ -699,7 +699,7 @@
         "address": "G2 街 R11, 金边 120210",
         "phone": "021 888 222",
         "hours": "每日：上午 06:00 - 晚上 10:00",
-        "image": "@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.webp",
+        "image": "@/assets/home-v2/boeung-kak-exterior.webp",
         "tags": [
           "活动空间",
           "大型团体",
@@ -721,7 +721,7 @@
       "eyebrow": "美国东部时间。 2008 · 金边",
       "title": "预订餐桌",
       "desc": "沉浸于极致的柬埔寨餐饮体验之中，传奇的传统食谱在精致优雅的氛围中被自豪地重新呈现。",
-      "backgroundImage": "@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.webp",
+      "backgroundImage": "@/assets/home-v2/boeung-kak-exterior.webp",
       "backgroundAlt": "One More Restaurant饭厅"
     },
     "guestInformationTitle": "宾客信息",
@@ -899,7 +899,7 @@
         "address": "37街315号, 金边 120407",
         "phone": "023 888 222",
         "hours": "每日：上午 06:00 - 晚上 10:00",
-        "img": "@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.webp",
+        "img": "@/assets/home-v2/toul-kork-exterior.webp",
         "tags": [
           "适合家庭入住",
           "商务会议",
@@ -912,7 +912,7 @@
         "address": "G2 街 R11, 金边 120210",
         "phone": "021 888 222",
         "hours": "每日：上午 06:00 - 晚上 10:00",
-        "img": "@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.webp",
+        "img": "@/assets/home-v2/boeung-kak-exterior.webp",
         "tags": [
           "活动空间",
           "大型团体",
@@ -956,7 +956,7 @@
       {
         "id": "室内的",
         "name": "室内的",
-        "img": "@/assets/home-v2/e8f4b56e423777f3f6c3df39c6ef78914b278e17.webp"
+        "img": "@/assets/home-v2/private-event-space.webp"
       },
       {
         "id": "户外的",
@@ -966,7 +966,7 @@
       {
         "id": "私人房间",
         "name": "私人房间",
-        "img": "@/assets/home-v2/31b0910d38c033be0ce5292cf4a1d68688308c6b.webp"
+        "img": "@/assets/home-v2/event-hall.webp"
       },
       {
         "id": "贵宾室",

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import type { CSSProperties } from 'react';
 import { Link } from 'react-router-dom';
 import {
   BellRing,
@@ -17,25 +18,26 @@ import { useTranslation } from '@/hooks/useTranslation';
 import { createFeedback } from '@/lib/api';
 
 import heroImage from '@/assets/about/both-outlets-side-by-side.webp';
-import toulKorkImage from '@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.webp';
-import omr2008Image from '@/assets/OMR 2008.webp';
-import boeungKakImage from '@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.webp';
-import omrTkImage from '@/assets/compressed_OMR TK.webp';
-import omrBkImage from '@/assets/compressed_OMR Bk edited.webp';
-import presentImage from '@/assets/present.webp';
-import privateRoomImage from '@/assets/home-v2/480cb1d76af2706b9692b726ad26ec2bf396f8c8.webp';
+import mobileHeroImage from '@/assets/about/about-hero-mobile.png';
+import toulKorkImage from '@/assets/home-v2/toul-kork-exterior.webp';
+import omr2008Image from '@/assets/about/restaurant-history-2008.webp';
+import boeungKakImage from '@/assets/home-v2/boeung-kak-exterior.webp';
+import omrTkImage from '@/assets/about/toul-kork-outlet.webp';
+import omrBkImage from '@/assets/about/boeung-kak-outlet.webp';
+import presentImage from '@/assets/about/restaurant-present.webp';
+import privateRoomImage from '@/assets/home-v2/private-dining-room.webp';
 import celebrationImage from '@/assets/gallery/15yearsanni.webp';
-import cateringImage from '@/assets/home-v2/07e47044152ad38cdbb1bda5ae392fb848e3a37a.webp';
-import communityImage from '@/assets/home-v2/9826b8c118c911c852174f3c0d0204245fd0da48.webp';
+import cateringImage from '@/assets/home-v2/round-table-private-dining.webp';
+import communityImage from '@/assets/home-v2/corporate-meeting.webp';
 import artisanalPlatingImage from '@/assets/gallery/artisanal-plating-no-logo.webp';
-import hospitalityImage from '@/assets/omr-hospitality-enhanced.webp';
+import hospitalityImage from '@/assets/about/khmer-hospitality.webp';
 import finalCtaImage from '@/assets/about/abt.webp';
-import chefTkImage from '@/assets/Chef tk.webp';
-import chefBkImage from '@/assets/chef bk.webp';
+import chefTkImage from '@/assets/about/toul-kork-chef.webp';
+import chefBkImage from '@/assets/about/boeung-kak-chef.webp';
 import chefAndStaffTkImage from '@/assets/about/chefandstaff-TK.webp';
 import chefAndStaffBkImage from '@/assets/about/chefandstaff-BK-enhanced.webp';
 import careersTeamImage from '@/assets/about/careers-team.webp';
-import linkedinLogoImage from '@/assets/linkedin logo.webp';
+import linkedinLogoImage from '@/assets/branding/linkedin-logo.webp';
 import './index.css';
 
 const timeline = [
@@ -418,7 +420,14 @@ export default function About() {
 
   return (
     <div className="about-page" ref={pageRef}>
-      <section className="about-hero" style={{ backgroundImage: `url(${heroImage})` }}>
+      <section
+        id="about-hero"
+        className="about-hero"
+        style={{
+          backgroundImage: `url(${heroImage})`,
+          '--about-mobile-hero-image': `url(${mobileHeroImage})`,
+        } as CSSProperties}
+      >
         <div className="about-hero-overlay" />
         <div className="about-hero-content">
           <h1 className="page-hero-title">{tr('More Than a Restaurant')}</h1>
