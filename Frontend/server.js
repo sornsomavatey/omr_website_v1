@@ -13,6 +13,20 @@ const isProduction =
 const port = process.env.PORT || 3001
 const base = process.env.BASE || '/'
 const trustProxy = process.env.TRUST_PROXY === 'true'
+const menuUpstreamBaseUrl = (
+  process.env.WEBAPP_BASE_URL || 'https://omd.a2hosted.com'
+).replace(/\/+$/, '')
+const menuUpstreamApiToken = process.env.WEBAPP_API_TOKEN || ''
+const menuCacheTtlMs = Number(process.env.MENU_CACHE_TTL_MS || 300_000)
+const menuCategoryNames = new Map([
+  [10, 'Breakfast'],
+  [11, 'Lunch'],
+  [12, 'Dinner'],
+  [17, 'Dessert'],
+  [15, 'Drinks'],
+])
+let publicMenuCache
+let publicMenuCacheExpiresAt = 0
 const legacyRedirects = new Map([
   ['/restaurants', '/branches'],
   ['/restaurants/toul-kork', '/branches/toul-kork'],
@@ -121,6 +135,82 @@ function sendHtml(req, res, html) {
   res.status(200).set(headers).send(html)
 }
 
+function getPublicImageUrl(imageUrl) {
+  if (typeof imageUrl !== 'string' || !imageUrl.trim()) {
+    return ''
+  }
+
+  try {
+    const pathname = imageUrl.startsWith('http')
+      ? new URL(imageUrl).pathname
+      : `/public/storage/${imageUrl.replace(/^\/+/, '')}`
+
+    // Product images are served through the restricted Nginx media proxy.
+    return `/media/${pathname.replace(/^\/+/, '')}`
+  } catch {
+    return ''
+  }
+}
+
+function buildPublicMenu(products) {
+  const items = {
+    Breakfast: [],
+    Lunch: [],
+    Dinner: [],
+    Dessert: [],
+    Drinks: [],
+  }
+
+  for (const product of products) {
+    if (!product || typeof product !== 'object') continue
+
+    const categoryIds = Array.isArray(product.categories)
+      ? product.categories.map((category) => Number(category?.id))
+      : []
+    const publicProduct = {
+      // Deliberately allowlist display-safe fields. Do not spread raw products.
+      name: typeof product.name === 'string' ? product.name : '',
+      name_kh: typeof product.name_kh === 'string' ? product.name_kh : '',
+      price: Number.isFinite(Number(product.price))
+        ? `USD ${Number(product.price).toFixed(2)}`
+        : '',
+      desc:
+        typeof product.description === 'string' &&
+        !['NULL', 'null'].includes(product.description)
+          ? product.description
+          : '',
+      img: getPublicImageUrl(product.image_url),
+      badge:
+        product.is_out_of_stock === '1' ||
+        (Array.isArray(product.menu_out_of_stock) &&
+          product.menu_out_of_stock.length > 0)
+          ? 'Out of Stock'
+          : undefined,
+    }
+
+    for (const categoryId of categoryIds) {
+      const categoryName = menuCategoryNames.get(categoryId)
+      if (categoryName) {
+        items[categoryName].push({
+          ...publicProduct,
+          category: categoryName.toUpperCase(),
+        })
+      }
+    }
+  }
+
+  return {
+    hero: {
+      title: 'Our Menu',
+      subtitle:
+        'Traditional Cambodian flavors served with modern warmth and refined presentation.',
+      backgroundImage: '@/assets/home-v2/boeung-kak-exterior.webp',
+    },
+    categories: Object.keys(items),
+    items,
+  }
+}
+
 // Add Vite 
 /** @type {import('vite').ViteDevServer | undefined} */
 let vite
@@ -135,6 +225,49 @@ if (!isProduction) {
 } else {
   app.use(base, express.static('./dist/client', { index: false }))
 }
+
+// Public, read-only projection of the upstream menu. The browser never receives
+// the upstream response or internal fields that are not explicitly allowlisted.
+app.get('/api/public-menu', async (_req, res) => {
+  try {
+    if (publicMenuCache && Date.now() < publicMenuCacheExpiresAt) {
+      res.set('Cache-Control', 'public, max-age=60, stale-while-revalidate=300')
+      res.json(publicMenuCache)
+      return
+    }
+
+    const upstreamResponse = await fetch(
+      `${menuUpstreamBaseUrl}/api/website/products`,
+      {
+        headers: {
+          Accept: 'application/json',
+          ...(menuUpstreamApiToken
+            ? {
+                Authorization: `Bearer ${menuUpstreamApiToken}`,
+              }
+            : {}),
+        },
+        signal: AbortSignal.timeout(10_000),
+      }
+    )
+    if (!upstreamResponse.ok) {
+      throw new Error(`Menu upstream returned ${upstreamResponse.status}`)
+    }
+
+    const upstreamPayload = await upstreamResponse.json()
+    const products = Array.isArray(upstreamPayload?.data)
+      ? upstreamPayload.data
+      : []
+    publicMenuCache = buildPublicMenu(products)
+    publicMenuCacheExpiresAt = Date.now() + menuCacheTtlMs
+
+    res.set('Cache-Control', 'public, max-age=60, stale-while-revalidate=300')
+    res.json(publicMenuCache)
+  } catch (error) {
+    console.error('Unable to load public menu:', error)
+    res.status(502).json({ message: 'Menu is temporarily unavailable.' })
+  }
+})
 
 // Static assets are handled above and do not consume the page-request quota.
 // This prevents image-heavy gallery/menu pages from rate-limiting themselves.
