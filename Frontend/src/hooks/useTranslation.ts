@@ -29,9 +29,7 @@ export function useTranslation() {
           setDictionary(loadedDictionary);
         }
       })
-      .catch((error) => {
-        console.error(error);
-
+      .catch(() => {
         if (mounted) {
           setDictionary({});
         }

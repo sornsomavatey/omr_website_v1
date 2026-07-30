@@ -180,9 +180,8 @@ export default defineConfig(({ mode }) => {
                         subject: `📋 New Table Reservation - ${safeCustomerName}`,
                         html: htmlContent,
                       });
-                      console.log('✅ Team Email Alert sent successfully to:', teamEmail, 'Message ID:', mailResult.messageId);
                     } catch (mailErr) {
-                      console.error('❌ Vite dev server email dispatch error:', mailErr);
+                      // ignore silent mail error
                     }
                   }
 
@@ -202,6 +201,9 @@ export default defineConfig(({ mode }) => {
         },
       },
     ],
+    esbuild: {
+      drop: ['console', 'debugger'],
+    },
     define: {
       __APP_BUILD_VERSION__: JSON.stringify(String(Date.now())),
     },

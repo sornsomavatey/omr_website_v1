@@ -64,8 +64,7 @@ export default function Branches() {
         setData(res);
         setLoading(false);
       })
-      .catch((err) => {
-        console.error(err);
+      .catch(() => {
         setError('Failed to load locations.');
         setLoading(false);
       });
