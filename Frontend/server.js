@@ -15,7 +15,7 @@ const port = process.env.PORT || 3001
 const base = process.env.BASE || '/'
 const trustProxy = process.env.TRUST_PROXY === 'true'
 const menuUpstreamBaseUrl = (
-  process.env.WEBAPP_BASE_URL || 'https://omd.a2hosted.com'
+  process.env.WEBAPP_BASE_URL
 ).replace(/\/+$/, '')
 const menuUpstreamApiToken = process.env.WEBAPP_API_TOKEN || ''
 const menuCacheTtlMs = Number(process.env.MENU_CACHE_TTL_MS || 300_000)
