@@ -180,7 +180,6 @@ export default defineConfig(({ mode }) => {
                         subject: `📋 New Table Reservation - ${safeCustomerName}`,
                         html: htmlContent,
                       });
-                      console.log('✅ Team Email Alert sent successfully to:', teamEmail, 'Message ID:', mailResult.messageId);
                     } catch (mailErr) {
                       console.error('❌ Vite dev server email dispatch error:', mailErr);
                     }

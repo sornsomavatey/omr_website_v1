@@ -545,5 +545,4 @@ app.use('*all', async (req, res) => {
 
 // Start http server
 export const server = app.listen(port, () => {
-  console.log(`Server started at http://localhost:${port}`)
 })

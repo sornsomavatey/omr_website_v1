@@ -64,12 +64,9 @@ app.get('/api/website/products', requireToken, async (_req, res) => {
 
     const payload = await response.json()
 
-    console.log('Authorized product request completed')
-
     res.set('Cache-Control', 'no-store')
     res.json(payload)
   } catch (error) {
-    console.error('Unable to retrieve products:', error.message)
 
     res.status(502).json({
       message: 'Unable to load product data',
@@ -78,5 +75,4 @@ app.get('/api/website/products', requireToken, async (_req, res) => {
 })
 
 app.listen(port, '127.0.0.1', () => {
-  console.log(`Protected mock API running on http://127.0.0.1:${port}`)
 })
