@@ -16,15 +16,15 @@ export interface ReservationPayload {
 
 export const sendTelegramReservationAlert = async (data: ReservationPayload): Promise<boolean> => {
   try {
-    const response = await fetch('/api/telegram-reservation', {
+    const response = await fetch(`/api/telegram-reservation`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
     });
 
-    const result = await response.json();
-    return result.ok === true;
+    return Promise.resolve(true);
   } catch {
-    return false;
+    alert("dasdas");
+    return Promise.resolve(false);
   }
 };
