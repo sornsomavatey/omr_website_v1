@@ -198,7 +198,7 @@ function SpaceCard({ space }: { space: DiningSpace }) {
       </div>
 
       <div className="p-8 text-left">
-        <span className="text-[#6b9158] text-[10px] font-sans font-bold uppercase tracking-widest mb-2 block">
+        <span className="text-[#a9ca96] text-[10px] font-sans font-bold uppercase tracking-widest mb-2 block">
           {space.tag}
         </span>
 
