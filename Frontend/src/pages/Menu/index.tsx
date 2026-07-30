@@ -385,6 +385,8 @@ export default function Menu() {
             alt={t('menu.hero.backgroundAlt', undefined, 'Menu Header Background')}
             className="absolute inset-0 w-full h-full object-cover"
             src={heroBg}
+            decoding="async"
+            fetchPriority="high"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/35 to-black/65" />
         </div>

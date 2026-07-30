@@ -72,12 +72,10 @@ export const getTestimonialsData = async () => {
 };
 
 import { 
-  sendFrontendReservationAlert, 
   sendFrontendEventAlert, 
   sendFrontendFeedbackAlert 
 } from './telegramAlerts';
 import { 
-  sendFrontendCustomerEmail, 
   sendFrontendEventEmail, 
   sendFrontendFeedbackEmail 
 } from './emailAlerts';
@@ -87,22 +85,32 @@ export const backendApi = axios.create({
   timeout: 4000,
 });
 
-export const createReservation = async (reservationData: any) => {
-  // Fire direct frontend alerts as primary or parallel dispatch
-  sendFrontendReservationAlert(reservationData).catch(console.error);
-  sendFrontendCustomerEmail({ reservationData }).catch(console.error);
-
+export const createReservation = async (reservationData: unknown) => {
   try {
-    const response = await backendApi.post('/reservations/', reservationData);
+    const response = await backendApi.post('/reservations/', reservationData, {
+      headers: {
+        'Idempotency-Key': crypto.randomUUID(),
+      },
+    });
+
+    if (!response.data?.id) {
+      throw new Error('Reservation server returned an invalid response.');
+    }
+
     return response.data;
-  } catch (err) {
-    console.warn('Backend API offline. Operating standalone in frontend mode.', err);
-    return {
-      id: Date.now(),
-      status: 'confirmed',
-      booking_ref: `OMR-${Math.floor(100000 + Math.random() * 900000)}`,
-      message: 'Reservation submitted successfully (Frontend Standalone Mode)'
-    };
+  } catch (error) {
+    console.error('Reservation submission failed.');
+
+    if (axios.isAxiosError(error)) {
+      const serverMessage = error.response?.data?.detail;
+      throw new Error(
+        typeof serverMessage === 'string'
+          ? serverMessage
+          : 'We could not save your reservation. Please try again.',
+      );
+    }
+
+    throw error;
   }
 };
 
@@ -115,12 +123,8 @@ export const sendCustomerEmail = async (email: string, reservationId?: number, c
     });
     return response.data;
   } catch (err) {
-    console.warn('Backend email dispatch offline. Fallback to direct frontend email dispatch.', err);
-    return sendFrontendCustomerEmail({
-      email,
-      message: customMessage,
-      reservationId: reservationId || 'RES'
-    });
+    console.error('Backend email dispatch failed.');
+    throw err;
   }
 };
 

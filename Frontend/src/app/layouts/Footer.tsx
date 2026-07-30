@@ -74,7 +74,7 @@ export default function Footer() {
 
           <nav className="site-footer-nav" aria-label={t('footer.aria.navigation')}>
             <div className="site-footer-column">
-              <h4 className="site-footer-heading">{t('footer.headings.explore')}</h4>
+              <h2 className="site-footer-heading">{t('footer.headings.explore')}</h2>
 
               <div className="site-footer-links">
                 {exploreLinks.map((link) => (
@@ -86,7 +86,7 @@ export default function Footer() {
             </div>
 
             <div className="site-footer-column site-footer-column-legal">
-              <h4 className="site-footer-heading">{t('footer.headings.legal')}</h4>
+              <h2 className="site-footer-heading">{t('footer.headings.legal')}</h2>
 
               <div className="site-footer-links">
                 {legalLinks.map((link) => (
@@ -98,7 +98,7 @@ export default function Footer() {
             </div>
 
             <div className="site-footer-column">
-              <h4 className="site-footer-heading">{t('footer.headings.contact')}</h4>
+              <h2 className="site-footer-heading">{t('footer.headings.contact')}</h2>
 
               <div className="site-footer-links">
                 {contactLinks.map((link) => (

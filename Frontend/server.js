@@ -1,5 +1,6 @@
 import fs from 'node:fs/promises'
 import zlib from 'node:zlib'
+import compression from 'compression'
 import express from 'express'
 import helmet from 'helmet'
 import { rateLimit } from 'express-rate-limit'
@@ -66,6 +67,7 @@ if (trustProxy) {
 }
 
 app.disable('x-powered-by')
+app.use(compression())
 app.use(
   helmet({
     contentSecurityPolicy: isProduction
@@ -223,7 +225,21 @@ if (!isProduction) {
   })
   app.use(vite.middlewares)
 } else {
-  app.use(base, express.static('./dist/client', { index: false }))
+  app.use(
+    addBase('/assets'),
+    express.static('./dist/client/assets', {
+      immutable: true,
+      index: false,
+      maxAge: '1y',
+    })
+  )
+  app.use(
+    base,
+    express.static('./dist/client', {
+      index: false,
+      maxAge: '1h',
+    })
+  )
 }
 
 // Public, read-only projection of the upstream menu. The browser never receives

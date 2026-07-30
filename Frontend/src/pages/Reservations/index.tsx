@@ -503,12 +503,14 @@ export default function ReservationPage() {
   // Booking submit status
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submissionError, setSubmissionError] = useState<string | null>(null);
 
   // Email Confirmation Modal State
   const [showEmailModal, setShowEmailModal] = useState(false);
   const [emailInput, setEmailInput] = useState('');
   const [isSendingEmail, setIsSendingEmail] = useState(false);
   const [createdReservationId, setCreatedReservationId] = useState<number | undefined>(undefined);
+  const [createdBookingRef, setCreatedBookingRef] = useState('');
 
   const handleSendToEmail = async (customEmail?: string) => {
     const targetEmail = (customEmail !== undefined ? customEmail : (emailInput || email)).trim();
@@ -833,7 +835,7 @@ export default function ReservationPage() {
     return t(`reservationPage.timeCategories.${cat}`, undefined, cat);
   };
 
-  const handleReservationSubmit = (e: React.FormEvent) => {
+  const handleReservationSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     // 1. Full Name check
@@ -918,21 +920,30 @@ export default function ReservationPage() {
     };
 
     setIsSubmitting(true);
+    setSubmissionError(null);
 
-    createReservation(payload)
-      .then((res: any) => {
-        if (res && res.id) {
-          setCreatedReservationId(res.id);
-        }
-        setIsSubmitted(true);
-      })
-      .catch((err) => {
-        console.error("Reservation processed on frontend with warning:", err);
-        setIsSubmitted(true);
-      })
-      .finally(() => {
-        setIsSubmitting(false);
-      });
+    try {
+      const reservation = await createReservation(payload);
+      if (!reservation?.id) {
+        throw new Error('The reservation was not confirmed.');
+      }
+
+      setCreatedReservationId(reservation.id);
+      setCreatedBookingRef(
+        reservation.booking_ref || `OMR-${reservation.id}`,
+      );
+      setIsSubmitted(true);
+    } catch (error) {
+      const message =
+        error instanceof Error
+          ? error.message
+          : 'We could not save your reservation. Please try again.';
+
+      setSubmissionError(message);
+      setIsSubmitted(false);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleDownloadConfirmation = async () => {
@@ -941,7 +952,14 @@ export default function ReservationPage() {
     setHasDownloadedConfirmation(true);
     setShowDownloadPrompt(false);
 
-    const bookingRef = `OMR-${Math.floor(100000 + Math.random() * 900000)}`;
+    const bookingRef =
+      createdBookingRef ||
+      (createdReservationId ? `OMR-${createdReservationId}` : '');
+    if (!bookingRef) {
+      setIsDownloadingPdf(false);
+      setSubmissionError('A confirmed booking reference is required.');
+      return;
+    }
     const formattedDate = formatDateDisplay(selectedDate);
     const formattedTime = formatTimeDisplay(customTime || selectedTime);
     const totalGuestsCount = adults + childrenCount;
@@ -1182,6 +1200,9 @@ export default function ReservationPage() {
     setSpecialRequest('');
     setPreOrderCart({});
     setIsSubmitted(false);
+    setSubmissionError(null);
+    setCreatedReservationId(undefined);
+    setCreatedBookingRef('');
     setHasDownloadedConfirmation(false);
     setHasSentEmail(false);
     setShowDownloadPrompt(false);
@@ -1862,6 +1883,14 @@ export default function ReservationPage() {
               </div>
 
               <div className="submit-area mt-8">
+                {submissionError && (
+                  <div
+                    role="alert"
+                    className="mb-4 rounded-lg border border-red-300 bg-red-50 p-4 text-sm text-red-700"
+                  >
+                    {submissionError}
+                  </div>
+                )}
                 <button type="submit" className="reserve-btn-primary w-full flex items-center justify-center gap-2" disabled={isSubmitting}>
                   {isSubmitting ? (
                     <>
