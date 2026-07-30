@@ -104,25 +104,29 @@
   border-radius: 999px;
   border: 1.5px solid #d5e4cc;
   background: #ffffff;
-  color: #4a6041;
+  color: #3b5034;
   font-family: 'Inter', sans-serif;
   font-size: 13px;
   font-weight: 600;
   line-height: 1;
   cursor: pointer;
   white-space: nowrap;
-  transition: background 0.18s, border-color 0.18s, color 0.18s;
+  transition: all 0.18s ease;
 }
 
 .mm-tab:hover {
   background: #f4faf0;
-  border-color: #6b9158;
+  border-color: #5b8045;
+  color: #2e4324;
 }
 
 .mm-tab--active {
-  background: #6b9158;
-  border-color: #6b9158;
-  color: #ffffff;
+  background-color: #5b8045 !important;
+  background: #5b8045 !important;
+  border-color: #5b8045 !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  box-shadow: 0 2px 8px rgba(91, 128, 69, 0.3) !important;
 }
 
 /* ── Scrollable body ── */

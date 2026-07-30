@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import DishCard from '@/components/ui/dish-card';
-import { Skeleton } from '@/components/ui/skeleton';
+import { DishCardSkeleton, Skeleton } from '@/components/ui/skeleton';
 import { getMenuData } from '@/lib/api';
 import { useTranslation } from '@/hooks/useTranslation';
 import './index.css';
@@ -98,8 +98,7 @@ export default function Menu() {
         setMenuDataState(res);
         setLoading(false);
       })
-      .catch((err) => {
-        console.error(err);
+      .catch(() => {
         setError('Failed to load menu data.');
         setLoading(false);
       });
@@ -448,7 +447,14 @@ export default function Menu() {
         </div>
 
         <div className="max-w-[1440px] w-full px-6 md:px-[64px] text-center flex flex-col items-center relative z-10">
-          {categories.map((category) => (
+          {loading ? (
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-3 md:gap-x-8 lg:gap-x-12 gap-y-12 w-full py-16">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <DishCardSkeleton key={i} />
+              ))}
+            </div>
+          ) : (
+            categories.map((category) => (
             <div
               key={category}
               id={category.toLowerCase()}
@@ -490,7 +496,8 @@ export default function Menu() {
                 ))}
               </div>
             </div>
-          ))}
+          ))
+        )}
         </div>
       </section>
     </div>

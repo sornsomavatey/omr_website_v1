@@ -24,8 +24,9 @@ import {
 } from 'lucide-react';
 
 import FeaturePackageCard from '@/components/FeaturePackageCard';
-import SectionHeader from '@/components/SectionHeader';
 import EventSpaceCard from '@/components/EventSpaceCard';
+import SectionHeader from '@/components/SectionHeader';
+import { EventCardSkeleton } from '@/components/ui/skeleton';
 import TestimonialSection from '@/components/TestimonialSection';
 import { createEventBooking, getTestimonialsData, sendCustomerEmail } from '@/lib/api';
 import { useTranslation } from '@/hooks/useTranslation';
@@ -460,7 +461,7 @@ export default function EventsPage() {
         }));
         setTestimonialsList(items);
       })
-      .catch((err) => console.error(err));
+      .catch(() => {});
   }, [isKhmer]);
 
   const faqsList = getObject<any[]>('eventsPage.faq.items', faqs);
@@ -694,8 +695,7 @@ export default function EventsPage() {
         doc.save(filename);
       }
       setHasDownloadedConfirmation(true);
-    } catch (err) {
-      console.error('jsPDF generation error:', err);
+    } catch {
       window.print();
     } finally {
       setIsDownloadingPdf(false);
@@ -730,8 +730,7 @@ Our event coordinator will contact you within 24 hours.`;
       setHasSentEmail(true);
       setShowEmailModal(false);
       alert(isKhmer ? 'អ៊ីមែលបញ្ជាក់ត្រូវបានផ្ញើដោយជោគជ័យ!' : 'Confirmation email sent successfully!');
-    } catch (err) {
-      console.error('Failed to send email:', err);
+    } catch {
       alert(isKhmer ? 'បរាជ័យក្នុងការផ្ញើអ៊ីមែល។ សូមព្យាយាមម្តងទៀត។' : 'Failed to send email. Please try again.');
     } finally {
       setIsSendingEmail(false);
@@ -798,8 +797,7 @@ Our event coordinator will contact you within 24 hours.`;
       formRef.current.reset();
       setShowModal(true);
       setTimeout(() => setFormSuccess(false), 5000);
-    } catch (err) {
-      console.error('Failed to submit inquiry:', err);
+    } catch {
       alert(isKhmer ? 'បរាជ័យក្នុងការផ្ញើព័ត៌មានសាកសួរ។ សូមព្យាយាមម្តងទៀត។' : 'Failed to submit inquiry. Please try again.');
     } finally {
       setIsSubmitting(false);

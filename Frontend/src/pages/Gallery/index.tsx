@@ -1,7 +1,7 @@
 import { ChevronLeft, ChevronRight, X, ZoomIn } from 'lucide-react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from '@/hooks/useTranslation';
-import { Skeleton } from '@/components/ui/skeleton';
+import { GallerySkeletonGrid, Skeleton } from '@/components/ui/skeleton';
 
 import imgHero from '@/assets/gallery/galleryhero.webp';
 import imgArchitecturalDining from '@/assets/home-v2/curved-wood-interior.webp';
@@ -315,7 +315,13 @@ function GalleryItemCard({
 
 export default function GalleryPage() {
   const { t } = useTranslation();
+  const [loading, setLoading] = useState(true);
   const [activeFilter, setActiveFilter] = useState<Filter>('All');
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 200);
+    return () => clearTimeout(timer);
+  }, []);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [isFilterNavigationVisible, setIsFilterNavigationVisible] = useState(false);
   const [galleryColumnCount, setGalleryColumnCount] = useState(3);
@@ -573,24 +579,28 @@ export default function GalleryPage() {
           ))}
         </div>
 
-        <div ref={masonryRef} className={`gallery-masonry gallery-masonry-${visibleColumns.length}`}>
-          {visibleColumns.map((column, columnIndex) => (
-            <div className="gallery-column" key={`gallery-column-${columnIndex}`}>
-              {column.map((item) => {
-                const lightboxIndex = visibleItems.indexOf(item);
-                return (
-                  <GalleryItemCard
-                    key={`${item.title}-${item.src}`}
-                    item={item}
-                    lightboxIndex={lightboxIndex}
-                    onSelect={() => setSelectedIndex(lightboxIndex)}
-                    t={t}
-                  />
-                );
-              })}
-            </div>
-          ))}
-        </div>
+        {loading ? (
+          <GallerySkeletonGrid count={6} />
+        ) : (
+          <div ref={masonryRef} className={`gallery-masonry gallery-masonry-${visibleColumns.length}`}>
+            {visibleColumns.map((column, columnIndex) => (
+              <div className="gallery-column" key={`gallery-column-${columnIndex}`}>
+                {column.map((item) => {
+                  const lightboxIndex = visibleItems.indexOf(item);
+                  return (
+                    <GalleryItemCard
+                      key={`${item.title}-${item.src}`}
+                      item={item}
+                      lightboxIndex={lightboxIndex}
+                      onSelect={() => setSelectedIndex(lightboxIndex)}
+                      t={t}
+                    />
+                  );
+                })}
+              </div>
+            ))}
+          </div>
+        )}
 
         {visibleItems.length === 0 && <p className="gallery-empty">{t('galleryPage.empty', undefined, 'More moments from this collection are coming soon.')}</p>}
       </section>

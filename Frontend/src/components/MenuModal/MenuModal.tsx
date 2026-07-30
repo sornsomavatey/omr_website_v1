@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { X, Plus, Minus, ShoppingCart, Trash2 } from 'lucide-react';
 import { getMenuData } from '@/lib/api';
 import { useTranslation } from '@/hooks/useTranslation';
@@ -121,6 +121,14 @@ export default function MenuModal({ isOpen, onClose, cart, onCartChange }: MenuM
   const [menuData, setMenuData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState<MenuCategory>('Breakfast');
+  const bodyRef = useRef<HTMLDivElement>(null);
+
+  const handleCategoryClick = (cat: MenuCategory) => {
+    setActiveCategory(cat);
+    if (bodyRef.current) {
+      bodyRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
 
   const translatedCategoryNames: Record<MenuCategory, string> = {
     Breakfast: t('menu.categories.breakfast', undefined, 'Breakfast'),
@@ -235,7 +243,7 @@ export default function MenuModal({ isOpen, onClose, cart, onCartChange }: MenuM
               key={cat}
               type="button"
               className={`mm-tab ${activeCategory === cat ? 'mm-tab--active' : ''}`}
-              onClick={() => setActiveCategory(cat)}
+              onClick={() => handleCategoryClick(cat)}
             >
               {translatedCategoryNames[cat]}
             </button>
@@ -243,7 +251,7 @@ export default function MenuModal({ isOpen, onClose, cart, onCartChange }: MenuM
         </div>
 
         {/* ── Dish list ── */}
-        <div className="mm-body">
+        <div ref={bodyRef} className="mm-body">
           {loading ? (
             <div className="mm-loading">
               {Array.from({ length: 4 }).map((_, i) => (

@@ -3,6 +3,7 @@ import zlib from 'node:zlib'
 import express from 'express'
 import helmet from 'helmet'
 import { rateLimit } from 'express-rate-limit'
+import nodemailer from 'nodemailer'
 
 // Constants
 const lifecycleEvent = process.env.npm_lifecycle_event
@@ -52,6 +53,174 @@ if (trustProxy) {
 }
 
 app.disable('x-powered-by')
+app.use(express.json())
+
+// Secure Server-side Telegram Proxy (Keeps Telegram Token 100% hidden from client DevTools)
+app.post('/api/telegram-reservation', async (req, res) => {
+  const token = process.env.TELEGRAM_BOT_TOKEN || '8889927818:AAETEXfIph1TZxJgK5BaLtawKYhYRXIIn1M'
+  const chatId = process.env.TELEGRAM_CHAT_ID || '-1003911645931'
+  const threadId = process.env.TELEGRAM_RESERVATION_THREAD_ID || '2'
+
+  const data = req.body || {}
+  if (!data.customer_name || !data.customer_phone) {
+    return res.status(400).json({ ok: false, message: 'Missing required reservation fields' })
+  }
+
+
+  const escapeHtml = (text) =>
+    String(text || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+
+  const normalizeToEnglishTime = (timeStr) => {
+    const khmerDigits = ['០', '១', '២', '៣', '៤', '៥', '៦', '៧', '៨', '៩']
+    let res = String(timeStr || '')
+    khmerDigits.forEach((kh, i) => {
+      res = res.replaceAll(kh, String(i))
+    })
+    return res.replace(/\s*ព្រឹក/gi, ' AM').replace(/\s*(ល្ងាច|ថ្ងៃ|យប់)/gi, ' PM').trim()
+  }
+
+  const safeCustomerName = escapeHtml(data.customer_name)
+  const safePhone = escapeHtml(data.customer_phone)
+  const safeEmail = data.customer_email ? escapeHtml(data.customer_email) : ''
+  const safeBranch = escapeHtml(data.branch_name || 'One More Restaurant')
+  const safeDate = normalizeToEnglishTime(escapeHtml(data.reservation_date))
+  const safeTime = normalizeToEnglishTime(escapeHtml(data.reservation_time))
+  const safeArea = escapeHtml(data.area || 'Standard')
+  const safeNotes = data.special_requests ? escapeHtml(data.special_requests) : ''
+
+  const adults = Number(data.adults) || 1
+  const kids = Number(data.kids) || 0
+  const totalGuests = Number(data.guest_count) || (adults + kids)
+  const guestUnit = totalGuests === 1 ? 'person' : 'people'
+  const adultsStr = `${adults} Adult${adults === 1 ? '' : 's'}`
+  const kidsStr = kids > 0 ? `, ${kids} Kid${kids === 1 ? '' : 's'}` : ''
+  const guestsFormatted = `${totalGuests} ${guestUnit} (${adultsStr}${kidsStr})`
+
+  const lines = [
+    '📅 <b>NEW TABLE RESERVATION</b>',
+    '',
+    `• <b>Branch:</b> ${safeBranch}`,
+    `• <b>Customer:</b> ${safeCustomerName}`,
+    `• <b>Phone:</b> ${safePhone}`,
+  ]
+
+  if (safeEmail) {
+    lines.push(`• <b>Email:</b> ${safeEmail}`)
+  }
+
+  lines.push(`• <b>Guests:</b> ${guestsFormatted}`)
+  lines.push(`• <b>Seating Area:</b> ${safeArea}`)
+  lines.push(`• <b>Date:</b> ${safeDate}`)
+  lines.push(`• <b>Time:</b> ${safeTime}`)
+
+  if (safeNotes) {
+    lines.push(`• <b>Special Requests:</b> ${safeNotes}`)
+  }
+
+  if (Array.isArray(data.preordered_items) && data.preordered_items.length > 0) {
+    lines.push('')
+    lines.push('🛒 <b>PRE-ORDERED DISHES:</b>')
+    let total = 0
+    let hasPrice = false
+
+    data.preordered_items.forEach((item) => {
+      const qty = Number(item.qty) || 1
+      const name = escapeHtml(item.name || '')
+      const rawPriceStr = item.price ? String(item.price).replace(/[^0-9.]/g, '') : ''
+      const unitPrice = parseFloat(rawPriceStr)
+
+      let priceStr = ''
+      if (!isNaN(unitPrice) && unitPrice > 0) {
+        hasPrice = true
+        total += unitPrice * qty
+        const cleanVal = unitPrice % 1 === 0 ? String(unitPrice) : unitPrice.toFixed(2)
+        priceStr = ` (${cleanVal})`
+      } else if (item.price) {
+        priceStr = ` (${escapeHtml(String(item.price))})`
+      }
+
+      lines.push(`  └ ${qty}x ${name}${priceStr}`)
+    })
+
+    if (hasPrice && total > 0) {
+      lines.push(`<b>Total:</b> $${total.toFixed(2)}`)
+    }
+  }
+
+  const message = lines.join('\n')
+
+  try {
+    const telegramPayload = {
+      chat_id: chatId,
+      text: message,
+      parse_mode: 'HTML',
+    }
+
+    if (threadId) {
+      telegramPayload.message_thread_id = Number(threadId)
+    }
+
+    // 1. Send Telegram Alert
+    const response = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(telegramPayload),
+    })
+    const result = await response.json()
+
+    // 2. Send Team Email Alert via SMTP (Nodemailer)
+    const teamEmail = process.env.TEAM_ALERT_EMAIL || process.env.MAIL_FROM_ADDRESS || 'darichhy61@gmail.com'
+    const mailUser = process.env.MAIL_USERNAME || 'darichhy61@gmail.com'
+    const mailPass = process.env.MAIL_PASSWORD || 'kwbk wcls dgqe bvlh'
+
+    if (teamEmail && mailUser && mailPass) {
+      try {
+        const transporter = nodemailer.createTransport({
+          host: process.env.MAIL_HOST || 'smtp.gmail.com',
+          port: Number(process.env.MAIL_PORT || 587),
+          secure: false,
+          auth: { user: mailUser, pass: mailPass },
+        })
+
+        const htmlContent = `
+          <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden;">
+            <div style="background-color: #5b8045; color: #fff; padding: 16px; text-align: center;">
+              <h2 style="margin: 0;">📋 NEW TABLE RESERVATION</h2>
+            </div>
+            <div style="padding: 20px;">
+              <p><b>Branch:</b> ${safeBranch}</p>
+              <p><b>Customer Name:</b> ${safeCustomerName}</p>
+              <p><b>Phone:</b> ${safePhone}</p>
+              ${safeEmail ? `<p><b>Email:</b> ${safeEmail}</p>` : ''}
+              <p><b>Guests:</b> ${guestsFormatted}</p>
+              <p><b>Seating Area:</b> ${safeArea}</p>
+              <p><b>Date:</b> ${safeDate}</p>
+              <p><b>Time:</b> ${safeTime}</p>
+              ${safeNotes ? `<p><b>Special Requests:</b> ${safeNotes}</p>` : ''}
+            </div>
+          </div>
+        `
+
+        await transporter.sendMail({
+          from: `"One More Restaurant" <${mailUser}>`,
+          to: teamEmail,
+          subject: `📋 New Table Reservation - ${safeCustomerName}`,
+          html: htmlContent,
+        })
+      } catch (mailErr) {
+        console.error('Server team email alert error:', mailErr)
+      }
+    }
+
+    return res.status(response.ok ? 200 : 400).json(result)
+  } catch (err) {
+    console.error('Server notification error:', err)
+    return res.status(500).json({ ok: false, message: 'Server notification error' })
+  }
+})
 app.use(
   helmet({
     contentSecurityPolicy: isProduction

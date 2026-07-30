@@ -27,8 +27,7 @@ export default function Careers() {
         setData(res);
         setLoading(false);
       })
-      .catch((err) => {
-        console.error(err);
+      .catch(() => {
         setError('Failed to load careers data.');
         setLoading(false);
       });

@@ -11,10 +11,6 @@ export default function MainLayouts() {
   const location = useLocation();
   const { isKhmer } = useTranslation();
 
-  useEffect(() => {
-    void useAppStore.persist.rehydrate();
-  }, []);
-
   // Dynamic SEO handler 
   useEffect(() => {
     const seo = getSEOMetadata(location.pathname, isKhmer);
