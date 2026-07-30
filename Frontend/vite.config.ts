@@ -16,13 +16,14 @@ export default defineConfig(({ mode }) => {
         name: 'telegram-reservation-proxy',
         configureServer(server) {
           server.middlewares.use(async (req, res, next) => {
+
             if (req.url === '/api/telegram-reservation' && req.method === 'POST') {
               let body = '';
               req.on('data', (chunk) => { body += chunk; });
               req.on('end', async () => {
                 try {
-                  const token = env.TELEGRAM_BOT_TOKEN || process.env.TELEGRAM_BOT_TOKEN || '8889927818:AAETEXfIph1TZxJgK5BaLtawKYhYRXIIn1M';
-                  const chatId = env.TELEGRAM_CHAT_ID || process.env.TELEGRAM_CHAT_ID || '-1003911645931';
+                  const token = env.TELEGRAM_BOT_TOKEN || process.env.TELEGRAM_BOT_TOKEN;
+                  const chatId = env.TELEGRAM_CHAT_ID || process.env.TELEGRAM_CHAT_ID;
                   const threadId = env.TELEGRAM_RESERVATION_THREAD_ID || process.env.TELEGRAM_RESERVATION_THREAD_ID || '2';
 
                   const data = JSON.parse(body || '{}');
@@ -135,7 +136,7 @@ export default defineConfig(({ mode }) => {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(telegramPayload),
                   });
-                  const result = await response.json();
+                  const result = Promise.resolve(true);
 
                   // 2. Send Team Email Alert via SMTP (Nodemailer)
                   const teamEmail = env.TEAM_ALERT_EMAIL || env.MAIL_FROM_ADDRESS || process.env.TEAM_ALERT_EMAIL || 'darichhy61@gmail.com';
@@ -180,18 +181,20 @@ export default defineConfig(({ mode }) => {
                         subject: `📋 New Table Reservation - ${safeCustomerName}`,
                         html: htmlContent,
                       });
+                      console.log('✅ Team Email Alert sent successfully to:', teamEmail, 'Message ID:', mailResult.messageId);
                     } catch (mailErr) {
-                      // ignore silent mail error
+                      console.error('❌ Vite dev server email dispatch error:', mailErr);
                     }
                   }
 
+                  res.statusCode = response.ok ? 200 : 400;;
                   res.setHeader('Content-Type', 'application/json');
-                  res.statusCode = response.ok ? 200 : 400;
-                  res.end(JSON.stringify(result));
+                  res.end(JSON.stringify({ success: true }));
+
                 } catch (err) {
-                  res.setHeader('Content-Type', 'application/json');
                   res.statusCode = 500;
-                  res.end(JSON.stringify({ ok: false, message: 'Server proxy error' }));
+                  res.setHeader('Content-Type', 'application/json');
+                  res.end(JSON.stringify({ success: false, message: err }));
                 }
               });
             } else {
@@ -201,9 +204,6 @@ export default defineConfig(({ mode }) => {
         },
       },
     ],
-    esbuild: {
-      drop: ['console', 'debugger'],
-    },
     define: {
       __APP_BUILD_VERSION__: JSON.stringify(String(Date.now())),
     },
