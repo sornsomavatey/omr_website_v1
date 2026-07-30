@@ -4,7 +4,7 @@ import logging
 from .api.core.config import settings
 from .api.middleware.cors import setup_cors
 from .api.middleware.logging import setup_logging
-from .api.middleware.rate_limit import setup_rate_limit
+from .api.middleware.security import setup_security
 
 # Routers
 from .api.modules.users import router as users_router
@@ -18,11 +18,18 @@ from .api.modules.contact import router as contact_router
 # DB creation 
 from .api.dependencies.db import engine, Base
 
-app = FastAPI(title=settings.APP_NAME, version=settings.APP_VERSION)
+is_production = settings.ENVIRONMENT.lower() == 'production'
+app = FastAPI(
+    title=settings.APP_NAME,
+    version=settings.APP_VERSION,
+    docs_url=None if is_production else '/docs',
+    redoc_url=None if is_production else '/redoc',
+    openapi_url=None if is_production else '/openapi.json',
+)
 
 setup_logging(app)
 setup_cors(app)
-setup_rate_limit(app)
+setup_security(app)
 
 # Register routers
 app.include_router(users_router, prefix=f"{settings.API_PREFIX}/users", tags=["users"])

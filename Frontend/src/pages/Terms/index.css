@@ -29,13 +29,25 @@
   letter-spacing: -0.035em;
 }
 
-.terms-hero span {
+.terms-hero > span {
   display: block;
   max-width: 650px;
   margin: 20px auto 0;
   color: #62705d;
   font-size: 16px;
   line-height: 1.7;
+}
+
+.terms-title-main,
+.terms-title-subtitle {
+  display: block;
+}
+
+.terms-title-subtitle {
+  margin-top: 8px;
+  font-size: 0.62em;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
 }
 
 .terms-content {
@@ -89,6 +101,16 @@ html:not([data-lang="kh"]):not([lang="km"]) .terms-section h2 {
   margin-bottom: 10px;
 }
 
+html[data-lang="zh"] .terms-page,
+html[data-lang="zh"] .terms-page * {
+  font-family: "Noto Sans SC", sans-serif !important;
+}
+
+html[data-lang="ko"] .terms-page,
+html[data-lang="ko"] .terms-page * {
+  font-family: "Noto Sans KR", sans-serif !important;
+}
+
 html[data-lang="kh"] .terms-page,
 html[lang="km"] .terms-page {
   font-family: var(--font-khmer);
@@ -106,6 +128,13 @@ html[lang="km"] .terms-section h2 {
   font-family: var(--font-khmer);
   line-height: 1.55;
   letter-spacing: 0;
+}
+
+html[data-lang="kh"] .terms-title-subtitle,
+html[lang="km"] .terms-title-subtitle {
+  margin-top: 6px;
+  font-size: 0.55em;
+  line-height: 1.6;
 }
 
 html[data-lang="kh"] .terms-section h2,

@@ -36,33 +36,34 @@ import { imageMap } from '@/pages/Home/homeAssets';
 import './BoeungKak.css';
 
 // Asset imports matching homeAssets
-import imgBranchBoeungKak from '@/assets/Bk.webp'; // Boeung Kak Building
-import imgHeritageMain from '@/assets/Bk space1.webp'; // Boeung Kak interior main
-import imgHeritageTopLeft from '@/assets/bk space2.jpg'; // Boeung Kak space top left
-import imgHeritageTopRight from '@/assets/bk space3.webp'; // Boeung Kak space top right
-import imgHeritageBottom from '@/assets/bk space4.webp'; // Boeung Kak space bottom full
-import imgNeangTeav from '@/assets/neang teav.webp'; // Neang Tev room
-import imgOrnTitTom from '@/assets/orn tit tom.webp'; // Orn Tit Tom room
-import imgNekJei from '@/assets/nek jei.webp'; // Nek Jei room
-import imgNekSok from '@/assets/nek sok .webp'; // Nek Sok room
-import imgVipBk from '@/assets/bk vip.webp'; // Boeung Kak VIP Room image
-import imgBirthdayBk from '@/assets/birthday bk.webp'; // Boeung Kak Birthday celebration image
-import imgEngagementCompressed from '@/assets/engagement_compressed.jpg'; // Engagement celebration image
-import imgFamilyPkg from '@/assets/Family_compressed.jpg'; // Family celebration image
-import imgSpace2 from '@/assets/home-v2/31b0910d38c033be0ce5292cf4a1d68688308c6b.webp'; // Event hall (used in private rooms)
-import imgGallery1 from '@/assets/neang teav.webp'; // Neang Tev room
-import imgGallery2 from '@/assets/home-v2/07e47044152ad38cdbb1bda5ae392fb848e3a37a.webp'; // Round tables private dining
-import imgGallery3 from '@/assets/moments.webp'; // Event hall with balloons
-import imgGallery4 from '@/assets/home-v2/80bc2f874a3b8b65fc3bd247f23046db8632d909.webp'; // People dining
-import imgGallery6 from '@/assets/home-v2/9826b8c118c911c852174f3c0d0204245fd0da48.webp'; // Corporate meeting
+import imgBranchBoeungKak from '@/assets/branches/boeung-kak/branch-exterior.webp'; // Boeung Kak Building
+import imgHeritageMain from '@/assets/branches/boeung-kak/event-space.webp'; // Boeung Kak interior main
+import imgHeritageTopLeft from '@/assets/gallery/BKchinese.webp'; // Boeung Kak building exterior with red lanterns
+import imgHeritageTopRight from '@/assets/gallery/Bkchanchaiya.webp'; // Boeung Kak Chan Chhaya wall
+import imgHeritageBottom from '@/assets/branches/boeung-kak/parking-area.webp'; // Boeung Kak parking area
+import imgNeangTeav from '@/assets/branches/shared/private-room-neang-teav.webp'; // Neang Tev room
+import imgOrnTitTom from '@/assets/branches/shared/private-room-orn-tit-tom.webp'; // Orn Tit Tom room
+import imgNekSok from '@/assets/branches/boeung-kak/private-room-nek-sok.webp'; // Nek Sok room
+import imgNekMean from '@/assets/branches/boeung-kak/private-room-nek-mean.webp'; // Nek Mean room
+import imgVipBk from '@/assets/branches/boeung-kak/vip-room.webp'; // Boeung Kak VIP Room image
+import imgBirthdayBk from '@/assets/branches/boeung-kak/birthday-event.webp'; // Boeung Kak Birthday celebration image
+import imgEngagementCompressed from '@/assets/branches/boeung-kak/engagement-event.jpg'; // Engagement celebration image
+import imgFamilyPkg from '@/assets/branches/shared/family-dining.jpg'; // Family celebration image
+import imgCorporateBk from '@/assets/branches/boeung-kak/corporate-event.webp'; // Boeung Kak Corporate celebration image
+import imgSpace2 from '@/assets/home-v2/event-hall.webp'; // Event hall (used in private rooms)
+import imgGallery1 from '@/assets/branches/shared/private-room-neang-teav.webp'; // Neang Tev room
+import imgGallery2 from '@/assets/home-v2/round-table-private-dining.webp'; // Round tables private dining
+import imgGallery3 from '@/assets/branches/shared/special-moments.webp'; // Event hall with balloons
+import imgGallery4 from '@/assets/home-v2/guests-dining.webp'; // People dining
+import imgGallery6 from '@/assets/home-v2/corporate-meeting.webp'; // Corporate meeting
 
 // Dish assets
-import imgDish1 from '@/assets/home-v2/36191a3943135f3542a0fe8b80adee304f122115.webp';
-import imgDish2 from '@/assets/Food/Lunch and Dinner/compressed_ហហ្មុក.webp';
-import imgDish3 from '@/assets/Food/Lunch and Dinner/grilled-chicken-siemreap.webp';
+import imgDish1 from '@/assets/home-v2/signature-dish-one.webp';
+import imgDish2 from '@/assets/Food/Lunch and Dinner/lunch-and-dinner-fish-amok-coconut-005.webp';
+import imgDish3 from '@/assets/Food/Lunch and Dinner/lunch-and-dinner-grilled-chicken-siemreap-007.webp';
 
 // Map asset
-import locationImg from '@/assets/Location Bk.webp';
+import locationImg from '@/assets/branches/boeung-kak/location-map.webp';
 
 export default function BoeungKak() {
   const navigate = useNavigate();
@@ -225,16 +226,14 @@ export default function BoeungKak() {
         />
         
         <div className="bk-rooms-grid">
-          {/* Room 1 — Nek Jei */}
+          {/* Room 1 — Nek Sok */}
           <div className="bk-room-card">
             <div className="bk-room-img-wrapper">
-              <img src={imgNekJei} alt="Nek Jei Private Room" className="bk-room-img-reveal-left" />
-              <div className="bk-room-badge">{t('branchDetails.rooms.guestBadge')}</div>
+              <img src={imgNekSok} alt="Nek Sok Private Room" className="bk-room-img-reveal-left" />
             </div>
             <div className="bk-room-body">
-              <h3 className="bk-room-name">{isKhmer ? "អ្នកជ័យ" : "Nek Jei"}</h3>
+              <h3 className="bk-room-name">{isKhmer ? "អ្នកសុខ" : "Nek Sok"}</h3>
               <ul className="bk-room-highlights">
-                <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.av')}</li>
                 <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.butler')}</li>
                 <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.views')}</li>
               </ul>
@@ -244,16 +243,14 @@ export default function BoeungKak() {
             </div>
           </div>
 
-          {/* Room 2 — Nek Sok */}
+          {/* Room 2 — Nek Mean */}
           <div className="bk-room-card">
             <div className="bk-room-img-wrapper">
-              <img src={imgNekSok} alt="Nek Sok Private Room" className="bk-room-img-reveal-right" />
-              <div className="bk-room-badge">{t('branchDetails.rooms.guestBadge')}</div>
+              <img src={imgNekMean} alt="Nek Mean Private Room" className="bk-room-img-reveal-right" />
             </div>
             <div className="bk-room-body">
-              <h3 className="bk-room-name">{isKhmer ? "អ្នកសុខ" : "Nek Sok"}</h3>
+              <h3 className="bk-room-name">{isKhmer ? "អ្នកមាន" : "Nek Mean"}</h3>
               <ul className="bk-room-highlights">
-                <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.av')}</li>
                 <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.butler')}</li>
                 <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.views')}</li>
               </ul>
@@ -267,12 +264,10 @@ export default function BoeungKak() {
           <div className="bk-room-card">
             <div className="bk-room-img-wrapper">
               <img src={imgVipBk} alt="VIP Room" />
-              <div className="bk-room-badge">{t('branchDetails.rooms.guestBadge')}</div>
             </div>
             <div className="bk-room-body">
               <h3 className="bk-room-name">{isKhmer ? "បន្ទប់ VIP" : "VIP Room"}</h3>
               <ul className="bk-room-highlights">
-                <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.av')}</li>
                 <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.butler')}</li>
                 <li><Check size={14} className="text-olive" /> {t('branchDetails.rooms.highlights.views')}</li>
               </ul>
@@ -367,7 +362,7 @@ export default function BoeungKak() {
             buttonHref="/events#inquiry"
           />
           <SharpImageCard
-            image={imgHeritageTopLeft}
+            image={imgCorporateBk}
             alt={t('branchDetails.events.items.corporate.title')}
             title={t('branchDetails.events.items.corporate.title')}
             description={t('branchDetails.events.items.corporate.desc')}

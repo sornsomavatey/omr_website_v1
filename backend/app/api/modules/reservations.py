@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
 from ..dependencies.db import get_db
+from ..dependencies.security import require_admin
 from ..dependencies.models import Reservation, Branch
 from ..dependencies.schemas import ReservationCreate, ReservationResponse, CustomerTelegramRequest, CustomerEmailRequest
 from ..utils.telegram import send_telegram_alert, send_reservation_telegram_alert
@@ -238,13 +239,20 @@ def create_reservation(res: ReservationCreate, db: Session = Depends(get_db)):
     return db_res
 
 @router.get("/", response_model=List[ReservationResponse])
-def get_reservations(db: Session = Depends(get_db)):
+def get_reservations(
+    db: Session = Depends(get_db),
+    _admin: None = Depends(require_admin),
+):
     """Retrieve all reservations (Admin/Staff view)."""
     reservations = db.query(Reservation).order_by(Reservation.created_at.desc()).all()
     return reservations
 
 @router.post("/send-customer-email")
-def send_customer_email(req: CustomerEmailRequest, db: Session = Depends(get_db)):
+def send_customer_email(
+    req: CustomerEmailRequest,
+    db: Session = Depends(get_db),
+    _admin: None = Depends(require_admin),
+):
     """Send detailed reservation confirmation email to customer."""
     sent = False
     

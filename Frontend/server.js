@@ -1,6 +1,8 @@
 import fs from 'node:fs/promises'
 import zlib from 'node:zlib'
 import express from 'express'
+import helmet from 'helmet'
+import { rateLimit } from 'express-rate-limit'
 
 // Constants
 const lifecycleEvent = process.env.npm_lifecycle_event
@@ -10,6 +12,21 @@ const isProduction =
   lifecycleEvent === 'preview'
 const port = process.env.PORT || 3001
 const base = process.env.BASE || '/'
+const trustProxy = process.env.TRUST_PROXY === 'true'
+const menuUpstreamBaseUrl = (
+  process.env.WEBAPP_BASE_URL || 'https://omd.a2hosted.com'
+).replace(/\/+$/, '')
+const menuUpstreamApiToken = process.env.WEBAPP_API_TOKEN || ''
+const menuCacheTtlMs = Number(process.env.MENU_CACHE_TTL_MS || 300_000)
+const menuCategoryNames = new Map([
+  [10, 'Breakfast'],
+  [11, 'Lunch'],
+  [12, 'Dinner'],
+  [17, 'Dessert'],
+  [15, 'Drinks'],
+])
+let publicMenuCache
+let publicMenuCacheExpiresAt = 0
 const legacyRedirects = new Map([
   ['/restaurants', '/branches'],
   ['/restaurants/toul-kork', '/branches/toul-kork'],
@@ -43,56 +60,57 @@ const templateHtml = isProduction
 // Create http server
 const app = express()
 
-// Rate Limiting & Security Headers Middleware to block request loops
-const ipRequestCounts = new Map()
-const RATE_LIMIT_WINDOW_MS = 60 * 1000 // 1 minute window
-const RATE_LIMIT_MAX_REQUESTS = 100 // max 100 requests per minute per IP
+if (trustProxy) {
+  // Enable only when requests always arrive through a trusted reverse proxy.
+  app.set('trust proxy', 1)
+}
 
-// Periodically clean up stale rate-limiting records to avoid memory leaks
-setInterval(() => {
-  const now = Date.now()
-  for (const [ip, record] of ipRequestCounts.entries()) {
-    if (now - record.startTime > RATE_LIMIT_WINDOW_MS) {
-      ipRequestCounts.delete(ip)
+app.disable('x-powered-by')
+app.use(
+  helmet({
+    contentSecurityPolicy: isProduction
+      ? {
+          directives: {
+            defaultSrc: ["'self'"],
+            baseUri: ["'self'"],
+            connectSrc: ["'self'", 'https:'],
+            fontSrc: ["'self'", 'https://fonts.gstatic.com', 'data:'],
+            formAction: ["'self'"],
+            frameAncestors: ["'none'"],
+            imgSrc: ["'self'", 'data:', 'blob:', 'https:'],
+            objectSrc: ["'none'"],
+            scriptSrc: ["'self'"],
+            styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
+            upgradeInsecureRequests: [],
+          },
+        }
+      : false,
+    crossOriginEmbedderPolicy: false,
+    hsts: isProduction
+      ? { maxAge: 31536000, includeSubDomains: true }
+      : false,
+    referrerPolicy: { policy: 'strict-origin-when-cross-origin' },
+  })
+)
+
+const pageLimiter = rateLimit({
+  windowMs: Number(process.env.RATE_LIMIT_WINDOW_MS || 60_000),
+  limit: Number(process.env.RATE_LIMIT_REQUESTS || 120),
+  standardHeaders: 'draft-8',
+  legacyHeaders: false,
+  message: 'Too many requests. Please try again later.',
+  skip: (req) => {
+    const hostname = req.hostname.toLowerCase()
+    if (hostname === 'localhost' || hostname === '127.0.0.1') {
+      return true
     }
-  }
-}, RATE_LIMIT_WINDOW_MS)
 
-app.use((req, res, next) => {
-  // 1. Security Headers
-  res.setHeader('X-Content-Type-Options', 'nosniff')
-  res.setHeader('X-Frame-Options', 'SAMEORIGIN')
-  res.setHeader('X-XSS-Protection', '1; mode=block')
-  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin')
-
-  // 2. Rate Limiting (Block request loop abuse)
-  const clientIp = (req.headers['x-forwarded-for']?.split(',')[0] || req.socket?.remoteAddress || '127.0.0.1').trim()
-  const now = Date.now()
-
-  let record = ipRequestCounts.get(clientIp)
-  if (!record || (now - record.startTime > RATE_LIMIT_WINDOW_MS)) {
-    record = { count: 1, startTime: now }
-    ipRequestCounts.set(clientIp, record)
-  } else {
-    record.count += 1
-  }
-
-  if (record.count > RATE_LIMIT_MAX_REQUESTS) {
-    const retryAfterSeconds = Math.ceil((RATE_LIMIT_WINDOW_MS - (now - record.startTime)) / 1000)
-    res.setHeader('Retry-After', retryAfterSeconds)
-    return res.status(429).send(`
-      <!DOCTYPE html>
-      <html lang="en">
-      <head><title>429 Too Many Requests</title></head>
-      <body style="font-family: system-ui, sans-serif; text-align: center; padding: 50px;">
-        <h2>429 - Rate Limit Exceeded</h2>
-        <p>Too many requests detected. Please wait ${retryAfterSeconds} seconds before trying again.</p>
-      </body>
-      </html>
-    `)
-  }
-
-  next()
+    // Missing or uncached asset requests can reach this middleware after the
+    // static handler. They should never consume the HTML page quota.
+    return /\.(?:avif|css|gif|ico|jpe?g|js|json|map|mov|mp4|png|svg|webm|webp|woff2?)$/i.test(
+      req.path
+    )
+  },
 })
 
 function sendHtml(req, res, html) {
@@ -117,6 +135,82 @@ function sendHtml(req, res, html) {
   res.status(200).set(headers).send(html)
 }
 
+function getPublicImageUrl(imageUrl) {
+  if (typeof imageUrl !== 'string' || !imageUrl.trim()) {
+    return ''
+  }
+
+  try {
+    const pathname = imageUrl.startsWith('http')
+      ? new URL(imageUrl).pathname
+      : `/public/storage/${imageUrl.replace(/^\/+/, '')}`
+
+    // Product images are served through the restricted Nginx media proxy.
+    return `/media/${pathname.replace(/^\/+/, '')}`
+  } catch {
+    return ''
+  }
+}
+
+function buildPublicMenu(products) {
+  const items = {
+    Breakfast: [],
+    Lunch: [],
+    Dinner: [],
+    Dessert: [],
+    Drinks: [],
+  }
+
+  for (const product of products) {
+    if (!product || typeof product !== 'object') continue
+
+    const categoryIds = Array.isArray(product.categories)
+      ? product.categories.map((category) => Number(category?.id))
+      : []
+    const publicProduct = {
+      // Deliberately allowlist display-safe fields. Do not spread raw products.
+      name: typeof product.name === 'string' ? product.name : '',
+      name_kh: typeof product.name_kh === 'string' ? product.name_kh : '',
+      price: Number.isFinite(Number(product.price))
+        ? `USD ${Number(product.price).toFixed(2)}`
+        : '',
+      desc:
+        typeof product.description === 'string' &&
+        !['NULL', 'null'].includes(product.description)
+          ? product.description
+          : '',
+      img: getPublicImageUrl(product.image_url),
+      badge:
+        product.is_out_of_stock === '1' ||
+        (Array.isArray(product.menu_out_of_stock) &&
+          product.menu_out_of_stock.length > 0)
+          ? 'Out of Stock'
+          : undefined,
+    }
+
+    for (const categoryId of categoryIds) {
+      const categoryName = menuCategoryNames.get(categoryId)
+      if (categoryName) {
+        items[categoryName].push({
+          ...publicProduct,
+          category: categoryName.toUpperCase(),
+        })
+      }
+    }
+  }
+
+  return {
+    hero: {
+      title: 'Our Menu',
+      subtitle:
+        'Traditional Cambodian flavors served with modern warmth and refined presentation.',
+      backgroundImage: '@/assets/home-v2/boeung-kak-exterior.webp',
+    },
+    categories: Object.keys(items),
+    items,
+  }
+}
+
 // Add Vite 
 /** @type {import('vite').ViteDevServer | undefined} */
 let vite
@@ -131,6 +225,53 @@ if (!isProduction) {
 } else {
   app.use(base, express.static('./dist/client', { index: false }))
 }
+
+// Public, read-only projection of the upstream menu. The browser never receives
+// the upstream response or internal fields that are not explicitly allowlisted.
+app.get('/api/public-menu', async (_req, res) => {
+  try {
+    if (publicMenuCache && Date.now() < publicMenuCacheExpiresAt) {
+      res.set('Cache-Control', 'public, max-age=60, stale-while-revalidate=300')
+      res.json(publicMenuCache)
+      return
+    }
+
+    const upstreamResponse = await fetch(
+      `${menuUpstreamBaseUrl}/api/website/products`,
+      {
+        headers: {
+          Accept: 'application/json',
+          ...(menuUpstreamApiToken
+            ? {
+                Authorization: `Bearer ${menuUpstreamApiToken}`,
+              }
+            : {}),
+        },
+        signal: AbortSignal.timeout(10_000),
+      }
+    )
+    if (!upstreamResponse.ok) {
+      throw new Error(`Menu upstream returned ${upstreamResponse.status}`)
+    }
+
+    const upstreamPayload = await upstreamResponse.json()
+    const products = Array.isArray(upstreamPayload?.data)
+      ? upstreamPayload.data
+      : []
+    publicMenuCache = buildPublicMenu(products)
+    publicMenuCacheExpiresAt = Date.now() + menuCacheTtlMs
+
+    res.set('Cache-Control', 'public, max-age=60, stale-while-revalidate=300')
+    res.json(publicMenuCache)
+  } catch (error) {
+    console.error('Unable to load public menu:', error)
+    res.status(502).json({ message: 'Menu is temporarily unavailable.' })
+  }
+})
+
+// Static assets are handled above and do not consume the page-request quota.
+// This prevents image-heavy gallery/menu pages from rate-limiting themselves.
+app.use(pageLimiter)
 
 // Serve HTML
 app.use('*all', async (req, res) => {
@@ -226,12 +367,14 @@ app.use('*all', async (req, res) => {
     sendHtml(req, res, html)
   } catch (e) {
     vite?.ssrFixStacktrace(e)
-    console.log(e.stack)
-    res.status(500).end(e.stack)
+    console.error(e)
+    res.status(500).end(
+      isProduction ? 'Internal Server Error' : e.stack
+    )
   }
 })
 
 // Start http server
-app.listen(port, () => {
+export const server = app.listen(port, () => {
   console.log(`Server started at http://localhost:${port}`)
 })

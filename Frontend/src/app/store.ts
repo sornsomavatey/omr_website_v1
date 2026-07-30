@@ -25,6 +25,9 @@ export const useAppStore = create<AppState>()(
     {
       name: 'omr-language-preference',
       partialize: (state) => ({ language: state.language }),
+      // SSR must start from the same English state in Node and the browser.
+      // The saved browser preference is restored after React hydrates.
+      skipHydration: true,
     }
   )
 );

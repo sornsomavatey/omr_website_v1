@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import whiteLogo from '@/assets/omr_logo_white.webp';
+import whiteLogo from '@/assets/branding/one-more-logo-white.webp';
 import { useTranslation } from '@/hooks/useTranslation';
 import './Footer.css';
 

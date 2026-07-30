@@ -4,10 +4,10 @@ import { useTranslation } from '@/hooks/useTranslation';
 import { Skeleton } from '@/components/ui/skeleton';
 
 import imgHero from '@/assets/gallery/galleryhero.webp';
-import imgArchitecturalDining from '@/assets/home-v2/43310dd2158ca5c7f7d098abf280dc14124d42de.webp';
+import imgArchitecturalDining from '@/assets/home-v2/curved-wood-interior.webp';
 import imgDining from '@/assets/gallery/main-hall-dining.webp';
 import imgNoodles from '@/assets/gallery/small-kuyteav-beef-no-logo.webp';
-import imgWorkshop from '@/assets/home-v2/9826b8c118c911c852174f3c0d0204245fd0da48.webp';
+import imgWorkshop from '@/assets/home-v2/corporate-meeting.webp';
 import imgChicken from '@/assets/gallery/kitchen-ritauls.webp';
 import imgArtisanalPlating from '@/assets/gallery/artisanal-plating-no-logo.webp';
 import imgChristmasWine from '@/assets/gallery/christmas-wine-display-no-logo.webp';
@@ -17,11 +17,11 @@ import imgMissPlanetDining from '@/assets/gallery/miss-planet-dining.webp';
 import imgCateringServiceStaff from '@/assets/gallery/catering-service-staff-no-logo.webp';
 import imgStaffNumansom from '@/assets/gallery/staff-with-numansom-no-logo.webp';
 import imgVitalEvent from '@/assets/gallery/vital-event.webp';
-import imgOmrHospitality from '@/assets/gallery/omr-hospitality.webp';
+import imgOmrHospitality from '@/assets/gallery/khmer-hospitality.webp';
 import imgService from '@/assets/gallery/service.webp';
 import imgCatering from '@/assets/gallery/private-gatherings-no-logo.webp';
-import imgRoom from '@/assets/home-v2/480cb1d76af2706b9692b726ad26ec2bf396f8c8.webp';
-import imgEvent from '@/assets/home-v2/e900cacb721f9c81cd07b8415a03f20f42a39856.webp';
+import imgRoom from '@/assets/home-v2/private-dining-room.webp';
+import imgEvent from '@/assets/home-v2/event-celebration.webp';
 import imgDessertCup from '@/assets/gallery/sweet-dessert-cup.webp';
 import imgGrillPlatter from '@/assets/gallery/khmer-grill-chicken-no-logo.webp';
 import imgCoffeeService from '@/assets/gallery/event-coffee-service.webp';
@@ -42,7 +42,7 @@ import imgKhmerCakePlating from '@/assets/gallery/khmercakeplating.webp';
 import imgAnsom from '@/assets/gallery/ansom-clean.webp';
 import imgRedTableDining from '@/assets/gallery/redtabledining-clean.webp';
 import imgChefInKitchen from '@/assets/gallery/chefinthekitchen-clean.webp';
-import imgChefPlating from '@/assets/gallery/chefplating-clean.webp';
+import imgTkChef from '@/assets/gallery/tkchef-clean.png';
 import imgFoodBox from '@/assets/gallery/foodbox-clean.webp';
 import imgFruitPlate from '@/assets/gallery/fruitplate-clean.webp';
 import imgFourDishes from '@/assets/gallery/fourdishes-clean.webp';
@@ -57,14 +57,14 @@ import imgBkOutsideRoom from '@/assets/gallery/bkoutsideroom.webp';
 import imgTkRoomService from '@/assets/gallery/tkroomservice.webp';
 import imgGalaDinner from '@/assets/gallery/galadinner.webp';
 import imgRedBirthday from '@/assets/gallery/redbirthday-name-removed.webp';
-import imgExterior from '@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.webp';
-import imgSiemReapChicken from '@/assets/Food/Lunch and Dinner/grilled-chicken-siemreap.webp';
-import imgEventHero from '@/assets/engagegreenv2-clean-v2.webp';
-import imgFamilyCelebration from '@/assets/roundtablebk.webp';
-import imgEngagementPackage from '@/assets/engagegreen-names-blurred.webp';
-import imgMeetingRoom from '@/assets/corporateroomwhite.webp';
-import imgCorporatePackage from '@/assets/cooporatepacakage.webp';
-import imgVipRoom from '@/assets/bkfamilyroom.webp';
+import imgExterior from '@/assets/home-v2/toul-kork-exterior.webp';
+import imgSiemReapChicken from '@/assets/gallery/grilled-chicken-salt-chilli.webp';
+import imgEventHero from '@/assets/gallery/green-engagement-clean.webp';
+import imgFamilyCelebration from '@/assets/events/round-table-boeung-kak.webp';
+import imgEngagementPackage from '@/assets/gallery/green-engagement-names-blurred.webp';
+import imgMeetingRoom from '@/assets/events/corporate-room.webp';
+import imgCorporatePackage from '@/assets/events/corporate-package.webp';
+import imgVipRoom from '@/assets/events/family-event-room.webp';
 
 import './index.css';
 
@@ -121,7 +121,7 @@ const galleryItems: GalleryItem[] = [
   { src: imgAnsom, alt: 'Traditional Khmer ansom cakes with savory and sweet fillings', title: 'Traditional Ansom', tag: 'Food', category: 'Food', shape: 'square' },
   { src: imgRedTableDining, alt: 'Red table dining room set for guests at One More Restaurant', title: 'Red Table Dining', tag: 'Restaurant', category: 'Restaurant', shape: 'square' },
   { src: imgChefInKitchen, alt: 'Chef organizing ingredients in the One More Restaurant kitchen', title: 'Chef in the Kitchen', tag: 'Food', category: 'Food', shape: 'square' },
-  { src: imgChefPlating, alt: 'Chefs carefully plating dishes in the restaurant kitchen', title: 'Chef Plating', tag: 'Food', category: 'Food', shape: 'square' },
+  { src: imgTkChef, alt: 'One More Restaurant chef carefully plating a dish in the kitchen', title: 'Chef Plating', tag: 'Food', category: 'Food', shape: 'square' },
   { src: imgFoodBox, alt: 'Assorted restaurant meal boxes with Khmer dishes, fruit, and pastries', title: 'Khmer Meal Boxes', tag: 'Food', category: 'Food', shape: 'square' },
   { src: imgFruitPlate, alt: 'Decorative fresh fruit platter with a carved apple centerpiece', title: 'Fresh Fruit Art', tag: 'Food', category: 'Food', shape: 'portrait' },
   { src: imgFourDishes, alt: 'Four bowls of Khmer noodle dishes arranged on a wooden table', title: 'Four Khmer Favorites', tag: 'Food', category: 'Food', shape: 'portrait' },
@@ -145,7 +145,7 @@ const galleryItems: GalleryItem[] = [
 ];
 
 const foodGalleryOrder = [
-  imgChefPlating,
+  imgTkChef,
   imgFoodPlating,
   imgKuyteav,
   imgFruitPlate,
