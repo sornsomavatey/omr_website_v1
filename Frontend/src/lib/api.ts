@@ -11,7 +11,7 @@ export const getHomeData = async () => {
 };
 
 export const getMenuData = async () => {
-  const webappImageUrl = import.meta.env.VITE_WEBAPP_IMAGE_URL || 'https://omd.a2hosted.com';
+  const webappImageUrl = import.meta.env.VITE_WEBAPP_IMAGE_URL;
   const baseUrl = webappImageUrl.endsWith('/') ? webappImageUrl : `${webappImageUrl}/`;
   
   const response = await axios.get(`${baseUrl}api/website/products`, {
