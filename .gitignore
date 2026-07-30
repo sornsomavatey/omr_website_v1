@@ -36,3 +36,7 @@ Frontend/build/
 # OS metadata
 .DS_Store
 Thumbs.db
+Frontend/npm-cache/*
+*.log
+npm-cache/*
+
