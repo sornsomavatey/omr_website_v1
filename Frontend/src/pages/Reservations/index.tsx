@@ -27,6 +27,7 @@ import {
   X,
   Send,
   Mail,
+  AlertTriangle,
 } from 'lucide-react';
 import { getReservationsData, getHomeData, createReservation, sendCustomerEmail } from '@/lib/api';
 import { useTranslation } from '@/hooks/useTranslation';
@@ -407,16 +408,18 @@ export default function ReservationPage() {
   // Automatically update active timeCategory tab when selectedTime or customTime changes
   useEffect(() => {
     const timeToParse = customTime || selectedTime;
+    if (!timeToParse) return;
     const detectedCategory = getMealCategoryFromTime(timeToParse, timeCategory);
     if (detectedCategory && detectedCategory !== timeCategory) {
       setTimeCategory(detectedCategory);
     }
-  }, [selectedTime, customTime, timeCategory]);
+  }, [selectedTime, customTime]);
 
   // Confirmation modal download & email prompt tracking state
   const [hasDownloadedConfirmation, setHasDownloadedConfirmation] = useState(false);
   const [hasSentEmail, setHasSentEmail] = useState(false);
   const [showDownloadPrompt, setShowDownloadPrompt] = useState(false);
+  const [showCloseConfirmModal, setShowCloseConfirmModal] = useState(false);
   const [isDownloadingPdf, setIsDownloadingPdf] = useState(false);
 
   // Time autocomplete dropdown state
@@ -461,7 +464,7 @@ export default function ReservationPage() {
 
   const handleSelectSuggestion = (time: string) => {
     setCustomTime(time);
-    setSelectedTime('');
+    setSelectedTime(time);
     setShowTimeDropdown(false);
   };
 
@@ -890,6 +893,15 @@ export default function ReservationPage() {
     }
     if (isSubmitting) return;
 
+    const normalizeToEnglishTime = (timeStr: string) => {
+      const khmerDigits = ['០', '១', '២', '៣', '៤', '៥', '៦', '៧', '៨', '៩'];
+      let res = String(timeStr || '');
+      khmerDigits.forEach((kh, i) => {
+        res = res.replaceAll(kh, String(i));
+      });
+      return res.replace(/\s*ព្រឹក/gi, ' AM').replace(/\s*(ល្ងាច|ថ្ងៃ|យប់)/gi, ' PM').trim();
+    };
+
     // Prepare reservation payload 
     const payload = {
       customer_name: fullName.trim(),
@@ -897,7 +909,7 @@ export default function ReservationPage() {
       customer_phone: phone.trim(),
       branch_id: selectedBranch === 'Toul Kork' ? 1 : 2,
       reservation_date: selectedDate.toISOString().split('T')[0],
-      reservation_time: customTime || selectedTime,
+      reservation_time: normalizeToEnglishTime(customTime || selectedTime),
       guest_count: adults + childrenCount,
       adults: adults,
       kids: childrenCount,
@@ -941,12 +953,53 @@ export default function ReservationPage() {
     setHasDownloadedConfirmation(true);
     setShowDownloadPrompt(false);
 
-    const bookingRef = `OMR-${Math.floor(100000 + Math.random() * 900000)}`;
-    const formattedDate = formatDateDisplay(selectedDate);
-    const formattedTime = formatTimeDisplay(customTime || selectedTime);
+    const normalizeToEnglishTime = (timeStr: string) => {
+      const khmerDigits = ['០', '១', '២', '៣', '៤', '៥', '៦', '៧', '៨', '៩'];
+      let res = String(timeStr || '');
+      khmerDigits.forEach((kh, i) => {
+        res = res.replaceAll(kh, String(i));
+      });
+      return res.replace(/\s*ព្រឹក/gi, ' AM').replace(/\s*(ល្ងាច|ថ្ងៃ|យប់)/gi, ' PM').trim();
+    };
+
+    const sanitizeAscii = (str: string) =>
+      String(str || '').replace(/[^\x00-\x7F]/g, '').trim();
+
+    const pdfBranchName = selectedBranch === 'Toul Kork'
+      ? 'One More Restaurant Toul Kork'
+      : 'One More Restaurant Boeung Kak';
+
+    const pdfSeatingMap: Record<string, string> = {
+      indoor: 'Indoor',
+      outdoor: 'Outdoor',
+      privateRoom: 'Private Room',
+      vipRoom: 'VIP Room',
+      bigRoom: 'VIP Room',
+    };
+    const pdfSeatingName = pdfSeatingMap[selectedSeating] || 'Standard';
+
+    const pdfOccasionMap: Record<string, string> = {
+      none: 'None',
+      birthday: 'Birthday',
+      anniversary: 'Anniversary',
+      business: 'Business Meeting',
+      gathering: 'Family Gathering',
+      date: 'Romantic Date',
+      celebration: 'Special Celebration',
+    };
+    const pdfOccasionName = pdfOccasionMap[selectedOccasion] || 'None';
+
+    const pdfEnglishDate = selectedDate.toLocaleDateString('en-GB', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric'
+    });
+
+    const pdfEnglishTime = normalizeToEnglishTime(customTime || selectedTime);
     const totalGuestsCount = adults + childrenCount;
-    const issueTimestamp = new Date().toLocaleString();
-    const filename = `OMR_Reservation_${bookingRef}.pdf`;
+    const now = new Date();
+    const issueTimestamp = `${now.toLocaleDateString('en-GB')} ${now.toLocaleTimeString('en-GB')}`;
+    const filename = `OMR_Reservation.pdf`;
 
     try {
       const { jsPDF } = await import('jspdf');
@@ -1033,21 +1086,16 @@ export default function ReservationPage() {
 
       currentTopY += 4;
 
-      // Ref Bar
+      // Top Status Bar
       doc.setFillColor(243, 248, 241);
       doc.setDrawColor(200, 220, 190);
       doc.setLineWidth(0.3);
       doc.roundedRect(14, currentTopY, 92, 11, 2, 2, 'FD');
 
-      doc.setTextColor(100, 104, 96);
-      doc.setFont('helvetica', 'normal');
-      doc.setFontSize(8);
-      doc.text('Booking Ref:', 18, currentTopY + 7);
-
       doc.setTextColor(107, 145, 88);
-      doc.setFont('courier', 'bold');
-      doc.setFontSize(9.5);
-      doc.text(`#${bookingRef}`, 37, currentTopY + 7);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(8.5);
+      doc.text('Reservation Confirmation', 18, currentTopY + 7);
 
       doc.setTextColor(100, 104, 96);
       doc.setFont('helvetica', 'normal');
@@ -1056,19 +1104,22 @@ export default function ReservationPage() {
 
       currentTopY += 18;
 
-      // Rows Data
+      // Rows Data (Clean ASCII strings to prevent garbled text/mojibake in jsPDF)
       const rows = [
-        { label: 'Guest Name', value: fullName.trim() || 'Valued Guest' },
-        { label: 'Phone Number', value: phone.trim() || 'Not Provided' },
-        { label: 'Branch Location', value: selectedBranchDisplay },
-        { label: 'Date & Time', value: `${formattedDate} at ${formattedTime}` },
+        { label: 'Guest Name', value: sanitizeAscii(fullName.trim()) || 'Valued Guest' },
+        { label: 'Phone Number', value: sanitizeAscii(phone.trim()) || 'Not Provided' },
+        { label: 'Branch Location', value: pdfBranchName },
+        { label: 'Date & Time', value: `${pdfEnglishDate} at ${pdfEnglishTime}` },
         { label: 'Party Size', value: `${totalGuestsCount} Guests (${adults} Adults, ${childrenCount} Kids)` },
-        { label: 'Seating Preference', value: selectedSeatingDisplay },
-        { label: 'Special Occasion', value: selectedOccasionDisplay },
+        { label: 'Seating Preference', value: pdfSeatingName },
+        { label: 'Special Occasion', value: pdfOccasionName },
       ];
 
       if (specialRequest.trim()) {
-        rows.push({ label: 'Special Request', value: specialRequest.trim() });
+        const safeReq = sanitizeAscii(specialRequest.trim());
+        if (safeReq) {
+          rows.push({ label: 'Special Request', value: safeReq });
+        }
       }
       if (preOrderItemCount > 0) {
         rows.push({ label: 'Pre-order Total', value: `$${preOrderTotal.toFixed(2)}` });
@@ -1136,7 +1187,7 @@ export default function ReservationPage() {
             await navigator.share({
               files: [pdfFile],
               title: 'Reservation Receipt',
-              text: `One More Restaurant Reservation Receipt #${bookingRef}`
+              text: 'One More Restaurant Reservation Confirmation'
             });
             sharedSuccessfully = true;
           }
@@ -1161,6 +1212,8 @@ export default function ReservationPage() {
   const handleCloseAttempt = () => {
     if (hasDownloadedConfirmation || hasSentEmail) {
       handleReset();
+    } else if (showDownloadPrompt) {
+      setShowCloseConfirmModal(true);
     } else {
       setShowDownloadPrompt(true);
     }
@@ -1185,6 +1238,7 @@ export default function ReservationPage() {
     setHasDownloadedConfirmation(false);
     setHasSentEmail(false);
     setShowDownloadPrompt(false);
+    setShowCloseConfirmModal(false);
   };
 
   // Translate step headings
@@ -1261,7 +1315,7 @@ export default function ReservationPage() {
                   <button
                     type="button"
                     disabled={isDownloadingPdf}
-                    onClick={handleReset}
+                    onClick={() => setShowCloseConfirmModal(true)}
                     className="w-full py-3 px-4 rounded-xl text-sm font-sans font-medium text-[#737970] hover:text-[#212d1b] hover:bg-[#f2f5f2] transition-colors"
                   >
                     {isKhmer ? 'បិទដោយមិនទាញយក' : 'Close Without Downloading'}
@@ -1634,15 +1688,17 @@ export default function ReservationPage() {
 
                   <div className="time-slots-grid">
                     {timeSlots[timeCategory].map((slot) => {
-                      const isSelected = selectedTime === slot && !customTime;
+                      const activeTime = customTime || selectedTime;
+                      const isSelected = activeTime === slot || activeTime === formatTimeDisplay(slot);
 
                       return (
                         <button
                           key={slot}
                           type="button"
                           onClick={() => {
-                            setSelectedTime(slot);
-                            setCustomTime('');
+                            const formatted = formatTimeDisplay(slot);
+                            setSelectedTime(formatted);
+                            setCustomTime(formatted);
                           }}
                           className={`time-slot-btn ${isSelected ? 'time-slot-btn-selected' : ''}`}
                         >
@@ -1661,10 +1717,11 @@ export default function ReservationPage() {
                       ref={timeInputRef}
                       type="text"
                       placeholder={t('reservationPage.form.placeholders.time', undefined, 'Enter time...')}
-                      value={customTime}
+                      value={customTime || selectedTime}
                       onChange={(e) => {
-                        setCustomTime(e.target.value);
-                        setSelectedTime('');
+                        const val = e.target.value;
+                        setCustomTime(val);
+                        setSelectedTime(val);
                         setShowTimeDropdown(true);
                       }}
                       onFocus={() => setShowTimeDropdown(true)}
@@ -2017,6 +2074,56 @@ export default function ReservationPage() {
         cart={preOrderCart}
         onCartChange={setPreOrderCart}
       />
+
+      {/* Confirmation Dialog before closing without downloading */}
+      {showCloseConfirmModal && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 animate-in fade-in duration-200">
+          <div className="bg-white rounded-2xl p-6 max-w-sm w-full text-center shadow-2xl border border-[#e0e7de] relative z-10 animate-in zoom-in-95 duration-200">
+            <div className="w-14 h-14 rounded-full bg-[#f3f8f1] border border-[#6b9158]/30 text-[#5b8045] flex items-center justify-center mx-auto mb-4 shadow-sm">
+              <AlertTriangle className="w-7 h-7" />
+            </div>
+            <h4 className="font-serif text-xl text-[#212d1b] font-semibold mb-2">
+              {isKhmer ? 'តើអ្នកចង់បិទដោយមិនទាញយកឯកសារមែនទេ?' : 'Close Without Downloading?'}
+            </h4>
+            <p className="text-xs text-[#646860] mb-6 leading-relaxed">
+              {isKhmer
+                ? 'តើអ្នកប្រាកដជាចង់បិទដោយមិនទាញយកលិខិតបញ្ជាក់ការកក់របស់អ្នកទេ?'
+                : 'Are you sure you want to close without downloading your reservation receipt?'}
+            </p>
+            <div className="flex gap-3">
+              <button
+                type="button"
+                disabled={isDownloadingPdf}
+                onClick={handleReset}
+                className="flex-1 py-3 px-3 rounded-xl border border-[#6b9158]/40 text-xs font-medium text-[#4a5245] hover:bg-[#f3f8f1] hover:text-[#212d1b] transition-colors disabled:opacity-50"
+              >
+                {isKhmer ? 'បិទ' : 'Close'}
+              </button>
+              <button
+                type="button"
+                disabled={isDownloadingPdf}
+                onClick={async () => {
+                  await handleDownloadConfirmation();
+                  handleReset();
+                }}
+                className="flex-1 py-3 px-3 rounded-xl bg-[#5b8045] text-white text-xs font-medium hover:bg-[#4a6b38] transition-colors shadow-sm flex items-center justify-center gap-1.5 disabled:opacity-60"
+              >
+                {isDownloadingPdf ? (
+                  <>
+                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                    <span>{isKhmer ? 'កំពុងទាញយក...' : 'Downloading...'}</span>
+                  </>
+                ) : (
+                  <>
+                    <Download className="w-3.5 h-3.5" />
+                    <span>{isKhmer ? 'ទាញយក' : 'Download'}</span>
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

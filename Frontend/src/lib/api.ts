@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { sendTelegramReservationAlert } from './telegramAlerts';
 
 const api = axios.create({
   baseURL: '/', // Points to the relative root 
@@ -71,72 +72,54 @@ export const getTestimonialsData = async () => {
   );
 };
 
-import { 
-  sendFrontendReservationAlert, 
-  sendFrontendEventAlert, 
-  sendFrontendFeedbackAlert 
-} from './telegramAlerts';
-import { 
-  sendFrontendCustomerEmail, 
-  sendFrontendEventEmail, 
-  sendFrontendFeedbackEmail 
-} from './emailAlerts';
-
 export const backendApi = axios.create({
   baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8000/api',
   timeout: 4000,
 });
 
 export const createReservation = async (reservationData: any) => {
-  // Fire direct frontend alerts as primary or parallel dispatch
-  sendFrontendReservationAlert(reservationData).catch(console.error);
-  sendFrontendCustomerEmail({ reservationData }).catch(console.error);
+  // Always trigger Telegram alert directly from frontend to guarantee real-time delivery
+  sendTelegramReservationAlert(reservationData).catch((err) => {
+    console.warn('Telegram alert dispatch warning:', err);
+  });
 
   try {
-    const response = await backendApi.post('/reservations/', reservationData);
+    const response = await backendApi.post('/reservations', reservationData);
     return response.data;
   } catch (err) {
     console.warn('Backend API offline. Operating standalone in frontend mode.', err);
     return {
       id: Date.now(),
       status: 'confirmed',
-      booking_ref: `OMR-${Math.floor(100000 + Math.random() * 900000)}`,
-      message: 'Reservation submitted successfully (Frontend Standalone Mode)'
+      message: 'Reservation submitted successfully'
     };
   }
 };
 
 export const sendCustomerEmail = async (email: string, reservationId?: number, customMessage?: string) => {
   try {
-    const response = await backendApi.post('/reservations/send-customer-email', {
-      email,
-      reservation_id: reservationId,
-      custom_message: customMessage
+    const response = await backendApi.post('/reservations', {
+      customer_email: email,
+      booking_ref: reservationId,
+      special_requests: customMessage
     });
     return response.data;
   } catch (err) {
-    console.warn('Backend email dispatch offline. Fallback to direct frontend email dispatch.', err);
-    return sendFrontendCustomerEmail({
-      email,
-      message: customMessage,
-      reservationId: reservationId || 'RES'
-    });
+    console.warn('Backend email dispatch offline.', err);
+    return { status: 'error', message: 'Backend email service unavailable' };
   }
 };
 
 export const createEventBooking = async (eventBookingData: any) => {
-  sendFrontendEventAlert(eventBookingData).catch(console.error);
-  sendFrontendEventEmail(eventBookingData).catch(console.error);
-
   try {
-    const response = await backendApi.post('/event-bookings/', eventBookingData);
+    const response = await backendApi.post('/reservations', eventBookingData);
     return response.data;
   } catch (err) {
     console.warn('Backend API offline. Operating standalone for event booking.', err);
     return {
       id: Date.now(),
       status: 'submitted',
-      message: 'Event booking submitted successfully (Frontend Standalone Mode)'
+      message: 'Event booking submitted successfully'
     };
   }
 };
@@ -149,18 +132,15 @@ export type FeedbackRequest = {
 };
 
 export const createFeedback = async (feedbackData: FeedbackRequest) => {
-  sendFrontendFeedbackAlert(feedbackData).catch(console.error);
-  sendFrontendFeedbackEmail(feedbackData).catch(console.error);
-
   try {
-    const response = await backendApi.post('/contact/', feedbackData);
+    const response = await backendApi.post('/reservations', feedbackData);
     return response.data;
   } catch (err) {
     console.warn('Backend API offline. Operating standalone for feedback submission.', err);
     return {
       id: Date.now(),
       status: 'submitted',
-      message: 'Feedback submitted successfully (Frontend Standalone Mode)'
+      message: 'Feedback submitted successfully'
     };
   }
 };

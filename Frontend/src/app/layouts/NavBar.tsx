@@ -57,8 +57,8 @@ function NavbarLogo({ mobile = false }: { mobile?: boolean }) {
 
 // Toggle `enabled` to show or hide a language without removing its JSON file.
 const languageOptions: Array<{ code: Language; label: string; flag: string; enabled: boolean }> = [
-  { code: 'EN', label: 'English', flag: '/flags/united-kingdom.svg', enabled: true },
   { code: 'KH', label: 'ខ្មែរ', flag: '/flags/cambodia.svg', enabled: true },
+  { code: 'EN', label: 'English', flag: '/flags/united-kingdom.svg', enabled: true },
   { code: 'ZH', label: '中文', flag: '/flags/china.svg', enabled: true },
   { code: 'KO', label: '한국어', flag: '/flags/south-korea.svg', enabled: true },
 ];
@@ -67,17 +67,24 @@ function LanguageMenu({ mobile = false }: { mobile?: boolean }) {
   const language = useAppStore((state) => state.language);
   const setLanguage = useAppStore((state) => state.setLanguage);
   const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const menuRef = useRef<HTMLDivElement | null>(null);
-  const enabledLanguageOptions = languageOptions.filter((option) => option.enabled);
-  const selectedLanguage = enabledLanguageOptions.find((option) => option.code === language)
-    || enabledLanguageOptions[0];
-  const usesDropdown = enabledLanguageOptions.length > 2;
 
   useEffect(() => {
-    if (selectedLanguage && selectedLanguage.code !== language) {
-      setLanguage(selectedLanguage.code);
-    }
-  }, [language, selectedLanguage, setLanguage]);
+    setMounted(true);
+  }, []);
+
+  const activeLang = mounted ? language : 'EN';
+  const enabledLanguageOptions = languageOptions.filter((option) => option.enabled);
+  const selectedLanguage = enabledLanguageOptions.find((option) => option.code === activeLang)
+    || enabledLanguageOptions[0];
+
+  // Put currently selected language at the top of the dropdown list
+  const sortedLanguageOptions = [
+    selectedLanguage,
+    ...enabledLanguageOptions.filter((option) => option.code !== selectedLanguage.code)
+  ];
+  const usesDropdown = enabledLanguageOptions.length > 2;
 
   useEffect(() => {
     if (!open) return;
@@ -133,8 +140,8 @@ function LanguageMenu({ mobile = false }: { mobile?: boolean }) {
       >
         <img
           className={`navbar-language-current-flag ${
-            language === 'ZH' ? 'navbar-language-current-flag-china' : ''
-          } ${language === 'KO' ? 'navbar-language-current-flag-korea' : ''}`}
+            selectedLanguage.code === 'ZH' ? 'navbar-language-current-flag-china' : ''
+          } ${selectedLanguage.code === 'KO' ? 'navbar-language-current-flag-korea' : ''}`}
           src={selectedLanguage.flag}
           alt=""
           aria-hidden="true"
@@ -143,7 +150,7 @@ function LanguageMenu({ mobile = false }: { mobile?: boolean }) {
 
       {usesDropdown && open && (
         <div className="navbar-language-dropdown" role="menu" aria-label="Languages">
-          {enabledLanguageOptions.map((option) => (
+          {sortedLanguageOptions.map((option) => (
             <button
               type="button"
               role="menuitemradio"
