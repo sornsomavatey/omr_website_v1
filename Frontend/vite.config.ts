@@ -181,7 +181,7 @@ export default defineConfig(({ mode }) => {
                         html: htmlContent,
                       });
                     } catch (mailErr) {
-                      console.error('❌ Vite dev server email dispatch error:', mailErr);
+                      // ignore silent mail error
                     }
                   }
 
@@ -201,6 +201,9 @@ export default defineConfig(({ mode }) => {
         },
       },
     ],
+    esbuild: {
+      drop: ['console', 'debugger'],
+    },
     define: {
       __APP_BUILD_VERSION__: JSON.stringify(String(Date.now())),
     },

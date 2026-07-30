@@ -98,8 +98,7 @@ export default function Menu() {
         setMenuDataState(res);
         setLoading(false);
       })
-      .catch((err) => {
-        console.error(err);
+      .catch(() => {
         setError('Failed to load menu data.');
         setLoading(false);
       });

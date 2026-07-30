@@ -24,8 +24,7 @@ export const sendTelegramReservationAlert = async (data: ReservationPayload): Pr
 
     const result = await response.json();
     return result.ok === true;
-  } catch (err) {
-    console.error('Failed to send Telegram alert via server proxy:', err);
+  } catch {
     return false;
   }
 };

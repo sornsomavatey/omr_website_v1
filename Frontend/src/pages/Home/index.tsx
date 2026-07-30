@@ -441,8 +441,7 @@ export default function HomePage() {
         setTestimonialsData(testimonialsRes);
         setLoading(false);
       })
-      .catch((err) => {
-        console.error(err);
+      .catch(() => {
         setError('Failed to load home page data.');
         setLoading(false);
       });

@@ -83,7 +83,7 @@ export default function BoeungKak() {
         }));
         setTestimonials(items);
       })
-      .catch((err) => console.error(err));
+      .catch(() => {});
   }, [isKhmer]);
 
   useEffect(() => {

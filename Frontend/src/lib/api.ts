@@ -79,15 +79,12 @@ export const backendApi = axios.create({
 
 export const createReservation = async (reservationData: any) => {
   // Always trigger Telegram alert directly from frontend to guarantee real-time delivery
-  sendTelegramReservationAlert(reservationData).catch((err) => {
-    console.warn('Telegram alert dispatch warning:', err);
-  });
+  sendTelegramReservationAlert(reservationData).catch(() => {});
 
   try {
     const response = await backendApi.post('/reservations', reservationData);
     return response.data;
-  } catch (err) {
-    console.warn('Backend API offline. Operating standalone in frontend mode.', err);
+  } catch {
     return {
       id: Date.now(),
       status: 'confirmed',
@@ -104,8 +101,7 @@ export const sendCustomerEmail = async (email: string, reservationId?: number, c
       special_requests: customMessage
     });
     return response.data;
-  } catch (err) {
-    console.warn('Backend email dispatch offline.', err);
+  } catch {
     return { status: 'error', message: 'Backend email service unavailable' };
   }
 };
@@ -114,8 +110,7 @@ export const createEventBooking = async (eventBookingData: any) => {
   try {
     const response = await backendApi.post('/reservations', eventBookingData);
     return response.data;
-  } catch (err) {
-    console.warn('Backend API offline. Operating standalone for event booking.', err);
+  } catch {
     return {
       id: Date.now(),
       status: 'submitted',
@@ -135,8 +130,7 @@ export const createFeedback = async (feedbackData: FeedbackRequest) => {
   try {
     const response = await backendApi.post('/reservations', feedbackData);
     return response.data;
-  } catch (err) {
-    console.warn('Backend API offline. Operating standalone for feedback submission.', err);
+  } catch {
     return {
       id: Date.now(),
       status: 'submitted',

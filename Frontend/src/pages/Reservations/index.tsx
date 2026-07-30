@@ -434,8 +434,7 @@ export default function ReservationPage() {
         setHomeData(homeRes);
         setLoading(false);
       })
-      .catch((err) => {
-        console.error(err);
+      .catch(() => {
         setError('Failed to load reservation data.');
         setLoading(false);
       });
@@ -530,8 +529,7 @@ export default function ReservationPage() {
         ? `លិខិតបញ្ជាក់ការកក់ត្រូវ បានផ្ញើទៅកាន់ ${targetEmail} ដោយជោគជ័យ!`
         : `Reservation confirmation email sent successfully to ${targetEmail}!`);
       setShowEmailModal(false);
-    } catch (err) {
-      console.error('Failed to send email to customer:', err);
+    } catch {
       alert(isKhmer
         ? 'មានបញ្ហាក្នុងការផ្ញើអ៊ីមែល។ សូមពិនិត្យមើលអាសយដ្ឋានអ៊ីមែលរបស់អ្នក។'
         : 'Could not send confirmation email. Please make sure backend server is running and email settings are configured.');
@@ -938,8 +936,7 @@ export default function ReservationPage() {
         }
         setIsSubmitted(true);
       })
-      .catch((err) => {
-        console.error("Reservation processed on frontend with warning:", err);
+      .catch(() => {
         setIsSubmitted(true);
       })
       .finally(() => {
@@ -1201,8 +1198,7 @@ export default function ReservationPage() {
       if (!sharedSuccessfully) {
         doc.save(filename);
       }
-    } catch (err) {
-      console.error('jsPDF generation error:', err);
+    } catch {
       window.print();
     } finally {
       setIsDownloadingPdf(false);
