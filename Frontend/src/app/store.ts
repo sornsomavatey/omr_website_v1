@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
 
 export type Language = 'EN' | 'KH' | 'ZH' | 'KO';
 
@@ -12,22 +11,42 @@ interface AppState {
   setMobileMenuOpen: (open: boolean) => void;
 }
 
-export const useAppStore = create<AppState>()(
-  persist(
-    (set) => ({
-      language: 'EN',
-      setLanguage: (language) => set({ language }),
-      reservationModalOpen: false,
-      setReservationModalOpen: (reservationModalOpen) => set({ reservationModalOpen }),
-      mobileMenuOpen: false,
-      setMobileMenuOpen: (mobileMenuOpen) => set({ mobileMenuOpen }),
-    }),
-    {
-      name: 'omr-language-preference',
-      partialize: (state) => ({ language: state.language }),
-      // SSR must start from the same English state in Node and the browser.
-      // The saved browser preference is restored after React hydrates.
-      skipHydration: true,
+const getInitialLanguage = (): Language => {
+  if (typeof window !== 'undefined') {
+    try {
+      const savedSimple = localStorage.getItem('omr_lang');
+      if (savedSimple && ['EN', 'KH', 'ZH', 'KO'].includes(savedSimple)) {
+        return savedSimple as Language;
+      }
+      const savedPersist = localStorage.getItem('omr-language-preference');
+      if (savedPersist) {
+        const parsed = JSON.parse(savedPersist);
+        if (parsed?.state?.language && ['EN', 'KH', 'ZH', 'KO'].includes(parsed.state.language)) {
+          return parsed.state.language as Language;
+        }
+      }
+    } catch (e) {
+      // Ignore fallback
     }
-  )
-);
+  }
+  return 'KH';
+};
+
+export const useAppStore = create<AppState>((set) => ({
+  language: getInitialLanguage(),
+  setLanguage: (language: Language) => {
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.setItem('omr_lang', language);
+        localStorage.setItem('omr-language-preference', JSON.stringify({ state: { language } }));
+      } catch (e) {
+        // ignore
+      }
+    }
+    set({ language });
+  },
+  reservationModalOpen: false,
+  setReservationModalOpen: (reservationModalOpen) => set({ reservationModalOpen }),
+  mobileMenuOpen: false,
+  setMobileMenuOpen: (mobileMenuOpen) => set({ mobileMenuOpen }),
+}));

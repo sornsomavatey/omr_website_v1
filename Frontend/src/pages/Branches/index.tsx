@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Phone, MapPin, Clock, Check, X } from 'lucide-react';
 import { getRestaurantsData } from '@/lib/api';
 import { Button } from '@/components/ui/button';
-import { Skeleton } from '@/components/ui/skeleton';
+import { BranchCardSkeleton, Skeleton } from '@/components/ui/skeleton';
 import LocationCard, { type BranchData } from '@/components/LocationCard';
 import SectionHeader from '@/components/SectionHeader';
 import { useTranslation } from '@/hooks/useTranslation';

@@ -168,21 +168,24 @@ html[data-lang="kh"] #menu-hero .page-hero-title {
 }
 
 .category-pill-btn-active {
-  background-color: #6b9158;
-  color: #ffffff;
-  border: 1px solid #6b9158;
-  box-shadow: 0 4px 14px rgba(107, 145, 88, 0.25);
+  background-color: #5b8045 !important;
+  background: #5b8045 !important;
+  color: #ffffff !important;
+  border: 1px solid #5b8045 !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 14px rgba(91, 128, 69, 0.25) !important;
 }
 
 .category-pill-btn-inactive {
-  background-color: #ffffff;
-  color: #6b9158;
-  border: 1px solid rgba(107, 145, 88, 0.45);
+  background-color: #ffffff !important;
+  color: #3b5034 !important;
+  border: 1.5px solid #d5e4cc !important;
 }
 
 .category-pill-btn-inactive:hover {
-  border-color: #6b9158;
-  background-color: rgba(107, 145, 88, 0.05);
+  border-color: #5b8045 !important;
+  background-color: #f4faf0 !important;
+  color: #2e4324 !important;
 }
 
 

@@ -24,8 +24,9 @@ import {
 } from 'lucide-react';
 
 import FeaturePackageCard from '@/components/FeaturePackageCard';
-import SectionHeader from '@/components/SectionHeader';
 import EventSpaceCard from '@/components/EventSpaceCard';
+import SectionHeader from '@/components/SectionHeader';
+import { EventCardSkeleton } from '@/components/ui/skeleton';
 import TestimonialSection from '@/components/TestimonialSection';
 import { createEventBooking, getTestimonialsData, sendCustomerEmail } from '@/lib/api';
 import { useTranslation } from '@/hooks/useTranslation';
