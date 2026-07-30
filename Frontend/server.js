@@ -16,6 +16,7 @@ const trustProxy = process.env.TRUST_PROXY === 'true'
 const menuUpstreamBaseUrl = (
   process.env.WEBAPP_BASE_URL || 'https://omd.a2hosted.com'
 ).replace(/\/+$/, '')
+const menuUpstreamApiToken = process.env.WEBAPP_API_TOKEN || ''
 const menuCacheTtlMs = Number(process.env.MENU_CACHE_TTL_MS || 300_000)
 const menuCategoryNames = new Map([
   [10, 'Breakfast'],
@@ -238,7 +239,14 @@ app.get('/api/public-menu', async (_req, res) => {
     const upstreamResponse = await fetch(
       `${menuUpstreamBaseUrl}/api/website/products`,
       {
-        headers: { Accept: 'application/json' },
+        headers: {
+          Accept: 'application/json',
+          ...(menuUpstreamApiToken
+            ? {
+                Authorization: `Bearer ${menuUpstreamApiToken}`,
+              }
+            : {}),
+        },
         signal: AbortSignal.timeout(10_000),
       }
     )
