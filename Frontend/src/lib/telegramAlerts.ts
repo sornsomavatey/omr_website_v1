@@ -29,10 +29,10 @@ export const sendTelegramReservationAlert = async (data: ReservationPayload): Pr
       body: JSON.stringify(data),
     });
 
-    return Promise.resolve(true);
+    const result = await response.json();
+    return result.ok === true || response.ok;
   } catch {
-    alert("dasdas");
-    return Promise.resolve(false);
+    return false;
   }
 };
 

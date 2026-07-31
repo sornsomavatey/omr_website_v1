@@ -40,6 +40,39 @@
           <td style="padding: 10px 0;">{{ $data['special_requests'] ?? 'None' }}</td>
         </tr>
       </table>
+
+      @if(!empty($data['preordered_items']) && is_array($data['preordered_items']) && count($data['preordered_items']) > 0)
+        <div style="margin-top: 16px; padding-top: 12px; border-top: 1px dashed #ddd;">
+          <h4 style="margin: 0 0 8px 0; color: #5b8045;">🛒 Pre-ordered Dishes:</h4>
+          <ul style="margin: 0; padding-left: 20px; color: #333;">
+            @php
+              $total = 0;
+              $hasPrice = false;
+            @endphp
+            @foreach($data['preordered_items'] as $item)
+              @php
+                $qty = (int) ($item['qty'] ?? 1);
+                $name = htmlspecialchars($item['name'] ?? '', ENT_QUOTES, 'UTF-8');
+                $rawPriceStr = isset($item['price']) ? preg_replace('/[^0-9.]/', '', (string)$item['price']) : '';
+                $unitPrice = is_numeric($rawPriceStr) ? (float)$rawPriceStr : 0;
+                $priceStr = '';
+                if ($unitPrice > 0) {
+                    $hasPrice = true;
+                    $total += ($unitPrice * $qty);
+                    $cleanPriceVal = (fmod($unitPrice, 1.0) == 0) ? (int)$unitPrice : number_format($unitPrice, 2, '.', '');
+                    $priceStr = ' (' . $cleanPriceVal . ')';
+                } elseif (!empty($item['price'])) {
+                    $priceStr = ' (' . htmlspecialchars((string)$item['price'], ENT_QUOTES, 'UTF-8') . ')';
+                }
+              @endphp
+              <li style="margin: 4px 0;">{{ $qty }}x {{ $name }}{{ $priceStr }}</li>
+            @endforeach
+          </ul>
+          @if($hasPrice && $total > 0)
+            <p style="margin-top: 8px; font-weight: bold;">Total: ${{ number_format($total, 2, '.', '') }}</p>
+          @endif
+        </div>
+      @endif
     </div>
 
     <p style="font-size: 12px; color: #888888; text-align: center; margin-top: 24px; border-top: 1px solid #e5e5e5; padding-top: 16px;">

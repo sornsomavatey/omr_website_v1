@@ -755,9 +755,9 @@ Our event coordinator will contact you within 24 hours.`;
     const guest_count = Number(formData.get('guest_count') || 1);
     const special_requirements = (formData.get('special_requirements') as string || '').trim();
 
-    // Construct valid payload
     const email = emailInput || 'noemail@onemore.com';
-    const event_date = new Date().toISOString().split('T')[0]; // Current date
+    const today = new Date();
+    const event_date = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
 
     const package_details = [
       `Branch: ${branch}`,
