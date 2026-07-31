@@ -10,6 +10,5 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::post('/reservations', [ReservationController::class, 'store']);
-Route::post('/telegram-reservation', [ReservationController::class, 'store']);
-Route::post('/telegram-event', [ReservationController::class, 'storeEvent']);
-Route::post('/telegram-feedback', [ReservationController::class, 'storeFeedback']);
+Route::post('/events', [ReservationController::class, 'storeEvent']);
+Route::post('/feedback', [ReservationController::class, 'storeFeedback']);

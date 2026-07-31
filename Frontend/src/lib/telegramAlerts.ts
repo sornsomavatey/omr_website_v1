@@ -55,7 +55,7 @@ export interface EventInquiryPayload {
 
 export const sendTelegramEventAlert = async (data: EventInquiryPayload): Promise<boolean> => {
   try {
-    const response = await fetch('/api/telegram-event', {
+    const response = await fetch('/api/event', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
@@ -80,7 +80,7 @@ export interface FeedbackPayload {
 
 export const sendTelegramFeedbackAlert = async (data: FeedbackPayload): Promise<boolean> => {
   try {
-    const response = await fetch('/api/telegram-feedback', {
+    const response = await fetch('/api/feedback', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
