@@ -369,12 +369,18 @@ export default function About() {
       const rawName = String(data.get('name') || '').trim();
       const rawMessage = String(data.get('message') || '').trim();
       const messageText = rawMessage ? `\n\n${rawMessage}` : '';
+      // Legacy format: message was formatted as `Branch: ${branch}\nRating: ${rating}/5${messageText}`
+      // Updated: pass branch & rating explicitly to createFeedback so Telegram and Nodemailer format them cleanly
       await createFeedback({
         name: rawName || 'Anonymous',
         email: 'N/A',
+        branch: branch,
+        rating: rating,
         subject: `Guest feedback - ${branch} - ${rating}/5`,
-        message: `Branch: ${branch}\nRating: ${rating}/5${messageText}`,
+        message: rawMessage || '(No written comment provided)',
       });
+
+
       form.reset();
       setRating(0);
       setHoveredRating(0);

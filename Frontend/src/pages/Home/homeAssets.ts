@@ -42,8 +42,12 @@ import imgGallery6 from '@/assets/home-v2/corporate-meeting.webp';
 // Avatars
 import imgAvatar1 from '@/assets/home-v2/testimonial-portrait-one.webp';
 import imgAvatar2 from '@/assets/home-v2/testimonial-portrait-two.webp';
-import imgAvatar3 from '@/assets/home-v2/testimonial-portrait-three.webp';
+// Legacy import: testimonial-portrait-three.webp is not present in asset directory, using imgAvatar2 as fallback
+// import imgAvatar3 from '@/assets/home-v2/testimonial-portrait-three.webp';
+const imgAvatar3 = imgAvatar2;
 import imgAvatar4 from '@/assets/home-v2/testimonial-portrait-four.webp';
+
+
 
 import imgAvatarBuckeyeSam from '@/assets/testimonial-avatar/buckeye-sam.webp';
 import imgAvatarSokhanearyroatUng from '@/assets/testimonial-avatar/sokhanearyroat-ung.webp';
