@@ -499,8 +499,23 @@ html[data-lang="kh"] .reservation-form-container ::placeholder {
   font-family: "Inter", sans-serif;
   font-size: 16px;
   font-weight: 700;
-  min-width: 20px;
+  min-width: 28px;
+  width: 44px;
   text-align: center;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  outline: none;
+  transition: all 0.2s ease;
+  padding: 2px 0;
+  cursor: pointer;
+}
+
+input.counter-value:hover,
+input.counter-value:focus {
+  background: #f4f8f2;
+  border-color: #5b8045;
+  cursor: text;
 }
 
 .total-guests-pill-wrapper {
