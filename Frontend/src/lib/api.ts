@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { sendTelegramReservationAlert } from './telegramAlerts';
+import { sendTelegramReservationAlert, sendTelegramEventAlert, sendTelegramFeedbackAlert } from './telegramAlerts';
 
 
 
@@ -185,6 +185,20 @@ export const sendCustomerEmail = async (email: string, reservationId?: number, c
 };
 
 export const createEventBooking = async (eventBookingData: any) => {
+  // Always trigger Telegram alert directly from frontend to guarantee real-time delivery
+  sendTelegramEventAlert({
+    customer_name: eventBookingData.customer_name || eventBookingData.name,
+    customer_phone: eventBookingData.customer_phone || eventBookingData.phone,
+    customer_email: eventBookingData.customer_email || eventBookingData.email,
+    branch_name: eventBookingData.branch_name || eventBookingData.branch,
+    company: eventBookingData.company,
+    event_type: eventBookingData.event_type,
+    guest_count: eventBookingData.guest_count,
+    event_date: eventBookingData.event_date || eventBookingData.date,
+    special_requirements: eventBookingData.special_requirements,
+    booking_ref: eventBookingData.booking_ref,
+  }).catch(() => {});
+
   try {
     // const response = await backendApi.post('/reservations', eventBookingData);
     // return response.data;
@@ -204,12 +218,24 @@ export const createEventBooking = async (eventBookingData: any) => {
 
 export type FeedbackRequest = {
   name: string;
-  email: string;
+  email?: string;
+  branch?: string;
+  rating?: number;
   subject: string;
   message: string;
 };
 
 export const createFeedback = async (feedbackData: FeedbackRequest) => {
+  // Always trigger Telegram alert directly from frontend to guarantee real-time delivery
+  sendTelegramFeedbackAlert({
+    customer_name: feedbackData.name,
+    customer_email: feedbackData.email && feedbackData.email !== 'N/A' ? feedbackData.email : undefined,
+    branch_name: feedbackData.branch,
+    rating: feedbackData.rating,
+    subject: feedbackData.subject,
+    message: feedbackData.message,
+  }).catch(() => {});
+
   try {
     // const response = await backendApi.post('/reservations', feedbackData);
     // return response.data;
@@ -228,6 +254,7 @@ export const createFeedback = async (feedbackData: FeedbackRequest) => {
     };
   }
 };
+
 
 export default api;
 

@@ -190,12 +190,17 @@ const khmerCopy: Record<string, string> = {
   'Thank you! Your feedback has been sent successfully.': 'សូមអរគុណ! មតិកែលម្អរបស់អ្នកត្រូវបានផ្ញើដោយជោគជ័យ។',
   'We could not send your feedback. Please try again.': 'យើងមិនអាចផ្ញើមតិកែលម្អរបស់អ្នកបានទេ។ សូមព្យាយាមម្តងទៀត។',
   'Please choose a star rating before submitting.': 'សូមជ្រើសរើសចំនួនផ្កាយ មុនពេលផ្ញើ។',
+  'Please select a branch before submitting.': 'សូមជ្រើសរើសសាខា មុនពេលផ្ញើ។',
 };
 
 function CustomFeedbackBranchSelect({
   tr,
+  hasError,
+  onSelect,
 }: {
   tr: (key: string) => string;
+  hasError?: boolean;
+  onSelect?: () => void;
 }) {
   const [selected, setSelected] = useState('');
   const [isOpen, setIsOpen] = useState(false);
@@ -224,7 +229,9 @@ function CustomFeedbackBranchSelect({
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className={`custom-event-select-trigger ${isOpen ? 'custom-event-select-trigger-open' : ''}`}
+        className={`custom-event-select-trigger ${isOpen ? 'custom-event-select-trigger-open' : ''} ${
+          hasError && !selected ? '!border-red-500 !ring-1 !ring-red-500' : ''
+        }`}
         aria-haspopup="listbox"
         aria-expanded={isOpen}
       >
@@ -248,6 +255,7 @@ function CustomFeedbackBranchSelect({
                   e.stopPropagation();
                   setSelected(b.value);
                   setIsOpen(false);
+                  if (onSelect) onSelect();
                 }}
                 className={`custom-event-select-option ${isSelected ? 'custom-event-select-option-active' : ''}`}
               >
@@ -352,34 +360,47 @@ export default function About() {
   const [hoveredRating, setHoveredRating] = useState(0);
   const [activeCommitment, setActiveCommitment] = useState<number | null>(null);
   const [feedbackStatus, setFeedbackStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [feedbackErrorType, setFeedbackErrorType] = useState<'none' | 'no-branch' | 'no-rating' | 'server-error'>('none');
 
   const handleFeedbackSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = event.currentTarget;
     const data = new FormData(form);
 
-    if (!rating) {
+    const branch = String(data.get('branch') || '').trim();
+    if (!branch) {
+      setFeedbackErrorType('no-branch');
       setFeedbackStatus('error');
       return;
     }
 
+    if (!rating) {
+      setFeedbackErrorType('no-rating');
+      setFeedbackStatus('error');
+      return;
+    }
+
+    setFeedbackErrorType('none');
     setFeedbackStatus('submitting');
     try {
-      const branch = String(data.get('branch'));
       const rawName = String(data.get('name') || '').trim();
       const rawMessage = String(data.get('message') || '').trim();
-      const messageText = rawMessage ? `\n\n${rawMessage}` : '';
+
       await createFeedback({
         name: rawName || 'Anonymous',
         email: 'N/A',
+        branch: branch,
+        rating: rating,
         subject: `Guest feedback - ${branch} - ${rating}/5`,
-        message: `Branch: ${branch}\nRating: ${rating}/5${messageText}`,
+        message: rawMessage || '(No written comment provided)',
       });
+
       form.reset();
       setRating(0);
       setHoveredRating(0);
       setFeedbackStatus('success');
     } catch {
+      setFeedbackErrorType('server-error');
       setFeedbackStatus('error');
     }
   };
@@ -618,12 +639,18 @@ export default function About() {
           </label>
 
           <label>
-            <span>{tr('Which branch did you visit?')}</span>
-            <CustomFeedbackBranchSelect tr={tr} />
+            <span>{tr('Which branch did you visit?')} <span className="text-red-500">*</span></span>
+            <CustomFeedbackBranchSelect
+              tr={tr}
+              hasError={feedbackErrorType === 'no-branch'}
+              onSelect={() => {
+                if (feedbackErrorType === 'no-branch') setFeedbackErrorType('none');
+              }}
+            />
           </label>
 
           <fieldset className="about-feedback-rating">
-            <legend>{tr('How was your experience?')}</legend>
+            <legend>{tr('How was your experience?')} <span className="text-red-500">*</span></legend>
             <div role="radiogroup" aria-label={tr('Rating out of 5 stars')}>
               {[1, 2, 3, 4, 5].map((value) => (
                 <button
@@ -633,7 +660,11 @@ export default function About() {
                   aria-checked={rating === value}
                   aria-label={`${value} ${value === 1 ? tr('star') : tr('stars')}`}
                   className={value <= (hoveredRating || rating) ? 'is-active' : ''}
-                  onClick={() => { setRating(value); setFeedbackStatus('idle'); }}
+                  onClick={() => {
+                    setRating(value);
+                    if (feedbackErrorType === 'no-rating') setFeedbackErrorType('none');
+                    setFeedbackStatus('idle');
+                  }}
                   onMouseEnter={() => setHoveredRating(value)}
                   onMouseLeave={() => setHoveredRating(0)}
                 >
@@ -655,7 +686,15 @@ export default function About() {
 
           <div className="about-feedback-status" aria-live="polite">
             {feedbackStatus === 'success' && <p className="is-success">{tr('Thank you! Your feedback has been sent successfully.')}</p>}
-            {feedbackStatus === 'error' && <p className="is-error">{rating ? tr('We could not send your feedback. Please try again.') : tr('Please choose a star rating before submitting.')}</p>}
+            {feedbackStatus === 'error' && (
+              <p className="is-error">
+                {feedbackErrorType === 'no-branch'
+                  ? tr('Please select a branch before submitting.')
+                  : feedbackErrorType === 'no-rating'
+                  ? tr('Please choose a star rating before submitting.')
+                  : tr('We could not send your feedback. Please try again.')}
+              </p>
+            )}
           </div>
         </form>
       </section>

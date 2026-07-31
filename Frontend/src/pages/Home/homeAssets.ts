@@ -42,8 +42,12 @@ import imgGallery6 from '@/assets/home-v2/corporate-meeting.webp';
 // Avatars
 import imgAvatar1 from '@/assets/home-v2/testimonial-portrait-one.webp';
 import imgAvatar2 from '@/assets/home-v2/testimonial-portrait-two.webp';
+// Legacy import: testimonial-portrait-three.webp is not present in asset directory, using imgAvatar2 as fallback
 // import imgAvatar3 from '@/assets/home-v2/testimonial-portrait-three.webp';
+const imgAvatar3 = imgAvatar2;
 import imgAvatar4 from '@/assets/home-v2/testimonial-portrait-four.webp';
+
+
 
 import imgAvatarBuckeyeSam from '@/assets/testimonial-avatar/buckeye-sam.webp';
 import imgAvatarSokhanearyroatUng from '@/assets/testimonial-avatar/sokhanearyroat-ung.webp';
@@ -75,7 +79,7 @@ export {
   imgGallery6,
   imgAvatar1,
   imgAvatar2,
-  // imgAvatar3,
+  imgAvatar3,
   imgAvatar4,
   imgAvatarBuckeyeSam,
   imgAvatarSokhanearyroatUng,
@@ -109,7 +113,7 @@ export const imageMap: Record<string, string> = {
   '@/assets/home-v2/corporate-meeting.webp': imgGallery6,
   '@/assets/home-v2/testimonial-portrait-one.webp': imgAvatar1,
   '@/assets/home-v2/testimonial-portrait-two.webp': imgAvatar2,
-  // '@/assets/home-v2/testimonial-portrait-three.webp': imgAvatar3,
+  '@/assets/home-v2/testimonial-portrait-three.webp': imgAvatar3,
   '@/assets/home-v2/testimonial-portrait-four.webp': imgAvatar4,
   '@/assets/testimonial-avatar/buckeye-sam.webp': imgAvatarBuckeyeSam,
   '@/assets/testimonial-avatar/sokhanearyroat-ung.webp': imgAvatarSokhanearyroatUng,
