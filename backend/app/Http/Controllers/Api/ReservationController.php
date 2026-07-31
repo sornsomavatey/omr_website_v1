@@ -39,16 +39,16 @@ class ReservationController extends Controller
         Cache::put($dupKey, true, 60);
 
         // 1. Send Email Alert ONLY to Team Email(s) (Configured in .env via TEAM_ALERT_EMAIL)
-        $teamEmailsRaw = env('TEAM_ALERT_EMAIL', env('MAIL_FROM_ADDRESS', 'darichhy61@gmail.com'));
-        $teamEmails = array_filter(array_map('trim', explode(',', (string) $teamEmailsRaw)));
+        // $teamEmailsRaw = env('TEAM_ALERT_EMAIL', env('MAIL_FROM_ADDRESS', 'darichhy61@gmail.com'));
+        // $teamEmails = array_filter(array_map('trim', explode(',', (string) $teamEmailsRaw)));
 
-        if (!empty($teamEmails)) {
-            try {
-                Mail::to($teamEmails)->send(new ReservationConfirmation($validated));
-            } catch (\Throwable $e) {
-                \Log::error('Laravel Team Email Alert Failed: ' . $e->getMessage());
-            }
-        }
+        // if (!empty($teamEmails)) {
+        //     try {
+        //         Mail::to($teamEmails)->send(new ReservationConfirmation($validated));
+        //     } catch (\Throwable $e) {
+        //         \Log::error('Laravel Team Email Alert Failed: ' . $e->getMessage());
+        //     }
+        // }
 
         // 2. Send Telegram Alert (if bot token configured)
         $telegramToken = env('TELEGRAM_BOT_TOKEN');
@@ -188,6 +188,28 @@ class ReservationController extends Controller
         }
         Cache::put($dupKey, true, 60);
 
+        // 1. Send Email Alert ONLY to Team Email(s)
+        $teamEmailsRaw = env('TEAM_ALERT_EMAIL', env('MAIL_FROM_ADDRESS', 'darichhy61@gmail.com'));
+        $teamEmails = array_filter(array_map('trim', explode(',', (string) $teamEmailsRaw)));
+
+        if (!empty($teamEmails)) {
+            try {
+                Mail::to($teamEmails)->send(new ReservationConfirmation([
+                    'booking_ref' => $request->input('booking_ref', 'EVT-' . rand(10000, 99000)),
+                    'customer_name' => $request->input('customer_name') ?? $request->input('name') ?? 'Valued Guest',
+                    'customer_phone' => $phone,
+                    'customer_email' => $request->input('customer_email') ?? $request->input('email'),
+                    'reservation_date' => $evtDate ?: date('Y-m-d'),
+                    'reservation_time' => 'Event Booking (' . $evtType . ')',
+                    'branch_name' => $request->input('branch_name') ?? $request->input('branch') ?? 'One More Restaurant',
+                    'special_requests' => $request->input('special_requirements') ?? $request->input('special_requests'),
+                ]));
+            } catch (\Throwable $e) {
+                \Log::error('Laravel Event Team Email Alert Failed: ' . $e->getMessage());
+            }
+        }
+
+        // 2. Send Telegram Alert (if bot token configured)
         $telegramToken = env('TELEGRAM_BOT_TOKEN');
         $telegramChatId = env('TELEGRAM_CHAT_ID');
         $telegramThreadId = env('TELEGRAM_EVENT_THREAD_ID', env('TELEGRAM_RESERVATION_THREAD_ID', '2'));
