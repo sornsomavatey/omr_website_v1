@@ -142,10 +142,20 @@ export const getTestimonialsData = async () => {
 
 export const createReservation = async (reservationData: any) => {
   // Always trigger Telegram alert directly from frontend to guarantee real-time delivery
-  sendTelegramReservationAlert(reservationData).catch(() => {});
+  // sendTelegramReservationAlert(reservationData).catch(() => {});
 
   try {
     // const response = await backendApi.post('/reservations', reservationData);
+    // get csrf-cookie
+    await api.get('/sanctum/csrf-cookie');
+    const response = await api.post('/api/reservations', reservationData, {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      }
+    });
+
+
     return {
       id: Date.now(),
       status: 'confirmed',
@@ -203,6 +213,8 @@ export const createFeedback = async (feedbackData: FeedbackRequest) => {
   try {
     // const response = await backendApi.post('/reservations', feedbackData);
     // return response.data;
+
+    
     return {
       id: Date.now(),
       status: 'submitted',

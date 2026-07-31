@@ -16,6 +16,9 @@ export interface ReservationPayload {
 
 export const sendTelegramReservationAlert = async (data: ReservationPayload): Promise<boolean> => {
   try {
+
+    
+    
     const response = await fetch(`/api/telegram-reservation`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

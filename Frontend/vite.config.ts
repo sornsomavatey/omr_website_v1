@@ -16,7 +16,6 @@ export default defineConfig(({ mode }) => {
         name: 'telegram-reservation-proxy',
         configureServer(server) {
           server.middlewares.use(async (req, res, next) => {
-
             if (req.url === '/api/telegram-reservation' && req.method === 'POST') {
               let body = '';
               req.on('data', (chunk) => { body += chunk; });
@@ -139,11 +138,11 @@ export default defineConfig(({ mode }) => {
                   const result = Promise.resolve(true);
 
                   // 2. Send Team Email Alert via SMTP (Nodemailer)
-                  const teamEmail = env.TEAM_ALERT_EMAIL || env.MAIL_FROM_ADDRESS || process.env.TEAM_ALERT_EMAIL || 'darichhy61@gmail.com';
-                  const mailUser = env.MAIL_USERNAME || process.env.MAIL_USERNAME || 'darichhy61@gmail.com';
-                  const mailPass = env.MAIL_PASSWORD || process.env.MAIL_PASSWORD || 'kwbk wcls dgqe bvlh';
-                  const mailHost = env.MAIL_HOST || process.env.MAIL_HOST || 'smtp.gmail.com';
-                  const mailPort = Number(env.MAIL_PORT || process.env.MAIL_PORT || 587);
+                  const teamEmail = env.TEAM_ALERT_EMAIL || env.MAIL_FROM_ADDRESS || process.env.TEAM_ALERT_EMAIL;
+                  const mailUser = env.MAIL_USERNAME || process.env.MAIL_USERNAME;
+                  const mailPass = env.MAIL_PASSWORD || process.env.MAIL_PASSWORD;
+                  const mailHost = env.MAIL_HOST || process.env.MAIL_HOST;
+                  const mailPort = Number(env.MAIL_PORT || process.env.MAIL_PORT);
 
                   if (teamEmail && mailUser && mailPass) {
                     try {
