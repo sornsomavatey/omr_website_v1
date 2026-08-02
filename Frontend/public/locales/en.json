@@ -641,28 +641,28 @@
       "features": [
         {
           "name": "Family Dining",
-          "toulKork": true,
-          "boeungKak": true
+          "toulKork": "TRUE",
+          "boeungKak": "TRUE"
         },
         {
           "name": "Private Room",
-          "toulKork": true,
-          "boeungKak": true
+          "toulKork": "TRUE",
+          "boeungKak": "TRUE"
         },
         {
           "name": "Business Meeting",
-          "toulKork": true,
-          "boeungKak": true
+          "toulKork": "TRUE",
+          "boeungKak": "TRUE"
         },
         {
           "name": "Event Space",
-          "toulKork": true,
-          "boeungKak": true
+          "toulKork": "TRUE",
+          "boeungKak": "TRUE"
         },
         {
           "name": "Parking",
-          "toulKork": true,
-          "boeungKak": true
+          "toulKork": "TRUE",
+          "boeungKak": "TRUE"
         },
         {
           "name": "Capacity",
@@ -678,7 +678,7 @@
         "address": "37 St 315, Phnom Penh 120407",
         "phone": "023 888 222",
         "hours": "Daily: 06:00 AM - 10:00 PM",
-        "image": "@/assets/home-v2/toul-kork-exterior.webp",
+        "image": "@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.webp",
         "tags": [
           "Family Friendly",
           "Business Meeting",
@@ -699,7 +699,7 @@
         "address": "G2 Street R11, Phnom Penh 120210",
         "phone": "021 888 222",
         "hours": "Daily: 06:00 AM - 10:00 PM",
-        "image": "@/assets/home-v2/boeung-kak-exterior.webp",
+        "image": "@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.webp",
         "tags": [
           "Event Space",
           "Large Groups",
@@ -720,8 +720,8 @@
     "hero": {
       "eyebrow": "EST. 2008 · PHNOM PENH",
       "title": "Reserve Your Table",
-      "desc": "Immerse yourself in the ultimate Cambodian dining experience, where legendary heritage recipes are proudly brought to life in an atmosphere of refined elegance.",
-      "backgroundImage": "@/assets/home-v2/boeung-kak-exterior.webp",
+      "desc": "Experience the pinnacle of Khmer culinary heritage. A journey of forgotten flavors rediscovered in a setting of timeless luxury.",
+      "backgroundImage": "@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.webp",
       "backgroundAlt": "One More Restaurant dining room"
     },
     "guestInformationTitle": "Guest Information",
@@ -810,7 +810,7 @@
     },
     "success": {
       "title": "Reservation Confirmed!",
-      "desc": "Thank you for booking with One More Restaurant.",
+      "desc": "Thank you for booking with One More Restaurant. A confirmation message has been sent to your phone number.",
       "makeAnother": "Make Another Booking",
       "backHome": "Back to Home",
       "preOrderTotal": "Pre-order Total",
@@ -899,7 +899,7 @@
         "address": "37 St 315, Phnom Penh 120407",
         "phone": "023 888 222",
         "hours": "Daily: 06:00 AM - 10:00 PM",
-        "img": "@/assets/home-v2/toul-kork-exterior.webp",
+        "img": "@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.webp",
         "tags": [
           "Family Friendly",
           "Business Meeting",
@@ -912,7 +912,7 @@
         "address": "G2 Street R11, Phnom Penh 120210",
         "phone": "021 888 222",
         "hours": "Daily: 06:00 AM - 10:00 PM",
-        "img": "@/assets/home-v2/boeung-kak-exterior.webp",
+        "img": "@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.webp",
         "tags": [
           "Event Space",
           "Large Groups",
@@ -956,7 +956,7 @@
       {
         "id": "indoor",
         "name": "Indoor",
-        "img": "@/assets/home-v2/private-event-space.webp"
+        "img": "@/assets/home-v2/e8f4b56e423777f3f6c3df39c6ef78914b278e17.webp"
       },
       {
         "id": "outdoor",
@@ -966,7 +966,7 @@
       {
         "id": "privateRoom",
         "name": "Private Room",
-        "img": "@/assets/home-v2/event-hall.webp"
+        "img": "@/assets/home-v2/31b0910d38c033be0ce5292cf4a1d68688308c6b.webp"
       },
       {
         "id": "vipRoom",
@@ -1034,7 +1034,7 @@
       "guestBadge": "8-12 guests",
       "highlights": {
         "av": "Integrated AV system",
-        "butler": "Personal Service",
+        "butler": "Personal butler service",
         "views": "Garden views"
       },
       "reserveCta": "Reserve Private Room"
@@ -1311,7 +1311,7 @@
           "company": "Company Name",
           "email": "Email Address (Optional)",
           "eventType": "Event Type",
-          "guests": "Guests *",
+          "guests": "Guests",
           "requirements": "Special Requirements"
         },
         "branches": {
@@ -1482,5 +1482,126 @@
         "tag": "Restaurant"
       }
     }
+  },
+  "aboutInline": {
+    "A New Chapter": "A New Chapter",
+    "A celebration at One More": "A celebration at One More",
+    "A dedicated team delivering warm and memorable Khmer dining experiences.": "A dedicated team delivering warm and memorable Khmer dining experiences.",
+    "A family activity": "A family activity",
+    "A kitchen built on precision, respect for ingredients, and the joy of sharing heritage recipes.": "A kitchen built on precision, respect for ingredients, and the joy of sharing heritage recipes.",
+    "A supportive team environment built on respect and excellence.": "A supportive team environment built on respect and excellence.",
+    "At One More, experience the legacy of Cambodian cuisine through Chef Hor Chanthorn's 15 years of experience, vision, and passion, which shape every dish on our menu. His commitment to preserving and elevating Cambodian cuisine ensures an unparalleled culinary journey for all who dine with us.": "At One More, experience the legacy of Cambodian cuisine through Chef Hor Chanthorn's 15 years of experience, vision, and passion, which shape every dish on our menu. His commitment to preserving and elevating Cambodian cuisine ensures an unparalleled culinary journey for all who dine with us.",
+    "At One More, experience the legacy of Cambodian cuisine through Chef Khna Ra's 10 years of experience. His commitment to preserving and elevating Cambodian cuisine ensures an unparalleled culinary journey for all who dine with us.": "At One More, experience the legacy of Cambodian cuisine through Chef Khna Ra's 10 years of experience. His commitment to preserving and elevating Cambodian cuisine ensures an unparalleled culinary journey for all who dine with us.",
+    "Authentic Khmer Cuisine": "Authentic Khmer Cuisine",
+    "Boeung Kak": "Boeung Kak",
+    "Boeung Kak Team": "Boeung Kak Team",
+    "Branches": "Branches",
+    "Career opportunities across culinary, service, and events.": "Career opportunities across culinary, service, and events.",
+    "Careers": "Careers",
+    "Caring for every detail, from planning and sourcing to daily service.": "Caring for every detail, from planning and sourcing to daily service.",
+    "Celebrations With Heart": "Celebrations With Heart",
+    "Connect with us on:": "Connect with us on:",
+    "Creating moments worth remembering.": "Creating moments worth remembering.",
+    "Creative, experienced, and ready to make every gathering feel personal.": "Creative, experienced, and ready to make every gathering feel personal.",
+    "Email Address": "Email Address",
+    "Enter your email": "Enter your email",
+    "Enter your name": "Enter your name",
+    "Event catering": "Event catering",
+    "Expanding Roots": "Expanding Roots",
+    "Experienced planning and thoughtful service for intimate or large celebrations.": "Experienced planning and thoughtful service for intimate or large celebrations.",
+    "Explore Our Story": "Explore Our Story",
+    "Follow us on social media": "Follow us on social media",
+    "For us, Khmer hospitality starts at the table: a warm welcome, food made with care, and time shared without hurry. We choose fresh local ingredients, cook with respect for familiar flavors, and serve each guest as if they were part of our own home.": "For us, Khmer hospitality starts at the table: a warm welcome, food made with care, and time shared without hurry. We choose fresh local ingredients, cook with respect for familiar flavors, and serve each guest as if they were part of our own home.",
+    "Genuine Khmer Hospitality": "Genuine Khmer Hospitality",
+    "Grow With One More": "Grow With One More",
+    "Guardians of Khmer Flavor": "Guardians of Khmer Flavor",
+    "Guests sharing a meal at One More Restaurant": "Guests sharing a meal at One More Restaurant",
+    "Guests' Choice": "Guests' Choice",
+    "Head Chef": "Head Chef",
+    "Head Chef at Boeung Kak Branch. Warm, attentive, and genuinely invested in making every guest feel at home.": "Head Chef at Boeung Kak Branch. Warm, attentive, and genuinely invested in making every guest feel at home.",
+    "Help Us Serve You Better": "Help Us Serve You Better",
+    "Hor Chanthorn": "Hor Chanthorn",
+    "Hospitality Since 2008": "Hospitality Since 2008",
+    "How was your experience?": "How was your experience?",
+    "Khlara": "Khlara",
+    "Khmer Culture": "Khmer Culture",
+    "Khmer cooking experience": "Khmer cooking experience",
+    "Khna Ra": "Khna Ra",
+    "Learn More": "Learn More",
+    "Maximum Capacity": "Maximum Capacity",
+    "Memorable Experiences": "Memorable Experiences",
+    "Menu Items": "Menu Items",
+    "Mission": "Mission",
+    "Moments": "Moments",
+    "Moments That Matter": "Moments That Matter",
+    "More Than a Restaurant": "More Than a Restaurant",
+    "One More In Numbers": "One More In Numbers",
+    "One More Restaurant begins with a vision to preserve Khmer flavors.": "One More Restaurant begins with a vision to preserve Khmer flavors.",
+    "Our Commitment": "Our Commitment",
+    "Our Culinary Team": "Our Culinary Team",
+    "Our Event Team": "Our Event Team",
+    "Our Guiding Principles": "Our Guiding Principles",
+    "Our Journey": "Our Journey",
+    "Our Number": "Our Number",
+    "Our People": "Our People",
+    "Our Story": "Our Story",
+    "Our Story Begins": "Our Story Begins",
+    "Our Story Since 2008": "Our Story Since 2008",
+    "Our second home opens, bringing our signature hospitality to a vibrant neighborhood.": "Our second home opens, bringing our signature hospitality to a vibrant neighborhood.",
+    "Plan Your Event": "Plan Your Event",
+    "Please choose a star rating before submitting.": "Please choose a star rating before submitting.",
+    "Precision, respect for ingredients, and the joy of sharing heritage recipes.": "Precision, respect for ingredients, and the joy of sharing heritage recipes.",
+    "Preserving Cambodia's culinary traditions.": "Preserving Cambodia's culinary traditions.",
+    "Private dining and celebrations grow into an important part of the One More experience.": "Private dining and celebrations grow into an important part of the One More experience.",
+    "Rating out of 5 stars": "Rating out of 5 stars",
+    "Reserve a Table": "Reserve a Table",
+    "Rooms & Event Spaces": "Rooms & Event Spaces",
+    "Select a branch": "Select a branch",
+    "Send Your CV": "Send Your CV",
+    "Sending...": "Sending...",
+    "Service Team": "Service Team",
+    "Serving Phnom Penh": "Serving Phnom Penh",
+    "Since 2008, One More Restaurant has brought people together through authentic Khmer cuisine, warm hospitality, and memorable celebrations.": "Since 2008, One More Restaurant has brought people together through authentic Khmer cuisine, warm hospitality, and memorable celebrations.",
+    "Sous Chef": "Sous Chef",
+    "Spaces For Every Occasion": "Spaces For Every Occasion",
+    "Stay connected with us": "Stay connected with us",
+    "Submit Feedback": "Submit Feedback",
+    "Team Members": "Team Members",
+    "Tell us about your experience": "Tell us about your experience",
+    "Thank you! Your feedback has been sent successfully.": "Thank you! Your feedback has been sent successfully.",
+    "The Boeung Kak chef and service team work together to welcome every guest with care, warmth, and authentic Khmer hospitality.": "The Boeung Kak chef and service team work together to welcome every guest with care, warmth, and authentic Khmer hospitality.",
+    "The One More Restaurant team": "The One More Restaurant team",
+    "The People Behind It All": "The People Behind It All",
+    "The People Behind One More": "The People Behind One More",
+    "The Spirit of Khmer Hospitality": "The Spirit of Khmer Hospitality",
+    "The Toul Kork chef and service team bring heritage recipes, warm hospitality, and careful service to every guest experience.": "The Toul Kork chef and service team bring heritage recipes, warm hospitality, and careful service to every guest experience.",
+    "To become a leading Khmer restaurant brand while preserving the cuisine and hospitality of Cambodia.": "To become a leading Khmer restaurant brand while preserving the cuisine and hospitality of Cambodia.",
+    "To serve excellent Khmer food with thoughtful choices, warm service, and memorable experiences.": "To serve excellent Khmer food with thoughtful choices, warm service, and memorable experiences.",
+    "Today": "Today",
+    "Toul Kork": "Toul Kork",
+    "Toul Kork Team": "Toul Kork Team",
+    "Traditional recipes prepared with care, quality ingredients, and contemporary refinement.": "Traditional recipes prepared with care, quality ingredients, and contemporary refinement.",
+    "Trusted Event Destination": "Trusted Event Destination",
+    "View Careers": "View Careers",
+    "Vision": "Vision",
+    "Vision and Mission": "Vision and Mission",
+    "Warm Hospitality": "Warm Hospitality",
+    "Warm, attentive, and genuinely invested in making every guest feel at home.": "Warm, attentive, and genuinely invested in making every guest feel at home.",
+    "Warm, attentive, and invested in making every guest feel at home.": "Warm, attentive, and invested in making every guest feel at home.",
+    "We are a team of storytellers, chefs, and hosts dedicated to preserving Khmer heritage through exceptional hospitality.": "We are a team of storytellers, chefs, and hosts dedicated to preserving Khmer heritage through exceptional hospitality.",
+    "We continue serving families, businesses, and celebrations across Phnom Penh.": "We continue serving families, businesses, and celebrations across Phnom Penh.",
+    "We could not send your feedback. Please try again.": "We could not send your feedback. Please try again.",
+    "We read every message and value your honest feedback.": "We read every message and value your honest feedback.",
+    "Welcoming dining rooms, private rooms, and flexible event spaces.": "Welcoming dining rooms, private rooms, and flexible event spaces.",
+    "Welcoming every guest with genuine care.": "Welcoming every guest with genuine care.",
+    "What did you enjoy, and what could we improve?": "What did you enjoy, and what could we improve?",
+    "Which branch did you visit?": "Which branch did you visit?",
+    "Why Guests Choose One More": "Why Guests Choose One More",
+    "Your Feedback": "Your Feedback",
+    "Your Name": "Your Name",
+    "Your experience matters to us. Share your thoughts and help us make every visit to One More even better.": "Your experience matters to us. Share your thoughts and help us make every visit to One More even better.",
+    "events hosted with care and excellence.": "events hosted with care and excellence.",
+    "star": "star",
+    "stars": "stars"
   }
 }

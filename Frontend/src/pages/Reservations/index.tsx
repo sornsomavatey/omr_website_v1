@@ -356,6 +356,72 @@ const getMealCategoryFromTime = (
   }
 };
 
+/**
+ * Format date using local timezone components YYYY-MM-DD instead of toISOString()
+ * to prevent UTC offset day shifts (UI-006 fix)
+ */
+const formatLocalDateString = (d: Date): string => {
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
+
+/**
+ * Check if a given date is strictly in the past (before today's local date)
+ */
+const isPastDate = (d: Date): boolean => {
+  const now = new Date();
+  const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const targetStart = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+  return targetStart < todayStart;
+};
+
+/**
+ * Check if a date matches local today
+ */
+const isTodayDate = (d: Date): boolean => {
+  const now = new Date();
+  return (
+    d.getFullYear() === now.getFullYear() &&
+    d.getMonth() === now.getMonth() &&
+    d.getDate() === now.getDate()
+  );
+};
+
+/**
+ * Parse time string (e.g. "06:30 AM", "02:00 PM") into minutes from midnight
+ */
+const parseTimeToMinutes = (timeStr: string): number | null => {
+  if (!timeStr) return null;
+  const normalized = timeStr.replace(/[^0-9:a-zA-Z\s]/g, '').trim();
+  const match = normalized.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)?$/i);
+  if (!match) return null;
+  let hours = parseInt(match[1], 10);
+  const minutes = parseInt(match[2], 10);
+  const period = match[3]?.toUpperCase();
+
+  if (period === 'PM' && hours < 12) hours += 12;
+  if (period === 'AM' && hours === 12) hours = 0;
+
+  return hours * 60 + minutes;
+};
+
+/**
+ * Check if a time slot has already passed for the selected date with a lead time buffer (UI-007 fix)
+ */
+const isPastTimeSlot = (timeStr: string, date: Date, leadMinutes = 15): boolean => {
+  if (isPastDate(date)) return true;
+  if (!isTodayDate(date)) return false;
+  const slotMinutes = parseTimeToMinutes(timeStr);
+  if (slotMinutes === null) return false;
+
+  const now = new Date();
+  const currentMinutes = now.getHours() * 60 + now.getMinutes();
+  return slotMinutes <= currentMinutes + leadMinutes;
+};
+
+
 export default function ReservationPage() {
   const { t, getObject, isKhmer, language } = useTranslation();
   const [resData, setResData] = useState<any>(null);
@@ -414,6 +480,15 @@ export default function ReservationPage() {
       setTimeCategory(detectedCategory);
     }
   }, [selectedTime, customTime]);
+
+  // Reset selected time if it is in the past for the chosen date (UI-007 fix)
+  useEffect(() => {
+    const activeTime = customTime || selectedTime;
+    if (activeTime && isPastTimeSlot(activeTime, selectedDate)) {
+      setSelectedTime('');
+      setCustomTime('');
+    }
+  }, [selectedDate]);
 
   // Confirmation modal download & email prompt tracking state
   const [hasDownloadedConfirmation, setHasDownloadedConfirmation] = useState(false);
@@ -881,12 +956,23 @@ export default function ReservationPage() {
     }
 
     // 3. Date & Time check
+    if (isPastDate(selectedDate)) {
+      alert(t('reservationPage.validation.pastDateNotAllowed', undefined, "The selected date has already passed. Please select a future date."));
+      return;
+    }
+
     if (!selectedDate || (!selectedTime && !customTime.trim())) {
       alert(t('reservationPage.validation.dateTimeRequired', undefined, "Please select a Date & Time for your reservation."));
       const element = document.querySelector(".date-time-picker-grid");
       if (element) {
         element.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
+      return;
+    }
+
+    const activeTimeVal = customTime || selectedTime;
+    if (isPastTimeSlot(activeTimeVal, selectedDate)) {
+      alert(t('reservationPage.validation.timePassed', undefined, "The selected time slot has already passed for today. Please select a future time slot."));
       return;
     }
     if (isSubmitting) return;
@@ -906,7 +992,9 @@ export default function ReservationPage() {
       customer_email: email.trim() || null,
       customer_phone: phone.trim(),
       branch_id: selectedBranch === 'Toul Kork' ? 1 : 2,
-      reservation_date: selectedDate.toISOString().split('T')[0],
+      branch_name: selectedBranch,
+      branch: selectedBranch,
+      reservation_date: formatLocalDateString(selectedDate),
       reservation_time: normalizeToEnglishTime(customTime || selectedTime),
       guest_count: adults + childrenCount,
       adults: adults,
@@ -1649,14 +1737,18 @@ export default function ReservationPage() {
                         selectedDate.getDate() === day &&
                         selectedDate.getMonth() === date.getMonth() &&
                         selectedDate.getFullYear() === date.getFullYear();
+                      const isPast = isPastDate(date);
 
                       return (
                         <button
                           key={idx}
                           type="button"
-                          onClick={() => setSelectedDate(date)}
+                          disabled={isPast}
+                          onClick={() => {
+                            if (!isPast) setSelectedDate(date);
+                          }}
                           className={`calendar-cell ${!isCurrentMonth ? 'calendar-cell-other-month' : ''} ${isSelected ? 'calendar-cell-selected' : ''
-                            }`}
+                            } ${isPast ? 'opacity-30 cursor-not-allowed pointer-events-none bg-gray-50 text-gray-300' : ''}`}
                         >
                           <span>{localizeNumber(day)}</span>
                         </button>
@@ -1686,17 +1778,22 @@ export default function ReservationPage() {
                     {timeSlots[timeCategory].map((slot) => {
                       const activeTime = customTime || selectedTime;
                       const isSelected = activeTime === slot || activeTime === formatTimeDisplay(slot);
+                      const isPassed = isPastTimeSlot(slot, selectedDate);
 
                       return (
                         <button
                           key={slot}
                           type="button"
+                          disabled={isPassed}
                           onClick={() => {
+                            if (isPassed) return;
                             const formatted = formatTimeDisplay(slot);
                             setSelectedTime(formatted);
                             setCustomTime(formatted);
                           }}
-                          className={`time-slot-btn ${isSelected ? 'time-slot-btn-selected' : ''}`}
+                          className={`time-slot-btn ${isSelected ? 'time-slot-btn-selected' : ''} ${
+                            isPassed ? 'opacity-35 line-through cursor-not-allowed bg-gray-100 text-gray-400 border-gray-200' : ''
+                          }`}
                         >
                           {formatTimeDisplay(slot)}
                         </button>

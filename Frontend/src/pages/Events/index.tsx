@@ -269,7 +269,10 @@ function CustomEventSelect({
   disabled?: boolean;
   t: any;
 }) {
-  const [selected, setSelected] = useState('');
+  // Default to 'Wedding' so the dropdown trigger immediately displays the translated label
+  // (e.g., "អាពាហ៍ពិពាហ៍" in Khmer, "Wedding" in English, "婚礼" in Chinese, "웨딩" in Korean)
+  // Legacy unselected state used: useState('') which produced untranslated 'Wedding' fallback
+  const [selected, setSelected] = useState('Wedding');
   const [hasUserSelected, setHasUserSelected] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -293,7 +296,7 @@ function CustomEventSelect({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const currentOption = eventTypes.find(opt => opt.value === selected);
+  const currentOption = eventTypes.find(opt => opt.value === selected) || eventTypes[0];
 
   return (
     <div className="custom-event-select-container" ref={dropdownRef}>
@@ -307,10 +310,11 @@ function CustomEventSelect({
         aria-expanded={isOpen}
       >
         <span className={`custom-event-select-label ${!hasUserSelected ? 'custom-event-select-label-placeholder' : ''}`}>
-          {currentOption ? currentOption.label : t('eventsPage.inquiry.form.selectEventType', undefined, 'Wedding')}
+          {currentOption.label}
         </span>
         <ChevronDown size={18} className={`custom-event-select-icon ${isOpen ? 'rotate-180' : ''}`} />
       </button>
+
 
       {isOpen && (
         <div className="custom-event-select-dropdown" role="listbox">
@@ -751,9 +755,9 @@ Our event coordinator will contact you within 24 hours.`;
     const guest_count = Number(formData.get('guest_count') || 1);
     const special_requirements = (formData.get('special_requirements') as string || '').trim();
 
-    // Construct valid payload
     const email = emailInput || 'noemail@onemore.com';
-    const event_date = new Date().toISOString().split('T')[0]; // Current date
+    const today = new Date();
+    const event_date = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
 
     const package_details = [
       `Branch: ${branch}`,
@@ -764,18 +768,24 @@ Our event coordinator will contact you within 24 hours.`;
     setIsSubmitting(true);
 
     try {
+      const ref = `EVT-${Math.floor(10000 + Math.random() * 90000)}`;
+      setBookingRef(ref);
+
       await createEventBooking({
         name,
         email,
         phone,
+        branch,
+        branch_name: branch,
+        company,
         event_type,
         guest_count,
         event_date,
+        special_requirements,
+        booking_ref: ref,
         package_details
       });
 
-      const ref = `EVT-${Math.floor(10000 + Math.random() * 90000)}`;
-      setBookingRef(ref);
 
       setSubmittedData({
         name,

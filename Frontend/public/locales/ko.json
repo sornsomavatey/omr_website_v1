@@ -150,22 +150,22 @@
         "family": {
           "name": "실내 식사 공간",
           "tag": "시그니처 분위기",
-          "description": "아름답고 넓은 실내 식사 공간은 에어컨이 완비되어 쾌적하며, 우아한 곡선형 목재 디자인과 어우러져 모든 식사를 위한 즐거운 분위기를 제공합니다."
+          "description": "시그니처 목재 파도 건축물을 특징으로 하는 아름답게 디자인된 실내 식사 공간은 편안하고 세련된 식사 환경을 제공합니다."
         },
         "privateRoom": {
           "name": "프라이빗 다이닝 룸",
           "tag": "개인적인 경험",
-          "description": "조용하고 아늑한 프라이빗 룸으로, 생일 행사와 비즈니스 식사 모임, 그리고 사적인 공간이 필요한 특별한 순간에 적합합니다."
+          "description": "생일, 비즈니스 만찬, 프라이버시가 보장되는 특별한 순간을 위한 친밀한 공간입니다."
         },
         "business": {
           "name": "비즈니스 식사 공간",
           "tag": "전문적인 설정",
-          "description": "조용한 회의실로 소규모 및 대규모 회의, 비즈니스 또는 고객 미팅, 팀 식사 모임과 격식 있는 식사에 적합합니다."
+          "description": "고객 회의, 팀 식사, 정식 식사를 위한 조용하고 세련된 환경입니다."
         },
         "kidZone": {
           "name": "어린이 친화적인 코너",
           "tag": "가족을 위한",
-          "description": "가족에게 가장 적합한 어린이 공간으로, 아이들이 안전하고 즐겁게 노는 동안 안심하고 맛있는 식사를 즐기실 수 있습니다."
+          "description": "아이들이 환영받고 안전하다고 느끼는 동안 가족이 식사를 즐길 수 있는 편안한 공간입니다."
         },
         "event": {
           "name": "야외 식사 공간",
@@ -641,28 +641,28 @@
       "features": [
         {
           "name": "가족 식사",
-          "toulKork": true,
-          "boeungKak": true
+          "toulKork": "TRUE",
+          "boeungKak": "TRUE"
         },
         {
           "name": "프라이빗 룸",
-          "toulKork": true,
-          "boeungKak": true
+          "toulKork": "TRUE",
+          "boeungKak": "TRUE"
         },
         {
           "name": "비즈니스 미팅",
-          "toulKork": true,
-          "boeungKak": true
+          "toulKork": "TRUE",
+          "boeungKak": "TRUE"
         },
         {
           "name": "이벤트 공간",
-          "toulKork": true,
-          "boeungKak": true
+          "toulKork": "TRUE",
+          "boeungKak": "TRUE"
         },
         {
           "name": "주차",
-          "toulKork": true,
-          "boeungKak": true
+          "toulKork": "TRUE",
+          "boeungKak": "TRUE"
         },
         {
           "name": "용량",
@@ -673,12 +673,12 @@
     },
     "locations": [
       {
-      "id": "toulKork",
+        "id": "toulKork",
         "name": "One More Restaurant툴 코르크",
         "address": "37 St 315, 프놈펜 120407",
         "phone": "023 888 222",
         "hours": "매일: 오전 06:00 - 오후 10:00",
-        "image": "@/assets/home-v2/toul-kork-exterior.webp",
+        "image": "@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.webp",
         "tags": [
           "가족 친화적",
           "비즈니스 미팅",
@@ -694,12 +694,12 @@
         ]
       },
       {
-      "id": "boeungKak",
+        "id": "boeungKak",
         "name": "One More Restaurant보응각",
         "address": "G2 스트리트 R11, 프놈펜 120210",
         "phone": "021 888 222",
         "hours": "매일: 오전 06:00 - 오후 10:00",
-        "image": "@/assets/home-v2/boeung-kak-exterior.webp",
+        "image": "@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.webp",
         "tags": [
           "이벤트 공간",
           "대규모 그룹",
@@ -720,8 +720,8 @@
     "hero": {
       "eyebrow": "EST. 2008 · 프놈펜",
       "title": "테이블 예약",
-      "desc": "전통의 명성을 이어온 레시피가 세련되고 우아한 분위기 속에서 자랑스럽게 되살아나는 최고의 캄보디아 다이닝 경험에 빠져보세요.",
-      "backgroundImage": "@/assets/home-v2/boeung-kak-exterior.webp",
+      "desc": "크메르 요리 유산의 정점을 경험해보세요. 시대를 초월한 럭셔리함 속에서 재발견된 잊혀진 맛의 여행.",
+      "backgroundImage": "@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.webp",
       "backgroundAlt": "One More Restaurant식당"
     },
     "guestInformationTitle": "손님 정보",
@@ -899,7 +899,7 @@
         "address": "37 St 315, 프놈펜 120407",
         "phone": "023 888 222",
         "hours": "매일: 오전 06:00 - 오후 10:00",
-        "img": "@/assets/home-v2/toul-kork-exterior.webp",
+        "img": "@/assets/home-v2/3ec2cb399ae1a979be0576b7024f314c93994687.webp",
         "tags": [
           "가족 친화적",
           "비즈니스 미팅",
@@ -912,7 +912,7 @@
         "address": "G2 스트리트 R11, 프놈펜 120210",
         "phone": "021 888 222",
         "hours": "매일: 오전 06:00 - 오후 10:00",
-        "img": "@/assets/home-v2/boeung-kak-exterior.webp",
+        "img": "@/assets/home-v2/9589c143859fce389be35b08b186282f736d9245.webp",
         "tags": [
           "이벤트 공간",
           "대규모 그룹",
@@ -956,7 +956,7 @@
       {
         "id": "실내",
         "name": "실내",
-        "img": "@/assets/home-v2/private-event-space.webp"
+        "img": "@/assets/home-v2/e8f4b56e423777f3f6c3df39c6ef78914b278e17.webp"
       },
       {
         "id": "집 밖의",
@@ -966,7 +966,7 @@
       {
         "id": "개인실",
         "name": "프라이빗 룸",
-        "img": "@/assets/home-v2/event-hall.webp"
+        "img": "@/assets/home-v2/31b0910d38c033be0ce5292cf4a1d68688308c6b.webp"
       },
       {
         "id": "VIP룸",
