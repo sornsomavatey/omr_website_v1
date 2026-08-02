@@ -102,7 +102,7 @@ const homepagePartners: PartnerCompany[] = [
 
 
 function HeroSection({ hero }: { hero: any }) {
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
 
   const handleScrollDown = () => {
     const targetSection = document.getElementById('menu');
@@ -114,6 +114,43 @@ function HeroSection({ hero }: { hero: any }) {
       block: 'start',
     });
   };
+
+  // Determine title for current language and CMS data
+  let titleLine1 = t('home.hero.titleLine1', undefined, 'Experience Authentic');
+  let titleHighlight = t('home.hero.titleHighlight', undefined, 'Khmer Cuisine');
+
+  if (language === 'EN' && hero?.title) {
+    const fullTitle = hero.title.trim();
+    if (fullTitle.includes('\n')) {
+      const parts = fullTitle.split('\n');
+      titleLine1 = parts[0];
+      titleHighlight = parts.slice(1).join(' ');
+    } else {
+      const words = fullTitle.split(/\s+/);
+      if (words.length > 2) {
+        titleLine1 = words.slice(0, 2).join(' ');
+        titleHighlight = words.slice(2).join(' ');
+      } else if (words.length === 2) {
+        titleLine1 = words[0];
+        titleHighlight = words[1];
+      } else {
+        titleLine1 = '';
+        titleHighlight = fullTitle;
+      }
+    }
+  }
+
+  const subtitleText = (language === 'EN' && hero?.subtitle)
+    ? hero.subtitle
+    : t('home.hero.description', undefined, 'Traditional Cambodian flavors served in a modern dining experience.');
+
+  const reserveBtnText = (language === 'EN' && hero?.cta_reserve)
+    ? hero.cta_reserve
+    : t('home.hero.reserveButton', undefined, 'Reserve a Table');
+
+  const menuBtnText = (language === 'EN' && hero?.cta_menu)
+    ? hero.cta_menu
+    : t('home.hero.menuButton', undefined, 'Explore Menu');
 
   return (
     <section
@@ -134,23 +171,33 @@ function HeroSection({ hero }: { hero: any }) {
 
       <div className="home-hero-content relative z-10 text-center text-white max-w-[1260px] px-6">
         <h1 className="page-hero-title page-hero-title--home font-serif text-5xl md:text-7xl lg:text-[80px] leading-tight mb-8 font-normal tracking-wide drop-shadow-sm">
-          <span className="hero-title-top">
-            {t('home.hero.titleLine1', undefined, 'Experience Authentic')}
-          </span>
-          <br />
+          {titleLine1 && (
+            <>
+              <span className="hero-title-top">
+                {titleLine1}
+              </span>
+              <br />
+            </>
+          )}
           <span className="text-white">
-            {t('home.hero.titleHighlight', undefined, 'Khmer Cuisine')}
+            {titleHighlight}
           </span>
         </h1>
+
+        {subtitleText && (
+          <p className="text-white/80 text-lg md:text-xl font-sans max-w-2xl mx-auto mb-8 font-light leading-relaxed">
+            {subtitleText}
+          </p>
+        )}
 
         <div className="home-hero-controls">
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
             <Link to="/reservations" className="custom-btn-primary">
-              {t('home.hero.reserveButton', undefined, 'Reserve a Table')}
+              {reserveBtnText}
             </Link>
 
             <Link to="/menu" className="custom-btn-secondary">
-              {t('home.hero.menuButton', undefined, 'Explore Menu')}{' '}
+              {menuBtnText}{' '}
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
