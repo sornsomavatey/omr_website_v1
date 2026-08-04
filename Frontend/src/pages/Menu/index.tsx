@@ -510,17 +510,17 @@ export default function Menu() {
 
       {/* Category Filter Bar Under Hero (Normal Flow) */}
       <div className="menu-filter-slot relative w-full">
-        <div className="menu-filter-bar relative flex items-center justify-between min-h-[44px] max-w-4xl mx-auto w-full px-3 sm:px-4 overflow-hidden">
+        <div className="menu-filter-bar relative flex items-center justify-center min-h-[44px] max-w-5xl mx-auto w-full px-3 sm:px-4">
           {/* Category Pills & Search Container */}
           <div
-            className={`flex items-center justify-between w-full transition-all duration-400 cubic-bezier(0.16,1,0.3,1) transform ${
+            className={`flex items-center justify-center gap-2.5 w-full transition-all duration-400 cubic-bezier(0.16,1,0.3,1) transform ${
               isSearchExpanded || searchQuery
                 ? '-translate-x-16 opacity-0 pointer-events-none'
                 : 'translate-x-0 opacity-100 pointer-events-auto'
             }`}
           >
-            {/* Scrollable Category Pills */}
-            <div className="flex items-center gap-1.5 sm:gap-2.5 overflow-x-auto scrollbar-none py-1 flex-1 min-w-0 pr-1.5">
+            {/* Scrollable / Centered Category Pills */}
+            <div className="flex items-center justify-center gap-2.5 overflow-x-auto scrollbar-none py-1 max-w-full">
               {categories.map((category) => {
                 const isActive = activeCategory === category;
                 return (
@@ -536,15 +536,15 @@ export default function Menu() {
               })}
             </div>
 
-            {/* Small Circular Search Icon Button (ALWAYS VISIBLE & ANCHORED) */}
+            {/* Circular Search Icon Button (42px height matching pills) */}
             <button
               type="button"
               onClick={handleOpenSearch}
-              className="w-8.5 h-8.5 sm:w-10 sm:h-10 rounded-full border border-[#6b9158]/40 hover:border-[#6b9158] bg-white text-[#6b9158] hover:bg-[#6b9158]/10 flex items-center justify-center transition-all shadow-xs cursor-pointer shrink-0 ml-1"
+              className="w-[42px] h-[42px] min-w-[42px] min-h-[42px] rounded-full border border-[#6b9158]/40 hover:border-[#6b9158] bg-white text-[#6b9158] hover:bg-[#6b9158]/10 flex items-center justify-center transition-all shadow-xs cursor-pointer shrink-0"
               aria-label={t('menu.search.placeholder', undefined, 'Search dishes')}
               title={isKhmer ? 'ស្វែងរក' : 'Search'}
             >
-              <Search className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+              <Search className="w-4 h-4" />
             </button>
           </div>
         </div>
@@ -552,8 +552,8 @@ export default function Menu() {
 
       {/* Sticky Category Filter Tabs (Normal Flow when scrolled) */}
       <div className={`menu-sticky-tabs-container ${isStickyVisible && !isSearchExpanded && !searchQuery ? 'menu-sticky-tabs-visible' : 'menu-sticky-tabs-hidden'}`}>
-        <div className="menu-sticky-tabs-inner flex items-center justify-between max-w-4xl mx-auto w-full px-3 sm:px-4">
-          <div className="flex items-center gap-1.5 sm:gap-2.5 overflow-x-auto scrollbar-none py-1 flex-1 min-w-0 pr-1.5">
+        <div className="menu-sticky-tabs-inner flex items-center justify-center max-w-5xl mx-auto w-full px-3 sm:px-4">
+          <div className="flex items-center justify-center gap-2.5 overflow-x-auto scrollbar-none py-1 max-w-full">
             {categories.map((category) => {
               const isActive = activeCategory === category;
               return (
@@ -571,15 +571,15 @@ export default function Menu() {
             })}
           </div>
 
-          {/* Small Circular Sticky Bar Search Button (ALWAYS VISIBLE & ANCHORED) */}
+          {/* Circular Sticky Bar Search Button (42px height matching pills) */}
           <button
             type="button"
             onClick={handleOpenSearch}
-            className="w-8.5 h-8.5 sm:w-9 sm:h-9 rounded-full border border-[#5b8045]/40 hover:border-[#5b8045] bg-white text-[#5b8045] hover:bg-[#5b8045]/10 flex items-center justify-center transition-all shadow-xs cursor-pointer shrink-0 ml-1"
+            className="w-[42px] h-[42px] min-w-[42px] min-h-[42px] rounded-full border border-[#5b8045]/40 hover:border-[#5b8045] bg-white text-[#5b8045] hover:bg-[#5b8045]/10 flex items-center justify-center transition-all shadow-xs cursor-pointer shrink-0 ml-1.5"
             aria-label={t('menu.search.placeholder', undefined, 'Search dishes')}
             title={isKhmer ? 'ស្វែងរក' : 'Search'}
           >
-            <Search className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+            <Search className="w-4 h-4" />
           </button>
         </div>
       </div>
