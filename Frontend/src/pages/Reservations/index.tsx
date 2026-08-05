@@ -472,8 +472,8 @@ export default function ReservationPage() {
   const [email, setEmail] = useState('');
 
   // Step 3: Guests
-  const [adults, setAdults] = useState(4);
-  const [childrenCount, setChildrenCount] = useState(2);
+  const [adults, setAdults] = useState(1);
+  const [childrenCount, setChildrenCount] = useState(0);
 
   // Step 3 (repeated): Date & Time
   const today = new Date();
@@ -1320,8 +1320,8 @@ export default function ReservationPage() {
     const now = new Date();
     setFullName('');
     setPhone('');
-    setAdults(4);
-    setChildrenCount(2);
+    setAdults(1);
+    setChildrenCount(0);
     setCurrentYear(now.getFullYear());
     setCurrentMonth(now.getMonth());
     setSelectedDate(now);
