@@ -9,6 +9,8 @@ import PartnerCompanySlider, {
   type PartnerCompany,
 } from '@/components/PartnerCompanySlider';
 import { useTranslation } from '@/hooks/useTranslation';
+
+
 import {
   ArrowRight,
   ChevronLeft,
@@ -232,7 +234,7 @@ function SpacesSection({ spaces }: { spaces: DiningSpace[] }) {
   const spaceKeys = ['family', 'privateRoom', 'business', 'kidZone', 'event'];
 
   return (
-    <section className="w-full py-24 bg-[#212d1b] text-white flex flex-col items-center">
+    <section className="gsap-spaces-section w-full py-24 bg-[#212d1b] text-white flex flex-col items-center overflow-hidden">
       <div className="max-w-[1440px] w-full px-6 md:px-[64px] flex flex-col items-center">
         <SectionHeader
           eyebrow={t('home.spaces.eyebrow')}
@@ -257,6 +259,8 @@ function SpacesSection({ spaces }: { spaces: DiningSpace[] }) {
               return <SpaceCard key={`${space.name}-${index}`} space={translatedSpace} />;
             })}
           </div>
+
+
 
           <div className="flex gap-4">
             <button
@@ -323,12 +327,13 @@ function LocationsSection({
               tags: branch.tags.map((tag: string) => t(tagKeyMap[tag] || tag, undefined, tag)),
             };
             return (
-              <LocationCard
-                key={branch.id}
-                branch={translatedBranch}
-                onDetailClick={onDetailClick}
-                onMapClick={onMapClick}
-              />
+              <div key={branch.id} className="gsap-location-card w-full">
+                <LocationCard
+                  branch={translatedBranch}
+                  onDetailClick={onDetailClick}
+                  onMapClick={onMapClick}
+                />
+              </div>
             );
           })}
         </div>
@@ -435,6 +440,7 @@ export default function HomePage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+
     Promise.all([getHomeData(), getTestimonialsData()])
       .then(([homeRes, testimonialsRes]) => {
         setData(homeRes);
@@ -547,6 +553,7 @@ export default function HomePage() {
 
   return (
     <div className="bg-white flex flex-col items-center w-full overflow-x-hidden">
+
       <HeroSection hero={data.hero} />
       <SignatureDishes dishes={signatureDishesList} />
       <SpacesSection spaces={diningSpacesList} />
@@ -590,3 +597,4 @@ export default function HomePage() {
     </div>
   );
 }
+

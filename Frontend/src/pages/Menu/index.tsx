@@ -3,6 +3,9 @@ import DishCard from '@/components/ui/dish-card';
 import { DishCardSkeleton, Skeleton } from '@/components/ui/skeleton';
 import { getMenuData } from '@/lib/api';
 import { useTranslation } from '@/hooks/useTranslation';
+import { formatPrice } from '@/lib/price';
+import { Search, X, TrendingUp } from 'lucide-react';
+
 import './index.css';
 import imgLotusHalf from '@/assets/menu/half-lotus-pattern.webp';
 
@@ -37,8 +40,12 @@ type MenuCategory = 'Breakfast' | 'Lunch' | 'Dinner' | 'Dessert' | 'Drinks';
 type MenuItem = {
   id: string;
   name: string;
+  nameEn: string;
+  nameKh?: string;
   category: string;
+  categoryEn: string;
   desc: string;
+  descEn: string;
   img: string;
   price: string;
   badge?: string;
@@ -74,10 +81,58 @@ export default function Menu() {
   const [menuDataState, setMenuDataState] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isSearchExpanded, setIsSearchExpanded] = useState(false);
+  const searchInputRef = useRef<HTMLInputElement>(null);
   const [activeCategory, setActiveCategory] = useState<MenuCategory>('Breakfast');
+
+  useEffect(() => {
+    if (isSearchExpanded && searchInputRef.current) {
+      searchInputRef.current.focus({ preventScroll: true });
+    }
+  }, [isSearchExpanded]);
+
+  const handleOpenSearch = () => {
+    setIsSearchExpanded(true);
+    const heroSection = document.getElementById('menu-hero');
+    if (heroSection) {
+      const heroBottom = heroSection.getBoundingClientRect().bottom + window.scrollY;
+      if (window.scrollY < heroBottom - 100) {
+        const targetElement = document.getElementById(activeCategory.toLowerCase());
+        if (targetElement) {
+          targetElement.scrollIntoView({ behavior: 'smooth' });
+        } else {
+          window.scrollTo({
+            top: heroBottom - 60,
+            behavior: 'smooth',
+          });
+        }
+      }
+    }
+  };
+
+  const handleSelectDishResult = (dishId: string) => {
+    setIsSearchExpanded(false);
+    setSearchQuery('');
+    setTimeout(() => {
+      const el = document.getElementById(`menu-dish-${dishId}`) || document.getElementById(dishId);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }, 60);
+  };
+
+
+
   const [isStickyVisible, setIsStickyVisible] = useState(false);
   const [isLotusVisible, setIsLotusVisible] = useState(false);
-  const [revealedSections, setRevealedSections] = useState<Record<string, boolean>>({});
+  const [revealedSections, setRevealedSections] = useState<Record<string, boolean>>({
+    breakfast: true,
+    lunch: true,
+    dinner: true,
+    dessert: true,
+    drinks: true,
+  });
   const observerRef = useRef<IntersectionObserver | null>(null);
   const pendingScrollRestoreRef = useRef<{ id: string; top: number } | null>(null);
 
@@ -264,6 +319,8 @@ export default function Menu() {
   }, [loading, error, menuDataState]);
 
   const handleCategoryClick = (category: MenuCategory) => {
+    setIsSearchExpanded(false);
+    setSearchQuery('');
     const id = category.toLowerCase();
     setIsLotusVisible(true);
     // Immediately reveal the clicked section so it's never invisible
@@ -355,15 +412,23 @@ export default function Menu() {
     acc[category] = itemsList.map((item: any, itemIndex: number) => {
       const localizedItem = translatedMenuItems[category.toLowerCase()]?.[itemIndex];
       const localizedLiveName = item.id != null ? translatedLiveItems[String(item.id)] : undefined;
+      const englishName = item.name || localizedItem?.name || '';
+      const englishDesc = item.desc || '';
+      const khmerName = item.name_kh || '';
+
       return {
         id: `${category.toLowerCase()}-${item.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`,
         name: isKhmer
           ? (localizedLiveName || item.name_kh || item.name)
           : (localizedLiveName || localizedItem?.name || item.name),
+        nameEn: englishName,
+        nameKh: khmerName,
         category: localizedItem?.category || translatedCategoryNames[category],
+        categoryEn: category,
         desc: language === 'EN'
           ? (item.desc || '')
           : (localizedItem?.desc || item.desc || ''),
+        descEn: englishDesc,
         badge: localizedItem?.badge || item.badge,
         img: item.img,
         price: item.price,
@@ -371,6 +436,50 @@ export default function Menu() {
     });
     return acc;
   }, {} as Record<MenuCategory, MenuItem[]>);
+
+  const matchesSearchQuery = (dish: MenuItem, query: string): boolean => {
+    if (!query || !query.trim()) return true;
+    const rawQuery = query.toLowerCase().trim();
+
+    // Expand search terms (e.g. 'ice' <-> 'iced', 'noodle' <-> 'noodles', 'soup' <-> 'kuyteav')
+    const queryTerms = new Set<string>([rawQuery]);
+    if (rawQuery === 'ice') queryTerms.add('iced');
+    if (rawQuery === 'iced') queryTerms.add('ice');
+    if (rawQuery === 'noodle') queryTerms.add('noodles');
+    if (rawQuery === 'noodles') queryTerms.add('noodle');
+    if (rawQuery === 'kuyteav' || rawQuery === 'kuy teav' || rawQuery === 'kuyteavs') {
+      queryTerms.add('soup');
+      queryTerms.add('kuyteav');
+      queryTerms.add('គុយទាវ');
+      queryTerms.add('ស៊ុប');
+    }
+    if (rawQuery === 'soup' || rawQuery === 'soups' || rawQuery === 'ស៊ុប') {
+      queryTerms.add('soup');
+      queryTerms.add('kuyteav');
+      queryTerms.add('ស៊ុប');
+      queryTerms.add('គុយទាវ');
+    }
+
+    const fieldsToSearch = [
+      dish.name,
+      dish.desc,
+      dish.category,
+      dish.nameEn,
+      dish.descEn,
+      dish.categoryEn,
+      dish.nameKh || '',
+    ].map((f) => f.toLowerCase());
+
+    return Array.from(queryTerms).some((q) => {
+      // For 'ice' or 'iced', use word-boundary matching so it matches iced beverages without matching 'rice', 'sliced', 'spiced', 'service', etc.
+      if (q === 'ice' || q === 'iced') {
+        const regex = new RegExp(`\\b${q}\\b`, 'i');
+        return fieldsToSearch.some((field) => regex.test(field));
+      }
+
+      return fieldsToSearch.some((field) => field.includes(q));
+    });
+  };
 
   const { hero } = menuDataState;
   const heroBg = imageMapper[hero.backgroundImage] || imgHeroBg;
@@ -399,45 +508,273 @@ export default function Menu() {
         </div>
       </section>
 
-      {/* Category Filter Bar Under Hero */}
-      <div className="menu-filter-slot">
-        <div className="menu-filter-bar">
-          {categories.map((category) => {
-            const isActive = activeCategory === category;
-            return (
-              <button
-                key={category}
-                type="button"
-                onClick={() => handleCategoryClick(category)}
-                className={`menu-filter-btn ${isActive ? 'active' : ''}`}
-              >
-                {translatedCategoryNames[category]}
-              </button>
-            );
-          })}
+      {/* Category Filter Bar Under Hero (Normal Flow) */}
+      <div className="menu-filter-slot relative w-full">
+        <div className="menu-filter-bar relative flex items-center justify-center min-h-[44px] max-w-5xl mx-auto w-full px-3 sm:px-4">
+          {/* Category Pills & Search Container */}
+          <div
+            className={`flex items-center justify-center gap-2.5 w-full transition-all duration-400 cubic-bezier(0.16,1,0.3,1) transform ${
+              isSearchExpanded || searchQuery
+                ? '-translate-x-16 opacity-0 pointer-events-none'
+                : 'translate-x-0 opacity-100 pointer-events-auto'
+            }`}
+          >
+            {/* Scrollable / Centered Category Pills */}
+            <div className="flex items-center justify-center gap-2.5 overflow-x-auto scrollbar-none py-1 max-w-full">
+              {categories.map((category) => {
+                const isActive = activeCategory === category;
+                return (
+                  <button
+                    key={category}
+                    type="button"
+                    onClick={() => handleCategoryClick(category)}
+                    className={`menu-filter-btn shrink-0 ${isActive ? 'active' : ''}`}
+                  >
+                    {translatedCategoryNames[category]}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Circular Search Icon Button (42px height matching pills) */}
+            <button
+              type="button"
+              onClick={handleOpenSearch}
+              className="w-[42px] h-[42px] min-w-[42px] min-h-[42px] rounded-full border border-[#6b9158]/40 hover:border-[#6b9158] bg-white text-[#6b9158] hover:bg-[#6b9158]/10 flex items-center justify-center transition-all shadow-xs cursor-pointer shrink-0"
+              aria-label={t('menu.search.placeholder', undefined, 'Search dishes')}
+              title={isKhmer ? 'ស្វែងរក' : 'Search'}
+            >
+              <Search className="w-4 h-4" />
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* Sticky Category Filter Tabs */}
-      <div className={`menu-sticky-tabs-container ${isStickyVisible ? 'menu-sticky-tabs-visible' : 'menu-sticky-tabs-hidden'}`}>
-        <div className="menu-sticky-tabs-inner">
-          {categories.map((category) => {
-            const isActive = activeCategory === category;
-            return (
-              <button
-                key={category}
-                type="button"
-                onClick={() => handleCategoryClick(category)}
-                className={`category-pill-btn ${
-                  isActive ? 'category-pill-btn-active' : 'category-pill-btn-inactive'
-                }`}
-              >
-                {translatedCategoryNames[category]}
-              </button>
-            );
-          })}
+      {/* Sticky Category Filter Tabs (Normal Flow when scrolled) */}
+      <div className={`menu-sticky-tabs-container ${isStickyVisible && !isSearchExpanded && !searchQuery ? 'menu-sticky-tabs-visible' : 'menu-sticky-tabs-hidden'}`}>
+        <div className="menu-sticky-tabs-inner flex items-center justify-center max-w-5xl mx-auto w-full px-3 sm:px-4">
+          <div className="flex items-center justify-center gap-2.5 overflow-x-auto scrollbar-none py-1 max-w-full">
+            {categories.map((category) => {
+              const isActive = activeCategory === category;
+              return (
+                <button
+                  key={category}
+                  type="button"
+                  onClick={() => handleCategoryClick(category)}
+                  className={`category-pill-btn shrink-0 ${
+                    isActive ? 'category-pill-btn-active' : 'category-pill-btn-inactive'
+                  }`}
+                >
+                  {translatedCategoryNames[category]}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Circular Sticky Bar Search Button (42px height matching pills) */}
+          <button
+            type="button"
+            onClick={handleOpenSearch}
+            className="w-[42px] h-[42px] min-w-[42px] min-h-[42px] rounded-full border border-[#5b8045]/40 hover:border-[#5b8045] bg-white text-[#5b8045] hover:bg-[#5b8045]/10 flex items-center justify-center transition-all shadow-xs cursor-pointer shrink-0 ml-1.5"
+            aria-label={t('menu.search.placeholder', undefined, 'Search dishes')}
+            title={isKhmer ? 'ស្វែងរក' : 'Search'}
+          >
+            <Search className="w-4 h-4" />
+          </button>
         </div>
       </div>
+
+      {/* Dark Blur Backdrop */}
+      <div
+        className={`fixed inset-0 bg-black/20 backdrop-blur-[1.5px] z-[1000] transition-opacity duration-300 ease-out ${
+          isSearchExpanded || searchQuery ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        }`}
+        onClick={() => setIsSearchExpanded(false)}
+      />
+
+      {/* Fixed Search Input Bar Prominently Centered at Top (z-[1003]) with Smooth Leftward Expansion */}
+      <div
+        className={`fixed top-3 sm:top-4 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-2xl z-[1003] origin-right transition-all duration-400 cubic-bezier(0.16,1,0.3,1) transform ${
+          isSearchExpanded || searchQuery
+            ? 'opacity-100 scale-x-100 pointer-events-auto'
+            : 'opacity-0 scale-x-0 pointer-events-none overflow-hidden'
+        }`}
+      >
+        <div className="relative w-full flex items-center shadow-lg rounded-full bg-white">
+          <Search className="w-4 h-4 absolute left-4 text-[#6b9158] pointer-events-none" />
+          <input
+            ref={searchInputRef}
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder={t('menu.search.placeholder', undefined, isKhmer ? 'ស្វែងរកម្ហូប ឬគ្រឿងផ្សំ...' : 'Special Pho.....')}
+            className="w-full pl-11 pr-10 py-2.5 sm:py-3 rounded-full border-2 border-[#6b9158] bg-white text-xs sm:text-sm text-[#212d1b] placeholder:text-[#6b9158]/50 focus:outline-none focus:ring-2 focus:ring-[#6b9158]/20"
+          />
+          <button
+            type="button"
+            onClick={() => {
+              setSearchQuery('');
+              setIsSearchExpanded(false);
+            }}
+            className="absolute right-3.5 text-[#6b9158]/70 hover:text-[#6b9158] p-1 cursor-pointer"
+            aria-label="Close search"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+      </div>
+
+      {/* Floating Rounded White Card Panel with Green Border Centered at z-[1002] */}
+      <div
+        className={`fixed top-[74px] sm:top-[82px] left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-2xl bg-white border-2 border-[#6b9158] rounded-[28px] shadow-2xl z-[1002] p-4 sm:p-6 flex flex-col items-center gap-4 min-h-[300px] max-h-[calc(100vh-110px)] overflow-y-auto transform transition-all duration-200 cubic-bezier(0.16,1,0.3,1) ${
+          isSearchExpanded || searchQuery
+            ? 'translate-y-0 opacity-100 scale-100 pointer-events-auto'
+            : '-translate-y-6 opacity-0 scale-95 pointer-events-none'
+        }`}
+      >
+        {/* Category Filter Pills - Only show when NOT actively searching */}
+        {!searchQuery.trim() && (
+          <div
+            className={`menu-filter-bar flex items-center justify-center flex-wrap gap-2 transition-all duration-200 cubic-bezier(0.16,1,0.3,1) transform ${
+              isSearchExpanded || searchQuery
+                ? 'translate-y-0 opacity-100 scale-95'
+                : '-translate-y-3 opacity-0 scale-75'
+            }`}
+          >
+            {categories.map((category) => {
+              const isActive = activeCategory === category;
+              return (
+                <button
+                  key={category}
+                  type="button"
+                  onClick={() => handleCategoryClick(category)}
+                  className={`menu-filter-btn !text-xs !py-1.5 !px-3.5 sm:!px-4 ${isActive ? 'active' : ''}`}
+                >
+                  {translatedCategoryNames[category]}
+                </button>
+              );
+            })}
+          </div>
+        )}
+
+
+            {/* Content / Matching Dishes inside Card Panel */}
+            {searchQuery.trim() ? (
+              <div className="w-full flex flex-col gap-3 pt-2">
+                <span className="text-xs font-semibold text-[#6b9158] uppercase tracking-wider text-left">
+                  {isKhmer ? 'លទ្ធផលស្វែងរក' : 'Search Results'} ({
+                    Object.values(menuItemsData).flat().filter((dish) => matchesSearchQuery(dish, searchQuery)).length
+                  })
+                </span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full">
+                  {Object.values(menuItemsData).flat().filter((dish) => matchesSearchQuery(dish, searchQuery)).map((dish) => (
+                    <div
+                      key={dish.id}
+                      onClick={() => handleSelectDishResult(dish.id)}
+                      className="flex items-center gap-3 p-2.5 rounded-xl border border-gray-100 hover:border-[#6b9158]/40 hover:bg-[#f8faf7] transition-all cursor-pointer text-left"
+                    >
+                      <img
+                        src={imageMapper[dish.img] || dish.img}
+                        alt={dish.name}
+                        className="w-12 h-12 rounded-lg object-cover shrink-0"
+                      />
+                      <div className="flex flex-col min-w-0 flex-1">
+                        <span className="text-sm font-semibold text-[#212d1b] truncate">{dish.name}</span>
+                        <span className="text-xs text-[#6b9158] font-bold">
+                          {formatPrice(dish.price, isKhmer)}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                  {Object.values(menuItemsData).flat().filter((dish) => matchesSearchQuery(dish, searchQuery)).length === 0 && (
+                    <p className="text-sm text-gray-500 col-span-full py-6 text-center">
+                      {isKhmer ? 'រកមិនឃើញម្ហូបទេ' : 'No dishes found matching your search.'}
+                    </p>
+                  )}
+                </div>
+              </div>
+            ) : (
+              <div className="w-full flex flex-col gap-4 pt-2 text-left">
+                {/* Popular Keywords Section */}
+                <div className="flex flex-col gap-2.5">
+                  <div className="flex items-center gap-1.5 px-1 text-[11px] font-medium text-gray-500 uppercase tracking-wider">
+                    <TrendingUp className="w-3.5 h-3.5 text-gray-400" />
+                    <span>{isKhmer ? 'ការស្វែងរកពេញនិយម' : 'Popular Searches'}</span>
+                  </div>
+                  <div className="flex items-center flex-wrap gap-2">
+                    {[
+                      { en: 'Pho', kh: 'ហ្វឺ' },
+                      { en: 'Lok Lak', kh: 'ឡុកឡាក់' },
+                      { en: 'Fried Noodle', kh: 'មីឆា' },
+                      { en: 'Soup', kh: 'គុយទាវ' },
+                      { en: 'Coffee', kh: 'កាហ្វេ' },
+                      { en: 'Chicken', kh: 'សាច់មាន់' },
+                    ].map((item) => {
+                      const label = isKhmer ? item.kh : item.en;
+                      return (
+                        <button
+                          key={item.en}
+                          type="button"
+                          onClick={() => setSearchQuery(label)}
+                          className="px-3 py-1.5 rounded-full text-xs font-medium bg-[#f3f7f0] hover:bg-[#6b9158] text-[#212d1b] hover:text-white border border-[#6b9158]/20 hover:border-transparent transition-all cursor-pointer shadow-2xs"
+                        >
+                          {label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Popular Dishes Quick Recommendations */}
+                <div className="flex flex-col gap-2.5 pt-2 border-t border-gray-100">
+                  <span className="text-xs font-semibold text-[#6b9158] uppercase tracking-wider px-1">
+                    {isKhmer ? 'ម្ហូបពេញនិយមប្រចាំហាង' : 'Popular Dishes'}
+                  </span>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 w-full">
+                    {Object.values(menuItemsData)
+                      .flat()
+                      .slice(0, 4)
+                      .map((dish) => (
+                        <div
+                          key={dish.id}
+                          onClick={() => handleSelectDishResult(dish.id)}
+                          className="flex items-center gap-3 p-2 rounded-xl border border-gray-100 hover:border-[#6b9158]/40 hover:bg-[#f8faf7] transition-all cursor-pointer text-left group"
+                        >
+                          <img
+                            src={imageMapper[dish.img] || dish.img}
+                            alt={dish.name}
+                            className="w-11 h-11 rounded-lg object-cover shrink-0 group-hover:scale-105 transition-transform"
+                          />
+                          <div className="flex flex-col min-w-0 flex-1">
+                            <span className="text-xs font-semibold text-[#212d1b] truncate group-hover:text-[#6b9158]">
+                              {dish.name}
+                            </span>
+                            <span className="text-[11px] text-[#6b9158] font-bold">
+                              {formatPrice(dish.price, isKhmer)}
+                            </span>
+                          </div>
+                        </div>
+                      ))}
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       {/* Menu Grid Sections */}
       <section className="w-full pt-0 pb-16 md:py-16 bg-white flex flex-col items-center relative overflow-hidden">
@@ -454,51 +791,63 @@ export default function Menu() {
               ))}
             </div>
           ) : (
-            categories.map((category) => (
-            <div
-              key={category}
-              id={category.toLowerCase()}
-              data-menu-scroll-anchor="true"
-              className={`menu-section section-animate w-full py-16 first:pt-0 md:first:pt-4 last:pb-16 border-b border-[#dde0dc]/50 last:border-b-0${
-                revealedSections[category.toLowerCase()] ? ' section-visible' : ''
-              }`}
-            >
-              <h2 className="font-serif text-4xl md:text-5xl font-normal tracking-wide mb-10 md:mb-16 text-[#212d1b]">
-                {translatedCategoryNames[category]}
-              </h2>
+            categories.map((category) => {
+              const categoryDishes = menuItemsData[category]
+                .filter((dish) => matchesSearchQuery(dish, searchQuery))
+                .sort((a, b) => {
+                  const aOut = Boolean(a.badge && (a.badge.toLowerCase().includes('out of stock') || a.badge.toLowerCase().includes('sold out')));
+                  const bOut = Boolean(b.badge && (b.badge.toLowerCase().includes('out of stock') || b.badge.toLowerCase().includes('sold out')));
+                  return aOut === bOut ? 0 : aOut ? 1 : -1;
+                });
 
-              {/* Grid */}
-              <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-3 md:gap-x-8 lg:gap-x-12 gap-y-16 w-full text-left">
-                {[...menuItemsData[category]]
-                  .sort((a, b) => {
-                    const aOut = Boolean(a.badge && (a.badge.toLowerCase().includes('out of stock') || a.badge.toLowerCase().includes('sold out')));
-                    const bOut = Boolean(b.badge && (b.badge.toLowerCase().includes('out of stock') || b.badge.toLowerCase().includes('sold out')));
-                    return aOut === bOut ? 0 : aOut ? 1 : -1;
-                  })
-                  .map((dish, index) => (
-                  <DishCard
-                    key={dish.id}
-                    id={`menu-dish-${dish.id}`}
-                    data-menu-scroll-anchor="true"
-                    className="menu-dish-card"
-                    index={index}
-                    name={dish.name}
-                    category={dish.category}
-                    description=""
-                    image={dish.img}
-                    price={dish.price}
-                    badge={dish.badge}
-                    showAction={false}
-                    showCategory={false}
-                    liftOnHover={false}
-                    priceSuffix=""
-                  />
-                ))}
-              </div>
-            </div>
-          ))
-        )}
+              return (
+                <div
+                  key={category}
+                  id={category.toLowerCase()}
+                  data-menu-scroll-anchor="true"
+                  className={`menu-section section-animate w-full py-16 first:pt-0 md:first:pt-4 last:pb-16 border-b border-[#dde0dc]/50 last:border-b-0${
+                    revealedSections[category.toLowerCase()] ? ' section-visible' : ''
+                  }`}
+                >
+                  <h2 className="font-serif text-4xl md:text-5xl font-normal tracking-wide mb-10 md:mb-16 text-[#212d1b]">
+                    {translatedCategoryNames[category]}
+                  </h2>
+
+                  {categoryDishes.length === 0 ? (
+                    <div className="py-8 text-center text-[#646860] font-sans text-sm italic w-full">
+                      {isKhmer
+                        ? `មិនមានម្ហូបឈ្មោះ "${searchQuery}" ក្នុងប្រភេទនេះទេ`
+                        : `No dishes matching "${searchQuery}" in ${translatedCategoryNames[category]}`}
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-3 md:gap-x-8 lg:gap-x-12 gap-y-16 w-full text-left">
+                      {categoryDishes.map((dish, index) => (
+                        <DishCard
+                          key={dish.id}
+                          id={`menu-dish-${dish.id}`}
+                          data-menu-scroll-anchor="true"
+                          className="menu-dish-card"
+                          index={index}
+                          name={dish.name}
+                          category={dish.category}
+                          description=""
+                          image={dish.img}
+                          price={dish.price}
+                          badge={dish.badge}
+                          showAction={false}
+                          showCategory={false}
+                          liftOnHover={false}
+                          priceSuffix=""
+                        />
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })
+          )}
         </div>
+
       </section>
     </div>
   );

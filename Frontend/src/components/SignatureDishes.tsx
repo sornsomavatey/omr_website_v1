@@ -39,8 +39,9 @@ export default function SignatureDishes({ dishes }: { dishes: SignatureDish[] })
             return (
               <div
                 key={`${dish?.name}-${index}`}
-                className={`cuisine-tile cuisine-tile-${index + 1}`}
+                className={`cuisine-tile cuisine-tile-${index + 1} gsap-dish-card`}
               >
+
                 <img src={dish?.img} alt={translatedName} />
                 <div className="cuisine-tile-overlay">
                   <div className="cuisine-tile-overlay-content">
@@ -77,7 +78,8 @@ export default function SignatureDishes({ dishes }: { dishes: SignatureDish[] })
             />
           </svg>
 
-          <div className="cuisine-center-circle">
+          <div className="cuisine-center-circle gsap-center-circle">
+
             {(() => {
               const centerDish = dishes.find((d) => d.key === 'friedRicePineapple') || dishes[0];
               const centerName = centerDish?.key

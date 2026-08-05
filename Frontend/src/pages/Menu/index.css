@@ -58,12 +58,12 @@ html[data-lang="kh"] #menu-hero .page-hero-title {
 .menu-section.section-animate h2,
 .menu-section.section-animate .grid {
   opacity: 0;
-  transform: translateY(45px);
-  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(15px);
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .menu-section.section-animate .grid {
-  transition-delay: 0.15s;
+  transition-delay: 0s;
 }
 
 .menu-section.section-animate.section-visible h2,
@@ -107,7 +107,7 @@ html[data-lang="kh"] #menu-hero .page-hero-title {
   body.menu-page-nav-compact .menu-sticky-tabs-container {
     top: 0;
     z-index: 1001;
-    width: min(620px, calc(100% - 520px));
+    width: min(780px, calc(100% - 460px));
     margin-right: auto;
     margin-left: auto;
     background: transparent;
@@ -124,7 +124,7 @@ html[data-lang="kh"] #menu-hero .page-hero-title {
 
   body.menu-page-nav-compact .category-pill-btn {
     min-height: 36px;
-    padding: 8px 22px;
+    padding: 8px 18px;
     font-size: 12px;
   }
 }
@@ -154,97 +154,65 @@ html[data-lang="kh"] #menu-hero .page-hero-title {
   }
 }
 
-/* Category Pill Buttons inside Sticky Header */
-.category-pill-btn {
-  font-family: "Inter", sans-serif;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  padding: 10px 28px;
+/* Unified Category Pill Buttons (Same size everywhere, perfectly centered) */
+.category-pill-btn,
+.menu-filter-btn {
+  font-family: var(--font-sans, "Inter", sans-serif);
+  font-size: 13.5px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  height: 42px;
+  min-height: 42px;
+  padding: 0 24px;
   border-radius: 999px;
   cursor: pointer;
-  transition: none;
   white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  transition: all 0.18s ease;
 }
 
-.category-pill-btn-active {
-  background-color: #5b8045 !important;
-  background: #5b8045 !important;
-  color: #ffffff !important;
-  border: 1px solid #5b8045 !important;
-  font-weight: 700 !important;
-  box-shadow: 0 4px 14px rgba(91, 128, 69, 0.25) !important;
-}
-
+.menu-filter-btn,
 .category-pill-btn-inactive {
   background-color: #ffffff !important;
-  color: #3b5034 !important;
-  border: 1.5px solid #d5e4cc !important;
+  color: #354330 !important;
+  border: 1.5px solid rgba(107, 145, 88, 0.4) !important;
 }
 
+.menu-filter-btn:hover,
 .category-pill-btn-inactive:hover {
   border-color: #5b8045 !important;
   background-color: #f4faf0 !important;
   color: #2e4324 !important;
 }
 
-
-.menu-section {
-  scroll-margin-top: 172px;
-  /* height of sticky navbar (82px) + sticky category bar (approx 72px) + buffer */
+.menu-filter-btn.active,
+.category-pill-btn-active {
+  background-color: #5b8045 !important;
+  background: #5b8045 !important;
+  color: #ffffff !important;
+  border: 1.5px solid #5b8045 !important;
+  font-weight: 700 !important;
+  box-shadow: 0 3px 12px rgba(91, 128, 69, 0.25) !important;
 }
 
-@media (max-width: 1023px) {
-  .menu-section {
-    scroll-margin-top: 154px;
-    /* mobile offset adjustment */
-  }
-}
-
-/* Category filter bar under Hero (styled like Gallery page) */
+/* Category filter bar under Hero slot */
 .menu-filter-slot {
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 34px 16px 10px;
+  padding: 48px 16px 14px;
   background-color: #ffffff;
 }
 
-.menu-filter-bar {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
-}
-
-.menu-filter-btn {
-  min-height: 42px;
-  padding: 0 24px;
-  border: 1px solid rgba(107, 145, 88, 0.45);
-  border-radius: 999px;
-  color: #354330;
-  background: #ffffff;
-  font-family: var(--font-sans, "Inter", sans-serif);
-  font-size: 13.5px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
-  white-space: nowrap;
-}
-
-.menu-filter-btn:hover {
-  border-color: #6b9158;
-  color: #6b9158;
-  transform: translateY(-1px);
-}
-
-.menu-filter-btn.active {
-  color: #ffffff;
-  border-color: #6b9158;
-  background: #6b9158;
-  box-shadow: 0 4px 14px rgba(107, 145, 88, 0.25);
+@media (max-width: 768px) {
+  .menu-filter-slot {
+    padding: 28px 12px 10px;
+  }
 }
 
 html[lang="km"] .menu-dish-card .dish-card-price,
@@ -379,18 +347,27 @@ html[data-lang="kh"] .menu-dish-card .dish-card-currency {
   }
 
   .hero-category-pill-btn {
-    font-size: 12px;
-    padding: 8px 20px;
+    font-size: 11.5px;
+    padding: 6px 14px;
   }
 
   .menu-sticky-tabs-inner {
-    padding-right: 16px;
-    padding-left: 16px;
+    padding-right: 12px;
+    padding-left: 12px;
+    gap: 8px;
   }
 
   .category-pill-btn {
-    min-height: 42px;
-    padding: 9px 20px;
+    min-height: 34px;
+    padding: 6px 14px;
+    font-size: 11.5px;
+    letter-spacing: 0.02em;
+  }
+
+  .menu-filter-btn {
+    min-height: 34px;
+    padding: 0 16px;
+    font-size: 12px;
   }
 
   .menu-section {
@@ -408,12 +385,30 @@ html[data-lang="kh"] .menu-dish-card .dish-card-currency {
   }
 
   .menu-hero-tabs-container {
-    gap: 8px;
-    padding: 0 8px;
+    gap: 6px;
+    padding: 0 6px;
   }
 
   .hero-category-pill-btn {
-    padding: 8px 14px;
+    padding: 6px 12px;
+    font-size: 11px;
   }
+
+  .category-pill-btn {
+    min-height: 32px;
+    padding: 5px 12px;
+    font-size: 11px;
+  }
+}
+
+/* Khmer Language Category Pills Layout Fix */
+html[lang="km"] .category-pill-btn,
+html[lang="km"] .menu-filter-btn,
+html[data-lang="kh"] .category-pill-btn,
+html[data-lang="kh"] .menu-filter-btn {
+  height: 42px;
+  min-height: 42px;
+  padding: 0 20px;
+  font-size: 13px;
 }
 
