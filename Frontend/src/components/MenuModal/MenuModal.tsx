@@ -49,8 +49,13 @@ const matchesSearchQuery = (dish: PreOrderCartItem, query: string): boolean => {
   const queryTerms = new Set<string>([rawQuery]);
   if (rawQuery === 'ice') queryTerms.add('iced');
   if (rawQuery === 'iced') queryTerms.add('ice');
-  if (rawQuery === 'noodle') queryTerms.add('noodles');
-  if (rawQuery === 'noodles') queryTerms.add('noodle');
+  if (rawQuery === 'noodle' || rawQuery === 'noodles' || rawQuery === 'មី' || rawQuery === 'មីឆា' || rawQuery === 'fried noodle') {
+    queryTerms.add('noodle');
+    queryTerms.add('noodles');
+    queryTerms.add('មី');
+    queryTerms.add('មីឆា');
+    queryTerms.add('fried noodle');
+  }
   if (rawQuery === 'kuyteav' || rawQuery === 'kuy teav' || rawQuery === 'kuyteavs') {
     queryTerms.add('soup');
     queryTerms.add('kuyteav');
@@ -62,6 +67,10 @@ const matchesSearchQuery = (dish: PreOrderCartItem, query: string): boolean => {
     queryTerms.add('kuyteav');
     queryTerms.add('ស៊ុប');
     queryTerms.add('គុយទាវ');
+  }
+  if (rawQuery === 'beef' || rawQuery === 'សាច់គោ') {
+    queryTerms.add('beef');
+    queryTerms.add('សាច់គោ');
   }
   if (rawQuery === 'coffee' || rawQuery === 'កាហ្វេ') {
     queryTerms.add('coffee');
@@ -124,26 +133,26 @@ function DishGridCard({
 
   return (
     <div className={`flex flex-col bg-white rounded-2xl border ${qty > 0 ? 'border-[#6b9158] bg-[#f8fbf6] ring-1 ring-[#6b9158]/30' : 'border-[#e2e8e0] hover:border-[#6b9158]/50'} transition-all shadow-xs overflow-hidden ${isOutOfStock ? 'opacity-70' : ''}`}>
-      <div className="relative w-full h-44 sm:h-52 overflow-hidden bg-gray-100">
+      <div className="relative w-full h-32 sm:h-40 overflow-hidden bg-gray-100 shrink-0">
         <img src={item.img} alt={displayName} className="w-full h-full object-cover transition-transform duration-300 hover:scale-105" loading="lazy" />
         {isOutOfStock && (
-          <span className="absolute top-2.5 left-2.5 px-2 py-0.5 rounded-full text-[9px] font-extrabold uppercase bg-red-600 text-white tracking-wider shadow-xs">
+          <span className="absolute top-2 left-2 px-2 py-0.5 rounded-full text-[9px] font-extrabold uppercase bg-red-600 text-white tracking-wider shadow-xs">
             {t('menu.modal.outOfStock', undefined, 'Out of Stock')}
           </span>
         )}
         {qty > 0 && (
-          <div className="absolute top-2.5 right-2.5 w-6.5 h-6.5 rounded-full bg-[#6b9158] text-white text-xs font-bold flex items-center justify-center shadow-md">
+          <div className="absolute top-2 right-2 w-6 h-6 rounded-full bg-[#6b9158] text-white text-xs font-bold flex items-center justify-center shadow-md">
             {qty}
           </div>
         )}
       </div>
 
-      <div className="p-3 sm:p-3.5 flex flex-col flex-1 justify-between gap-2 text-left">
-        <div>
-          <span className="text-[10px] font-bold uppercase tracking-wider text-[#6b9158] block mb-0.5">
+      <div className="p-2.5 sm:p-3 flex flex-col flex-1 justify-between gap-1.5 text-left min-w-0">
+        <div className="min-w-0">
+          <span className="text-[10px] font-bold uppercase tracking-wider text-[#6b9158] block mb-0.5 truncate">
             {item.category}
           </span>
-          <h4 className="font-serif text-sm sm:text-base text-[#212d1b] font-medium leading-snug line-clamp-1">
+          <h4 className="font-serif text-xs sm:text-sm text-[#212d1b] font-medium leading-snug truncate">
             {displayName}
           </h4>
           {displayDesc && (
@@ -153,16 +162,16 @@ function DishGridCard({
           )}
         </div>
 
-        <div className="flex items-center justify-between pt-2 border-t border-[#f0f3ef] mt-auto">
-          <span className="text-xs sm:text-sm font-bold text-[#212d1b]">
+        <div className="flex items-center justify-between pt-1.5 border-t border-[#f0f3ef] mt-auto min-w-0 gap-1">
+          <span className="text-xs sm:text-sm font-bold text-[#212d1b] shrink-0">
             ${item.price.toFixed(2)}
           </span>
 
-          <div className="mm-dish-ctrl !mt-0">
+          <div className="mm-dish-ctrl !mt-0 shrink-0">
             {isOutOfStock ? (
               <button
                 type="button"
-                className="mm-add-btn mm-add-btn--disabled cursor-not-allowed opacity-50 bg-gray-300 text-gray-500 border-gray-300 hover:bg-gray-300 !text-[11px] !py-1 !px-2"
+                className="mm-add-btn mm-add-btn--disabled cursor-not-allowed opacity-50 bg-gray-300 text-gray-500 border-gray-300 hover:bg-gray-300 !text-[10px] !py-0.5 !px-2"
                 disabled
               >
                 {t('menu.modal.outOfStock', undefined, 'Out of Stock')}
@@ -256,8 +265,67 @@ function DishRow({
   );
 }
 
-//main modal
-export default function MenuModal({ isOpen, onClose, cart, onCartChange }: MenuModalProps) {
+function useDragToScroll() {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const isMouseDown = useRef(false);
+  const startX = useRef(0);
+  const scrollLeft = useRef(0);
+  const isDragging = useRef(false);
+
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!ref.current) return;
+    isMouseDown.current = true;
+    isDragging.current = false;
+    startX.current = e.pageX - ref.current.offsetLeft;
+    scrollLeft.current = ref.current.scrollLeft;
+  };
+
+  const handleMouseLeave = () => {
+    isMouseDown.current = false;
+    isDragging.current = false;
+  };
+
+  const handleMouseUp = () => {
+    isMouseDown.current = false;
+    setTimeout(() => {
+      isDragging.current = false;
+    }, 80);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isMouseDown.current || !ref.current) return;
+    const x = e.pageX - ref.current.offsetLeft;
+    const walk = (x - startX.current) * 1.5;
+    if (Math.abs(walk) > 5) {
+      isDragging.current = true;
+      e.preventDefault();
+      ref.current.scrollLeft = scrollLeft.current - walk;
+    }
+  };
+
+  return {
+    ref,
+    isDragging,
+    props: {
+      onMouseDown: handleMouseDown,
+      onMouseLeave: handleMouseLeave,
+      onMouseUp: handleMouseUp,
+      onMouseMove: handleMouseMove,
+    },
+  };
+}
+
+export default function MenuModal({
+  isOpen,
+  onClose,
+  cart,
+  onCartChange,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+  cart: PreOrderCart;
+  onCartChange: (updater: (prev: PreOrderCart) => PreOrderCart) => void;
+}) {
   const { t, getObject, isKhmer, language } = useTranslation();
   const [menuData, setMenuData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -267,6 +335,8 @@ export default function MenuModal({ isOpen, onClose, cart, onCartChange }: MenuM
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('list');
   const bodyRef = useRef<HTMLDivElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
+
+  const modalDrag = useDragToScroll();
 
   const handleToggleSearch = () => {
     if (isSearchExpanded) {
@@ -279,6 +349,7 @@ export default function MenuModal({ isOpen, onClose, cart, onCartChange }: MenuM
   };
 
   const handleCategoryClick = (cat: MenuCategory) => {
+    if (modalDrag.isDragging.current) return;
     setSearchQuery('');
     setIsSearchExpanded(false);
     setActiveCategory(cat);
@@ -352,11 +423,18 @@ export default function MenuModal({ isOpen, onClose, cart, onCartChange }: MenuM
 
     let itemsList: any[] = [];
     if (searchQuery.trim()) {
-      // Search across ALL categories when query is present
+      // Search across ALL categories when query is present and deduplicate items
+      const seenProductKeys = new Set<string>();
       Object.keys(menuData.items).forEach((cat) => {
         const raw = menuData.items[cat] ?? [];
         raw.forEach((d: any, itemIndex: number) => {
-          itemsList.push({ ...d, rawCategory: cat, itemIndex });
+          const key = d.id != null && String(d.id).length > 0 
+            ? String(d.id) 
+            : (d.name || '').toLowerCase().trim();
+          if (!seenProductKeys.has(key)) {
+            seenProductKeys.add(key);
+            itemsList.push({ ...d, rawCategory: cat, itemIndex });
+          }
         });
       });
     } else {
@@ -428,7 +506,7 @@ export default function MenuModal({ isOpen, onClose, cart, onCartChange }: MenuM
 
         {/* ── Category tabs, Search Button & View Toggle ── */}
         <div className="mm-tabs-wrapper">
-          <div className="mm-tabs-scroll">
+          <div ref={modalDrag.ref} {...modalDrag.props} className="mm-tabs-scroll cursor-grab active:cursor-grabbing select-none">
             {CATEGORIES.map((cat) => (
               <button
                 key={cat}
@@ -524,7 +602,7 @@ export default function MenuModal({ isOpen, onClose, cart, onCartChange }: MenuM
               {[
                 { en: 'Pho', kh: 'ហ្វឺ' },
                 { en: 'Lok Lak', kh: 'ឡុកឡាក់' },
-                { en: 'Fried Noodle', kh: 'មីឆា' },
+                { en: 'Beef', kh: 'សាច់គោ' },
                 { en: 'Soup', kh: 'គុយទាវ' },
                 { en: 'Coffee', kh: 'កាហ្វេ' },
                 { en: 'Chicken', kh: 'សាច់មាន់' },
@@ -574,7 +652,7 @@ export default function MenuModal({ isOpen, onClose, cart, onCartChange }: MenuM
                     : t('menu.modal.empty')}
                 </p>
               ) : viewMode === 'grid' ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 sm:p-6">
+                <div className="grid grid-cols-2 gap-3 sm:gap-4 p-3.5 sm:p-5">
                   {getItems().map((item) => (
                     <DishGridCard
                       key={item.id}
@@ -628,7 +706,7 @@ export default function MenuModal({ isOpen, onClose, cart, onCartChange }: MenuM
                       t('menu.modal.clearConfirm')
                     );
                     if (confirmClear) {
-                      onCartChange({});
+                      onCartChange(() => ({}));
                     }
                   }}
                   aria-label={t('menu.modal.clear')}

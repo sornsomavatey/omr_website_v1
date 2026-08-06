@@ -274,10 +274,19 @@ html[data-lang="kh"] .mm-tab {
   font-size: 16px;
   font-weight: 400;
   color: #212d1b;
-  line-height: 1.25;
+  line-height: 1.3;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  word-break: normal;
+  overflow-wrap: normal;
+}
+
+/* Defensive text wrapping & Khmer line-height protection */
+html[lang="km"] .mm-dish-name,
+html[data-lang="kh"] .mm-dish-name {
+  line-height: 1.35;
+  font-size: 15px;
 }
 
 .mm-dish-desc {

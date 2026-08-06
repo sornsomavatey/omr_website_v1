@@ -74,6 +74,56 @@ const MENU_LANGUAGE_TOGGLE_EVENT = 'omr:before-language-toggle';
 const MENU_SCROLL_ANCHOR_SELECTOR = '[data-menu-scroll-anchor="true"]';
 const MENU_SCROLL_TARGET_TOP = 180;
 
+function useDragToScroll() {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const isMouseDown = useRef(false);
+  const startX = useRef(0);
+  const scrollLeft = useRef(0);
+  const isDragging = useRef(false);
+
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!ref.current) return;
+    isMouseDown.current = true;
+    isDragging.current = false;
+    startX.current = e.pageX - ref.current.offsetLeft;
+    scrollLeft.current = ref.current.scrollLeft;
+  };
+
+  const handleMouseLeave = () => {
+    isMouseDown.current = false;
+    isDragging.current = false;
+  };
+
+  const handleMouseUp = () => {
+    isMouseDown.current = false;
+    setTimeout(() => {
+      isDragging.current = false;
+    }, 80);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isMouseDown.current || !ref.current) return;
+    const x = e.pageX - ref.current.offsetLeft;
+    const walk = (x - startX.current) * 1.5;
+    if (Math.abs(walk) > 5) {
+      isDragging.current = true;
+      e.preventDefault();
+      ref.current.scrollLeft = scrollLeft.current - walk;
+    }
+  };
+
+  return {
+    ref,
+    isDragging,
+    props: {
+      onMouseDown: handleMouseDown,
+      onMouseLeave: handleMouseLeave,
+      onMouseUp: handleMouseUp,
+      onMouseMove: handleMouseMove,
+    },
+  };
+}
+
 const useIsomorphicLayoutEffect = typeof window === 'undefined' ? useEffect : useLayoutEffect;
 
 export default function Menu() {
@@ -85,6 +135,9 @@ export default function Menu() {
   const [isSearchExpanded, setIsSearchExpanded] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const [activeCategory, setActiveCategory] = useState<MenuCategory>('Breakfast');
+
+  const inlineDrag = useDragToScroll();
+  const stickyDrag = useDragToScroll();
 
   useEffect(() => {
     if (isSearchExpanded && searchInputRef.current) {
@@ -319,6 +372,9 @@ export default function Menu() {
   }, [loading, error, menuDataState]);
 
   const handleCategoryClick = (category: MenuCategory) => {
+    if (inlineDrag.isDragging.current || stickyDrag.isDragging.current) {
+      return;
+    }
     setIsSearchExpanded(false);
     setSearchQuery('');
     const id = category.toLowerCase();
@@ -445,8 +501,13 @@ export default function Menu() {
     const queryTerms = new Set<string>([rawQuery]);
     if (rawQuery === 'ice') queryTerms.add('iced');
     if (rawQuery === 'iced') queryTerms.add('ice');
-    if (rawQuery === 'noodle') queryTerms.add('noodles');
-    if (rawQuery === 'noodles') queryTerms.add('noodle');
+    if (rawQuery === 'noodle' || rawQuery === 'noodles' || rawQuery === 'មី' || rawQuery === 'មីឆា' || rawQuery === 'fried noodle') {
+      queryTerms.add('noodle');
+      queryTerms.add('noodles');
+      queryTerms.add('មី');
+      queryTerms.add('មីឆា');
+      queryTerms.add('fried noodle');
+    }
     if (rawQuery === 'kuyteav' || rawQuery === 'kuy teav' || rawQuery === 'kuyteavs') {
       queryTerms.add('soup');
       queryTerms.add('kuyteav');
@@ -458,6 +519,10 @@ export default function Menu() {
       queryTerms.add('kuyteav');
       queryTerms.add('ស៊ុប');
       queryTerms.add('គុយទាវ');
+    }
+    if (rawQuery === 'beef' || rawQuery === 'សាច់គោ') {
+      queryTerms.add('beef');
+      queryTerms.add('សាច់គោ');
     }
 
     const fieldsToSearch = [
@@ -520,7 +585,11 @@ export default function Menu() {
             }`}
           >
             {/* Scrollable / Centered Category Pills */}
-            <div className="flex items-center justify-center gap-2.5 overflow-x-auto scrollbar-none py-1 max-w-full">
+            <div
+              ref={inlineDrag.ref}
+              {...inlineDrag.props}
+              className="flex items-center justify-start sm:justify-center gap-2.5 overflow-x-auto scrollbar-none py-1 max-w-full cursor-grab active:cursor-grabbing select-none"
+            >
               {categories.map((category) => {
                 const isActive = activeCategory === category;
                 return (
@@ -553,7 +622,11 @@ export default function Menu() {
       {/* Sticky Category Filter Tabs (Normal Flow when scrolled) */}
       <div className={`menu-sticky-tabs-container ${isStickyVisible && !isSearchExpanded && !searchQuery ? 'menu-sticky-tabs-visible' : 'menu-sticky-tabs-hidden'}`}>
         <div className="menu-sticky-tabs-inner flex items-center justify-center max-w-5xl mx-auto w-full px-3 sm:px-4">
-          <div className="flex items-center justify-center gap-2.5 overflow-x-auto scrollbar-none py-1 max-w-full">
+          <div
+            ref={stickyDrag.ref}
+            {...stickyDrag.props}
+            className="flex items-center justify-start sm:justify-center gap-2.5 overflow-x-auto scrollbar-none py-1 max-w-full cursor-grab active:cursor-grabbing select-none"
+          >
             {categories.map((category) => {
               const isActive = activeCategory === category;
               return (
@@ -659,41 +732,58 @@ export default function Menu() {
 
 
             {/* Content / Matching Dishes inside Card Panel */}
-            {searchQuery.trim() ? (
-              <div className="w-full flex flex-col gap-3 pt-2">
-                <span className="text-xs font-semibold text-[#6b9158] uppercase tracking-wider text-left">
-                  {isKhmer ? 'លទ្ធផលស្វែងរក' : 'Search Results'} ({
-                    Object.values(menuItemsData).flat().filter((dish) => matchesSearchQuery(dish, searchQuery)).length
-                  })
-                </span>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full">
-                  {Object.values(menuItemsData).flat().filter((dish) => matchesSearchQuery(dish, searchQuery)).map((dish) => (
-                    <div
-                      key={dish.id}
-                      onClick={() => handleSelectDishResult(dish.id)}
-                      className="flex items-center gap-3 p-2.5 rounded-xl border border-gray-100 hover:border-[#6b9158]/40 hover:bg-[#f8faf7] transition-all cursor-pointer text-left"
-                    >
-                      <img
-                        src={imageMapper[dish.img] || dish.img}
-                        alt={dish.name}
-                        className="w-12 h-12 rounded-lg object-cover shrink-0"
-                      />
-                      <div className="flex flex-col min-w-0 flex-1">
-                        <span className="text-sm font-semibold text-[#212d1b] truncate">{dish.name}</span>
-                        <span className="text-xs text-[#6b9158] font-bold">
-                          {formatPrice(dish.price, isKhmer)}
-                        </span>
+            {(() => {
+              const searchResults = searchQuery.trim() ? (() => {
+                const allDishes = Object.values(menuItemsData).flat();
+                const seenKeys = new Set<string>();
+                const uniqueDishes: MenuItem[] = [];
+                for (const dish of allDishes) {
+                  const key = (dish.nameEn || dish.name || '').toLowerCase().trim();
+                  if (!seenKeys.has(key)) {
+                    seenKeys.add(key);
+                    if (matchesSearchQuery(dish, searchQuery)) {
+                      uniqueDishes.push(dish);
+                    }
+                  }
+                }
+                return uniqueDishes;
+              })() : [];
+
+              return searchQuery.trim() ? (
+                <div className="w-full flex flex-col gap-3 pt-2">
+                  <span className="text-xs font-semibold text-[#6b9158] uppercase tracking-wider text-left">
+                    {isKhmer ? 'លទ្ធផលស្វែងរក' : 'Search Results'} ({searchResults.length})
+                  </span>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full">
+                    {searchResults.map((dish) => (
+                      <div
+                        key={dish.id}
+                        onClick={() => handleSelectDishResult(dish.id)}
+                        className="flex items-center gap-3 p-2.5 rounded-xl border border-gray-100 hover:border-[#6b9158]/40 hover:bg-[#f8faf7] transition-all cursor-pointer text-left"
+                      >
+                        <img
+                          src={imageMapper[dish.img] || dish.img}
+                          alt={dish.name}
+                          className="w-12 h-12 rounded-lg object-cover shrink-0"
+                        />
+                        <div className="flex flex-col min-w-0 flex-1">
+                          <span className="text-sm font-semibold text-[#212d1b] truncate">{dish.name}</span>
+                          <span className="text-xs text-[#6b9158] font-bold">
+                            {formatPrice(dish.price, isKhmer)}
+                          </span>
+                        </div>
                       </div>
-                    </div>
-                  ))}
-                  {Object.values(menuItemsData).flat().filter((dish) => matchesSearchQuery(dish, searchQuery)).length === 0 && (
-                    <p className="text-sm text-gray-500 col-span-full py-6 text-center">
-                      {isKhmer ? 'រកមិនឃើញម្ហូបទេ' : 'No dishes found matching your search.'}
-                    </p>
-                  )}
+                    ))}
+                    {searchResults.length === 0 && (
+                      <p className="text-sm text-gray-500 col-span-full py-6 text-center">
+                        {isKhmer ? 'រកមិនឃើញម្ហូបទេ' : 'No dishes found matching your search.'}
+                      </p>
+                    )}
+                  </div>
                 </div>
-              </div>
-            ) : (
+              ) : null;
+            })()}
+            {!searchQuery.trim() && (
               <div className="w-full flex flex-col gap-4 pt-2 text-left">
                 {/* Popular Keywords Section */}
                 <div className="flex flex-col gap-2.5">
@@ -705,7 +795,7 @@ export default function Menu() {
                     {[
                       { en: 'Pho', kh: 'ហ្វឺ' },
                       { en: 'Lok Lak', kh: 'ឡុកឡាក់' },
-                      { en: 'Fried Noodle', kh: 'មីឆា' },
+                      { en: 'Beef', kh: 'សាច់គោ' },
                       { en: 'Soup', kh: 'គុយទាវ' },
                       { en: 'Coffee', kh: 'កាហ្វេ' },
                       { en: 'Chicken', kh: 'សាច់មាន់' },

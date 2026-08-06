@@ -117,15 +117,16 @@ html[data-lang="kh"] #menu-hero .page-hero-title {
   }
 
   body.menu-page-nav-compact .menu-sticky-tabs-inner {
-    height: 76px;
+    height: 82px;
     gap: 12px;
     padding: 0;
   }
 
   body.menu-page-nav-compact .category-pill-btn {
-    min-height: 36px;
-    padding: 8px 18px;
-    font-size: 12px;
+    height: 42px;
+    min-height: 42px;
+    padding: 0 24px;
+    font-size: 13.5px;
   }
 }
 
