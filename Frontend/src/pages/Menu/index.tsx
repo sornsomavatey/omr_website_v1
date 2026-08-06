@@ -81,45 +81,45 @@ function useDragToScroll() {
   const scrollLeft = useRef(0);
   const isDragging = useRef(false);
 
-  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+  const startDrag = (pageX: number) => {
     if (!ref.current) return;
     isMouseDown.current = true;
     isDragging.current = false;
-    startX.current = e.pageX - ref.current.offsetLeft;
+    startX.current = pageX - ref.current.offsetLeft;
     scrollLeft.current = ref.current.scrollLeft;
   };
 
-  const handleMouseLeave = () => {
-    isMouseDown.current = false;
-    isDragging.current = false;
+  const moveDrag = (pageX: number, e: React.SyntheticEvent) => {
+    if (!isMouseDown.current || !ref.current) return;
+    const x = pageX - ref.current.offsetLeft;
+    const walk = (x - startX.current) * 1.5;
+    if (Math.abs(walk) > 3) {
+      isDragging.current = true;
+      if (e.cancelable) e.preventDefault();
+      ref.current.scrollLeft = scrollLeft.current - walk;
+    }
   };
 
-  const handleMouseUp = () => {
+  const endDrag = () => {
     isMouseDown.current = false;
     setTimeout(() => {
       isDragging.current = false;
     }, 80);
   };
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!isMouseDown.current || !ref.current) return;
-    const x = e.pageX - ref.current.offsetLeft;
-    const walk = (x - startX.current) * 1.5;
-    if (Math.abs(walk) > 5) {
-      isDragging.current = true;
-      e.preventDefault();
-      ref.current.scrollLeft = scrollLeft.current - walk;
-    }
-  };
-
   return {
     ref,
     isDragging,
     props: {
-      onMouseDown: handleMouseDown,
-      onMouseLeave: handleMouseLeave,
-      onMouseUp: handleMouseUp,
-      onMouseMove: handleMouseMove,
+      onMouseDown: (e: React.MouseEvent<HTMLDivElement>) => startDrag(e.pageX),
+      onMouseMove: (e: React.MouseEvent<HTMLDivElement>) => moveDrag(e.pageX, e),
+      onMouseUp: endDrag,
+      onMouseLeave: endDrag,
+      onPointerDown: (e: React.PointerEvent<HTMLDivElement>) => startDrag(e.pageX),
+      onPointerMove: (e: React.PointerEvent<HTMLDivElement>) => moveDrag(e.pageX, e),
+      onPointerUp: endDrag,
+      onPointerLeave: endDrag,
+      onPointerCancel: endDrag,
     },
   };
 }
