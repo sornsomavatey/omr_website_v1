@@ -36,3 +36,8 @@ Frontend/build/
 # OS metadata
 .DS_Store
 Thumbs.db
+
+# Local development tooling
+.claude/
+nginx-*.zip
+nginx-*/

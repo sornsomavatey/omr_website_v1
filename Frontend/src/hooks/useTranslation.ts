@@ -36,8 +36,8 @@ export function useTranslation() {
       });
 
     const htmlLanguages = {
-      EN: 'en',
       KH: 'km',
+      EN: 'en',
       ZH: 'zh-CN',
       KO: 'ko',
     } as const;

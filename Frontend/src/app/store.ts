@@ -15,13 +15,13 @@ const getInitialLanguage = (): Language => {
   if (typeof window !== 'undefined') {
     try {
       const savedSimple = localStorage.getItem('omr_lang');
-      if (savedSimple && ['EN', 'KH', 'ZH', 'KO'].includes(savedSimple)) {
+      if (savedSimple && ['KH', 'EN', 'ZH', 'KO'].includes(savedSimple)) {
         return savedSimple as Language;
       }
       const savedPersist = localStorage.getItem('omr-language-preference');
       if (savedPersist) {
         const parsed = JSON.parse(savedPersist);
-        if (parsed?.state?.language && ['EN', 'KH', 'ZH', 'KO'].includes(parsed.state.language)) {
+        if (parsed?.state?.language && ['KH', 'EN', 'ZH', 'KO'].includes(parsed.state.language)) {
           return parsed.state.language as Language;
         }
       }

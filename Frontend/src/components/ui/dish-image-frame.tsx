@@ -33,7 +33,7 @@ export function DishImageFrame({
   const [isLoaded, setIsLoaded] = React.useState(false)
   const imageRef = React.useRef<HTMLImageElement>(null)
 
-  React.useLayoutEffect(() => {
+  React.useEffect(() => {
     const image = imageRef.current
 
     setIsLoaded(Boolean(image?.complete && image.naturalWidth > 0))
@@ -55,6 +55,8 @@ export function DishImageFrame({
         ref={imageRef}
         src={src}
         alt={alt}
+        loading="lazy"
+        decoding="async"
         onLoad={() => setIsLoaded(true)}
         onError={() => setIsLoaded(true)}
         className={cn(

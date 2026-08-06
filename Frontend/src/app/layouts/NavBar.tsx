@@ -59,8 +59,8 @@ function NavbarLogo({ mobile = false }: { mobile?: boolean }) {
 const languageOptions: Array<{ code: Language; label: string; flag: string; enabled: boolean }> = [
   { code: 'KH', label: 'ខ្មែរ', flag: '/flags/cambodia.svg', enabled: true },
   { code: 'EN', label: 'English', flag: '/flags/united-kingdom.svg', enabled: true },
-  { code: 'ZH', label: '中文', flag: '/flags/china.svg', enabled: true },
-  { code: 'KO', label: '한국어', flag: '/flags/south-korea.svg', enabled: true },
+  { code: 'ZH', label: '中文', flag: '/flags/china.svg', enabled: false },
+  { code: 'KO', label: '한국어', flag: '/flags/south-korea.svg', enabled: false},
 ];
 
 function LanguageMenu({ mobile = false }: { mobile?: boolean }) {
