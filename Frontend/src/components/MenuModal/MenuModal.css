@@ -107,6 +107,9 @@
   scrollbar-width: none;
   -ms-overflow-style: none;
   padding: 2px 0;
+  touch-action: pan-x;
+  overscroll-behavior: contain;
+  overscroll-behavior-x: contain;
 }
 
 .mm-tabs-scroll::-webkit-scrollbar {
@@ -166,6 +169,9 @@ html[data-lang="kh"] .mm-tab {
 .mm-body {
   flex: 1;
   overflow-y: auto;
+  overscroll-behavior: contain;
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
   padding: 12px 0 8px;
 }
 

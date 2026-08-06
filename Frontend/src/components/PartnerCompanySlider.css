@@ -18,7 +18,9 @@
   margin-top: 44px;
   overflow-x: auto;
   overflow-y: hidden;
-  overscroll-behavior-inline: contain;
+  overscroll-behavior: contain;
+  overscroll-behavior-x: contain;
+  overscroll-behavior-y: contain;
   scrollbar-width: none;
   touch-action: pan-x;
   -webkit-overflow-scrolling: touch;
@@ -44,7 +46,8 @@
   display: none;
 }
 
-.partner-slider-viewport:active {
+.partner-slider-viewport:active,
+.partner-slider-viewport.is-dragging {
   cursor: grabbing;
 }
 
@@ -59,8 +62,10 @@
     infinite;
 }
 
+.partner-slider-viewport:hover .partner-slider-track-animated,
 .partner-slider-viewport:active .partner-slider-track-animated,
-.partner-slider-viewport:focus-within .partner-slider-track-animated {
+.partner-slider-viewport:focus-within .partner-slider-track-animated,
+.partner-slider-viewport.is-dragging .partner-slider-track-animated {
   animation-play-state: paused;
 }
 

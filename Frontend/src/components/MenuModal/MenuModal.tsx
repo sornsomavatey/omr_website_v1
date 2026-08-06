@@ -267,50 +267,62 @@ function DishRow({
 
 function useDragToScroll() {
   const ref = useRef<HTMLDivElement | null>(null);
-  const isMouseDown = useRef(false);
+  const isDown = useRef(false);
   const startX = useRef(0);
-  const scrollLeft = useRef(0);
+  const startScrollLeft = useRef(0);
   const isDragging = useRef(false);
 
-  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleStart = (clientX: number) => {
     if (!ref.current) return;
-    isMouseDown.current = true;
+    isDown.current = true;
     isDragging.current = false;
-    startX.current = e.pageX - ref.current.offsetLeft;
-    scrollLeft.current = ref.current.scrollLeft;
+    startX.current = clientX;
+    startScrollLeft.current = ref.current.scrollLeft;
   };
 
-  const handleMouseLeave = () => {
-    isMouseDown.current = false;
-    isDragging.current = false;
-  };
+  useEffect(() => {
+    const handleGlobalMove = (e: MouseEvent | PointerEvent) => {
+      if (!isDown.current || !ref.current) return;
+      const dragDistance = e.clientX - startX.current;
+      if (Math.abs(dragDistance) > 4) {
+        isDragging.current = true;
+        if (e.cancelable) {
+          e.preventDefault();
+        }
+        ref.current.scrollLeft = startScrollLeft.current - dragDistance;
+      }
+    };
 
-  const handleMouseUp = () => {
-    isMouseDown.current = false;
-    setTimeout(() => {
-      isDragging.current = false;
-    }, 80);
-  };
+    const handleGlobalEnd = () => {
+      if (isDown.current) {
+        isDown.current = false;
+        setTimeout(() => {
+          isDragging.current = false;
+        }, 80);
+      }
+    };
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!isMouseDown.current || !ref.current) return;
-    const x = e.pageX - ref.current.offsetLeft;
-    const walk = (x - startX.current) * 1.5;
-    if (Math.abs(walk) > 5) {
-      isDragging.current = true;
-      e.preventDefault();
-      ref.current.scrollLeft = scrollLeft.current - walk;
-    }
-  };
+    window.addEventListener('mousemove', handleGlobalMove);
+    window.addEventListener('mouseup', handleGlobalEnd);
+    window.addEventListener('pointermove', handleGlobalMove);
+    window.addEventListener('pointerup', handleGlobalEnd);
+    window.addEventListener('pointercancel', handleGlobalEnd);
+
+    return () => {
+      window.removeEventListener('mousemove', handleGlobalMove);
+      window.removeEventListener('mouseup', handleGlobalEnd);
+      window.removeEventListener('pointermove', handleGlobalMove);
+      window.removeEventListener('pointerup', handleGlobalEnd);
+      window.removeEventListener('pointercancel', handleGlobalEnd);
+    };
+  }, []);
 
   return {
     ref,
     isDragging,
     props: {
-      onMouseDown: handleMouseDown,
-      onMouseLeave: handleMouseLeave,
-      onMouseUp: handleMouseUp,
-      onMouseMove: handleMouseMove,
+      onMouseDown: (e: React.MouseEvent<HTMLDivElement>) => handleStart(e.clientX),
+      onPointerDown: (e: React.PointerEvent<HTMLDivElement>) => handleStart(e.clientX),
     },
   };
 }
