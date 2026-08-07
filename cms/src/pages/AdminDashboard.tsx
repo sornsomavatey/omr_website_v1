@@ -139,6 +139,10 @@ export const AdminDashboard: React.FC = () => {
       time: '7:00 PM',
       guests: 4,
       branch: 'Boeung Kak',
+      preorder: [
+        { name: 'Signature Amok Curry', qty: 2 },
+        { name: 'Wagyu Beef Lok Lak', qty: 1 },
+      ],
       status: 'Confirmed',
     },
     {
@@ -147,6 +151,7 @@ export const AdminDashboard: React.FC = () => {
       time: '7:30 PM',
       guests: 2,
       branch: 'Toul Kork',
+      preorder: null,
       status: 'Pending',
     },
     {
@@ -155,6 +160,10 @@ export const AdminDashboard: React.FC = () => {
       time: '8:00 PM',
       guests: 6,
       branch: 'Boeung Kak',
+      preorder: [
+        { name: 'Khmer Fried Rice', qty: 3 },
+        { name: 'Mango Sticky Rice', qty: 2 },
+      ],
       status: 'Confirmed',
     },
     {
@@ -163,6 +172,9 @@ export const AdminDashboard: React.FC = () => {
       time: '8:30 PM',
       guests: 3,
       branch: 'Toul Kork',
+      preorder: [
+        { name: 'Grilled River Prawns', qty: 2 },
+      ],
       status: 'Confirmed',
     },
   ];
@@ -606,6 +618,7 @@ export const AdminDashboard: React.FC = () => {
                   <th className="pb-3">TIME</th>
                   <th className="pb-3">GUESTS</th>
                   <th className="pb-3">BRANCH</th>
+                  <th className="pb-3">PRE-ORDERED DISHES</th>
                   <th className="pb-3 text-right">STATUS</th>
                 </tr>
               </thead>
@@ -619,6 +632,24 @@ export const AdminDashboard: React.FC = () => {
                     <td className="py-3 font-semibold text-gray-700">{res.time}</td>
                     <td className="py-3 font-bold text-[#1c2819]">{res.guests}</td>
                     <td className="py-3 font-medium text-gray-600">{res.branch}</td>
+                    <td className="py-3">
+                      {res.preorder && res.preorder.length > 0 ? (
+                        <div className="space-y-0.5">
+                          <div className="flex items-center gap-1.5 text-xs font-bold text-[#213816]">
+                            <UtensilsCrossed className="w-3.5 h-3.5 text-[#5b8045]" />
+                            <span>
+                              {res.preorder.reduce((acc, item) => acc + item.qty, 0)}{' '}
+                              {res.preorder.reduce((acc, item) => acc + item.qty, 0) === 1 ? 'Dish' : 'Dishes'}
+                            </span>
+                          </div>
+                          <div className="text-[11px] text-gray-500 font-medium truncate max-w-[240px]" title={res.preorder.map((item) => `${item.name} (x${item.qty})`).join(', ')}>
+                            {res.preorder.map((item) => `${item.name} (x${item.qty})`).join(', ')}
+                          </div>
+                        </div>
+                      ) : (
+                        <span className="text-gray-400 text-[11px] font-mono italic">No pre-orders</span>
+                      )}
+                    </td>
                     <td className="py-3 text-right">
                       <span
                         className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold border ${
