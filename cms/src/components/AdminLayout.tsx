@@ -2,30 +2,43 @@ import React, { useState } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import {
   LayoutDashboard,
-  Home,
+  Home as HomeIcon,
   UtensilsCrossed,
-  Calendar,
   MapPin,
   Image as ImageIcon,
   MessageSquare,
   Globe,
   Eye,
   ExternalLink,
-  GitBranch,
-  CheckCircle,
   Menu as MenuIcon,
   X,
+  Search,
+  Settings,
+  LogOut,
+  Bell,
+  MessageCircle,
+  FileText,
+  Calendar,
+  Building2,
+  Users,
+  ShieldCheck,
+  Building,
+  GitBranch,
+  CheckCircle,
 } from 'lucide-react';
 import { LivePreviewModal } from './LivePreviewModal';
 import { CmsLanguageSwitcher } from './CmsLanguageSwitcher';
 import { getCMSConfig, saveCMSConfig } from '../lib/cmsStorage';
+import omrLogo from '../assets/one-more-logo-green.webp';
 
 export const AdminLayout: React.FC = () => {
   const location = useLocation();
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [previewPath, setPreviewPath] = useState('/');
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
+  const [isSidebarVisible, setIsSidebarVisible] = useState(true);
+  const [globalSearch, setGlobalSearch] = useState('');
+  const [selectedBranch, setSelectedBranch] = useState('Boeung Kak');
 
   const [config, setConfig] = useState(getCMSConfig());
   const [saveMessage, setSaveMessage] = useState<string | null>(null);
@@ -33,22 +46,43 @@ export const AdminLayout: React.FC = () => {
   const handleSaveSettings = (e: React.FormEvent) => {
     e.preventDefault();
     saveCMSConfig(config);
-    setSaveMessage('CMS & GitHub settings saved!');
+    setSaveMessage('CMS & GitHub settings saved successfully!');
     setTimeout(() => setSaveMessage(null), 3000);
   };
 
-  const navItems = [
-    { label: 'Dashboard', path: '/', icon: LayoutDashboard, preview: '/' },
-    { label: 'Home Page', path: '/home', icon: Home, preview: '/' },
-    { label: 'Menu Items', path: '/menu', icon: UtensilsCrossed, preview: '/menu' },
-    { label: 'Events & Promos', path: '/events', icon: Calendar, preview: '/events' },
-    { label: 'Branches', path: '/branches', icon: MapPin, preview: '/branches' },
-    { label: 'Gallery', path: '/gallery', icon: ImageIcon, preview: '/gallery' },
-    { label: 'Testimonials', path: '/testimonials', icon: MessageSquare, preview: '/' },
-    { label: 'Translations (i18n)', path: '/translations', icon: Globe, preview: '/' },
+  // Nav Groups matching user request (Gallery replaced by Header, Footer added)
+  const navSections = [
+    {
+      group: 'CONTENT',
+      items: [
+        { label: 'Website Pages', path: '/pages', icon: FileText, preview: '/' },
+        { label: 'Menu Management', path: '/menu', icon: UtensilsCrossed, preview: '/menu' },
+        { label: 'Header', path: '/header', icon: Globe, preview: '/' },
+        { label: 'Footer', path: '/footer', icon: FileText, preview: '/' },
+        { label: 'Testimonials', path: '/testimonials', icon: MessageSquare, preview: '/' },
+      ],
+    },
+    {
+      group: 'OPERATIONS',
+      items: [
+        { label: 'Reservations', path: '/reservations', icon: Calendar, preview: '/reservations' },
+        { label: 'Branches', path: '/branches', icon: MapPin, preview: '/branches' },
+      ],
+    },
+    {
+      group: 'ADMIN',
+      items: [
+        { label: 'Translations (i18n)', path: '/translations', icon: Globe, preview: '/' },
+      ],
+    },
   ];
 
-  const currentNavItem = navItems.find((item) => item.path === location.pathname) || navItems[0];
+  const allItems = [
+    { label: 'Dashboard', path: '/', icon: LayoutDashboard, preview: '/' },
+    ...navSections.flatMap((s) => s.items),
+  ];
+
+  const currentNavItem = allItems.find((item) => item.path === location.pathname) || allItems[0];
 
   const openPreview = () => {
     setPreviewPath(currentNavItem.preview);
@@ -56,116 +90,157 @@ export const AdminLayout: React.FC = () => {
   };
 
   return (
-    <div className="h-screen w-screen flex flex-col bg-[#121c13] text-neutral-100 font-sans overflow-hidden">
-      {/* Top Bar - Strictly Fixed Navbar */}
-      <header className="h-16 bg-[#18271a] border-b border-[#2d402f] px-4 sm:px-6 flex items-center justify-between shrink-0 z-50 shadow-md">
-        <div className="flex items-center gap-3">
-          <button
-            onClick={() => setIsMobileNavOpen(!isMobileNavOpen)}
-            className="p-2 text-neutral-400 hover:text-white md:hidden"
-          >
-            {isMobileNavOpen ? <X className="w-5 h-5" /> : <MenuIcon className="w-5 h-5" />}
-          </button>
-          <Link to="/" className="flex items-center gap-2.5">
-            <span className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#d4af37] to-[#b39a62] text-black font-serif font-bold flex items-center justify-center text-sm tracking-wider shadow-sm">
-              OMR
-            </span>
-            <div>
-              <h1 className="text-sm font-bold text-neutral-100 leading-tight font-serif tracking-wide">
-                One More Restaurant
-              </h1>
-              <span className="text-[10px] uppercase tracking-widest text-[#c8a962] font-mono font-medium">
-                Content Management System
-              </span>
-            </div>
-          </Link>
-        </div>
-
-        {/* Controls Bar with Language Switcher */}
-        <div className="flex items-center gap-2 sm:gap-3">
-          <CmsLanguageSwitcher />
-
-          <button
-            onClick={openPreview}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#c8a962]/15 text-[#e5c158] hover:bg-[#c8a962]/25 border border-[#c8a962]/30 transition shadow-sm"
-          >
-            <Eye className="w-4 h-4" />
-            <span className="hidden sm:inline">Live Preview</span>
-          </button>
-
-          <button
-            onClick={() => setIsSettingsOpen(true)}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-[#1d2f20] hover:bg-[#253b29] text-neutral-300 border border-[#2d402f] transition"
-            title="CI/CD & GitHub Settings"
-          >
-            <GitBranch className="w-4 h-4 text-[#c8a962]" />
-            <span className="hidden sm:inline">Settings</span>
-          </button>
-
-          <a
-            href={config.websiteUrl || 'http://localhost:3001'}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-[#1d2f20] hover:bg-[#253b29] text-neutral-300 border border-[#2d402f] transition"
-          >
-            <ExternalLink className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Visit Site</span>
-          </a>
-        </div>
-      </header>
-
-      {/* Main Container - Non-scrolling body, scrollable content */}
-      <div className="flex-1 flex overflow-hidden relative">
-        {/* Sidebar Navigation */}
-        <aside
-          className={`${
-            isMobileNavOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
-          } fixed md:static inset-y-0 left-0 z-40 w-64 bg-[#18271a] border-r border-[#2d402f] p-4 transition-transform duration-200 ease-in-out flex flex-col justify-between overflow-y-auto shrink-0`}
-        >
-          <div className="space-y-1.5">
-            <div className="px-3 py-2 text-[11px] font-semibold uppercase tracking-wider text-[#a9ca96] font-mono">
-              Content Managers
-            </div>
-            {navItems.map((item) => {
-              const Icon = item.icon;
-              const isActive = location.pathname === item.path;
-
-              return (
-                <Link
-                  key={item.path}
-                  to={item.path}
-                  onClick={() => setIsMobileNavOpen(false)}
-                  className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-medium transition ${
-                    isActive
-                      ? 'bg-[#c8a962]/15 text-[#e5c158] font-bold border border-[#c8a962]/30 shadow-sm'
-                      : 'text-neutral-300 hover:text-neutral-100 hover:bg-[#1d2f20]/80'
-                  }`}
-                >
-                  <Icon className={`w-4 h-4 ${isActive ? 'text-[#e5c158]' : 'text-[#8ba38e]'}`} />
-                  {item.label}
-                </Link>
-              );
-            })}
-          </div>
-
-          <div className="pt-4 border-t border-[#2d402f] space-y-2">
-            <div className="bg-[#121c13] p-3 rounded-xl border border-[#2d402f] space-y-1.5 text-xs">
-              <div className="flex items-center justify-between text-neutral-400">
-                <span>Target:</span>
-                <span className="font-mono text-[#a9ca96] text-[11px]">Frontend/public</span>
+    <div className="h-screen w-screen flex bg-[#f8faf6] text-[#1c2819] font-sans overflow-hidden">
+      {/* ── Left Sidebar (Light Clean White Theme - Collapsible via Hamburger) ── */}
+      <aside
+        className={`${
+          isSidebarVisible
+            ? 'w-64 translate-x-0 p-4 border-r border-[#e2e8df] opacity-100'
+            : 'w-0 -translate-x-full p-0 border-0 border-transparent opacity-0 pointer-events-none'
+        } fixed md:static inset-y-0 left-0 z-40 bg-white text-[#1c2819] transition-all duration-300 ease-in-out flex flex-col justify-between shrink-0 shadow-xs overflow-y-auto`}
+      >
+        <div className="space-y-5 min-w-[224px]">
+          {/* Brand Logo & Header */}
+          <div className="flex items-center justify-between pb-3 border-b border-[#edf2ea]">
+            <Link to="/" className="flex items-center gap-2.5 group">
+              <div className="w-10 h-10 flex items-center justify-center group-hover:scale-105 transition-transform shrink-0">
+                <img src={omrLogo} alt="One More Logo" className="w-full h-full object-contain" />
               </div>
-              <div className="flex items-center justify-between text-neutral-400">
-                <span>GitHub PAT:</span>
-                <span className="font-mono text-[11px] text-[#e5c158]">
-                  {config.githubToken ? 'Connected' : 'Local Disk'}
+              <div>
+                <h1 className="text-sm font-extrabold text-black leading-tight font-sans tracking-tight">
+                  One More Restaurant
+                </h1>
+                <span className="text-[10px] text-gray-500 font-bold">
+                  Content Management System
                 </span>
               </div>
+            </Link>
+          </div>
+
+          {/* Navigation Items */}
+          <div className="space-y-4">
+            {/* Dashboard Link */}
+            <Link
+              to="/"
+              className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs transition-all ${
+                location.pathname === '/'
+                  ? 'bg-[#eef3eb] text-black border border-[#5b8045]/40 font-extrabold shadow-2xs'
+                  : 'text-black hover:bg-[#f4f7f2] font-semibold'
+              }`}
+            >
+              <div className="flex items-center gap-3">
+                <LayoutDashboard className={`w-4 h-4 ${location.pathname === '/' ? 'text-black stroke-[2.5]' : 'text-black'}`} />
+                <span className={location.pathname === '/' ? 'font-extrabold text-black' : 'font-semibold text-black'}>Dashboard</span>
+              </div>
+              {location.pathname === '/' && <span className="w-1.5 h-1.5 rounded-full bg-[#5b8045]" />}
+            </Link>
+
+            {/* Nav Groups */}
+            {navSections.map((section) => (
+              <div key={section.group} className="space-y-1">
+                <div className="px-3 text-[10px] font-bold uppercase tracking-wider text-gray-500 font-mono">
+                  {section.group}
+                </div>
+                {section.items.map((item) => {
+                  const Icon = item.icon;
+                  const isActive = location.pathname === item.path;
+
+                  return (
+                    <Link
+                      key={item.path}
+                      to={item.path}
+                      className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs transition-all ${
+                        isActive
+                          ? 'bg-[#eef3eb] text-black border border-[#5b8045]/40 font-extrabold shadow-2xs'
+                          : 'text-black hover:bg-[#f4f7f2] font-semibold'
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <Icon className={`w-4 h-4 ${isActive ? 'text-black stroke-[2.5]' : 'text-black'}`} />
+                        <span className={isActive ? 'font-extrabold text-black' : 'font-semibold text-black'}>
+                          {item.label}
+                        </span>
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
+            ))}
+
+            {/* Settings */}
+            <div className="space-y-1 pt-1">
+              <button
+                onClick={() => setIsSettingsOpen(true)}
+                className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold text-black hover:bg-[#f4f7f2] transition cursor-pointer"
+              >
+                <div className="flex items-center gap-3">
+                  <Settings className="w-4 h-4 text-black" />
+                  <span className="font-semibold text-black">Settings</span>
+                </div>
+              </button>
             </div>
           </div>
-        </aside>
+        </div>
 
-        {/* Main Content Area - Scrollable */}
-        <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 bg-[#121c13]">
+        {/* Footer Logout */}
+        <div className="pt-4 border-t border-[#edf2ea] min-w-[224px]">
+          <Link
+            to="/"
+            className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-black hover:text-rose-700 hover:bg-rose-50 transition"
+          >
+            <LogOut className="w-4 h-4 text-black" />
+            <span className="font-semibold text-black">Logout</span>
+          </Link>
+        </div>
+      </aside>
+
+      {/* ── Main Content Container ── */}
+      <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
+        {/* Top Header Bar with Hamburger Toggle */}
+        <header className="bg-white border-b border-[#e2e8df] px-4 sm:px-6 py-3 flex items-center justify-between gap-4 shrink-0">
+          <div className="flex items-center gap-3 flex-1 max-w-xl">
+            {/* Hamburger Button to Hide/Show Sidebar */}
+            <button
+              onClick={() => setIsSidebarVisible(!isSidebarVisible)}
+              className="w-10 h-10 text-black hover:bg-[#f4f7f2] rounded-xl border border-[#e2e8df] transition cursor-pointer flex items-center justify-center shrink-0 shadow-2xs"
+              title={isSidebarVisible ? 'Hide Navigation Sidebar' : 'Show Navigation Sidebar'}
+            >
+              <MenuIcon className="w-5 h-5 text-black" />
+            </button>
+
+            {/* Global Search Input matching Hamburger button size and radius */}
+            <div className="relative flex-1 h-10 flex items-center">
+              <Search className="w-4 h-4 absolute left-3.5 text-gray-400 pointer-events-none" />
+              <input
+                type="text"
+                placeholder="Search..."
+                value={globalSearch}
+                onChange={(e) => setGlobalSearch(e.target.value)}
+                className="w-full h-10 pl-9.5 pr-4 rounded-xl bg-[#f4f7f2] border border-transparent focus:border-[#5b8045] focus:bg-white text-xs outline-none transition"
+              />
+            </div>
+          </div>
+
+          {/* Top Bar Actions & Profile */}
+          <div className="flex items-center gap-3">
+            {/* View Website Button */}
+            <button
+              onClick={openPreview}
+              className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#5b8045]/10 hover:bg-[#5b8045]/20 text-[#5b8045] text-xs font-bold border border-[#5b8045]/30 shadow-xs transition cursor-pointer"
+            >
+              <Globe className="w-3.5 h-3.5" />
+              <span>View Website</span>
+            </button>
+
+            {/* User Avatar Circle */}
+            <div className="w-8 h-8 rounded-full bg-[#5b8045] text-white text-xs font-bold flex items-center justify-center shadow-xs cursor-pointer">
+              SM
+            </div>
+          </div>
+        </header>
+
+        {/* Main Content View Container */}
+        <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 bg-[#f4f7f2]">
           <Outlet />
         </main>
       </div>
@@ -179,24 +254,31 @@ export const AdminLayout: React.FC = () => {
 
       {/* Settings Modal */}
       {isSettingsOpen && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="w-full max-w-lg bg-[#18271a] border border-[#2d402f] rounded-2xl p-6 space-y-4 shadow-2xl">
-            <div className="flex items-center justify-between">
-              <h2 className="text-base font-bold text-neutral-100 flex items-center gap-2 font-serif">
-                <GitBranch className="w-5 h-5 text-[#c8a962]" />
-                CMS & GitHub CI/CD Settings
-              </h2>
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="w-full max-w-lg bg-white border border-[#e2e8df] rounded-3xl p-6 space-y-5 shadow-2xl text-[#1c2819]">
+            <div className="flex items-center justify-between pb-3 border-b border-[#e2e8df]">
+              <div className="flex items-center gap-2">
+                <div className="p-2 rounded-xl bg-[#5b8045]/10 text-[#5b8045]">
+                  <GitBranch className="w-5 h-5" />
+                </div>
+                <div>
+                  <h2 className="text-base font-bold text-[#212d1b] font-serif">
+                    CMS & Repository Settings
+                  </h2>
+                  <p className="text-xs text-gray-500">Configure deployment targets & GitHub sync</p>
+                </div>
+              </div>
               <button
                 onClick={() => setIsSettingsOpen(false)}
-                className="text-neutral-400 hover:text-white p-1"
+                className="text-gray-400 hover:text-black p-1.5 rounded-xl hover:bg-gray-100 transition"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <form onSubmit={handleSaveSettings} className="space-y-3">
+            <form onSubmit={handleSaveSettings} className="space-y-4">
               <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-[#a9ca96] mb-1">
+                <label className="block text-xs font-bold uppercase tracking-wider text-[#5b8045] mb-1.5">
                   Public Website Base URL (for Live Preview)
                 </label>
                 <input
@@ -204,12 +286,12 @@ export const AdminLayout: React.FC = () => {
                   value={config.websiteUrl || ''}
                   onChange={(e) => setConfig({ ...config, websiteUrl: e.target.value })}
                   placeholder="http://localhost:3001"
-                  className="w-full bg-[#121c13] border border-[#2d402f] text-neutral-100 text-xs px-3 py-2 rounded-lg focus:outline-none focus:border-[#c8a962] font-mono"
+                  className="w-full bg-[#f8faf6] border border-[#e2e8df] text-[#212d1b] text-xs px-3.5 py-2.5 rounded-xl focus:outline-none focus:border-[#5b8045] focus:ring-2 focus:ring-[#5b8045]/20 font-mono"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-[#a9ca96] mb-1">
+                <label className="block text-xs font-bold uppercase tracking-wider text-[#5b8045] mb-1.5">
                   GitHub Personal Access Token (PAT)
                 </label>
                 <input
@@ -217,13 +299,13 @@ export const AdminLayout: React.FC = () => {
                   value={config.githubToken || ''}
                   onChange={(e) => setConfig({ ...config, githubToken: e.target.value })}
                   placeholder="ghp_xxxxxxxxxxxxxxxxxxxx"
-                  className="w-full bg-[#121c13] border border-[#2d402f] text-neutral-100 text-xs px-3 py-2 rounded-lg focus:outline-none focus:border-[#c8a962] font-mono"
+                  className="w-full bg-[#f8faf6] border border-[#e2e8df] text-[#212d1b] text-xs px-3.5 py-2.5 rounded-xl focus:outline-none focus:border-[#5b8045] focus:ring-2 focus:ring-[#5b8045]/20 font-mono"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-[#a9ca96] mb-1">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-[#5b8045] mb-1.5">
                     Repo Owner / Org
                   </label>
                   <input
@@ -231,11 +313,11 @@ export const AdminLayout: React.FC = () => {
                     value={config.githubOwner || ''}
                     onChange={(e) => setConfig({ ...config, githubOwner: e.target.value })}
                     placeholder="e.g. sornsomavatey"
-                    className="w-full bg-[#121c13] border border-[#2d402f] text-neutral-100 text-xs px-3 py-2 rounded-lg focus:outline-none focus:border-[#c8a962] font-mono"
+                    className="w-full bg-[#f8faf6] border border-[#e2e8df] text-[#212d1b] text-xs px-3.5 py-2.5 rounded-xl focus:outline-none focus:border-[#5b8045] focus:ring-2 focus:ring-[#5b8045]/20 font-mono"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-[#a9ca96] mb-1">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-[#5b8045] mb-1.5">
                     Repository Name
                   </label>
                   <input
@@ -243,29 +325,29 @@ export const AdminLayout: React.FC = () => {
                     value={config.githubRepo || ''}
                     onChange={(e) => setConfig({ ...config, githubRepo: e.target.value })}
                     placeholder="e.g. omr_website_v1"
-                    className="w-full bg-[#121c13] border border-[#2d402f] text-neutral-100 text-xs px-3 py-2 rounded-lg focus:outline-none focus:border-[#c8a962] font-mono"
+                    className="w-full bg-[#f8faf6] border border-[#e2e8df] text-[#212d1b] text-xs px-3.5 py-2.5 rounded-xl focus:outline-none focus:border-[#5b8045] focus:ring-2 focus:ring-[#5b8045]/20 font-mono"
                   />
                 </div>
               </div>
 
               {saveMessage && (
-                <div className="flex items-center gap-1.5 text-xs text-emerald-400 font-medium pt-1">
-                  <CheckCircle className="w-4 h-4" />
+                <div className="flex items-center gap-1.5 text-xs text-emerald-700 bg-emerald-50 border border-emerald-200 p-2.5 rounded-xl font-medium">
+                  <CheckCircle className="w-4 h-4 text-emerald-600" />
                   {saveMessage}
                 </div>
               )}
 
-              <div className="flex justify-end gap-2 pt-2">
+              <div className="flex justify-end gap-2.5 pt-2">
                 <button
                   type="button"
                   onClick={() => setIsSettingsOpen(false)}
-                  className="px-4 py-2 rounded-lg text-xs bg-[#1d2f20] hover:bg-[#253b29] text-neutral-300 font-medium border border-[#2d402f]"
+                  className="px-4 py-2.5 rounded-xl text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold transition"
                 >
-                  Close
+                  Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 rounded-lg text-xs bg-[#c8a962] hover:bg-[#b39a62] text-black font-semibold shadow-md"
+                  className="px-5 py-2.5 rounded-xl text-xs bg-[#5b8045] hover:bg-[#4a6b37] text-white font-bold shadow-md shadow-[#5b8045]/20 transition"
                 >
                   Save Settings
                 </button>
@@ -277,3 +359,4 @@ export const AdminLayout: React.FC = () => {
     </div>
   );
 };
+

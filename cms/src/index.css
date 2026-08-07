@@ -1,8 +1,38 @@
 @import "tailwindcss";
 
+@theme {
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-serif: "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: "Inter", system-ui, -apple-system, sans-serif;
+}
+
 @layer base {
-  body {
-    background-color: #09090b;
-    color: #f4f4f5;
+  *, ::before, ::after {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
   }
+
+  body {
+    background-color: #f4f7f2;
+    color: #1c2819;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
+  }
+}
+
+/* Custom smooth scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5c8;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a3b89e;
 }

@@ -170,18 +170,18 @@ export const HomeEditor: React.FC = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6 pb-12">
+    <div className="max-w-5xl mx-auto space-y-6 pb-12 text-[#1c2819]">
       {/* Header Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-[#2d402f] pb-4 gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-[#e2e8df] pb-4 gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-xl font-bold text-neutral-100 font-serif tracking-wide">Home Page Editor</h1>
-            <span className="px-2.5 py-0.5 rounded-lg text-[11px] font-semibold bg-[#c8a962]/15 text-[#e5c158] border border-[#c8a962]/30 flex items-center gap-1 font-mono">
+            <h1 className="text-xl font-bold text-[#212d1b] font-serif tracking-wide">Home Page Editor</h1>
+            <span className="px-2.5 py-0.5 rounded-lg text-[11px] font-semibold bg-[#5b8045]/10 text-[#5b8045] border border-[#5b8045]/30 flex items-center gap-1 font-mono">
               <span>{currentLangInfo.flag}</span>
               <span>{currentLangInfo.short} Mode</span>
             </span>
           </div>
-          <p className="text-xs text-[#a9ca96] font-mono mt-1">
+          <p className="text-xs text-[#606e5c] font-mono mt-1">
             Editing {currentLangInfo.flag} {currentLangInfo.label} content (home.json & locales/{language}.json)
           </p>
         </div>
@@ -189,7 +189,7 @@ export const HomeEditor: React.FC = () => {
         <button
           onClick={handleSave}
           disabled={saving}
-          className="flex items-center gap-2 bg-[#c8a962] hover:bg-[#b39a62] text-black px-4 py-2 rounded-xl text-xs font-bold transition shadow-lg shadow-[#c8a962]/10 disabled:opacity-50 shrink-0"
+          className="flex items-center gap-2 bg-[#5b8045] hover:bg-[#4a6b37] text-white px-5 py-2.5 rounded-xl text-xs font-bold transition shadow-md shadow-[#5b8045]/20 disabled:opacity-50 shrink-0 cursor-pointer"
         >
           {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
           {saving ? 'Saving...' : `Save (${currentLangInfo.short})`}
@@ -197,21 +197,24 @@ export const HomeEditor: React.FC = () => {
       </div>
 
       {message && (
-        <div className="p-3.5 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-emerald-400 text-xs flex items-center gap-2 font-medium">
-          <CheckCircle className="w-4 h-4 shrink-0" />
+        <div className="p-3.5 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-800 text-xs flex items-center gap-2 font-medium">
+          <CheckCircle className="w-4 h-4 text-emerald-600 shrink-0" />
           {message}
         </div>
       )}
 
       {/* Hero Section */}
-      <div className="bg-[#18271a] border border-[#2d402f] rounded-2xl p-6 space-y-4 shadow-sm">
-        <h2 className="text-sm font-bold text-[#c8a962] uppercase tracking-wider border-b border-[#2d402f] pb-3 flex items-center justify-between font-mono">
-          <span>Hero Section ({currentLangInfo.flag} {currentLangInfo.label})</span>
+      <div className="bg-white border border-[#e2e8df] rounded-2xl p-6 space-y-4 shadow-xs">
+        <h2 className="text-sm font-bold text-[#212d1b] font-serif tracking-wide border-b border-gray-100 pb-3 flex items-center justify-between">
+          <span className="flex items-center gap-2">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#5b8045]" />
+            Hero Section ({currentLangInfo.flag} {currentLangInfo.label})
+          </span>
         </h2>
 
         <div className="grid grid-cols-1 gap-4">
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-[#a9ca96] mb-1 font-mono">
+            <label className="block text-xs font-bold uppercase tracking-wider text-[#5b8045] mb-1.5 font-mono">
               Hero Title ({currentLangInfo.short})
             </label>
             <input
@@ -221,12 +224,12 @@ export const HomeEditor: React.FC = () => {
                 setData({ ...data, hero: { ...data?.hero, title: e.target.value } })
               }
               placeholder={`Hero Title in ${currentLangInfo.label}`}
-              className="w-full bg-[#121c13] border border-[#2d402f] text-neutral-100 text-xs px-3 py-2.5 rounded-lg focus:outline-none focus:border-[#c8a962]"
+              className="w-full bg-[#f8faf6] border border-[#e2e8df] text-[#212d1b] text-xs px-3.5 py-2.5 rounded-xl focus:outline-none focus:border-[#5b8045] focus:ring-2 focus:ring-[#5b8045]/20 font-medium"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-[#a9ca96] mb-1 font-mono">
+            <label className="block text-xs font-bold uppercase tracking-wider text-[#5b8045] mb-1.5 font-mono">
               Hero Subtitle ({currentLangInfo.short})
             </label>
             <textarea
@@ -236,13 +239,13 @@ export const HomeEditor: React.FC = () => {
                 setData({ ...data, hero: { ...data?.hero, subtitle: e.target.value } })
               }
               placeholder={`Hero Subtitle in ${currentLangInfo.label}`}
-              className="w-full bg-[#121c13] border border-[#2d402f] text-neutral-100 text-xs px-3 py-2.5 rounded-lg focus:outline-none focus:border-[#c8a962] resize-none"
+              className="w-full bg-[#f8faf6] border border-[#e2e8df] text-[#212d1b] text-xs px-3.5 py-2.5 rounded-xl focus:outline-none focus:border-[#5b8045] focus:ring-2 focus:ring-[#5b8045]/20 resize-none font-medium"
             />
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-[#a9ca96] mb-1 font-mono">
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#5b8045] mb-1.5 font-mono">
                 CTA Button 1 Text
               </label>
               <input
@@ -251,11 +254,11 @@ export const HomeEditor: React.FC = () => {
                 onChange={(e) =>
                   setData({ ...data, hero: { ...data?.hero, cta_reserve: e.target.value } })
                 }
-                className="w-full bg-[#121c13] border border-[#2d402f] text-neutral-100 text-xs px-3 py-2.5 rounded-lg focus:outline-none focus:border-[#c8a962]"
+                className="w-full bg-[#f8faf6] border border-[#e2e8df] text-[#212d1b] text-xs px-3.5 py-2.5 rounded-xl focus:outline-none focus:border-[#5b8045] focus:ring-2 focus:ring-[#5b8045]/20 font-medium"
               />
             </div>
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-[#a9ca96] mb-1 font-mono">
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#5b8045] mb-1.5 font-mono">
                 CTA Button 2 Text
               </label>
               <input
@@ -264,7 +267,7 @@ export const HomeEditor: React.FC = () => {
                 onChange={(e) =>
                   setData({ ...data, hero: { ...data?.hero, cta_menu: e.target.value } })
                 }
-                className="w-full bg-[#121c13] border border-[#2d402f] text-neutral-100 text-xs px-3 py-2.5 rounded-lg focus:outline-none focus:border-[#c8a962]"
+                className="w-full bg-[#f8faf6] border border-[#e2e8df] text-[#212d1b] text-xs px-3.5 py-2.5 rounded-xl focus:outline-none focus:border-[#5b8045] focus:ring-2 focus:ring-[#5b8045]/20 font-medium"
               />
             </div>
           </div>
@@ -280,14 +283,15 @@ export const HomeEditor: React.FC = () => {
       </div>
 
       {/* Signature Dishes List */}
-      <div className="bg-[#18271a] border border-[#2d402f] rounded-2xl p-6 space-y-4 shadow-sm">
-        <div className="flex items-center justify-between border-b border-[#2d402f] pb-3">
-          <h2 className="text-sm font-bold text-[#c8a962] uppercase tracking-wider font-mono">
-            Signature Dishes Showcase ({data?.signatureDishes?.length || 0}) — {currentLangInfo.flag} {currentLangInfo.short}
+      <div className="bg-white border border-[#e2e8df] rounded-2xl p-6 space-y-4 shadow-xs">
+        <div className="flex items-center justify-between border-b border-gray-100 pb-3">
+          <h2 className="text-sm font-bold text-[#212d1b] font-serif tracking-wide flex items-center gap-2">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#5b8045]" />
+            <span>Signature Dishes Showcase ({data?.signatureDishes?.length || 0})</span>
           </h2>
           <button
             onClick={handleAddDish}
-            className="flex items-center gap-1 bg-[#c8a962]/15 text-[#e5c158] hover:bg-[#c8a962]/25 px-3 py-1.5 rounded-lg text-xs font-medium border border-[#c8a962]/30 transition"
+            className="flex items-center gap-1.5 bg-[#5b8045]/10 text-[#5b8045] hover:bg-[#5b8045] hover:text-white px-3 py-1.5 rounded-xl text-xs font-semibold border border-[#5b8045]/30 transition shadow-xs cursor-pointer"
           >
             <Plus className="w-3.5 h-3.5" />
             Add Dish
@@ -298,13 +302,13 @@ export const HomeEditor: React.FC = () => {
           {(data?.signatureDishes || []).map((dish: any, idx: number) => (
             <div
               key={dish.key || idx}
-              className="p-4 bg-[#121c13] border border-[#2d402f] rounded-xl space-y-3 relative group"
+              className="p-4 bg-[#f8faf6] border border-[#e2e8df] rounded-xl space-y-3 relative group"
             >
               <div className="flex items-center justify-between">
-                <span className="text-xs font-mono font-bold text-[#c8a962]">Dish #{idx + 1}</span>
+                <span className="text-xs font-mono font-bold text-[#5b8045]">Dish #{idx + 1}</span>
                 <button
                   onClick={() => handleRemoveDish(idx)}
-                  className="text-neutral-500 hover:text-rose-400 p-1 transition"
+                  className="text-gray-400 hover:text-rose-600 p-1 transition"
                   title="Remove dish"
                 >
                   <Trash2 className="w-4 h-4" />
@@ -313,65 +317,65 @@ export const HomeEditor: React.FC = () => {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-[11px] font-semibold text-[#a9ca96] mb-1 font-mono">
+                  <label className="block text-[11px] font-bold text-[#5b8045] mb-1 font-mono">
                     Dish Name ({currentLangInfo.short})
                   </label>
                   <input
                     type="text"
                     value={dish.name || ''}
                     onChange={(e) => handleDishChange(idx, 'name', e.target.value)}
-                    className="w-full bg-[#18271a] border border-[#2d402f] text-neutral-100 text-xs px-3 py-2 rounded-lg focus:outline-none focus:border-[#c8a962]"
+                    className="w-full bg-white border border-[#e2e8df] text-[#212d1b] text-xs px-3 py-2 rounded-xl focus:outline-none focus:border-[#5b8045] focus:ring-2 focus:ring-[#5b8045]/20 font-medium"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-semibold text-[#a9ca96] mb-1 font-mono">
+                  <label className="block text-[11px] font-bold text-[#5b8045] mb-1 font-mono">
                     Category Tag
                   </label>
                   <input
                     type="text"
                     value={dish.category || ''}
                     onChange={(e) => handleDishChange(idx, 'category', e.target.value)}
-                    className="w-full bg-[#18271a] border border-[#2d402f] text-neutral-100 text-xs px-3 py-2 rounded-lg focus:outline-none focus:border-[#c8a962]"
+                    className="w-full bg-white border border-[#e2e8df] text-[#212d1b] text-xs px-3 py-2 rounded-xl focus:outline-none focus:border-[#5b8045] focus:ring-2 focus:ring-[#5b8045]/20 font-medium"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-[11px] font-semibold text-[#a9ca96] mb-1 font-mono">
+                  <label className="block text-[11px] font-bold text-[#5b8045] mb-1 font-mono">
                     Price
                   </label>
                   <input
                     type="text"
                     value={dish.price || ''}
                     onChange={(e) => handleDishChange(idx, 'price', e.target.value)}
-                    className="w-full bg-[#18271a] border border-[#2d402f] text-neutral-100 text-xs px-3 py-2 rounded-lg focus:outline-none focus:border-[#c8a962]"
+                    className="w-full bg-white border border-[#e2e8df] text-[#212d1b] text-xs px-3 py-2 rounded-xl focus:outline-none focus:border-[#5b8045] focus:ring-2 focus:ring-[#5b8045]/20 font-medium"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-semibold text-[#a9ca96] mb-1 font-mono">
+                  <label className="block text-[11px] font-bold text-[#5b8045] mb-1 font-mono">
                     Badge Tag
                   </label>
                   <input
                     type="text"
                     value={dish.badge || ''}
                     onChange={(e) => handleDishChange(idx, 'badge', e.target.value)}
-                    className="w-full bg-[#18271a] border border-[#2d402f] text-neutral-100 text-xs px-3 py-2 rounded-lg focus:outline-none focus:border-[#c8a962]"
+                    className="w-full bg-white border border-[#e2e8df] text-[#212d1b] text-xs px-3 py-2 rounded-xl focus:outline-none focus:border-[#5b8045] focus:ring-2 focus:ring-[#5b8045]/20 font-medium"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-[11px] font-semibold text-[#a9ca96] mb-1 font-mono">
+                <label className="block text-[11px] font-bold text-[#5b8045] mb-1 font-mono">
                   Description ({currentLangInfo.short})
                 </label>
                 <textarea
                   rows={2}
                   value={dish.desc || ''}
                   onChange={(e) => handleDishChange(idx, 'desc', e.target.value)}
-                  className="w-full bg-[#18271a] border border-[#2d402f] text-neutral-100 text-xs px-3 py-2 rounded-lg focus:outline-none focus:border-[#c8a962] resize-none"
+                  className="w-full bg-white border border-[#e2e8df] text-[#212d1b] text-xs px-3 py-2 rounded-xl focus:outline-none focus:border-[#5b8045] focus:ring-2 focus:ring-[#5b8045]/20 resize-none font-medium"
                 />
               </div>
 
