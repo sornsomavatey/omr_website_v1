@@ -43,13 +43,13 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
 
   return (
     <div className={`space-y-2 ${className}`}>
-      {label && <label className="block text-xs font-semibold uppercase tracking-wider text-[#a9ca96]">{label}</label>}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-3 bg-[#18271a] border border-[#2d402f] rounded-xl shadow-sm">
-        <div className="relative w-20 h-20 bg-[#121c13] rounded-lg border border-[#2d402f] flex items-center justify-center overflow-hidden shrink-0 group">
+      {label && <label className="block text-xs font-bold uppercase tracking-wider text-[#5b8045] font-mono">{label}</label>}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-3.5 bg-white border border-[#e2e8df] rounded-xl shadow-xs">
+        <div className="relative w-20 h-20 bg-[#f8faf6] rounded-xl border border-[#e2e8df] flex items-center justify-center overflow-hidden shrink-0 group">
           {value ? (
             <img src={value} alt="Preview" className="w-full h-full object-cover" />
           ) : (
-            <ImageIcon className="w-8 h-8 text-[#8ba38e]" />
+            <ImageIcon className="w-8 h-8 text-[#5b8045]/40" />
           )}
         </div>
 
@@ -59,19 +59,19 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
             value={value}
             onChange={(e) => onChange(e.target.value)}
             placeholder="Image path or URL (e.g. /uploads/image.webp)"
-            className="w-full bg-[#121c13] border border-[#2d402f] text-neutral-100 text-xs px-3 py-2 rounded-lg focus:outline-none focus:border-[#c8a962] font-mono"
+            className="w-full bg-[#f8faf6] border border-[#e2e8df] text-[#212d1b] text-xs px-3 py-2 rounded-xl focus:outline-none focus:border-[#5b8045] focus:ring-2 focus:ring-[#5b8045]/20 font-mono font-medium"
           />
 
           <div className="flex items-center gap-2">
-            <label className="cursor-pointer inline-flex items-center gap-1.5 text-xs bg-[#c8a962]/15 text-[#e5c158] hover:bg-[#c8a962]/25 px-3 py-1.5 rounded-lg transition font-medium border border-[#c8a962]/30">
+            <label className="cursor-pointer inline-flex items-center gap-1.5 text-xs bg-[#5b8045]/10 text-[#5b8045] hover:bg-[#5b8045] hover:text-white px-3.5 py-1.5 rounded-xl transition font-semibold border border-[#5b8045]/30 shadow-xs">
               {loading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Upload className="w-3.5 h-3.5" />}
               {loading ? 'Uploading...' : 'Upload New File'}
               <input type="file" accept="image/*" onChange={handleFileChange} className="hidden" disabled={loading} />
             </label>
 
             {status && (
-              <span className="text-xs flex items-center gap-1 text-emerald-400 font-medium">
-                <CheckCircle className="w-3.5 h-3.5" />
+              <span className="text-xs flex items-center gap-1 text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200 font-medium">
+                <CheckCircle className="w-3.5 h-3.5 text-emerald-600" />
                 {status}
               </span>
             )}

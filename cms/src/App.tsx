@@ -3,9 +3,11 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { CmsLanguageProvider } from './context/CmsLanguageContext';
 import { AdminLayout } from './components/AdminLayout';
 import { AdminDashboard } from './pages/AdminDashboard';
+import { WebsitePages } from './pages/WebsitePages';
 import { HomeEditor } from './pages/HomeEditor';
 import { MenuEditor } from './pages/MenuEditor';
-import { EventsEditor } from './pages/EventsEditor';
+import { HeaderEditor } from './pages/HeaderEditor';
+import { FooterEditor } from './pages/FooterEditor';
 import { BranchesEditor } from './pages/BranchesEditor';
 import { GalleryEditor } from './pages/GalleryEditor';
 import { TestimonialsEditor } from './pages/TestimonialsEditor';
@@ -18,9 +20,11 @@ export default function App() {
         <Routes>
           <Route path="/" element={<AdminLayout />}>
             <Route index element={<AdminDashboard />} />
+            <Route path="pages" element={<WebsitePages />} />
             <Route path="home" element={<HomeEditor />} />
             <Route path="menu" element={<MenuEditor />} />
-            <Route path="events" element={<EventsEditor />} />
+            <Route path="header" element={<HeaderEditor />} />
+            <Route path="footer" element={<FooterEditor />} />
             <Route path="branches" element={<BranchesEditor />} />
             <Route path="gallery" element={<GalleryEditor />} />
             <Route path="testimonials" element={<TestimonialsEditor />} />
