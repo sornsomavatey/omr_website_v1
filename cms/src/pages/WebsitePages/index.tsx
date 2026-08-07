@@ -10,8 +10,16 @@ import {
   User,
   ShieldCheck,
   Search,
+  FileText,
+  Home,
+  UtensilsCrossed,
+  Calendar,
+  MapPin,
+  Image as ImageIcon,
 } from 'lucide-react';
-import { LivePreviewModal } from '../components/LivePreviewModal';
+import { LivePreviewModal } from '../../components/LivePreviewModal';
+import { CmsLanguageDropdown } from '../../components/CmsLanguageDropdown';
+import './index.css';
 
 interface PageItem {
   id: string;
@@ -23,6 +31,27 @@ interface PageItem {
   editPath: string;
   previewPath: string;
 }
+
+const getPageIcon = (id: string) => {
+  switch (id) {
+    case 'home':
+      return <Home className="w-3.5 h-3.5" />;
+    case 'menu':
+      return <UtensilsCrossed className="w-3.5 h-3.5" />;
+    case 'reservations':
+      return <Calendar className="w-3.5 h-3.5" />;
+    case 'branches':
+      return <MapPin className="w-3.5 h-3.5" />;
+    case 'gallery':
+      return <ImageIcon className="w-3.5 h-3.5" />;
+    case 'about':
+      return <FileText className="w-3.5 h-3.5" />;
+    case 'terms':
+      return <ShieldCheck className="w-3.5 h-3.5" />;
+    default:
+      return <Globe className="w-3.5 h-3.5" />;
+  }
+};
 
 export const WebsitePages: React.FC = () => {
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
@@ -121,26 +150,30 @@ export const WebsitePages: React.FC = () => {
       {/* ── Page Header ── */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold font-sans text-[#1c2819] tracking-tight">
-            Website Pages
+          <h1 className="text-2xl font-bold font-sans text-[#1c2819] tracking-tight flex items-center gap-2.5">
+            <FileText className="w-7 h-7 text-black shrink-0" />
+            <span>Website Pages</span>
           </h1>
-          <p className="text-xs text-gray-500 mt-0.5 font-medium">
+          <p className="text-xs text-gray-500 mt-1 font-medium">
             Manage and publish content for all public pages
           </p>
         </div>
 
-        <button className="px-4 py-2 rounded-xl bg-[#5b8045] hover:bg-[#4a6b37] text-white text-xs font-bold shadow-xs flex items-center gap-1.5 transition cursor-pointer self-start sm:self-auto">
-          <Plus className="w-4 h-4" />
-          <span>New Page</span>
-        </button>
+        <div className="flex items-center gap-3 self-start sm:self-auto">
+          <CmsLanguageDropdown />
+          <button className="px-4 py-2 rounded-xl bg-[#5b8045] hover:bg-[#4a6b37] text-white text-xs font-bold shadow-xs flex items-center gap-1.5 transition cursor-pointer">
+            <Plus className="w-4 h-4" />
+            <span>New Page</span>
+          </button>
+        </div>
       </div>
 
       {/* ── Pages Table Card Container ── */}
-      <div className="bg-white rounded-2xl border border-[#e2e8df] shadow-xs overflow-hidden">
+      <div className="bg-white rounded-2xl border border-[#d6e0d0] shadow-md overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs">
+          <table className="w-full text-left text-xs border-collapse">
             <thead>
-              <tr className="border-b border-[#e2e8df] text-gray-400 font-bold uppercase font-mono text-[10px] tracking-wider bg-[#fdfefe]">
+              <tr className="border-b border-[#d6e0d0] text-gray-500 font-bold uppercase font-mono text-[10px] tracking-wider bg-[#f4f7f2]">
                 <th className="py-4 px-6">PAGE NAME</th>
                 <th className="py-4 px-4">SLUG</th>
                 <th className="py-4 px-4">STATUS</th>
@@ -154,7 +187,12 @@ export const WebsitePages: React.FC = () => {
                 <tr key={page.id} className="hover:bg-[#f8faf6] transition">
                   {/* Page Name */}
                   <td className="py-4 px-6 font-bold text-[#1c2819] text-sm">
-                    {page.name}
+                    <div className="flex items-center gap-2.5">
+                      <span className="text-black shrink-0">
+                        {getPageIcon(page.id)}
+                      </span>
+                      <span>{page.name}</span>
+                    </div>
                   </td>
 
                   {/* Slug Badge */}

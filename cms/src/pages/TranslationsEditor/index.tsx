@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Save, CheckCircle, Loader2, Globe } from 'lucide-react';
-import { loadPageJson, savePageJson } from '../lib/cmsStorage';
-import { useCmsLanguage } from '../context/CmsLanguageContext';
+import { loadPageJson, savePageJson } from '../../lib/cmsStorage';
+import { useCmsLanguage } from '../../context/CmsLanguageContext';
+import './index.css';
 
 export const TranslationsEditor: React.FC = () => {
   const { language: lang, currentLangInfo } = useCmsLanguage();

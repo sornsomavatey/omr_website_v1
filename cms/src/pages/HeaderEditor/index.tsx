@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Save, Globe, Eye, Link as LinkIcon, Plus, Trash2, CheckCircle2 } from 'lucide-react';
-import { LivePreviewModal } from '../components/LivePreviewModal';
+import { LivePreviewModal } from '../../components/LivePreviewModal';
+import { CmsLanguageDropdown } from '../../components/CmsLanguageDropdown';
+import { CmsBackToPagesLink, CmsPageSelectDropdown } from '../../components/CmsPageSwitcher';
+import './index.css';
 
 export const HeaderEditor: React.FC = () => {
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
@@ -59,19 +62,27 @@ export const HeaderEditor: React.FC = () => {
   };
 
   return (
-    <div className="max-w-5xl mx-auto space-y-6 text-[#1c2819] font-sans">
+    <div className="max-w-5xl mx-auto space-y-4 text-[#1c2819] font-sans pb-12">
+      {/* Back Link under Hamburger */}
+      <div>
+        <CmsBackToPagesLink />
+      </div>
+
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-[#1c2819] tracking-tight">
-            Header Navigation Editor
+          <h1 className="text-2xl font-bold text-[#1c2819] tracking-tight flex items-center gap-2.5">
+            <Globe className="w-7 h-7 text-black shrink-0" />
+            <span>Header Navigation Editor</span>
           </h1>
-          <p className="text-xs text-gray-500 mt-0.5 font-medium">
+          <p className="text-xs text-gray-500 mt-1 font-medium">
             Manage main navigation links, logo branding, action CTA buttons & languages
           </p>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2 shrink-0">
+          <CmsLanguageDropdown />
+          <CmsPageSelectDropdown />
           <button
             onClick={() => setIsPreviewOpen(true)}
             className="px-4 py-2 rounded-xl bg-white border border-[#e2e8df] text-xs font-bold text-gray-700 hover:bg-gray-50 shadow-xs flex items-center gap-1.5 transition cursor-pointer"
@@ -99,7 +110,7 @@ export const HeaderEditor: React.FC = () => {
       {/* Main Form Cards */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Navigation Links Manager (2 Cols) */}
-        <div className="lg:col-span-2 bg-white rounded-2xl p-6 border border-[#e2e8df] shadow-xs space-y-4">
+        <div className="lg:col-span-2 bg-white rounded-2xl p-6 border border-[#d6e0d0] shadow-md space-y-4">
           <div className="flex items-center justify-between pb-3 border-b border-gray-100">
             <h2 className="text-base font-bold text-[#1c2819]">Main Navigation Menu Links</h2>
             <button
@@ -157,7 +168,7 @@ export const HeaderEditor: React.FC = () => {
         {/* CTA & Language Controls (1 Col) */}
         <div className="space-y-6">
           {/* Reservation Button CTA */}
-          <div className="bg-white rounded-2xl p-6 border border-[#e2e8df] shadow-xs space-y-4">
+          <div className="bg-white rounded-2xl p-6 border border-[#d6e0d0] shadow-md space-y-4">
             <h2 className="text-base font-bold text-[#1c2819] pb-3 border-b border-gray-100">
               Header Action Button
             </h2>

@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
-import { Save, Eye, Plus, Trash2, CheckCircle2 } from 'lucide-react';
-import { LivePreviewModal } from '../components/LivePreviewModal';
+import { Save, Eye, Plus, Trash2, CheckCircle2, FileText } from 'lucide-react';
+import { LivePreviewModal } from '../../components/LivePreviewModal';
+import { CmsLanguageDropdown } from '../../components/CmsLanguageDropdown';
+import { CmsBackToPagesLink, CmsPageSelectDropdown } from '../../components/CmsPageSwitcher';
+import './index.css';
 
 export const FooterEditor: React.FC = () => {
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
@@ -35,19 +38,27 @@ export const FooterEditor: React.FC = () => {
   };
 
   return (
-    <div className="max-w-5xl mx-auto space-y-6 text-[#1c2819] font-sans">
+    <div className="max-w-5xl mx-auto space-y-4 text-[#1c2819] font-sans pb-12">
+      {/* Back Link under Hamburger */}
+      <div>
+        <CmsBackToPagesLink />
+      </div>
+
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-[#1c2819] tracking-tight">
-            Footer Navigation & Content Editor
+          <h1 className="text-2xl font-bold text-[#1c2819] tracking-tight flex items-center gap-2.5">
+            <FileText className="w-7 h-7 text-black shrink-0" />
+            <span>Footer Navigation & Content Editor</span>
           </h1>
-          <p className="text-xs text-gray-500 mt-0.5 font-medium">
+          <p className="text-xs text-gray-500 mt-1 font-medium">
             Manage footer links, brand description, copyright & social media links
           </p>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2 shrink-0">
+          <CmsLanguageDropdown />
+          <CmsPageSelectDropdown />
           <button
             onClick={() => setIsPreviewOpen(true)}
             className="px-4 py-2 rounded-xl bg-white border border-[#e2e8df] text-xs font-bold text-gray-700 hover:bg-gray-50 shadow-xs flex items-center gap-1.5 transition cursor-pointer"
@@ -77,7 +88,7 @@ export const FooterEditor: React.FC = () => {
         {/* Brand Text & Links Columns (2 Cols) */}
         <div className="lg:col-span-2 space-y-6">
           {/* Brand Description Card */}
-          <div className="bg-white rounded-2xl p-6 border border-[#e2e8df] shadow-xs space-y-4">
+          <div className="bg-white rounded-2xl p-6 border border-[#d6e0d0] shadow-md space-y-4">
             <h2 className="text-base font-bold text-[#1c2819] pb-3 border-b border-gray-100">
               Footer Brand Text
             </h2>
@@ -106,7 +117,7 @@ export const FooterEditor: React.FC = () => {
           </div>
 
           {/* Footer Explore & Legal Links */}
-          <div className="bg-white rounded-2xl p-6 border border-[#e2e8df] shadow-xs space-y-4">
+          <div className="bg-white rounded-2xl p-6 border border-[#d6e0d0] shadow-md space-y-4">
             <h2 className="text-base font-bold text-[#1c2819] pb-3 border-b border-gray-100">
               Explore & Legal Navigation Links
             </h2>
@@ -141,7 +152,7 @@ export const FooterEditor: React.FC = () => {
         </div>
 
         {/* Social Links Card (1 Col) */}
-        <div className="bg-white rounded-2xl p-6 border border-[#e2e8df] shadow-xs space-y-4">
+        <div className="bg-white rounded-2xl p-6 border border-[#d6e0d0] shadow-md space-y-4">
           <h2 className="text-base font-bold text-[#1c2819] pb-3 border-b border-gray-100">
             Social Media Links
           </h2>
