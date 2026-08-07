@@ -20,6 +20,7 @@ import {
   Mail,
   Sparkles,
   XCircle,
+  AlertTriangle,
   LayoutDashboard,
 } from 'lucide-react';
 import { loadPageJson } from '../../lib/cmsStorage';
@@ -217,10 +218,40 @@ export const AdminDashboard: React.FC = () => {
     },
   ]);
 
+  const [cancellingResId, setCancellingResId] = useState<string | null>(null);
+  const [cancelReasonInput, setCancelReasonInput] = useState('');
+
   const handleDashboardStatusChange = (index: number, newStatus: any) => {
+    const target = todaysReservations[index];
+    if (newStatus === 'Cancelled' && target) {
+      setCancellingResId(target.id);
+      setCancelReasonInput('');
+      return;
+    }
     setTodaysReservations((prev) =>
       prev.map((item, i) => (i === index ? { ...item, status: newStatus } : item))
     );
+  };
+
+  const confirmDashboardCancellation = () => {
+    if (!cancellingResId) return;
+    const reason = cancelReasonInput.trim();
+    if (!reason) return;
+
+    setTodaysReservations((prev) =>
+      prev.map((item) =>
+        item.id === cancellingResId
+          ? { ...item, status: 'Cancelled', cancellationReason: reason }
+          : item
+      )
+    );
+    if (selectedRes && selectedRes.id === cancellingResId) {
+      setSelectedRes((prev: any) =>
+        prev ? { ...prev, status: 'Cancelled', cancellationReason: reason } : null
+      );
+    }
+    setCancellingResId(null);
+    setCancelReasonInput('');
   };
 
   if (loading) {
@@ -973,19 +1004,37 @@ export const AdminDashboard: React.FC = () => {
                 </div>
               )}
 
+              {selectedRes.cancellationReason && (
+                <div>
+                  <span className="text-[10px] font-bold text-rose-500 font-mono uppercase">CANCELLATION REASON</span>
+                  <p className="p-2.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs mt-1 font-medium">
+                    "{selectedRes.cancellationReason}"
+                  </p>
+                </div>
+              )}
+
               <div>
                 <span className="text-[10px] font-bold text-gray-400 font-mono uppercase">UPDATE STATUS</span>
                 <div className="flex gap-2 mt-1">
                   {(['Confirmed', 'Pending', 'Cancelled'] as const).map((st) => (
                     <button
                       key={st}
+                      type="button"
                       onClick={() => {
-                        handleDashboardStatusChange(todaysReservations.findIndex(r => r.id === selectedRes.id), st);
-                        setSelectedRes({ ...selectedRes, status: st });
+                        const idx = todaysReservations.findIndex((r) => r.id === selectedRes.id);
+                        if (st === 'Cancelled') {
+                          setCancellingResId(selectedRes.id);
+                          setCancelReasonInput('');
+                        } else {
+                          handleDashboardStatusChange(idx, st);
+                          setSelectedRes({ ...selectedRes, status: st });
+                        }
                       }}
-                      className={`px-3 py-1.5 rounded-xl text-xs font-bold transition border ${
+                      className={`px-3 py-1.5 rounded-xl text-xs font-bold transition border cursor-pointer ${
                         selectedRes.status === st
-                          ? 'bg-[#5b8045] text-white border-[#5b8045]'
+                          ? st === 'Cancelled'
+                            ? 'bg-rose-600 text-white border-rose-600'
+                            : 'bg-[#5b8045] text-white border-[#5b8045]'
                           : 'bg-white border-[#e2e8df] text-gray-700 hover:bg-gray-50'
                       }`}
                     >
@@ -1002,6 +1051,90 @@ export const AdminDashboard: React.FC = () => {
                 className="px-4 py-2 rounded-xl bg-[#5b8045] text-white font-bold text-xs hover:bg-[#4a6b37]"
               >
                 Done
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── Cancellation Reason Modal ── */}
+      {cancellingResId && (
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl p-6 max-w-md w-full space-y-4 border border-rose-100 shadow-2xl text-[#1c2819]">
+            <div className="flex items-center justify-between pb-3 border-b border-gray-100">
+              <div className="flex items-center gap-2 text-rose-600">
+                <AlertTriangle className="w-5 h-5" />
+                <h3 className="text-base font-bold text-[#1c2819]">Cancellation Reason</h3>
+              </div>
+              <button
+                type="button"
+                onClick={() => setCancellingResId(null)}
+                className="p-1 rounded-lg text-gray-400 hover:text-gray-600 cursor-pointer"
+              >
+                <XCircle className="w-5 h-5" />
+              </button>
+            </div>
+
+            <p className="text-xs text-gray-600 font-medium">
+              Please specify the reason for cancelling reservation{' '}
+              <span className="font-bold text-gray-900">{cancellingResId}</span> before confirming.
+            </p>
+
+            {/* Quick Reasons Chips */}
+            <div className="space-y-1.5">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-gray-400 font-mono">QUICK REASONS:</span>
+              <div className="flex flex-wrap gap-1.5">
+                {[
+                  'Guest requested cancellation',
+                  'Fully booked / No table capacity',
+                  'Guest no-show',
+                  'Duplicate reservation',
+                  'Emergency / Unforeseen closure',
+                ].map((preset) => (
+                  <button
+                    key={preset}
+                    type="button"
+                    onClick={() => setCancelReasonInput(preset)}
+                    className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition cursor-pointer border ${
+                      cancelReasonInput === preset
+                        ? 'bg-rose-600 text-white border-rose-600'
+                        : 'bg-rose-50/60 text-rose-800 border-rose-200 hover:bg-rose-100'
+                    }`}
+                  >
+                    {preset}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-[10px] font-bold uppercase tracking-wider text-gray-500 font-mono mb-1">
+                CANCELLATION DETAILS / NOTES
+              </label>
+              <textarea
+                rows={3}
+                value={cancelReasonInput}
+                onChange={(e) => setCancelReasonInput(e.target.value)}
+                placeholder="Type cancellation reason here..."
+                className="w-full p-3 rounded-xl border border-gray-200 focus:border-rose-500 focus:ring-1 focus:ring-rose-500 text-xs outline-none"
+              />
+            </div>
+
+            <div className="flex items-center justify-end gap-2 pt-2 border-t border-gray-100">
+              <button
+                type="button"
+                onClick={() => setCancellingResId(null)}
+                className="px-4 py-2 rounded-xl bg-gray-100 text-gray-700 text-xs font-bold hover:bg-gray-200 transition cursor-pointer"
+              >
+                Back
+              </button>
+              <button
+                type="button"
+                onClick={confirmDashboardCancellation}
+                disabled={!cancelReasonInput.trim()}
+                className="px-4 py-2 rounded-xl bg-rose-600 text-white text-xs font-bold hover:bg-rose-700 disabled:opacity-50 transition cursor-pointer flex items-center gap-1.5 shadow-md shadow-rose-600/20"
+              >
+                Confirm Cancellation
               </button>
             </div>
           </div>
