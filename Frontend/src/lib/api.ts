@@ -7,12 +7,18 @@ const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL, // Points to the relative root 
 });
 
+// Bundled website content is served by Vite/Express from public/mocks.
+// It must not inherit the /api prefix used for backend requests.
+const contentApi = axios.create({
+  baseURL: '/',
+});
+
 const apiWebApp = axios.create({
   baseURL: import.meta.env.VITE_WEBAPP_IMAGE_URL, // Points to the relative root 
 });
 
 export const getHomeData = async () => {
-  const response = await api.get('/mocks/home.json');
+  const response = await contentApi.get('/mocks/home.json');
   return response.data;
 };
 
@@ -81,33 +87,33 @@ export const getMenuData = async () => {
 };
 
 export const getAboutData = async () => {
-  const response = await api.get('/mocks/about.json');
+  const response = await contentApi.get('/mocks/about.json');
   return response.data;
 };
 
 export const getCareersData = async () => {
-  const response = await api.get('/mocks/careers.json');
+  const response = await contentApi.get('/mocks/careers.json');
   return response.data;
 };
 
 export const getEventsData = async () => {
-  const response = await api.get('/mocks/events.json');
+  const response = await contentApi.get('/mocks/events.json');
   return response.data;
 };
 
 export const getGalleryData = async () => {
-  const response = await api.get('/mocks/gallery.json');
+  const response = await contentApi.get('/mocks/gallery.json');
   return response.data;
 };
 
 
 export const getRestaurantsData = async () => {
-  const response = await api.get('/mocks/restaurants.json');
+  const response = await contentApi.get('/mocks/restaurants.json');
   return response.data;
 };
 
 export const getReservationsData = async () => {
-  const response = await api.get('/mocks/reservations.json');
+  const response = await contentApi.get('/mocks/reservations.json');
   return response.data;
 };
 
@@ -126,7 +132,7 @@ const getRelativeReviewAgeInMonths = (date: unknown) => {
 };
 
 export const getTestimonialsData = async () => {
-  const response = await api.get('/mocks/testimonials.json');
+  const response = await contentApi.get('/mocks/testimonials.json');
   if (!Array.isArray(response.data)) return response.data;
 
   return [...response.data].sort(

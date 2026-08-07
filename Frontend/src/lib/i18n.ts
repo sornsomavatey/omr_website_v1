@@ -7,8 +7,8 @@ const cache: Partial<Record<Language, Dictionary>> = {};
 const pendingLoads: Partial<Record<Language, Promise<Dictionary>>> = {};
 
 const languageFiles: Record<Language, string> = {
-  EN: '/locales/en.json',
   KH: '/locales/kh.json',
+  EN: '/locales/en.json',
   ZH: '/locales/zh.json',
   KO: '/locales/ko.json',
 };

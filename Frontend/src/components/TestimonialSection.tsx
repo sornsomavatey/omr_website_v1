@@ -44,7 +44,11 @@ function TestimonialCard({
   return (
     <article className="ts-card">
       <div className="ts-card-topline">
-        <div className="ts-stars" aria-label={`${starCount} out of 5 stars`}>
+        <div
+          className="ts-stars"
+          role="img"
+          aria-label={`${starCount} out of 5 stars`}
+        >
           <span aria-hidden="true">
             {Array.from({ length: 5 }, (_, index) => (
               <Star

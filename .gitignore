@@ -40,3 +40,8 @@ Frontend/npm-cache/*
 *.log
 npm-cache/*
 
+
+# Local development tooling
+.claude/
+nginx-*.zip
+nginx-*/

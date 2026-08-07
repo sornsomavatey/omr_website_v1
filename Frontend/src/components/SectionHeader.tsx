@@ -29,7 +29,9 @@ export default function SectionHeader({
 
       {/* Eyebrow */}
       <div
-        className={`flex items-center gap-4 mb-4 text-[#6b9158] font-sans text-xs font-bold uppercase tracking-widest ${
+        className={`flex items-center gap-4 mb-4 ${
+          dark ? 'text-[#a9ca96]' : 'text-[#4d6f3d]'
+        } font-sans text-xs font-bold uppercase tracking-widest ${
           isLeft ? 'justify-start' : 'justify-center'
         }`}
       >

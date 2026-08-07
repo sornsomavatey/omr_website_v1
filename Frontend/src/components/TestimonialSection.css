@@ -115,7 +115,7 @@
 }
 
 .ts-review-label {
-  color: #718067;
+  color: #4b5944;
   font-family: "Inter", sans-serif;
   font-size: 9px;
   font-weight: 700;
@@ -165,7 +165,7 @@
   align-self: flex-start;
   margin: 6px 0 18px;
   padding: 0;
-  color: #6b9158;
+  color: #466837;
   background: none;
   border: 0;
   font-family: "Inter", sans-serif;
@@ -233,7 +233,7 @@
 }
 
 .ts-author-copy span {
-  color: #858c82;
+  color: #596256;
   font-family: "Inter", sans-serif;
   font-size: 11px;
   font-weight: 400;
