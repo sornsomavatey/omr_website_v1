@@ -74,7 +74,7 @@ function LanguageMenu({ mobile = false }: { mobile?: boolean }) {
     setMounted(true);
   }, []);
 
-  const activeLang = mounted ? language : 'EN';
+  const activeLang = mounted ? language : 'KH';
   const enabledLanguageOptions = languageOptions.filter((option) => option.enabled);
   const selectedLanguage = enabledLanguageOptions.find((option) => option.code === activeLang)
     || enabledLanguageOptions[0];

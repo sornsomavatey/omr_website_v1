@@ -3,29 +3,39 @@ import { sendTelegramReservationAlert, sendTelegramEventAlert, sendTelegramFeedb
 
 
 
+const noCacheHeaders = {
+  'Cache-Control': 'no-cache, no-store, must-revalidate',
+  'Pragma': 'no-cache',
+  'Expires': '0',
+};
+
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL, // Points to the relative root 
+  headers: noCacheHeaders,
 });
 
 // Bundled website content is served by Vite/Express from public/mocks.
 // It must not inherit the /api prefix used for backend requests.
 const contentApi = axios.create({
   baseURL: '/',
+  headers: noCacheHeaders,
 });
 
 const apiWebApp = axios.create({
   baseURL: import.meta.env.VITE_WEBAPP_IMAGE_URL, // Points to the relative root 
+  headers: noCacheHeaders,
 });
 
 export const getHomeData = async () => {
-  const response = await contentApi.get('/mocks/home.json');
+  const response = await contentApi.get(`/mocks/home.json?_t=${Date.now()}`);
   return response.data;
 };
 
 export const getMenuData = async () => {
   // const response = await api.get('/api/website/products');
-  const response = await apiWebApp.get(`/api/website/products`, {
+  const response = await apiWebApp.get(`/api/website/products?_t=${Date.now()}`, {
     headers: {
+      ...noCacheHeaders,
       'Accept': 'application/json'
     }
   });
