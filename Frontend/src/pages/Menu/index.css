@@ -413,3 +413,34 @@ html[data-lang="kh"] .menu-filter-btn {
   font-size: 13px;
 }
 
+/* ==================================
+   Custom Green Rounded Scrollbar for Search Panel
+================================== */
+.menu-search-panel {
+  scrollbar-width: thin;
+  scrollbar-color: #6b9158 transparent;
+}
+
+.menu-search-panel::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+.menu-search-panel::-webkit-scrollbar-track {
+  background: transparent;
+  margin: 16px 0;
+  border-radius: 9999px;
+}
+
+.menu-search-panel::-webkit-scrollbar-thumb {
+  background-color: #6b9158;
+  border-radius: 9999px;
+  border: 1px solid transparent;
+  background-clip: padding-box;
+  transition: background-color 0.2s ease;
+}
+
+.menu-search-panel::-webkit-scrollbar-thumb:hover {
+  background-color: #557745;
+}
+

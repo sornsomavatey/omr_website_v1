@@ -199,7 +199,7 @@ export default function Menu() {
     drinks: true,
   });
   const observerRef = useRef<IntersectionObserver | null>(null);
-  const pendingScrollRestoreRef = useRef<{ id: string; top: number } | null>(null);
+  const pendingScrollRestoreRef = useRef<{ id: string; top: number; scrollY?: number } | null>(null);
 
   const categories: MenuCategory[] = ['Breakfast', 'Lunch', 'Dinner', 'Dessert', 'Drinks'];
 
@@ -295,7 +295,7 @@ export default function Menu() {
 
       const visibleAnchors = anchors
         .map((element) => ({ element, rect: element.getBoundingClientRect() }))
-        .filter(({ rect }) => rect.bottom > MENU_SCROLL_TARGET_TOP && rect.top < window.innerHeight)
+        .filter(({ rect }) => rect.bottom > 0 && rect.top < window.innerHeight)
         .sort(
           (a, b) =>
             Math.abs(a.rect.top - MENU_SCROLL_TARGET_TOP) -
@@ -303,12 +303,19 @@ export default function Menu() {
         );
 
       const anchor = visibleAnchors[0];
-      if (!anchor?.element.id) return;
-
-      pendingScrollRestoreRef.current = {
-        id: anchor.element.id,
-        top: anchor.rect.top,
-      };
+      if (anchor?.element?.id) {
+        pendingScrollRestoreRef.current = {
+          id: anchor.element.id,
+          top: anchor.rect.top,
+          scrollY: window.scrollY,
+        };
+      } else {
+        pendingScrollRestoreRef.current = {
+          id: '',
+          top: 0,
+          scrollY: window.scrollY,
+        };
+      }
     };
 
     window.addEventListener(MENU_LANGUAGE_TOGGLE_EVENT, captureCurrentMenuAnchor);
@@ -325,13 +332,20 @@ export default function Menu() {
       const pendingAnchor = pendingScrollRestoreRef.current;
       if (!pendingAnchor) return;
 
-      const anchor = document.getElementById(pendingAnchor.id);
-      if (!anchor) return;
+      if (pendingAnchor.id) {
+        const anchor = document.getElementById(pendingAnchor.id);
+        if (anchor) {
+          const nextTop = anchor.getBoundingClientRect().top;
+          const delta = nextTop - pendingAnchor.top;
+          if (Math.abs(delta) > 0.5) {
+            window.scrollBy({ top: delta, left: 0, behavior: 'instant' as ScrollBehavior });
+          }
+          return;
+        }
+      }
 
-      const nextTop = anchor.getBoundingClientRect().top;
-      const delta = nextTop - pendingAnchor.top;
-      if (Math.abs(delta) > 1) {
-        window.scrollBy({ top: delta, left: 0, behavior: 'auto' });
+      if (pendingAnchor.scrollY != null) {
+        window.scrollTo({ top: pendingAnchor.scrollY, behavior: 'instant' as ScrollBehavior });
       }
     };
 
@@ -341,13 +355,13 @@ export default function Menu() {
     const timeout = window.setTimeout(() => {
       restoreScrollAnchor();
       pendingScrollRestoreRef.current = null;
-    }, 180);
+    }, 200);
 
     return () => {
       window.cancelAnimationFrame(animationFrame);
       window.clearTimeout(timeout);
     };
-  }, [isKhmer]);
+  }, [language]);
 
   // Reveal sections and lotus background as they scroll into view
   useEffect(() => {
@@ -472,32 +486,31 @@ export default function Menu() {
     );
   }
 
-  // Parse item images and translate properties dynamically
+  // Parse item images and translate properties dynamically directly from live API data
   const menuItemsData: Record<MenuCategory, MenuItem[]> = Object.keys(menuDataState.items).reduce((acc, cat) => {
     const category = cat as MenuCategory;
     const itemsList = (menuDataState.items as any)[category];
 
     acc[category] = itemsList.map((item: any, itemIndex: number) => {
-      const localizedItem = translatedMenuItems[category.toLowerCase()]?.[itemIndex];
       const localizedLiveName = item.id != null ? translatedLiveItems[String(item.id)] : undefined;
-      const englishName = item.name || localizedItem?.name || '';
-      const englishDesc = item.desc || '';
+      const englishName = item.name || '';
       const khmerName = item.name_kh || '';
+      const englishDesc = item.desc || '';
+
+      const displayName = isKhmer
+        ? (localizedLiveName || item.name_kh || item.name)
+        : (localizedLiveName || item.name);
 
       return {
-        id: `${category.toLowerCase()}-${item.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`,
-        name: isKhmer
-          ? (localizedLiveName || item.name_kh || item.name)
-          : (localizedLiveName || localizedItem?.name || item.name),
+        id: `${category.toLowerCase()}-${item.id != null ? item.id : itemIndex}`,
+        name: displayName,
         nameEn: englishName,
         nameKh: khmerName,
-        category: localizedItem?.category || translatedCategoryNames[category],
+        category: translatedCategoryNames[category] || category,
         categoryEn: category,
-        desc: language === 'EN'
-          ? (item.desc || '')
-          : (localizedItem?.desc || item.desc || ''),
+        desc: item.desc || '',
         descEn: englishDesc,
-        badge: localizedItem?.badge || item.badge,
+        badge: item.badge,
         img: item.img,
         price: item.price,
       };
@@ -509,7 +522,7 @@ export default function Menu() {
     if (!query || !query.trim()) return true;
     const rawQuery = query.toLowerCase().trim();
 
-    // Expand search terms (e.g. 'ice' <-> 'iced', 'noodle' <-> 'noodles', 'soup' <-> 'kuyteav')
+    // Expand search terms (e.g. 'ice' <-> 'iced', 'noodle' <-> 'noodles')
     const queryTerms = new Set<string>([rawQuery]);
     if (rawQuery === 'ice') queryTerms.add('iced');
     if (rawQuery === 'iced') queryTerms.add('ice');
@@ -521,16 +534,13 @@ export default function Menu() {
       queryTerms.add('fried noodle');
     }
     if (rawQuery === 'kuyteav' || rawQuery === 'kuy teav' || rawQuery === 'kuyteavs') {
-      queryTerms.add('soup');
       queryTerms.add('kuyteav');
       queryTerms.add('គុយទាវ');
-      queryTerms.add('ស៊ុប');
     }
     if (rawQuery === 'soup' || rawQuery === 'soups' || rawQuery === 'ស៊ុប') {
       queryTerms.add('soup');
-      queryTerms.add('kuyteav');
+      queryTerms.add('soups');
       queryTerms.add('ស៊ុប');
-      queryTerms.add('គុយទាវ');
     }
     if (rawQuery === 'beef' || rawQuery === 'សាច់គោ') {
       queryTerms.add('beef');
@@ -713,7 +723,7 @@ export default function Menu() {
 
       {/* Floating Rounded White Card Panel with Green Border Centered at z-[1002] */}
       <div
-        className={`fixed top-[74px] sm:top-[82px] left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-2xl bg-white border-2 border-[#6b9158] rounded-[28px] shadow-2xl z-[1002] p-4 sm:p-6 flex flex-col items-center gap-4 min-h-[300px] max-h-[calc(100vh-110px)] overflow-y-auto transform transition-all duration-200 cubic-bezier(0.16,1,0.3,1) ${
+        className={`menu-search-panel fixed top-[74px] sm:top-[82px] left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-2xl bg-white border-2 border-[#6b9158] rounded-[28px] shadow-2xl z-[1002] p-4 sm:p-6 flex flex-col items-center gap-4 min-h-[300px] max-h-[calc(100vh-110px)] overflow-y-auto transform transition-all duration-200 cubic-bezier(0.16,1,0.3,1) ${
           isSearchExpanded || searchQuery
             ? 'translate-y-0 opacity-100 scale-100 pointer-events-auto'
             : '-translate-y-6 opacity-0 scale-95 pointer-events-none'

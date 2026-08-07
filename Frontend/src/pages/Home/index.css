@@ -1135,7 +1135,7 @@
 }
 
 .home-hero-controls {
-  margin-top: clamp(6rem, 13vh, 11rem);
+  margin-top: clamp(5.5rem, 10vh, 8.5rem);
 }
 
 .home-hero-dots {
@@ -1193,12 +1193,12 @@
 
 @media (max-width: 640px) {
   .home-hero-content {
-    padding-top: max(6.5rem, calc(env(safe-area-inset-top) + 5.5rem));
+    padding-top: max(6rem, calc(env(safe-area-inset-top) + 5rem));
     padding-bottom: max(2rem, calc(env(safe-area-inset-bottom) + 1.5rem));
   }
 
   .home-hero-controls {
-    margin-top: 4.5rem;
+    margin-top: 2rem;
   }
 
   .home-hero-dots {

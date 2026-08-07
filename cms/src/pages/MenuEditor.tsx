@@ -105,24 +105,24 @@ export const MenuEditor: React.FC = () => {
   const categories = data?.categories || ['Breakfast', 'Lunch', 'Dinner', 'Dessert', 'Drinks'];
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6 pb-12">
+    <div className="max-w-5xl mx-auto space-y-6 pb-12 text-[#1c2819]">
       {/* Header Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-[#2d402f] pb-4 gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-[#e2e8df] pb-4 gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-xl font-bold text-neutral-100 font-serif tracking-wide">Menu Items & Pricing Editor</h1>
-            <span className="px-2.5 py-0.5 rounded-lg text-[11px] font-semibold bg-[#c8a962]/15 text-[#e5c158] border border-[#c8a962]/30 flex items-center gap-1 font-mono">
+            <h1 className="text-xl font-bold text-[#212d1b] font-serif tracking-wide">Menu Items & Pricing Editor</h1>
+            <span className="px-2.5 py-0.5 rounded-lg text-[11px] font-semibold bg-[#5b8045]/10 text-[#5b8045] border border-[#5b8045]/30 flex items-center gap-1 font-mono">
               <span>{currentLangInfo.flag}</span>
               <span>{currentLangInfo.short} Mode</span>
             </span>
           </div>
-          <p className="text-xs text-[#a9ca96] font-mono mt-1">Editing Frontend/public/mocks/menu.json</p>
+          <p className="text-xs text-[#606e5c] font-mono mt-1">Editing Frontend/public/mocks/menu.json</p>
         </div>
 
         <button
           onClick={handleSave}
           disabled={saving}
-          className="flex items-center gap-2 bg-[#c8a962] hover:bg-[#b39a62] text-black px-4 py-2 rounded-xl text-xs font-bold transition shadow-lg shadow-[#c8a962]/10 disabled:opacity-50 shrink-0"
+          className="flex items-center gap-2 bg-[#5b8045] hover:bg-[#4a6b37] text-white px-5 py-2.5 rounded-xl text-xs font-bold transition shadow-md shadow-[#5b8045]/20 disabled:opacity-50 shrink-0 cursor-pointer"
         >
           {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
           {saving ? 'Saving...' : `Save (${currentLangInfo.short})`}
@@ -130,8 +130,8 @@ export const MenuEditor: React.FC = () => {
       </div>
 
       {message && (
-        <div className="p-3.5 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-emerald-400 text-xs flex items-center gap-2 font-medium">
-          <CheckCircle className="w-4 h-4 shrink-0" />
+        <div className="p-3.5 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-800 text-xs flex items-center gap-2 font-medium">
+          <CheckCircle className="w-4 h-4 text-emerald-600 shrink-0" />
           {message}
         </div>
       )}
@@ -141,14 +141,18 @@ export const MenuEditor: React.FC = () => {
         const items = data?.items?.[cat] || [];
 
         return (
-          <div key={cat} className="bg-[#18271a] border border-[#2d402f] rounded-2xl p-6 space-y-4 shadow-sm">
-            <div className="flex items-center justify-between border-b border-[#2d402f] pb-3">
-              <h2 className="text-sm font-bold text-[#c8a962] uppercase tracking-wider font-mono">
-                Category: {cat} ({items.length} dishes) — {currentLangInfo.flag} {currentLangInfo.short}
+          <div key={cat} className="bg-white border border-[#e2e8df] rounded-2xl p-6 space-y-4 shadow-xs">
+            <div className="flex items-center justify-between border-b border-gray-100 pb-3">
+              <h2 className="text-sm font-bold text-[#212d1b] font-serif tracking-wide flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#5b8045]" />
+                <span>Category: {cat}</span>
+                <span className="text-xs font-mono text-[#5b8045] font-semibold bg-[#5b8045]/10 px-2 py-0.5 rounded-lg">
+                  {items.length} dishes
+                </span>
               </h2>
               <button
                 onClick={() => handleAddItem(cat)}
-                className="flex items-center gap-1 bg-[#c8a962]/15 text-[#e5c158] hover:bg-[#c8a962]/25 px-3 py-1.5 rounded-lg text-xs font-medium border border-[#c8a962]/30 transition"
+                className="flex items-center gap-1.5 bg-[#5b8045]/10 text-[#5b8045] hover:bg-[#5b8045] hover:text-white px-3 py-1.5 rounded-xl text-xs font-semibold border border-[#5b8045]/30 transition shadow-xs cursor-pointer"
               >
                 <Plus className="w-3.5 h-3.5" />
                 Add Item
@@ -157,14 +161,14 @@ export const MenuEditor: React.FC = () => {
 
             <div className="space-y-4">
               {items.map((item: any, idx: number) => (
-                <div key={item.id || idx} className="p-4 bg-[#121c13] border border-[#2d402f] rounded-xl space-y-3 relative group">
+                <div key={item.id || idx} className="p-4 bg-[#f8faf6] border border-[#e2e8df] rounded-xl space-y-3 relative group">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-mono font-bold text-[#c8a962]">
+                    <span className="text-xs font-mono font-bold text-[#5b8045]">
                       Item #{idx + 1} ({cat})
                     </span>
                     <button
                       onClick={() => handleRemoveItem(cat, idx)}
-                      className="text-neutral-500 hover:text-rose-400 p-1 transition"
+                      className="text-gray-400 hover:text-rose-600 p-1 transition"
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
@@ -172,55 +176,55 @@ export const MenuEditor: React.FC = () => {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
-                      <label className="block text-[11px] font-semibold text-[#a9ca96] mb-1 font-mono">Item Name ({currentLangInfo.short})</label>
+                      <label className="block text-[11px] font-bold text-[#5b8045] mb-1 font-mono">Item Name ({currentLangInfo.short})</label>
                       <input
                         type="text"
                         value={item.name || ''}
                         onChange={(e) => handleItemChange(cat, idx, 'name', e.target.value)}
-                        className="w-full bg-[#18271a] border border-[#2d402f] text-neutral-100 text-xs px-3 py-2 rounded-lg focus:outline-none focus:border-[#c8a962]"
+                        className="w-full bg-white border border-[#e2e8df] text-[#212d1b] text-xs px-3 py-2 rounded-xl focus:outline-none focus:border-[#5b8045] focus:ring-2 focus:ring-[#5b8045]/20 font-medium"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-[11px] font-semibold text-[#a9ca96] mb-1 font-mono">Khmer Name (name_kh)</label>
+                      <label className="block text-[11px] font-bold text-[#5b8045] mb-1 font-mono">Khmer Name (name_kh)</label>
                       <input
                         type="text"
                         value={item.name_kh || ''}
                         onChange={(e) => handleItemChange(cat, idx, 'name_kh', e.target.value)}
-                        className="w-full bg-[#18271a] border border-[#2d402f] text-neutral-100 text-xs px-3 py-2 rounded-lg focus:outline-none focus:border-[#c8a962]"
+                        className="w-full bg-white border border-[#e2e8df] text-[#212d1b] text-xs px-3 py-2 rounded-xl focus:outline-none focus:border-[#5b8045] focus:ring-2 focus:ring-[#5b8045]/20 font-medium"
                       />
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
-                      <label className="block text-[11px] font-semibold text-[#a9ca96] mb-1 font-mono">Price</label>
+                      <label className="block text-[11px] font-bold text-[#5b8045] mb-1 font-mono">Price</label>
                       <input
                         type="text"
                         value={item.price || ''}
                         onChange={(e) => handleItemChange(cat, idx, 'price', e.target.value)}
-                        className="w-full bg-[#18271a] border border-[#2d402f] text-neutral-100 text-xs px-3 py-2 rounded-lg focus:outline-none focus:border-[#c8a962]"
+                        className="w-full bg-white border border-[#e2e8df] text-[#212d1b] text-xs px-3 py-2 rounded-xl focus:outline-none focus:border-[#5b8045] focus:ring-2 focus:ring-[#5b8045]/20 font-medium"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-[11px] font-semibold text-[#a9ca96] mb-1 font-mono">Badge Tag (e.g. Popular, Chef's Choice)</label>
+                      <label className="block text-[11px] font-bold text-[#5b8045] mb-1 font-mono">Badge Tag (e.g. Popular, Chef's Choice)</label>
                       <input
                         type="text"
                         value={item.badge || ''}
                         onChange={(e) => handleItemChange(cat, idx, 'badge', e.target.value)}
-                        className="w-full bg-[#18271a] border border-[#2d402f] text-neutral-100 text-xs px-3 py-2 rounded-lg focus:outline-none focus:border-[#c8a962]"
+                        className="w-full bg-white border border-[#e2e8df] text-[#212d1b] text-xs px-3 py-2 rounded-xl focus:outline-none focus:border-[#5b8045] focus:ring-2 focus:ring-[#5b8045]/20 font-medium"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-[11px] font-semibold text-[#a9ca96] mb-1 font-mono">Description ({currentLangInfo.short})</label>
+                    <label className="block text-[11px] font-bold text-[#5b8045] mb-1 font-mono">Description ({currentLangInfo.short})</label>
                     <textarea
                       rows={2}
                       value={item.desc || ''}
                       onChange={(e) => handleItemChange(cat, idx, 'desc', e.target.value)}
-                      className="w-full bg-[#18271a] border border-[#2d402f] text-neutral-100 text-xs px-3 py-2 rounded-lg focus:outline-none focus:border-[#c8a962] resize-none"
+                      className="w-full bg-white border border-[#e2e8df] text-[#212d1b] text-xs px-3 py-2 rounded-xl focus:outline-none focus:border-[#5b8045] focus:ring-2 focus:ring-[#5b8045]/20 resize-none font-medium"
                     />
                   </div>
 
