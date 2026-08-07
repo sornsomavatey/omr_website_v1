@@ -173,6 +173,15 @@ html[lang="km"] .site-footer * {
   font-family: "Kantumruy Pro", sans-serif !important;
 }
 
+html[data-lang="kh"] .site-footer-heading,
+html[lang="km"] .site-footer-heading {
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  line-height: 1.4 !important;
+  letter-spacing: 0.02em !important;
+  color: #fad795 !important;
+}
+
 @media (hover: hover) and (pointer: fine) {
   .site-footer-logo-link:hover {
     opacity: 0.86;
@@ -308,9 +317,9 @@ html[lang="km"] .site-footer * {
 
   html[data-lang="kh"] .site-footer-column,
   html[lang="km"] .site-footer-column {
-    width: max-content;
+    width: 100%;
     max-width: 100%;
-    justify-self: center;
+    justify-self: start;
     align-items: flex-start;
     text-align: left;
   }
