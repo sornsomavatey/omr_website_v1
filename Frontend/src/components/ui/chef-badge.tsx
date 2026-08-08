@@ -6,6 +6,15 @@ export interface ChefBadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
 }
 
 export function ChefBadge({ className, children, ...props }: ChefBadgeProps) {
+  const badgeContent = React.useMemo(() => {
+    if (!children) return "Chef's Choice ✦"
+    if (typeof children === "string") {
+      const trimmed = children.trim()
+      return trimmed.endsWith("✦") ? trimmed : `${trimmed} ✦`
+    }
+    return children
+  }, [children])
+
   return (
     <span
       className={cn(
@@ -14,7 +23,7 @@ export function ChefBadge({ className, children, ...props }: ChefBadgeProps) {
       )}
       {...props}
     >
-      {children || "Chef's Choice ✦"}
+      {badgeContent}
     </span>
   )
 }

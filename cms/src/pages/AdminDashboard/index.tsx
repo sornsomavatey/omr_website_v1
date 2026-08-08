@@ -16,8 +16,16 @@ import {
   Users,
   Eye,
   Loader2,
+  Phone,
+  Mail,
+  Sparkles,
+  XCircle,
+  AlertTriangle,
+  LayoutDashboard,
 } from 'lucide-react';
-import { loadPageJson } from '../lib/cmsStorage';
+import { loadPageJson } from '../../lib/cmsStorage';
+import { Reservation, getMealType } from '../Reservations';
+import './index.css';
 
 export const AdminDashboard: React.FC = () => {
   const [loading, setLoading] = useState(true);
@@ -131,41 +139,120 @@ export const AdminDashboard: React.FC = () => {
     },
   ];
 
+  const [selectedRes, setSelectedRes] = useState<Reservation | null>(null);
+
   // Today's Reservations mock table matching screenshot
-  const todaysReservations = [
+  const [todaysReservations, setTodaysReservations] = useState<Reservation[]>([
     {
+      id: 'RES-8091',
       name: 'Sophea Meas',
       phone: '+855 12 345 678',
+      email: 'sophea.m@gmail.com',
+      date: '2026-08-07',
       time: '7:00 PM',
       guests: 4,
       branch: 'Boeung Kak',
+      bookingType: 'Table Booking',
+      tableType: 'VIP Indoor Room',
+      preorder: [
+        { name: 'Signature Amok Curry', qty: 2, price: 6.50 },
+        { name: 'Wagyu Beef Lok Lak', qty: 1, price: 8.50 },
+      ],
+      specialRequest: 'Birthday celebration setup required',
       status: 'Confirmed',
+      mealType: 'Dinner',
     },
     {
+      id: 'RES-8092',
       name: 'Dara Chhan',
       phone: '+855 17 876 543',
+      email: 'dara.chhan@outlook.com',
+      date: '2026-08-07',
       time: '7:30 PM',
       guests: 2,
       branch: 'Toul Kork',
+      bookingType: 'Event Booking',
+      eventType: 'Corporate Dinner Party',
+      tableType: 'Private Banquet Hall',
+      preorder: null,
+      specialRequest: 'Projector & microphone setup needed',
       status: 'Pending',
+      mealType: 'Dinner',
     },
     {
+      id: 'RES-8093',
       name: 'Vannak Ken',
       phone: '+855 92 112 334',
+      email: 'v.ken@business.kh',
+      date: '2026-08-07',
       time: '8:00 PM',
       guests: 6,
       branch: 'Boeung Kak',
+      bookingType: 'Table Booking',
+      tableType: 'Main Dining Indoor',
+      preorder: [
+        { name: 'Khmer Fried Rice', qty: 3, price: 5.50 },
+        { name: 'Mango Sticky Rice', qty: 2, price: 4.50 },
+      ],
+      specialRequest: 'Need high chair for toddler',
       status: 'Confirmed',
+      mealType: 'Dinner',
     },
     {
+      id: 'RES-8094',
       name: 'Bopha Roth',
       phone: '+855 88 901 223',
+      email: 'bopha.roth@yahoo.com',
+      date: '2026-08-07',
       time: '8:30 PM',
       guests: 3,
       branch: 'Toul Kork',
+      bookingType: 'Table Booking',
+      tableType: 'Garden Outdoor Terrace',
+      preorder: [
+        { name: 'Grilled River Prawns', qty: 2, price: 12.00 },
+      ],
+      specialRequest: 'Anniversary setup',
       status: 'Confirmed',
+      mealType: 'Dinner',
     },
-  ];
+  ]);
+
+  const [cancellingResId, setCancellingResId] = useState<string | null>(null);
+  const [cancelReasonInput, setCancelReasonInput] = useState('');
+
+  const handleDashboardStatusChange = (index: number, newStatus: any) => {
+    const target = todaysReservations[index];
+    if (newStatus === 'Cancelled' && target) {
+      setCancellingResId(target.id);
+      setCancelReasonInput('');
+      return;
+    }
+    setTodaysReservations((prev) =>
+      prev.map((item, i) => (i === index ? { ...item, status: newStatus } : item))
+    );
+  };
+
+  const confirmDashboardCancellation = () => {
+    if (!cancellingResId) return;
+    const reason = cancelReasonInput.trim();
+    if (!reason) return;
+
+    setTodaysReservations((prev) =>
+      prev.map((item) =>
+        item.id === cancellingResId
+          ? { ...item, status: 'Cancelled', cancellationReason: reason }
+          : item
+      )
+    );
+    if (selectedRes && selectedRes.id === cancellingResId) {
+      setSelectedRes((prev: any) =>
+        prev ? { ...prev, status: 'Cancelled', cancellationReason: reason } : null
+      );
+    }
+    setCancellingResId(null);
+    setCancelReasonInput('');
+  };
 
   if (loading) {
     return (
@@ -181,8 +268,9 @@ export const AdminDashboard: React.FC = () => {
       {/* ── Top Dashboard Title & Header ── */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold font-sans text-[#1c2819] tracking-tight">
-            Dashboard
+          <h1 className="text-2xl font-bold font-sans text-[#1c2819] tracking-tight flex items-center gap-2.5">
+            <LayoutDashboard className="w-7 h-7 text-black shrink-0" />
+            <span>Dashboard</span>
           </h1>
         </div>
 
@@ -208,7 +296,7 @@ export const AdminDashboard: React.FC = () => {
           return (
             <div
               key={idx}
-              className="bg-white rounded-2xl p-5 border border-[#e2e8df] shadow-xs flex flex-col justify-between space-y-3"
+              className="bg-white rounded-2xl p-5 border border-[#d6e0d0] shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between space-y-3"
             >
               <div className="flex items-start justify-between gap-2">
                 <div className="space-y-1">
@@ -261,7 +349,7 @@ export const AdminDashboard: React.FC = () => {
                         style={{ left: `${(activeResDay.x / 280) * 100}%` }}
                       >
                         <span className="text-white font-extrabold">{activeResDay.count} Res</span>
-                        <span className="text-[#84ab6d] font-normal">• {activeResDay.fullDate}</span>
+                        <span className="text-white font-normal">• {activeResDay.fullDate}</span>
                       </div>
                     ) : null}
 
@@ -550,7 +638,7 @@ export const AdminDashboard: React.FC = () => {
       </div>
 
       {/* ── QUICK ACTIONS BAR ── */}
-      <div className="bg-white rounded-2xl p-5 border border-[#e2e8df] shadow-xs space-y-4.5">
+      <div className="bg-white rounded-2xl p-5 border border-[#d6e0d0] shadow-sm space-y-4.5">
         <h3 className="text-xs font-extrabold uppercase tracking-wider text-black font-sans">
           QUICK ACTIONS
         </h3>
@@ -589,7 +677,7 @@ export const AdminDashboard: React.FC = () => {
       {/* ── Bottom Grid: Today's Reservations (2/3) & Outlet Branches (1/3) ── */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Today's Reservations Table */}
-        <div className="lg:col-span-2 bg-white rounded-2xl p-6 border border-[#e2e8df] shadow-xs space-y-4">
+        <div className="lg:col-span-2 bg-white rounded-2xl p-6 border border-[#d6e0d0] shadow-md space-y-4">
           <div className="flex items-center justify-between pb-3 border-b border-gray-100">
             <h2 className="text-base font-bold text-[#1c2819] font-sans">Today's Reservations</h2>
             <Link to="/reservations" className="text-xs font-bold text-[#5b8045] hover:underline flex items-center gap-1">
@@ -599,36 +687,101 @@ export const AdminDashboard: React.FC = () => {
           </div>
 
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs">
+            <table className="w-full text-left text-xs border-collapse">
               <thead>
-                <tr className="border-b border-gray-100 text-gray-400 font-bold uppercase font-mono text-[10px] tracking-wider">
-                  <th className="pb-3">GUEST</th>
-                  <th className="pb-3">TIME</th>
-                  <th className="pb-3">GUESTS</th>
-                  <th className="pb-3">BRANCH</th>
-                  <th className="pb-3 text-right">STATUS</th>
+                <tr className="border-b border-[#e2e8df] text-gray-500 font-bold uppercase font-mono text-[10px] tracking-wider">
+                  <th className="pb-3 px-2">RES ID</th>
+                  <th className="pb-3 px-2">TYPE</th>
+                  <th className="pb-3 px-2">GUEST</th>
+                  <th className="pb-3 px-2">TIME</th>
+                  <th className="pb-3 px-2 text-center">GUESTS</th>
+                  <th className="pb-3 px-2">BRANCH</th>
+                  <th className="pb-3 px-2 text-center">STATUS</th>
+                  <th className="pb-3 px-2 text-right">ACTIONS</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-50">
+              <tbody className="divide-y divide-[#edf2ea]">
                 {todaysReservations.map((res, i) => (
-                  <tr key={i} className="hover:bg-[#f8faf6] transition">
-                    <td className="py-3">
-                      <div className="font-bold text-[#1c2819]">{res.name}</div>
-                      <div className="text-[11px] text-gray-400 font-mono">{res.phone}</div>
+                  <tr key={i} className="hover:bg-[#f4f7f2]/60 transition-colors">
+                    {/* RES ID */}
+                    <td className="py-3 px-2 align-middle font-bold font-mono text-gray-500 whitespace-nowrap">
+                      {res.id}
                     </td>
-                    <td className="py-3 font-semibold text-gray-700">{res.time}</td>
-                    <td className="py-3 font-bold text-[#1c2819]">{res.guests}</td>
-                    <td className="py-3 font-medium text-gray-600">{res.branch}</td>
-                    <td className="py-3 text-right">
-                      <span
-                        className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold border ${
-                          res.status === 'Confirmed'
-                            ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
-                            : 'bg-amber-50 text-amber-700 border-amber-200'
-                        }`}
+
+                    {/* BOOKING TYPE */}
+                    <td className="py-3 px-2 align-middle whitespace-nowrap">
+                      {res.bookingType === 'Event Booking' ? (
+                        <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-extrabold bg-emerald-50 text-emerald-800 border border-emerald-300 shadow-2xs">
+                          Event
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-extrabold bg-blue-50 text-blue-700 border border-blue-200 shadow-2xs">
+                          Table
+                        </span>
+                      )}
+                    </td>
+
+                    {/* GUEST */}
+                    <td className="py-3 px-2 align-middle">
+                      <div className="font-bold text-[#1c2819]">{res.name}</div>
+                      <a
+                        href={`tel:${res.phone.replace(/[^+\d]/g, '')}`}
+                        className="inline-flex items-center gap-1 text-[11px] text-[#5b8045] hover:text-[#4a6b37] hover:underline font-mono font-semibold whitespace-nowrap"
+                        title={`Click to call ${res.name}`}
                       >
-                        {res.status}
-                      </span>
+                        <Phone className="w-3 h-3 text-[#5b8045]" />
+                        <span>{res.phone}</span>
+                      </a>
+                    </td>
+
+                    {/* TIME */}
+                    <td className="py-3 px-2 align-middle whitespace-nowrap">
+                      <div className="font-bold text-gray-800">{res.time}</div>
+                      <div className="text-[11px] text-gray-400 font-mono">{res.date}</div>
+                    </td>
+
+                    {/* GUESTS */}
+                    <td className="py-3 px-2 align-middle text-center font-extrabold text-[#1c2819] font-mono text-xs">
+                      {res.guests}
+                    </td>
+
+                    {/* BRANCH */}
+                    <td className="py-3 px-2 align-middle whitespace-nowrap font-medium text-gray-700">
+                      {res.branch}
+                    </td>
+
+                    {/* STATUS */}
+                    <td className="py-3 px-2 align-middle text-center">
+                      <select
+                        value={res.status}
+                        onChange={(e) => handleDashboardStatusChange(i, e.target.value as any)}
+                        className={`px-2.5 py-1 rounded-full text-[10px] font-bold border cursor-pointer focus:outline-none transition-colors appearance-none pr-5.5 bg-no-repeat bg-[right_0.4rem_center] shadow-2xs ${
+                          res.status === 'Confirmed'
+                            ? 'bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100'
+                            : res.status === 'Pending'
+                            ? 'bg-amber-50 text-amber-700 border-amber-200 hover:bg-amber-100'
+                            : 'bg-rose-50 text-rose-700 border-rose-200 hover:bg-rose-100'
+                        }`}
+                        style={{
+                          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23374151'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
+                          backgroundSize: '0.65rem',
+                        }}
+                      >
+                        <option value="Confirmed" className="bg-white text-emerald-800 font-semibold">Confirmed</option>
+                        <option value="Pending" className="bg-white text-amber-800 font-semibold">Pending</option>
+                        <option value="Cancelled" className="bg-white text-rose-800 font-semibold">Cancelled</option>
+                      </select>
+                    </td>
+
+                    {/* ACTIONS */}
+                    <td className="py-3 px-2 align-middle text-right">
+                      <button
+                        onClick={() => setSelectedRes(res)}
+                        className="p-1.5 rounded-lg border border-[#e2e8df] hover:bg-[#5b8045]/10 hover:border-[#5b8045]/30 text-gray-600 hover:text-[#5b8045] transition cursor-pointer"
+                        title="View details"
+                      >
+                        <Eye className="w-4 h-4" />
+                      </button>
                     </td>
                   </tr>
                 ))}
@@ -638,7 +791,7 @@ export const AdminDashboard: React.FC = () => {
         </div>
 
         {/* Recent Content Updates Overview */}
-        <div className="bg-white rounded-2xl p-6 border border-[#e2e8df] shadow-xs space-y-4 flex flex-col justify-between">
+        <div className="bg-white rounded-2xl p-6 border border-[#d6e0d0] shadow-md space-y-4 flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between pb-3 border-b border-gray-100">
               <h2 className="text-base font-bold text-[#1c2819] font-sans">Recent Content Updates</h2>
@@ -710,6 +863,283 @@ export const AdminDashboard: React.FC = () => {
           </Link>
         </div>
       </div>
+
+      {/* ── View Details Modal in Dashboard ── */}
+      {selectedRes && (
+        <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl p-6 max-w-lg w-full space-y-4 border border-[#e2e8df] shadow-xl text-[#1c2819]">
+            <div className="flex items-center justify-between pb-3 border-b border-gray-100">
+              <div>
+                <span className="text-[10px] font-bold font-mono text-gray-400">{selectedRes.id}</span>
+                <h3 className="text-lg font-bold text-[#1c2819]">{selectedRes.name}</h3>
+              </div>
+              <button
+                onClick={() => setSelectedRes(null)}
+                className="p-1.5 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100"
+              >
+                <XCircle className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Type Header Banner in Modal */}
+            {selectedRes.bookingType === 'Event Booking' ? (
+              <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-between">
+                <div className="flex items-center gap-2.5">
+                  <div className="p-2 rounded-lg bg-[#5b8045] text-white shadow-2xs">
+                    <Sparkles className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#4a6b37] font-mono">EVENT BOOKING</span>
+                    <h4 className="text-xs font-bold text-[#1c2819]">
+                      {selectedRes.eventType || 'Private Event Reservation'}
+                    </h4>
+                  </div>
+                </div>
+                <span className="px-2.5 py-1 rounded-lg text-[10px] font-extrabold bg-emerald-100 text-emerald-800">
+                  Event
+                </span>
+              </div>
+            ) : (
+              <div className="p-3.5 rounded-xl bg-blue-50 border border-blue-200 flex items-center justify-between">
+                <div className="flex items-center gap-2.5">
+                  <div className="p-2 rounded-lg bg-blue-600 text-white shadow-2xs">
+                    <UtensilsCrossed className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-extrabold uppercase tracking-wider text-blue-700 font-mono">TABLE BOOKING</span>
+                    <h4 className="text-xs font-bold text-blue-950">Standard Table Reservation</h4>
+                  </div>
+                </div>
+                <span className={`px-2.5 py-1 rounded-lg text-[10px] font-extrabold shadow-2xs ${
+                  getMealType(selectedRes) === 'Breakfast'
+                    ? 'bg-amber-200 text-amber-900 border border-amber-300'
+                    : getMealType(selectedRes) === 'Lunch'
+                    ? 'bg-sky-200 text-sky-900 border border-sky-300'
+                    : 'bg-blue-200 text-blue-900 border border-blue-300'
+                }`}>
+                  {getMealType(selectedRes)}
+                </span>
+              </div>
+            )}
+
+            <div className="space-y-3 text-xs">
+              <div className="grid grid-cols-2 gap-3 p-3 rounded-xl bg-[#f8faf6] border border-[#e2e8df]">
+                <div>
+                  <span className="text-[10px] font-bold text-gray-400 font-mono">PHONE</span>
+                  <div>
+                    <a
+                      href={`tel:${selectedRes.phone.replace(/[^+\d]/g, '')}`}
+                      className="inline-flex items-center gap-1.5 font-bold text-[#5b8045] hover:text-[#4a6b37] hover:underline"
+                      title={`Click to call ${selectedRes.phone}`}
+                    >
+                      <Phone className="w-3.5 h-3.5 text-[#5b8045]" />
+                      <span>{selectedRes.phone}</span>
+                    </a>
+                  </div>
+                </div>
+                <div>
+                  <span className="text-[10px] font-bold text-gray-400 font-mono">EMAIL</span>
+                  <div className="truncate">
+                    <a
+                      href={`mailto:${selectedRes.email}`}
+                      className="inline-flex items-center gap-1.5 font-bold text-[#5b8045] hover:text-[#4a6b37] hover:underline truncate max-w-full"
+                      title={`Click to send email to ${selectedRes.email}`}
+                    >
+                      <Mail className="w-3.5 h-3.5 text-[#5b8045] shrink-0" />
+                      <span className="truncate">{selectedRes.email}</span>
+                    </a>
+                  </div>
+                </div>
+                <div>
+                  <span className="text-[10px] font-bold text-gray-400 font-mono">DATE & TIME</span>
+                  <div className="font-semibold text-gray-800">{selectedRes.date} at {selectedRes.time}</div>
+                </div>
+                <div>
+                  <span className="text-[10px] font-bold text-gray-400 font-mono">BRANCH & AREA</span>
+                  <div className="font-semibold text-gray-800">{selectedRes.branch} ({selectedRes.tableType || 'Main Dining'})</div>
+                </div>
+              </div>
+
+              {selectedRes.preorder && selectedRes.preorder.length > 0 && (
+                <div className="p-3.5 rounded-xl bg-[#f4f7f2] border border-[#d6e2d1] space-y-2">
+                  <div className="flex items-center justify-between font-bold text-[#213816] pb-2 border-b border-[#d6e2d1]/80">
+                    <div className="text-xs">
+                      <span>Pre-ordered Dishes</span>
+                    </div>
+                    <div className="text-xs font-extrabold text-[#7a1c1c] font-mono bg-[#7a1c1c]/10 px-2.5 py-0.5 rounded-lg border border-[#7a1c1c]/25 shadow-2xs">
+                      Total: USD ${selectedRes.preorder.reduce((sum: number, item: any) => sum + (item.price || 0) * item.qty, 0).toFixed(2)}
+                    </div>
+                  </div>
+                  <ul className="space-y-1.5 text-xs">
+                    {selectedRes.preorder.map((item: any, idx: number) => {
+                      const itemTotal = (item.price || 0) * item.qty;
+                      return (
+                        <li key={idx} className="flex items-center justify-between text-gray-800">
+                          <div className="flex items-center gap-2">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#5b8045]" />
+                            <span className="font-bold text-[#1c2819]">{item.name}</span>
+                            <span className="text-[11px] text-gray-500 font-mono">x{item.qty}</span>
+                          </div>
+                          <div className="font-mono text-xs font-bold text-gray-800">
+                            USD ${itemTotal.toFixed(2)}
+                            {item.price && item.qty > 1 && (
+                              <span className="text-[10px] text-gray-400 font-normal ml-1">
+                                (${item.price.toFixed(2)} ea)
+                              </span>
+                            )}
+                          </div>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              )}
+
+              {selectedRes.specialRequest && (
+                <div>
+                  <span className="text-[10px] font-bold text-gray-400 font-mono">SPECIAL REQUEST / EVENT DETAILS</span>
+                  <p className="p-2.5 rounded-xl bg-gray-50 border border-gray-200 text-gray-700 italic mt-1">
+                    "{selectedRes.specialRequest}"
+                  </p>
+                </div>
+              )}
+
+              {selectedRes.cancellationReason && (
+                <div>
+                  <span className="text-[10px] font-bold text-rose-500 font-mono uppercase">CANCELLATION REASON</span>
+                  <p className="p-2.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs mt-1 font-medium">
+                    "{selectedRes.cancellationReason}"
+                  </p>
+                </div>
+              )}
+
+              <div>
+                <span className="text-[10px] font-bold text-gray-400 font-mono uppercase">UPDATE STATUS</span>
+                <div className="flex gap-2 mt-1">
+                  {(['Confirmed', 'Pending', 'Cancelled'] as const).map((st) => (
+                    <button
+                      key={st}
+                      type="button"
+                      onClick={() => {
+                        const idx = todaysReservations.findIndex((r) => r.id === selectedRes.id);
+                        if (st === 'Cancelled') {
+                          setCancellingResId(selectedRes.id);
+                          setCancelReasonInput('');
+                        } else {
+                          handleDashboardStatusChange(idx, st);
+                          setSelectedRes({ ...selectedRes, status: st });
+                        }
+                      }}
+                      className={`px-3 py-1.5 rounded-xl text-xs font-bold transition border cursor-pointer ${
+                        selectedRes.status === st
+                          ? st === 'Cancelled'
+                            ? 'bg-rose-600 text-white border-rose-600'
+                            : 'bg-[#5b8045] text-white border-[#5b8045]'
+                          : 'bg-white border-[#e2e8df] text-gray-700 hover:bg-gray-50'
+                      }`}
+                    >
+                      {st}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="pt-2 text-right">
+              <button
+                onClick={() => setSelectedRes(null)}
+                className="px-4 py-2 rounded-xl bg-[#5b8045] text-white font-bold text-xs hover:bg-[#4a6b37]"
+              >
+                Done
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── Cancellation Reason Modal ── */}
+      {cancellingResId && (
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl p-6 max-w-md w-full space-y-4 border border-rose-100 shadow-2xl text-[#1c2819]">
+            <div className="flex items-center justify-between pb-3 border-b border-gray-100">
+              <div className="flex items-center gap-2 text-rose-600">
+                <AlertTriangle className="w-5 h-5" />
+                <h3 className="text-base font-bold text-[#1c2819]">Cancellation Reason</h3>
+              </div>
+              <button
+                type="button"
+                onClick={() => setCancellingResId(null)}
+                className="p-1 rounded-lg text-gray-400 hover:text-gray-600 cursor-pointer"
+              >
+                <XCircle className="w-5 h-5" />
+              </button>
+            </div>
+
+            <p className="text-xs text-gray-600 font-medium">
+              Please specify the reason for cancelling reservation{' '}
+              <span className="font-bold text-gray-900">{cancellingResId}</span> before confirming.
+            </p>
+
+            {/* Quick Reasons Chips */}
+            <div className="space-y-1.5">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-gray-400 font-mono">QUICK REASONS:</span>
+              <div className="flex flex-wrap gap-1.5">
+                {[
+                  'Guest requested cancellation',
+                  'Fully booked / No table capacity',
+                  'Guest no-show',
+                  'Duplicate reservation',
+                  'Emergency / Unforeseen closure',
+                ].map((preset) => (
+                  <button
+                    key={preset}
+                    type="button"
+                    onClick={() => setCancelReasonInput(preset)}
+                    className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition cursor-pointer border ${
+                      cancelReasonInput === preset
+                        ? 'bg-rose-600 text-white border-rose-600'
+                        : 'bg-rose-50/60 text-rose-800 border-rose-200 hover:bg-rose-100'
+                    }`}
+                  >
+                    {preset}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-[10px] font-bold uppercase tracking-wider text-gray-500 font-mono mb-1">
+                CANCELLATION DETAILS / NOTES
+              </label>
+              <textarea
+                rows={3}
+                value={cancelReasonInput}
+                onChange={(e) => setCancelReasonInput(e.target.value)}
+                placeholder="Type cancellation reason here..."
+                className="w-full p-3 rounded-xl border border-gray-200 focus:border-rose-500 focus:ring-1 focus:ring-rose-500 text-xs outline-none"
+              />
+            </div>
+
+            <div className="flex items-center justify-end gap-2 pt-2 border-t border-gray-100">
+              <button
+                type="button"
+                onClick={() => setCancellingResId(null)}
+                className="px-4 py-2 rounded-xl bg-gray-100 text-gray-700 text-xs font-bold hover:bg-gray-200 transition cursor-pointer"
+              >
+                Back
+              </button>
+              <button
+                type="button"
+                onClick={confirmDashboardCancellation}
+                disabled={!cancelReasonInput.trim()}
+                className="px-4 py-2 rounded-xl bg-rose-600 text-white text-xs font-bold hover:bg-rose-700 disabled:opacity-50 transition cursor-pointer flex items-center gap-1.5 shadow-md shadow-rose-600/20"
+              >
+                Confirm Cancellation
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

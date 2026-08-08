@@ -75,9 +75,5 @@
       @endif
     </div>
 
-    <p style="font-size: 12px; color: #888888; text-align: center; margin-top: 24px; border-top: 1px solid #e5e5e5; padding-top: 16px;">
-      This is an automated reservation confirmation from One More Restaurant.
-    </p>
-
 </body>
 </html>

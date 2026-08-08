@@ -173,11 +173,26 @@ const galleryItems: { src: string; alt: string; caption: string }[] = [
 ];
 
 const faqs = [
-  { q: 'How far in advance should I book my event?', a: 'We recommend booking at least 4–6 weeks in advance for smaller events and 3–6 months for large weddings or corporate functions. This ensures your preferred date and space are available.' },
-  { q: 'What is your minimum guest count for private events?', a: 'Our private VIP suite accommodates 8–30 guests. The Grand Ballroom is ideal for 40–120 guests. For smaller intimate dinners, we can arrange semi-private sections starting from 6 guests.' },
-  { q: 'Can I bring my own cake or decoration items?', a: 'Yes! You are welcome to bring your own cake and personal decorations. Our team will help set everything up at no additional charge. A small corkage fee may apply for external beverages.' },
-  { q: 'What is the cancellation and deposit policy?', a: 'A 30% deposit secures your event date. Full cancellations made more than 14 days before the event receive a full deposit refund. Cancellations within 14 days forfeit the deposit.' },
-
+  {
+    q: 'What is the dress code?',
+    a: 'We recommend smart casual attire. Traditional Khmer attire is also very welcome for special occasions.',
+  },
+  {
+    q: 'Do you offer vegetarian or vegan options?',
+    a: 'Yes, we have a variety of vegetarian and vegan options available. Please inform your waiter or mention it in the special requests section when booking.',
+  },
+  {
+    q: 'Is there parking available at the branches?',
+    a: 'Yes, both our Toul Kork and Boeung Kak branches feature spacious, secure parking lots with complimentary valet service.',
+  },
+  {
+    q: 'Can I bring my own wine?',
+    a: 'Yes, you may bring your own wine. A corkage fee of USD 15 per bottle applies.',
+  },
+  {
+    q: 'Are pets allowed?',
+    a: 'To ensure a comfortable dining environment for all guests, pets are only allowed in our outdoor garden areas.',
+  },
 ];
 
 // ── Sub-components ───────────────────────────────────────────
@@ -188,14 +203,18 @@ function Stars({ count }: { count: number }) {
 function CustomBranchSelect({
   disabled,
   t,
-  defaultBranch
+  defaultBranch,
+  hasError,
+  onSelect,
 }: {
   disabled?: boolean;
   t: any;
   defaultBranch?: string;
+  hasError?: boolean;
+  onSelect?: () => void;
 }) {
-  const [selected, setSelected] = useState(defaultBranch || 'Boeung Kak');
-  const [hasUserSelected, setHasUserSelected] = useState(false);
+  const { isKhmer } = useTranslation();
+  const [selected, setSelected] = useState(defaultBranch || '');
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -214,21 +233,23 @@ function CustomBranchSelect({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const currentOption = branches.find(opt => opt.value === selected) || branches[0];
+  const currentOption = branches.find(opt => opt.value === selected);
 
   return (
     <div className="custom-event-select-container" ref={dropdownRef}>
-      <input type="hidden" name="branch" value={selected} />
+      <input type="hidden" name="branch" value={selected} required />
       <button
         type="button"
         disabled={disabled}
         onClick={() => !disabled && setIsOpen(!isOpen)}
-        className={`custom-event-select-trigger ${isOpen ? 'custom-event-select-trigger-open' : ''}`}
+        className={`custom-event-select-trigger ${isOpen ? 'custom-event-select-trigger-open' : ''} ${
+          hasError && !selected ? '!border-red-500 !ring-1 !ring-red-500' : ''
+        }`}
         aria-haspopup="listbox"
         aria-expanded={isOpen}
       >
-        <span className={`custom-event-select-label ${!hasUserSelected ? 'custom-event-select-label-placeholder' : ''}`}>
-          {currentOption.label}
+        <span className={`custom-event-select-label ${!selected ? 'custom-event-select-label-placeholder' : ''}`}>
+          {currentOption ? currentOption.label : t('eventsPage.inquiry.form.placeholders.selectBranch', undefined, isKhmer ? 'ជ្រើសរើសសាខា *' : 'Select Branch *')}
         </span>
         <ChevronDown size={18} className={`custom-event-select-icon ${isOpen ? 'rotate-180' : ''}`} />
       </button>
@@ -246,8 +267,8 @@ function CustomBranchSelect({
                   e.preventDefault();
                   e.stopPropagation();
                   setSelected(b.value);
-                  setHasUserSelected(true);
                   setIsOpen(false);
+                  if (onSelect) onSelect();
                 }}
                 className={`custom-event-select-option ${isSelected ? 'custom-event-select-option-active' : ''}`}
               >
@@ -366,9 +387,13 @@ export default function EventsPage() {
   } | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
 
+  const [branchError, setBranchError] = useState(false);
+
   const queryBranch = new URLSearchParams(location.search).get('branch') ||
                       (location.hash.includes('boeung-kak') ? 'Boeung Kak' : location.hash.includes('toul-kork') ? 'Toul Kork' : '');
-  const initialBranch = queryBranch?.toLowerCase().includes('toul') ? 'Toul Kork' : 'Boeung Kak';
+  const initialBranch = queryBranch?.toLowerCase().includes('toul')
+    ? 'Toul Kork'
+    : (queryBranch?.toLowerCase().includes('boeung') ? 'Boeung Kak' : '');
 
   useEffect(() => {
     if (location.hash === '#inquiry') {
@@ -748,12 +773,40 @@ Our event coordinator will contact you within 24 hours.`;
     const formData = new FormData(formRef.current);
     const name = (formData.get('name') as string || '').trim();
     const phone = (formData.get('phone') as string || '').trim();
-    const branch = (formData.get('branch') as string || 'Boeung Kak').trim();
+    const branch = (formData.get('branch') as string || '').trim();
     const company = (formData.get('company') as string || '').trim();
     const emailInput = (formData.get('email') as string || '').trim();
     const event_type = formData.get('event_type') as string;
-    const guest_count = Number(formData.get('guest_count') || 1);
+    let guest_count = Number(formData.get('guest_count') || 1);
     const special_requirements = (formData.get('special_requirements') as string || '').trim();
+
+    // 0. Mandatory Branch selection validation
+    if (!branch) {
+      setBranchError(true);
+      alert(t('eventsPage.validation.branchRequired', undefined, isKhmer ? "សូមជ្រើសរើសសាខាមុនពេលផ្ញើ។" : "Please select a branch before submitting."));
+      return;
+    }
+    setBranchError(false);
+
+    // 1. Phone number validation (matching Reservation page)
+    if (!phone) {
+      alert(t('eventsPage.validation.phoneRequired', undefined, "Please enter your Phone Number."));
+      return;
+    }
+    const phoneDigits = phone.replace(/\D/g, '');
+    if (phoneDigits.length < 9 || phoneDigits.length > 12) {
+      alert(t('eventsPage.validation.invalidPhone', undefined, "Please enter a valid Phone Number (typically 9 to 11 digits)."));
+      return;
+    }
+
+    // 2. Guest count limit (max 1,000 guests)
+    if (isNaN(guest_count) || guest_count < 1) {
+      guest_count = 1;
+    }
+    if (guest_count > 1000) {
+      alert(t('eventsPage.validation.maxGuestsExceeded', undefined, "Guest count cannot exceed 1,000 people."));
+      return;
+    }
 
     const email = emailInput || 'noemail@onemore.com';
     const today = new Date();
@@ -1015,7 +1068,13 @@ Our event coordinator will contact you within 24 hours.`;
                   </label>
                   <label>
                     {t('eventsPage.inquiry.form.labels.branch', undefined, 'Select Branch *')}
-                    <CustomBranchSelect disabled={isSubmitting} t={t} defaultBranch={initialBranch} />
+                    <CustomBranchSelect
+                      disabled={isSubmitting}
+                      t={t}
+                      defaultBranch={initialBranch}
+                      hasError={branchError}
+                      onSelect={() => setBranchError(false)}
+                    />
                   </label>
                   <label>
                     {t('eventsPage.inquiry.form.labels.company', undefined, 'Company Name')}
@@ -1049,6 +1108,7 @@ Our event coordinator will contact you within 24 hours.`;
                       type="number"
                       inputMode="numeric"
                       min={1}
+                      max={1000}
                       placeholder={t('eventsPage.inquiry.form.placeholders.guests', undefined, 'e.g. 150')}
                       required
                       disabled={isSubmitting}
@@ -1184,7 +1244,7 @@ Our event coordinator will contact you within 24 hours.`;
 
             <p className="text-center text-[#646860] mb-8 max-w-md mx-auto">
               {t('eventsPage.inquiry.modal.subtitle', undefined, isKhmer
-                ? 'សូមអរគុណសម្រាប់ការទាក់ទងមកកាន់ភោជនីយដ្ឋាន វ៉ាន់ ម៉័រ។'
+                ? 'សូមអរគុណសម្រាប់ការទាក់ទងមកកាន់ភោជនីយដ្ឋាន វ័នម៉រ។'
                 : 'Thank you for booking with One More Restaurant.')}
             </p>
 

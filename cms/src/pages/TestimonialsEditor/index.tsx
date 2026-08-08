@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Save, Plus, Trash2, CheckCircle, Loader2 } from 'lucide-react';
-import { loadPageJson, savePageJson } from '../lib/cmsStorage';
-import { useCmsLanguage } from '../context/CmsLanguageContext';
+import { Save, Plus, Trash2, CheckCircle, Loader2, MessageSquare } from 'lucide-react';
+import { loadPageJson, savePageJson } from '../../lib/cmsStorage';
+import { useCmsLanguage } from '../../context/CmsLanguageContext';
+import { CmsLanguageDropdown } from '../../components/CmsLanguageDropdown';
+import { CmsBackToPagesLink, CmsPageSelectDropdown } from '../../components/CmsPageSwitcher';
+import './index.css';
 
 export const TestimonialsEditor: React.FC = () => {
   const { language, currentLangInfo } = useCmsLanguage();
@@ -19,13 +22,16 @@ export const TestimonialsEditor: React.FC = () => {
   }, [language]);
 
   const handleSave = async () => {
-    setSaving(true);
-    setMessage(null);
-
-    const result = await savePageJson('testimonials.json', data);
-    setSaving(false);
-    setMessage(`Successfully saved Guest Reviews for ${currentLangInfo.flag} ${currentLangInfo.label}!`);
-    setTimeout(() => setMessage(null), 4000);
+    try {
+      setSaving(true);
+      await savePageJson('testimonials.json', { testimonials: data });
+      setMessage(`Testimonials saved successfully for ${currentLangInfo.label}!`);
+      setTimeout(() => setMessage(null), 3000);
+    } catch {
+      setMessage('Failed to save testimonials data.');
+    } finally {
+      setSaving(false);
+    }
   };
 
   const handleAdd = () => {
@@ -54,7 +60,7 @@ export const TestimonialsEditor: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-64 text-neutral-400 gap-2 font-mono text-xs">
+      <div className="flex items-center justify-center h-64 text-[#a9ca96] gap-2 text-xs font-medium">
         <Loader2 className="w-5 h-5 animate-spin text-[#c8a962]" />
         Loading testimonials.json content for {currentLangInfo.flag} {currentLangInfo.label}...
       </div>
@@ -62,28 +68,34 @@ export const TestimonialsEditor: React.FC = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6 pb-12">
+    <div className="max-w-4xl mx-auto space-y-4 pb-12">
+      {/* Back Link under Hamburger */}
+      <div>
+        <CmsBackToPagesLink />
+      </div>
+
       {/* Header Bar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-[#2d402f] pb-4 gap-4">
         <div>
-          <div className="flex items-center gap-2">
-            <h1 className="text-xl font-bold text-neutral-100 font-serif tracking-wide">Guest Testimonials Editor</h1>
-            <span className="px-2.5 py-0.5 rounded-lg text-[11px] font-semibold bg-[#c8a962]/15 text-[#e5c158] border border-[#c8a962]/30 flex items-center gap-1 font-mono">
-              <span>{currentLangInfo.flag}</span>
-              <span>{currentLangInfo.short} Mode</span>
-            </span>
-          </div>
+          <h1 className="text-xl font-bold text-neutral-100 font-serif tracking-wide flex items-center gap-2.5">
+            <MessageSquare className="w-6 h-6 text-[#c8a962] shrink-0 font-sans" />
+            <span>Guest Testimonials Editor</span>
+          </h1>
           <p className="text-xs text-[#a9ca96] font-mono mt-1">Editing Frontend/public/mocks/testimonials.json</p>
         </div>
 
-        <button
-          onClick={handleSave}
-          disabled={saving}
-          className="flex items-center gap-2 bg-[#c8a962] hover:bg-[#b39a62] text-black px-4 py-2 rounded-xl text-xs font-bold transition shadow-lg shadow-[#c8a962]/10 disabled:opacity-50 shrink-0"
-        >
-          {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
-          {saving ? 'Saving...' : `Save (${currentLangInfo.short})`}
-        </button>
+        <div className="flex flex-wrap items-center gap-2 shrink-0">
+          <CmsLanguageDropdown />
+          <CmsPageSelectDropdown />
+          <button
+            onClick={handleSave}
+            disabled={saving}
+            className="flex items-center gap-2 bg-[#c8a962] hover:bg-[#b39a62] text-black px-4 py-2 rounded-xl text-xs font-bold transition shadow-lg shadow-[#c8a962]/10 disabled:opacity-50 shrink-0"
+          >
+            {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+            {saving ? 'Saving...' : `Save (${currentLangInfo.short})`}
+          </button>
+        </div>
       </div>
 
       {message && (

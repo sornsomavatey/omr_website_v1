@@ -7,6 +7,7 @@ type SectionHeaderProps = {
   description?: string;
   dark?: boolean;
   align?: 'center' | 'left';
+  className?: string;
 };
 
 export default function SectionHeader({
@@ -15,6 +16,7 @@ export default function SectionHeader({
   description,
   dark = false,
   align = 'center',
+  className = '',
 }: SectionHeaderProps) {
   const { isKhmer } = useTranslation();
   const isLeft = align === 'left';
@@ -23,7 +25,8 @@ export default function SectionHeader({
   const bottomMarginClass = description ? '' : 'mb-8 md:mb-12';
 
   return (
-    <div className={isLeft ? 'text-left' : 'text-center'}>
+    <div className={`gsap-section-header ${isLeft ? 'text-left' : 'text-center'} ${className}`}>
+
       {/* Eyebrow */}
       <div
         className={`flex items-center gap-4 mb-4 ${

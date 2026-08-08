@@ -11,7 +11,10 @@ import { FooterEditor } from './pages/FooterEditor';
 import { BranchesEditor } from './pages/BranchesEditor';
 import { GalleryEditor } from './pages/GalleryEditor';
 import { TestimonialsEditor } from './pages/TestimonialsEditor';
+import { EventsEditor } from './pages/EventsEditor';
 import { TranslationsEditor } from './pages/TranslationsEditor';
+
+import { ReservationsEditor } from './pages/Reservations';
 
 export default function App() {
   return (
@@ -25,8 +28,10 @@ export default function App() {
             <Route path="menu" element={<MenuEditor />} />
             <Route path="header" element={<HeaderEditor />} />
             <Route path="footer" element={<FooterEditor />} />
+            <Route path="reservations" element={<ReservationsEditor />} />
             <Route path="branches" element={<BranchesEditor />} />
             <Route path="gallery" element={<GalleryEditor />} />
+            <Route path="events" element={<EventsEditor />} />
             <Route path="testimonials" element={<TestimonialsEditor />} />
             <Route path="translations" element={<TranslationsEditor />} />
             <Route path="*" element={<AdminDashboard />} />

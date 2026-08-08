@@ -10,10 +10,10 @@ export interface LanguageInfo {
 }
 
 export const SUPPORTED_LANGUAGES: LanguageInfo[] = [
-  { code: 'en', label: 'English', short: 'EN', flag: '🇬🇧' },
-  { code: 'kh', label: 'Khmer (ខ្មែរ)', short: 'KH', flag: '🇰🇭' },
-  { code: 'zh', label: 'Chinese (中文)', short: 'ZH', flag: '🇨🇳' },
-  { code: 'ko', label: 'Korean (한국어)', short: 'KO', flag: '🇰🇷' },
+  { code: 'en', label: 'English', short: 'EN', flag: '' },
+  { code: 'kh', label: 'Khmer (ខ្មែរ)', short: 'KH', flag: '' },
+  { code: 'zh', label: 'Chinese (中文)', short: 'ZH', flag: '' },
+  { code: 'ko', label: 'Korean (한국어)', short: 'KO', flag: '' },
 ];
 
 interface CmsLanguageContextType {

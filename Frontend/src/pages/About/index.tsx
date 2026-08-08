@@ -235,7 +235,7 @@ function CustomFeedbackBranchSelect({
         aria-haspopup="listbox"
         aria-expanded={isOpen}
       >
-        <span className={`custom-event-select-label ${!selected ? 'text-gray-400 font-normal' : ''}`}>
+        <span className={`custom-event-select-label ${!selected ? 'custom-event-select-label-placeholder' : ''}`}>
           {currentOption ? currentOption.label : tr('Select a branch')}
         </span>
         <ChevronDown size={18} className={`custom-event-select-icon ${isOpen ? 'rotate-180' : ''}`} />

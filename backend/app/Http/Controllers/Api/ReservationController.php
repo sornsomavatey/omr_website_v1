@@ -219,7 +219,7 @@ class ReservationController extends Controller
                 $cName = htmlspecialchars($request->input('customer_name') ?? $request->input('name') ?? 'Valued Guest', ENT_QUOTES, 'UTF-8');
                 $cPhone = htmlspecialchars($phone, ENT_QUOTES, 'UTF-8');
                 $bName = htmlspecialchars($request->input('branch_name') ?? $request->input('branch') ?? 'One More Restaurant', ENT_QUOTES, 'UTF-8');
-                $guestCount = (int) $request->input('guest_count', 1);
+                $guestCount = min(1000, max(1, (int) $request->input('guest_count', 1)));
                 $specialReq = htmlspecialchars($request->input('special_requirements') ?? $request->input('special_requests') ?? '', ENT_QUOTES, 'UTF-8');
                 $ref = htmlspecialchars($request->input('booking_ref', ''), ENT_QUOTES, 'UTF-8');
 

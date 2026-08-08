@@ -408,6 +408,19 @@ const parseTimeToMinutes = (timeStr: string): number | null => {
 };
 
 /**
+ * Parse input string with English or Khmer digits into an integer
+ */
+const parseDigitString = (str: string): number => {
+  const khmerDigits = ['០', '១', '២', '៣', '៤', '៥', '៦', '៧', '៨', '៩'];
+  let norm = String(str || '');
+  khmerDigits.forEach((kh, i) => {
+    norm = norm.replaceAll(kh, String(i));
+  });
+  const digitsOnly = norm.replace(/\D/g, '');
+  return digitsOnly ? parseInt(digitsOnly, 10) : 0;
+};
+
+/**
  * Check if a time slot has already passed for the selected date with a lead time buffer (UI-007 fix)
  */
 const isPastTimeSlot = (timeStr: string, date: Date, leadMinutes = 15): boolean => {
@@ -459,8 +472,8 @@ export default function ReservationPage() {
   const [email, setEmail] = useState('');
 
   // Step 3: Guests
-  const [adults, setAdults] = useState(4);
-  const [childrenCount, setChildrenCount] = useState(2);
+  const [adults, setAdults] = useState(1);
+  const [childrenCount, setChildrenCount] = useState(0);
 
   // Step 3 (repeated): Date & Time
   const today = new Date();
@@ -1307,8 +1320,8 @@ export default function ReservationPage() {
     const now = new Date();
     setFullName('');
     setPhone('');
-    setAdults(4);
-    setChildrenCount(2);
+    setAdults(1);
+    setChildrenCount(0);
     setCurrentYear(now.getFullYear());
     setCurrentMonth(now.getMonth());
     setSelectedDate(now);
@@ -1651,7 +1664,26 @@ export default function ReservationPage() {
                     >
                       <Minus className="w-4 h-4" />
                     </button>
-                    <span className="counter-value">{localizeNumber(adults)}</span>
+                    <input
+                      type="text"
+                      inputMode="numeric"
+                      value={isKhmer ? localizeNumber(adults) : String(adults)}
+                      onFocus={(e) => e.target.select()}
+                      onChange={(e) => {
+                        const raw = e.target.value;
+                        if (raw === '') {
+                          setAdults(1);
+                          return;
+                        }
+                        const val = parseDigitString(raw);
+                        setAdults(Math.min(500, Math.max(1, val)));
+                      }}
+                      onBlur={() => {
+                        if (!adults || adults < 1) setAdults(1);
+                      }}
+                      className="counter-value input-counter-number"
+                      aria-label={t('reservationPage.form.ariaLabels.adultsCount', undefined, 'Adults count')}
+                    />
                     <button
                       type="button"
                       onClick={() => setAdults((prev) => prev + 1)}
@@ -1673,7 +1705,26 @@ export default function ReservationPage() {
                     >
                       <Minus className="w-4 h-4" />
                     </button>
-                    <span className="counter-value">{localizeNumber(childrenCount)}</span>
+                    <input
+                      type="text"
+                      inputMode="numeric"
+                      value={isKhmer ? localizeNumber(childrenCount) : String(childrenCount)}
+                      onFocus={(e) => e.target.select()}
+                      onChange={(e) => {
+                        const raw = e.target.value;
+                        if (raw === '') {
+                          setChildrenCount(0);
+                          return;
+                        }
+                        const val = parseDigitString(raw);
+                        setChildrenCount(Math.min(500, Math.max(0, val)));
+                      }}
+                      onBlur={() => {
+                        if (childrenCount < 0) setChildrenCount(0);
+                      }}
+                      className="counter-value input-counter-number"
+                      aria-label={t('reservationPage.form.ariaLabels.childrenCount', undefined, 'Children count')}
+                    />
                     <button
                       type="button"
                       onClick={() => setChildrenCount((prev) => prev + 1)}

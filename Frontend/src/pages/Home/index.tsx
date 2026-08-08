@@ -9,6 +9,8 @@ import PartnerCompanySlider, {
   type PartnerCompany,
 } from '@/components/PartnerCompanySlider';
 import { useTranslation } from '@/hooks/useTranslation';
+
+
 import {
   ArrowRight,
   ChevronLeft,
@@ -115,11 +117,14 @@ function HeroSection({ hero }: { hero: any }) {
     });
   };
 
+  // Check if string contains Khmer characters
+  const isKhmerText = (str?: string) => (str ? /[\u1780-\u17FF]/.test(str) : false);
+
   // Determine title for current language and CMS data
   let titleLine1 = t('home.hero.titleLine1', undefined, 'Experience Authentic');
   let titleHighlight = t('home.hero.titleHighlight', undefined, 'Khmer Cuisine');
 
-  if (language === 'EN' && hero?.title) {
+  if (hero?.title && (language === 'KH' || !isKhmerText(hero.title))) {
     const fullTitle = hero.title.trim();
     if (fullTitle.includes('\n')) {
       const parts = fullTitle.split('\n');
@@ -140,15 +145,15 @@ function HeroSection({ hero }: { hero: any }) {
     }
   }
 
-  const subtitleText = (language === 'EN' && hero?.subtitle)
+  const subtitleText = (hero?.subtitle && (language === 'KH' || !isKhmerText(hero.subtitle)))
     ? hero.subtitle
     : t('home.hero.description', undefined, 'Traditional Cambodian flavors served in a modern dining experience.');
 
-  const reserveBtnText = (language === 'EN' && hero?.cta_reserve)
+  const reserveBtnText = (hero?.cta_reserve && (language === 'KH' || !isKhmerText(hero.cta_reserve)))
     ? hero.cta_reserve
     : t('home.hero.reserveButton', undefined, 'Reserve a Table');
 
-  const menuBtnText = (language === 'EN' && hero?.cta_menu)
+  const menuBtnText = (hero?.cta_menu && (language === 'KH' || !isKhmerText(hero.cta_menu)))
     ? hero.cta_menu
     : t('home.hero.menuButton', undefined, 'Explore Menu');
 
@@ -170,33 +175,39 @@ function HeroSection({ hero }: { hero: any }) {
       </div>
 
       <div className="home-hero-content relative z-10 text-center text-white max-w-[1260px] px-6">
-        <h1 className="page-hero-title page-hero-title--home font-serif text-5xl md:text-7xl lg:text-[80px] leading-tight mb-8 font-normal tracking-wide drop-shadow-sm">
-          {titleLine1 && (
+        <h1 className="page-hero-title page-hero-title--home font-serif text-4xl sm:text-6xl md:text-7xl lg:text-[80px] leading-[1.38] mb-8 font-normal tracking-wide drop-shadow-sm">
+          {language === 'EN' ? (
             <>
-              <span className="hero-title-top">
-                {titleLine1}
+              <span className="block sm:inline">Experience</span>{' '}
+              <span className="block sm:inline">Authentic</span>
+              <br className="hidden sm:block" />
+              <span className="block sm:inline">Khmer</span>{' '}
+              <span className="block sm:inline">Cuisine</span>
+            </>
+          ) : (
+            <>
+              {titleLine1 && (
+                <>
+                  <span className="hero-title-top">
+                    {titleLine1}
+                  </span>
+                  <br />
+                </>
+              )}
+              <span className="text-white">
+                {titleHighlight}
               </span>
-              <br />
             </>
           )}
-          <span className="text-white">
-            {titleHighlight}
-          </span>
         </h1>
 
-        {subtitleText && (
-          <p className="text-white/80 text-lg md:text-xl font-sans max-w-2xl mx-auto mb-8 font-light leading-relaxed">
-            {subtitleText}
-          </p>
-        )}
-
         <div className="home-hero-controls">
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-            <Link to="/reservations" className="custom-btn-primary">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 sm:gap-6">
+            <Link to="/reservations" className="custom-btn-primary w-full sm:w-auto max-w-[260px] sm:max-w-none">
               {reserveBtnText}
             </Link>
 
-            <Link to="/menu" className="custom-btn-secondary">
+            <Link to="/menu" className="custom-btn-secondary w-full sm:w-auto max-w-[260px] sm:max-w-none">
               {menuBtnText}{' '}
               <ArrowRight className="w-4 h-4" />
             </Link>
@@ -279,7 +290,7 @@ function SpacesSection({ spaces }: { spaces: DiningSpace[] }) {
   const spaceKeys = ['family', 'privateRoom', 'business', 'kidZone', 'event'];
 
   return (
-    <section className="w-full py-24 bg-[#212d1b] text-white flex flex-col items-center">
+    <section className="gsap-spaces-section w-full py-24 bg-[#212d1b] text-white flex flex-col items-center overflow-hidden">
       <div className="max-w-[1440px] w-full px-6 md:px-[64px] flex flex-col items-center">
         <SectionHeader
           eyebrow={t('home.spaces.eyebrow')}
@@ -304,6 +315,8 @@ function SpacesSection({ spaces }: { spaces: DiningSpace[] }) {
               return <SpaceCard key={`${space.name}-${index}`} space={translatedSpace} />;
             })}
           </div>
+
+
 
           <div className="flex gap-4">
             <button
@@ -370,12 +383,13 @@ function LocationsSection({
               tags: branch.tags.map((tag: string) => t(tagKeyMap[tag] || tag, undefined, tag)),
             };
             return (
-              <LocationCard
-                key={branch.id}
-                branch={translatedBranch}
-                onDetailClick={onDetailClick}
-                onMapClick={onMapClick}
-              />
+              <div key={branch.id} className="gsap-location-card w-full">
+                <LocationCard
+                  branch={translatedBranch}
+                  onDetailClick={onDetailClick}
+                  onMapClick={onMapClick}
+                />
+              </div>
             );
           })}
         </div>
@@ -482,6 +496,7 @@ export default function HomePage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+
     Promise.all([getHomeData(), getTestimonialsData()])
       .then(([homeRes, testimonialsRes]) => {
         setData(homeRes);
@@ -594,6 +609,7 @@ export default function HomePage() {
 
   return (
     <div className="bg-white flex flex-col items-center w-full overflow-x-hidden">
+
       <HeroSection hero={data.hero} />
       <SignatureDishes dishes={signatureDishesList} />
       <SpacesSection spaces={diningSpacesList} />
@@ -637,3 +653,4 @@ export default function HomePage() {
     </div>
   );
 }
+

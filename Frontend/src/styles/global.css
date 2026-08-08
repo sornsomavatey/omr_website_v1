@@ -128,6 +128,7 @@ html[data-lang="ko"] .dish-card-currency {
 
 .page-hero-title--home {
   font-size: clamp(52px, 6.4vw, 84px) !important;
+  line-height: 1.38 !important;
 }
 
 html[lang="km"] .page-hero-title,
@@ -348,22 +349,22 @@ html[data-lang="kh"] select {
 /* ONLY main page hero titles (h1) and SectionHeader section titles (h2) use Moul Pali OS font */
 html[lang="km"] h1,
 html[lang="km"] h1 *,
-html[lang="km"] h2,
-html[lang="km"] h2 *,
+html[lang="km"] h2:not(.site-footer-heading),
+html[lang="km"] h2:not(.site-footer-heading) *,
 html[data-lang="kh"] h1,
 html[data-lang="kh"] h1 *,
-html[data-lang="kh"] h2,
-html[data-lang="kh"] h2 * {
+html[data-lang="kh"] h2:not(.site-footer-heading),
+html[data-lang="kh"] h2:not(.site-footer-heading) * {
   font-family: "Moulpali", "Khmer OS Muol Pali", "Khmer OS Muol", "Moul", serif !important;
   font-weight: 400 !important;
   line-height: 1.85 !important;
 }
 
 /* Balanced font size for SectionHeader h2 titles in Khmer */
-html[lang="km"] h2,
-html[lang="km"] h2 *,
-html[data-lang="kh"] h2,
-html[data-lang="kh"] h2 * {
+html[lang="km"] h2:not(.site-footer-heading),
+html[lang="km"] h2:not(.site-footer-heading) *,
+html[data-lang="kh"] h2:not(.site-footer-heading),
+html[data-lang="kh"] h2:not(.site-footer-heading) * {
   font-size: clamp(1.5rem, 3.8vw, 2.5rem) !important;
   line-height: 1.85 !important;
 }

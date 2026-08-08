@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Save, Plus, Trash2, CheckCircle, Loader2 } from 'lucide-react';
-import { loadPageJson, savePageJson } from '../lib/cmsStorage';
-import { ImageUploader } from '../components/ImageUploader';
-import { useCmsLanguage } from '../context/CmsLanguageContext';
+import { Save, Plus, Trash2, CheckCircle, Loader2, UtensilsCrossed } from 'lucide-react';
+import { loadPageJson, savePageJson } from '../../lib/cmsStorage';
+import { ImageUploader } from '../../components/ImageUploader';
+import { useCmsLanguage } from '../../context/CmsLanguageContext';
+import { CmsLanguageDropdown } from '../../components/CmsLanguageDropdown';
+import { CmsBackToPagesLink, CmsPageSelectDropdown } from '../../components/CmsPageSwitcher';
+import './index.css';
 
 export const MenuEditor: React.FC = () => {
   const { language, currentLangInfo } = useCmsLanguage();
@@ -105,28 +108,34 @@ export const MenuEditor: React.FC = () => {
   const categories = data?.categories || ['Breakfast', 'Lunch', 'Dinner', 'Dessert', 'Drinks'];
 
   return (
-    <div className="max-w-5xl mx-auto space-y-6 pb-12 text-[#1c2819]">
+    <div className="max-w-5xl mx-auto space-y-4 pb-12 text-[#1c2819]">
+      {/* Back Link under Hamburger */}
+      <div>
+        <CmsBackToPagesLink />
+      </div>
+
       {/* Header Bar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-[#e2e8df] pb-4 gap-4">
         <div>
-          <div className="flex items-center gap-2">
-            <h1 className="text-xl font-bold text-[#212d1b] font-serif tracking-wide">Menu Items & Pricing Editor</h1>
-            <span className="px-2.5 py-0.5 rounded-lg text-[11px] font-semibold bg-[#5b8045]/10 text-[#5b8045] border border-[#5b8045]/30 flex items-center gap-1 font-mono">
-              <span>{currentLangInfo.flag}</span>
-              <span>{currentLangInfo.short} Mode</span>
-            </span>
-          </div>
+          <h1 className="text-xl font-bold text-[#212d1b] font-serif tracking-wide flex items-center gap-2.5">
+            <UtensilsCrossed className="w-6 h-6 text-black shrink-0 font-sans" />
+            <span>Menu Items & Pricing Editor</span>
+          </h1>
           <p className="text-xs text-[#606e5c] font-mono mt-1">Editing Frontend/public/mocks/menu.json</p>
         </div>
 
-        <button
-          onClick={handleSave}
-          disabled={saving}
-          className="flex items-center gap-2 bg-[#5b8045] hover:bg-[#4a6b37] text-white px-5 py-2.5 rounded-xl text-xs font-bold transition shadow-md shadow-[#5b8045]/20 disabled:opacity-50 shrink-0 cursor-pointer"
-        >
-          {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
-          {saving ? 'Saving...' : `Save (${currentLangInfo.short})`}
-        </button>
+        <div className="flex flex-wrap items-center gap-2 shrink-0">
+          <CmsLanguageDropdown />
+          <CmsPageSelectDropdown />
+          <button
+            onClick={handleSave}
+            disabled={saving}
+            className="flex items-center gap-2 bg-[#5b8045] hover:bg-[#4a6b37] text-white px-5 py-2.5 rounded-xl text-xs font-bold transition shadow-md shadow-[#5b8045]/20 disabled:opacity-50 shrink-0 cursor-pointer"
+          >
+            {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+            {saving ? 'Saving...' : `Save (${currentLangInfo.short})`}
+          </button>
+        </div>
       </div>
 
       {message && (
@@ -141,7 +150,7 @@ export const MenuEditor: React.FC = () => {
         const items = data?.items?.[cat] || [];
 
         return (
-          <div key={cat} className="bg-white border border-[#e2e8df] rounded-2xl p-6 space-y-4 shadow-xs">
+          <div key={cat} className="bg-white border border-[#d6e0d0] rounded-2xl p-6 space-y-4 shadow-md">
             <div className="flex items-center justify-between border-b border-gray-100 pb-3">
               <h2 className="text-sm font-bold text-[#212d1b] font-serif tracking-wide flex items-center gap-2">
                 <span className="w-2.5 h-2.5 rounded-full bg-[#5b8045]" />

@@ -2,6 +2,7 @@ import {
   useCallback,
   useEffect,
   useRef,
+  useState,
   type CSSProperties,
   type PointerEvent as ReactPointerEvent,
   type WheelEvent as ReactWheelEvent,
@@ -147,16 +148,26 @@ export default function PartnerCompanySlider({
     handleScroll();
   }, [canAnimate, handleScroll]);
 
+  const [isDraggingState, setIsDraggingState] = useState(false);
+
   const handlePointerDown = useCallback((event: ReactPointerEvent<HTMLDivElement>) => {
-    if (!canAnimate || event.pointerType === 'touch') return;
+    if (!canAnimate) return;
 
     const viewport = viewportRef.current;
     if (!viewport) return;
 
     isPointerDraggingRef.current = true;
+    setIsDraggingState(true);
     dragStartXRef.current = event.clientX;
     dragStartScrollLeftRef.current = viewport.scrollLeft;
-    viewport.setPointerCapture(event.pointerId);
+
+    if (viewport.setPointerCapture) {
+      try {
+        viewport.setPointerCapture(event.pointerId);
+      } catch {
+        // ignore
+      }
+    }
   }, [canAnimate]);
 
   const handlePointerMove = useCallback((event: ReactPointerEvent<HTMLDivElement>) => {
@@ -164,7 +175,9 @@ export default function PartnerCompanySlider({
     if (!viewport || !isPointerDraggingRef.current) return;
 
     const dragDistance = event.clientX - dragStartXRef.current;
-    event.preventDefault();
+    if (Math.abs(dragDistance) > 3 && event.cancelable) {
+      event.preventDefault();
+    }
     viewport.scrollLeft = dragStartScrollLeftRef.current - dragDistance;
     handleScroll();
   }, [handleScroll]);
@@ -174,8 +187,15 @@ export default function PartnerCompanySlider({
     if (!viewport || !isPointerDraggingRef.current) return;
 
     isPointerDraggingRef.current = false;
-    if (viewport.hasPointerCapture(event.pointerId)) {
-      viewport.releasePointerCapture(event.pointerId);
+    setIsDraggingState(false);
+    if (viewport.releasePointerCapture) {
+      try {
+        if (viewport.hasPointerCapture(event.pointerId)) {
+          viewport.releasePointerCapture(event.pointerId);
+        }
+      } catch {
+        // ignore
+      }
     }
   }, []);
 
@@ -207,7 +227,7 @@ export default function PartnerCompanySlider({
       </div>
 
       <div
-        className="partner-slider-viewport"
+        className={`partner-slider-viewport ${isDraggingState ? 'is-dragging' : ''}`}
         ref={viewportRef}
         onScroll={handleScroll}
         onWheel={handleWheel}
@@ -219,9 +239,8 @@ export default function PartnerCompanySlider({
       >
         <div
           ref={trackRef}
-          className={`partner-slider-track ${
-            canAnimate ? 'partner-slider-track-animated' : ''
-          }`}
+          className={`partner-slider-track ${canAnimate ? 'partner-slider-track-animated' : ''
+            }`}
           style={sliderStyle}
         >
           {Array.from({ length: loopGroupCount }).map((_, groupIndex) => {
@@ -233,13 +252,13 @@ export default function PartnerCompanySlider({
                 className="partner-slider-group"
                 aria-hidden={isDuplicate || undefined}
               >
-              {partners.map((partner, index) => (
-                <PartnerCard
-                  key={`${groupIndex}-${partner.id || `${partner.name}-${index}`}`}
-                  partner={partner}
-                  duplicate={isDuplicate}
-                />
-              ))}
+                {partners.map((partner, index) => (
+                  <PartnerCard
+                    key={`${groupIndex}-${partner.id || `${partner.name}-${index}`}`}
+                    partner={partner}
+                    duplicate={isDuplicate}
+                  />
+                ))}
               </div>
             );
           })}
