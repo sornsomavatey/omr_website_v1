@@ -3,11 +3,13 @@ import { Save, Globe, Eye, Link as LinkIcon, Plus, Trash2, CheckCircle2 } from '
 import { LivePreviewModal } from '../../components/LivePreviewModal';
 import { CmsLanguageDropdown } from '../../components/CmsLanguageDropdown';
 import { CmsBackToPagesLink, CmsPageSelectDropdown } from '../../components/CmsPageSwitcher';
+import { CmsSaveConfirmModal } from '../../components/CmsSaveConfirmModal';
 import './index.css';
 
 export const HeaderEditor: React.FC = () => {
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
+  const [showSaveConfirmModal, setShowSaveConfirmModal] = useState(false);
 
   const [headerConfig, setHeaderConfig] = useState({
     logoText: 'One More Restaurant',
@@ -28,8 +30,8 @@ export const HeaderEditor: React.FC = () => {
     ],
   });
 
-  const handleSave = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSave = (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
     setSaveSuccess(true);
     setTimeout(() => setSaveSuccess(false), 3000);
   };
@@ -91,7 +93,7 @@ export const HeaderEditor: React.FC = () => {
             <span>Live Preview</span>
           </button>
           <button
-            onClick={handleSave}
+            onClick={() => setShowSaveConfirmModal(true)}
             className="px-4 py-2 rounded-xl bg-[#5b8045] hover:bg-[#4a6b37] text-white text-xs font-bold shadow-xs flex items-center gap-1.5 transition cursor-pointer"
           >
             <Save className="w-4 h-4" />
@@ -99,6 +101,16 @@ export const HeaderEditor: React.FC = () => {
           </button>
         </div>
       </div>
+
+      <CmsSaveConfirmModal
+        isOpen={showSaveConfirmModal}
+        onClose={() => setShowSaveConfirmModal(false)}
+        onConfirm={async () => {
+          handleSave();
+          setShowSaveConfirmModal(false);
+        }}
+        pageName="Header Navigation"
+      />
 
       {saveSuccess && (
         <div className="p-3 bg-emerald-50 text-emerald-800 text-xs font-bold rounded-xl border border-emerald-200 flex items-center gap-2">

@@ -328,7 +328,7 @@ export const ReservationsEditor: React.FC = () => {
         <div>
           <h1 className="text-2xl font-bold font-sans text-[#1c2819] tracking-tight flex items-center gap-2.5">
             <Calendar className="w-7 h-7 text-black shrink-0" />
-            <span>Reservations Management</span>
+            <span>Reservation Management</span>
           </h1>
           <p className="text-xs text-gray-500 mt-1 font-medium">
             Manage table reservations, private event inquiries, and booking status for all branches.

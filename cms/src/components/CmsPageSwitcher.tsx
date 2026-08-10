@@ -5,11 +5,14 @@ import { ArrowLeft, ChevronDown } from 'lucide-react';
 export const CMS_PAGES_LIST = [
   { label: 'Home', path: '/home' },
   { label: 'Menu', path: '/menu' },
-  { label: 'Reservations', path: '/reservations' },
-  { label: 'Branches', path: '/branches' },
+  { label: 'Reservations Content', path: '/reservations-editor' },
+  { label: 'Reservations Bookings', path: '/reservations' },
+  { label: 'Branches (All)', path: '/branches' },
+  { label: '  - Boeung Kak Branch', path: '/branches?branch=boeung-kak' },
+  { label: '  - Toul Kork Branch', path: '/branches?branch=toul-kork' },
   { label: 'Gallery', path: '/gallery' },
-  { label: 'About Us', path: '/home' },
-  { label: 'Terms & Conditions', path: '/footer' },
+  { label: 'About Us', path: '/about' },
+  { label: 'Terms & Conditions', path: '/terms' },
 ];
 
 export const CmsBackToPagesLink: React.FC = () => {

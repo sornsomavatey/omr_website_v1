@@ -16,6 +16,8 @@ import {
   Calendar,
   MapPin,
   Image as ImageIcon,
+  ChevronDown,
+  ChevronRight,
 } from 'lucide-react';
 import { LivePreviewModal } from '../../components/LivePreviewModal';
 import { CmsLanguageDropdown } from '../../components/CmsLanguageDropdown';
@@ -56,6 +58,8 @@ const getPageIcon = (id: string) => {
 export const WebsitePages: React.FC = () => {
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [previewPath, setPreviewPath] = useState('/');
+  const [isBranchesExpanded, setIsBranchesExpanded] = useState(true);
+  const [showBranchesDropdown, setShowBranchesDropdown] = useState(false);
 
   const [pages, setPages] = useState<PageItem[]>([
     {
@@ -85,7 +89,7 @@ export const WebsitePages: React.FC = () => {
       status: 'Published',
       lastUpdated: 'Jul 28, 2026',
       author: 'Sophea Admin',
-      editPath: '/reservations',
+      editPath: '/reservations-editor',
       previewPath: '/reservations',
     },
     {
@@ -184,79 +188,229 @@ export const WebsitePages: React.FC = () => {
             </thead>
             <tbody className="divide-y divide-[#edf2ea]">
               {pages.map((page) => (
-                <tr key={page.id} className="hover:bg-[#f8faf6] transition">
-                  {/* Page Name */}
-                  <td className="py-4 px-6 font-bold text-[#1c2819] text-sm">
-                    <div className="flex items-center gap-2.5">
-                      <span className="text-black shrink-0">
-                        {getPageIcon(page.id)}
+                <React.Fragment key={page.id}>
+                  <tr className="hover:bg-[#f8faf6] transition">
+                    {/* Page Name */}
+                    <td className="py-4 px-6 font-bold text-[#1c2819] text-sm">
+                      <div className="flex items-center gap-2.5">
+                        <span className="text-black shrink-0">
+                          {getPageIcon(page.id)}
+                        </span>
+                        <span>{page.name}</span>
+                        {page.id === 'branches' && (
+                          <button
+                            onClick={() => setIsBranchesExpanded(!isBranchesExpanded)}
+                            className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#f4f7f2] border border-[#e2e8df] text-[10px] font-bold text-[#5b8045] hover:bg-[#eaf0e7] transition cursor-pointer ml-1"
+                            title="Toggle sub-branch pages"
+                          >
+                            <span>2 Sub-pages</span>
+                            <ChevronDown className={`w-3 h-3 transition-transform ${isBranchesExpanded ? 'rotate-180' : ''}`} />
+                          </button>
+                        )}
+                      </div>
+                    </td>
+
+                    {/* Slug Badge */}
+                    <td className="py-4 px-4">
+                      <span className="px-2.5 py-1 rounded-md bg-[#f4f7f2] text-gray-600 font-mono text-xs border border-[#e2e8df]">
+                        {page.slug}
                       </span>
-                      <span>{page.name}</span>
-                    </div>
-                  </td>
+                    </td>
 
-                  {/* Slug Badge */}
-                  <td className="py-4 px-4">
-                    <span className="px-2.5 py-1 rounded-md bg-[#f4f7f2] text-gray-600 font-mono text-xs border border-[#e2e8df]">
-                      {page.slug}
-                    </span>
-                  </td>
-
-                  {/* Status Badge */}
-                  <td className="py-4 px-4">
-                    <span
-                      className={`inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold border ${
-                        page.status === 'Published'
-                          ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
-                          : 'bg-amber-50 text-amber-700 border-amber-200'
-                      }`}
-                    >
-                      {page.status}
-                    </span>
-                  </td>
-
-                  {/* Last Updated */}
-                  <td className="py-4 px-4 text-gray-600 font-medium">
-                    {page.lastUpdated}
-                  </td>
-
-                  {/* Author */}
-                  <td className="py-4 px-4 text-gray-700 font-medium">
-                    {page.author}
-                  </td>
-
-                  {/* Action Buttons */}
-                  <td className="py-4 px-6 text-right">
-                    <div className="flex items-center justify-end gap-2">
-                      <button
-                        onClick={() => handlePreview(page.previewPath)}
-                        className="px-3 py-1.5 rounded-lg border border-gray-200 text-gray-600 hover:text-gray-900 hover:bg-gray-50 font-semibold flex items-center gap-1.5 transition cursor-pointer"
-                      >
-                        <Eye className="w-3.5 h-3.5" />
-                        <span>Preview</span>
-                      </button>
-
-                      <Link
-                        to={page.editPath}
-                        className="px-3 py-1.5 rounded-lg border border-gray-200 text-gray-700 hover:text-[#5b8045] hover:bg-[#f0f5ed] font-semibold flex items-center gap-1.5 transition"
-                      >
-                        <Edit className="w-3.5 h-3.5" />
-                        <span>Edit</span>
-                      </Link>
-
-                      <button
-                        onClick={() => toggleStatus(page.id)}
-                        className={`px-3 py-1.5 rounded-lg text-white font-bold transition cursor-pointer ${
+                    {/* Status Badge */}
+                    <td className="py-4 px-4">
+                      <span
+                        className={`inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold border ${
                           page.status === 'Published'
-                            ? 'bg-[#5b8045] hover:bg-[#4a6b37]'
-                            : 'bg-[#5b8045] hover:bg-[#4a6b37]'
+                            ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                            : 'bg-amber-50 text-amber-700 border-amber-200'
                         }`}
                       >
-                        {page.status === 'Published' ? 'Unpublish' : 'Publish'}
-                      </button>
-                    </div>
-                  </td>
-                </tr>
+                        {page.status}
+                      </span>
+                    </td>
+
+                    {/* Last Updated */}
+                    <td className="py-4 px-4 text-gray-600 font-medium">
+                      {page.lastUpdated}
+                    </td>
+
+                    {/* Author */}
+                    <td className="py-4 px-4 text-gray-700 font-medium">
+                      {page.author}
+                    </td>
+
+                    {/* Action Buttons */}
+                    <td className="py-4 px-6 text-right">
+                      <div className="flex items-center justify-end gap-2">
+                        <button
+                          onClick={() => handlePreview(page.previewPath)}
+                          className="px-3 py-1.5 rounded-lg border border-gray-200 text-gray-600 hover:text-gray-900 hover:bg-gray-50 font-semibold flex items-center gap-1.5 transition cursor-pointer"
+                        >
+                          <Eye className="w-3.5 h-3.5" />
+                          <span>Preview</span>
+                        </button>
+
+                        {page.id === 'branches' ? (
+                          <div className="relative inline-block text-left">
+                            <button
+                              onClick={() => setShowBranchesDropdown(!showBranchesDropdown)}
+                              className="px-3 py-1.5 rounded-lg border border-gray-200 text-gray-700 hover:text-[#5b8045] hover:bg-[#f0f5ed] font-semibold flex items-center gap-1.5 transition cursor-pointer"
+                            >
+                              <Edit className="w-3.5 h-3.5" />
+                              <span>Edit</span>
+                              <ChevronDown className="w-3 h-3 text-gray-500" />
+                            </button>
+
+                            {showBranchesDropdown && (
+                              <div className="absolute right-0 mt-1 w-56 bg-white rounded-xl shadow-xl border border-gray-200 py-1.5 z-30 text-left text-xs">
+                                <Link
+                                  to="/branches"
+                                  onClick={() => setShowBranchesDropdown(false)}
+                                  className="px-3.5 py-2 hover:bg-[#f4f7f2] flex items-center gap-2 font-bold text-[#1c2819]"
+                                >
+                                  <MapPin className="w-3.5 h-3.5 text-[#5b8045]" />
+                                  <span>Edit All Branches</span>
+                                </Link>
+                                <div className="border-t border-gray-100 my-1" />
+                                <Link
+                                  to="/branches?branch=boeung-kak"
+                                  onClick={() => setShowBranchesDropdown(false)}
+                                  className="px-3.5 py-2 hover:bg-[#f4f7f2] flex items-center gap-2 font-semibold text-gray-700"
+                                >
+                                  <span className="w-1.5 h-1.5 rounded-full bg-[#5b8045]" />
+                                  <span>Boeung Kak Branch</span>
+                                </Link>
+                                <Link
+                                  to="/branches?branch=toul-kork"
+                                  onClick={() => setShowBranchesDropdown(false)}
+                                  className="px-3.5 py-2 hover:bg-[#f4f7f2] flex items-center gap-2 font-semibold text-gray-700"
+                                >
+                                  <span className="w-1.5 h-1.5 rounded-full bg-[#5b8045]" />
+                                  <span>Toul Kork Branch</span>
+                                </Link>
+                              </div>
+                            )}
+                          </div>
+                        ) : (
+                          <Link
+                            to={page.editPath}
+                            className="px-3 py-1.5 rounded-lg border border-gray-200 text-gray-700 hover:text-[#5b8045] hover:bg-[#f0f5ed] font-semibold flex items-center gap-1.5 transition"
+                          >
+                            <Edit className="w-3.5 h-3.5" />
+                            <span>Edit</span>
+                          </Link>
+                        )}
+
+                        <button
+                          onClick={() => toggleStatus(page.id)}
+                          className="px-3 py-1.5 rounded-lg text-white font-bold transition cursor-pointer bg-[#5b8045] hover:bg-[#4a6b37]"
+                        >
+                          {page.status === 'Published' ? 'Unpublish' : 'Publish'}
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+
+                  {/* Sub-Pages Rows for Branches (Boeung Kak & Toul Kork) */}
+                  {page.id === 'branches' && isBranchesExpanded && (
+                    <>
+                      {/* Boeung Kak Branch Sub-Row */}
+                      <tr className="bg-[#f8faf6]/70 hover:bg-[#f0f5ed] transition border-l-4 border-l-[#5b8045]">
+                        <td className="py-3 px-6 font-semibold text-gray-800 text-xs pl-10">
+                          <div className="flex items-center gap-2">
+                            <span className="text-gray-400 font-mono">-</span>
+                            <MapPin className="w-3.5 h-3.5 text-[#5b8045]" />
+                            <span className="font-bold text-[#1c2819]">Boeung Kak Branch</span>
+                          </div>
+                        </td>
+                        <td className="py-3 px-4">
+                          <span className="px-2 py-0.5 rounded-md bg-[#eef3eb] text-gray-600 font-mono text-[11px] border border-[#d8e3d3]">
+                            /branches/boeung-kak
+                          </span>
+                        </td>
+                        <td className="py-3 px-4">
+                          <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                            Published
+                          </span>
+                        </td>
+                        <td className="py-3 px-4 text-gray-500 font-medium text-[11px]">Jul 20, 2026</td>
+                        <td className="py-3 px-4 text-gray-600 font-medium text-[11px]">Content Editor</td>
+                        <td className="py-3 px-6 text-right">
+                          <div className="flex items-center justify-end gap-2">
+                            <button
+                              onClick={() => handlePreview('/branches#boeung-kak')}
+                              className="px-2.5 py-1 rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 text-xs font-semibold flex items-center gap-1 transition cursor-pointer"
+                            >
+                              <Eye className="w-3 h-3" />
+                              <span>Preview</span>
+                            </button>
+                            <Link
+                              to="/branches?branch=boeung-kak"
+                              className="px-2.5 py-1 rounded-lg border border-gray-200 text-[#5b8045] hover:bg-[#f0f5ed] text-xs font-semibold flex items-center gap-1 transition"
+                            >
+                              <Edit className="w-3 h-3" />
+                              <span>Edit</span>
+                            </Link>
+                            <button
+                              onClick={() => toggleStatus('branches')}
+                              className="px-2.5 py-1 rounded-lg text-white text-xs font-bold transition cursor-pointer bg-[#5b8045] hover:bg-[#4a6b37]"
+                            >
+                              Unpublish
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+
+                      {/* Toul Kork Branch Sub-Row */}
+                      <tr className="bg-[#f8faf6]/70 hover:bg-[#f0f5ed] transition border-l-4 border-l-[#5b8045]">
+                        <td className="py-3 px-6 font-semibold text-gray-800 text-xs pl-10">
+                          <div className="flex items-center gap-2">
+                            <span className="text-gray-400 font-mono">-</span>
+                            <MapPin className="w-3.5 h-3.5 text-[#5b8045]" />
+                            <span className="font-bold text-[#1c2819]">Toul Kork Branch</span>
+                          </div>
+                        </td>
+                        <td className="py-3 px-4">
+                          <span className="px-2 py-0.5 rounded-md bg-[#eef3eb] text-gray-600 font-mono text-[11px] border border-[#d8e3d3]">
+                            /branches/toul-kork
+                          </span>
+                        </td>
+                        <td className="py-3 px-4">
+                          <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                            Published
+                          </span>
+                        </td>
+                        <td className="py-3 px-4 text-gray-500 font-medium text-[11px]">Jul 20, 2026</td>
+                        <td className="py-3 px-4 text-gray-600 font-medium text-[11px]">Content Editor</td>
+                        <td className="py-3 px-6 text-right">
+                          <div className="flex items-center justify-end gap-2">
+                            <button
+                              onClick={() => handlePreview('/branches#toul-kork')}
+                              className="px-2.5 py-1 rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 text-xs font-semibold flex items-center gap-1 transition cursor-pointer"
+                            >
+                              <Eye className="w-3 h-3" />
+                              <span>Preview</span>
+                            </button>
+                            <Link
+                              to="/branches?branch=toul-kork"
+                              className="px-2.5 py-1 rounded-lg border border-gray-200 text-[#5b8045] hover:bg-[#f0f5ed] text-xs font-semibold flex items-center gap-1 transition"
+                            >
+                              <Edit className="w-3 h-3" />
+                              <span>Edit</span>
+                            </Link>
+                            <button
+                              onClick={() => toggleStatus('branches')}
+                              className="px-2.5 py-1 rounded-lg text-white text-xs font-bold transition cursor-pointer bg-[#5b8045] hover:bg-[#4a6b37]"
+                            >
+                              Unpublish
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    </>
+                  )}
+                </React.Fragment>
               ))}
             </tbody>
           </table>

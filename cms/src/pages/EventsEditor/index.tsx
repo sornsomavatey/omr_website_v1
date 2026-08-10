@@ -5,6 +5,7 @@ import { ImageUploader } from '../../components/ImageUploader';
 import { useCmsLanguage } from '../../context/CmsLanguageContext';
 import { CmsLanguageDropdown } from '../../components/CmsLanguageDropdown';
 import { CmsBackToPagesLink, CmsPageSelectDropdown } from '../../components/CmsPageSwitcher';
+import { CmsSaveConfirmModal } from '../../components/CmsSaveConfirmModal';
 import './index.css';
 
 export const EventsEditor: React.FC = () => {
@@ -13,6 +14,7 @@ export const EventsEditor: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
+  const [showSaveConfirmModal, setShowSaveConfirmModal] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -95,7 +97,7 @@ export const EventsEditor: React.FC = () => {
           <CmsLanguageDropdown />
           <CmsPageSelectDropdown />
           <button
-            onClick={handleSave}
+            onClick={() => setShowSaveConfirmModal(true)}
             disabled={saving}
             className="flex items-center gap-2 bg-[#c8a962] hover:bg-[#b39a62] text-black px-4 py-2 rounded-xl text-xs font-bold transition shadow-lg shadow-[#c8a962]/10 disabled:opacity-50 shrink-0"
           >
@@ -104,6 +106,17 @@ export const EventsEditor: React.FC = () => {
           </button>
         </div>
       </div>
+
+      <CmsSaveConfirmModal
+        isOpen={showSaveConfirmModal}
+        onClose={() => setShowSaveConfirmModal(false)}
+        onConfirm={async () => {
+          await handleSave();
+          setShowSaveConfirmModal(false);
+        }}
+        saving={saving}
+        pageName="Events & Promotions"
+      />
 
       {message && (
         <div className="p-3.5 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-emerald-400 text-xs flex items-center gap-2 font-medium">

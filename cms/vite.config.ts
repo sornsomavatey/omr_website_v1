@@ -5,10 +5,38 @@ import path from 'path';
 import fs from 'fs';
 
 function cmsDevServerPlugin(): Plugin {
+  const sseClients: any[] = [];
+
   return {
     name: 'cms-dev-server',
     configureServer(server) {
       server.middlewares.use((req, res, next) => {
+        // Set CORS headers for real-time frontend integration
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+        res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+        if (req.method === 'OPTIONS') {
+          res.statusCode = 204;
+          return res.end();
+        }
+
+        // SSE Real-time Stream Endpoint
+        if (req.url === '/api/cms/realtime-stream') {
+          res.writeHead(200, {
+            'Content-Type': 'text/event-stream',
+            'Cache-Control': 'no-cache',
+            'Connection': 'keep-alive',
+            'Access-Control-Allow-Origin': '*',
+          });
+          sseClients.push(res);
+          req.on('close', () => {
+            const idx = sseClients.indexOf(res);
+            if (idx !== -1) sseClients.splice(idx, 1);
+          });
+          return;
+        }
+
         // Read JSON File
         if (req.url?.startsWith('/api/cms/read-json') && req.method === 'GET') {
           try {
@@ -57,6 +85,16 @@ function cmsDevServerPlugin(): Plugin {
               const targetPath = path.join(targetDir, safeName);
               const jsonStr = typeof content === 'string' ? content : JSON.stringify(content, null, 2);
               fs.writeFileSync(targetPath, jsonStr, 'utf-8');
+
+              // Broadcast real-time update to all connected frontend SSE clients
+              const payload = JSON.stringify({ filename: safeName, content: typeof content === 'string' ? JSON.parse(content) : content, timestamp: Date.now() });
+              sseClients.forEach((client) => {
+                try {
+                  client.write(`data: ${payload}\n\n`);
+                } catch (e) {
+                  // Client disconnected
+                }
+              });
 
               res.setHeader('Content-Type', 'application/json');
               res.end(JSON.stringify({ success: true, message: `Saved ${safeName} successfully to Frontend/public/` }));

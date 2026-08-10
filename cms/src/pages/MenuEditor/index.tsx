@@ -5,6 +5,7 @@ import { ImageUploader } from '../../components/ImageUploader';
 import { useCmsLanguage } from '../../context/CmsLanguageContext';
 import { CmsLanguageDropdown } from '../../components/CmsLanguageDropdown';
 import { CmsBackToPagesLink, CmsPageSelectDropdown } from '../../components/CmsPageSwitcher';
+import { CmsSaveConfirmModal } from '../../components/CmsSaveConfirmModal';
 import './index.css';
 
 export const MenuEditor: React.FC = () => {
@@ -13,6 +14,7 @@ export const MenuEditor: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
+  const [showSaveConfirmModal, setShowSaveConfirmModal] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -128,7 +130,7 @@ export const MenuEditor: React.FC = () => {
           <CmsLanguageDropdown />
           <CmsPageSelectDropdown />
           <button
-            onClick={handleSave}
+            onClick={() => setShowSaveConfirmModal(true)}
             disabled={saving}
             className="flex items-center gap-2 bg-[#5b8045] hover:bg-[#4a6b37] text-white px-5 py-2.5 rounded-xl text-xs font-bold transition shadow-md shadow-[#5b8045]/20 disabled:opacity-50 shrink-0 cursor-pointer"
           >
@@ -137,6 +139,17 @@ export const MenuEditor: React.FC = () => {
           </button>
         </div>
       </div>
+
+      <CmsSaveConfirmModal
+        isOpen={showSaveConfirmModal}
+        onClose={() => setShowSaveConfirmModal(false)}
+        onConfirm={async () => {
+          await handleSave();
+          setShowSaveConfirmModal(false);
+        }}
+        saving={saving}
+        pageName="Menu Items & Pricing"
+      />
 
       {message && (
         <div className="p-3.5 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-800 text-xs flex items-center gap-2 font-medium">

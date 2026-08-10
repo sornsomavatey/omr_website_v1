@@ -32,6 +32,16 @@ export const getCMSConfig = (): CMSConfig => getStoredConfig();
  * Load JSON content from local dev API or fallback
  */
 export async function loadPageJson(filename: string): Promise<any> {
+  // Check local cache first for real-time live content updates
+  try {
+    const cached = localStorage.getItem(`omr_cms_data_${filename}`);
+    if (cached) {
+      return JSON.parse(cached);
+    }
+  } catch (e) {
+    console.warn('Failed to read cached CMS data:', e);
+  }
+
   try {
     const res = await axios.get(`/api/cms/read-json?filename=${encodeURIComponent(filename)}`);
     return res.data;
@@ -49,6 +59,20 @@ export async function loadPageJson(filename: string): Promise<any> {
  */
 export async function savePageJson(filename: string, content: any): Promise<{ success: boolean; message: string }> {
   const jsonString = typeof content === 'string' ? content : JSON.stringify(content, null, 2);
+  const parsedObj = typeof content === 'string' ? JSON.parse(content) : content;
+
+  // Always update LocalStorage & BroadcastChannel for real-time live page updates across windows/tabs
+  try {
+    localStorage.setItem(`omr_cms_data_${filename}`, JSON.stringify(parsedObj));
+
+    if ('BroadcastChannel' in window) {
+      const bc = new BroadcastChannel('omr_cms_realtime_channel');
+      bc.postMessage({ filename, content: parsedObj, timestamp: Date.now() });
+    }
+    window.dispatchEvent(new CustomEvent('cms_data_updated', { detail: { filename, content: parsedObj } }));
+  } catch (err) {
+    console.warn('Error broadcasting real-time CMS storage event:', err);
+  }
 
   // 1. Try Local Server API first (Dev Mode / Local Server)
   try {

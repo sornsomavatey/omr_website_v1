@@ -83,7 +83,7 @@ export const AdminLayout: React.FC = () => {
     {
       group: 'OPERATIONS',
       items: [
-        { label: 'Reservations', path: '/reservations', icon: Calendar, preview: '/reservations' },
+        { label: 'Reservation Management', path: '/reservations', icon: Calendar, preview: '/reservations' },
         { label: 'Branches', path: '/branches', icon: MapPin, preview: '/branches' },
       ],
     },
@@ -242,15 +242,6 @@ export const AdminLayout: React.FC = () => {
 
           {/* Top Bar Actions & Profile */}
           <div className="flex items-center gap-3">
-            {/* Clear Cache Button */}
-            <button
-              onClick={handleClearCMSCache}
-              className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-800 text-xs font-bold border border-amber-500/30 shadow-xs transition cursor-pointer"
-              title="Clear local browser cache and reload fresh data"
-            >
-              <RotateCcw className="w-3.5 h-3.5" />
-              <span>Clear Cache</span>
-            </button>
 
             {/* View Website Button */}
             <button
