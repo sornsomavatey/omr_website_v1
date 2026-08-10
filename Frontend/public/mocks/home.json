@@ -1,116 +1,117 @@
 {
   "hero": {
-    "title": "បទពិសោធន៍ ម្ហូបខ្មែរពិតប្រាកដ",
-    "subtitle": "រសជាតិខ្មែរបែបប្រពៃណី ត្រូវបានបម្រើជូនក្នុងបទពិសោធន៍ទទួលទានអាហារបែបទំនើប។",
-    "cta_reserve": "កក់តុ",
-    "cta_menu": "មើលម៉ឺនុយ",
-    "backgroundImage": "@/assets/home-v2/boeung-kak-exterior.webp"
+    "title": "Experience Authentic Khmer Cuisine",
+    "subtitle": "Traditional Cambodian flavors served in a modern dining experience.",
+    "cta_reserve": "Reserve",
+    "cta_menu": "ok",
+    "backgroundImage": "",
+    "backgroundVideo": ""
   },
   "signatureDishes": [
     {
       "key": "kuyteavOneMore",
-      "name": "គុយទាវសាច់គ្រប់មុខវ័នម៉រ",
+      "name": "One More Special Kuyteav",
       "category": "BREAKFAST · SOUP",
-      "desc": "ស៊ុបឆ្អឹងដ៏ឈ្ងុយឆ្ងាញ់ជាមួយគុយទាវ សាច់ចម្រុះ ប្រហិត ជីស្រស់ និងសណ្តែកបណ្តុះស្រស់ៗ។",
+      "desc": "Rich bone broth with rice noodles, sliced meats, meatballs, fresh herbs and crisp bean sprouts.",
       "img": "/uploads/1785697135224-________________________.png",
       "price": "$18",
       "badge": "Chef's Choice ✦"
     },
     {
       "key": "kuyteavMincedPork",
-      "name": "គុយទាវសាច់ជ្រូកចិញ្ច្រាំ",
+      "name": "Minced Pork Kuyteav",
       "category": "BREAKFAST · SOUP",
-      "desc": "គុយទាវទឹកស៊ុបសាច់ជ្រូកដ៏ឈ្ងុយឆ្ងាញ់ ជាមួយសាច់ជ្រូកចិញ្ច្រាំឆ្អិនល្មម និងស្លឹកខ្ទឹមស្រស់។",
+      "desc": "Flavorful rice noodles in pork broth topped with perfectly seasoned minced pork and fresh chives.",
       "img": "@/assets/Food/Breakfast/breakfast-minced-pork-kuyteav-009.webp",
       "price": "$14",
       "badge": "Chef's Choice ✦"
     },
     {
       "key": "hainanChickenRice",
-      "name": "បាយហៃណាំភ្លៅមាន់ចៀន",
+      "name": "Hainan Chicken Thigh Rice",
       "category": "BREAKFAST · CLASSIC",
-      "desc": "បាយហៃណាំក្លិនឈ្ងុយ បម្រើជាមួយភ្លៅមាន់ចៀនស្រួយពណ៌មាស និងទឹកជ្រលក់រូបមន្តប្រចាំហាង។",
+      "desc": "Fragrant seasoned rice served with crispy golden-fried chicken thigh and homemade dipping sauce.",
       "img": "@/assets/Food/Breakfast/breakfast-chicken-thigh-rice-004.webp",
       "price": "$16",
       "badge": "Chef's Choice ✦"
     },
     {
       "key": "porkBloodPorridge",
-      "name": "បបរឈាមជ្រូកវ័នម៉រ",
+      "name": "Pork Blood Porridge",
       "category": "BREAKFAST · COMFORT",
-      "desc": "បបរឈាមជ្រូកក្តៅឧណ្ហៗ ជាមួយឈាមជ្រូក គ្រឿងក្នុង ខ្ញី និងស្លឹកខ្ទឹមស្រស់។",
+      "desc": "Hearty and comforting rice porridge simmered with pork blood, offal, ginger and green scallions.",
       "img": "@/assets/Food/Breakfast/breakfast-pork-blood-porridge-010.webp",
       "price": "$15",
       "badge": "Chef's Choice ✦"
     },
     {
       "key": "lortchaEgg",
-      "name": "លតឆាសាច់គោប៉ាតេពងទា",
+      "name": "Lort Cha with Beef & Egg",
       "category": "BREAKFAST · PAN-FRIED",
-      "desc": "លតឆាជាមួយសាច់គោទន់ ប៉ាតេ ស្លឹកខ្ទឹម សណ្តែកបណ្តុះ និងពងទាចៀនពីលើ។",
+      "desc": "Stir-fried pin-noodles with tender beef, chives and bean sprouts, topped with a fried egg.",
       "img": "@/assets/Food/Breakfast/breakfast-lortcha-egg-007.webp",
       "price": "$16",
       "badge": "Chef's Choice ✦"
     },
     {
       "key": "friedRicePineapple",
-      "name": "បាយឆាម្នាស់",
+      "name": "Pineapple Fried Rice",
       "category": "BREAKFAST Â· FRIED RICE",
-      "desc": "បាយឆាពណ៌មាស បម្រើក្នុងផ្លែម្នាស់ស្រស់ ជាមួយបង្គា គ្រាប់ស្វាយចន្ទី និងគ្រឿងទេសខ្មែរ។",
+      "desc": "Golden fried rice served in fresh pineapple with prawns, cashews, and aromatic Khmer seasoning.",
       "img": "@/assets/Food/Breakfast/breakfast-fried-rice-pineapple-005.webp",
       "price": "$16",
       "badge": "Chef's Choice âœ¦"
     },
     {
       "key": "fishAmokCoconut",
-      "name": "ហហ្មុកដូងខ្ចីសាច់ត្រី",
+      "name": "Fish Amok in Coconut",
       "category": "LUNCH · SIGNATURE",
-      "desc": "សាច់ត្រីទន្លេស្រស់ៗចំហុយជាមួយគ្រឿងខ្មែរ ខ្ទិះដូង និងស្លឹកក្រូចសើច នៅក្នុងផ្លែដូងខ្ចី។",
+      "desc": "Tender river fish fillets steamed in a rich, kaffir lime infused lemongrass curry mousse inside a fresh young coconut.",
       "img": "@/assets/Food/Lunch and Dinner/lunch-and-dinner-fish-amok-coconut-005.webp",
       "price": "$24",
       "badge": "Chef's Choice ✦"
     },
     {
       "key": "sourSeafoodSoup",
-      "name": "សម្លម្ជូរគ្រឿងសមុទ្រ",
+      "name": "Sour Seafood Soup",
       "category": "LUNCH · SEAFOOD",
-      "desc": "សម្លម្ជូរគ្រឿងសមុទ្របែបបុរាណ ដែលមានបង្គា មឹក ផ្សិត និងជីគ្រប់មុខ រសជាតិដិតដល់ចិត្ត។",
+      "desc": "Traditional hot and sour seafood soup loaded with prawns, mushrooms and fragrant herbs.",
       "img": "@/assets/Food/Lunch and Dinner/lunch-and-dinner-yaaoaeuayu-016.webp",
       "price": "$19",
       "badge": "Chef's Choice ✦"
     },
     {
       "key": "panFriedFishPaste",
-      "name": "ពងទាចៀនត្រីប្រម៉ា",
+      "name": "Pan-fried Fish Paste with Fresh Vegetables",
       "category": "LUNCH · SIGNATURE",
-      "desc": "ប្រហិតត្រីចៀនពណ៌មាស បម្រើជាមួយបន្លែស្រស់ចម្រុះ។",
+      "desc": "Golden pan-fried fish paste served with a colorful selection of crisp fresh vegetables.",
       "img": "@/assets/Food/Lunch and Dinner/lunch-and-dinner-pan-fried-fish-paste-enhanced-008.webp",
       "price": "$18",
       "badge": "Chef's Choice ✦"
     },
     {
       "key": "grilledChickenSiemReap",
-      "name": "អាំងមាន់បែបសៀមរាប",
+      "name": "Siem Reap Grilled Chicken",
       "category": "LUNCH · SPECIAL",
-      "desc": "មាន់ស្រែអាំងក្តៅៗដែលត្រូវបានប្រឡាក់គ្រឿងទេសខ្មែរបែបបុរាណ និងអាំងយ៉ាងឈ្ងុយឆ្ងាញ់។",
+      "desc": "Whole local chicken marinated in traditional Cambodian herbs and slow-grilled to smoky perfection.",
       "img": "@/assets/Food/Lunch and Dinner/lunch-and-dinner-grilled-chicken-siemreap-007.webp",
       "price": "$22",
       "badge": "Chef's Choice ✦"
     },
     {
       "key": "stirFriedBokchoy",
-      "name": "ឆាសណ្តែកពោធិ៍សាត់",
+      "name": "Stir-fried Bok Choy",
       "category": "LUNCH · VEGETABLE",
-      "desc": "បន្លែស្រស់ៗឆាក្នុងខ្ទះក្តៅខ្លាំងជាមួយខ្ទឹមស និងប្រេងខ្យងរសជាតិឈ្ងុយឆ្ងាញ់។",
+      "desc": "Crisp bok choy greens stir-fried in a roaring wok with garlic and savory oyster sauce.",
       "img": "@/assets/Food/Lunch and Dinner/lunch-and-dinner-stir-fried-bokchoy-048.webp",
       "price": "$12",
       "badge": "Chef's Choice ✦"
     },
     {
       "key": "friedFermentedEgg",
-      "name": "ចៀនពងទាត្រីប្រម៉ា",
+      "name": "Fried Egg with Salted Fish",
       "category": "LUNCH · COMFORT",
-      "desc": "មុខម្ហូបខ្មែរបែបបុរាណ ពងទាចៀនជាមួយត្រីប្រម៉ា និងសាច់ជ្រូកចិញ្ច្រាំ រសជាតិដិតប្រៃឆ្ងាញ់។",
+      "desc": "Traditional Cambodian dish of eggs fried with aromatic salted fish (Trey Pror-ma) and pork.",
       "img": "@/assets/Food/Lunch and Dinner/lunch-and-dinner-fried-fermented-egg-006.webp",
       "price": "$15",
       "badge": "Chef's Choice ✦"

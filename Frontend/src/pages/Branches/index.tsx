@@ -58,7 +58,7 @@ export default function Branches() {
   const [error, setError] = useState<string | null>(null);
   const [activeModal, setActiveModal] = useState<LocationItem | null>(null);
 
-  useEffect(() => {
+  const fetchBranches = () => {
     getRestaurantsData()
       .then((res) => {
         setData(res);
@@ -68,7 +68,17 @@ export default function Branches() {
         setError('Failed to load locations.');
         setLoading(false);
       });
+  };
+
+  useEffect(() => {
+    fetchBranches();
   }, []);
+
+  useCmsRealtimeListener((evt) => {
+    if (evt.filename === 'restaurants.json') {
+      fetchBranches();
+    }
+  });
 
   // Prevent scroll when modal is open
   useEffect(() => {

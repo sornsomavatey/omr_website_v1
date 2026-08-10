@@ -25,6 +25,43 @@
     "branch": {
       "title": "Choose Branch",
       "desc": "Select your preferred location in Phnom Penh"
+    },
+    "dateTime": {
+      "title": "Select Date & Time",
+      "desc": "Choose preferred date, meal time & guest size"
+    },
+    "guestDetails": {
+      "title": "Guest Details & Special Requests",
+      "desc": "Enter your contact information & special occasion notes"
     }
+  },
+  "summary": {
+    "title": "Booking Summary"
+  },
+  "faq": {
+    "eyebrow": "Assistance",
+    "title": "Frequently Asked Questions",
+    "items": [
+      {
+        "q": "What is the dress code?",
+        "a": "We recommend smart casual attire. Traditional Khmer attire is also very welcome for special occasions."
+      },
+      {
+        "q": "Do you offer vegetarian or vegan options?",
+        "a": "Yes, we have a variety of vegetarian and vegan options available. Please inform your waiter or mention it in the special requests section when booking."
+      },
+      {
+        "q": "Is there parking available at the branches?",
+        "a": "Yes, both our Toul Kork and Boeung Kak branches feature spacious, secure parking lots with complimentary valet service."
+      },
+      {
+        "q": "Can I bring my own wine?",
+        "a": "Yes, you may bring your own wine. A corkage fee of USD 15 per bottle applies."
+      },
+      {
+        "q": "Are pets allowed?",
+        "a": "To ensure a comfortable dining environment for all guests, pets are only allowed in our outdoor garden areas."
+      }
+    ]
   }
 }

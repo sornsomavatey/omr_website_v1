@@ -30,6 +30,7 @@ import {
   AlertTriangle,
 } from 'lucide-react';
 import { getReservationsData, getHomeData, createReservation, sendCustomerEmail } from '@/lib/api';
+import { useCmsRealtimeListener } from '@/lib/cmsRealtimeSync';
 import { useTranslation } from '@/hooks/useTranslation';
 import { partnerLogos } from '@/assets/partners';
 import { toKhmerDigits } from '@/lib/price';
@@ -207,7 +208,7 @@ function ReservationHero({ hero, info }: { hero: any; info: any[] }) {
   );
 }
 
-function FaqSection() {
+function FaqSection({ faqData }: { faqData?: any }) {
   const { t, getObject } = useTranslation();
   const [expandedIndex, setExpandedIndex] = useState<number | null>(0);
 
@@ -234,14 +235,16 @@ function FaqSection() {
     },
   ];
 
-  const faqs = getObject<any[]>('reservationPage.faq.items', defaultFaqs);
+  const faqs = (faqData?.items && faqData.items.length > 0) ? faqData.items : getObject<any[]>('reservationPage.faq.items', defaultFaqs);
+  const eyebrowText = faqData?.eyebrow || t('reservationPage.faq.eyebrow', undefined, 'Assistance');
+  const titleText = faqData?.title || t('reservationPage.faq.title', undefined, 'Frequently Asked Questions');
 
   return (
     <section className="faq-section" aria-labelledby="faq-section-title">
       <div className="faq-container">
-        <span className="faq-eyebrow">{t('reservationPage.faq.eyebrow', undefined, 'Assistance')}</span>
+        <span className="faq-eyebrow">{eyebrowText}</span>
         <h2 id="faq-section-title" className="faq-title font-serif">
-          {t('reservationPage.faq.title', undefined, 'Frequently Asked Questions')}
+          {titleText}
         </h2>
 
         <div className="faq-list">
@@ -527,6 +530,8 @@ export default function ReservationPage() {
         setLoading(false);
       });
   }, []);
+
+  useCmsRealtimeListener('reservations.json', setResData);
 
   // Close dropdown on click outside
   useEffect(() => {
@@ -2209,7 +2214,7 @@ export default function ReservationPage() {
       </section>
 
       {/* FAQ Section */}
-      <FaqSection />
+      <FaqSection faqData={resData?.faq} />
 
       {/* Menu Modal */}
       <MenuModal

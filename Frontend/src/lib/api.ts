@@ -26,7 +26,21 @@ const apiWebApp = axios.create({
   headers: noCacheHeaders,
 });
 
+const getCmsCachedData = (filename: string) => {
+  try {
+    const cached = localStorage.getItem(`omr_cms_data_${filename}`);
+    if (cached) {
+      return JSON.parse(cached);
+    }
+  } catch (e) {
+    console.warn('Failed to parse cached CMS data for', filename, e);
+  }
+  return null;
+};
+
 export const getHomeData = async () => {
+  const cached = getCmsCachedData('home.json');
+  if (cached) return cached;
   const response = await contentApi.get(`/mocks/home.json?_t=${Date.now()}`);
   return response.data;
 };
@@ -97,32 +111,43 @@ export const getMenuData = async () => {
 };
 
 export const getAboutData = async () => {
+  const cached = getCmsCachedData('about.json');
+  if (cached) return cached;
   const response = await contentApi.get('/mocks/about.json');
   return response.data;
 };
 
 export const getCareersData = async () => {
+  const cached = getCmsCachedData('careers.json');
+  if (cached) return cached;
   const response = await contentApi.get('/mocks/careers.json');
   return response.data;
 };
 
 export const getEventsData = async () => {
+  const cached = getCmsCachedData('events.json');
+  if (cached) return cached;
   const response = await contentApi.get('/mocks/events.json');
   return response.data;
 };
 
 export const getGalleryData = async () => {
+  const cached = getCmsCachedData('gallery.json');
+  if (cached) return cached;
   const response = await contentApi.get('/mocks/gallery.json');
   return response.data;
 };
 
-
 export const getRestaurantsData = async () => {
+  const cached = getCmsCachedData('restaurants.json');
+  if (cached) return cached;
   const response = await contentApi.get('/mocks/restaurants.json');
   return response.data;
 };
 
 export const getReservationsData = async () => {
+  const cached = getCmsCachedData('reservations.json');
+  if (cached) return cached;
   const response = await contentApi.get('/mocks/reservations.json');
   return response.data;
 };
@@ -142,10 +167,11 @@ const getRelativeReviewAgeInMonths = (date: unknown) => {
 };
 
 export const getTestimonialsData = async () => {
-  const response = await contentApi.get('/mocks/testimonials.json');
-  if (!Array.isArray(response.data)) return response.data;
+  const cached = getCmsCachedData('testimonials.json');
+  const rawData = cached || (await contentApi.get('/mocks/testimonials.json')).data;
 
-  return [...response.data].sort(
+  const list = Array.isArray(rawData) ? rawData : rawData?.testimonials || [];
+  return [...list].sort(
     (first, second) =>
       getRelativeReviewAgeInMonths(first?.date) - getRelativeReviewAgeInMonths(second?.date),
   );

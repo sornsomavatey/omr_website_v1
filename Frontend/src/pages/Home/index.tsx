@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { getHomeData, getTestimonialsData } from '@/lib/api';
+import { useCmsRealtimeListener } from '@/lib/cmsRealtimeSync';
 import SignatureDishes from '@/components/SignatureDishes';
 import { Skeleton } from '@/components/ui/skeleton';
 import LocationCard from '@/components/LocationCard';
@@ -157,20 +158,44 @@ function HeroSection({ hero }: { hero: any }) {
     ? hero.cta_menu
     : t('home.hero.menuButton', undefined, 'Explore Menu');
 
+  const rawMedia = hero?.backgroundVideo || hero?.backgroundImage;
+  let mediaSrc = heroVideo;
+  if (rawMedia) {
+    if (rawMedia.startsWith('data:') || rawMedia.startsWith('blob:') || rawMedia.startsWith('http://') || rawMedia.startsWith('https://')) {
+      mediaSrc = rawMedia;
+    } else if (rawMedia.startsWith('@/assets/')) {
+      mediaSrc = rawMedia.replace('@/assets/', '/src/assets/');
+    } else if (rawMedia.startsWith('/uploads/')) {
+      mediaSrc = rawMedia;
+    } else {
+      mediaSrc = rawMedia;
+    }
+  }
+
+  const isVideo = /\.(mp4|webm|mov|ogg|ogv)(\?.*)?$/i.test(mediaSrc) || mediaSrc === heroVideo || mediaSrc.startsWith('data:video');
+
   return (
     <section
       id="home-hero"
       className="home-hero relative w-full min-h-screen flex items-center justify-center bg-black overflow-hidden"
     >
       <div className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-hidden">
-        <video
-          src={heroVideo}
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="w-full h-full object-cover opacity-95"
-        />
+        {isVideo ? (
+          <video
+            src={mediaSrc}
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-cover opacity-95"
+          />
+        ) : (
+          <img
+            src={mediaSrc}
+            alt="Hero Background"
+            className="w-full h-full object-cover opacity-95"
+          />
+        )}
         <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-transparent to-black/35 pointer-events-none" />
       </div>
 
@@ -495,8 +520,7 @@ export default function HomePage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-
+  const fetchHomeContent = () => {
     Promise.all([getHomeData(), getTestimonialsData()])
       .then(([homeRes, testimonialsRes]) => {
         setData(homeRes);
@@ -507,7 +531,17 @@ export default function HomePage() {
         setError('Failed to load home page data.');
         setLoading(false);
       });
+  };
+
+  useEffect(() => {
+    fetchHomeContent();
   }, []);
+
+  useCmsRealtimeListener((evt) => {
+    if (evt.filename === 'home.json' || evt.filename === 'testimonials.json') {
+      fetchHomeContent();
+    }
+  });
 
   if (loading) {
     return (
