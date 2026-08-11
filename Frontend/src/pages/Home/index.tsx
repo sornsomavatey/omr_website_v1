@@ -118,45 +118,39 @@ function HeroSection({ hero }: { hero: any }) {
     });
   };
 
-  // Check if string contains Khmer characters
-  const isKhmerText = (str?: string) => (str ? /[\u1780-\u17FF]/.test(str) : false);
-
   // Determine title for current language and CMS data
   let titleLine1 = t('home.hero.titleLine1', undefined, 'Experience Authentic');
   let titleHighlight = t('home.hero.titleHighlight', undefined, 'Khmer Cuisine');
+  let subtitleText = t('home.hero.description', undefined, 'Traditional Cambodian flavors served in a modern dining experience.');
+  let reserveBtnText = t('home.hero.reserveButton', undefined, 'Reserve a Table');
+  let menuBtnText = t('home.hero.menuButton', undefined, 'Explore Menu');
 
-  if (hero?.title && (language === 'KH' || !isKhmerText(hero.title))) {
-    const fullTitle = hero.title.trim();
-    if (fullTitle.includes('\n')) {
-      const parts = fullTitle.split('\n');
-      titleLine1 = parts[0];
-      titleHighlight = parts.slice(1).join(' ');
-    } else {
-      const words = fullTitle.split(/\s+/);
-      if (words.length > 2) {
-        titleLine1 = words.slice(0, 2).join(' ');
-        titleHighlight = words.slice(2).join(' ');
-      } else if (words.length === 2) {
-        titleLine1 = words[0];
-        titleHighlight = words[1];
+  if (language === 'EN' && hero) {
+    if (hero.title) {
+      const fullTitle = hero.title.trim();
+      if (fullTitle.includes('\n')) {
+        const parts = fullTitle.split('\n');
+        titleLine1 = parts[0];
+        titleHighlight = parts.slice(1).join(' ');
       } else {
-        titleLine1 = '';
-        titleHighlight = fullTitle;
+        const words = fullTitle.split(/\s+/);
+        if (words.length > 2) {
+          titleLine1 = words.slice(0, 2).join(' ');
+          titleHighlight = words.slice(2).join(' ');
+        } else if (words.length === 2) {
+          titleLine1 = words[0];
+          titleHighlight = words[1];
+        } else {
+          titleLine1 = '';
+          titleHighlight = fullTitle;
+        }
       }
     }
+
+    if (hero.subtitle) subtitleText = hero.subtitle;
+    if (hero.cta_reserve) reserveBtnText = hero.cta_reserve;
+    if (hero.cta_menu) menuBtnText = hero.cta_menu;
   }
-
-  const subtitleText = (hero?.subtitle && (language === 'KH' || !isKhmerText(hero.subtitle)))
-    ? hero.subtitle
-    : t('home.hero.description', undefined, 'Traditional Cambodian flavors served in a modern dining experience.');
-
-  const reserveBtnText = (hero?.cta_reserve && (language === 'KH' || !isKhmerText(hero.cta_reserve)))
-    ? hero.cta_reserve
-    : t('home.hero.reserveButton', undefined, 'Reserve a Table');
-
-  const menuBtnText = (hero?.cta_menu && (language === 'KH' || !isKhmerText(hero.cta_menu)))
-    ? hero.cta_menu
-    : t('home.hero.menuButton', undefined, 'Explore Menu');
 
   const rawMedia = hero?.backgroundVideo || hero?.backgroundImage;
   let mediaSrc = heroVideo;
@@ -201,29 +195,17 @@ function HeroSection({ hero }: { hero: any }) {
 
       <div className="home-hero-content relative z-10 text-center text-white max-w-[1260px] px-6">
         <h1 className="page-hero-title page-hero-title--home font-serif text-4xl sm:text-6xl md:text-7xl lg:text-[80px] leading-[1.38] mb-8 font-normal tracking-wide drop-shadow-sm">
-          {language === 'EN' ? (
+          {titleLine1 && (
             <>
-              <span className="block sm:inline">Experience</span>{' '}
-              <span className="block sm:inline">Authentic</span>
-              <br className="hidden sm:block" />
-              <span className="block sm:inline">Khmer</span>{' '}
-              <span className="block sm:inline">Cuisine</span>
-            </>
-          ) : (
-            <>
-              {titleLine1 && (
-                <>
-                  <span className="hero-title-top">
-                    {titleLine1}
-                  </span>
-                  <br />
-                </>
-              )}
-              <span className="text-white">
-                {titleHighlight}
+              <span className="hero-title-top">
+                {titleLine1}
               </span>
+              <br />
             </>
           )}
+          <span className="text-white">
+            {titleHighlight}
+          </span>
         </h1>
 
         <div className="home-hero-controls">

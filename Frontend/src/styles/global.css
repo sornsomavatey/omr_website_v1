@@ -90,25 +90,42 @@ h6 {
 }
 
 html[data-lang="zh"] {
-  --font-sans: "Noto Sans SC", sans-serif;
-  --font-serif: "Noto Sans SC", sans-serif;
-  --font-heading: "Noto Sans SC", sans-serif;
+  --font-sans: "Noto Sans SC", "Inter", sans-serif;
+  --font-serif: "Noto Sans SC", "Playfair Display", serif;
+  --font-heading: "Noto Sans SC", "Playfair Display", serif;
 }
 
 html[data-lang="ko"] {
-  --font-sans: "Noto Sans KR", sans-serif;
-  --font-serif: "Noto Sans KR", sans-serif;
-  --font-heading: "Noto Sans KR", sans-serif;
+  --font-sans: "Noto Sans KR", "Inter", sans-serif;
+  --font-serif: "Noto Sans KR", "Playfair Display", serif;
+  --font-heading: "Noto Sans KR", "Playfair Display", serif;
+}
+
+html[data-lang="en"],
+html[lang="en"] {
+  --font-sans: "Inter", sans-serif;
+  --font-serif: "Playfair Display", serif;
+  --font-heading: "Playfair Display", serif;
 }
 
 html[data-lang="zh"] body,
 html[data-lang="zh"] body :is(h1, h2, h3, h4, h5, h6, p, a, span, button, input, textarea, select, label, legend, small, strong, em, li, td, th) {
-  font-family: "Noto Sans SC", sans-serif !important;
+  font-family: "Noto Sans SC", "Inter", sans-serif !important;
 }
 
 html[data-lang="ko"] body,
 html[data-lang="ko"] body :is(h1, h2, h3, h4, h5, h6, p, a, span, button, input, textarea, select, label, legend, small, strong, em, li, td, th) {
-  font-family: "Noto Sans KR", sans-serif !important;
+  font-family: "Noto Sans KR", "Inter", sans-serif !important;
+}
+
+html[data-lang="en"] body,
+html[lang="en"] body {
+  font-family: "Playfair Display", serif !important;
+}
+
+html[data-lang="en"] body :is(h1, h2, h3, h4, h5, h6),
+html[lang="en"] body :is(h1, h2, h3, h4, h5, h6) {
+  font-family: "Playfair Display", serif !important;
 }
 
 html[data-lang="zh"] .dish-card-price,
@@ -295,6 +312,7 @@ html[data-lang="kh"] .page-hero-title--home {
 }
 
 @media (max-width: 640px) {
+
   input,
   select,
   textarea {
@@ -457,8 +475,7 @@ html[data-lang="kh"] body :is(h1, h2, h3, h4, h5, h6, .font-serif):not(.page-her
   }
 
   /* Keep page CTAs compact on mobile; navigation and icon controls are excluded. */
-  main :is(
-    .about-button,
+  main :is(.about-button,
     .custom-btn-primary,
     .custom-btn-secondary,
     .custom-btn-outline-green,
@@ -476,8 +493,7 @@ html[data-lang="kh"] body :is(h1, h2, h3, h4, h5, h6, .font-serif):not(.page-her
     .bk-btn-close,
     .tk-btn-menu-full,
     .tk-btn-directions,
-    .tk-btn-close
-  ),
+    .tk-btn-close),
   main form button[type="submit"] {
     width: min(100%, 220px) !important;
     max-width: 220px;

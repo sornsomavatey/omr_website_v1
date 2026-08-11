@@ -57,9 +57,7 @@ export async function loadDictionary(language: Language): Promise<Dictionary> {
       }
 
       const localizedDictionary = (await response.json()) as Dictionary;
-      const dictionary = language === 'EN'
-        ? localizedDictionary
-        : mergeDictionaries(await loadDictionary('EN'), localizedDictionary);
+      const dictionary = localizedDictionary;
       cache[language] = dictionary;
 
       return dictionary;

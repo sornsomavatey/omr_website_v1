@@ -248,7 +248,7 @@ function FaqSection({ faqData }: { faqData?: any }) {
         </h2>
 
         <div className="faq-list">
-          {faqs.map((faq, index) => {
+          {faqs.map((faq: any, index: number) => {
             const isExpanded = expandedIndex === index;
             return (
               <div
@@ -531,7 +531,11 @@ export default function ReservationPage() {
       });
   }, []);
 
-  useCmsRealtimeListener('reservations.json', setResData);
+  useCmsRealtimeListener((evt) => {
+    if (evt.filename === 'reservations.json') {
+      getReservationsData().then((res) => setResData(res));
+    }
+  });
 
   // Close dropdown on click outside
   useEffect(() => {

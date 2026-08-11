@@ -7,6 +7,7 @@ import { BranchCardSkeleton, Skeleton } from '@/components/ui/skeleton';
 import LocationCard, { type BranchData } from '@/components/LocationCard';
 import SectionHeader from '@/components/SectionHeader';
 import { useTranslation } from '@/hooks/useTranslation';
+import { useCmsRealtimeListener } from '@/lib/cmsRealtimeSync';
 import './index.css';
 
 // Asset imports
