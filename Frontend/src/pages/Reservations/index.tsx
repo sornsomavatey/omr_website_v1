@@ -181,10 +181,13 @@ function GuestInformationCard({ info }: { info: any[] }) {
 
 function ReservationHero({ hero, info }: { hero: any; info: any[] }) {
   const { t } = useTranslation();
+  const rawBg = hero?.heroImage || hero?.image || hero?.backgroundImage;
+  const heroBgSrc = (rawBg && imageMap[rawBg]) ? imageMap[rawBg] : (rawBg || imgHeroBg2);
+
   return (
     <section className="reservation-hero" aria-labelledby="reservation-title">
       <img
-        src={imgHeroBg2}
+        src={heroBgSrc}
         alt={t('reservationPage.hero.backgroundAlt', undefined, 'One More Restaurant dining room')}
         className="reservation-hero-image"
       />

@@ -899,7 +899,11 @@ Our event coordinator will contact you within 24 hours.`;
           </div>
 
           <div className="events-contact-card">
-            <h2 className="font-serif">{t('eventsPage.hero.contactInfo', undefined, 'Event Contact Info')}</h2>
+            <h2 className="events-contact-card-title font-serif">
+              {t('eventsPage.hero.contactInfo', undefined, 'Event Contact Info').split('\n').map((line: string, idx: number) => (
+                <span className="block" key={idx}>{line}</span>
+              ))}
+            </h2>
             <div className="events-contact-row">
               <span className="events-contact-icon"><Clock size={16} /></span>
               <div>

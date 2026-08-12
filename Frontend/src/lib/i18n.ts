@@ -40,8 +40,44 @@ function mergeDictionaries(base: Dictionary, localized: Dictionary): Dictionary 
   return merged;
 }
 
+export function clearDictionaryCache(language?: Language) {
+  if (language) {
+    delete cache[language];
+    delete pendingLoads[language];
+  } else {
+    (Object.keys(cache) as Language[]).forEach((k) => delete cache[k]);
+    (Object.keys(pendingLoads) as Language[]).forEach((k) => delete pendingLoads[k]);
+  }
+}
+
+function getLocalStorageLocaleData(language: Language): Dictionary | null {
+  if (typeof window === 'undefined') return null;
+  const langLower = language.toLowerCase();
+  const keysToTry = [
+    `omr_cms_data_locales/${langLower}.json`,
+    `omr_cms_data_${langLower}.json`,
+    `omr_cms_data_locales/${language}.json`,
+  ];
+  for (const key of keysToTry) {
+    try {
+      const raw = localStorage.getItem(key);
+      if (raw) {
+        return JSON.parse(raw);
+      }
+    } catch {
+      // Ignore JSON parse errors
+    }
+  }
+  return null;
+}
+
 export async function loadDictionary(language: Language): Promise<Dictionary> {
+  const localOverride = getLocalStorageLocaleData(language);
+
   if (cache[language]) {
+    if (localOverride) {
+      return mergeDictionaries(cache[language]!, localOverride);
+    }
     return cache[language]!;
   }
 
@@ -57,7 +93,7 @@ export async function loadDictionary(language: Language): Promise<Dictionary> {
       }
 
       const localizedDictionary = (await response.json()) as Dictionary;
-      const dictionary = localizedDictionary;
+      const dictionary = localOverride ? mergeDictionaries(localizedDictionary, localOverride) : localizedDictionary;
       cache[language] = dictionary;
 
       return dictionary;
@@ -69,6 +105,23 @@ export async function loadDictionary(language: Language): Promise<Dictionary> {
   pendingLoads[language] = load;
 
   return load;
+}
+
+if (typeof window !== 'undefined') {
+  const handleCmsUpdate = (e: any) => {
+    const fn = e?.detail?.filename || e?.filename || '';
+    if (fn.includes('locales/') || fn.includes('.json')) {
+      clearDictionaryCache();
+      window.dispatchEvent(new CustomEvent('i18n_dictionary_updated', { detail: { filename: fn } }));
+    }
+  };
+  window.addEventListener('cms_data_updated', handleCmsUpdate);
+  window.addEventListener('storage', (e: StorageEvent) => {
+    if (e.key && e.key.includes('omr_cms_data_')) {
+      clearDictionaryCache();
+      window.dispatchEvent(new CustomEvent('i18n_dictionary_updated'));
+    }
+  });
 }
 
 function getNestedValue(source: unknown, key: string): unknown {

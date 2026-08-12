@@ -62,9 +62,10 @@
 }
 
 .events-hero-inner {
-  width: min(1240px, calc(100% - 80px));
-  margin: auto;
-  padding: 148px 0 96px;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 148px 64px 96px;
   display: grid;
   grid-template-columns: minmax(0, 1.15fr) 380px;
   align-items: center;
@@ -170,11 +171,11 @@
 }
 
 .events-contact-card h2 {
-  margin: 0 0 24px;
+  margin: 0 0 18px;
   font-family: var(--font-serif);
-  font-size: 26px;
-  font-weight: 400;
-  line-height: 1.2;
+  font-size: 19px;
+  font-weight: 500;
+  line-height: 1.35;
 }
 
 .events-contact-row {
@@ -182,7 +183,7 @@
   grid-template-columns: 38px 1fr;
   align-items: center;
   gap: 12px;
-  margin-top: 17px
+  margin-top: 16px
 }
 
 .events-contact-icon {
@@ -267,7 +268,8 @@
 .events-packages-section {
   background: #fff;
   padding: 88px 24px 96px;
-  max-width: 1240px;
+  width: 100%;
+  max-width: 1440px;
   margin: 0 auto;
 }
 
@@ -279,6 +281,7 @@
 
 .events-package-grid {
   width: 100%;
+  max-width: 1440px;
   margin: 8px auto 0;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -291,8 +294,10 @@
 }
 
 .events-spaces-list {
-  width: min(1050px, calc(100% - 64px));
-  margin: auto;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 64px;
   display: grid;
   gap: 26px
 }
@@ -447,8 +452,10 @@
 }
 
 .events-service-grid {
-  width: min(1050px, calc(100% - 64px));
-  margin: auto;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 64px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px
@@ -517,9 +524,11 @@
 }
 
 .events-gallery-grid {
-  width: min(1050px, calc(100% - 64px));
+  width: 100%;
+  max-width: 1440px;
   height: 620px;
-  margin: auto;
+  margin: 0 auto;
+  padding: 0 64px;
   display: grid;
   grid-template-columns: 1.6fr 1fr 1fr;
   grid-template-rows: 1fr 1fr;
@@ -612,8 +621,10 @@
 }
 
 .events-testimonial-grid {
-  width: min(1180px, calc(100% - 64px));
-  margin: auto;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 64px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 22px
@@ -712,13 +723,14 @@
 }
 
 .events-inquiry-section {
-  width: min(1200px, calc(100% - 64px));
-  margin: auto;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 90px 64px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 32px;
   align-items: stretch;
-  padding: 90px 0;
 }
 
 .events-inquiry-visual {
@@ -1023,8 +1035,10 @@
 }
 
 .events-faq-list {
-  width: min(1050px, calc(100% - 64px));
-  margin: auto
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 64px;
 }
 
 .events-faq-item {
@@ -1405,8 +1419,10 @@
   }
 
   .events-hero-inner {
-    width: min(1280px, calc(100% - 96px));
-    grid-template-columns: minmax(0, 1fr) 390px;
+    width: 100%;
+    max-width: 1440px;
+    padding: 148px 64px 96px;
+    grid-template-columns: minmax(0, 1fr) 380px;
   }
 
   .events-hero-copy h1 {
@@ -1424,7 +1440,7 @@
   }
 
   .events-contact-card h2 {
-    font-size: 27px;
+    font-size: 19px;
   }
 }
 
@@ -1480,7 +1496,8 @@
 .events-service-grid,
 .events-gallery-grid,
 .events-faq-list {
-  width: min(1120px, calc(100% - 80px));
+  width: 100%;
+  max-width: 1440px;
 }
 
 .events-package-grid {
@@ -1564,7 +1581,8 @@
 }
 
 .events-inquiry-section {
-  width: min(1200px, calc(100% - 72px));
+  width: 100%;
+  max-width: 1440px;
 }
 
 .events-inquiry-visual p {
@@ -1928,8 +1946,9 @@ html[data-lang="kh"] .events-hero-copy p {
 }
 
 html[data-lang="kh"] .events-contact-card h2 {
-  font-size: clamp(18px, 1.8vw, 22px) !important;
-  line-height: 1.3 !important;
+  font-size: 19px !important;
+  line-height: 1.35 !important;
+  margin-bottom: 18px !important;
 }
 
 /* ── INQUIRY LOADING & MODAL STYLES ───────────────────── */

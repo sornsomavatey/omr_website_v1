@@ -23,17 +23,27 @@ export function useTranslation() {
   useEffect(() => {
     let mounted = true;
 
-    loadDictionary(language)
-      .then((loadedDictionary) => {
-        if (mounted) {
-          setDictionary(loadedDictionary);
-        }
-      })
-      .catch(() => {
-        if (mounted) {
-          setDictionary({});
-        }
-      });
+    const fetchDict = () => {
+      loadDictionary(language)
+        .then((loadedDictionary) => {
+          if (mounted) {
+            setDictionary(loadedDictionary);
+          }
+        })
+        .catch(() => {
+          if (mounted) {
+            setDictionary({});
+          }
+        });
+    };
+
+    fetchDict();
+
+    const handleDictUpdated = () => {
+      fetchDict();
+    };
+
+    window.addEventListener('i18n_dictionary_updated', handleDictUpdated);
 
     const htmlLanguages = {
       KH: 'km',
@@ -47,6 +57,7 @@ export function useTranslation() {
 
     return () => {
       mounted = false;
+      window.removeEventListener('i18n_dictionary_updated', handleDictUpdated);
     };
   }, [language]);
 
