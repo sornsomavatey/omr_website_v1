@@ -78,8 +78,8 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
       const res = await uploadCMSImage(file);
       if (res.success && res.url) {
         onChange(res.url);
-        setStatus('Uploaded successfully!');
-        setTimeout(() => setStatus(null), 3000);
+        setStatus(res.message || 'Uploaded successfully!');
+        setTimeout(() => setStatus(null), 4000);
       } else {
         setStatus(`Upload failed: ${res.message}`);
       }
@@ -87,6 +87,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
       setStatus(`Error: ${err.message || 'Failed to upload'}`);
     } finally {
       setLoading(false);
+      e.target.value = '';
     }
   };
 

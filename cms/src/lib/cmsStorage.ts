@@ -141,10 +141,101 @@ export async function savePageJson(filename: string, content: any): Promise<{ su
 }
 
 /**
+ * Compress an image file to WebP format using HTML5 Canvas.
+ * Keeps SVGs and non-image files (e.g. videos) as-is.
+ */
+export async function compressImageToWebP(file: File, maxDimension = 1920, quality = 0.85): Promise<File> {
+  // If not an image or is SVG, return original file
+  if (!file.type.startsWith('image/') || file.type === 'image/svg+xml') {
+    return file;
+  }
+
+  return new Promise((resolve) => {
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+
+    img.onload = () => {
+      URL.revokeObjectURL(url);
+
+      let width = img.width;
+      let height = img.height;
+
+      // Scale down if larger than maxDimension while preserving aspect ratio
+      if (width > maxDimension || height > maxDimension) {
+        if (width > height) {
+          height = Math.round((height * maxDimension) / width);
+          width = maxDimension;
+        } else {
+          width = Math.round((width * maxDimension) / height);
+          height = maxDimension;
+        }
+      }
+
+      const canvas = document.createElement('canvas');
+      canvas.width = width;
+      canvas.height = height;
+
+      const ctx = canvas.getContext('2d');
+      if (!ctx) {
+        resolve(file);
+        return;
+      }
+
+      ctx.drawImage(img, 0, 0, width, height);
+
+      canvas.toBlob(
+        (blob) => {
+          if (!blob) {
+            resolve(file);
+            return;
+          }
+
+          // Generate new filename with .webp extension
+          const originalName = file.name;
+          const baseName = originalName.substring(0, originalName.lastIndexOf('.')) || originalName;
+          const webpFileName = `${baseName}.webp`;
+
+          const webpFile = new File([blob], webpFileName, {
+            type: 'image/webp',
+            lastModified: Date.now(),
+          });
+
+          resolve(webpFile);
+        },
+        'image/webp',
+        quality
+      );
+    };
+
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      resolve(file);
+    };
+
+    img.src = url;
+  });
+}
+
+/**
  * Upload an image file to Frontend/public/uploads/ or GitHub repo
  */
 export async function uploadCMSImage(file: File): Promise<{ success: boolean; url: string; message: string }> {
-  const cleanName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
+  // Automatically compress images to WebP
+  let processedFile = file;
+  let compressedNotice = '';
+  if (file.type.startsWith('image/') && file.type !== 'image/svg+xml') {
+    try {
+      const originalSize = file.size;
+      processedFile = await compressImageToWebP(file);
+      const newSize = processedFile.size;
+      const savings = Math.max(0, Math.round(((originalSize - newSize) / originalSize) * 100));
+      compressedNotice = ` (Compressed to WebP: ${savings}% smaller)`;
+    } catch (e) {
+      console.warn('WebP compression failed, uploading original file:', e);
+    }
+  }
+
+  const cleanName = processedFile.name.replace(/[^a-zA-Z0-9.-]/g, '_');
   const timestamp = Date.now();
   const fileName = `${timestamp}-${cleanName}`;
 
@@ -153,7 +244,7 @@ export async function uploadCMSImage(file: File): Promise<{ success: boolean; ur
     const base64Promise = new Promise<string>((resolve, reject) => {
       reader.onload = () => resolve(reader.result as string);
       reader.onerror = reject;
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(processedFile);
     });
     const base64Data = await base64Promise;
 
@@ -166,7 +257,7 @@ export async function uploadCMSImage(file: File): Promise<{ success: boolean; ur
       return {
         success: true,
         url: res.data.url,
-        message: 'Image uploaded successfully to Frontend/public/uploads/',
+        message: `Image uploaded successfully to Frontend/public/uploads/${compressedNotice}`,
       };
     }
   } catch (err: any) {
@@ -180,7 +271,7 @@ export async function uploadCMSImage(file: File): Promise<{ success: boolean; ur
       const filePath = `Frontend/public/uploads/${fileName}`;
       const url = `https://api.github.com/repos/${config.githubOwner}/${config.githubRepo}/contents/${filePath}`;
 
-      const arrayBuffer = await file.arrayBuffer();
+      const arrayBuffer = await processedFile.arrayBuffer();
       const bytes = new Uint8Array(arrayBuffer);
       let binary = '';
       for (let i = 0; i < bytes.byteLength; i++) {
@@ -206,7 +297,7 @@ export async function uploadCMSImage(file: File): Promise<{ success: boolean; ur
       return {
         success: true,
         url: `/uploads/${fileName}`,
-        message: 'Image committed to GitHub /uploads/',
+        message: `Image committed to GitHub /uploads/${compressedNotice}`,
       };
     } catch (ghErr: any) {
       console.error('GitHub Image upload error:', ghErr);
@@ -216,13 +307,13 @@ export async function uploadCMSImage(file: File): Promise<{ success: boolean; ur
   const dataUrl = await new Promise<string>((resolve) => {
     const r = new FileReader();
     r.onload = () => resolve(r.result as string);
-    r.readAsDataURL(file);
+    r.readAsDataURL(processedFile);
   });
 
   return {
     success: true,
     url: dataUrl,
-    message: 'Loaded image preview (Data URL)',
+    message: `Loaded image preview (Data URL)${compressedNotice}`,
   };
 }
 

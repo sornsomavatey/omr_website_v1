@@ -157,7 +157,7 @@ function cmsDevServerPlugin(): Plugin {
                 fs.mkdirSync(uploadsDir, { recursive: true });
               }
 
-              const base64Content = fileData.replace(/^data:image\/\w+;base64,/, '');
+              const base64Content = fileData.replace(/^data:[^;]+;base64,/, '');
               const buffer = Buffer.from(base64Content, 'base64');
               const targetPath = path.join(uploadsDir, safeName);
               fs.writeFileSync(targetPath, buffer);
