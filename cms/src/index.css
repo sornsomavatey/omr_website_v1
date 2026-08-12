@@ -7,14 +7,10 @@
 }
 
 @layer base {
-  *, ::before, ::after {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
-  }
-
   body {
     background-color: #f4f7f2;
     color: #1c2819;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
   }
 }
 

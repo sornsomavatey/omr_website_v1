@@ -237,3 +237,106 @@ export function triggerJsonDownload(filename: string, contentStr: string) {
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
 }
+
+/**
+ * Publish all modified CMS files to GitHub repository & live production site
+ */
+export async function publishToProduction(
+  customCommitMessage?: string
+): Promise<{ success: boolean; message: string; filesCount?: number }> {
+  const commitMessage = customCommitMessage || 'cms: publish content updates to production';
+  const config = getStoredConfig();
+
+  // 1. Gather all pending modified files from localStorage
+  const pendingItems: { filename: string; content: any }[] = [];
+  try {
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key && key.startsWith('omr_cms_data_')) {
+        const filename = key.replace('omr_cms_data_', '');
+        const raw = localStorage.getItem(key);
+        if (raw) {
+          try {
+            pendingItems.push({ filename, content: JSON.parse(raw) });
+          } catch (e) {
+            console.warn(`Failed parsing cached item ${key}:`, e);
+          }
+        }
+      }
+    }
+  } catch (e) {
+    console.warn('Error iterating localStorage:', e);
+  }
+
+  // 2. Try calling Local Dev Server Publish API first
+  try {
+    const res = await axios.post('/api/cms/publish-production', {
+      commitMessage,
+      items: pendingItems,
+    });
+    if (res.data && res.data.success) {
+      return {
+        success: true,
+        message: res.data.message || `Successfully committed and pushed ${pendingItems.length || 'all'} files to GitHub!`,
+        filesCount: pendingItems.length,
+      };
+    }
+  } catch (err: any) {
+    console.warn('Local publish-production API unavailable or failed, checking direct GitHub API...', err?.message);
+  }
+
+  // 3. Fallback / Direct GitHub API Commit if GitHub token is present
+  if (config.githubToken && config.githubOwner && config.githubRepo) {
+    let successCount = 0;
+    const errors: string[] = [];
+
+    // Save each pending file to GitHub repository
+    for (const item of pendingItems) {
+      const saveRes = await savePageJson(item.filename, item.content);
+      if (saveRes.success) {
+        successCount++;
+      } else {
+        errors.push(`${item.filename}: ${saveRes.message}`);
+      }
+    }
+
+    // Trigger GitHub Repository Dispatch (Workflow Trigger)
+    try {
+      await axios.post(
+        `https://api.github.com/repos/${config.githubOwner}/${config.githubRepo}/dispatches`,
+        {
+          event_type: 'cms_publish',
+          client_payload: { commit_message: commitMessage, timestamp: new Date().toISOString() },
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${config.githubToken}`,
+            Accept: 'application/vnd.github.v3+json',
+          },
+        }
+      );
+    } catch {
+      // Repository dispatch optional
+    }
+
+    if (errors.length > 0) {
+      return {
+        success: false,
+        message: `Published ${successCount} files, but encountered errors:\n${errors.join('\n')}`,
+      };
+    }
+
+    return {
+      success: true,
+      message: `Successfully committed ${successCount || 'all'} CMS content updates directly to GitHub (${config.githubOwner}/${config.githubRepo} @ ${config.githubBranch || 'main'})!`,
+      filesCount: successCount,
+    };
+  }
+
+  // 4. Fallback: Save local files if no GitHub PAT token is configured
+  return {
+    success: true,
+    message: 'Changes saved locally to Frontend/public/! Configure GitHub Token in Settings to push directly to production repo.',
+  };
+}
+

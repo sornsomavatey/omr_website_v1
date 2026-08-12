@@ -26,8 +26,10 @@ import {
   GitBranch,
   CheckCircle,
   RotateCcw,
+  UploadCloud,
 } from 'lucide-react';
 import { LivePreviewModal } from './LivePreviewModal';
+import { PublishConfirmModal } from './PublishConfirmModal';
 import { CmsLanguageSwitcher } from './CmsLanguageSwitcher';
 import { getCMSConfig, saveCMSConfig } from '../lib/cmsStorage';
 import omrLogo from '../assets/one-more-logo-green.webp';
@@ -35,6 +37,7 @@ import omrLogo from '../assets/one-more-logo-green.webp';
 export const AdminLayout: React.FC = () => {
   const location = useLocation();
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
+  const [isPublishOpen, setIsPublishOpen] = useState(false);
   const [previewPath, setPreviewPath] = useState('/');
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isSidebarVisible, setIsSidebarVisible] = useState(true);
@@ -84,7 +87,6 @@ export const AdminLayout: React.FC = () => {
       group: 'OPERATIONS',
       items: [
         { label: 'Reservation Management', path: '/reservations', icon: Calendar, preview: '/reservations' },
-        { label: 'Branches', path: '/branches', icon: MapPin, preview: '/branches' },
       ],
     },
     {
@@ -243,6 +245,16 @@ export const AdminLayout: React.FC = () => {
           {/* Top Bar Actions & Profile */}
           <div className="flex items-center gap-3">
 
+            {/* Publish to Production Button */}
+            <button
+              onClick={() => setIsPublishOpen(true)}
+              className="hidden sm:flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-[#5b8045] hover:bg-[#4a6b37] text-white text-xs font-bold shadow-md shadow-[#5b8045]/20 transition cursor-pointer"
+              title="Publish Changes to Production (GitHub)"
+            >
+              <UploadCloud className="w-3.5 h-3.5" />
+              <span>Publish to Production</span>
+            </button>
+
             {/* View Website Button */}
             <button
               onClick={openPreview}
@@ -260,7 +272,7 @@ export const AdminLayout: React.FC = () => {
         </header>
 
         {/* Main Content View Container */}
-        <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 bg-white">
+        <main className="flex-1 overflow-y-auto bg-[#f8faf6] p-4 sm:p-6 md:p-8">
           <Outlet />
         </main>
       </div>
@@ -270,6 +282,12 @@ export const AdminLayout: React.FC = () => {
         isOpen={isPreviewOpen}
         onClose={() => setIsPreviewOpen(false)}
         pagePath={previewPath}
+      />
+
+      {/* Publish to Production Modal */}
+      <PublishConfirmModal
+        isOpen={isPublishOpen}
+        onClose={() => setIsPublishOpen(false)}
       />
 
       {/* Settings Modal */}

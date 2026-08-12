@@ -7,6 +7,7 @@ import { useCmsLanguage } from '../../context/CmsLanguageContext';
 import { CmsLanguageDropdown } from '../../components/CmsLanguageDropdown';
 import { CmsBackToPagesLink, CmsPageSelectDropdown } from '../../components/CmsPageSwitcher';
 import { CmsSaveConfirmModal } from '../../components/CmsSaveConfirmModal';
+import { CmsSectionNav, CmsSectionItem } from '../../components/CmsSectionNav';
 import './index.css';
 
 export const BranchesEditor: React.FC = () => {
@@ -19,6 +20,14 @@ export const BranchesEditor: React.FC = () => {
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [showSaveConfirmModal, setShowSaveConfirmModal] = useState(false);
+
+  const [activeSection, setActiveSection] = useState<string>('all');
+  const [viewMode, setViewMode] = useState<'tab' | 'scroll'>('tab');
+
+  const sections: CmsSectionItem[] = [
+    { id: 'boeung-kak', label: 'Boeung Kak Branch', icon: <MapPin className="w-3.5 h-3.5 text-[#5b8045]" /> },
+    { id: 'toul-kork', label: 'Toul Kork Branch', icon: <MapPin className="w-3.5 h-3.5 text-[#5b8045]" /> },
+  ];
 
   useEffect(() => {
     setLoading(true);
@@ -147,9 +156,24 @@ export const BranchesEditor: React.FC = () => {
         </div>
       )}
 
+      {/* Section Quick Jump & Focus Tab Bar */}
+      <CmsSectionNav
+        sections={sections}
+        activeSection={activeSection}
+        onSelectSection={setActiveSection}
+        viewMode={viewMode}
+        onToggleViewMode={setViewMode}
+      />
+
       {/* Branch Cards */}
       <div className="space-y-6">
-        {filteredBranches.map((branch: any, idx: number) => {
+        {filteredBranches
+          .filter((branch: any, idx: number) => {
+            const branchKey = branch.id === 'boeungKak' || branch.id === 'boeung-kak' || idx === 0 ? 'boeung-kak' : 'toul-kork';
+            if (activeSection === 'all') return true;
+            return activeSection === branchKey;
+          })
+          .map((branch: any, idx: number) => {
           const originalIdx = rawBranches.findIndex((b: any) => b === branch);
 
           return (
