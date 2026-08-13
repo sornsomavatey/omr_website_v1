@@ -4,9 +4,8 @@ import { ArrowLeft, ChevronDown } from 'lucide-react';
 
 export const CMS_PAGES_LIST = [
   { label: 'Home', path: '/home' },
-  { label: 'Menu', path: '/menu' },
-  { label: 'Reservations Content', path: '/reservations-editor' },
-  { label: 'Reservations Bookings', path: '/reservations' },
+  { label: 'Menu (Disabled)', path: '/menu', disabled: true },
+  { label: 'Reservations', path: '/reservations-editor' },
   { label: 'Branches (All)', path: '/branches' },
   { label: '  - Boeung Kak Branch', path: '/branches?branch=boeung-kak' },
   { label: '  - Toul Kork Branch', path: '/branches?branch=toul-kork' },
@@ -41,22 +40,34 @@ export const CmsBackButton: React.FC<{ label?: string }> = ({ label }) => {
   );
 };
 
-export const CmsPageSelectDropdown: React.FC = () => {
+interface Props {
+  className?: string;
+  size?: 'sm' | 'md';
+}
+
+export const CmsPageSelectDropdown: React.FC<Props> = ({ className = '', size = 'md' }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const currentPath = location.pathname;
+  const currentPath = location.pathname + location.search;
 
   return (
-    <div className="relative inline-flex items-center">
+    <div className={`relative inline-flex items-center ${className}`}>
       <select
         value={currentPath}
         onChange={(e) => navigate(e.target.value)}
-        className="py-1.5 pl-3 pr-7 rounded-xl bg-white border border-[#e2e8df] text-xs font-bold text-gray-800 shadow-2xs hover:border-[#5b8045] focus:outline-none focus:border-[#5b8045] cursor-pointer transition appearance-none"
+        className={`w-32 h-9 rounded-xl bg-white border border-[#e2e8df] text-xs font-bold text-gray-800 shadow-2xs hover:border-[#5b8045] focus:outline-none focus:border-[#5b8045] cursor-pointer transition appearance-none ${
+          size === 'sm' ? 'py-1 pl-2.5 pr-6 text-[11px]' : 'py-2 pl-3 pr-7 text-xs'
+        }`}
         title="Switch to edit another page"
       >
         {CMS_PAGES_LIST.map((page) => (
-          <option key={page.path} value={page.path} className="font-sans py-1">
+          <option
+            key={page.path}
+            value={page.path}
+            disabled={(page as any).disabled}
+            className={(page as any).disabled ? 'text-gray-400 font-sans py-1' : 'font-sans py-1'}
+          >
             {page.label}
           </option>
         ))}
@@ -66,7 +77,6 @@ export const CmsPageSelectDropdown: React.FC = () => {
   );
 };
 
-export const CmsPageSwitcher: React.FC = () => {
-  return <CmsPageSelectDropdown />;
+export const CmsPageSwitcher: React.FC<Props> = (props) => {
+  return <CmsPageSelectDropdown {...props} />;
 };
-

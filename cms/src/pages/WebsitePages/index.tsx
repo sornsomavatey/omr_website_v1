@@ -388,14 +388,7 @@ export const WebsitePages: React.FC = () => {
                         <span className="text-black shrink-0">
                           {getPageIcon(page.id)}
                         </span>
-                        <div className="flex flex-col">
-                          <span className="text-[#1c2819] font-bold">{page.name}</span>
-                          {page.metricsText && (
-                            <span className="text-[11px] font-normal text-gray-500 font-mono">
-                              {page.metricsText}
-                            </span>
-                          )}
-                        </div>
+                        <span className="text-[#1c2819] font-bold">{page.name}</span>
                       </div>
                     </td>
 
@@ -432,23 +425,38 @@ export const WebsitePages: React.FC = () => {
                     {/* Action Buttons */}
                     <td className="py-4 px-6 text-right">
                       <div className="flex items-center justify-end gap-2">
+                        {/* Icon-Only Preview Button */}
                         <button
-                          onClick={() => handlePreview(page.previewPath)}
-                          className="px-3 py-1.5 rounded-lg border border-gray-200 text-gray-600 hover:text-gray-900 hover:bg-gray-50 font-semibold flex items-center gap-1.5 transition cursor-pointer"
+                          onClick={() => page.id !== 'menu' && handlePreview(page.previewPath)}
+                          disabled={page.id === 'menu'}
+                          className={`w-9 h-9 rounded-xl border flex items-center justify-center transition shrink-0 ${
+                            page.id === 'menu'
+                              ? 'border-gray-200 bg-gray-100 text-gray-400 cursor-not-allowed opacity-60'
+                              : 'border-gray-200 text-gray-600 hover:text-[#5b8045] hover:bg-[#f0f5ed] hover:border-[#5b8045]/30 cursor-pointer shadow-2xs'
+                          }`}
+                          title={page.id === 'menu' ? 'Menu Preview Disabled' : `Preview ${page.name}`}
                         >
-                          <Eye className="w-3.5 h-3.5" />
-                          <span>Preview</span>
+                          <Eye className="w-4 h-4" />
                         </button>
 
-                        {page.id === 'branches' ? (
+                        {/* Icon-Only Edit Button */}
+                        {page.id === 'menu' ? (
+                          <button
+                            disabled
+                            className="w-9 h-9 rounded-xl border border-gray-200 bg-gray-100 text-gray-400 flex items-center justify-center cursor-not-allowed opacity-60 shrink-0"
+                            title="Menu Editor Disabled"
+                          >
+                            <Edit className="w-4 h-4" />
+                          </button>
+                        ) : page.id === 'branches' ? (
                           <div className="relative inline-block text-left">
                             <button
                               onClick={() => setShowBranchesDropdown(!showBranchesDropdown)}
-                              className="px-3 py-1.5 rounded-lg border border-gray-200 text-gray-700 hover:text-[#5b8045] hover:bg-[#f0f5ed] font-semibold flex items-center gap-1.5 transition cursor-pointer"
+                              className="w-9 h-9 rounded-xl border border-gray-200 text-gray-700 hover:text-[#5b8045] hover:bg-[#f0f5ed] hover:border-[#5b8045]/30 flex items-center justify-center transition cursor-pointer shrink-0 shadow-2xs relative"
+                              title="Edit Branches Options"
                             >
-                              <Edit className="w-3.5 h-3.5" />
-                              <span>Edit</span>
-                              <ChevronDown className="w-3 h-3 text-gray-500" />
+                              <Edit className="w-4 h-4 text-gray-700" />
+                              <ChevronDown className="w-3 h-3 text-[#5b8045] absolute -bottom-0.5 -right-0.5 bg-white rounded-full border border-gray-200" />
                             </button>
 
                             {showBranchesDropdown && (
@@ -479,16 +487,22 @@ export const WebsitePages: React.FC = () => {
                         ) : (
                           <Link
                             to={page.editPath}
-                            className="px-3 py-1.5 rounded-lg border border-gray-200 text-gray-700 hover:text-[#5b8045] hover:bg-[#f0f5ed] font-semibold flex items-center gap-1.5 transition"
+                            className="w-9 h-9 rounded-xl border border-gray-200 text-gray-700 hover:text-[#5b8045] hover:bg-[#f0f5ed] hover:border-[#5b8045]/30 flex items-center justify-center transition cursor-pointer shrink-0 shadow-2xs"
+                            title={`Edit ${page.name}`}
                           >
-                            <Edit className="w-3.5 h-3.5" />
-                            <span>Edit</span>
+                            <Edit className="w-4 h-4" />
                           </Link>
                         )}
 
+                        {/* Publish / Unpublish Button */}
                         <button
-                          onClick={() => toggleStatus(page.id)}
-                          className="px-3 py-1.5 rounded-lg text-white font-bold transition cursor-pointer bg-[#5b8045] hover:bg-[#4a6b37]"
+                          onClick={() => page.id !== 'menu' && toggleStatus(page.id)}
+                          disabled={page.id === 'menu'}
+                          className={`h-9 px-3.5 rounded-xl font-bold text-xs transition shrink-0 ${
+                            page.id === 'menu'
+                              ? 'border border-gray-200 bg-gray-100 text-gray-400 cursor-not-allowed opacity-60'
+                              : 'text-white cursor-pointer bg-[#5b8045] hover:bg-[#4a6b37] shadow-xs'
+                          }`}
                         >
                           {page.status === 'Published' ? 'Unpublish' : 'Publish'}
                         </button>
@@ -520,14 +534,7 @@ export const WebsitePages: React.FC = () => {
                                   <span className="p-1 rounded-md bg-[#eaf0e7] text-[#5b8045] shrink-0">
                                     <MapPin className="w-3.5 h-3.5" />
                                   </span>
-                                  <div className="flex flex-col">
-                                    <span className="font-bold text-[#1c2819]">{subPage.name}</span>
-                                    {subPage.metricsText && (
-                                      <span className="text-[10px] text-gray-400 font-mono font-normal">
-                                        {subPage.metricsText}
-                                      </span>
-                                    )}
-                                  </div>
+                                  <span className="font-bold text-[#1c2819]">{subPage.name}</span>
                                 </div>
                               </div>
                             </td>
@@ -547,21 +554,21 @@ export const WebsitePages: React.FC = () => {
                               <div className="flex items-center justify-end gap-2">
                                 <button
                                   onClick={() => handlePreview(subPage.previewPath)}
-                                  className="px-3 py-1.5 rounded-lg border border-gray-200 text-gray-600 hover:text-gray-900 hover:bg-gray-50 font-semibold flex items-center gap-1.5 transition cursor-pointer text-xs"
+                                  className="w-9 h-9 rounded-xl border border-gray-200 text-gray-600 hover:text-[#5b8045] hover:bg-[#f0f5ed] hover:border-[#5b8045]/30 flex items-center justify-center transition cursor-pointer shrink-0 shadow-2xs"
+                                  title={`Preview ${subPage.name}`}
                                 >
-                                  <Eye className="w-3.5 h-3.5" />
-                                  <span>Preview</span>
+                                  <Eye className="w-4 h-4" />
                                 </button>
                                 <Link
                                   to={subPage.editPath}
-                                  className="px-3 py-1.5 rounded-lg border border-gray-200 text-gray-700 hover:text-[#5b8045] hover:bg-[#f0f5ed] font-semibold flex items-center gap-1.5 transition text-xs"
+                                  className="w-9 h-9 rounded-xl border border-gray-200 text-gray-700 hover:text-[#5b8045] hover:bg-[#f0f5ed] hover:border-[#5b8045]/30 flex items-center justify-center transition cursor-pointer shrink-0 shadow-2xs"
+                                  title={`Edit ${subPage.name}`}
                                 >
-                                  <Edit className="w-3.5 h-3.5" />
-                                  <span>Edit</span>
+                                  <Edit className="w-4 h-4" />
                                 </Link>
                                 <button
                                   onClick={() => toggleStatus('branches')}
-                                  className="px-3 py-1.5 rounded-lg text-white font-bold transition cursor-pointer bg-[#5b8045] hover:bg-[#4a6b37] text-xs"
+                                  className="h-9 px-3.5 rounded-xl text-white font-bold transition cursor-pointer bg-[#5b8045] hover:bg-[#4a6b37] text-xs shrink-0 shadow-xs"
                                 >
                                   Unpublish
                                 </button>

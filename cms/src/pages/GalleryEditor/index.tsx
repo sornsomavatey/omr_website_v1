@@ -1,28 +1,49 @@
 import React, { useEffect, useState } from 'react';
-import { Save, Plus, Trash2, CheckCircle, Loader2, Image as ImageIcon } from 'lucide-react';
+import { Save, Plus, Trash2, CheckCircle, Loader2, Image as ImageIcon, Eye, Undo2, Redo2 } from 'lucide-react';
 import { loadPageJson, savePageJson } from '../../lib/cmsStorage';
 import { ImageUploader } from '../../components/ImageUploader';
 import { useCmsLanguage } from '../../context/CmsLanguageContext';
 import { CmsLanguageDropdown } from '../../components/CmsLanguageDropdown';
 import { CmsBackToPagesLink, CmsPageSelectDropdown } from '../../components/CmsPageSwitcher';
 import { CmsSaveConfirmModal } from '../../components/CmsSaveConfirmModal';
+import { LivePreviewModal } from '../../components/LivePreviewModal';
+import { useCmsHistory } from '../../lib/useCmsHistory';
 import './index.css';
 
 export const GalleryEditor: React.FC = () => {
   const { language, currentLangInfo } = useCmsLanguage();
-  const [data, setData] = useState<any>(null);
+  const {
+    data,
+    setData,
+    setInitialData,
+    updateData,
+    undo,
+    redo,
+    canUndo,
+    canRedo,
+  } = useCmsHistory<any>('gallery.json');
+
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [showSaveConfirmModal, setShowSaveConfirmModal] = useState(false);
+  const [isPreviewOpen, setIsPreviewOpen] = useState(false);
+
+  const handleUndo = () => {
+    undo();
+  };
+
+  const handleRedo = () => {
+    redo();
+  };
 
   useEffect(() => {
     setLoading(true);
     loadPageJson('gallery.json')
-      .then((res) => setData(res))
+      .then((res) => setInitialData(res))
       .catch((err) => console.error('Failed to load gallery.json:', err))
       .finally(() => setLoading(false));
-  }, [language]);
+  }, [language, setInitialData]);
 
   const handleSave = async () => {
     if (!data) return;
@@ -45,19 +66,25 @@ export const GalleryEditor: React.FC = () => {
     };
 
     const items = Array.isArray(data) ? [...data, newPhoto] : [...(data.items || []), newPhoto];
-    setData(Array.isArray(data) ? items : { ...data, items });
+    const updated = Array.isArray(data) ? items : { ...data, items };
+    updateData(updated);
+    savePageJson('gallery.json', updated).catch(() => {});
   };
 
   const handleRemovePhoto = (index: number) => {
     const items = Array.isArray(data) ? [...data] : [...(data.items || [])];
     items.splice(index, 1);
-    setData(Array.isArray(data) ? items : { ...data, items });
+    const updated = Array.isArray(data) ? items : { ...data, items };
+    updateData(updated);
+    savePageJson('gallery.json', updated).catch(() => {});
   };
 
   const handleItemChange = (index: number, field: string, val: any) => {
     const items = Array.isArray(data) ? [...data] : [...(data.items || [])];
     items[index] = { ...items[index], [field]: val };
-    setData(Array.isArray(data) ? items : { ...data, items });
+    const updated = Array.isArray(data) ? items : { ...data, items };
+    updateData(updated);
+    savePageJson('gallery.json', updated).catch(() => {});
   };
 
   if (loading) {
@@ -94,7 +121,7 @@ export const GalleryEditor: React.FC = () => {
           <button
             onClick={() => setShowSaveConfirmModal(true)}
             disabled={saving}
-            className="flex items-center gap-2 bg-[#c8a962] hover:bg-[#b39a62] text-black px-4 py-2 rounded-xl text-xs font-bold transition shadow-lg shadow-[#c8a962]/10 disabled:opacity-50 shrink-0"
+            className="flex items-center gap-2 bg-[#5b8045] hover:bg-[#4a6b37] text-white px-5 py-2 rounded-xl text-xs font-bold transition shadow-md shadow-[#5b8045]/20 disabled:opacity-50 shrink-0 cursor-pointer"
           >
             {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
             {saving ? 'Saving...' : `Save (${currentLangInfo.short})`}
@@ -114,9 +141,21 @@ export const GalleryEditor: React.FC = () => {
       />
 
       {message && (
-        <div className="p-3.5 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-emerald-400 text-xs flex items-center gap-2 font-medium">
-          <CheckCircle className="w-4 h-4 shrink-0" />
-          {message}
+        <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-2xl text-emerald-900 text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3 font-medium shadow-xs animate-in fade-in duration-200">
+          <div className="flex items-center gap-2.5">
+            <CheckCircle className="w-5 h-5 text-emerald-600 shrink-0" />
+            <div className="flex flex-col">
+              <span className="font-bold text-emerald-950 text-sm">Draft Content Saved!</span>
+              <span className="text-emerald-800 font-normal">{message}</span>
+            </div>
+          </div>
+          <button
+            onClick={() => setIsPreviewOpen(true)}
+            className="px-4 py-2 bg-[#5b8045] hover:bg-[#4a6b37] text-white rounded-xl font-bold text-xs shadow-md shadow-[#5b8045]/20 flex items-center gap-1.5 shrink-0 cursor-pointer self-start sm:self-auto transition"
+          >
+            <Eye className="w-4 h-4" />
+            <span>Preview Changes Now</span>
+          </button>
         </div>
       )}
 
@@ -174,6 +213,13 @@ export const GalleryEditor: React.FC = () => {
           </div>
         ))}
       </div>
+
+      {/* Live Preview Modal */}
+      <LivePreviewModal
+        isOpen={isPreviewOpen}
+        onClose={() => setIsPreviewOpen(false)}
+        pagePath="/gallery"
+      />
     </div>
   );
 };

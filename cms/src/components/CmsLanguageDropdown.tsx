@@ -15,8 +15,8 @@ export const CmsLanguageDropdown: React.FC<Props> = ({ className = '', size = 'm
       <select
         value={language}
         onChange={(e) => setLanguage(e.target.value as CmsLanguage)}
-        className={`rounded-xl bg-white border border-[#e2e8df] text-xs font-bold text-gray-800 shadow-2xs hover:border-[#5b8045] focus:outline-none focus:border-[#5b8045] cursor-pointer transition appearance-none ${
-          size === 'sm' ? 'py-1 pl-2.5 pr-6 text-[11px]' : 'py-1.5 pl-3 pr-7 text-xs'
+        className={`w-32 h-9 rounded-xl bg-white border border-[#e2e8df] text-xs font-bold text-gray-800 shadow-2xs hover:border-[#5b8045] focus:outline-none focus:border-[#5b8045] cursor-pointer transition appearance-none ${
+          size === 'sm' ? 'py-1 pl-2.5 pr-6 text-[11px]' : 'py-2 pl-3 pr-7 text-xs'
         }`}
         title="Select CMS Editing Language"
       >
@@ -30,4 +30,3 @@ export const CmsLanguageDropdown: React.FC<Props> = ({ className = '', size = 'm
     </div>
   );
 };
-

@@ -1,26 +1,47 @@
 import React, { useEffect, useState } from 'react';
-import { Save, CheckCircle, Loader2, FileText, Target, Users } from 'lucide-react';
+import { Save, CheckCircle, Loader2, FileText, Target, Users, Eye, Undo2, Redo2 } from 'lucide-react';
 import { loadPageJson, savePageJson } from '../../lib/cmsStorage';
 import { useCmsLanguage } from '../../context/CmsLanguageContext';
 import { CmsLanguageDropdown } from '../../components/CmsLanguageDropdown';
 import { CmsBackToPagesLink, CmsPageSelectDropdown } from '../../components/CmsPageSwitcher';
 import { CmsSaveConfirmModal } from '../../components/CmsSaveConfirmModal';
+import { LivePreviewModal } from '../../components/LivePreviewModal';
+import { useCmsHistory } from '../../lib/useCmsHistory';
 import './index.css';
 
 export const AboutEditor: React.FC = () => {
   const { language, currentLangInfo } = useCmsLanguage();
-  const [data, setData] = useState<any>(null);
+  const {
+    data,
+    setData,
+    setInitialData,
+    updateData,
+    undo,
+    redo,
+    canUndo,
+    canRedo,
+  } = useCmsHistory<any>('about.json');
+
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [showSaveConfirmModal, setShowSaveConfirmModal] = useState(false);
+  const [isPreviewOpen, setIsPreviewOpen] = useState(false);
+
+  const handleUndo = () => {
+    undo();
+  };
+
+  const handleRedo = () => {
+    redo();
+  };
 
   useEffect(() => {
     setLoading(true);
     loadPageJson('about.json')
       .then((res) => {
         if (!res) {
-          setData({
+          setInitialData({
             header: {
               title: 'Our Story',
               subtitle: 'Elevating Cambodian culinary art since 2008',
@@ -36,11 +57,11 @@ export const AboutEditor: React.FC = () => {
             },
           });
         } else {
-          setData(res);
+          setInitialData(res);
         }
       })
       .catch(() => {
-        setData({
+        setInitialData({
           header: {
             title: 'Our Story',
             subtitle: 'Elevating Cambodian culinary art since 2008',
@@ -57,7 +78,7 @@ export const AboutEditor: React.FC = () => {
         });
       })
       .finally(() => setLoading(false));
-  }, [language]);
+  }, [language, setInitialData]);
 
   const handleSave = async () => {
     setSaving(true);
@@ -130,9 +151,21 @@ export const AboutEditor: React.FC = () => {
       />
 
       {message && (
-        <div className="p-3.5 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-800 text-xs flex items-center gap-2 font-medium">
-          <CheckCircle className="w-4 h-4 text-emerald-600 shrink-0" />
-          {message}
+        <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-2xl text-emerald-900 text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3 font-medium shadow-xs animate-in fade-in duration-200">
+          <div className="flex items-center gap-2.5">
+            <CheckCircle className="w-5 h-5 text-emerald-600 shrink-0" />
+            <div className="flex flex-col">
+              <span className="font-bold text-emerald-950 text-sm">Draft Content Saved!</span>
+              <span className="text-emerald-800 font-normal">{message}</span>
+            </div>
+          </div>
+          <button
+            onClick={() => setIsPreviewOpen(true)}
+            className="px-4 py-2 bg-[#5b8045] hover:bg-[#4a6b37] text-white rounded-xl font-bold text-xs shadow-md shadow-[#5b8045]/20 flex items-center gap-1.5 shrink-0 cursor-pointer self-start sm:self-auto transition"
+          >
+            <Eye className="w-4 h-4" />
+            <span>Preview Changes Now</span>
+          </button>
         </div>
       )}
 
@@ -227,6 +260,13 @@ export const AboutEditor: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Live Preview Modal */}
+      <LivePreviewModal
+        isOpen={isPreviewOpen}
+        onClose={() => setIsPreviewOpen(false)}
+        pagePath="/about"
+      />
     </div>
   );
 };

@@ -42,8 +42,11 @@ export const LivePreviewModal: React.FC<LivePreviewModalProps> = ({
             <div className="flex items-center gap-2 min-w-0">
               <span className="w-2.5 h-2.5 rounded-full bg-[#5b8045] animate-pulse shrink-0" />
               <span className="text-sm font-bold text-[#1c2819] font-serif tracking-wide shrink-0">Live Page Preview</span>
-              <span className="text-xs font-mono bg-[#f4f7f2] text-[#5b8045] px-2.5 py-1 rounded-lg border border-[#e2e8df] truncate hidden md:inline-block max-w-xs font-semibold">
-                {targetUrl}
+              <span className="text-[11px] font-mono bg-amber-50 text-amber-800 px-3 py-1 rounded-full border border-amber-200 shrink-0 font-semibold hidden lg:inline-flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-ping" />
+                <span>1. Review Preview</span>
+                <span className="text-amber-400">➔</span>
+                <span>2. Publish to Production</span>
               </span>
             </div>
 
@@ -85,10 +88,10 @@ export const LivePreviewModal: React.FC<LivePreviewModalProps> = ({
             <div className="flex items-center gap-2 shrink-0">
               <button
                 onClick={() => setIsPublishModalOpen(true)}
-                className="px-3.5 py-1.5 rounded-xl bg-[#5b8045] hover:bg-[#4a6b37] text-white text-xs font-bold transition shadow-md shadow-[#5b8045]/20 flex items-center gap-1.5 cursor-pointer"
+                className="px-4 py-2 rounded-xl bg-[#5b8045] hover:bg-[#4a6b37] text-white text-xs font-bold transition shadow-md shadow-[#5b8045]/20 flex items-center gap-2 cursor-pointer"
                 title="Publish Changes to Production (GitHub)"
               >
-                <UploadCloud className="w-3.5 h-3.5" />
+                <UploadCloud className="w-4 h-4" />
                 <span>Publish to Production</span>
               </button>
 

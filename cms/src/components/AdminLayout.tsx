@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import {
   LayoutDashboard,
@@ -27,10 +27,13 @@ import {
   CheckCircle,
   RotateCcw,
   UploadCloud,
+  Undo2,
+  Redo2,
 } from 'lucide-react';
 import { LivePreviewModal } from './LivePreviewModal';
 import { PublishConfirmModal } from './PublishConfirmModal';
 import { CmsLanguageSwitcher } from './CmsLanguageSwitcher';
+import { CmsPageSelectDropdown } from './CmsPageSwitcher';
 import { getCMSConfig, saveCMSConfig } from '../lib/cmsStorage';
 import omrLogo from '../assets/one-more-logo-green.webp';
 
@@ -43,6 +46,46 @@ export const AdminLayout: React.FC = () => {
   const [isSidebarVisible, setIsSidebarVisible] = useState(true);
   const [globalSearch, setGlobalSearch] = useState('');
   const [selectedBranch, setSelectedBranch] = useState('Boeung Kak');
+  const [historyState, setHistoryState] = useState({ canUndo: false, canRedo: false });
+
+  useEffect(() => {
+    const handleHistoryChange = (e: CustomEvent<{ canUndo: boolean; canRedo: boolean }>) => {
+      if (e.detail) {
+        setHistoryState({ canUndo: e.detail.canUndo, canRedo: e.detail.canRedo });
+      }
+    };
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+      const isCmdOrCtrl = isMac ? e.metaKey : e.ctrlKey;
+
+      if (isCmdOrCtrl && e.key.toLowerCase() === 'z') {
+        const tag = (e.target as HTMLElement)?.tagName?.toLowerCase();
+        if (tag === 'input' || tag === 'textarea') return;
+
+        e.preventDefault();
+        if (e.shiftKey) {
+          window.dispatchEvent(new CustomEvent('cms-trigger-redo'));
+        } else {
+          window.dispatchEvent(new CustomEvent('cms-trigger-undo'));
+        }
+      } else if (isCmdOrCtrl && e.key.toLowerCase() === 'y') {
+        const tag = (e.target as HTMLElement)?.tagName?.toLowerCase();
+        if (tag === 'input' || tag === 'textarea') return;
+
+        e.preventDefault();
+        window.dispatchEvent(new CustomEvent('cms-trigger-redo'));
+      }
+    };
+
+    window.addEventListener('cms-history-change', handleHistoryChange as EventListener);
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('cms-history-change', handleHistoryChange as EventListener);
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
 
   const [config, setConfig] = useState(getCMSConfig());
   const [saveMessage, setSaveMessage] = useState<string | null>(null);
@@ -97,15 +140,34 @@ export const AdminLayout: React.FC = () => {
     },
   ];
 
-  const allItems = [
-    { label: 'Dashboard', path: '/', icon: LayoutDashboard, preview: '/' },
-    ...navSections.flatMap((s) => s.items),
-  ];
+  const getDynamicPreviewPath = (pathname: string, search: string) => {
+    const cleanPath = pathname.replace(/^\//, '');
 
-  const currentNavItem = allItems.find((item) => item.path === location.pathname) || allItems[0];
+    switch (cleanPath) {
+      case 'about':
+        return '/about';
+      case 'branches':
+        return search ? `/branches${search}` : '/branches';
+      case 'gallery':
+        return '/gallery';
+      case 'menu':
+        return '/menu';
+      case 'events':
+        return '/events';
+      case 'reservations':
+      case 'reservations-editor':
+        return '/reservations';
+      case 'terms':
+        return '/terms';
+      case 'home':
+      default:
+        return '/';
+    }
+  };
 
   const openPreview = () => {
-    setPreviewPath(currentNavItem.preview);
+    const targetPath = getDynamicPreviewPath(location.pathname, location.search);
+    setPreviewPath(targetPath);
     setIsPreviewOpen(true);
   };
 
@@ -243,25 +305,44 @@ export const AdminLayout: React.FC = () => {
           </div>
 
           {/* Top Bar Actions & Profile */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2.5">
+            {/* Compact Icon-Only Undo / Redo Buttons */}
+            <div className="h-9 flex items-center bg-[#5b8045]/10 p-1 rounded-xl border border-[#5b8045]/30 shrink-0 shadow-2xs">
+              <button
+                onClick={() => window.dispatchEvent(new CustomEvent('cms-trigger-undo'))}
+                disabled={!historyState.canUndo}
+                className="h-7 w-7 rounded-lg flex items-center justify-center transition cursor-pointer text-[#5b8045] hover:bg-white disabled:opacity-30 disabled:cursor-not-allowed"
+                title="Undo last change (Ctrl+Z / Cmd+Z)"
+              >
+                <Undo2 className="w-3.5 h-3.5" />
+              </button>
+              <button
+                onClick={() => window.dispatchEvent(new CustomEvent('cms-trigger-redo'))}
+                disabled={!historyState.canRedo}
+                className="h-7 w-7 rounded-lg flex items-center justify-center transition cursor-pointer text-[#5b8045] hover:bg-white disabled:opacity-30 disabled:cursor-not-allowed border-l border-[#5b8045]/20"
+                title="Redo change (Ctrl+Y / Cmd+Shift+Z)"
+              >
+                <Redo2 className="w-3.5 h-3.5" />
+              </button>
+            </div>
+
+            {/* Icon-Only Preview Button (Eye Icon) */}
+            <button
+              onClick={openPreview}
+              className="h-9 w-9 hidden sm:flex items-center justify-center rounded-xl bg-[#5b8045]/10 hover:bg-[#5b8045]/20 text-[#5b8045] border border-[#5b8045]/30 shadow-2xs transition cursor-pointer shrink-0"
+              title="Preview Live Page"
+            >
+              <Eye className="w-4 h-4" />
+            </button>
 
             {/* Publish to Production Button */}
             <button
-              onClick={() => setIsPublishOpen(true)}
-              className="hidden sm:flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-[#5b8045] hover:bg-[#4a6b37] text-white text-xs font-bold shadow-md shadow-[#5b8045]/20 transition cursor-pointer"
-              title="Publish Changes to Production (GitHub)"
+              onClick={openPreview}
+              className="h-9 hidden sm:flex items-center gap-1.5 px-4 rounded-xl bg-[#5b8045] hover:bg-[#4a6b37] text-white text-xs font-bold shadow-md shadow-[#5b8045]/20 transition cursor-pointer shrink-0"
+              title="Preview & Publish Changes to Production"
             >
               <UploadCloud className="w-3.5 h-3.5" />
               <span>Publish to Production</span>
-            </button>
-
-            {/* View Website Button */}
-            <button
-              onClick={openPreview}
-              className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#5b8045]/10 hover:bg-[#5b8045]/20 text-[#5b8045] text-xs font-bold border border-[#5b8045]/30 shadow-xs transition cursor-pointer"
-            >
-              <Globe className="w-3.5 h-3.5" />
-              <span>View Website</span>
             </button>
 
             {/* User Avatar Circle */}

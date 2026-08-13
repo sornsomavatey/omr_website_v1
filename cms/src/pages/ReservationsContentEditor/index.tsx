@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Save, Plus, Trash2, CheckCircle, Loader2, Calendar, FileText, HelpCircle, Clock, Info, Check, Gift, Armchair, Sparkles } from 'lucide-react';
 import { loadPageJson, savePageJson } from '../../lib/cmsStorage';
+import { useCmsHistory } from '../../lib/useCmsHistory';
 import { useCmsLanguage } from '../../context/CmsLanguageContext';
 import { CmsLanguageDropdown } from '../../components/CmsLanguageDropdown';
 import { CmsBackToPagesLink, CmsPageSelectDropdown } from '../../components/CmsPageSwitcher';
@@ -26,7 +27,17 @@ const defaultSeating = [
 
 export const ReservationsContentEditor: React.FC = () => {
   const { language, currentLangInfo } = useCmsLanguage();
-  const [data, setData] = useState<any>(null);
+  const {
+    data,
+    setData,
+    setInitialData,
+    updateData,
+    undo,
+    redo,
+    canUndo,
+    canRedo,
+  } = useCmsHistory<any>('reservations.json');
+
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
@@ -43,17 +54,14 @@ export const ReservationsContentEditor: React.FC = () => {
 
   useEffect(() => {
     setLoading(true);
-    Promise.all([
-      loadPageJson('reservations.json').catch(() => null),
-      loadPageJson(`locales/${language}.json`).catch(() => null),
-    ])
-      .then(([res, dict]) => {
+    loadPageJson('reservations.json')
+      .then((res) => {
         const defaultBase = {
           hero: {
             eyebrow: 'EST. 2008 · PHNOM PENH',
             title: 'Reserve Your Table',
             desc: 'Immerse yourself in the ultimate Cambodian dining experience, where legendary heritage recipes are proudly brought to life in an atmosphere of refined elegance.',
-            heroImage: '@/assets/home-v2/silver-table-setting.webp',
+            heroImage: '@/assets/home-v2/boeung-kak-exterior.webp',
           },
           guestInformationTitle: 'Guest Information',
           guestInformation: [
@@ -90,157 +98,30 @@ export const ReservationsContentEditor: React.FC = () => {
           },
         };
 
-        const base = res || defaultBase;
-        const resPage = dict?.reservationPage || {};
-
-        const mergedHero = {
-          eyebrow: resPage.hero?.eyebrow ?? base.hero?.eyebrow ?? '',
-          title: resPage.hero?.title ?? base.hero?.title ?? '',
-          desc: resPage.hero?.desc ?? base.hero?.desc ?? '',
-          heroImage: resPage.hero?.heroImage ?? base.hero?.heroImage ?? '@/assets/home-v2/silver-table-setting.webp',
-        };
-
-        const mergedGuestInfoTitle = resPage.guestInformationTitle ?? base.guestInformationTitle ?? 'Guest Information';
-
-        const mergedGuestInfo = (base.guestInformation || []).map((item: any, idx: number) => {
-          const locItem = resPage.guestInformation?.[idx];
-          if (!locItem) return item;
-          return {
-            ...item,
-            label: locItem.label || item.label,
-            value: locItem.value || item.value,
-          };
-        });
-
-        const mergedSteps = {
-          branch: {
-            title: resPage.steps?.branch?.title ?? base.steps?.branch?.title ?? 'Choose Branch',
-            desc: resPage.steps?.branch?.desc ?? base.steps?.branch?.desc ?? 'Select your preferred location in Phnom Penh',
+        const base = res ? {
+          ...defaultBase,
+          ...res,
+          hero: {
+            ...defaultBase.hero,
+            ...(res?.hero || {}),
+            heroImage: res?.hero?.heroImage || res?.hero?.backgroundImage || res?.hero?.image || defaultBase.hero.heroImage,
           },
-          contact: {
-            title: resPage.steps?.contact?.title ?? base.steps?.contact?.title ?? 'Contact Details',
-            desc: resPage.steps?.contact?.desc ?? base.steps?.contact?.desc ?? 'Enter your information so we can contact you regarding your booking',
-          },
-          guests: {
-            title: resPage.steps?.guests?.title ?? base.steps?.guests?.title ?? 'Guests',
-            desc: resPage.steps?.guests?.desc ?? base.steps?.guests?.desc ?? 'Tell us how many people will be joining you',
-          },
-          dateTime: {
-            title: resPage.steps?.dateTime?.title ?? base.steps?.dateTime?.title ?? 'Select Date & Time',
-            desc: resPage.steps?.dateTime?.desc ?? base.steps?.dateTime?.desc ?? 'Choose preferred date, meal time & guest size',
-          },
-          occasion: {
-            title: resPage.steps?.occasion?.title ?? base.steps?.occasion?.title ?? 'Special Occasion',
-            desc: resPage.steps?.occasion?.desc ?? base.steps?.occasion?.desc ?? 'Let us know if you are celebrating a special event',
-          },
-          seating: {
-            title: resPage.steps?.seating?.title ?? base.steps?.seating?.title ?? 'Seating Preference',
-            desc: resPage.steps?.seating?.desc ?? base.steps?.seating?.desc ?? 'Choose where you would like to be seated',
-          },
-          summary: {
-            title: resPage.steps?.summary?.title ?? base.steps?.summary?.title ?? 'Booking Summary',
-          },
-        };
-
-        const mergedOccasions = (resPage.occasions && resPage.occasions.length > 0)
-          ? resPage.occasions
-          : (base.occasions || defaultOccasions);
-
-        const mergedSeating = (resPage.seatingPreferences && resPage.seatingPreferences.length > 0)
-          ? resPage.seatingPreferences
-          : (base.seatingPreferences || defaultSeating);
-
-        const mergedSuccess = {
-          title: resPage.success?.title ?? base.success?.title ?? 'Reservation Confirmed!',
-          desc: resPage.success?.desc ?? base.success?.desc ?? 'Thank you for booking with One More Restaurant.',
-          makeAnother: resPage.success?.makeAnother ?? base.success?.makeAnother ?? 'Make Another Booking',
-        };
-
-        const mergedFaq = {
-          eyebrow: resPage.faq?.eyebrow ?? base.faq?.eyebrow ?? 'Assistance',
-          title: resPage.faq?.title ?? base.faq?.title ?? 'Frequently Asked Questions',
-          items: (resPage.faq?.items && resPage.faq.items.length > 0)
-            ? resPage.faq.items
-            : (base.faq?.items || []),
-        };
-
-        setData({
-          ...base,
-          hero: mergedHero,
-          guestInformationTitle: mergedGuestInfoTitle,
-          guestInformation: mergedGuestInfo,
-          steps: mergedSteps,
-          occasions: mergedOccasions,
-          seatingPreferences: mergedSeating,
-          success: mergedSuccess,
-          faq: mergedFaq,
-        });
+        } : defaultBase;
+        setInitialData(base);
       })
       .catch((err) => console.error('Failed to load reservations data:', err))
       .finally(() => setLoading(false));
-  }, [language]);
+  }, []);
 
   const handleSave = async () => {
     if (!data) return;
     setSaving(true);
     setMessage(null);
 
-    // Save to base reservations.json if in English mode
-    if (language === 'en') {
-      await savePageJson('reservations.json', data);
-    }
-
-    try {
-      let currentDict = await loadPageJson(`locales/${language}.json`).catch(() => ({}));
-      if (!currentDict) currentDict = {};
-
-      const updatedDict = {
-        ...currentDict,
-        reservationPage: {
-          ...(currentDict.reservationPage || {}),
-          hero: {
-            ...(currentDict.reservationPage?.hero || {}),
-            eyebrow: data.hero?.eyebrow || '',
-            title: data.hero?.title || '',
-            desc: data.hero?.desc || '',
-            heroImage: data.hero?.heroImage || '',
-          },
-          guestInformationTitle: data.guestInformationTitle || 'Guest Information',
-          guestInformation: data.guestInformation || [],
-          steps: {
-            ...(currentDict.reservationPage?.steps || {}),
-            branch: data.steps?.branch || { title: '', desc: '' },
-            contact: data.steps?.contact || { title: '', desc: '' },
-            guests: data.steps?.guests || { title: '', desc: '' },
-            dateTime: data.steps?.dateTime || { title: '', desc: '' },
-            occasion: data.steps?.occasion || { title: '', desc: '' },
-            seating: data.steps?.seating || { title: '', desc: '' },
-            summary: data.steps?.summary || { title: '' },
-          },
-          occasions: data.occasions || [],
-          seatingPreferences: data.seatingPreferences || [],
-          success: {
-            ...(currentDict.reservationPage?.success || {}),
-            title: data.success?.title || '',
-            desc: data.success?.desc || '',
-            makeAnother: data.success?.makeAnother || '',
-          },
-          faq: {
-            ...(currentDict.reservationPage?.faq || {}),
-            eyebrow: data.faq?.eyebrow || 'Assistance',
-            title: data.faq?.title || 'Frequently Asked Questions',
-            items: data.faq?.items || [],
-          },
-        },
-      };
-
-      await savePageJson(`locales/${language}.json`, updatedDict);
-    } catch (err) {
-      console.warn('Could not sync locale dictionary:', err);
-    }
+    await savePageJson('reservations.json', data);
 
     setSaving(false);
-    setMessage(`Successfully saved Reservations Page content for ${currentLangInfo.flag} ${currentLangInfo.label}!`);
+    setMessage(`Successfully saved Reservations Page content!`);
     setTimeout(() => setMessage(null), 4000);
   };
 
@@ -414,9 +295,17 @@ export const ReservationsContentEditor: React.FC = () => {
             <div className="pt-2 border-t border-gray-100">
               <ImageUploader
                 label={`Hero Background Image (${currentLangInfo.short})`}
-                value={data?.hero?.heroImage || ''}
+                value={data?.hero?.heroImage || data?.hero?.backgroundImage || data?.hero?.image || '@/assets/home-v2/boeung-kak-exterior.webp'}
                 onChange={(url) =>
-                  setData({ ...data, hero: { ...data?.hero, heroImage: url } })
+                  setData({
+                    ...data,
+                    hero: {
+                      ...data?.hero,
+                      heroImage: url,
+                      backgroundImage: url,
+                      image: url,
+                    },
+                  })
                 }
               />
             </div>
