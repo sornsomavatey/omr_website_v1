@@ -3,7 +3,6 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
@@ -19,9 +18,10 @@ class ReservationConfirmation extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct(array $data)
+    public function __construct(array $data, string $type)
     {
-        $this->data = $data;
+         $this->data = $data;
+         $this->data["type_booking"] = $type;
     }
 
     /**
@@ -29,10 +29,20 @@ class ReservationConfirmation extends Mailable
      */
     public function envelope(): Envelope
     {
-        $ref = $this->data['booking_ref'] ?? '#OMR-RES';
-        return new Envelope(
-            subject: "Your Reservation Confirmation {$ref} - One More Restaurant",
-        );
+
+        if ($this->data["type_booking"] == "reservation") {
+            $ref = $this->data['customer_name'] ?? '#OMR-RES';
+            return new Envelope(
+                subject: "📋 New Table Reservation - {$ref}",
+            );
+        }
+        else {
+            $ref = $this->data['customer_name'] ?? '#OMR-RES';
+            return new Envelope(
+                subject: "📋 New Event Booked - {$ref}",
+            );
+        }
+
     }
 
     /**
@@ -40,9 +50,17 @@ class ReservationConfirmation extends Mailable
      */
     public function content(): Content
     {
-        return new Content(
-            view: 'emails.reservation',
-        );
+        if ($this->data["type_booking"] == "reservation") {
+            return new Content(
+                view: 'emails.reservation',
+            );
+        }
+        else {
+            return new Content(
+                view: 'emails.event',
+            );
+        }
+
     }
 
     /**
